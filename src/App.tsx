@@ -1,9 +1,33 @@
 import React, { useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Separator } from "@/components/ui/separator";
+
+/******************************
+ * Minimal UI primitives (no external imports)
+ * These replace shadcn/ui so Netlify builds without alias config.
+ ******************************/
+export function Button({ className = "", ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { className?: string }) {
+  return <button className={("inline-flex items-center justify-center px-4 py-2 rounded-md border text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 " + className).trim()} {...props} />;
+}
+export function Card({ className = "", ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <div className={("bg-white/90 border rounded-2xl " + className).trim()} {...props} />;
+}
+export function CardHeader({ className = "", ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <div className={("px-5 pt-5 " + className).trim()} {...props} />;
+}
+export function CardTitle({ className = "", ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <div className={("font-semibold text-lg " + className).trim()} {...props} />;
+}
+export function CardContent({ className = "", ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <div className={("px-5 pb-5 " + className).trim()} {...props} />;
+}
+export function Input({ className = "", ...props }: React.InputHTMLAttributes<HTMLInputElement>) {
+  return <input className={("w-full rounded-md border border-slate-300 bg-white/90 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-500 " + className).trim()} {...props} />;
+}
+export function Textarea({ className = "", ...props }: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
+  return <textarea className={("w-full rounded-md border border-slate-300 bg-white/90 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-sky-500 " + className).trim()} {...props} />;
+}
+export function Separator({ className = "", ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <div className={("h-px w-full bg-slate-200 " + className).trim()} {...props} />;
+}
 
 /******************************
  * Deferred Google Analytics (GA4)
@@ -32,7 +56,7 @@ function AnalyticsDeferred({ id }: { id: string }) {
 /******************************
  * Inline SVG Icons (no external CDN deps)
  ******************************/
-const base = {
+const base: React.SVGProps<SVGSVGElement> = {
   viewBox: "0 0 24 24",
   fill: "none",
   stroke: "currentColor",
@@ -40,73 +64,6 @@ const base = {
   strokeLinecap: "round",
   strokeLinejoin: "round",
 };
-export const CheckCircle = (p: React.SVGProps<SVGSVGElement>) => (
-  <svg {...base} {...p}><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>
-);
-export const Printer = (p: React.SVGProps<SVGSVGElement>) => (
-  <svg {...base} {...p}><rect x="6" y="9" width="12" height="8" rx="2"/><path d="M8 13h8"/><rect x="8" y="3" width="8" height="4" rx="1"/></svg>
-);
-export const Cog = (p: React.SVGProps<SVGSVGElement>) => (
-  <svg {...base} {...p}><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M2 12h3M19 12h3M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></svg>
-);
-export const Cube = (p: React.SVGProps<SVGSVGElement>) => (
-  <svg {...base} {...p}><path d="M12 2l8 4.5v10L12 21 4 16.5v-10L12 2z"/><path d="M12 21V11.5M4 6.5l8 5 8-5"/></svg>
-);
-export const Phone = (p: React.SVGProps<SVGSVGElement>) => (
-  <svg {...base} {...p}><path d="M22 16.92v2a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.66A2 2 0 0 1 4.11 1h2a2 2 0 0 1 2 1.72c.12.89.32 1.76.59 2.6a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.48-1.16a2 2 0 0 1 2.11-.45c.84.27 1.71.47 2.6.59A2 2 0 0 1 22 16.92z"/></svg>
-);
-export const Mail = (p: React.SVGProps<SVGSVGElement>) => (
-  <svg {...base} {...p}><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
-);
-export const Instagram = (p: React.SVGProps<SVGSVGElement>) => (
-  <svg {...base} {...p}><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.5" cy="6.5" r="1"/></svg>
-);
-export const Wrench = (p: React.SVGProps<SVGSVGElement>) => (
-  <svg {...base} {...p}><path d="M21 3a7 7 0 0 1-9.8 9.8L7 17l-3 3 1.5 1.5 3-3 4.2-4.2A7 7 0 0 1 21 3z"/></svg>
-);
-export const Shield = (p: React.SVGProps<SVGSVGElement>) => (
-  <svg {...base} {...p}><path d="M12 2l7 4v5c0 5-3.5 9-7 11-3.5-2-7-6-7-11V6l7-4z"/></svg>
-);
-
-/******************************
- * Runtime sanity tests (non-throwing)
- ******************************/
-try {
-  const iconTests = [
-    React.isValidElement(<CheckCircle />), React.isValidElement(<Printer />), React.isValidElement(<Cog />),
-    React.isValidElement(<Cube />), React.isValidElement(<Phone />), React.isValidElement(<Mail />),
-    React.isValidElement(<Instagram />), React.isValidElement(<Wrench />), React.isValidElement(<Shield />),
-  ];
-  console.assert(iconTests.every(Boolean), 'Icon components should render as valid elements');
-  console.assert(React.isValidElement(<AnalyticsDeferred id="G-TEST123" />), 'AnalyticsDeferred should be a valid element');
-} catch {}
-
-/******************************
- * Global Animated Background + Reveal-on-scroll styles
- ******************************/
-function GlobalAnimatedBackground() {
-  return (
-    <style>{`
-      :root { --c1:#f0f9ff; --c2:#e0f2fe; --c3:#f8fafc; }
-      .animated-bg { background: linear-gradient(120deg, var(--c1), var(--c2), var(--c3)); background-size: 400% 400%; animation: gradientShift 20s ease-in-out infinite; }
-      @keyframes gradientShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-      .fade-section { opacity: 0; transform: translateY(18px); transition: opacity .8s ease, transform .8s ease; }
-      .fade-section.is-visible { opacity: 1; transform: translateY(0); }
-    `}</style>
-  );
-}
-
-/******************************
- * SEO & Social tags (Open Graph + Twitter)
- ******************************/
-function HeadTags({ title, description, url, image }: { title: string; description: string; url: string; image: string }) {
-  useEffect(() => {
-    if (title) document.title = title;
-    const ensure = (selector: string, create: () => HTMLElement) => {
-      let el = document.head.querySelector(selector) as HTMLElement | null;
-      if (!el) { el = create(); document.head.appendChild(el); }
-      return el;
-    };
     // Description
     const md = ensure('meta[name="description"]', () => { const m = document.createElement('meta'); m.setAttribute('name','description'); return m; }) as HTMLMetaElement;
     md.setAttribute('content', description || '');
@@ -210,7 +167,7 @@ export default function Site() {
             <a href="#contact" className="hover:text-slate-700">Contact</a>
           </nav>
           <div className="flex items-center gap-2">
-            <a href="#contact"><Button className="rounded-2xl bg-sky-500 hover:bg-sky-600 text-white transition-colors">Get a Quote</Button></a>
+            <a href="#contact"><Button className="rounded-2xl bg-sky-500 hover:bg-sky-600 text-white transition-colors border border-transparent">Get a Quote</Button></a>
           </div>
         </div>
       </header>
