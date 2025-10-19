@@ -303,38 +303,73 @@ export default function App() {
       </header>
 
       {/* HERO */}
-      <section className="fade-section mx-auto max-w-3xl px-4 py-20 text-center">
-        <div className="space-y-6">
-          <img
-            src="/images/brand/LOGO.png"
-            alt="Custom Build Studio Logo"
-            className="mx-auto mb-4 h-16 w-auto object-contain"
-          />
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight break-words leading-tight">From Idea → Precision Parts, Faster</h1>
-          <p className="text-lg text-slate-600 max-w-prose">
-            We help Edmonton businesses and makers turn concepts into durable, functional parts. On-demand <strong>3D printing</strong>,
-            precision <strong>CNC programming</strong>, and smart <strong>CAD design</strong>—delivered with shop-floor practicality and quick turnaround.
-          </p>
-          <ul className="text-slate-700 space-y-2">
-            {[
-              "Same-day quotes, clear timelines",
-              "Carbon/Glass Fiber Reinforced Filaments/PLA/PETG/ABS/ASA/TPU/PET/PC/PA",
-              "Functional prototypes and low-volume production",
-            ].map((t) => (
-              <li key={t} className="flex items-center gap-2"><CheckCircle className="h-5 w-5" /> {t}</li>
-            ))}
-          </ul>
-          <div className="flex gap-3">
-            <a href="#contact"><Button className="rounded-2xl bg-sky-500 hover:bg-sky-600 text-white transition-colors">Start Your Project</Button></a>
-            <a href="#work"><Button className="rounded-2xl border-slate-300 text-slate-800 hover:bg-slate-100 transition-colors">See Examples</Button></a>
-          </div>
-          <div className="flex flex-wrap items-center gap-4 pt-2 text-sm text-slate-600">
-            <div className="flex items-center gap-2"><Phone className="h-4 w-4" /> <a href="tel:+17802030081" className="underline">780-203-0081</a></div>
-            <div className="flex items-center gap-2"><Mail className="h-4 w-4" /> <a href="mailto:custombuildstudio@gmail.com" className="underline break-all">custombuildstudio@gmail.com</a></div>
-            <div className="flex items-center gap-2"><Instagram className="h-4 w-4" /> <a className="underline" href="https://instagram.com/Custom_Build_Studio" target="_blank" rel="noreferrer">@Custom_Build_Studio</a></div>
+      <section
+        className="fade-section relative mx-auto max-w-3xl px-4 py-28 text-center text-slate-900 overflow-hidden"
+        style={{
+          backgroundImage: "url('/images/hero-bg.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-white/75 to-white/90 backdrop-blur-[2px]"></div>
+        <div className="relative z-10">
+          <div className="space-y-6">
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight break-words leading-tight">
+              From Idea → Precision Parts, Faster
+            </h1>
+            <p className="text-lg text-slate-600 max-w-prose mx-auto">
+              We help Edmonton businesses and makers turn concepts into durable, functional parts.
+              On-demand <strong>3D printing</strong>, precision <strong>CNC programming</strong>, and
+              smart <strong>CAD design</strong> — delivered with shop-floor practicality and quick turnaround.
+            </p>
+
+            <ul className="text-slate-700 space-y-2">
+              {[
+                "Same-day quotes, clear timelines",
+                "Carbon/Glass Fiber Reinforced Filaments/PLA/PETG/ABS/ASA/TPU/PET/PC/PA",
+                "Functional prototypes and low-volume production",
+              ].map((t) => (
+                <li key={t} className="flex items-center gap-2 justify-center">
+                  <CheckCircle className="h-5 w-5" /> {t}
+                </li>
+              ))}
+            </ul>
+
+            <div className="flex justify-center gap-3">
+              <a href="#contact">
+                <Button className="rounded-2xl bg-sky-500 hover:bg-sky-600 text-white transition-colors">
+                  Start Your Project
+                </Button>
+              </a>
+              <a href="#work">
+                <Button className="rounded-2xl border-slate-300 text-slate-800 hover:bg-slate-100 transition-colors">
+                  See Examples
+                </Button>
+              </a>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-2 text-sm text-slate-600">
+              <div className="flex items-center gap-2">
+                <Phone className="h-4 w-4" />
+                <a href="tel:+17802030081" className="underline">780-203-0081</a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail className="h-4 w-4" />
+                <a href="mailto:custombuildstudio@gmail.com" className="underline break-all">
+                  custombuildstudio@gmail.com
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Instagram className="h-4 w-4" />
+                <a className="underline" href="https://instagram.com/Custom_Build_Studio" target="_blank" rel="noreferrer">
+                  @Custom_Build_Studio
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
+
 
       <Separator className="my-8" />
 
