@@ -350,9 +350,9 @@ export default function App() {
         <p className="text-slate-600 mt-2">Clear options you can book today.</p>
         <div className="grid md:grid-cols-3 gap-6 mt-8">
           {[
-            { icon: <Printer className="h-5 w-5" />, title: "FDM 3D Printing", desc: "PLA/PETG/ABS/ASA up to 300°C. Functional parts, jigs, fixtures, enclosures.", bullets: ["0.2–0.6 mm nozzles", "Rapid prototypes", "Batch runs"] },
-            { icon: <Cube className="h-5 w-5" />, title: "CAD Modeling", desc: "Design from scratch or based on sketches/samples. Includes DFM and tolerance advice.", bullets: ["Fusion 360", "Onshape", "STEP/STL/IGES"] },
-            { icon: <Wrench className="h-5 w-5" />, title: "CNC Programming", desc: "2.5D–3+2 toolpaths, probing, posts, and setup docs for your machines.", bullets: ["Haas/Mazak/Siemens", "Solid fixturing", "Clear setup sheets"] },
+            { icon: <Printer className="h-5 w-5" />, title: "FDM 3D Printing", desc: "High-precision FDM printing using PLA, PETG, ABS, ASA, TPU, PET, PC, PA, and carbon or glass fiber-reinforced materials. We produce durable prototypes, functional parts, and small-batch runs with excellent accuracy and finish — optimized for strength and performance.", bullets: ["0.2–0.6 mm nozzles", "Rapid prototypes", "Batch runs"] },
+            { icon: <Cube className="h-5 w-5" />, title: "CAD Modeling & 3D Scanning", desc: "Professional 3D modeling and high-resolution scanning for reverse engineering, product design, and prototyping. We convert real parts or ideas into detailed digital models, ready for 3D printing or CNC machining.", bullets: ["Fusion 360", "Onshape", "STEP/STL/IGES"] },
+            { icon: <Wrench className="h-5 w-5" />, title: "CNC Programming", desc: "Accurate, efficient CNC programming for milling and turning operations. Using Fusion 360, Siemens, and Mazak systems, we create optimized toolpaths for precision, speed, and surface quality — tailored to your machine and materials.", bullets: ["Haas/Mazak/Siemens", "Solid fixturing", "Clear setup sheets"] },
           ].map((s) => (
             <Card key={s.title} className="rounded-2xl">
               <CardHeader className="pb-3"><CardTitle className="flex items-center gap-2 text-xl">{s.icon}{s.title}</CardTitle></CardHeader>
