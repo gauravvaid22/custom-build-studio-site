@@ -13,3 +13,16 @@ html, body {
   scroll-behavior: smooth;
   background: white;
 }
+
+/* Mobile hardening */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { width: 100%; overflow-x: hidden; }
+img, video { max-width: 100%; height: auto; display: block; }
+
+/* iOS keeps text size consistent and avoids odd zoom behavior */
+html { -webkit-text-size-adjust: 100%; }
+
+/* Make form fields 16px on small screens to prevent iOS auto-zoom on focus */
+@media (max-width: 640px) {
+  input, textarea, select, button { font-size: 16px; }
+}
