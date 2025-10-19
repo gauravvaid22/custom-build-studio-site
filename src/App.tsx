@@ -460,18 +460,16 @@ export default function App() {
       {/* HERO */}
       <section
         id="hero"
-        className="relative w-full h-screen flex flex-col items-center justify-center text-white overflow-hidden"
+        className="relative w-full min-h-[100svh] flex flex-col items-center justify-center text-white overflow-hidden"
+        style={{
+          backgroundImage: "url('/images/hero-bg.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat"
+        }}
       >
-        {/* Background layer */}
-        <div className="absolute inset-0">
-          <img
-            src="/images/hero-bg.jpg"
-            alt="Custom Build Studio Background"
-            className="w-full h-full object-cover"
-          />
-          {/* subtle dark gradient for readability without dulling the image */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/50" />
-        </div>
+        {/* Overlay for readability (no interactions) */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/50" />
 
         {/* Content (pad down to clear fixed navbar) */}
         <div className="relative z-10 text-center max-w-5xl px-6 pt-24">
@@ -488,9 +486,7 @@ export default function App() {
 
           <ul className="space-y-2 mb-8 text-gray-300">
             {[
-              "Same-day quotes, clear timelines",
-              "Carbon/Glass Fiber Reinforced Filaments / PLA / PETG / ABS / ASA / TPU / PET / PC / PA",
-              "Functional prototypes and low-volume production",
+              ,
             ].map((t) => (
               <li key={t} className="flex items-center justify-center gap-2">
                 <CheckCircle className="h-5 w-5 text-sky-400" /> {t}

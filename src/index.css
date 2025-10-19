@@ -83,3 +83,55 @@ html, body {
 section, main, header, footer {
   overscroll-behavior: contain;
 }
+
+
+/* --- FINAL SCROLLBAR RESET --- */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+/* Disable scroll behavior on nested containers */
+main, section, header, footer, div {
+  overscroll-behavior: none !important;
+  overflow: visible !important;
+  max-height: none !important;
+}
+
+/* Prevent hero background or absolute elements from creating new scroll layers */
+.relative > img,
+.relative > div.absolute {
+  max-height: 100vh !important;
+  height: 100% !important;
+}
+
+/* --- FIX DOUBLE SCROLL: Root container must not scroll --- */
+#root {
+  overflow: visible !important;
+  height: auto !important;
+  min-height: 100% !important;
+  position: relative !important;
+}
+html, body {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+
+/* === FINAL SCROLLBAR FIX === */
+html {
+  overflow: hidden; /* prevents outer scrollbar duplication */
+}
+body {
+  overflow-y: auto; /* only body scrolls */
+  height: 100vh; /* ensures body fills viewport properly */
+}
+
+/* Safety: ensure no child (root or main) reintroduces overflow */
+#root, main {
+  overflow: visible !important;
+}
