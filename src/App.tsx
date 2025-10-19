@@ -1,4 +1,160 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
+/* ===== NAVBAR COMPONENT ===== */
+function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Make header solid + shadow after slight scroll
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Lock page scroll when mobile menu is open
+  useEffect(() => {
+    const original = document.body.style.overflow;
+    document.body.style.overflow = menuOpen ? "hidden" : original || "";
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, [menuOpen]);
+
+  const links = [
+    { href: "#services", label: "Services" },
+    { href: "#work", label: "Work" },
+    { href: "#pricing", label: "Pricing" },
+    { href: "#contact", label: "Contact" },
+  ];
+
+  return (
+    <>
+      <header
+        className={
+          "nav-appear fixed top-0 left-0 w-full z-50 transition-[background,box-shadow,backdrop-filter] duration-300 " +
+          (scrolled ? "bg-black/90 shadow-lg backdrop-blur-sm" : "bg-transparent")
+        }
+      >
+        <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between text-white">
+          {/* Brand */}
+          <a href="/" className="flex items-center gap-3">
+            <img
+              src="/images/brand/LOGO.png"
+              alt="Custom Build Studio"
+              className="h-10 w-auto"
+            />
+            <div className="hidden sm:block leading-tight">
+              <div className="font-semibold text-lg">Custom Build Studio</div>
+              <div className="text-xs text-gray-300">Precision. Design. Innovation.</div>
+            </div>
+          </a>
+
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+            {links.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                className="nav-link hover:text-sky-400 transition-colors"
+              >
+                {l.label}
+              </a>
+            ))}
+          </nav>
+
+          {/* CTA */}
+          <div className="hidden md:block">
+            <a href="#contact" className="inline-block">
+              <button
+                type="button"
+                className="rounded-2xl bg-sky-600 hover:bg-sky-700 text-white px-5 py-2.5 font-semibold shadow-sm transition-transform duration-200 hover:-translate-y-0.5"
+              >
+                Get a Quote
+              </button>
+            </a>
+          </div>
+
+          {/* Mobile menu button */}
+          <button
+            type="button"
+            className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-md ring-1 ring-white/15 text-white"
+            onClick={() => setMenuOpen(true)}
+            aria-label="Open menu"
+          >
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      {/* Mobile drawer */}
+        <div
+          className={
+            "fixed inset-0 z-50 md:hidden transition-opacity overscroll-contain " +
+            (menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none")
+          }
+          onClick={() => setMenuOpen(false)}
+        >
+          <div className="absolute inset-0 bg-black/60" />
+          <div
+            className={
+              "absolute top-0 right-0 h-full w-72 bg-black text-white p-6 transform transition-transform duration-300 overflow-y-auto overscroll-contain " +
+              (menuOpen ? "translate-x-0" : "translate-x-full")
+            }
+            onClick={(e) => e.stopPropagation()}
+          >
+          <div className="flex items-center justify-between">
+            <span className="font-semibold">Menu</span>
+            <button
+              type="button"
+              className="w-9 h-9 grid place-items-center rounded-md ring-1 ring-white/15"
+              onClick={() => setMenuOpen(false)}
+              aria-label="Close menu"
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            </button>
+          </div>
+          <nav className="mt-6 space-y-3">
+            {links.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                className="block nav-link text-base py-2"
+                onClick={() => setMenuOpen(false)}
+              >
+                {l.label}
+              </a>
+            ))}
+            <a href="#contact" onClick={() => setMenuOpen(false)} className="block mt-4">
+              <button className="w-full rounded-xl bg-sky-600 hover:bg-sky-700 text-white px-4 py-2.5 font-semibold shadow-sm">
+                Get a Quote
+              </button>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </>
+  );
+}
 
 /* =========================
    Minimal UI Primitives
@@ -270,31 +426,30 @@ export default function App() {
       <AnalyticsDeferred id="G-8D08Z57Q3S" />
 
       {/* NAVBAR */}
-      <header className="sticky top-0 z-50 bg-white shadow-md border-b border-slate-200">
-        <div className="mx-auto max-w-7xl px-6 py-5 flex items-center justify-between">
+      <header className="fixed top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-sm text-white shadow-md">
+        <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-           <img
-              src="/images/brand/LOGO.png"
-              alt="Custom Build Studio Logo"
-              className="h-14 w-auto object-contain"
+            <img
+              src="/images/brand/logo.png"
+              alt="Custom Build Studio"
+              className="h-10 w-auto"
             />
             <div className="leading-tight">
-              <div className="font-semibold text-xl text-slate-800 tracking-tight">
-                Custom Build Studio
-              </div>
-              <div className="text-sm text-slate-500">Precision. Design. Innovation.</div>
+              <div className="font-semibold text-lg">Custom Build Studio</div>
+              <div className="text-xs text-gray-300">Precision. Design. Innovation.</div>
             </div>
           </div>
 
-          <nav className="hidden md:flex gap-6 text-sm">
-            <a href="#services" className="hover:text-slate-700">Services</a>
-            <a href="#work" className="hover:text-slate-700">Work</a>
-            <a href="#pricing" className="hover:text-slate-700">Pricing</a>
-            <a href="#contact" className="hover:text-slate-700">Contact</a>
+          <nav className="hidden md:flex gap-8 text-sm font-medium">
+            <a href="#services" className="hover:text-sky-400 transition">Services</a>
+            <a href="#work" className="hover:text-sky-400 transition">Work</a>
+            <a href="#pricing" className="hover:text-sky-400 transition">Pricing</a>
+            <a href="#contact" className="hover:text-sky-400 transition">Contact</a>
           </nav>
+
           <div className="flex items-center gap-2">
             <a href="#contact">
-              <Button className="rounded-2xl bg-sky-600 hover:bg-sky-700 text-white px-6 py-2.5 text-base font-semibold shadow-sm transition-all duration-200">
+              <Button className="rounded-2xl bg-sky-500 hover:bg-sky-600 text-white border-none">
                 Get a Quote
               </Button>
             </a>
@@ -304,71 +459,80 @@ export default function App() {
 
       {/* HERO */}
       <section
-        className="fade-section relative mx-auto max-w-3xl px-4 py-28 text-center text-slate-900 overflow-hidden"
-        style={{
-          backgroundImage: "url('/images/hero-bg.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+        id="hero"
+        className="relative w-full h-screen flex flex-col items-center justify-center text-white overflow-hidden"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-white/75 to-white/90 backdrop-blur-[2px]"></div>
-        <div className="relative z-10">
-          <div className="space-y-6">
-            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight break-words leading-tight">
-              From Idea → Precision Parts, Faster
-            </h1>
-            <p className="text-lg text-slate-600 max-w-prose mx-auto">
-              We help Edmonton businesses and makers turn concepts into durable, functional parts.
-              On-demand <strong>3D printing</strong>, precision <strong>CNC programming</strong>, and
-              smart <strong>CAD design</strong> — delivered with shop-floor practicality and quick turnaround.
-            </p>
+        {/* Background layer */}
+        <div className="absolute inset-0">
+          <img
+            src="/images/hero-bg.jpg"
+            alt="Custom Build Studio Background"
+            className="w-full h-full object-cover"
+          />
+          {/* subtle dark gradient for readability without dulling the image */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/50" />
+        </div>
 
-            <ul className="text-slate-700 space-y-2">
-              {[
-                "Same-day quotes, clear timelines",
-                "Carbon/Glass Fiber Reinforced Filaments/PLA/PETG/ABS/ASA/TPU/PET/PC/PA",
-                "Functional prototypes and low-volume production",
-              ].map((t) => (
-                <li key={t} className="flex items-center gap-2 justify-center">
-                  <CheckCircle className="h-5 w-5" /> {t}
-                </li>
-              ))}
-            </ul>
+        {/* Content (pad down to clear fixed navbar) */}
+        <div className="relative z-10 text-center max-w-5xl px-6 pt-24">
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6">
+            From Idea → Precision Parts, Faster
+          </h1>
 
-            <div className="flex justify-center gap-3">
-              <a href="#contact">
-                <Button className="rounded-2xl bg-sky-500 hover:bg-sky-600 text-white transition-colors">
-                  Start Your Project
-                </Button>
-              </a>
-              <a href="#work">
-                <Button className="rounded-2xl border-slate-300 text-slate-800 hover:bg-slate-100 transition-colors">
-                  See Examples
-                </Button>
+          <p className="text-lg text-gray-200 max-w-2xl mx-auto mb-6">
+            We help Edmonton businesses and makers turn concepts into durable, functional parts.
+            On-demand <strong>3D printing</strong>, precision <strong>CNC programming</strong>,
+            and smart <strong>CAD design</strong> — delivered with shop-floor practicality and
+            quick turnaround.
+          </p>
+
+          <ul className="space-y-2 mb-8 text-gray-300">
+            {[
+              "Same-day quotes, clear timelines",
+              "Carbon/Glass Fiber Reinforced Filaments / PLA / PETG / ABS / ASA / TPU / PET / PC / PA",
+              "Functional prototypes and low-volume production",
+            ].map((t) => (
+              <li key={t} className="flex items-center justify-center gap-2">
+                <CheckCircle className="h-5 w-5 text-sky-400" /> {t}
+              </li>
+            ))}
+          </ul>
+
+          <div className="flex justify-center gap-3">
+            <a href="#contact">
+              <Button className="rounded-2xl bg-sky-600 hover:bg-sky-700 text-white px-6 border-none">
+                Start Your Project
+              </Button>
+            </a>
+            <a href="#work">
+              <Button className="rounded-2xl border border-white/40 text-white hover:bg-white/10 px-5">
+                See Examples
+              </Button>
+            </a>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-6 text-sm text-gray-300">
+            <div className="flex items-center gap-2">
+              <Phone className="h-4 w-4 text-sky-400" />
+              <a href="tel:+17802030081" className="underline">780-203-0081</a>
+            </div>
+            <div className="flex items-center gap-2">
+              <Mail className="h-4 w-4 text-sky-400" />
+              <a href="mailto:custombuildstudio@gmail.com" className="underline break-all">
+                custombuildstudio@gmail.com
               </a>
             </div>
-
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-2 text-sm text-slate-600">
-              <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4" />
-                <a href="tel:+17802030081" className="underline">780-203-0081</a>
-              </div>
-              <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4" />
-                <a href="mailto:custombuildstudio@gmail.com" className="underline break-all">
-                  custombuildstudio@gmail.com
-                </a>
-              </div>
-              <div className="flex items-center gap-2">
-                <Instagram className="h-4 w-4" />
-                <a className="underline" href="https://instagram.com/Custom_Build_Studio" target="_blank" rel="noreferrer">
-                  @Custom_Build_Studio
-                </a>
-              </div>
+            <div className="flex items-center gap-2">
+              <Instagram className="h-4 w-4 text-sky-400" />
+              <a className="underline" href="https://instagram.com/Custom_Build_Studio" target="_blank" rel="noreferrer">
+                @Custom_Build_Studio
+              </a>
             </div>
           </div>
         </div>
       </section>
+
+
 
 
       <Separator className="my-8" />

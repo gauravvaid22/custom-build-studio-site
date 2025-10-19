@@ -2,27 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root {
-  height: 100%;
-}
-
+/* Base */
 html, body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  overflow-x: hidden;          /* prevent sideways scroll */
+  overflow-y: auto;            /* single page scrollbar */
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
   scroll-behavior: smooth;
-  background: white;
+  background: #ffffff;
 }
+#root { min-height: 100%; }    /* ensure app stretches */
 
 /* Mobile hardening */
 *, *::before, *::after { box-sizing: border-box; }
-html, body { width: 100%; overflow-x: hidden; }
 img, video { max-width: 100%; height: auto; display: block; }
-
-/* iOS keeps text size consistent and avoids odd zoom behavior */
 html { -webkit-text-size-adjust: 100%; }
 
-/* Make form fields 16px on small screens to prevent iOS auto-zoom on focus */
 @media (max-width: 640px) {
-  input, textarea, select, button { font-size: 16px; }
+  input, textarea, select, button { font-size: 16px; } /* avoid iOS zoom */
+}
+
+/* SINGLE SCROLLER — page (html) scrolls, sections don't */
+html { overflow-y: auto; }
+body, #root {
+  height: auto;
+  min-height: 100%;
+  overflow-y: visible;
+  position: relative;
+}
+
+/* Neutralize accidental vertical scrollers from utility classes */
+[class*="overflow-y-scroll"], [class*="overflow-y-auto"] { overflow-y: visible !important; }
+
+/* Underline grow effect for nav links */
+.nav-link {
+  position: relative;
+  display: inline-block;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 2px;
+  width: 0;
+  background: #38bdf8; /* sky-400 */
+  transition: width .25s ease;
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* Subtle drop-in on load for navbar */
+@keyframes dropIn {
+  from { transform: translateY(-12px); opacity: 0; }
+  to   { transform: translateY(0);      opacity: 1; }
+}
+.nav-appear {
+  animation: dropIn .45s ease-out both;
+}
+
+/* Smooth shadow + background transition for navbar */
+header {
+  transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+/* Optional: make hover underline color brighter for better visibility on dark navbar */
+.nav-link::after {
+  background: #0ea5e9; /* sky-500 */
+}
+
+/* Safety: prevent accidental extra scrollbars from absolutely positioned elements */
+html, body {
+  overscroll-behavior: none;
+}
+
+section, main, header, footer {
+  overscroll-behavior: contain;
 }
