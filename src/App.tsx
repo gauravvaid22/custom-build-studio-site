@@ -300,7 +300,7 @@ export default function App() {
       </header>
 
       {/* HERO */}
-      <section className="fade-section mx-auto max-w-6xl px-4 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
+      <section className="fade-section mx-auto max-w-3xl px-4 py-20 text-center">
         <div className="space-y-6">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight break-words leading-tight">From Idea → Precision Parts, Faster</h1>
           <p className="text-lg text-slate-600 max-w-prose">
@@ -325,20 +325,6 @@ export default function App() {
             <div className="flex items-center gap-2"><Mail className="h-4 w-4" /> <a href="mailto:custombuildstudio@gmail.com" className="underline break-all">custombuildstudio@gmail.com</a></div>
             <div className="flex items-center gap-2"><Instagram className="h-4 w-4" /> <a className="underline" href="https://instagram.com/Custom_Build_Studio" target="_blank" rel="noreferrer">@Custom_Build_Studio</a></div>
           </div>
-        </div>
-        <div className="grid gap-4">
-          <Card className="rounded-2xl shadow-md">
-            <CardHeader className="pb-2"><CardTitle className="text-base flex items-center gap-2"><Printer className="h-4 w-4" /> 3D Printing</CardTitle></CardHeader>
-            <CardContent className="text-sm text-slate-600">Precision FDM printing using PLA, PETG, ABS, ASA, TPU, PET, PC, PA, and carbon/glass fiber-reinforced filaments. Strong, detailed, and production-ready parts.</CardContent>
-          </Card>
-          <Card className="rounded-2xl shadow-md">
-            <CardHeader className="pb-2"><CardTitle className="text-base flex items-center gap-2"><Cube className="h-4 w-4" /> CAD Modeling & 3D Scanning</CardTitle></CardHeader>
-            <CardContent className="text-sm text-slate-600">High-accuracy 3D modeling and scanning for reverse engineering, prototyping, and product design. From concept to precise digital models ready for printing or machining.</CardContent>
-          </Card>
-          <Card className="rounded-2xl shadow-md">
-            <CardHeader className="pb-2"><CardTitle className="text-base flex items-center gap-2"><Cog className="h-4 w-4" /> CNC Programming</CardTitle></CardHeader>
-            <CardContent className="text-sm text-slate-600">Expert G-code programming for milling and turning — accurate, efficient, and production-ready.</CardContent>
-          </Card>
         </div>
       </section>
 
