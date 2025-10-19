@@ -270,19 +270,22 @@ export default function App() {
       <AnalyticsDeferred id="G-8D08Z57Q3S" />
 
       {/* NAVBAR */}
-      <header className="sticky top-0 z-40 backdrop-blur bg-white/70 border-b">
-        <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+      <header className="sticky top-0 z-50 bg-white shadow-md border-b border-slate-200">
+        <div className="mx-auto max-w-7xl px-6 py-5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img
-              src="/images/brand/logo.png"
+           <img
+              src="/images/brand/LOGO.png"
               alt="Custom Build Studio Logo"
-              className="h-10 w-auto object-contain"
+              className="h-14 w-auto object-contain"
             />
             <div className="leading-tight">
-              <div className="font-semibold text-lg">Custom Build Studio</div>
-              <div className="text-xs text-slate-500">Edmonton · 3D Printing · CNC · Design</div>
+              <div className="font-semibold text-xl text-slate-800 tracking-tight">
+                Custom Build Studio
+              </div>
+              <div className="text-sm text-slate-500">Precision. Design. Innovation.</div>
             </div>
           </div>
+
           <nav className="hidden md:flex gap-6 text-sm">
             <a href="#services" className="hover:text-slate-700">Services</a>
             <a href="#work" className="hover:text-slate-700">Work</a>
@@ -302,6 +305,11 @@ export default function App() {
       {/* HERO */}
       <section className="fade-section mx-auto max-w-3xl px-4 py-20 text-center">
         <div className="space-y-6">
+          <img
+            src="/images/brand/LOGO.png"
+            alt="Custom Build Studio Logo"
+            className="mx-auto mb-4 h-16 w-auto object-contain"
+          />
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight break-words leading-tight">From Idea → Precision Parts, Faster</h1>
           <p className="text-lg text-slate-600 max-w-prose">
             We help Edmonton businesses and makers turn concepts into durable, functional parts. On-demand <strong>3D printing</strong>,
