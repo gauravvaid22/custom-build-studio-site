@@ -7,23 +7,27 @@
   </head>
   <body>
     <div id="root"></div>
+
     <!-- Hidden form for Netlify to detect schema at build time -->
-<form name="contact"
+    <form
+      name="contact"
       method="POST"
       data-netlify="true"
       netlify-honeypot="bot-field"
-      action="/thank-you"
+      action="/thank-you.html"
       enctype="multipart/form-data"
-      hidden>
-  <input type="hidden" name="form-name" value="contact" />
-  <p><input type="text"   name="name"    /></p>
-  <p><input type="email"  name="email"   /></p>
-  <p><input type="text"   name="phone"   /></p>
-  <p><textarea name="message"></textarea></p>
-  <p><input type="file"   name="files"   /></p>
-  <p><input type="text"   name="subject" /></p>
-  <p class="hidden"><input name="bot-field" /></p>
-</form>
+      hidden
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <p><input type="text" name="name" /></p>
+      <p><input type="email" name="email" /></p>
+      <p><input type="text" name="phone" /></p>
+      <p><textarea name="message"></textarea></p>
+      <p><input type="file" name="files" /></p>
+      <p><input type="text" name="subject" /></p>
+      <p class="hidden"><input name="bot-field" /></p>
+    </form>
+
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
