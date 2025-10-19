@@ -306,7 +306,7 @@ export default function App() {
           <ul className="text-slate-700 space-y-2">
             {[
               "Same-day quotes, clear timelines",
-              "PETG, ABS, ASA, PLA, and resin options",
+              "Carbon/Glass Fiber Reinforced Filaments/PLA/PETG/ABS/ASA/TPU/PET/PC/PA",
               "Functional prototypes and low-volume production",
             ].map((t) => (
               <li key={t} className="flex items-center gap-2"><CheckCircle className="h-5 w-5" /> {t}</li>
