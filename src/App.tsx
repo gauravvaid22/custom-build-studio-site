@@ -259,7 +259,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="animated-bg min-h-screen w-full text-slate-900">
+    <div className="animated-bg min-h-screen w-full text-slate-900 overflow-x-hidden">
       <GlobalAnimatedBackground />
       <HeadTags
         title="Custom Build Studio — 3D Printing, CAD & CNC in Edmonton"
@@ -298,7 +298,7 @@ export default function App() {
       {/* HERO */}
       <section className="fade-section mx-auto max-w-6xl px-4 py-16 md:py-24 grid md:grid-cols-2 gap-10 items-center">
         <div className="space-y-6">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">From Idea → Part, fast.</h1>
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">From Idea → Precision Parts, Faster</h1>
           <p className="text-lg text-slate-600 max-w-prose">
             We help Edmonton businesses and makers turn concepts into durable, functional parts. On-demand <strong>3D printing</strong>,
             precision <strong>CNC programming</strong>, and smart <strong>CAD design</strong>—delivered with shop-floor practicality and quick turnaround.
