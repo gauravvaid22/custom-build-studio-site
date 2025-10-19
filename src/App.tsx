@@ -294,7 +294,7 @@ export default function App() {
           </nav>
           <div className="flex items-center gap-2">
             <a href="#contact">
-              <Button className="rounded-2xl bg-sky-500 hover:bg-sky-600 text-white transition-colors border border-transparent">
+              <Button className="rounded-2xl bg-sky-600 hover:bg-sky-700 text-white px-6 py-2.5 text-base font-semibold shadow-sm transition-all duration-200">
                 Get a Quote
               </Button>
             </a>
