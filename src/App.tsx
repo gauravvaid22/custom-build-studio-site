@@ -273,7 +273,11 @@ export default function App() {
       <header className="sticky top-0 z-40 backdrop-blur bg-white/70 border-b">
         <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-2xl bg-slate-800 text-white grid place-items-center font-bold">CB</div>
+            <img
+              src="/images/brand/logo.png"
+              alt="Custom Build Studio Logo"
+              className="h-10 w-auto object-contain"
+            />
             <div className="leading-tight">
               <div className="font-semibold text-lg">Custom Build Studio</div>
               <div className="text-xs text-slate-500">Edmonton · 3D Printing · CNC · Design</div>
