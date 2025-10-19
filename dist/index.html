@@ -11,22 +11,14 @@
     <div id="root"></div>
 
     <!-- Hidden form for Netlify to detect schema at build time -->
-    <form
-      name="contact"
-      method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      action="/thank-you.html"
-      enctype="multipart/form-data"
-      hidden
-    >
+    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html" hidden>
       <input type="hidden" name="form-name" value="contact" />
-      <p><input type="text" name="name" /></p>
-      <p><input type="email" name="email" /></p>
-      <p><input type="text" name="phone" /></p>
-      <p><textarea name="message"></textarea></p>
-      <p><input type="file" name="files" /></p>
-      <p><input type="text" name="subject" /></p>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="phone" />
+      <textarea name="message"></textarea>
+      <input type="file" name="files" />
+      <input type="text" name="subject" />
       <p class="hidden"><input name="bot-field" /></p>
     </form>
 
