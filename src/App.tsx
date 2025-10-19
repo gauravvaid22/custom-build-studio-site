@@ -445,7 +445,7 @@ export default function App() {
               name="contact"
               encType="multipart/form-data"
               netlify-honeypot="bot-field"
-              action="/thank-you"
+              action="/thank-you.html"
               className="space-y-4"
               onSubmit={(e) => {
                 const form = e.currentTarget as HTMLFormElement;
