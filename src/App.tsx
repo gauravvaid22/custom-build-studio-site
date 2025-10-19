@@ -329,15 +329,15 @@ export default function App() {
         <div className="grid gap-4">
           <Card className="rounded-2xl shadow-md">
             <CardHeader className="pb-2"><CardTitle className="text-base flex items-center gap-2"><Printer className="h-4 w-4" /> 3D Printing</CardTitle></CardHeader>
-            <CardContent className="text-sm text-slate-600">We specialize in high-precision FDM 3D printing for functional and aesthetic parts. Using materials like PLA, PETG, and ABS, we produce durable prototypes, custom components, and low-volume production parts. Our printers run 16+ hours daily, ensuring consistent quality and fast turnaround for every project.</CardContent>
+            <CardContent className="text-sm text-slate-600">Precision FDM printing using PLA, PETG, ABS, ASA, TPU, PET, PC, PA, and carbon/glass fiber-reinforced filaments. Strong, detailed, and production-ready parts.</CardContent>
           </Card>
           <Card className="rounded-2xl shadow-md">
-            <CardHeader className="pb-2"><CardTitle className="text-base flex items-center gap-2"><Cube className="h-4 w-4" /> CAD & Reverse-Engineering</CardTitle></CardHeader>
-            <CardContent className="text-sm text-slate-600">From concept to production, we transform your ideas into manufacturable 3D models. With expertise in Fusion 360 and mechanical design, we create detailed assemblies, prototypes, and functional parts optimized for 3D printing or CNC machining. Every design is built for accuracy, strength, and real-world usability.</CardContent>
+            <CardHeader className="pb-2"><CardTitle className="text-base flex items-center gap-2"><Cube className="h-4 w-4" /> CAD Modeling & 3D Scanning</CardTitle></CardHeader>
+            <CardContent className="text-sm text-slate-600">High-accuracy 3D modeling and scanning for reverse engineering, prototyping, and product design. From concept to precise digital models ready for printing or machining.</CardContent>
           </Card>
           <Card className="rounded-2xl shadow-md">
             <CardHeader className="pb-2"><CardTitle className="text-base flex items-center gap-2"><Cog className="h-4 w-4" /> CNC Programming</CardTitle></CardHeader>
-            <CardContent className="text-sm text-slate-600">We provide professional CNC programming services for milling and turning applications. Using advanced CAM tools and proven machining strategies, we deliver efficient, production-ready G-code tailored to your machines and materials. Whether it’s complex 3D contours or precision holes, we ensure optimal toolpaths and surface finish.</CardContent>
+            <CardContent className="text-sm text-slate-600">Expert G-code programming for milling and turning — accurate, efficient, and production-ready.</CardContent>
           </Card>
         </div>
       </section>
