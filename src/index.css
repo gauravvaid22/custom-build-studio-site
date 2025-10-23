@@ -135,3 +135,40 @@ body {
 #root, main {
   overflow: visible !important;
 }
+
+
+/* === Luxury Scroll Hero === */
+:root { --hero-p: 0; } /* 0 at top → 1 after ~400px scroll */
+
+.hero-bg {
+  will-change: transform, opacity;
+  transform: translateY(calc(var(--hero-p) * -20px)) scale(calc(1 + var(--hero-p) * 0.05));
+}
+
+.hero-overlay {
+  will-change: opacity;
+  opacity: calc(0.6 - var(--hero-p) * 0.3); /* overlay eases out a bit while scrolling */
+}
+
+.hero-content {
+  will-change: transform, opacity, filter;
+  transform: translateY(calc(var(--hero-p) * 20px));
+  opacity: calc(1 - var(--hero-p) * 0.9);
+  filter: blur(calc(var(--hero-p) * 2px));
+  transition: opacity .2s linear; /* smoothen quick flicks */
+}
+
+/* Scroll cue (optional, fades away) */
+.scroll-cue {
+  opacity: calc(1 - var(--hero-p));
+  transition: opacity .2s linear;
+}
+
+/* Respect user preference (no motion) */
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg, .hero-overlay, .hero-content, .scroll-cue {
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+}

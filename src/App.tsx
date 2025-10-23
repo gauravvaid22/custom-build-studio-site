@@ -1,50 +1,62 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+
+
 
 /* ===== NAVBAR COMPONENT ===== */
+
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastY = useRef(0);
 
-  // Make header solid + shadow after slight scroll
+  // Solid + blur after slight scroll
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => {
+      const y = window.scrollY || 0;
+      setScrolled(y > 8);
+
+      // Hide when scrolling down, show when scrolling up (only if not at top)
+      const goingDown = y > lastY.current + 6;
+      const goingUp   = y < lastY.current - 6;
+      if (!menuOpen) {
+        if (y > 80 && goingDown) setHidden(true);
+        else if (goingUp || y < 80) setHidden(false);
+      }
+      lastY.current = y;
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [menuOpen]);
 
-  // Lock page scroll when mobile menu is open
+  // Lock body scroll when drawer open
   useEffect(() => {
     const original = document.body.style.overflow;
     document.body.style.overflow = menuOpen ? "hidden" : original || "";
-    return () => {
-      document.body.style.overflow = original;
-    };
+    return () => { document.body.style.overflow = original; };
   }, [menuOpen]);
 
   const links = [
     { href: "#services", label: "Services" },
-    { href: "#work", label: "Work" },
-    { href: "#pricing", label: "Pricing" },
-    { href: "#contact", label: "Contact" },
+    { href: "#work",     label: "Work" },
+    { href: "#pricing",  label: "Pricing" },
+    { href: "#contact",  label: "Contact" },
   ];
 
   return (
     <>
       <header
-        className={
-          "nav-appear fixed top-0 left-0 w-full z-50 transition-[background,box-shadow,backdrop-filter] duration-300 " +
-          (scrolled ? "bg-black/90 shadow-lg backdrop-blur-sm" : "bg-transparent")
+            className={
+          "nav-appear fixed top-0 left-0 w-full z-50 will-change-transform " +
+          (hidden ? "header-hidden " : "") +
+          "bg-black shadow-md"
         }
       >
         <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between text-white">
           {/* Brand */}
           <a href="/" className="flex items-center gap-3">
-            <img
-              src="/images/brand/LOGO.png"
-              alt="Custom Build Studio"
-              className="h-10 w-auto"
-            />
+            <img src="/images/brand/logo.png" alt="Custom Build Studio" className="h-10 w-auto" />
             <div className="hidden sm:block leading-tight">
               <div className="font-semibold text-lg">Custom Build Studio</div>
               <div className="text-xs text-gray-300">Precision. Design. Innovation.</div>
@@ -53,11 +65,12 @@ function Navbar() {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-            {links.map((l) => (
+            {links.map((l, i) => (
               <a
                 key={l.href}
                 href={l.href}
-                className="nav-link hover:text-sky-400 transition-colors"
+                className="nav-link hover:text-sky-500 transition-colors"
+                style={{ animationDelay: `${120 + i * 60}ms` }}
               >
                 {l.label}
               </a>
@@ -83,14 +96,7 @@ function Navbar() {
             onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
           >
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
@@ -98,21 +104,21 @@ function Navbar() {
       </header>
 
       {/* Mobile drawer */}
+      <div
+        className={
+          "fixed inset-0 z-50 md:hidden transition-opacity overscroll-contain " +
+          (menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none")
+        }
+        onClick={() => setMenuOpen(false)}
+      >
+        <div className="absolute inset-0 bg-black/60" />
         <div
           className={
-            "fixed inset-0 z-50 md:hidden transition-opacity overscroll-contain " +
-            (menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none")
+            "absolute top-0 right-0 h-full w-72 bg-black text-white p-6 transform transition-transform duration-300 overflow-y-auto overscroll-contain " +
+            (menuOpen ? "translate-x-0" : "translate-x-full")
           }
-          onClick={() => setMenuOpen(false)}
+          onClick={(e) => e.stopPropagation()}
         >
-          <div className="absolute inset-0 bg-black/60" />
-          <div
-            className={
-              "absolute top-0 right-0 h-full w-72 bg-black text-white p-6 transform transition-transform duration-300 overflow-y-auto overscroll-contain " +
-              (menuOpen ? "translate-x-0" : "translate-x-full")
-            }
-            onClick={(e) => e.stopPropagation()}
-          >
           <div className="flex items-center justify-between">
             <span className="font-semibold">Menu</span>
             <button
@@ -121,26 +127,14 @@ function Navbar() {
               onClick={() => setMenuOpen(false)}
               aria-label="Close menu"
             >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M6 6l12 12M18 6L6 18" />
               </svg>
             </button>
           </div>
           <nav className="mt-6 space-y-3">
             {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="block nav-link text-base py-2"
-                onClick={() => setMenuOpen(false)}
-              >
+              <a key={l.href} href={l.href} className="block nav-link text-base py-2" onClick={() => setMenuOpen(false)}>
                 {l.label}
               </a>
             ))}
@@ -155,6 +149,9 @@ function Navbar() {
     </>
   );
 }
+
+
+
 
 /* =========================
    Minimal UI Primitives
@@ -399,6 +396,21 @@ export default function App() {
     return <ThankYouPage />;
   }
 
+  // Scroll-progress variable for hero animations
+  useEffect(() => {
+    const MAX = 400; // pixels of scroll range to complete the effect
+    const onScroll = () => {
+      const y = Math.max(0, Math.min(MAX, window.scrollY || 0));
+      const p = y / MAX; // 0 → 1
+      document.documentElement.style.setProperty("--hero-p", String(p));
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+
+
   // Reveal-on-scroll behavior
   useEffect(() => {
     const els = document.querySelectorAll<HTMLElement>(".fade-section");
@@ -414,6 +426,8 @@ export default function App() {
     return () => obs.disconnect();
   }, []);
 
+
+ 
   return (
     <div className="animated-bg min-h-screen w-full text-slate-900 overflow-x-hidden">
       <GlobalAnimatedBackground />
@@ -426,107 +440,106 @@ export default function App() {
       <AnalyticsDeferred id="G-8D08Z57Q3S" />
 
       {/* NAVBAR */}
-      <header className="fixed top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-sm text-white shadow-md">
-        <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img
-              src="/images/brand/logo.png"
-              alt="Custom Build Studio"
-              className="h-10 w-auto"
-            />
-            <div className="leading-tight">
-              <div className="font-semibold text-lg">Custom Build Studio</div>
-              <div className="text-xs text-gray-300">Precision. Design. Innovation.</div>
-            </div>
-          </div>
+        <Navbar />
 
-          <nav className="hidden md:flex gap-8 text-sm font-medium">
-            <a href="#services" className="hover:text-sky-400 transition">Services</a>
-            <a href="#work" className="hover:text-sky-400 transition">Work</a>
-            <a href="#pricing" className="hover:text-sky-400 transition">Pricing</a>
-            <a href="#contact" className="hover:text-sky-400 transition">Contact</a>
-          </nav>
-
-          <div className="flex items-center gap-2">
-            <a href="#contact">
-              <Button className="rounded-2xl bg-sky-500 hover:bg-sky-600 text-white border-none">
-                Get a Quote
-              </Button>
-            </a>
-          </div>
-        </div>
-      </header>
 
       {/* HERO */}
-      <section
-        id="hero"
-        className="relative w-full min-h-[100svh] flex flex-col items-center justify-center text-white overflow-hidden"
-        style={{
-          backgroundImage: "url('/images/hero-bg.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat"
-        }}
-      >
-        {/* Overlay for readability (no interactions) */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/50" />
+        <section
+          id="hero"
+          className="relative w-full min-h-[100svh] flex flex-col items-center justify-center text-white overflow-hidden"
+        >
+          {/* Background (parallax + slight zoom) */}
+          <div
+            className="absolute inset-0 hero-bg"
+            style={{
+              backgroundImage: "url('/images/hero-bg.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+            }}
+            aria-hidden="true"
+          />
+          {/* Overlay that fades slightly on scroll */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/50 hero-overlay" aria-hidden="true" />
 
-        {/* Content (pad down to clear fixed navbar) */}
-        <div className="relative z-10 text-center max-w-5xl px-6 pt-24">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6">
-            From Idea → Precision Parts, Faster
-          </h1>
+          {/* Content that lifts, fades, and gently blurs as you scroll */}
+          <div className="relative z-10 text-center max-w-5xl px-6 pt-24 hero-content">
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6">
+              From Idea → Precision Parts, Faster
+            </h1>
 
-          <p className="text-lg text-gray-200 max-w-2xl mx-auto mb-6">
-            We help Edmonton businesses and makers turn concepts into durable, functional parts.
-            On-demand <strong>3D printing</strong>, precision <strong>CNC programming</strong>,
-            and smart <strong>CAD design</strong> — delivered with shop-floor practicality and
-            quick turnaround.
-          </p>
+            <p className="text-lg text-gray-200 max-w-2xl mx-auto mb-6">
+              We help Edmonton businesses and makers turn concepts into durable, functional parts.
+              On-demand <strong>3D printing</strong>, precision <strong>CNC programming</strong>,
+              and smart <strong>CAD design</strong> — delivered with shop-floor practicality and
+              quick turnaround.
+            </p>
 
-          <ul className="space-y-2 mb-8 text-gray-300">
-            {[
-              ,
-            ].map((t) => (
-              <li key={t} className="flex items-center justify-center gap-2">
-                <CheckCircle className="h-5 w-5 text-sky-400" /> {t}
-              </li>
-            ))}
-          </ul>
+            <ul className="space-y-2 mb-8 text-gray-300">
+              {[
+                "Same-day quotes, clear timelines",
+                "Carbon/Glass Fiber Reinforced Filaments / PLA / PETG / ABS / ASA / TPU / PET / PC / PA",
+                "Functional prototypes and low-volume production",
+              ].map((t) => (
+                <li key={t} className="flex items-center justify-center gap-2">
+                  <CheckCircle className="h-5 w-5 text-sky-400" /> {t}
+                </li>
+              ))}
+            </ul>
 
-          <div className="flex justify-center gap-3">
-            <a href="#contact">
-              <Button className="rounded-2xl bg-sky-600 hover:bg-sky-700 text-white px-6 border-none">
-                Start Your Project
-              </Button>
-            </a>
-            <a href="#work">
-              <Button className="rounded-2xl border border-white/40 text-white hover:bg-white/10 px-5">
-                See Examples
-              </Button>
-            </a>
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-6 text-sm text-gray-300">
-            <div className="flex items-center gap-2">
-              <Phone className="h-4 w-4 text-sky-400" />
-              <a href="tel:+17802030081" className="underline">780-203-0081</a>
-            </div>
-            <div className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-sky-400" />
-              <a href="mailto:custombuildstudio@gmail.com" className="underline break-all">
-                custombuildstudio@gmail.com
+            <div className="flex justify-center gap-3">
+              <a href="#contact">
+                <Button className="rounded-2xl bg-sky-600 hover:bg-sky-700 text-white px-6 border-none">
+                  Start Your Project
+                </Button>
+              </a>
+              <a href="#work">
+                <Button className="rounded-2xl border border-white/40 text-white hover:bg-white/10 px-5">
+                  See Examples
+                </Button>
               </a>
             </div>
-            <div className="flex items-center gap-2">
-              <Instagram className="h-4 w-4 text-sky-400" />
-              <a className="underline" href="https://instagram.com/Custom_Build_Studio" target="_blank" rel="noreferrer">
-                @Custom_Build_Studio
-              </a>
+
+            {/* Contact row (your bolder version) */}
+            <div className="flex flex-wrap items-center justify-center gap-6 pt-6 text-base font-semibold text-gray-100">
+              <div className="flex items-center gap-2">
+                <Phone className="h-5 w-5 text-sky-400" />
+                <a href="tel:+17802030081" className="underline hover:text-sky-400 transition">
+                  780-203-0081
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail className="h-5 w-5 text-sky-400" />
+                <a
+                  href="mailto:custombuildstudio@gmail.com"
+                  className="underline break-all hover:text-sky-400 transition"
+                >
+                  custombuildstudio@gmail.com
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Instagram className="h-5 w-5 text-sky-400" />
+                <a
+                  className="underline hover:text-sky-400 transition"
+                  href="https://instagram.com/Custom_Build_Studio"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  @Custom_Build_Studio
+                </a>
+              </div>
+            </div>
+
+            {/* Scroll cue (optional) */}
+            <div className="mt-10 scroll-cue">
+              <svg width="22" height="32" viewBox="0 0 24 36" fill="none" stroke="currentColor" strokeWidth="2" className="mx-auto text-gray-200/80">
+                <rect x="1" y="1" width="22" height="34" rx="11" />
+                <circle cx="12" cy="10" r="2" />
+              </svg>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
 
 
 
@@ -581,10 +594,10 @@ export default function App() {
       <section id="pricing" className="fade-section mx-auto max-w-6xl px-4 py-12">
         <h2 className="text-3xl font-bold">Pricing</h2>
         <p className="text-slate-600 mt-2">Transparent pricing that respects your deadlines.</p>
-        <div className="grid md:grid-cols-3 gap-6 mt-8">
+        <div className="grid md:grid-cols-2 gap-4 mt-8">
           {[
-            { name: "3D Printing", price: "From $0.20/gram + setup", items: ["Material: PLA, PETG, ABS/ASA", "Rush options available", "Bulk discounts"] },
-            { name: "CAD & Reverse-Eng", price: "$35–$55/hr (scope-based)", items: ["Simple parts often fixed-fee", "Includes DFM notes", "Export: STEP/STL"] },
+            { name: "3D Printing", price: "Pricing varies by size, material, and part complexity.", items: ["Typical prototypes start around $15–$40, and functional parts from $50+.", "Rush options available", "Bulk discounts"] },
+            { name: "CAD Modeling & 3D Scanning", price: "$35–$55/hr (scope-based)", items: ["Simple parts often fixed-fee", "Includes cleanup ", "Export: STEP/STL"] },
             { name: "CNC Programming", price: "$45–$75/hr (machine-dependent)", items: ["Setup sheets included", "Tool lists + posts", "Remote or onsite"] },
           ].map((p) => (
             <Card key={p.name} className="rounded-2xl border-slate-200">
@@ -600,7 +613,7 @@ export default function App() {
             </Card>
           ))}
         </div>
-        <p className="text-xs text-slate-500 mt-3">* Final quote depends on geometry, material, finish, and deadlines. GST extra.</p>
+        <p className="text-xs text-slate-500 mt-3">* Final quote depends on geometry, material, finish, and deadlines.</p>
       </section>
 
       {/* TRUST */}
