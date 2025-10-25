@@ -187,7 +187,7 @@ function Navbar() {
               </a>
             ))}
             <a href="#contact" onClick={() => setMenuOpen(false)} className="block mt-4">
-              <button className="w-full rounded-xl bg-sky-600 hover:bg-sky-700 text-white px-4 py-2.5 font-semibold">
+              <button className="w-full rounded-xl bg-sky-600 hover:bg-sky-700 text-white px-4 py-2.5 font-semibold shadow-sm">
                 Get a Quote
               </button>
             </a>
@@ -362,6 +362,13 @@ const Instagram = (p: React.SVGProps<SVGSVGElement>) => (
     <circle cx="17.5" cy="6.5" r="1" />
   </svg>
 );
+/* New: Facebook Icon (matches inline style) */
+const Facebook = (p: React.SVGProps<SVGSVGElement>) => (
+  <svg {...base} {...p}>
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+);
+
 const Wrench = (p: React.SVGProps<SVGSVGElement>) => (
   <svg {...base} {...p}>
     <path d="M21 3a7 7 0 0 1-9.8 9.8L7 17l-3 3 1.5 1.5 3-3 4.2-4.2A7 7 0 0 1 21 3z" />
@@ -633,6 +640,18 @@ export default function App() {
                 rel="noreferrer"
               >
                 @Custom_Build_Studio
+              </a>
+            </div>
+            {/* New: Facebook link */}
+            <div className="flex items-center gap-2">
+              <Facebook className="h-5 w-5 text-sky-400" />
+              <a
+                className="underline hover:text-sky-400 transition"
+                href="https://www.facebook.com/profile.php?id=61582467820321"
+                target="_blank"
+                rel="noreferrer"
+              >
+                /CustomBuildStudio
               </a>
             </div>
           </div>
