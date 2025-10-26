@@ -465,6 +465,37 @@ function HeadTags({
   return null;
 }
 
+
+/* =========================
+   Google Ads: init + conversion
+   ========================= */
+
+// 1) Initialize your Google Ads gtag property once.
+function AdsInit({ adsId }: { adsId: string }) {
+  useEffect(() => {
+    // Ensure dataLayer/gtag exist (GA4 loader already defines them, this is a safe fallback)
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    function gtag(...args: any[]) { (window as any).dataLayer.push(args); }
+    (window as any).gtag = (window as any).gtag || gtag;
+
+    // Tell gtag about your Ads ID (loads settings if GA4 script already on page)
+    (window as any).gtag('config', adsId);
+  }, [adsId]);
+  return null;
+}
+
+// 2) Fire the conversion when the Thank You page is shown.
+function AdsConversion({ sendTo }: { sendTo: string }) {
+  useEffect(() => {
+    // Example: sendTo = 'AW-1234567890/AbCdEfGhIjkLmNoPqR'
+    if (typeof (window as any).gtag === "function") {
+      (window as any).gtag('event', 'conversion', { send_to: sendTo });
+    }
+  }, [sendTo]);
+  return null;
+}
+
+
 /* =========================
    Thank You Page (/thank-you)
    ========================= */
@@ -478,7 +509,11 @@ function ThankYouPage() {
         url="https://www.custombuildstudio.ca/thank-you"
         image="/og-image.jpg"
       />
+      <AdsInit adsId="AW-17678917579" />
+      <AdsConversion sendTo="AW-17678917579/uecaCOev77MbEMu_--1B" />
+
       <AnalyticsDeferred id="G-8D08Z57Q3S" />
+      <AdsInit adsId="AW-17678917579" />
       <div className="max-w-xl text-center space-y-6 fade-section is-visible">
         <div className="text-4xl font-extrabold">Thanks — we got your request!</div>
         <p className="text-slate-600">
