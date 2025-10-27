@@ -73,12 +73,12 @@ function Navbar() {
     <>
       <header
         className={
-          "nav-appear fixed top-0 left-0 w-full z-50 will-change-transform " +
-          (hidden ? "header-hidden " : "") +
-          "bg-black shadow-md"
-        }
-      >
-        <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between text-white">
+            "nav-appear fixed top-0 left-0 w-full z-50 will-change-transform " +
+            (hidden ? "header-hidden " : "") +
+            "bg-black shadow-md h-16 md:h-20"
+          }
+        >
+          <div className="mx-auto max-w-7xl px-6 h-full flex items-center justify-between text-white">
           {/* Brand */}
           <a href="/" className="flex items-center gap-3">
             <img
@@ -86,7 +86,7 @@ function Navbar() {
               alt="Custom Build Studio"
               className="h-10 w-auto"
             />
-            <div className="hidden sm:block leading-tight">
+            <div className="block leading-tight">
               <div className="font-semibold text-lg">Custom Build Studio</div>
               <div className="text-xs text-gray-300">Precision. Design. Innovation.</div>
             </div>
@@ -180,8 +180,8 @@ function Navbar() {
               <a
                 key={l.href}
                 href={l.href}
-                className="block nav-link text-base py-2"
                 onClick={() => setMenuOpen(false)}
+                className="block w-full text-base py-3 border-b border-white/10"
               >
                 {l.label}
               </a>
@@ -511,6 +511,7 @@ function ThankYouPage() {
       />
       {/* GA4 only (fine to keep for SPA route) */}
       <AnalyticsDeferred id="G-8D08Z57Q3S" />
+      <AdsInit adsId="AW-17678917579" />
 
       <div className="max-w-xl text-center space-y-6 fade-section is-visible">
         <div className="text-4xl font-extrabold">Thanks — we got your request!</div>
@@ -589,6 +590,9 @@ export default function App() {
 
       {/* NAVBAR */}
       <Navbar />
+      {/* Fixed-header spacer (prevents overlap on iOS/iphone) */}
+      <div className="h-16 md:h-20" aria-hidden="true" />
+
 
       {/* HERO */}
       <section
