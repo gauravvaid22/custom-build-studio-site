@@ -497,7 +497,7 @@ function AdsConversion({ sendTo }: { sendTo: string }) {
 
 
 /* =========================
-   Thank You Page (/thank-you)
+   Thank You Page (/thank-you) — SPA route (unused if your form posts to /thank-you.html)
    ========================= */
 function ThankYouPage() {
   return (
@@ -509,11 +509,9 @@ function ThankYouPage() {
         url="https://www.custombuildstudio.ca/thank-you"
         image="/og-image.jpg"
       />
-      <AdsInit adsId="AW-17678917579" />
-      <AdsConversion sendTo="AW-17678917579/uecaCOev77MbEMu_--1B" />
-
+      {/* GA4 only (fine to keep for SPA route) */}
       <AnalyticsDeferred id="G-8D08Z57Q3S" />
-      <AdsInit adsId="AW-17678917579" />
+
       <div className="max-w-xl text-center space-y-6 fade-section is-visible">
         <div className="text-4xl font-extrabold">Thanks — we got your request!</div>
         <p className="text-slate-600">
@@ -525,6 +523,8 @@ function ThankYouPage() {
     </div>
   );
 }
+
+
 
 /* =========================
    Main Site

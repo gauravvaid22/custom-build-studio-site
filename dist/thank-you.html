@@ -1,6 +1,26 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) for GA4 + Google Ads -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8D08Z57Q3S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    /* GA4 config (your existing GA4 property) */
+    gtag('config', 'G-8D08Z57Q3S');
+
+    /* Google Ads config — this line is what Google’s email asks you to add
+      when you already have a Google tag from another product. */
+    gtag('config', 'AW-17678917579');
+
+    /* Event snippet for "Request quote" conversion.
+      Fires when the thank-you page loads. */
+    gtag('event', 'conversion', {
+      send_to: 'AW-17678917579/uecaCOev77MbEMu_--1B'
+    });
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Thanks — Custom Build Studio</title>
