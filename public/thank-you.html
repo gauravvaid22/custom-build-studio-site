@@ -1,19 +1,27 @@
 <!doctype html>
 <html lang="en">
 <head>
-      <!-- Google tag (gtag.js) for GA4 + Google Ads -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8D08Z57Q3S"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
+      <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-8D08Z57Q3S"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-    gtag('config', 'G-8D08Z57Q3S');      // GA4
-    gtag('config', 'AW-17678917579');     // Google Ads
-    gtag('event', 'conversion', {         // Request quote conversion
-      send_to: 'AW-17678917579/uecaCOev77MbEMu_--1B'
-    });
-  </script>
+        // GA4
+        gtag('config', 'G-8D08Z57Q3S');
+
+        // Google Ads global tag
+        gtag('config', 'AW-17678917579');
+      </script>
+
+      <!-- 👇 Paste your new event snippet right below this block -->
+      <!-- Event snippet for Request quote conversion page -->
+      <script>
+        gtag('event', 'conversion', {
+          'send_to': 'AW-17678917579/L2otCKraw7QbEMu_--1B'
+        });
+      </script>
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
