@@ -28,11 +28,13 @@ const works = [
     title: "Custom Dovetail Tracing Jig (PETG)",
     desc: "High-volume production run of tracing templates used for consistent floor profile marking.",
     img: "/images/work/dovetail-jigs.jpg", // your photo file name
+    alt: "High-volume production run of tracing templates used for consistent floor profile marking.",
   },
   {
     title: "Custom Load-Bearing Bracket (PETG)",
     desc: "Designed and printed for a long wall shelf — built to support heavy weight with structural rigidity.",
     img: "/images/work/custom-bracket.JPG", // replace with your real image path
+    alt: "Designed and printed for a long wall shelf — built to support heavy weight with structural rigidity.",
   },
 ];
 
