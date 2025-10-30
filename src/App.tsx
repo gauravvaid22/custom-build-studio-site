@@ -919,13 +919,26 @@ export default function App() {
               action="/thank-you.html"
               className="space-y-4"
               onSubmit={(e) => {
-                const form = e.currentTarget as HTMLFormElement;
-                const name = (form.querySelector('input[name="name"]') as HTMLInputElement)?.value?.trim();
-                const subject = `[Custom Build Studio] New Quote Request${name ? ` from ${name}` : ""}`;
-                const subjInput = form.querySelector('input[name="subject"]') as HTMLInputElement | null;
-                if (subjInput) subjInput.value = subject;
-              }}
-            >
+                  const form = e.currentTarget;
+                  const files = (form.querySelector('input[name="files[]"]') as HTMLInputElement)?.files;
+                  if (files) {
+                    let total = 0;
+                    for (let i = 0; i < files.length; i++) total += files[i].size;
+                    // 7.5 MB safety threshold under 8 MB hard limit
+                    if (total > 7.5 * 1024 * 1024) {
+                      e.preventDefault();
+                      alert("Total attachment size is too large. Please send fewer/smaller files or zip them (max ~8 MB per submit).");
+                      return;
+                    }
+                  }
+                  // subject auto-fill logic (keep this part if you already have it)
+                  const name = (form.querySelector('input[name=\"name\"]') as HTMLInputElement)?.value?.trim();
+                  const subject = `[Custom Build Studio] New Quote Request${name ? ` from ${name}` : ""}`;
+                  const subjInput = form.querySelector('input[name=\"subject\"]') as HTMLInputElement | null;
+                  if (subjInput) subjInput.value = subject;
+                }}
+              >
+
               <input type="hidden" name="form-name" value="contact" />
               <input type="hidden" name="subject" value="[Custom Build Studio] New Quote Request" />
               {/* Netlify honeypot */}
