@@ -931,7 +931,7 @@ export default function App() {
               <div>
                 <label className="text-sm font-medium">Attach files (optional)</label>
                 <Input
-                  name="files"
+                  name="files[]"
                   type="file"
                   multiple
                   accept=".step,.stp,.stl,.iges,.igs,.obj,.jpg,.jpeg,.png,.pdf"
