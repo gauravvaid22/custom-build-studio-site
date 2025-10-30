@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Custom Build Studio</title>
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17678917579"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'AW-17678917579');
     </script>
     <script type="module" crossorigin src="/assets/index-InpbIM3h.js"></script>
@@ -20,14 +20,29 @@
     <div id="root"></div>
 
     <!-- Hidden form for Netlify to detect schema at build time -->
-    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html" hidden>
+    <form
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      action="/thank-you.html"
+      enctype="multipart/form-data"
+      hidden
+    >
       <input type="hidden" name="form-name" value="contact" />
       <input type="text" name="name" />
       <input type="email" name="email" />
       <input type="text" name="phone" />
       <textarea name="message"></textarea>
-      <input type="file" name="files[]" multiple
-       accept=".step,.stp,.stl,.iges,.igs,.obj,.jpg,.jpeg,.png,.pdf" />
+
+      <!-- ✅ Correct file input -->
+      <input
+        type="file"
+        name="files[]"
+        multiple
+        accept=".step,.stp,.stl,.iges,.igs,.obj,.jpg,.jpeg,.png,.pdf"
+      />
+
       <input type="text" name="subject" />
       <p class="hidden"><input name="bot-field" /></p>
     </form>
