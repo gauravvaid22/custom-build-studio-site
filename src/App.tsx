@@ -24,6 +24,16 @@ const works = [
     img: "/images/work/hose-adapter.jpg",
     alt: "One-piece vacuum hose adapter designed for air-duct cleaning",
   },
+  {
+    title: "Custom Dovetail Tracing Jig (PETG)",
+    desc: "High-volume production run of tracing templates used for consistent floor profile marking.",
+    img: "/images/work/dovetail-jigs.jpg", // your photo file name
+  },
+  {
+    title: "Custom Load-Bearing Bracket (PETG)",
+    desc: "Designed and printed for a long wall shelf — built to support heavy weight with structural rigidity.",
+    img: "/images/work/custom-bracket.JPG", // replace with your real image path
+  },
 ];
 
 /* ===== NAVBAR COMPONENT ===== */
