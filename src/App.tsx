@@ -3,40 +3,130 @@ import React, { useEffect, useState, useRef } from "react";
 /* =========================
    Work items (images in /public/images/work)
    ========================= */
-// Upload your collages/single images to /public/images/work/...
-const works = [
+
+// You can adjust filenames to match your real files.
+// Make sure these live in /public/images/work and /public/videos (or similar).
+type WorkItem = {
+  title: string;
+  desc: string;
+  images: { src: string; alt: string }[];
+  videoUrl?: string; // optional – only used when a project has a video
+};
+
+const works: WorkItem[] = [
   {
     title: "Gauge pod for automotive dash (PETG)",
     desc: "Clean fit and rigid mounting for daily-use driving.",
-    img: "/images/work/gauge-pod.jpg",
-    alt: "Black PETG gauge pod mounted on a car dash",
+    images: [
+      {
+        src: "/images/work/gauge-pod.jpg",
+        alt: "Black PETG gauge pod mounted on a car dash",
+      },
+    ],
   },
   {
     title: "Vintage toy car — 3D scan to 1/4 scale print",
     desc: "Customer’s old toy car scanned and reproduced at quarter scale.",
-    // This can be your collage image that shows real photo + scan in one file.
-    img: "/images/work/toy-car-collage.jpg",
-    alt: "Collage showing the original toy car and its 3D scan",
+    images: [
+      {
+        src: "/images/work/toy-car-collage.jpg",
+        alt: "Collage showing the original toy car and its 3D scan",
+      },
+    ],
   },
   {
     title: "Single-piece vacuum hose adapter",
     desc: "Combined two adapters into one lighter part for better suction and no snag points.",
-    img: "/images/work/hose-adapter.jpg",
-    alt: "One-piece vacuum hose adapter designed for air-duct cleaning",
+    images: [
+      {
+        src: "/images/work/hose-adapter.jpg",
+        alt: "One-piece vacuum hose adapter designed for air-duct cleaning",
+      },
+    ],
   },
   {
     title: "Custom Dovetail Tracing Jig (PETG)",
     desc: "High-volume production run of tracing templates used for consistent floor profile marking.",
-    img: "/images/work/dovetail-jigs.jpg", // your photo file name
-    alt: "High-volume production run of tracing templates used for consistent floor profile marking.",
+    images: [
+      {
+        src: "/images/work/dovetail-jigs.jpg",
+        alt: "High-volume production run of tracing templates used for consistent floor profile marking.",
+      },
+    ],
   },
   {
     title: "Custom Load-Bearing Bracket (PETG)",
     desc: "Designed and printed for a long wall shelf — built to support heavy weight with structural rigidity.",
-    img: "/images/work/custom-bracket.JPG", // replace with your real image path
-    alt: "Designed and printed for a long wall shelf — built to support heavy weight with structural rigidity.",
+    images: [
+      {
+        src: "/images/work/custom-bracket.JPG",
+        alt: "Designed and printed for a long wall shelf — built to support heavy weight with structural rigidity.",
+      },
+    ],
+  },
+
+  /* 🔽 NEW PROJECTS 🔽 */
+
+  {
+    title: "Brake Caliper Prototype — Golf 7 (ASA-CF)",
+    desc:
+      "Functional prototype caliper adapter for a Golf 7 Akebono brake setup. Printed in ASA-CF to verify clearances and geometry before metal machining.",
+    images: [
+      {
+        src: "/images/work/brake-caliper-1.jpg",
+        alt: "ASA-CF brake caliper adapter prototype mounted for test fit",
+      },
+      {
+        src: "/images/work/brake-caliper-2.jpg",
+        alt: "Close-up view of ASA-CF caliper adapter showing surface finish",
+      },
+    ],
+  },
+  {
+    title: "High-Flow Venturi Tube (PETG)",
+    desc:
+      "Custom Venturi tube designed to increase airflow and create a low-pressure zone. Printed in PETG and tuned using flow calculations and testing.",
+    images: [
+      {
+        src: "/images/work/venturi-tube-1.jpg",
+        alt: "PETG Venturi tube showing inlet, throat, and outlet geometry",
+      },
+    ],
+    // ⬇️ adjust path to where you put the video (for example: /videos/venturi-demo.mp4)
+    videoUrl: "/videos/venturi-demo.mp4",
+  },
+  {
+    title: "Custom Mouse Shell (ASA-CF)",
+    desc:
+      "Ergonomic mouse shell printed in ASA-CF for stiffness, heat resistance, and a clean matte finish. Built for daily-use reliability.",
+    images: [
+      {
+        src: "/images/work/custom-mouse-1.jpg",
+        alt: "Custom ASA-CF mouse shell on desk setup",
+      },
+    ],
+  },
+  {
+    title: "Gear & Motor Mount Assembly (PA6-CF)",
+    desc:
+      "High-strength gear and motor mount assembly printed in PA6-CF for excellent toughness and dimensional stability under load.",
+    images: [
+      {
+        src: "/images/work/pa6cf-gear-mount-1.jpg",
+        alt: "PA6-CF printed gear and motor mount assembly on workbench",
+      },
+      {
+        src: "/images/work/pa6cf-gear-mount-2.jpg",
+        alt: "Side view of PA6-CF gear with motor mount installed",
+      },
+      {
+        src: "/images/work/pa6cf-gear-mount-3.jpg",
+        alt: "Close-up of PA6-CF gear teeth and motor mounting interface",
+      },
+    ],
   },
 ];
+
 
 /* ===== NAVBAR COMPONENT ===== */
 function Navbar() {
@@ -580,7 +670,7 @@ export default function App() {
   }, []);
 
   // Simple lightbox state (single image)
-  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
+const [lightbox, setLightbox] = useState<{ workIndex: number; imageIndex: number } | null>(null);
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setLightbox(null);
@@ -784,31 +874,49 @@ export default function App() {
           A few representative projects. We’ll add your portfolio shots here.
         </p>
         <div className="grid md:grid-cols-3 gap-6 mt-8">
-          {works.map((w) => (
-            <Card key={w.title} className="rounded-2xl overflow-hidden group">
-              <button
-                type="button"
-                onClick={() => setLightbox({ src: w.img, alt: w.alt })}
-                className="block relative h-40 w-full focus:outline-none"
-                aria-label={`Open larger view: ${w.title}`}
-              >
-                <img
-                  src={w.img}
-                  alt={w.alt}
-                  loading="lazy"
-                  className="h-40 w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 to-transparent" />
-              </button>
+          {works.map((w, index) => {
+            const cover = w.images[0]; // first image as the card cover
+            return (
+              <Card key={w.title} className="rounded-2xl overflow-hidden group">
+                <button
+                  type="button"
+                  onClick={() => setLightbox({ workIndex: index, imageIndex: 0 })}
+                  className="block relative h-40 w-full focus:outline-none"
+                  aria-label={`Open larger view: ${w.title}`}
+                >
+                  <img
+                    src={cover.src}
+                    alt={cover.alt}
+                    loading="lazy"
+                    className="h-40 w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 to-transparent" />
+                </button>
 
-              <CardHeader className="pb-2">
-                <CardTitle className="text-base">{w.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="text-xs text-slate-600">{w.desc}</CardContent>
-            </Card>
-          ))}
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-base">{w.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="text-xs text-slate-600">
+                  <p>{w.desc}</p>
+
+                  {/* Optional video preview inside the card */}
+                  {w.videoUrl && (
+                    <video
+                      className="mt-3 w-full rounded-xl"
+                      controls
+                      preload="metadata"
+                    >
+                      <source src={w.videoUrl} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  )}
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </section>
+
 
       {/* PRICING */}
       <section id="pricing" className="fade-section mx-auto max-w-6xl px-4 py-12">
@@ -979,32 +1087,78 @@ export default function App() {
         </div>
       </section>
 
-      {/* LIGHTBOX (single image) */}
-      {lightbox && (
-        <div
-          className="fixed inset-0 z-[60] bg-black/80 grid place-items-center p-4"
-          onClick={() => setLightbox(null)}
-          role="dialog"
-          aria-modal="true"
-        >
-          <img
-            src={lightbox.src}
-            alt={lightbox.alt}
-            className="max-h-[85vh] max-w-[92vw] object-contain rounded-lg shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          />
+{/* LIGHTBOX (multiple images per project) */}
+{lightbox !== null && (() => {
+  const work = works[lightbox.workIndex];
+  const image = work.images[lightbox.imageIndex];
+  const hasPrev = lightbox.imageIndex > 0;
+  const hasNext = lightbox.imageIndex < work.images.length - 1;
+
+  return (
+    <div
+      className="fixed inset-0 z-[60] bg-black/80 grid place-items-center p-4"
+      onClick={() => setLightbox(null)}
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        className="relative max-h-[85vh] max-w-[92vw] w-full flex items-center justify-center"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <img
+          src={image.src}
+          alt={image.alt}
+          className="max-h-[85vh] max-w-[92vw] object-contain rounded-lg shadow-2xl"
+        />
+
+        {/* Prev / Next buttons if multiple images */}
+        {hasPrev && (
           <button
             type="button"
-            onClick={() => setLightbox(null)}
-            className="absolute top-4 right-4 w-10 h-10 grid place-items-center rounded-full bg-white/10 hover:bg-white/20 text-white ring-1 ring-white/30"
-            aria-label="Close"
+            onClick={() =>
+              setLightbox({
+                workIndex: lightbox.workIndex,
+                imageIndex: lightbox.imageIndex - 1,
+              })
+            }
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center rounded-full bg-white/10 hover:bg-white/20 text-white ring-1 ring-white/30"
+            aria-label="Previous image"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M6 6l12 12M18 6L6 18" />
-            </svg>
+            ‹
           </button>
-        </div>
-      )}
+        )}
+        {hasNext && (
+          <button
+            type="button"
+            onClick={() =>
+              setLightbox({
+                workIndex: lightbox.workIndex,
+                imageIndex: lightbox.imageIndex + 1,
+              })
+            }
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center rounded-full bg-white/10 hover:bg-white/20 text-white ring-1 ring-white/30"
+            aria-label="Next image"
+          >
+            ›
+          </button>
+        )}
+      </div>
+
+      {/* Close button */}
+      <button
+        type="button"
+        onClick={() => setLightbox(null)}
+        className="absolute top-4 right-4 w-10 h-10 grid place-items-center rounded-full bg-white/10 hover:bg-white/20 text-white ring-1 ring-white/30"
+        aria-label="Close"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+    </div>
+  );
+})()}
+
 
       {/* FOOTER */}
       <footer className="fade-section border-t">
