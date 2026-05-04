@@ -1,6 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Routes, Route, Outlet, Link, useLocation } from "react-router-dom";
 
+
+
+
+
 /* =========================
    Work items (images in /public/images/work)
    ========================= */
@@ -985,7 +989,7 @@ function ReviewsPage() {
           <h3 className="text-2xl font-bold text-sky-950 mb-3">Worked with us recently?</h3>
           <p className="text-sky-800 mb-6">We appreciate your honest feedback. It helps other local businesses find reliable manufacturing partners.</p>
           {/* REPLACE the # with your actual Google Maps Page Link */}
-          <a href="#" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-white border-2 border-sky-200 text-sky-700 font-bold hover:bg-sky-100 transition-colors shadow-sm">
+          <a href="https://g.page/r/Cfv-5VOiNsypEAE/review" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-white border-2 border-sky-200 text-sky-700 font-bold hover:bg-sky-100 transition-colors shadow-sm">
             Leave us a review on Google
           </a>
         </div>
