@@ -67,7 +67,6 @@ const works: WorkItem[] = [
   },
 ];
 
-"/images/PRODUCTS/IPHONE_MAGSAFE_CHARGER/pa6cf-gear-mount-1.jpg"
 
 /* =========================
    Product items
