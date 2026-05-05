@@ -17,7 +17,7 @@
   <body>
     <div id="root"></div>
 
-    <!-- Hidden form for Netlify to detect schema at build time -->
+<!-- Hidden form for Netlify to detect schema at build time -->
     <form
       name="contact"
       method="POST"
@@ -33,13 +33,12 @@
       <input type="text" name="phone" />
       <textarea name="message"></textarea>
 
-      <!-- ✅ Correct file input -->
-      <input
-        type="file"
-        name="files[]"
-        multiple
-        accept=".step,.stp,.stl,.iges,.igs,.obj,.jpg,.jpeg,.png,.pdf"
-      />
+      <!-- Manually register the 5 separate file inputs so Netlify accepts them -->
+      <input type="file" name="file_1" />
+      <input type="file" name="file_2" />
+      <input type="file" name="file_3" />
+      <input type="file" name="file_4" />
+      <input type="file" name="file_5" />
 
       <input type="text" name="subject" />
       <p class="hidden"><input name="bot-field" /></p>
