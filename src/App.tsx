@@ -753,6 +753,16 @@ function ProductsPage() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  // Prevent background from scrolling when modal is open (Mobile fix)
+  useEffect(() => {
+    if (activeProduct !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [activeProduct]);
+
   return (
     <div className="pb-24">
       <HeadTags title="Products | Custom Build Studio" description="Ready-to-order engineering grade 3D printed parts from Custom Build Studio." url="https://www.custombuildstudio.ca/products" image="/og-image.jpg" />
@@ -791,7 +801,9 @@ function ProductsPage() {
                   ) : (
                     <Cube className="w-16 h-16 text-slate-300 transition-transform duration-500 group-hover:scale-110" />
                   )}
-                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur text-slate-800 text-[11px] px-2.5 py-1 rounded-full font-bold border border-slate-200 shadow-sm z-10">{p.material}</div>
+                  {p.material && (
+                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur text-slate-800 text-[11px] px-2.5 py-1 rounded-full font-bold border border-slate-200 shadow-sm z-10">{p.material}</div>
+                  )}
                   
                   {/* Hover Overlay */}
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
@@ -800,8 +812,8 @@ function ProductsPage() {
                 </button>
 
                 <div className="p-6 flex flex-col flex-grow">
-                  <h3 className="text-xl font-bold text-slate-900 leading-tight mb-3">{p.title}</h3>
-                  <p className="text-slate-600 text-sm mb-6 flex-grow leading-relaxed">
+                  <h3 className="text-xl font-bold text-slate-900 leading-tight mb-3 line-clamp-2">{p.title}</h3>
+                  <p className="text-slate-600 text-sm mb-6 flex-grow leading-relaxed line-clamp-3">
                     {p.desc}
                   </p>
                   <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-100">
@@ -821,7 +833,7 @@ function ProductsPage() {
         </div>
       </section>
 
-      {/* PRODUCT DETAIL MODAL */}
+      {/* PRODUCT DETAIL MODAL (Fixed for Mobile Scrolling) */}
       {activeProduct !== null && (() => {
         const product = products[activeProduct.productIndex];
         const hasImages = product.images && product.images.length > 0;
@@ -831,74 +843,86 @@ function ProductsPage() {
         const hasNext = hasImages && activeProduct.imageIndex < product.images.length - 1;
 
         return (
-          <div className="fixed inset-0 z-[60] bg-black/90 backdrop-blur-sm grid place-items-center p-4 overflow-y-auto" onClick={() => setActiveProduct(null)} role="dialog" aria-modal="true">
-            <div className="relative bg-white rounded-2xl max-w-5xl w-full my-auto flex flex-col md:flex-row overflow-hidden shadow-2xl" onClick={(e) => e.stopPropagation()}>
+          <div className="fixed inset-0 z-[60] overflow-y-auto" role="dialog" aria-modal="true">
+            {/* Dark background backdrop */}
+            <div className="fixed inset-0 bg-black/90 backdrop-blur-sm" onClick={() => setActiveProduct(null)}></div>
+            
+            {/* Scrollable positioning container */}
+            <div className="flex min-h-full items-start justify-center p-4 py-10 md:p-8">
               
-              {/* Left Side: Image Viewer */}
-              <div className="relative w-full md:w-1/2 bg-slate-100 min-h-[300px] md:min-h-[500px] flex items-center justify-center">
-                {currentImage ? (
-                  <img src={currentImage.src} alt={currentImage.alt} className="w-full h-full object-cover absolute inset-0" />
-                ) : (
-                  <div className="flex flex-col items-center text-slate-400">
-                    <Cube className="w-20 h-20 mb-4" />
-                    <span className="text-sm font-medium uppercase tracking-wider">Image Coming Soon</span>
+              {/* Actual Modal Content - No restricted max-height */}
+              <div className="relative bg-white rounded-2xl max-w-5xl w-full flex flex-col md:flex-row shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+                
+                {/* Left Side: Image Viewer */}
+                <div className="relative w-full md:w-1/2 bg-slate-100 h-[350px] md:h-auto md:min-h-[500px] flex items-center justify-center shrink-0">
+                  {currentImage ? (
+                    <img src={currentImage.src} alt={currentImage.alt} className="w-full h-full object-contain absolute inset-0 bg-white" />
+                  ) : (
+                    <div className="flex flex-col items-center text-slate-400">
+                      <Cube className="w-20 h-20 mb-4" />
+                      <span className="text-sm font-medium uppercase tracking-wider">Image Coming Soon</span>
+                    </div>
+                  )}
+
+                  {/* Arrows */}
+                  {hasPrev && (
+                    <button type="button" onClick={() => setActiveProduct({ ...activeProduct, imageIndex: activeProduct.imageIndex - 1 })} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center rounded-full bg-black/40 hover:bg-black/60 text-white transition-colors z-10">
+                      ‹
+                    </button>
+                  )}
+                  {hasNext && (
+                    <button type="button" onClick={() => setActiveProduct({ ...activeProduct, imageIndex: activeProduct.imageIndex + 1 })} className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center rounded-full bg-black/40 hover:bg-black/60 text-white transition-colors z-10">
+                      ›
+                    </button>
+                  )}
+                </div>
+
+                {/* Right Side: Product Details */}
+                <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col bg-white">
+                  <div className="flex justify-between items-start mb-4 gap-4">
+                    <h3 className="text-xl md:text-2xl font-extrabold text-slate-900 leading-tight">{product.title}</h3>
+                    <button type="button" onClick={() => setActiveProduct(null)} className="text-slate-400 hover:text-slate-700 transition-colors bg-slate-100 hover:bg-slate-200 rounded-full p-2 shrink-0">
+                      <XMark className="w-5 h-5" />
+                    </button>
                   </div>
-                )}
+                  
+                  {product.material && (
+                    <div className="mb-6">
+                      <span className="bg-sky-100 text-sky-800 text-[10px] px-3 py-1.5 rounded-full font-bold uppercase tracking-wider border border-sky-200">{product.material}</span>
+                    </div>
+                  )}
+                  
+                  <div className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6">{product.price}</div>
+                  
+                  <p className="text-slate-600 text-sm md:text-base leading-relaxed mb-8 whitespace-pre-line">
+                    {product.desc}
+                  </p>
 
-                {/* Arrows */}
-                {hasPrev && (
-                  <button type="button" onClick={() => setActiveProduct({ ...activeProduct, imageIndex: activeProduct.imageIndex - 1 })} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center rounded-full bg-black/40 hover:bg-black/60 text-white transition-colors">
-                    ‹
-                  </button>
-                )}
-                {hasNext && (
-                  <button type="button" onClick={() => setActiveProduct({ ...activeProduct, imageIndex: activeProduct.imageIndex + 1 })} className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center rounded-full bg-black/40 hover:bg-black/60 text-white transition-colors">
-                    ›
-                  </button>
-                )}
+                  <div className="mb-8">
+                    <h4 className="font-semibold text-slate-900 mb-4 uppercase tracking-wide text-xs">Product Highlights</h4>
+                    <ul className="grid grid-cols-1 gap-3">
+                      {product.features.map((feature, i) => (
+                        <li key={i} className="flex items-start gap-3 text-sm text-slate-700">
+                          <CheckCircle className="w-5 h-5 text-sky-500 mt-0.5 shrink-0" />
+                          <span className="leading-snug">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mt-auto pt-6 border-t border-slate-100">
+                    <a 
+                      href={`mailto:Custombuildstudio@gmail.com?subject=Order Inquiry: ${encodeURIComponent(product.title)}&body=Hi Custom Build Studio,%0A%0AI would like to order the ${encodeURIComponent(product.title)}.%0A%0AQuantity:%0A%0AAdditional Details/Questions:%0A%0ALet me know the next steps for e-Transfer. Thanks!`} 
+                      className="w-full inline-flex items-center justify-center px-6 py-4 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-lg font-bold transition-transform hover:-translate-y-0.5 shadow-lg shadow-sky-600/30"
+                    >
+                      <Mail className="w-5 h-5 mr-2" />
+                      Order via Email
+                    </a>
+                    <p className="text-center text-xs text-slate-400 mt-4">We will reply within 24 hours to arrange payment & pickup.</p>
+                  </div>
+                </div>
+
               </div>
-
-              {/* Right Side: Product Details */}
-              <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col bg-white">
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight pr-6">{product.title}</h3>
-                  <button type="button" onClick={() => setActiveProduct(null)} className="text-slate-400 hover:text-slate-700 transition-colors bg-slate-100 hover:bg-slate-200 rounded-full p-2 shrink-0">
-                    <XMark className="w-5 h-5" />
-                  </button>
-                </div>
-                
-                <div className="mb-6">
-                  <span className="bg-sky-100 text-sky-800 text-xs px-3 py-1.5 rounded-full font-bold uppercase tracking-wider border border-sky-200">{product.material}</span>
-                </div>
-                
-                <div className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6">{product.price}</div>
-                
-                <p className="text-slate-600 text-base leading-relaxed mb-8">
-                  {product.desc}
-                </p>
-
-                <div className="flex-grow">
-                  <h4 className="font-semibold text-slate-900 mb-4 uppercase tracking-wide text-sm">Product Highlights</h4>
-                  <ul className="space-y-3 mb-8">
-                    {product.features.map((feature, i) => (
-                      <li key={i} className="flex items-start gap-3 text-sm text-slate-700">
-                        <CheckCircle className="w-5 h-5 text-sky-500 shrink-0" />
-                        <span className="leading-snug">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <a 
-                  href={`mailto:Custombuildstudio@gmail.com?subject=Order Inquiry: ${encodeURIComponent(product.title)}&body=Hi Custom Build Studio,%0A%0AI would like to order the ${encodeURIComponent(product.title)}.%0A%0AQuantity:%0A%0AAdditional Details/Questions:%0A%0ALet me know the next steps for e-Transfer. Thanks!`} 
-                  className="w-full inline-flex items-center justify-center px-6 py-4 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-lg font-bold transition-transform hover:-translate-y-0.5 shadow-lg shadow-sky-600/30"
-                >
-                  <Mail className="w-5 h-5 mr-2" />
-                  Order via Email
-                </a>
-                <p className="text-center text-xs text-slate-400 mt-4">We will reply within 24 hours to arrange payment & pickup.</p>
-              </div>
-
             </div>
           </div>
         );
