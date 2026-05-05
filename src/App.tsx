@@ -15,7 +15,7 @@ const works: WorkItem[] = [
   {
     title: "CUSTOM ASA-CF SCREW",
     desc: "Durable manufacturing Custom Screw printed in ASA-CF.",
-    images: [{ src: "/images/work/screw.JPG", alt: "New project" }],
+    images: [{ src: "/images/work/screw.jpg", alt: "New project" }],
     // videoUrl: "/videos/optional-video.mp4", // <-- Uncomment this line if your new item has a video!
   },
   {
