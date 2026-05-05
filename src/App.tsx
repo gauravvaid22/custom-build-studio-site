@@ -1,10 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Routes, Route, Outlet, Link, useLocation } from "react-router-dom";
 
-
-
-
-
 /* =========================
    Work items (images in /public/images/work)
    ========================= */
@@ -16,6 +12,12 @@ type WorkItem = {
 };
 
 const works: WorkItem[] = [
+  {
+    title: "CUSTOM ASA-CF SCREW",
+    desc: "Durable manufacturing Custom Screw printed in ASA-CF.",
+    images: [{ src: "/images/work/screw.JPG", alt: "New project" }],
+    // videoUrl: "/videos/optional-video.mp4", // <-- Uncomment this line if your new item has a video!
+  },
   {
     title: "Gauge pod for automotive dash (PETG)",
     desc: "Clean fit and rigid mounting for daily-use driving.",
@@ -71,7 +73,6 @@ const works: WorkItem[] = [
   },
 ];
 
-
 /* =========================
    Product items
    ========================= */
@@ -87,28 +88,35 @@ type ProductItem = {
 const products: ProductItem[] = [
   {
     title: "MagSafe Charger Stand for iPhone & Apple Watch | Charging Dock Holder | Desk Organizer",
-    material: "",
+    material: "PETG",
     desc: `Keep your desk clean and organized with this minimal MagSafe stand for iPhone and Apple Watch.
+
 Designed to hold both devices securely in one place while keeping cables hidden and tidy.
+
 Each stand is made using high-quality PETG material for durability and heat resistance.
+
 Available in multiple colors. Custom color requests are welcome.
+
+📦 Shipping from Canada
+
 If you have any questions, feel free to message me.`,
     features: [
-      "Charging Station for both Apple Watch and Iphore",
-      "Premium Feel",
-      "Clean Design",
-      "Wire managment",
+      "Compatible with MagSafe chargers (not included)",
+      "Fits Apple Watch charger perfectly (not included)",
+      "Clean cable management design",
+      "Strong and stable — no tipping",
+      "Compact and modern look for any desk or nightstand"
     ],
-    price: "$35.00",
-    images: [{ src: "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO1.jpg", alt: "IPHONE MAGSACE HOLDER" },
-      { src: "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO2.jpg", alt: "IPHONE MAGSACE HOLDER" },
-      { src: "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO3.jpg", alt: "IPHONE MAGSACE HOLDER" },
-      { src: "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO4.jpg", alt: "IPHONE MAGSACE HOLDER" },
-      { src: "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO5.jpg", alt: "IPHONE MAGSACE HOLDER" },
-      { src: "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO6.jpg", alt: "IPHONE MAGSACE HOLDER" },
-      { src: "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO7.jpg", alt: "IPHONE MAGSACE HOLDER" },
-      { src: "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO8.jpg", alt: "IPHONE MAGSACE HOLDER" },
-
+    price: "$36.00",
+    images: [
+      { src: "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO1.jpg", alt: "IPHONE MAGSAFE HOLDER" },
+      { src: "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO2.jpg", alt: "IPHONE MAGSAFE HOLDER" },
+      { src: "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO3.jpg", alt: "IPHONE MAGSAFE HOLDER" },
+      { src: "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO4.jpg", alt: "IPHONE MAGSAFE HOLDER" },
+      { src: "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO5.jpg", alt: "IPHONE MAGSAFE HOLDER" },
+      { src: "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO6.jpg", alt: "IPHONE MAGSAFE HOLDER" },
+      { src: "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO7.jpg", alt: "IPHONE MAGSAFE HOLDER" },
+      { src: "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO8.jpg", alt: "IPHONE MAGSAFE HOLDER" },
     ]
   },
   // {
@@ -159,6 +167,11 @@ const ArrowRight = (p: React.SVGProps<SVGSVGElement>) => (<svg {...base} {...p}>
 const Plus = (p: React.SVGProps<SVGSVGElement>) => (<svg {...base} {...p}><path d="M12 5v14M5 12h14" /></svg>);
 const XMark = (p: React.SVGProps<SVGSVGElement>) => (<svg {...base} {...p}><path d="M18 6L6 18M6 6l12 12" /></svg>);
 const Star = (p: React.SVGProps<SVGSVGElement>) => (<svg {...base} viewBox="0 0 24 24" fill="currentColor" stroke="none" {...p}><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>);
+const ChevronLeft = (p: React.SVGProps<SVGSVGElement>) => (<svg {...base} {...p}><path d="M15 18l-6-6 6-6" /></svg>);
+const ChevronRight = (p: React.SVGProps<SVGSVGElement>) => (<svg {...base} {...p}><path d="M9 18l6-6-6-6" /></svg>);
+// Play icon for video thumbnails
+const PlayCircle = (p: React.SVGProps<SVGSVGElement>) => (<svg {...base} {...p}><circle cx="12" cy="12" r="10" /><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" /></svg>);
+
 
 /* =========================
    UI Primitives
@@ -424,7 +437,7 @@ function HomePage() {
           <span className="inline-block py-1 px-3 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30 text-sm font-semibold mb-6 tracking-wide">EDMONTON, ALBERTA</span>
           <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6">From Idea → Precision Parts, Faster</h1>
           <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-8 leading-relaxed">
-            We help businesses and makers turn concepts into durable, functional parts. On-demand <strong>3D printing</strong>, precision <strong>CNC programming</strong>, and smart <strong>CAD design</strong>.
+            We help businesses and makers turn concepts into durable, functional parts. On-demand <strong>3D printing</strong> and smart <strong>CAD design</strong>.
           </p>
           
           <div className="flex flex-col sm:flex-row justify-center gap-4">
@@ -446,7 +459,7 @@ function HomePage() {
             <div className="px-4 py-4 md:py-0">
               <Cog className="h-8 w-8 mx-auto text-sky-500 mb-3" />
               <h3 className="text-white font-bold text-lg">Industrial Materials</h3>
-              <p className="text-slate-400 text-sm mt-2">PA-CF, PC, ASA, PETG. We stock engineering-grade materials for parts that endure.</p>
+              <p className="text-slate-400 text-sm mt-2">PETG, ABS, ASA, ASA-CF, PET-CF, PA12, PA12-GF, PA12CF, PPS-CF but not limited to. We stock engineering-grade materials for parts that endure.</p>
             </div>
             <div className="px-4 py-4 md:py-0">
               <Phone className="h-8 w-8 mx-auto text-sky-500 mb-3" />
@@ -511,6 +524,11 @@ function HomePage() {
               <Card key={w.title} className="rounded-2xl overflow-hidden group shadow-sm flex flex-col border-slate-200">
                 <button type="button" onClick={() => setLightbox({ workIndex: index, imageIndex: 0 })} className="block relative h-56 w-full focus:outline-none overflow-hidden">
                   <img src={cover.src} alt={cover.alt} loading="lazy" className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  {w.videoUrl && (
+                    <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-white p-1.5 rounded-full z-10">
+                      <PlayCircle className="w-5 h-5" />
+                    </div>
+                  )}
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                      <span className="text-white text-sm font-medium flex items-center gap-1">View Details <ArrowRight className="w-4 h-4"/></span>
                   </div>
@@ -548,19 +566,30 @@ function HomePage() {
         const hasNext = lightbox.imageIndex < work.images.length - 1;
 
         return (
-          <div className="fixed inset-0 z-[60] bg-black/90 backdrop-blur-sm grid place-items-center p-4" onClick={() => setLightbox(null)} role="dialog" aria-modal="true">
-            <div className="relative max-h-[85vh] max-w-[92vw] w-full flex flex-col items-center justify-center" onClick={(e) => e.stopPropagation()}>
-              <img src={image.src} alt={image.alt} className="max-h-[80vh] max-w-full object-contain rounded-lg shadow-2xl" />
-              <div className="text-white text-center mt-4 bg-black/50 px-4 py-2 rounded-full backdrop-blur-md">
-                 <h4 className="font-semibold">{work.title}</h4>
+          <div className="fixed inset-0 z-[60] bg-black/90 backdrop-blur-sm overflow-y-auto" onClick={() => setLightbox(null)} role="dialog" aria-modal="true">
+            <div className="flex min-h-full items-center justify-center p-4 md:p-8 pointer-events-none">
+              <div className="relative bg-black rounded-2xl max-w-5xl w-full flex flex-col shadow-2xl pointer-events-auto items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>
+                <img src={image.src} alt={image.alt} className="max-h-[75vh] max-w-full object-contain rounded-lg" />
+                <div className="text-white text-center mt-4 px-4 py-2">
+                   <h4 className="font-semibold">{work.title}</h4>
+                </div>
+                
+                {hasPrev && (
+                  <button type="button" onClick={() => setLightbox({ workIndex: lightbox.workIndex, imageIndex: lightbox.imageIndex - 1 })} className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 w-12 h-12 grid place-items-center rounded-full bg-slate-900/70 hover:bg-slate-900 backdrop-blur-md border border-white/20 text-white transition-all shadow-lg hover:scale-105 z-[70]">
+                    <ChevronLeft className="w-6 h-6 mr-1" />
+                  </button>
+                )}
+                {hasNext && (
+                  <button type="button" onClick={() => setLightbox({ workIndex: lightbox.workIndex, imageIndex: lightbox.imageIndex + 1 })} className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 w-12 h-12 grid place-items-center rounded-full bg-slate-900/70 hover:bg-slate-900 backdrop-blur-md border border-white/20 text-white transition-all shadow-lg hover:scale-105 z-[70]">
+                    <ChevronRight className="w-6 h-6 ml-1" />
+                  </button>
+                )}
+                
+                <button type="button" onClick={() => setLightbox(null)} className="absolute top-4 right-4 md:top-6 md:right-6 w-12 h-12 grid place-items-center rounded-full bg-slate-900/70 hover:bg-slate-900 backdrop-blur-md border border-white/20 text-white transition-all shadow-lg hover:scale-105 z-[70]">
+                  <XMark className="w-6 h-6" />
+                </button>
               </div>
-              
-              {hasPrev && <button type="button" onClick={() => setLightbox({ workIndex: lightbox.workIndex, imageIndex: lightbox.imageIndex - 1 })} className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 grid place-items-center rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors">‹</button>}
-              {hasNext && <button type="button" onClick={() => setLightbox({ workIndex: lightbox.workIndex, imageIndex: lightbox.imageIndex + 1 })} className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 grid place-items-center rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors">›</button>}
             </div>
-            <button type="button" onClick={() => setLightbox(null)} className="absolute top-4 right-4 md:top-8 md:right-8 w-12 h-12 grid place-items-center rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 6l12 12M18 6L6 18" /></svg>
-            </button>
           </div>
         );
       })()}
@@ -629,14 +658,21 @@ function WorkPage() {
         description="A selection of our latest functional prints, prototypes, and engineering solutions." 
       />
 
+      {/* Updated to use CSS Masonry layout (columns-3) to handle mixed-height cards smoothly */}
       <section className="mx-auto max-w-6xl px-4 py-16 fade-section">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6">
           {works.map((w, index) => {
             const cover = w.images[0];
             return (
-              <Card key={w.title} className="rounded-2xl overflow-hidden group shadow-sm flex flex-col border-slate-200">
-                <button type="button" onClick={() => setLightbox({ workIndex: index, imageIndex: 0 })} className="block relative h-56 w-full focus:outline-none overflow-hidden">
+              <Card key={w.title} className="rounded-2xl overflow-hidden group shadow-sm flex flex-col border-slate-200 mb-6 break-inside-avoid h-fit w-full inline-block">
+                <button type="button" onClick={() => setLightbox({ workIndex: index, imageIndex: 0 })} className="block relative h-56 w-full focus:outline-none overflow-hidden bg-slate-100">
                   <img src={cover.src} alt={cover.alt} loading="lazy" className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  {/* Premium video icon badge for thumbnails */}
+                  {w.videoUrl && (
+                    <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-white p-1.5 rounded-full z-10 shadow-md">
+                      <PlayCircle className="w-5 h-5" />
+                    </div>
+                  )}
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                      <span className="text-white text-sm font-medium flex items-center gap-1">View Details <ArrowRight className="w-4 h-4"/></span>
                   </div>
@@ -646,9 +682,11 @@ function WorkPage() {
                 </CardHeader>
                 <CardContent className="text-sm text-slate-600 flex-grow flex flex-col">
                   <p className="mb-4">{w.desc}</p>
+                  
+                  {/* Cleaned up embedded video layout */}
                   {w.videoUrl && (
-                    <div className="mt-auto">
-                      <video className="w-full rounded-xl bg-slate-100" controls preload="metadata"><source src={w.videoUrl} type="video/mp4" />Your browser does not support the video tag.</video>
+                    <div className="mt-2 mb-2 rounded-xl overflow-hidden bg-slate-900 border border-slate-200 shadow-inner relative">
+                      <video className="w-full aspect-video object-cover" controls preload="metadata"><source src={w.videoUrl} type="video/mp4" />Your browser does not support the video tag.</video>
                     </div>
                   )}
                 </CardContent>
@@ -666,19 +704,30 @@ function WorkPage() {
         const hasNext = lightbox.imageIndex < work.images.length - 1;
 
         return (
-          <div className="fixed inset-0 z-[60] bg-black/90 backdrop-blur-sm grid place-items-center p-4" onClick={() => setLightbox(null)} role="dialog" aria-modal="true">
-            <div className="relative max-h-[85vh] max-w-[92vw] w-full flex flex-col items-center justify-center" onClick={(e) => e.stopPropagation()}>
-              <img src={image.src} alt={image.alt} className="max-h-[80vh] max-w-full object-contain rounded-lg shadow-2xl" />
-              <div className="text-white text-center mt-4 bg-black/50 px-4 py-2 rounded-full backdrop-blur-md">
-                 <h4 className="font-semibold">{work.title}</h4>
+          <div className="fixed inset-0 z-[60] bg-black/90 backdrop-blur-sm overflow-y-auto" onClick={() => setLightbox(null)} role="dialog" aria-modal="true">
+            <div className="flex min-h-full items-center justify-center p-4 md:p-8 pointer-events-none">
+              <div className="relative bg-black rounded-2xl max-w-5xl w-full flex flex-col shadow-2xl pointer-events-auto items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>
+                <img src={image.src} alt={image.alt} className="max-h-[75vh] max-w-full object-contain rounded-lg" />
+                <div className="text-white text-center mt-4 px-4 py-2">
+                   <h4 className="font-semibold">{work.title}</h4>
+                </div>
+                
+                {hasPrev && (
+                  <button type="button" onClick={() => setLightbox({ workIndex: lightbox.workIndex, imageIndex: lightbox.imageIndex - 1 })} className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 w-12 h-12 grid place-items-center rounded-full bg-slate-900/70 hover:bg-slate-900 backdrop-blur-md border border-white/20 text-white transition-all shadow-lg hover:scale-105 z-[70]">
+                    <ChevronLeft className="w-6 h-6 mr-1" />
+                  </button>
+                )}
+                {hasNext && (
+                  <button type="button" onClick={() => setLightbox({ workIndex: lightbox.workIndex, imageIndex: lightbox.imageIndex + 1 })} className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 w-12 h-12 grid place-items-center rounded-full bg-slate-900/70 hover:bg-slate-900 backdrop-blur-md border border-white/20 text-white transition-all shadow-lg hover:scale-105 z-[70]">
+                    <ChevronRight className="w-6 h-6 ml-1" />
+                  </button>
+                )}
+                
+                <button type="button" onClick={() => setLightbox(null)} className="absolute top-4 right-4 md:top-6 md:right-6 w-12 h-12 grid place-items-center rounded-full bg-slate-900/70 hover:bg-slate-900 backdrop-blur-md border border-white/20 text-white transition-all shadow-lg hover:scale-105 z-[70]">
+                  <XMark className="w-6 h-6" />
+                </button>
               </div>
-              
-              {hasPrev && <button type="button" onClick={() => setLightbox({ workIndex: lightbox.workIndex, imageIndex: lightbox.imageIndex - 1 })} className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 grid place-items-center rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors">‹</button>}
-              {hasNext && <button type="button" onClick={() => setLightbox({ workIndex: lightbox.workIndex, imageIndex: lightbox.imageIndex + 1 })} className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 grid place-items-center rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors">›</button>}
             </div>
-            <button type="button" onClick={() => setLightbox(null)} className="absolute top-4 right-4 md:top-8 md:right-8 w-12 h-12 grid place-items-center rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 6l12 12M18 6L6 18" /></svg>
-            </button>
           </div>
         );
       })()}
@@ -701,8 +750,8 @@ function PricingPage() {
         <div className="grid md:grid-cols-2 gap-6">
           {[
             { name: "3D Printing", price: "Project Based", desc: "Pricing varies by size, material, and part complexity. We do not charge basic plate fees for engineering work.", items: ["Minimum job charges $20.00", "Functional industrial parts from $50+", "Rush options available", "Bulk production discounts"] },
-            { name: "CAD Modeling & Scanning", price: "$75/ hr", desc: "For reverse engineering and custom design work. Simple brackets and modifiers are often fixed-fee.", items: ["Simple parts often fixed-fee", "Includes geometry cleanup", "Export formats: STEP / STL / IGES"] },
-            { name: "CNC Programming", price: "$75/ hr", desc: "Machine-dependent rate for efficient, crashed-tested toolpaths ready for your shop floor.", items: ["Setup sheets included", "Tool lists + post-processing", "Remote or onsite collaboration"] },
+            { name: "CAD Modeling & Scanning", price: "$75 / hr", desc: "For reverse engineering and custom design work. Simple brackets and modifiers are often fixed-fee.", items: ["Simple parts often fixed-fee", "Includes geometry cleanup", "Export formats: STEP / STL / IGES"] },
+            { name: "CNC Programming", price: "$75 / hr", desc: "Machine-dependent rate for efficient, crashed-tested toolpaths ready for your shop floor.", items: ["Setup sheets included", "Tool lists + post-processing", "Remote or onsite collaboration"] },
             { name: "Consulting / Troubleshooting", price: "Custom", desc: "Need advice on machine setup, material selection, or manufacturing workflow?", items: ["Process optimization", "Material sourcing advice", "Design for Manufacturing (DFM) check"] }
           ].map((p) => (
             <Card key={p.name} className="rounded-2xl border-slate-200 shadow-sm flex flex-col">
@@ -848,13 +897,13 @@ function ProductsPage() {
             <div className="fixed inset-0 bg-black/90 backdrop-blur-sm" onClick={() => setActiveProduct(null)}></div>
             
             {/* Scrollable positioning container */}
-            <div className="flex min-h-full items-start justify-center p-4 py-10 md:p-8">
+            <div className="flex min-h-full items-start justify-center p-4 py-10 md:p-8 pointer-events-none">
               
               {/* Actual Modal Content - No restricted max-height */}
-              <div className="relative bg-white rounded-2xl max-w-5xl w-full flex flex-col md:flex-row shadow-2xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+              <div className="relative bg-white rounded-2xl max-w-5xl w-full flex flex-col md:flex-row shadow-2xl overflow-hidden pointer-events-auto" onClick={(e) => e.stopPropagation()}>
                 
                 {/* Left Side: Image Viewer */}
-                <div className="relative w-full md:w-1/2 bg-slate-100 h-[350px] md:h-auto md:min-h-[500px] flex items-center justify-center shrink-0">
+                <div className="relative w-full md:w-1/2 bg-slate-100 h-[350px] md:h-auto md:min-h-[500px] flex items-center justify-center shrink-0 rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none overflow-hidden">
                   {currentImage ? (
                     <img src={currentImage.src} alt={currentImage.alt} className="w-full h-full object-contain absolute inset-0 bg-white" />
                   ) : (
@@ -864,21 +913,21 @@ function ProductsPage() {
                     </div>
                   )}
 
-                  {/* Arrows */}
+                  {/* Sleek SVG Arrows */}
                   {hasPrev && (
-                    <button type="button" onClick={() => setActiveProduct({ ...activeProduct, imageIndex: activeProduct.imageIndex - 1 })} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center rounded-full bg-black/40 hover:bg-black/60 text-white transition-colors z-10">
-                      ‹
+                    <button type="button" onClick={() => setActiveProduct({ ...activeProduct, imageIndex: activeProduct.imageIndex - 1 })} className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center rounded-full bg-slate-900/70 hover:bg-slate-900 backdrop-blur-md border border-white/20 text-white transition-all shadow-lg hover:scale-105 z-10">
+                      <ChevronLeft className="w-5 h-5 mr-0.5" />
                     </button>
                   )}
                   {hasNext && (
-                    <button type="button" onClick={() => setActiveProduct({ ...activeProduct, imageIndex: activeProduct.imageIndex + 1 })} className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center rounded-full bg-black/40 hover:bg-black/60 text-white transition-colors z-10">
-                      ›
+                    <button type="button" onClick={() => setActiveProduct({ ...activeProduct, imageIndex: activeProduct.imageIndex + 1 })} className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 grid place-items-center rounded-full bg-slate-900/70 hover:bg-slate-900 backdrop-blur-md border border-white/20 text-white transition-all shadow-lg hover:scale-105 z-10">
+                      <ChevronRight className="w-5 h-5 ml-0.5" />
                     </button>
                   )}
                 </div>
 
                 {/* Right Side: Product Details */}
-                <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col bg-white">
+                <div className="w-full md:w-1/2 p-6 md:p-10 flex flex-col bg-white rounded-b-2xl md:rounded-r-2xl md:rounded-bl-none">
                   <div className="flex justify-between items-start mb-4 gap-4">
                     <h3 className="text-xl md:text-2xl font-extrabold text-slate-900 leading-tight">{product.title}</h3>
                     <button type="button" onClick={() => setActiveProduct(null)} className="text-slate-400 hover:text-slate-700 transition-colors bg-slate-100 hover:bg-slate-200 rounded-full p-2 shrink-0">
@@ -1013,7 +1062,7 @@ function ReviewsPage() {
           <h3 className="text-2xl font-bold text-sky-950 mb-3">Worked with us recently?</h3>
           <p className="text-sky-800 mb-6">We appreciate your honest feedback. It helps other local businesses find reliable manufacturing partners.</p>
           {/* REPLACE the # with your actual Google Maps Page Link */}
-          <a href="https://g.page/r/Cfv-5VOiNsypEAE/review" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-white border-2 border-sky-200 text-sky-700 font-bold hover:bg-sky-100 transition-colors shadow-sm">
+          <a href="#" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-white border-2 border-sky-200 text-sky-700 font-bold hover:bg-sky-100 transition-colors shadow-sm">
             Leave us a review on Google
           </a>
         </div>
@@ -1147,9 +1196,8 @@ function ContactPage() {
                 {fileInputs.map((id, index) => (
                   <div key={id} className="flex items-center gap-2">
                     <Input 
-                      name={`file_${index + 1}[]`} 
+                      name={`file_${index + 1}`}
                       type="file" 
-                      multiple
                       accept=".step,.stp,.stl,.iges,.igs,.obj,.jpg,.jpeg,.png,.pdf" 
                       className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-sky-100 file:text-sky-700 hover:file:bg-sky-200 bg-white shadow-sm cursor-pointer w-full" 
                     />
@@ -1157,7 +1205,7 @@ function ContactPage() {
                       <button 
                         type="button" 
                         onClick={() => removeFileInput(id)}
-                        className="p-2 text-slate-400 hover:text-red-500 transition-colors"
+                        className="p-2 text-slate-400 hover:text-red-500 transition-colors shrink-0"
                         aria-label="Remove file"
                         title="Remove file"
                       >
