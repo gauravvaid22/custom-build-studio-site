@@ -162,6 +162,7 @@ const Mail = (p: React.SVGProps<SVGSVGElement>) => (<svg {...base} {...p}><path 
 const Instagram = (p: React.SVGProps<SVGSVGElement>) => (<svg {...base} {...p}><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="3.5" /><circle cx="17.5" cy="6.5" r="1" /></svg>);
 const Facebook = (p: React.SVGProps<SVGSVGElement>) => (<svg {...base} {...p}><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>);
 const Wrench = (p: React.SVGProps<SVGSVGElement>) => (<svg {...base} {...p}><path d="M21 3a7 7 0 0 1-9.8 9.8L7 17l-3 3 1.5 1.5 3-3 4.2-4.2A7 7 0 0 1 21 3z" /></svg>);
+const SawBlade = (p: React.SVGProps<SVGSVGElement>) => (<svg {...base} {...p}><path d="M12 3l1.4 2.3 2.7-.4.4 2.7 2.5 1.2-1.2 2.5 1.8 2-2 1.8.4 2.7-2.7.4-1.2 2.5-2.5-1.2-2.3 1.4-1.4-2.3-2.7.4-.4-2.7-2.5-1.2 1.2-2.5-1.8-2 2-1.8-.4-2.7 2.7-.4L10.6 3z" /><circle cx="12" cy="12" r="3" /></svg>);
 const Shield = (p: React.SVGProps<SVGSVGElement>) => (<svg {...base} {...p}><path d="M12 2l7 4v5c0 5-3.5 9-7 11-3.5-2-7-6-7-11V6l7-4z" /></svg>);
 const ArrowRight = (p: React.SVGProps<SVGSVGElement>) => (<svg {...base} {...p}><path d="M5 12h14M12 5l7 7-7 7" /></svg>);
 const Plus = (p: React.SVGProps<SVGSVGElement>) => (<svg {...base} {...p}><path d="M12 5v14M5 12h14" /></svg>);
@@ -422,8 +423,8 @@ function HomePage() {
   return (
     <>
       <HeadTags
-        title="Custom Build Studio — 3D Printing, CAD & CNC in Edmonton"
-        description="On-demand 3D printing, CAD modeling, and CNC programming in Edmonton. Fast quotes, functional parts, and shop-floor practicality."
+        title="Custom Build Studio — 3D Printing, CAD & CNC Woodworking in Edmonton"
+        description="On-demand 3D printing, CAD modeling, and custom CNC woodworking in Edmonton. Fast quotes and practical, small-batch work."
         url="https://www.custombuildstudio.ca/"
         image="/og-image.jpg"
       />
@@ -496,9 +497,9 @@ function HomePage() {
               </CardContent>
             </Card>
             <Card className="rounded-2xl border-slate-200 hover:border-sky-300 transition-colors bg-white shadow-sm">
-              <CardHeader className="pb-3"><CardTitle className="flex items-center gap-2 text-xl"><Wrench className="h-5 w-5 text-sky-600" /> CNC Programming</CardTitle></CardHeader>
+              <CardHeader className="pb-3"><CardTitle className="flex items-center gap-2 text-xl"><SawBlade className="h-5 w-5 text-sky-600" /> Custom CNC Woodworking</CardTitle></CardHeader>
               <CardContent className="text-slate-600 text-sm">
-                <p>Accurate toolpaths for milling and turning operations (Fusion 360, Siemens, Mazak) designed for speed and surface quality.</p>
+                <p>Custom CNC routing for signs, panels, cutouts, templates, and small-batch wood projects made from your drawing, dimensions, file, or idea.</p>
               </CardContent>
             </Card>
         </div>
@@ -601,7 +602,7 @@ function ServicesPage() {
   useReveal();
   return (
     <div className="pb-24">
-      <HeadTags title="Services | Custom Build Studio" description="FDM 3D printing, CAD modeling, and CNC programming services in Edmonton." url="https://www.custombuildstudio.ca/services" image="/og-image.jpg" />
+      <HeadTags title="Services | Custom Build Studio" description="FDM 3D printing, CAD modeling, and custom CNC woodworking services in Edmonton." url="https://www.custombuildstudio.ca/services" image="/og-image.jpg" />
       
       <PageHeader 
         title="Our Capabilities" 
@@ -613,7 +614,7 @@ function ServicesPage() {
           {[
             { icon: <Printer className="h-6 w-6 text-sky-600" />, title: "FDM 3D Printing", desc: "High-precision FDM printing using PLA, PETG, ABS, ASA, TPU, PET, PC, PA, and carbon or glass fiber-reinforced materials. We produce durable prototypes, functional parts, and small-batch runs with excellent accuracy and finish — optimized for strength and performance.", bullets: ["0.2–0.6 mm nozzles", "Rapid prototypes", "Batch production runs", "Engineering-grade materials"] },
             { icon: <Cube className="h-6 w-6 text-sky-600" />, title: "CAD Modeling & Scanning", desc: "Professional 3D modeling and high-resolution scanning for reverse engineering, product design, and prototyping. We convert real parts or ideas into detailed digital models, ready for 3D printing or CNC machining.", bullets: ["Fusion 360 & Onshape", "Reverse Engineering", "Export to STEP/STL/IGES", "Design for Manufacturing (DFM)"] },
-            { icon: <Wrench className="h-6 w-6 text-sky-600" />, title: "CNC Programming", desc: "Accurate, efficient CNC programming for milling and turning operations. Using Fusion 360, Siemens, and Mazak systems, we create optimized toolpaths for precision, speed, and surface quality — tailored to your machine and materials.", bullets: ["Haas / Mazak / Siemens", "Solid fixturing strategies", "Clear setup sheets", "Tool list generation"] },
+            { icon: <SawBlade className="h-6 w-6 text-sky-600" />, title: "Custom CNC Woodworking", desc: "Custom CNC router work for homeowners, DIY customers, contractors, designers, furniture makers, and local businesses. Share a sketch, drawing, dimensions, file, or idea, and we can prepare and route small-batch wood projects to suit your needs.", bullets: ["Custom routing, shapes & cutouts", "Wood engraving, carving & CNC signs", "Door, cabinet & decorative panels", "Templates, components & small batches"] },
           ].map((s) => (
             <Card key={s.title} className="rounded-2xl border-slate-200 shadow-sm flex flex-col">
               <CardHeader className="pb-4 border-b border-slate-100 bg-slate-50/50 rounded-t-2xl">
@@ -739,7 +740,7 @@ function PricingPage() {
   useReveal();
   return (
     <div className="pb-24">
-      <HeadTags title="Pricing | Custom Build Studio" description="Transparent pricing for 3D printing, CAD, and CNC programming." url="https://www.custombuildstudio.ca/pricing" image="/og-image.jpg" />
+      <HeadTags title="Pricing | Custom Build Studio" description="Transparent pricing for 3D printing, CAD, and custom CNC woodworking." url="https://www.custombuildstudio.ca/pricing" image="/og-image.jpg" />
       
       <PageHeader 
         title="Transparent Pricing" 
@@ -751,7 +752,7 @@ function PricingPage() {
           {[
             { name: "3D Printing", price: "Project Based", desc: "Pricing varies by size, material, and part complexity. We do not charge basic plate fees for engineering work.", items: ["Minimum job charges $20.00", "Functional industrial parts from $50+", "Rush options available", "Bulk production discounts"] },
             { name: "CAD Modeling & Scanning", price: "$75 / hr", desc: "For reverse engineering and custom design work. Simple brackets and modifiers are often fixed-fee.", items: ["Simple parts often fixed-fee", "Includes geometry cleanup", "Export formats: STEP / STL / IGES"] },
-            { name: "CNC Programming", price: "$75 / hr", desc: "Machine-dependent rate for efficient, crashed-tested toolpaths ready for your shop floor.", items: ["Setup sheets included", "Tool lists + post-processing", "Remote or onsite collaboration"] },
+            { name: "Custom CNC Woodworking", price: "Starting at $100", desc: "Most CNC router projects are quoted individually. Your quote reflects material, design or CAD work, setup, machining time, tooling, and any finishing requested.", items: ["Simple routing projects from $100", "Material and design quoted clearly", "Custom files, drawings & ideas welcome"] },
             { name: "Consulting / Troubleshooting", price: "Custom", desc: "Need advice on machine setup, material selection, or manufacturing workflow?", items: ["Process optimization", "Material sourcing advice", "Design for Manufacturing (DFM) check"] }
           ].map((p) => (
             <Card key={p.name} className="rounded-2xl border-slate-200 shadow-sm flex flex-col">
@@ -779,7 +780,7 @@ function PricingPage() {
         <div className="mt-12 bg-sky-50 border border-sky-100 rounded-2xl p-6 md:p-8 text-center flex flex-col items-center">
           <Shield className="h-10 w-10 text-sky-600 mb-3" />
           <h3 className="text-xl font-bold text-sky-950">Need an exact quote?</h3>
-          <p className="text-sky-800 mt-2 max-w-xl">Send us your 3D files (STEP, STL, IGES) or a dimensioned sketch. We review geometry same-day and provide a firm cost.</p>
+          <p className="text-sky-800 mt-2 max-w-xl">Send a file, sketch, dimensions, or a description of your project. We will review the details and provide a clear quote.</p>
           <Link to="/contact" className="mt-6">
             <Button className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-2 rounded-xl">Request a Quote</Button>
           </Link>
@@ -1090,7 +1091,7 @@ function ContactPage() {
 
   return (
     <div className="pb-24 flex flex-col">
-      <HeadTags title="Contact & Quotes | Custom Build Studio" description="Get a quote for your 3D printing or CNC programming project." url="https://www.custombuildstudio.ca/contact" image="/og-image.jpg" />
+      <HeadTags title="Contact & Quotes | Custom Build Studio" description="Get a quote for your 3D printing, CAD, or custom CNC woodworking project." url="https://www.custombuildstudio.ca/contact" image="/og-image.jpg" />
       
       <PageHeader 
         title="Get a Quote" 
