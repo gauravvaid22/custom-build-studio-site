@@ -13,6 +13,35 @@ type WorkItem = {
 
 const works: WorkItem[] = [
   {
+    title: "Architectural Signage & Door Number Replacement (Matte High-Impact Polymer)",
+    desc: "Custom-modeled replacement numerals reverse-engineered to match discontinued exterior apartment door hardware. Printed with UV-resistant, high-contrast filament to ensure long-term durability and seamless architectural integration. Direct digital manufacturing bypassed expensive custom cast-metal minimums while maintaining a clean, professional finish. Application: Architectural & Facility Maintenance.",
+    images: [{ src: "/images/work/1.jpg", alt: "Architectural Signage & Door Number Replacement" }],
+  },
+  {
+    title: "High-Temp Diesel Heater Duct Adapter (Polycarbonate)",
+    desc: "Precision duct transition adapter engineered to handle forced-air output from auxiliary diesel heating systems. Fabricated from pure Polycarbonate (PC) for its high heat deflection temperature (HDT) and structural rigidity under thermal load. Designed with an integrated mounting flange to ensure an airtight, rattle-free seal in off-grid van builds. Application: Automotive & Off-Grid Heating Systems.",
+    images: [{ src: "/images/work/2.DIESEL HEATER ADAPTER.jpg", alt: "High-Temp Diesel Heater Duct Adapter" }],
+  },
+  {
+    title: "Structural Centering & Adapter Rings (PA6-CF)",
+    desc: "High-stiffness concentric spacer rings produced for mechanical spacing and vibration isolation. Utilizes industrial PA6-CF to deliver extreme tensile strength, low warpage, and elevated thermal endurance. The carbon-fiber matrix yields a clean, non-reflective matte surface with tight dimensional tolerances. Application: Mechanical & Automotive Prototyping.",
+    images: [{ src: "/images/work/3.jpg", alt: "Structural Centering & Adapter Rings" }],
+  },
+  {
+    title: "Flame-Retardant Electrical Wire Routing Modules (PC-FR)",
+    desc: "Modular wire-management blocks engineered for clean cable routing and reliable mechanical retention. Manufactured from certified flame-retardant polycarbonate (PC-FR) compliant with UL94 V-0 safety standards. Batch-printed with integrated mounting counterbores and multi-axis channels for compact electrical assemblies. Application: Industrial Wire Management & Electrical Enclosures.",
+    images: [
+      { src: "/images/work/4.jpg", alt: "Batch Production / Array" },
+      { src: "/images/work/5.jpg", alt: "Assembly Profile" },
+      { src: "/images/work/6.jpg", alt: "Feature Detail" }
+    ],
+  },
+  {
+    title: "Exterior Emblem & Logo Badges for Overland Adventure Mods (ASA)",
+    desc: "Dual-tone exterior vehicle emblems manufactured for custom camper van and overland conversion packages. Printed in ASA to deliver exceptional resistance to outdoor weathering, harsh road salts, and intense UV degradation. Multi-color perimeter and typography execution provides an OEM-grade embossed finish suitable for direct exterior mounting. Application: Custom Automotive & Camper Van Branding.",
+    images: [{ src: "/images/work/7.JPG", alt: "Exterior Emblem & Logo Badges for Overland Adventure Mods" }],
+  },
+  {
     title: "CUSTOM ASA-CF SCREW",
     desc: "Durable manufacturing Custom Screw printed in ASA-CF.",
     images: [{ src: "/images/work/screw.JPG", alt: "New project" }],
