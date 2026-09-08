@@ -205,11 +205,12 @@ export function Separator({ className = "", ...props }: React.HTMLAttributes<HTM
 // Standardized Page Header
 export function PageHeader({ title, description }: { title: string, description: string }) {
   return (
-    <div className="bg-slate-900 border-b border-slate-800 text-white py-16 md:py-24 text-center px-4 relative overflow-hidden">
+    <div className="page-header-premium bg-slate-900 border-b border-slate-800 text-white py-16 md:py-24 text-center px-4 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-sky-900/20 to-transparent" />
-      <div className="relative z-10 max-w-4xl mx-auto fade-section is-visible">
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">{title}</h1>
-        <p className="mt-4 text-slate-300 max-w-2xl mx-auto text-lg">{description}</p>
+      <div className="absolute inset-0 hero-grid-pattern" aria-hidden="true" />
+      <div className="relative z-10 max-w-4xl mx-auto">
+        <h1 className="hero-heading text-4xl md:text-5xl font-extrabold tracking-tight">{title}</h1>
+        <p className="hero-desc mt-4 text-slate-300 max-w-2xl mx-auto text-lg">{description}</p>
       </div>
     </div>
   );
@@ -221,18 +222,23 @@ export function PageHeader({ title, description }: { title: string, description:
 function GlobalAnimatedBackground() {
   return (
     <style>{`
-      :root { --c1:#f0f9ff; --c2:#e0f2fe; --c3:#f8fafc; }
-      .animated-bg { background: linear-gradient(120deg, var(--c1), var(--c2), var(--c3)); background-size: 400% 400%; animation: gradientShift 20s ease-in-out infinite; }
+      :root { --c1:#f8fafc; --c2:#f0f9ff; --c3:#f1f5f9; }
+      .animated-bg { background: linear-gradient(135deg, var(--c1), var(--c2), var(--c3)); background-size: 400% 400%; animation: gradientShift 20s ease-in-out infinite; }
       @keyframes gradientShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-      .fade-section { opacity: 0; transform: translateY(18px); transition: opacity .8s ease, transform .8s ease; }
-      .fade-section.is-visible { opacity: 1; transform: translateY(0); }
     `}</style>
   );
 }
 
+/* Page load overlay — fades out on mount */
+function PageLoadOverlay() {
+  return <div className="page-load-overlay" aria-hidden="true" />;
+}
+
+/* Enhanced reveal hook: supports all directional reveal classes + stagger */
 function useReveal() {
   useEffect(() => {
-    const els = document.querySelectorAll<HTMLElement>(".fade-section");
+    const selectors = ".fade-section, .reveal-up, .reveal-down, .reveal-left, .reveal-right, .reveal-scale, .reveal-blur";
+    const els = document.querySelectorAll<HTMLElement>(selectors);
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) {
@@ -240,7 +246,7 @@ function useReveal() {
           obs.unobserve(e.target);
         }
       });
-    }, { threshold: 0.10 });
+    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
     els.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, []);
@@ -299,6 +305,7 @@ function AdsInit({ adsId }: { adsId: string }) {
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const lastY = useRef(0);
 
   useEffect(() => {
@@ -310,6 +317,7 @@ function Navbar() {
         if (y > 80 && goingDown) setHidden(true);
         else if (goingUp || y < 80) setHidden(false);
       }
+      setScrolled(y > 20);
       lastY.current = y;
     };
     onScroll();
@@ -334,7 +342,7 @@ function Navbar() {
 
   return (
     <>
-      <header className={"nav-appear fixed top-0 left-0 w-full z-50 will-change-transform " + (hidden ? "header-hidden " : "") + "bg-black shadow-md h-16 md:h-20"}>
+      <header className={"nav-appear fixed top-0 left-0 w-full z-50 will-change-transform transition-all duration-300 " + (hidden ? "header-hidden " : "") + (scrolled ? "nav-scrolled " : "") + "bg-black shadow-md h-16 md:h-20"}>
         <div className="mx-auto max-w-7xl px-6 h-full flex items-center justify-between text-white">
           <Link to="/" className="flex items-center gap-3">
             <img src="/images/brand/logo.png" alt="Custom Build Studio" className="h-10 w-auto" />
@@ -352,7 +360,7 @@ function Navbar() {
           </nav>
           <div className="hidden md:block">
             <Link to="/contact" className="inline-block">
-              <button type="button" className="rounded-2xl bg-sky-600 hover:bg-sky-500 text-white px-5 py-2.5 font-semibold shadow-sm transition-transform duration-200 hover:-translate-y-0.5">
+              <button type="button" className="btn-premium btn-shimmer rounded-2xl bg-sky-600 hover:bg-sky-500 text-white px-5 py-2.5 font-semibold shadow-sm transition-all duration-200">
                 Get a Quote
               </button>
             </Link>
@@ -374,14 +382,14 @@ function Navbar() {
             </button>
           </div>
           <nav className="mt-8 space-y-2">
-            <Link to="/" onClick={() => setMenuOpen(false)} className="block w-full text-base py-3 border-b border-white/10 hover:text-sky-400">Home</Link>
+            <Link to="/" onClick={() => setMenuOpen(false)} className="mobile-drawer-link block w-full text-base py-3 border-b border-white/10 hover:text-sky-400">Home</Link>
             {links.map((l) => (
-              <Link key={l.href} to={l.href} onClick={() => setMenuOpen(false)} className="block w-full text-base py-3 border-b border-white/10 hover:text-sky-400">
+              <Link key={l.href} to={l.href} onClick={() => setMenuOpen(false)} className="mobile-drawer-link block w-full text-base py-3 border-b border-white/10 hover:text-sky-400">
                 {l.label}
               </Link>
             ))}
             <Link to="/contact" onClick={() => setMenuOpen(false)} className="block mt-6">
-              <button className="w-full rounded-xl bg-sky-600 hover:bg-sky-500 text-white px-4 py-3 font-semibold shadow-sm">Get a Quote</button>
+              <button className="btn-premium w-full rounded-xl bg-sky-600 hover:bg-sky-500 text-white px-4 py-3 font-semibold shadow-sm">Get a Quote</button>
             </Link>
           </nav>
         </div>
@@ -432,38 +440,59 @@ function HomePage() {
       {/* HERO */}
       <section className="relative w-full min-h-[90svh] flex flex-col items-center justify-center text-white overflow-hidden bg-slate-900">
         <div className="absolute inset-0 hero-bg opacity-60" style={{ backgroundImage: "url('/images/hero-bg.jpg')", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }} aria-hidden="true" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-slate-900 hero-overlay" aria-hidden="true" />
+        <div className="absolute inset-0 hero-overlay-animated" aria-hidden="true" />
+        <div className="absolute inset-0 hero-grid-pattern" aria-hidden="true" />
+        
+        {/* Floating particles */}
+        <div className="hero-particles" aria-hidden="true">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="hero-particle" style={{
+              left: `${15 + i * 14}%`,
+              top: `${20 + (i % 3) * 25}%`,
+              '--dur': `${6 + i * 2}s`,
+              '--delay': `${i * 1.2}s`,
+              '--dx': `${(i % 2 === 0 ? 1 : -1) * (20 + i * 10)}px`,
+              '--dy': `${-40 - i * 15}px`,
+            } as React.CSSProperties} />
+          ))}
+        </div>
         
         <div className="relative z-10 text-center max-w-5xl px-6 pt-20 hero-content">
-          <span className="inline-block py-1 px-3 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30 text-sm font-semibold mb-6 tracking-wide">EDMONTON, ALBERTA</span>
-          <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6">From Idea → Precision Parts, Faster</h1>
-          <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-8 leading-relaxed">
+          <span className="hero-badge inline-block py-1.5 px-4 rounded-full bg-sky-500/15 text-sky-300 border border-sky-500/25 text-sm font-semibold mb-6 tracking-wide backdrop-blur-sm">EDMONTON, ALBERTA</span>
+          <h1 className="hero-heading text-4xl md:text-7xl font-extrabold tracking-tight leading-tight mb-6">From Idea → Precision Parts, Faster</h1>
+          <p className="hero-desc text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-8 leading-relaxed">
             We help businesses and makers turn concepts into durable, functional parts. On-demand <strong>3D printing</strong> and smart <strong>CAD design</strong>.
           </p>
           
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link to="/contact"><Button className="w-full sm:w-auto rounded-xl bg-sky-600 hover:bg-sky-500 text-white px-8 py-3 text-base border-none shadow-lg shadow-sky-900/50">Start Your Project</Button></Link>
-            <Link to="/services"><Button className="w-full sm:w-auto rounded-xl bg-slate-800/80 border border-slate-600 text-white hover:bg-slate-700 px-8 py-3 text-base backdrop-blur-sm">Explore Services</Button></Link>
+          <div className="hero-buttons flex flex-col sm:flex-row justify-center gap-4">
+            <Link to="/contact"><Button className="btn-premium btn-shimmer w-full sm:w-auto rounded-xl bg-sky-600 hover:bg-sky-500 text-white px-8 py-3 text-base border-none shadow-lg shadow-sky-900/50">Start Your Project</Button></Link>
+            <Link to="/services"><Button className="btn-outline-premium w-full sm:w-auto rounded-xl bg-slate-800/80 border border-slate-600 text-white hover:bg-slate-700 px-8 py-3 text-base backdrop-blur-sm">Explore Services</Button></Link>
           </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="scroll-indicator absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40">
+          <span className="text-xs tracking-widest uppercase font-medium">Scroll</span>
+          <svg className="scroll-indicator-arrow w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7" /></svg>
         </div>
       </section>
 
       {/* V2 Landing: Trust/Value Prop */}
-      <section className="bg-slate-900 border-b border-slate-800 py-12 relative z-20">
-        <div className="mx-auto max-w-6xl px-4 fade-section">
+      <section className="bg-slate-900 border-b border-slate-800 py-12 relative z-20 section-divider">
+        <div className="mx-auto max-w-6xl px-4 reveal-up">
           <div className="grid md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-800">
-            <div className="px-4 py-4 md:py-0">
-              <Shield className="h-8 w-8 mx-auto text-sky-500 mb-3" />
+            <div className="px-4 py-4 md:py-0 reveal-up card-dark-premium" style={{ '--stagger': '0ms' } as React.CSSProperties}>
+              <Shield className="h-8 w-8 mx-auto text-sky-500 mb-3 card-icon-float" />
               <h3 className="text-white font-bold text-lg">Shop-Floor Practical</h3>
               <p className="text-slate-400 text-sm mt-2">Advice from a working CNC machinist. Designs that print and parts that actually fit.</p>
             </div>
-            <div className="px-4 py-4 md:py-0">
-              <Cog className="h-8 w-8 mx-auto text-sky-500 mb-3" />
+            <div className="px-4 py-4 md:py-0 reveal-up card-dark-premium" style={{ '--stagger': '150ms' } as React.CSSProperties}>
+              <Cog className="h-8 w-8 mx-auto text-sky-500 mb-3 card-icon-float" />
               <h3 className="text-white font-bold text-lg">Industrial Materials</h3>
               <p className="text-slate-400 text-sm mt-2">PETG, ABS, ASA, ASA-CF, PET-CF, PA12, PA12-GF, PA12CF, PPS-CF but not limited to. We stock engineering-grade materials for parts that endure.</p>
             </div>
-            <div className="px-4 py-4 md:py-0">
-              <Phone className="h-8 w-8 mx-auto text-sky-500 mb-3" />
+            <div className="px-4 py-4 md:py-0 reveal-up card-dark-premium" style={{ '--stagger': '300ms' } as React.CSSProperties}>
+              <Phone className="h-8 w-8 mx-auto text-sky-500 mb-3 card-icon-float" />
               <h3 className="text-white font-bold text-lg">Clear Communication</h3>
               <p className="text-slate-400 text-sm mt-2">One owner-operator point of contact. Fast quotes and clear ETAs you can rely on.</p>
             </div>
@@ -472,8 +501,8 @@ function HomePage() {
       </section>
 
       {/* V2 Landing: Service Teaser */}
-      <section className="mx-auto max-w-6xl px-4 pt-20 pb-10 fade-section">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+      <section className="mx-auto max-w-6xl px-4 pt-20 pb-10 relative bg-tech-grid">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 reveal-up">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">What We Do</h2>
             <p className="text-slate-600 mt-2 text-lg">Specialized manufacturing capabilities for low-volume production.</p>
@@ -484,21 +513,21 @@ function HomePage() {
         </div>
         
         <div className="grid md:grid-cols-3 gap-6">
-           <Card className="rounded-2xl border-slate-200 hover:border-sky-300 transition-colors bg-white shadow-sm">
-              <CardHeader className="pb-3"><CardTitle className="flex items-center gap-2 text-xl"><Printer className="h-5 w-5 text-sky-600" /> FDM 3D Printing</CardTitle></CardHeader>
-              <CardContent className="text-slate-600 text-sm">
+           <Card className="card-premium relative rounded-2xl border-slate-200 hover:border-sky-300 transition-colors bg-white shadow-sm reveal-left" style={{ '--stagger': '0ms' } as React.CSSProperties}>
+              <CardHeader className="pb-3"><CardTitle className="flex items-center gap-2 text-xl"><Printer className="h-5 w-5 text-sky-600 card-icon-float" /> FDM 3D Printing</CardTitle></CardHeader>
+              <CardContent className="text-slate-600 text-sm relative z-10">
                 <p>High-precision printing using functional materials (Carbon/Glass Fiber, PC, ASA, PA). Optimized for strength and performance.</p>
               </CardContent>
             </Card>
-            <Card className="rounded-2xl border-slate-200 hover:border-sky-300 transition-colors bg-white shadow-sm">
-              <CardHeader className="pb-3"><CardTitle className="flex items-center gap-2 text-xl"><Cube className="h-5 w-5 text-sky-600" /> CAD & 3D Scanning</CardTitle></CardHeader>
-              <CardContent className="text-slate-600 text-sm">
+            <Card className="card-premium relative rounded-2xl border-slate-200 hover:border-sky-300 transition-colors bg-white shadow-sm reveal-up" style={{ '--stagger': '150ms' } as React.CSSProperties}>
+              <CardHeader className="pb-3"><CardTitle className="flex items-center gap-2 text-xl"><Cube className="h-5 w-5 text-sky-600 card-icon-float" /> CAD & 3D Scanning</CardTitle></CardHeader>
+              <CardContent className="text-slate-600 text-sm relative z-10">
                 <p>Professional modeling and high-res scanning for reverse engineering and prototyping. Converting real parts into digital geometry.</p>
               </CardContent>
             </Card>
-            <Card className="rounded-2xl border-slate-200 hover:border-sky-300 transition-colors bg-white shadow-sm">
-              <CardHeader className="pb-3"><CardTitle className="flex items-center gap-2 text-xl"><SawBlade className="h-5 w-5 text-sky-600" /> Custom CNC Woodworking</CardTitle></CardHeader>
-              <CardContent className="text-slate-600 text-sm">
+            <Card className="card-premium relative rounded-2xl border-slate-200 hover:border-sky-300 transition-colors bg-white shadow-sm reveal-right" style={{ '--stagger': '300ms' } as React.CSSProperties}>
+              <CardHeader className="pb-3"><CardTitle className="flex items-center gap-2 text-xl"><SawBlade className="h-5 w-5 text-sky-600 card-icon-float" /> Custom CNC Woodworking</CardTitle></CardHeader>
+              <CardContent className="text-slate-600 text-sm relative z-10">
                 <p>Custom CNC routing for signs, panels, cutouts, templates, and small-batch wood projects made from your drawing, dimensions, file, or idea.</p>
               </CardContent>
             </Card>
@@ -506,8 +535,8 @@ function HomePage() {
       </section>
 
       {/* V2 Landing: Featured Work Teaser */}
-      <section className="mx-auto max-w-6xl px-4 py-10 fade-section">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+      <section className="mx-auto max-w-6xl px-4 py-10 section-divider">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 reveal-up">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">Featured Projects</h2>
             <p className="text-slate-600 mt-2 text-lg">A look at some of our recent industrial and functional prints.</p>
@@ -522,7 +551,7 @@ function HomePage() {
           {works.slice(0, 3).map((w, index) => {
             const cover = w.images[0];
             return (
-              <Card key={w.title} className="rounded-2xl overflow-hidden group shadow-sm flex flex-col border-slate-200">
+              <Card key={w.title} className="card-premium relative rounded-2xl overflow-hidden group shadow-sm flex flex-col border-slate-200 reveal-up" style={{ '--stagger': `${index * 150}ms` } as React.CSSProperties}>
                 <button type="button" onClick={() => setLightbox({ workIndex: index, imageIndex: 0 })} className="block relative h-56 w-full focus:outline-none overflow-hidden">
                   <img src={cover.src} alt={cover.alt} loading="lazy" className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   {w.videoUrl && (
@@ -530,14 +559,14 @@ function HomePage() {
                       <PlayCircle className="w-5 h-5" />
                     </div>
                   )}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 work-card-overlay">
                      <span className="text-white text-sm font-medium flex items-center gap-1">View Details <ArrowRight className="w-4 h-4"/></span>
                   </div>
                 </button>
                 <CardHeader className="pb-2">
                   <CardTitle className="text-lg leading-tight">{w.title}</CardTitle>
                 </CardHeader>
-                <CardContent className="text-sm text-slate-600 flex-grow flex flex-col">
+                <CardContent className="text-sm text-slate-600 flex-grow flex flex-col relative z-10">
                   <p className="mb-4">{w.desc}</p>
                 </CardContent>
               </Card>
@@ -547,12 +576,13 @@ function HomePage() {
       </section>
 
       {/* V2 Landing: CTA Banner */}
-      <section className="bg-sky-50 border-y border-sky-100 py-16 mt-10">
-        <div className="mx-auto max-w-4xl px-4 text-center fade-section">
+      <section className="bg-sky-50 border-y border-sky-100 py-16 mt-10 relative overflow-hidden">
+        <div className="absolute inset-0 bg-tech-grid" aria-hidden="true" />
+        <div className="mx-auto max-w-4xl px-4 text-center reveal-scale relative z-10">
           <h2 className="text-3xl font-bold text-sky-950 mb-4">Ready to bring your part to life?</h2>
-          <p className="text-sky-800 mb-8 text-lg">Send us a sketch, photo, or 3D file. We’ll review the geometry and give you a quote the same day.</p>
+          <p className="text-sky-800 mb-8 text-lg">Send us a sketch, photo, or 3D file. We'll review the geometry and give you a quote the same day.</p>
           <Link to="/contact">
-            <Button className="rounded-xl bg-sky-600 hover:bg-sky-700 text-white px-8 py-3 text-base shadow-md transition-transform hover:-translate-y-0.5">
+            <Button className="btn-premium btn-shimmer rounded-xl bg-sky-600 hover:bg-sky-700 text-white px-8 py-3 text-base shadow-md">
               Get a Fast Quote
             </Button>
           </Link>
@@ -609,18 +639,18 @@ function ServicesPage() {
         description="Comprehensive manufacturing services designed for functional prototypes, replacement parts, and low-volume production." 
       />
 
-      <section className="mx-auto max-w-6xl px-4 py-16 fade-section">
+      <section className="mx-auto max-w-6xl px-4 py-16">
         <div className="grid md:grid-cols-3 gap-8">
           {[
-            { icon: <Printer className="h-6 w-6 text-sky-600" />, title: "FDM 3D Printing", desc: "High-precision FDM printing using PLA, PETG, ABS, ASA, TPU, PET, PC, PA, and carbon or glass fiber-reinforced materials. We produce durable prototypes, functional parts, and small-batch runs with excellent accuracy and finish — optimized for strength and performance.", bullets: ["0.2–0.6 mm nozzles", "Rapid prototypes", "Batch production runs", "Engineering-grade materials"] },
-            { icon: <Cube className="h-6 w-6 text-sky-600" />, title: "CAD Modeling & Scanning", desc: "Professional 3D modeling and high-resolution scanning for reverse engineering, product design, and prototyping. We convert real parts or ideas into detailed digital models, ready for 3D printing or CNC machining.", bullets: ["Fusion 360 & Onshape", "Reverse Engineering", "Export to STEP/STL/IGES", "Design for Manufacturing (DFM)"] },
-            { icon: <SawBlade className="h-6 w-6 text-sky-600" />, title: "Custom CNC Woodworking", desc: "Custom CNC router work for homeowners, DIY customers, contractors, designers, furniture makers, and local businesses. Share a sketch, drawing, dimensions, file, or idea, and we can prepare and route small-batch wood projects to suit your needs.", bullets: ["Custom routing, shapes & cutouts", "Wood engraving, carving & CNC signs", "Door, cabinet & decorative panels", "Templates, components & small batches"] },
-          ].map((s) => (
-            <Card key={s.title} className="rounded-2xl border-slate-200 shadow-sm flex flex-col">
+            { icon: <Printer className="h-6 w-6 text-sky-600 card-icon-float" />, title: "FDM 3D Printing", desc: "High-precision FDM printing using PLA, PETG, ABS, ASA, TPU, PET, PC, PA, and carbon or glass fiber-reinforced materials. We produce durable prototypes, functional parts, and small-batch runs with excellent accuracy and finish — optimized for strength and performance.", bullets: ["0.2–0.6 mm nozzles", "Rapid prototypes", "Batch production runs", "Engineering-grade materials"] },
+            { icon: <Cube className="h-6 w-6 text-sky-600 card-icon-float" />, title: "CAD Modeling & Scanning", desc: "Professional 3D modeling and high-resolution scanning for reverse engineering, product design, and prototyping. We convert real parts or ideas into detailed digital models, ready for 3D printing or CNC machining.", bullets: ["Fusion 360 & Onshape", "Reverse Engineering", "Export to STEP/STL/IGES", "Design for Manufacturing (DFM)"] },
+            { icon: <SawBlade className="h-6 w-6 text-sky-600 card-icon-float" />, title: "Custom CNC Woodworking", desc: "Custom CNC router work for homeowners, DIY customers, contractors, designers, furniture makers, and local businesses. Share a sketch, drawing, dimensions, file, or idea, and we can prepare and route small-batch wood projects to suit your needs.", bullets: ["Custom routing, shapes & cutouts", "Wood engraving, carving & CNC signs", "Door, cabinet & decorative panels", "Templates, components & small batches"] },
+          ].map((s, i) => (
+            <Card key={s.title} className={"card-premium relative rounded-2xl border-slate-200 shadow-sm flex flex-col " + (i === 0 ? "reveal-left" : i === 2 ? "reveal-right" : "reveal-up")} style={{ '--stagger': `${i * 150}ms` } as React.CSSProperties}>
               <CardHeader className="pb-4 border-b border-slate-100 bg-slate-50/50 rounded-t-2xl">
                 <CardTitle className="flex items-center gap-3 text-xl">{s.icon}{s.title}</CardTitle>
               </CardHeader>
-              <CardContent className="text-slate-600 text-sm pt-5 flex-grow">
+              <CardContent className="text-slate-600 text-sm pt-5 flex-grow relative z-10">
                 <p className="leading-relaxed mb-5">{s.desc}</p>
                 <div className="font-semibold text-slate-800 mb-2">Key Highlights:</div>
                 <ul className="space-y-2">
@@ -660,12 +690,12 @@ function WorkPage() {
       />
 
       {/* Updated to use CSS Masonry layout (columns-3) to handle mixed-height cards smoothly */}
-      <section className="mx-auto max-w-6xl px-4 py-16 fade-section">
+      <section className="mx-auto max-w-6xl px-4 py-16">
         <div className="columns-1 sm:columns-2 lg:columns-3 gap-6">
           {works.map((w, index) => {
             const cover = w.images[0];
             return (
-              <Card key={w.title} className="rounded-2xl overflow-hidden group shadow-sm flex flex-col border-slate-200 mb-6 break-inside-avoid h-fit w-full inline-block">
+              <Card key={w.title} className="card-premium relative rounded-2xl overflow-hidden group shadow-sm flex flex-col border-slate-200 mb-6 break-inside-avoid h-fit w-full inline-block reveal-blur" style={{ '--stagger': `${index * 100}ms` } as React.CSSProperties}>
                 <button type="button" onClick={() => setLightbox({ workIndex: index, imageIndex: 0 })} className="block relative h-56 w-full focus:outline-none overflow-hidden bg-slate-100">
                   <img src={cover.src} alt={cover.alt} loading="lazy" className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   {/* Premium video icon badge for thumbnails */}
@@ -674,14 +704,14 @@ function WorkPage() {
                       <PlayCircle className="w-5 h-5" />
                     </div>
                   )}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 work-card-overlay">
                      <span className="text-white text-sm font-medium flex items-center gap-1">View Details <ArrowRight className="w-4 h-4"/></span>
                   </div>
                 </button>
                 <CardHeader className="pb-2">
                   <CardTitle className="text-lg leading-tight">{w.title}</CardTitle>
                 </CardHeader>
-                <CardContent className="text-sm text-slate-600 flex-grow flex flex-col">
+                <CardContent className="text-sm text-slate-600 flex-grow flex flex-col relative z-10">
                   <p className="mb-4">{w.desc}</p>
                   
                   {/* Cleaned up embedded video layout */}
@@ -747,20 +777,20 @@ function PricingPage() {
         description="No hidden fees. We price jobs based on geometry, material performance, and your strict deadlines." 
       />
 
-      <section className="mx-auto max-w-5xl px-4 py-16 fade-section">
+      <section className="mx-auto max-w-5xl px-4 py-16">
         <div className="grid md:grid-cols-2 gap-6">
           {[
             { name: "3D Printing", price: "Project Based", desc: "Pricing varies by size, material, and part complexity. We do not charge basic plate fees for engineering work.", items: ["Minimum job charges $20.00", "Functional industrial parts from $50+", "Rush options available", "Bulk production discounts"] },
             { name: "CAD Modeling & Scanning", price: "$75 / hr", desc: "For reverse engineering and custom design work. Simple brackets and modifiers are often fixed-fee.", items: ["Simple parts often fixed-fee", "Includes geometry cleanup", "Export formats: STEP / STL / IGES"] },
             { name: "Custom CNC Woodworking", price: "Starting at $100", desc: "Most CNC router projects are quoted individually. Your quote reflects material, design or CAD work, setup, machining time, tooling, and any finishing requested.", items: ["Simple routing projects from $100", "Material and design quoted clearly", "Custom files, drawings & ideas welcome"] },
             { name: "Consulting / Troubleshooting", price: "Custom", desc: "Need advice on machine setup, material selection, or manufacturing workflow?", items: ["Process optimization", "Material sourcing advice", "Design for Manufacturing (DFM) check"] }
-          ].map((p) => (
-            <Card key={p.name} className="rounded-2xl border-slate-200 shadow-sm flex flex-col">
+          ].map((p, i) => (
+            <Card key={p.name} className="pricing-card rounded-2xl border-slate-200 shadow-sm flex flex-col reveal-up" style={{ '--stagger': `${i * 120}ms` } as React.CSSProperties}>
               <CardHeader className="bg-slate-50/50 rounded-t-2xl border-b border-slate-100">
                 <CardTitle className="text-xl text-slate-900">{p.name}</CardTitle>
               </CardHeader>
               <CardContent className="text-sm text-slate-700 pt-6 flex-grow flex flex-col">
-                <div className="text-3xl font-extrabold text-sky-700 tracking-tight mb-2">{p.price}</div>
+                <div className="text-3xl font-extrabold text-sky-700 tracking-tight mb-2 stat-number">{p.price}</div>
                 <p className="text-slate-600 mb-6">{p.desc}</p>
                 <div className="mt-auto">
                   <ul className="space-y-3 border-t border-slate-100 pt-4">
@@ -777,12 +807,12 @@ function PricingPage() {
           ))}
         </div>
         
-        <div className="mt-12 bg-sky-50 border border-sky-100 rounded-2xl p-6 md:p-8 text-center flex flex-col items-center">
+        <div className="mt-12 bg-sky-50 border border-sky-100 rounded-2xl p-6 md:p-8 text-center flex flex-col items-center reveal-scale">
           <Shield className="h-10 w-10 text-sky-600 mb-3" />
           <h3 className="text-xl font-bold text-sky-950">Need an exact quote?</h3>
           <p className="text-sky-800 mt-2 max-w-xl">Send a file, sketch, dimensions, or a description of your project. We will review the details and provide a clear quote.</p>
           <Link to="/contact" className="mt-6">
-            <Button className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-2 rounded-xl">Request a Quote</Button>
+            <Button className="btn-premium bg-sky-600 hover:bg-sky-700 text-white px-6 py-2 rounded-xl">Request a Quote</Button>
           </Link>
         </div>
       </section>
@@ -822,8 +852,8 @@ function ProductsPage() {
         description="Durable, functional, and engineering-grade 3D printed components manufactured right here in Edmonton." 
       />
 
-      <section className="mx-auto max-w-6xl px-4 py-16 fade-section">
-        <div className="mb-10 p-5 bg-sky-50 border border-sky-100 rounded-2xl flex flex-col md:flex-row gap-6 items-center">
+      <section className="mx-auto max-w-6xl px-4 py-16">
+        <div className="mb-10 p-5 bg-sky-50 border border-sky-100 rounded-2xl flex flex-col md:flex-row gap-6 items-center reveal-up">
           <div className="flex-shrink-0 bg-sky-100 p-3 rounded-full">
             <Mail className="w-8 h-8 text-sky-600" />
           </div>
@@ -838,7 +868,7 @@ function ProductsPage() {
             const coverImage = p.images && p.images.length > 0 ? p.images[0].src : null;
             
             return (
-              <Card key={index} className="rounded-2xl overflow-hidden flex flex-col group border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+              <Card key={index} className="card-premium relative rounded-2xl overflow-hidden flex flex-col group border-slate-200 shadow-sm hover:shadow-md transition-shadow reveal-up" style={{ '--stagger': `${index * 120}ms` } as React.CSSProperties}>
                 
                 {/* Image Button that opens the modal */}
                 <button 
@@ -852,26 +882,26 @@ function ProductsPage() {
                     <Cube className="w-16 h-16 text-slate-300 transition-transform duration-500 group-hover:scale-110" />
                   )}
                   {p.material && (
-                    <div className="absolute top-3 right-3 bg-white/90 backdrop-blur text-slate-800 text-[11px] px-2.5 py-1 rounded-full font-bold border border-slate-200 shadow-sm z-10">{p.material}</div>
+                    <div className="material-badge absolute top-3 right-3 bg-white/90 backdrop-blur text-slate-800 text-[11px] px-2.5 py-1 rounded-full font-bold border border-slate-200 shadow-sm z-10">{p.material}</div>
                   )}
                   
                   {/* Hover Overlay */}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 work-card-overlay">
                      <span className="text-white text-sm font-medium flex items-center gap-1">View Details <ArrowRight className="w-4 h-4"/></span>
                   </div>
                 </button>
 
-                <div className="p-6 flex flex-col flex-grow">
+                <div className="p-6 flex flex-col flex-grow relative z-10">
                   <h3 className="text-xl font-bold text-slate-900 leading-tight mb-3 line-clamp-2">{p.title}</h3>
                   <p className="text-slate-600 text-sm mb-6 flex-grow leading-relaxed line-clamp-3">
                     {p.desc}
                   </p>
                   <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-100">
-                    <span className="text-2xl font-extrabold text-slate-900">{p.price}</span>
+                    <span className="text-2xl font-extrabold text-slate-900 stat-number">{p.price}</span>
                     <button 
                       type="button"
                       onClick={() => setActiveProduct({ productIndex: index, imageIndex: 0 })}
-                      className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-sm font-semibold transition-colors shadow-sm"
+                      className="btn-premium inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-sm font-semibold transition-colors shadow-sm"
                     >
                       Details
                     </button>
@@ -963,7 +993,7 @@ function ProductsPage() {
                   <div className="mt-auto pt-6 border-t border-slate-100">
                     <a 
                       href={`mailto:Custombuildstudio@gmail.com?subject=Order Inquiry: ${encodeURIComponent(product.title)}&body=Hi Custom Build Studio,%0A%0AI would like to order the ${encodeURIComponent(product.title)}.%0A%0AQuantity:%0A%0AAdditional Details/Questions:%0A%0ALet me know the next steps for e-Transfer. Thanks!`} 
-                      className="w-full inline-flex items-center justify-center px-6 py-4 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-lg font-bold transition-transform hover:-translate-y-0.5 shadow-lg shadow-sky-600/30"
+                      className="btn-premium btn-shimmer w-full inline-flex items-center justify-center px-6 py-4 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-lg font-bold transition-transform shadow-lg shadow-sky-600/30"
                     >
                       <Mail className="w-5 h-5 mr-2" />
                       Order via Email
@@ -1031,13 +1061,13 @@ function ReviewsPage() {
         description="Don't just take our word for it. See what local businesses and makers are saying about our parts." 
       />
 
-      <section className="mx-auto max-w-6xl px-4 py-16 fade-section">
+      <section className="mx-auto max-w-6xl px-4 py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {reviews.map((r, i) => (
-            <Card key={i} className="rounded-2xl border-slate-200 shadow-sm flex flex-col p-6">
-              <div className="flex gap-1 mb-4">
+            <Card key={i} className="review-card rounded-2xl border-slate-200 shadow-sm flex flex-col p-6 reveal-up" style={{ '--stagger': `${i * 150}ms` } as React.CSSProperties}>
+              <div className="review-stars flex gap-1 mb-4">
                 {[...Array(5)].map((_, idx) => (
-                  <Star key={idx} className="w-5 h-5 text-yellow-400" />
+                  <Star key={idx} className="review-star w-5 h-5 text-yellow-400" />
                 ))}
               </div>
               <p className="text-slate-700 italic flex-grow mb-6 leading-relaxed">"{r.text}"</p>
@@ -1059,11 +1089,11 @@ function ReviewsPage() {
           ))}
         </div>
 
-        <div className="mt-16 text-center p-8 bg-sky-50 rounded-2xl border border-sky-100">
+        <div className="mt-16 text-center p-8 bg-sky-50 rounded-2xl border border-sky-100 reveal-scale">
           <h3 className="text-2xl font-bold text-sky-950 mb-3">Worked with us recently?</h3>
           <p className="text-sky-800 mb-6">We appreciate your honest feedback. It helps other local businesses find reliable manufacturing partners.</p>
           {/* REPLACE the # with your actual Google Maps Page Link */}
-          <a href="#" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center px-6 py-3 rounded-xl bg-white border-2 border-sky-200 text-sky-700 font-bold hover:bg-sky-100 transition-colors shadow-sm">
+          <a href="#" target="_blank" rel="noreferrer" className="btn-outline-premium inline-flex items-center justify-center px-6 py-3 rounded-xl bg-white border-2 border-sky-200 text-sky-700 font-bold hover:bg-sky-100 transition-colors shadow-sm">
             Leave us a review on Google
           </a>
         </div>
@@ -1098,19 +1128,19 @@ function ContactPage() {
         description="Send a sketch, photo, or 3D file. We’ll review the geometry and confirm details the same day." 
       />
 
-      <section className="mx-auto max-w-5xl px-4 py-16 w-full fade-section">
+      <section className="mx-auto max-w-5xl px-4 py-16 w-full">
         <div className="grid lg:grid-cols-5 gap-12 items-start">
           
           {/* Contact Info Sidebar */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-8 reveal-left">
             <div>
               <h2 className="text-2xl font-bold text-slate-900 mb-4">Direct Contact</h2>
               <div className="space-y-4">
-                <a href="tel:+17802030081" className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors border border-slate-200">
+                <a href="tel:+17802030081" className="contact-link flex items-center gap-4 p-4 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors border border-slate-200">
                   <div className="bg-white p-2 rounded-lg shadow-sm"><Phone className="h-5 w-5 text-sky-600" /></div>
                   <span className="font-semibold text-slate-700">780-203-0081</span>
                 </a>
-                <a href="mailto:custombuildstudio@gmail.com" className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors border border-slate-200">
+                <a href="mailto:custombuildstudio@gmail.com" className="contact-link flex items-center gap-4 p-4 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors border border-slate-200">
                   <div className="bg-white p-2 rounded-lg shadow-sm"><Mail className="h-5 w-5 text-sky-600" /></div>
                   <span className="font-semibold text-slate-700 break-all">custombuildstudio@gmail.com</span>
                 </a>
@@ -1120,11 +1150,11 @@ function ContactPage() {
             <div>
               <h2 className="text-2xl font-bold text-slate-900 mb-4">Social</h2>
               <div className="space-y-4">
-                <a href="https://instagram.com/Custom_Build_Studio" target="_blank" rel="noreferrer" className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors border border-slate-200">
+                <a href="https://instagram.com/Custom_Build_Studio" target="_blank" rel="noreferrer" className="contact-link flex items-center gap-4 p-4 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors border border-slate-200">
                   <div className="bg-white p-2 rounded-lg shadow-sm"><Instagram className="h-5 w-5 text-sky-600" /></div>
                   <span className="font-semibold text-slate-700">@Custom_Build_Studio</span>
                 </a>
-                <a href="https://www.facebook.com/profile.php?id=61582467820321" target="_blank" rel="noreferrer" className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors border border-slate-200">
+                <a href="https://www.facebook.com/profile.php?id=61582467820321" target="_blank" rel="noreferrer" className="contact-link flex items-center gap-4 p-4 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors border border-slate-200">
                   <div className="bg-white p-2 rounded-lg shadow-sm"><Facebook className="h-5 w-5 text-sky-600" /></div>
                   <span className="font-semibold text-slate-700">/CustomBuildStudio</span>
                 </a>
@@ -1133,7 +1163,7 @@ function ContactPage() {
           </div>
 
           {/* Contact Form */}
-          <Card className="lg:col-span-3 rounded-2xl p-8 shadow-md border-slate-200">
+          <Card className="lg:col-span-3 rounded-2xl p-8 shadow-md border-slate-200 reveal-right">
             <h3 className="text-xl font-bold text-slate-900 mb-6">Send Project Details</h3>
             <form method="POST" data-netlify="true" name="contact" encType="multipart/form-data" netlify-honeypot="bot-field" action="/thank-you.html" className="space-y-5"
               onSubmit={(e) => {
@@ -1231,7 +1261,7 @@ function ContactPage() {
                 </p>
               </div>
 
-              <Button type="submit" className="w-full bg-sky-600 hover:bg-sky-500 text-white text-base py-3 rounded-xl shadow-md transition-transform hover:-translate-y-0.5">Send Request</Button>
+              <Button type="submit" className="btn-premium btn-shimmer w-full bg-sky-600 hover:bg-sky-500 text-white text-base py-3 rounded-xl shadow-md">Send Request</Button>
             </form>
           </Card>
 
@@ -1266,6 +1296,7 @@ function ThankYouPage() {
 function Layout() {
   return (
     <div className="min-h-[100svh] w-full text-slate-900 overflow-x-hidden flex flex-col bg-white">
+      <PageLoadOverlay />
       <AnalyticsDeferred id="G-8D08Z57Q3S" />
       <Navbar />
       <div className="h-16 md:h-20 bg-slate-900" aria-hidden="true" /> {/* Spacer matched to header color */}
@@ -1274,7 +1305,7 @@ function Layout() {
         <Outlet />
       </main>
 
-      <footer className="bg-slate-900 text-slate-400 py-12 mt-auto border-t border-slate-800">
+      <footer className="footer-premium bg-slate-900 text-slate-400 py-12 mt-auto border-t border-slate-800">
         <div className="mx-auto max-w-6xl px-4 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
              <img src="/images/brand/logo.png" alt="" className="h-8 w-auto opacity-50 grayscale" />

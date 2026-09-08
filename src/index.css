@@ -1,46 +1,888 @@
+/* ─── Google Font: Inter ─── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Base Setup */
-html { 
+/* ============================================================
+   PREMIUM ANIMATION SYSTEM — Custom Build Studio
+   Modern, engineering-grade visual experience
+   ============================================================ */
+
+/* ─── CSS Custom Properties ─── */
+:root {
+  --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 200ms;
+  --duration-normal: 400ms;
+  --duration-slow: 700ms;
+  --duration-reveal: 900ms;
+  --hero-p: 0;
+  --accent-glow: rgba(14, 165, 233, 0.15);
+  --accent-glow-strong: rgba(14, 165, 233, 0.3);
+}
+
+/* ─── Base Setup ─── */
+html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   margin: 0;
   padding: 0;
   background: #ffffff;
-  font-family: system-ui, -apple-system, sans-serif;
-  /* Prevent horizontal scrolling/swiping without breaking vertical modals */
-  overflow-x: hidden; 
+  font-family: var(--font-primary);
+  overflow-x: hidden;
+  color: #0f172a;
 }
 
-/* Prevent iOS from automatically zooming in when you click the Contact Form inputs */
+::selection {
+  background: rgba(14, 165, 233, 0.2);
+  color: #0c4a6e;
+}
+
+/* Prevent iOS zoom on input focus */
 @media (max-width: 640px) {
   input, textarea, select, button { font-size: 16px !important; }
 }
 
-/* Animations for scrolling down the page */
-.fade-section { 
-  opacity: 0; 
-  transform: translateY(18px); 
-  transition: opacity .8s ease, transform .8s ease; 
-}
-.fade-section.is-visible { 
-  opacity: 1; 
-  transform: translateY(0); 
+
+/* ============================================================
+   PAGE LOAD OVERLAY
+   ============================================================ */
+.page-load-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #0f172a;
+  pointer-events: none;
+  animation: pageLoadFade 0.8s var(--ease-premium) 0.1s forwards;
 }
 
-/* Hero Parallax effect */
-:root { --hero-p: 0; }
+@keyframes pageLoadFade {
+  0%   { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+
+/* ============================================================
+   SCROLL REVEAL ANIMATIONS
+   Multi-directional with stagger support
+   ============================================================ */
+
+/* Base reveal state (hidden) */
+.reveal-up,
+.reveal-down,
+.reveal-left,
+.reveal-right,
+.reveal-scale,
+.reveal-blur,
+.fade-section {
+  opacity: 0;
+  transition:
+    opacity var(--duration-reveal) var(--ease-premium),
+    transform var(--duration-reveal) var(--ease-premium),
+    filter var(--duration-reveal) var(--ease-premium);
+  transition-delay: var(--stagger, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal-up,
+.fade-section {
+  transform: translateY(40px);
+}
+
+.reveal-down {
+  transform: translateY(-40px);
+}
+
+.reveal-left {
+  transform: translateX(-50px);
+}
+
+.reveal-right {
+  transform: translateX(50px);
+}
+
+.reveal-scale {
+  transform: scale(0.92);
+}
+
+.reveal-blur {
+  transform: translateY(20px);
+  filter: blur(8px);
+}
+
+/* Revealed state */
+.reveal-up.is-visible,
+.reveal-down.is-visible,
+.reveal-left.is-visible,
+.reveal-right.is-visible,
+.reveal-scale.is-visible,
+.reveal-blur.is-visible,
+.fade-section.is-visible {
+  opacity: 1;
+  transform: translateY(0) translateX(0) scale(1);
+  filter: blur(0);
+}
+
+
+/* ============================================================
+   NAVBAR — Premium Glass Morphism
+   ============================================================ */
+.nav-appear {
+  animation: navSlideDown 0.6s var(--ease-premium) forwards;
+}
+
+@keyframes navSlideDown {
+  0%   { opacity: 0; transform: translateY(-100%); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.header-hidden {
+  transform: translateY(-100%) !important;
+  transition: transform 0.4s var(--ease-premium) !important;
+}
+
+/* Glass effect when scrolled */
+.nav-scrolled {
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* Animated nav link underline */
+.nav-link {
+  position: relative;
+  padding-bottom: 2px;
+  transition: color 0.3s var(--ease-premium);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+  border-radius: 1px;
+  transition: width 0.35s var(--ease-premium), left 0.35s var(--ease-premium);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+  left: 0;
+}
+
+
+/* ============================================================
+   HERO SECTION — Cinematic Entrance
+   ============================================================ */
+
+/* Parallax effect for hero */
 .hero-bg {
   will-change: transform, opacity;
   transform: translateY(calc(var(--hero-p) * -20px)) scale(calc(1 + var(--hero-p) * 0.05));
 }
+
 .hero-content {
   will-change: transform, opacity, filter;
   transform: translateY(calc(var(--hero-p) * 20px));
   opacity: calc(1 - var(--hero-p) * 0.9);
+}
+
+/* Hero animated gradient overlay */
+.hero-overlay-animated {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(15, 23, 42, 0.5) 40%,
+    rgba(14, 165, 233, 0.08) 70%,
+    rgba(15, 23, 42, 0.6) 100%
+  );
+  background-size: 300% 300%;
+  animation: heroGradient 12s ease-in-out infinite;
+}
+
+@keyframes heroGradient {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Staggered hero element entrances */
+.hero-badge {
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  animation: heroElementIn 0.8s var(--ease-out-expo) 0.3s forwards;
+}
+
+.hero-heading {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: heroElementIn 0.9s var(--ease-out-expo) 0.5s forwards;
+}
+
+.hero-desc {
+  opacity: 0;
+  transform: translateY(25px);
+  animation: heroElementIn 0.8s var(--ease-out-expo) 0.75s forwards;
+}
+
+.hero-buttons {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: heroElementIn 0.8s var(--ease-out-expo) 0.95s forwards;
+}
+
+@keyframes heroElementIn {
+  0%   { opacity: 0; transform: translateY(var(--translate-y, 30px)) scale(var(--scale-from, 1)); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Hero grid pattern decoration */
+.hero-grid-pattern {
+  background-image:
+    linear-gradient(rgba(14, 165, 233, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridFloat 25s linear infinite;
+}
+
+@keyframes gridFloat {
+  0%   { background-position: 0 0; }
+  100% { background-position: 60px 60px; }
+}
+
+/* Floating particles for hero */
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: rgba(56, 189, 248, 0.3);
+  border-radius: 50%;
+  animation: particleFloat var(--dur, 8s) var(--delay, 0s) ease-in-out infinite;
+}
+
+@keyframes particleFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0; }
+  10%  { opacity: 1; }
+  50%  { transform: translate(var(--dx, 30px), var(--dy, -60px)) scale(1.5); opacity: 0.6; }
+  90%  { opacity: 0; }
+}
+
+
+/* ============================================================
+   CARDS — Premium Hover Interactions
+   ============================================================ */
+.card-premium {
+  transition:
+    transform var(--duration-normal) var(--ease-premium),
+    box-shadow var(--duration-normal) var(--ease-premium),
+    border-color var(--duration-normal) var(--ease-premium);
+  will-change: transform;
+}
+
+.card-premium:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.04);
+  border-color: rgba(14, 165, 233, 0.3);
+}
+
+/* Card inner glow on hover */
+.card-premium::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-premium);
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    var(--accent-glow),
+    transparent 40%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card-premium:hover::before {
+  opacity: 1;
+}
+
+/* Card icon float animation */
+.card-icon-float {
+  transition: transform var(--duration-normal) var(--ease-bounce);
+}
+
+.card-premium:hover .card-icon-float {
+  transform: translateY(-3px) scale(1.1);
+}
+
+/* Service card dark variant */
+.card-dark-premium {
+  transition:
+    transform var(--duration-normal) var(--ease-premium),
+    box-shadow var(--duration-normal) var(--ease-premium),
+    background-color var(--duration-normal) var(--ease-premium);
+}
+
+.card-dark-premium:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 8px 30px rgba(14, 165, 233, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+/* ============================================================
+   BUTTONS — Premium Effects
+   ============================================================ */
+
+/* Premium button base */
+.btn-premium {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform var(--duration-fast) var(--ease-premium),
+    box-shadow var(--duration-normal) var(--ease-premium),
+    background-color var(--duration-fast) ease;
+}
+
+.btn-premium:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 20px rgba(14, 165, 233, 0.25),
+    0 2px 6px rgba(14, 165, 233, 0.1);
+}
+
+.btn-premium:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 80ms;
+}
+
+/* Ripple effect */
+.btn-premium::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 10%, transparent 10.01%);
+  transform: scale(10);
+  opacity: 0;
+  transition: transform 0.5s, opacity 0.8s;
+  pointer-events: none;
+}
+
+.btn-premium:active::after {
+  transform: scale(0);
+  opacity: 1;
+  transition: 0s;
+}
+
+/* Shimmer effect on CTA */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shimmer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  transition: none;
+  animation: shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer {
+  0%   { left: -100%; }
+  50%  { left: 100%; }
+  100% { left: 100%; }
+}
+
+/* Secondary/outline button premium */
+.btn-outline-premium {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform var(--duration-fast) var(--ease-premium),
+    box-shadow var(--duration-normal) var(--ease-premium),
+    background-color var(--duration-fast) ease,
+    border-color var(--duration-fast) ease;
+}
+
+.btn-outline-premium:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-outline-premium:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 80ms;
+}
+
+
+/* ============================================================
+   SECTION TRANSITIONS — Continuous Flow
+   ============================================================ */
+
+/* Gradient divider between sections */
+.section-divider {
+  position: relative;
+}
+
+.section-divider::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(14, 165, 233, 0.15) 20%,
+    rgba(14, 165, 233, 0.25) 50%,
+    rgba(14, 165, 233, 0.15) 80%,
+    transparent
+  );
+}
+
+/* Technical grid background accent */
+.bg-tech-grid {
+  background-image:
+    linear-gradient(rgba(14, 165, 233, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(14, 165, 233, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Subtle noise texture overlay */
+.bg-noise::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* ============================================================
+   FORM ELEMENTS — Premium Focus
+   ============================================================ */
+.input-premium {
+  transition:
+    border-color var(--duration-fast) var(--ease-premium),
+    box-shadow var(--duration-fast) var(--ease-premium),
+    background-color var(--duration-fast) var(--ease-premium);
+}
+
+.input-premium:focus {
+  border-color: #0ea5e9;
+  box-shadow:
+    0 0 0 3px rgba(14, 165, 233, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+}
+
+
+/* ============================================================
+   IMAGE HOVER EFFECTS
+   ============================================================ */
+.img-hover-zoom {
+  overflow: hidden;
+}
+
+.img-hover-zoom img {
+  transition: transform 0.6s var(--ease-premium);
+}
+
+.img-hover-zoom:hover img {
+  transform: scale(1.05);
+}
+
+
+/* ============================================================
+   LIGHTBOX / MODAL — Smooth Entrance
+   ============================================================ */
+.modal-backdrop-enter {
+  animation: modalBgIn 0.3s var(--ease-premium) forwards;
+}
+
+@keyframes modalBgIn {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.modal-content-enter {
+  animation: modalContentIn 0.4s var(--ease-out-expo) forwards;
+}
+
+@keyframes modalContentIn {
+  0%   { opacity: 0; transform: scale(0.95) translateY(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+
+/* ============================================================
+   FOOTER REVEAL
+   ============================================================ */
+.footer-premium {
+  position: relative;
+}
+
+.footer-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(56, 189, 248, 0.2) 30%,
+    rgba(56, 189, 248, 0.3) 50%,
+    rgba(56, 189, 248, 0.2) 70%,
+    transparent
+  );
+}
+
+
+/* ============================================================
+   ANIMATED BACKGROUND (existing, enhanced)
+   ============================================================ */
+:root { --c1:#f8fafc; --c2:#f0f9ff; --c3:#f1f5f9; }
+.animated-bg {
+  background: linear-gradient(135deg, var(--c1), var(--c2), var(--c3));
+  background-size: 400% 400%;
+  animation: gradientShift 20s ease-in-out infinite;
+}
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+/* ============================================================
+   STATISTICS COUNTER ANIMATION
+   ============================================================ */
+.stat-number {
+  display: inline-block;
+  transition: transform 0.3s var(--ease-bounce);
+}
+
+.stat-number:hover {
+  transform: scale(1.05);
+}
+
+
+/* ============================================================
+   SCROLL INDICATOR (Hero)
+   ============================================================ */
+.scroll-indicator {
+  opacity: 0;
+  animation: scrollIndicatorIn 0.8s var(--ease-premium) 1.5s forwards;
+}
+
+@keyframes scrollIndicatorIn {
+  to { opacity: 0.6; }
+}
+
+.scroll-indicator-arrow {
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(6px); }
+}
+
+
+/* ============================================================
+   CTA SECTION — Gradient Pulse
+   ============================================================ */
+.cta-glow {
+  position: relative;
+}
+
+.cta-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), transparent 50%, rgba(14, 165, 233, 0.1));
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-premium);
+}
+
+.cta-glow:hover::before {
+  opacity: 1;
+}
+
+
+/* ============================================================
+   REVIEW CARD HOVER
+   ============================================================ */
+.review-card {
+  transition:
+    transform var(--duration-normal) var(--ease-premium),
+    box-shadow var(--duration-normal) var(--ease-premium);
+}
+
+.review-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.06),
+    0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.review-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.review-star {
+  opacity: 0;
+  transform: scale(0) rotate(-30deg);
+  animation: starPop 0.3s var(--ease-bounce) forwards;
+}
+
+.review-star:nth-child(1) { animation-delay: 0.1s; }
+.review-star:nth-child(2) { animation-delay: 0.2s; }
+.review-star:nth-child(3) { animation-delay: 0.3s; }
+.review-star:nth-child(4) { animation-delay: 0.4s; }
+.review-star:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes starPop {
+  0%   { opacity: 0; transform: scale(0) rotate(-30deg); }
+  60%  { transform: scale(1.2) rotate(5deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+
+/* ============================================================
+   PRICING CARD EFFECTS
+   ============================================================ */
+.pricing-card {
+  transition:
+    transform var(--duration-normal) var(--ease-premium),
+    box-shadow var(--duration-normal) var(--ease-premium),
+    border-color var(--duration-normal) var(--ease-premium);
+  position: relative;
+}
+
+.pricing-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.04);
+  border-color: rgba(14, 165, 233, 0.3);
+}
+
+.pricing-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0ea5e9, #38bdf8, #0ea5e9);
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-premium);
+  border-radius: 1rem 1rem 0 0;
+}
+
+.pricing-card:hover::after {
+  opacity: 1;
+  animation: gradientSlide 2s linear infinite;
+}
+
+@keyframes gradientSlide {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+
+/* ============================================================
+   CONTACT CARD LINK EFFECTS
+   ============================================================ */
+.contact-link {
+  transition:
+    transform var(--duration-fast) var(--ease-premium),
+    box-shadow var(--duration-fast) var(--ease-premium),
+    border-color var(--duration-fast) var(--ease-premium);
+}
+
+.contact-link:hover {
+  transform: translateY(-2px) translateX(2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  border-color: rgba(14, 165, 233, 0.3);
+}
+
+
+/* ============================================================
+   MOBILE / TOUCH OPTIMIZATIONS
+   ============================================================ */
+@media (hover: none) and (pointer: coarse) {
+  /* Disable hover effects that don't work on touch */
+  .card-premium:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  .card-premium:hover::before {
+    opacity: 0;
+  }
+  .card-premium:hover .card-icon-float {
+    transform: none;
+  }
+  .review-card:hover,
+  .pricing-card:hover,
+  .contact-link:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  .pricing-card:hover::after {
+    opacity: 0;
+  }
+
+  /* Keep active states for feedback */
+  .btn-premium:active {
+    transform: scale(0.97);
+  }
+
+  /* Reduce reveal distances */
+  .reveal-up, .fade-section { transform: translateY(20px); }
+  .reveal-left { transform: translateX(-25px); }
+  .reveal-right { transform: translateX(25px); }
+  .reveal-blur { transform: translateY(10px); filter: blur(4px); }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal-up, .reveal-down, .reveal-left, .reveal-right,
+  .reveal-scale, .reveal-blur, .fade-section {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .hero-badge, .hero-heading, .hero-desc, .hero-buttons {
+    opacity: 1;
+    transform: none;
+  }
+
+  .page-load-overlay {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+
+/* ============================================================
+   PAGE HEADER — Enhanced
+   ============================================================ */
+.page-header-premium {
+  position: relative;
+  overflow: hidden;
+}
+
+.page-header-premium::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.03));
+  pointer-events: none;
+}
+
+
+/* ============================================================
+   MOBILE DRAWER — Enhanced
+   ============================================================ */
+.mobile-drawer-link {
+  transition:
+    color var(--duration-fast) var(--ease-premium),
+    padding-left var(--duration-fast) var(--ease-premium);
+}
+
+.mobile-drawer-link:hover {
+  padding-left: 8px;
+}
+
+
+/* ============================================================
+   PRODUCT CARD MATERIAL BADGE
+   ============================================================ */
+.material-badge {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform var(--duration-fast) var(--ease-premium);
+}
+
+.card-premium:hover .material-badge {
+  transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   WORK CARD OVERLAY EFFECT
+   ============================================================ */
+.work-card-overlay {
+  transition: opacity 0.4s var(--ease-premium);
+}
+
+.work-card-overlay span {
+  transform: translateY(8px);
+  transition: transform 0.4s var(--ease-premium);
+}
+
+.group:hover .work-card-overlay span {
+  transform: translateY(0);
 }
