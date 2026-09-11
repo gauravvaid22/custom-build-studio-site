@@ -1,0 +1,232 @@
+[
+  {
+    "id": "door-numbers",
+    "title": "Replacement door numbers",
+    "material": "Matte polymer",
+    "description": "Discontinued door hardware, recreated to match.",
+    "services": ["3d-printing", "cad-design"],
+    "images": [
+      {
+        "src": "/images/work/1.jpg",
+        "alt": "Architectural Signage & Door Number Replacement"
+      }
+    ],
+    "videoUrl": null
+  },
+  {
+    "id": "heater-adapter",
+    "title": "Diesel heater duct adapter",
+    "material": "Polycarbonate",
+    "description": "A custom transition between heater outlet and ducting.",
+    "services": ["3d-printing", "cad-design"],
+    "images": [
+      {
+        "src": "/images/work/2.DIESEL HEATER ADAPTER.jpg",
+        "alt": "High-Temp Diesel Heater Duct Adapter"
+      }
+    ],
+    "videoUrl": null
+  },
+  {
+    "id": "adapter-rings",
+    "title": "Centering & adapter rings",
+    "material": "PA6-CF",
+    "description": "Custom concentric rings for mechanical spacing.",
+    "services": ["3d-printing"],
+    "images": [
+      {
+        "src": "/images/work/3.jpg",
+        "alt": "Structural Centering & Adapter Rings"
+      }
+    ],
+    "videoUrl": null
+  },
+  {
+    "id": "wire-routing",
+    "title": "Wire-routing modules",
+    "material": "PC-FR",
+    "description": "A repeatable set of blocks for organized cable routing.",
+    "services": ["3d-printing"],
+    "images": [
+      {
+        "src": "/images/work/4.jpg",
+        "alt": "Batch Production / Array"
+      },
+      {
+        "src": "/images/work/5.jpg",
+        "alt": "Assembly Profile"
+      },
+      {
+        "src": "/images/work/6.jpg",
+        "alt": "Feature Detail"
+      }
+    ],
+    "videoUrl": null
+  },
+  {
+    "id": "overland-badges",
+    "title": "Custom overland badges",
+    "material": "ASA",
+    "description": "Two-colour exterior emblems for a camper van brand.",
+    "services": ["3d-printing"],
+    "images": [
+      {
+        "src": "/images/work/7.JPG",
+        "alt": "Exterior Emblem & Logo Badges for Overland Adventure Mods"
+      }
+    ],
+    "videoUrl": null
+  },
+  {
+    "id": "custom-screw",
+    "title": "Custom threaded component",
+    "material": "ASA-CF",
+    "description": "A custom screw geometry produced with FDM printing.",
+    "services": ["3d-printing"],
+    "images": [
+      {
+        "src": "/images/work/screw.JPG",
+        "alt": "New project"
+      }
+    ],
+    "videoUrl": null
+  },
+  {
+    "id": "gauge-pod",
+    "title": "Dashboard gauge pod",
+    "material": "PETG",
+    "description": "From digital design to a custom-fit dashboard accessory.",
+    "services": ["3d-printing", "cad-design"],
+    "images": [
+      {
+        "src": "/images/work/gauge-pod.jpg",
+        "alt": "Black PETG gauge pod mounted on a car dash"
+      }
+    ],
+    "videoUrl": null
+  },
+  {
+    "id": "toy-car",
+    "title": "Vintage toy, re-created",
+    "material": "Polymer",
+    "description": "An existing toy car scanned for a quarter-scale reproduction.",
+    "services": ["3d-printing", "3d-scanning"],
+    "images": [
+      {
+        "src": "/images/work/toy-car-collage.jpg",
+        "alt": "Collage showing the original toy car and its 3D scan"
+      }
+    ],
+    "videoUrl": null
+  },
+  {
+    "id": "hose-adapter",
+    "title": "One-piece hose adapter",
+    "material": "Polymer",
+    "description": "Two vacuum hose adapters combined into a single part.",
+    "services": ["3d-printing", "cad-design"],
+    "images": [
+      {
+        "src": "/images/work/hose-adapter.jpg",
+        "alt": "One-piece vacuum hose adapter designed for air-duct cleaning"
+      }
+    ],
+    "videoUrl": null
+  },
+  {
+    "id": "dovetail-jigs",
+    "title": "Dovetail tracing jigs",
+    "material": "PETG",
+    "description": "Repeatable floor-profile marking with printed templates.",
+    "services": ["3d-printing"],
+    "images": [
+      {
+        "src": "/images/work/dovetail-jigs.jpg",
+        "alt": "High-volume production run of tracing templates used for consistent floor profile marking."
+      }
+    ],
+    "videoUrl": null
+  },
+  {
+    "id": "shelf-bracket",
+    "title": "Custom shelf bracket",
+    "material": "PETG",
+    "description": "A made-to-fit bracket developed for a long wall shelf.",
+    "services": ["3d-printing", "cad-design"],
+    "images": [
+      {
+        "src": "/images/work/custom-bracket.JPG",
+        "alt": "Designed and printed for a long wall shelf — built to support heavy weight with structural rigidity."
+      }
+    ],
+    "videoUrl": null
+  },
+  {
+    "id": "caliper-prototype",
+    "title": "Brake adapter fit-check prototype",
+    "material": "ASA-CF",
+    "description": "Geometry and clearance checks before metal machining.",
+    "services": ["3d-printing", "cad-design"],
+    "images": [
+      {
+        "src": "/images/work/brake-caliper-1.jpg",
+        "alt": "ASA-CF brake caliper adapter prototype mounted for test fit"
+      },
+      {
+        "src": "/images/work/brake-caliper-2.jpg",
+        "alt": "Close-up view of ASA-CF caliper adapter showing surface finish"
+      }
+    ],
+    "videoUrl": null
+  },
+  {
+    "id": "venturi-tube",
+    "title": "Venturi tube prototype",
+    "material": "PETG",
+    "description": "A custom airflow component with a demonstration video.",
+    "services": ["3d-printing", "cad-design"],
+    "images": [
+      {
+        "src": "/images/work/venturi-tube-1.jpg",
+        "alt": "PETG Venturi tube showing inlet, throat, and outlet geometry"
+      }
+    ],
+    "videoUrl": "/videos/venturi-demo.mp4"
+  },
+  {
+    "id": "mouse-shell",
+    "title": "Custom mouse shell",
+    "material": "ASA-CF",
+    "description": "A custom enclosure developed around a mouse assembly.",
+    "services": ["3d-printing"],
+    "images": [
+      {
+        "src": "/images/work/custom-mouse-1.jpg",
+        "alt": "Custom ASA-CF mouse shell on desk setup"
+      }
+    ],
+    "videoUrl": null
+  },
+  {
+    "id": "gear-mount",
+    "title": "Gear & motor mount assembly",
+    "material": "PA6-CF",
+    "description": "Interlocking geometry, made into functional components.",
+    "services": ["3d-printing"],
+    "images": [
+      {
+        "src": "/images/work/pa6cf-gear-mount-1.jpg",
+        "alt": "PA6-CF printed gear and motor mount assembly on workbench"
+      },
+      {
+        "src": "/images/work/pa6cf-gear-mount-2.jpg",
+        "alt": "Side view of PA6-CF gear with motor mount installed"
+      },
+      {
+        "src": "/images/work/pa6cf-gear-mount-3.jpg",
+        "alt": "Close-up of PA6-CF gear teeth and motor mounting interface"
+      }
+    ],
+    "videoUrl": null
+  }
+]
