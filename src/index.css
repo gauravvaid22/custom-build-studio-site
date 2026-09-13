@@ -1313,6 +1313,9 @@ fieldset {
   margin-bottom: 20px;
   min-width: 0;
 }
+.quote-form .form-field label {
+  margin-bottom: 0;
+}
 .quote-form label > span,
 .upload-box legend > span {
   font-weight: 400;
