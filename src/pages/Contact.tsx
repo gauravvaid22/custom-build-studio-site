@@ -5,7 +5,7 @@ import { services } from "../data/services";
 import { PageIntro } from "../components/Shared";
 import { trackQuote } from "../components/Analytics";
 
-const ACCEPT =
+const ALLOWED_EXTENSIONS =
   ".stl,.step,.stp,.iges,.igs,.obj,.3mf,.dxf,.svg,.jpg,.jpeg,.png,.webp,.pdf,.zip";
 export const MAX_FILE_BYTES = 7_000_000; // Leave room below Netlify's 8 MB request limit for fields and multipart headers.
 export default function Contact() {
@@ -16,7 +16,6 @@ export default function Contact() {
     : "";
   const [selectedService, setSelectedService] = useState("");
   useEffect(() => setSelectedService(initialService), [initialService]);
-  const [files, setFiles] = useState([1]);
   const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
   const [error, setError] = useState("");
   const [bytes, setBytes] = useState(0);
@@ -33,7 +32,9 @@ export default function Contact() {
       formRef.current?.querySelectorAll<HTMLInputElement>("input[type=file]");
     let total = 0;
     inputs?.forEach((input) => {
-      total += input.files?.[0]?.size || 0;
+      Array.from(input.files || []).forEach((file) => {
+        total += file.size;
+      });
     });
     setBytes(total);
     return total;
@@ -63,7 +64,7 @@ export default function Contact() {
       if (
         value instanceof File &&
         value.size &&
-        !ACCEPT.split(",").some((ext) => value.name.toLowerCase().endsWith(ext))
+        !ALLOWED_EXTENSIONS.split(",").some((ext) => value.name.toLowerCase().endsWith(ext))
       ) {
         reportError(
           "One attachment uses an unsupported format. Use a listed file type or share a download link.",
@@ -173,19 +174,6 @@ export default function Contact() {
                 <input name="bot-field" tabIndex={-1} autoComplete="off" />
               </label>
             </div>
-            {/* Keep all upload names in the prerendered HTML so Netlify registers the complete schema. */}
-            {[1, 2, 3, 4, 5]
-              .filter((id) => !files.includes(id))
-              .map((id) => (
-                <input
-                  key={id}
-                  type="file"
-                  name={`file_${id}`}
-                  hidden
-                  disabled
-                  aria-hidden="true"
-                />
-              ))}
             <div className="form-heading">
               <h2>Request a quote</h2>
               <p>Fields marked * are required.</p>
@@ -226,8 +214,8 @@ export default function Contact() {
                     maxLength={40}
                   />
                 </label>
-                <label htmlFor="service">
-                  Service *
+                <div className="form-field">
+                  <label htmlFor="service">Service *</label>
                   <select
                     id="service"
                     name="service"
@@ -247,7 +235,7 @@ export default function Contact() {
                       Not sure / multiple services
                     </option>
                   </select>
-                </label>
+                </div>
               </div>
               <label htmlFor="message">
                 Tell us about your project *
@@ -302,60 +290,22 @@ export default function Contact() {
                   Photos & files <span>(optional)</span>
                 </legend>
                 <p id="file-help">
-                  Up to 5 files, 7 MB total. CAD files, images, PDF or ZIP. For
-                  larger files, use the link field below.
+                  Attach one or more CAD files, photos, PDFs or ZIPs (7 MB total).
+                  On a phone, choose “Browse” or “Files” to find STEP and STL
+                  files. For larger files, use the link field below.
                 </p>
-                {files.map((id, index) => (
-                  <div className="file-row" key={id}>
-                    <label htmlFor={`file_${id}`}>
-                      Attachment {index + 1}
-                      <input
-                        type="file"
-                        id={`file_${id}`}
-                        name={`file_${id}`}
-                        accept={ACCEPT}
-                        aria-describedby="file-help file-total"
-                        onChange={countBytes}
-                      />
-                    </label>
-                    <button
-                      type="button"
-                      className="file-remove"
-                      aria-label={`Remove attachment ${index + 1}`}
-                      onClick={() => {
-                        if (files.length === 1) {
-                          const input =
-                            formRef.current?.querySelector<HTMLInputElement>(
-                              `#file_${id}`,
-                            );
-                          if (input) input.value = "";
-                        } else {
-                          setFiles((current) =>
-                            current.filter((x) => x !== id),
-                          );
-                        }
-                        requestAnimationFrame(countBytes);
-                      }}
-                    >
-                      ×
-                    </button>
-                  </div>
-                ))}
+                <label className="file-row" htmlFor="attachments">
+                  Attach files
+                  <input
+                    type="file"
+                    id="attachments"
+                    name="attachments"
+                    multiple
+                    aria-describedby="file-help file-total"
+                    onChange={countBytes}
+                  />
+                </label>
                 <div className="upload-bottom">
-                  {files.length < 5 && (
-                    <button
-                      className="text-button"
-                      type="button"
-                      onClick={() => {
-                        const next = [1, 2, 3, 4, 5].find(
-                          (id) => !files.includes(id),
-                        )!;
-                        setFiles((current) => [...current, next]);
-                      }}
-                    >
-                      + Add another file
-                    </button>
-                  )}
                   <span
                     id="file-total"
                     className={
