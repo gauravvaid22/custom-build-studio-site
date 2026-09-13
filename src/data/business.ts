@@ -4,6 +4,7 @@ export const business = {
   email: "custombuildstudio@gmail.com",
   phone: "780-203-0081",
   telephone: "+17802030081",
+  googleProfile: "https://share.google/r0qV4iw8FxD8SLkLL",
   instagram: "https://instagram.com/Custom_Build_Studio",
   facebook: "https://www.facebook.com/profile.php?id=61582467820321",
 };
