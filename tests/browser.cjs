@@ -202,7 +202,7 @@ async function scroll(page) {
   await page
     .locator("#message")
     .fill("TEST ONLY: custom sign design, 300 by 200 mm.");
-  await page.locator("#attachments").setInputFiles({
+  await page.locator("#file_1").setInputFiles({
     name: "oversize.stl",
     mimeType: "application/octet-stream",
     buffer: Buffer.alloc(7_000_001),
@@ -210,19 +210,37 @@ async function scroll(page) {
   await page.getByRole("button", { name: "Send Quote Request" }).click();
   assert(await page.getByRole("alert").isVisible());
   assert((await page.getByRole("alert").textContent()).includes("over 7 MB"));
-  await page.locator("#attachments").setInputFiles([{
+  await page.locator("#file_1").setInputFiles({
     name: "part.stl",
     mimeType: "application/octet-stream",
     buffer: Buffer.from("solid test\nendsolid test"),
-  }, {
-    name: "drawing.pdf",
-    mimeType: "application/pdf",
-    buffer: Buffer.from("%PDF-test"),
-  }]);
+  });
+  let singlePayload = "";
+  await page.route("**/contact", async (route) => {
+    if (route.request().method() !== "POST") return route.continue();
+    singlePayload = route.request().postData() || "";
+    await route.fulfill({status: 503, body: "Test failure"});
+  });
+  await page.getByRole("button", { name: "Send Quote Request" }).click();
+  await page.waitForFunction(() => document.querySelector('.submit-button').disabled === false);
+  assert(singlePayload.includes('name="file_1"; filename="part.stl"'));
+  assert(!singlePayload.includes('name="file_2"'));
+  await page.unroute("**/contact");
+  const filenames = ["part.stl", "model.STEP", "drawing.pdf", "model.stp", "second.STL"];
+  for (let i = 2; i <= 5; i++) {
+    await page.getByRole("button", {name: "Add another file"}).click();
+    await page.locator(`#file_${i}`).setInputFiles({name: filenames[i-1], mimeType: "application/octet-stream", buffer: Buffer.from(`fixture-${i}`)});
+  }
+  assert.equal(await page.getByRole("button", {name: "Add another file"}).count(), 0);
+  await page.getByRole("button", {name: "Remove attachment 3", exact: true}).click();
+  await page.getByRole("button", {name: "Add another file"}).click();
+  assert.equal(await page.locator('#file_3').evaluate(el=>el.files.length), 0);
+  await page.locator('#file_3').setInputFiles({name: "drawing.pdf", mimeType:"application/pdf", buffer:Buffer.from("%PDF-test")});
   const names = await page
     .locator("input[type=file]")
     .evaluateAll((els) => els.map((e) => e.name));
-  assert.deepEqual(names, ["attachments"]);
+  assert.deepEqual(names, ["file_1", "file_2", "file_3", "file_4", "file_5"]);
+  assert.equal(await page.locator('input[type=file][multiple], input[type=file][accept]').count(), 0);
   await page.route("**/contact", (route) =>
     route.request().method() === "POST"
       ? route.fulfill({
@@ -256,10 +274,10 @@ async function scroll(page) {
       .isVisible(),
   );
   assert(payload.includes('name="form-name"'));
-  assert(payload.includes('name="attachments"'));
+  filenames.forEach((filename, i) => assert(payload.includes(`name="file_${i+1}"; filename="${filename}"`)));
   assert(payload.includes("drawing.pdf"));
   results.interactions.push(
-    "Service preselection, required validation, 7 MB limit, multi-file upload, failure preservation, mocked multipart success",
+    "One and five independent upload fields, STEP/STL acceptance, remove/re-add, five-file cap, 7 MB limit, failure preservation and mocked multipart success",
   );
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -290,7 +308,7 @@ async function scroll(page) {
   const fields = await staticPage
     .locator("form[name=contact] input[type=file]")
     .evaluateAll((els) => els.map((e) => e.name));
-  assert.deepEqual(fields, ["attachments"]);
+  assert.deepEqual(fields, ["file_1", "file_2", "file_3", "file_4", "file_5"]);
   results.interactions.push(
     "No-JavaScript service content and Netlify upload schema",
   );
