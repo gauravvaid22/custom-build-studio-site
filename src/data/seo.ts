@@ -94,7 +94,7 @@ export const localBusiness = {
     addressCountry: "CA",
   },
   areaServed: { "@type": "City", name: "Edmonton" },
-  sameAs: [business.instagram, business.facebook],
+  sameAs: [business.instagram, business.facebook, business.googleProfile],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
     name: "Design and fabrication services",
