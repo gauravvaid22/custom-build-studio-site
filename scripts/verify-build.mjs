@@ -56,7 +56,7 @@ for (const field of [
   "notes",
   "subject",
   "bot-field",
-  ...Array.from({ length: 5 }, (_, i) => `file_${i + 1}`),
+  "attachments",
 ])
   assert(
     contact.includes(`name="${field}"`),
