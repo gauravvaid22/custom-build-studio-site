@@ -202,7 +202,7 @@ async function scroll(page) {
   await page
     .locator("#message")
     .fill("TEST ONLY: custom sign design, 300 by 200 mm.");
-  await page.locator("#file_1").setInputFiles({
+  await page.locator("#attachments").setInputFiles({
     name: "oversize.stl",
     mimeType: "application/octet-stream",
     buffer: Buffer.alloc(7_000_001),
@@ -210,27 +210,19 @@ async function scroll(page) {
   await page.getByRole("button", { name: "Send Quote Request" }).click();
   assert(await page.getByRole("alert").isVisible());
   assert((await page.getByRole("alert").textContent()).includes("over 7 MB"));
-  await page.locator("#file_1").setInputFiles({
+  await page.locator("#attachments").setInputFiles([{
     name: "part.stl",
     mimeType: "application/octet-stream",
     buffer: Buffer.from("solid test\nendsolid test"),
-  });
-  for (let i = 0; i < 4; i++)
-    await page.getByRole("button", { name: "Add another file" }).click();
-  assert.equal(await page.locator("input[type=file]:visible").count(), 5);
-  await page.locator("#file_3").setInputFiles({
+  }, {
     name: "drawing.pdf",
     mimeType: "application/pdf",
     buffer: Buffer.from("%PDF-test"),
-  });
-  await page
-    .getByRole("button", { name: "Remove attachment 2", exact: true })
-    .click();
-  await page.getByRole("button", { name: "Add another file" }).click();
+  }]);
   const names = await page
     .locator("input[type=file]")
     .evaluateAll((els) => els.map((e) => e.name));
-  assert.equal(new Set(names).size, 5);
+  assert.deepEqual(names, ["attachments"]);
   await page.route("**/contact", (route) =>
     route.request().method() === "POST"
       ? route.fulfill({
@@ -264,10 +256,10 @@ async function scroll(page) {
       .isVisible(),
   );
   assert(payload.includes('name="form-name"'));
-  assert(payload.includes('name="file_3"'));
+  assert(payload.includes('name="attachments"'));
   assert(payload.includes("drawing.pdf"));
   results.interactions.push(
-    "Service preselection, required validation, 7 MB limit, five upload fields, remove/re-add stability, failure preservation, mocked multipart success",
+    "Service preselection, required validation, 7 MB limit, multi-file upload, failure preservation, mocked multipart success",
   );
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -298,15 +290,9 @@ async function scroll(page) {
   const fields = await staticPage
     .locator("form[name=contact] input[type=file]")
     .evaluateAll((els) => els.map((e) => e.name));
-  assert.deepEqual(fields.sort(), [
-    "file_1",
-    "file_2",
-    "file_3",
-    "file_4",
-    "file_5",
-  ]);
+  assert.deepEqual(fields, ["attachments"]);
   results.interactions.push(
-    "No-JavaScript service content and complete Netlify upload schema",
+    "No-JavaScript service content and Netlify upload schema",
   );
   fs.writeFileSync(
     "test-results/qa-results.json",
