@@ -174,6 +174,9 @@ export function Footer() {
           <a href={`mailto:${business.email}`}>{business.email}</a>
           <a href={`tel:${business.telephone}`}>{business.phone}</a>
           <Link to="/contact">Request a quote ↗</Link>
+          <a href={business.googleProfile} target="_blank" rel="noreferrer">
+            Read our Google reviews ↗
+          </a>
           <div className="socials">
             <a href={business.instagram} target="_blank" rel="noreferrer">
               Instagram ↗
@@ -309,7 +312,7 @@ export const steps = [
   ["Make it", "Your agreed design becomes a printed part or CNC-routed piece."],
   [
     "Receive your project",
-    "Arrange collection or discuss shipping for your finished work.",
+    "We arrange pickup directly with you during your project, or discuss shipping for your finished work.",
   ],
 ];
 export function Process() {
