@@ -33,7 +33,7 @@ The suite uses installed Microsoft Edge by default. Alternatively install Playwr
 
 1. Connect this repository/branch to the existing Netlify site.
 2. Keep the base directory at the repository root. The committed `netlify.toml` uses `npm run build` and publishes `dist`.
-3. Ensure **Forms → form detection** is enabled. The prerendered `/contact/index.html` exposes the `contact` form, honeypot and every field, including `file_1` through `file_5`.
+3. Ensure **Forms → form detection** is enabled. The prerendered `/contact/index.html` exposes the `contact` form, honeypot and every field, including the `attachments` upload field.
 4. Confirm the existing `contact` form notification recipient in Netlify. Notification settings are account settings, not code.
 5. After deployment, send one clearly labelled test enquiry with a small attachment. Check that it appears in Netlify Forms, the attachment opens, and the notification arrives. Then remove the test submission if desired.
 6. Check `/services/cnc-woodworking`, a `/work/...` URL, `/thank-you.html`, an unknown URL, `/sitemap.xml` and `/robots.txt` directly.
@@ -46,7 +46,7 @@ The canonical origin is `https://custombuildstudio.ca`, matching the existing li
 
 - Name, email, service and project description are required.
 - Phone, quantity, material, desired date, location, notes and files are optional.
-- Up to five separate uploads. The client caps combined files at 7,000,000 bytes, leaving room below Netlify’s 8 MB total request limit.
+- One attachment picker supports multiple files. The client caps combined files at 7,000,000 bytes, leaving room below Netlify’s 8 MB total request limit.
 - Larger files use a shared download link; no fragile custom upload service is introduced.
 - Files are sent as browser-generated multipart `FormData`, without manually overriding `Content-Type`.
 - Native validation, a honeypot, disabled sending controls, HTTP-error handling and timeout feedback are included. Entered details remain after failure.
