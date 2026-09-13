@@ -1,0 +1,167 @@
+{
+  "/images/hero-bd_1.jpg": {
+    "base": "/media/hero-bd_1",
+    "width": 605,
+    "height": 280
+  },
+  "/images/hero-bg.jpg": {
+    "base": "/media/hero-bg",
+    "width": 1536,
+    "height": 1024
+  },
+  "/images/brand/logo.png": {
+    "base": "/media/logo",
+    "width": 1024,
+    "height": 1024
+  },
+  "/images/work/1.jpg": {
+    "base": "/media/1",
+    "width": 1365,
+    "height": 768
+  },
+  "/images/work/2.DIESEL HEATER ADAPTER.jpg": {
+    "base": "/media/2-diesel-heater-adapter",
+    "width": 4032,
+    "height": 3024
+  },
+  "/images/work/3.jpg": {
+    "base": "/media/3",
+    "width": 4032,
+    "height": 3024
+  },
+  "/images/work/4.jpg": {
+    "base": "/media/4",
+    "width": 3024,
+    "height": 4032
+  },
+  "/images/work/5.jpg": {
+    "base": "/media/5",
+    "width": 4032,
+    "height": 3024
+  },
+  "/images/work/6.jpg": {
+    "base": "/media/6",
+    "width": 3024,
+    "height": 4032
+  },
+  "/images/work/7.JPG": {
+    "base": "/media/7",
+    "width": 1365,
+    "height": 768
+  },
+  "/images/work/brake-caliper-1.jpg": {
+    "base": "/media/brake-caliper-1",
+    "width": 3024,
+    "height": 4032
+  },
+  "/images/work/brake-caliper-2.jpg": {
+    "base": "/media/brake-caliper-2",
+    "width": 4032,
+    "height": 2268
+  },
+  "/images/work/custom-bracket.JPG": {
+    "base": "/media/custom-bracket",
+    "width": 4284,
+    "height": 3049
+  },
+  "/images/work/custom-mouse-1.jpg": {
+    "base": "/media/custom-mouse-1",
+    "width": 4032,
+    "height": 2268
+  },
+  "/images/work/dovetail-jigs.jpg": {
+    "base": "/media/dovetail-jigs",
+    "width": 720,
+    "height": 1280
+  },
+  "/images/work/gauge-pod.jpg": {
+    "base": "/media/gauge-pod",
+    "width": 3000,
+    "height": 3000
+  },
+  "/images/work/hose-adapter.jpg": {
+    "base": "/media/hose-adapter",
+    "width": 3000,
+    "height": 3000
+  },
+  "/images/work/pa6cf-gear-mount-1.jpg": {
+    "base": "/media/pa6cf-gear-mount-1",
+    "width": 1914,
+    "height": 975
+  },
+  "/images/work/pa6cf-gear-mount-2.jpg": {
+    "base": "/media/pa6cf-gear-mount-2",
+    "width": 1917,
+    "height": 969
+  },
+  "/images/work/pa6cf-gear-mount-3.jpg": {
+    "base": "/media/pa6cf-gear-mount-3",
+    "width": 1782,
+    "height": 1015
+  },
+  "/images/work/screw.JPG": {
+    "base": "/media/screw",
+    "width": 3213,
+    "height": 4331
+  },
+  "/images/work/toy-car-collage.jpg": {
+    "base": "/media/toy-car-collage",
+    "width": 3000,
+    "height": 3000
+  },
+  "/images/work/venturi-tube-1.jpg": {
+    "base": "/media/venturi-tube-1",
+    "width": 3024,
+    "height": 4032
+  },
+  "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/hero-bd_1.jpg": {
+    "base": "/media/product-hero-bd_1",
+    "width": 605,
+    "height": 280
+  },
+  "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/pa6cf-gear-mount-1.jpg": {
+    "base": "/media/product-pa6cf-gear-mount-1",
+    "width": 1914,
+    "height": 975
+  },
+  "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO1.jpg": {
+    "base": "/media/product-photo1",
+    "width": 896,
+    "height": 1195
+  },
+  "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO2.jpg": {
+    "base": "/media/product-photo2",
+    "width": 896,
+    "height": 1195
+  },
+  "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO3.jpg": {
+    "base": "/media/product-photo3",
+    "width": 896,
+    "height": 1195
+  },
+  "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO4.jpg": {
+    "base": "/media/product-photo4",
+    "width": 896,
+    "height": 1041
+  },
+  "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO5.jpg": {
+    "base": "/media/product-photo5",
+    "width": 768,
+    "height": 1160
+  },
+  "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO6.jpg": {
+    "base": "/media/product-photo6",
+    "width": 768,
+    "height": 1208
+  },
+  "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO7.jpg": {
+    "base": "/media/product-photo7",
+    "width": 768,
+    "height": 1209
+  },
+  "/images/PRODUCTS/IPHONE_MAGSAFE_HOLDER/PHOTO8.jpg": {
+    "base": "/media/product-photo8",
+    "width": 768,
+    "height": 1190
+  }
+}
