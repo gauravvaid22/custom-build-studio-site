@@ -11,6 +11,7 @@ import {
 } from "../components/Shared";
 import { services } from "../data/services";
 import projects from "../data/projects.json";
+import { business } from "../data/business";
 
 export default function Home() {
   return (
@@ -73,7 +74,9 @@ export default function Home() {
       <div className="trust-strip">
         <div className="container">
           <span>Designed around your project</span>
-          <span>Direct, practical communication</span>
+          <a href={business.googleProfile} target="_blank" rel="noreferrer">
+            Read our Google reviews ↗
+          </a>
           <span>From digital model to physical part</span>
         </div>
       </div>
