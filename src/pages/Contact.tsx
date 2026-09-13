@@ -8,6 +8,7 @@ import { trackQuote } from "../components/Analytics";
 const ALLOWED_EXTENSIONS =
   ".stl,.step,.stp,.iges,.igs,.obj,.3mf,.dxf,.svg,.jpg,.jpeg,.png,.webp,.pdf,.zip";
 export const MAX_FILE_BYTES = 7_000_000; // Leave room below Netlify's 8 MB request limit for fields and multipart headers.
+const UPLOAD_SLOTS = [1, 2, 3, 4, 5];
 export default function Contact() {
   const [params] = useSearchParams();
   const requested = params.get("service") || "";
@@ -15,6 +16,7 @@ export default function Contact() {
     ? requested
     : "";
   const [selectedService, setSelectedService] = useState("");
+  const [files, setFiles] = useState([1]);
   useEffect(() => setSelectedService(initialService), [initialService]);
   const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
   const [error, setError] = useState("");
@@ -45,6 +47,10 @@ export default function Contact() {
     const form = event.currentTarget;
     if (!form.reportValidity()) return;
     const data = new FormData(form);
+    // Omit unselected file inputs; each selected file keeps its own Netlify field.
+    for (const [name, value] of Array.from(data.entries())) {
+      if (value instanceof File && !value.name) data.delete(name);
+    }
     if (
       !String(data.get("name")).trim() ||
       !String(data.get("message")).trim()
@@ -290,22 +296,43 @@ export default function Contact() {
                   Photos & files <span>(optional)</span>
                 </legend>
                 <p id="file-help">
-                  Attach one or more CAD files, photos, PDFs or ZIPs (7 MB total).
+                  Attach up to 5 files, one per attachment (7 MB total).
                   On a phone, choose “Browse” or “Files” to find STEP and STL
                   files. For larger files, use the link field below.
                 </p>
-                <label className="file-row" htmlFor="attachments">
-                  Attach files
-                  <input
-                    type="file"
-                    id="attachments"
-                    name="attachments"
-                    multiple
-                    aria-describedby="file-help file-total"
-                    onChange={countBytes}
-                  />
-                </label>
+                {/* Netlify supports one file per named field. Keep all five
+                    fields in static HTML for detection. Do not use multiple or
+                    accept: mobile pickers can hide STEP/STL with extension filters. */}
+                {UPLOAD_SLOTS.map((id) => (
+                  <div className="file-row" key={id} hidden={!files.includes(id)}>
+                    <label htmlFor={`file_${id}`}>
+                      Attachment {id}
+                      <input
+                        type="file"
+                        id={`file_${id}`}
+                        name={`file_${id}`}
+                        disabled={!files.includes(id) || status === "sending"}
+                        aria-describedby="file-help file-total"
+                        onChange={countBytes}
+                      />
+                    </label>
+                    <button type="button" className="file-remove"
+                      aria-label={`Remove attachment ${id}`}
+                      onClick={() => {
+                        const input = formRef.current?.querySelector<HTMLInputElement>(`#file_${id}`);
+                        if (input) input.value = "";
+                        if (files.length > 1) setFiles((current) => current.filter((slot) => slot !== id));
+                        countBytes();
+                      }}>×</button>
+                  </div>
+                ))}
                 <div className="upload-bottom">
+                  {files.length < UPLOAD_SLOTS.length && (
+                    <button className="text-button" type="button" onClick={() => {
+                      const next = UPLOAD_SLOTS.find((id) => !files.includes(id))!;
+                      setFiles((current) => [...current, next]);
+                    }}>+ Add another file</button>
+                  )}
                   <span
                     id="file-total"
                     className={
