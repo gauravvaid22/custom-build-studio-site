@@ -1384,6 +1384,9 @@ textarea:disabled {
   align-items: center;
   gap: 10px;
 }
+.file-row[hidden] {
+  display: none;
+}
 .file-row label {
   flex-grow: 1;
   min-width: 0;
