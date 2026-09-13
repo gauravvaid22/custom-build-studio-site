@@ -214,6 +214,16 @@ export function Reviews() {
       />
       <section className="section">
         <div className="container narrow">
+          <div className="note-panel">
+            <h2>Hear from our customers.</h2>
+            <p>
+              Read customer feedback on our public Google Business Profile,
+              or share your experience if we’ve worked on a project together.
+            </p>
+            <a className="button button-dark" href={business.googleProfile} target="_blank" rel="noreferrer">
+              Read Our Google Reviews ↗
+            </a>
+          </div>
           {verifiedReviews.length ? (
             verifiedReviews.map((r) => (
               <blockquote key={r.source}>
