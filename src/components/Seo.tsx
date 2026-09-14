@@ -1,11 +1,19 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { getSeo } from "../data/seo";
+import { getSeo, getStructuredData } from "../data/seo";
 export default function Seo() {
   const { pathname } = useLocation();
   useEffect(() => {
     const seo = getSeo(pathname);
     document.title = seo.title;
+    let structured = document.getElementById("structured-data");
+    if (!structured) {
+      structured = document.createElement("script");
+      structured.id = "structured-data";
+      structured.setAttribute("type", "application/ld+json");
+      document.head.appendChild(structured);
+    }
+    structured.textContent = JSON.stringify(getStructuredData(pathname));
     const meta = (attr: string, key: string, value: string) => {
       let tag = document.head.querySelector<HTMLMetaElement>(
         `meta[${attr}="${key}"]`,

@@ -41,10 +41,10 @@ export function About() {
               your project.
             </p>
             <p>
-              Our services bring together FDM and resin 3D printing, CAD modeling, 3D
-              scanning and CNC woodworking. That means help with both the
-              digital design and the physical piece, without expecting you to
-              arrive with every technical decision already made.
+              Our services bring together FDM and resin 3D printing, CAD
+              modeling, 3D scanning and CNC woodworking. That means help with
+              both the digital design and the physical piece, without expecting
+              you to arrive with every technical decision already made.
             </p>
             <p>
               From a replacement component to a personalized sign, we welcome
@@ -230,10 +230,15 @@ export function Reviews() {
           <div className="note-panel">
             <h2>Hear from our customers.</h2>
             <p>
-              Read customer feedback on our public Google Business Profile,
-              or share your experience if we’ve worked on a project together.
+              Read customer feedback on our public Google Business Profile, or
+              share your experience if we’ve worked on a project together.
             </p>
-            <a className="button button-dark" href={business.googleProfile} target="_blank" rel="noreferrer">
+            <a
+              className="button button-dark"
+              href={business.googleProfile}
+              target="_blank"
+              rel="noreferrer"
+            >
               Read Our Google Reviews ↗
             </a>
           </div>
@@ -303,6 +308,13 @@ export function Privacy() {
             and control access through your file-sharing service.
           </p>
           <h2>Website analytics</h2>
+          <p>
+            We measure quote starts and clicks on the business phone link as
+            well as successful requests. Campaign tags and advertising click
+            identifiers may be retained in session storage for the current
+            browser tab so a later quote can be attributed to its advertising
+            visit.
+          </p>
           <p>
             The production website uses Google Analytics and Google Ads tags to
             measure site visits and quote-request conversions. These services

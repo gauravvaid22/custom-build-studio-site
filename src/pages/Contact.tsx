@@ -3,7 +3,7 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { business } from "../data/business";
 import { quoteServices } from "../data/services";
 import { PageIntro } from "../components/Shared";
-import { trackQuote } from "../components/Analytics";
+import { trackQuote, trackQuoteStart } from "../components/Analytics";
 
 const ALLOWED_EXTENSIONS =
   ".stl,.step,.stp,.iges,.igs,.obj,.3mf,.dxf,.svg,.jpg,.jpeg,.png,.webp,.pdf,.zip";
@@ -22,6 +22,7 @@ export default function Contact() {
   const [error, setError] = useState("");
   const [bytes, setBytes] = useState(0);
   const formRef = useRef<HTMLFormElement>(null);
+  const started = useRef(false);
   const errorRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const reportError = (message: string) => {
@@ -70,7 +71,9 @@ export default function Contact() {
       if (
         value instanceof File &&
         value.size &&
-        !ALLOWED_EXTENSIONS.split(",").some((ext) => value.name.toLowerCase().endsWith(ext))
+        !ALLOWED_EXTENSIONS.split(",").some((ext) =>
+          value.name.toLowerCase().endsWith(ext),
+        )
       ) {
         reportError(
           "One attachment uses an unsupported format. Use a listed file type or share a download link.",
@@ -167,6 +170,12 @@ export default function Contact() {
             data-netlify="true"
             data-netlify-honeypot="bot-field"
             onSubmit={submit}
+            onChange={() => {
+              if (!started.current) {
+                started.current = true;
+                trackQuoteStart();
+              }
+            }}
           >
             <input type="hidden" name="form-name" value="contact" />
             <input
@@ -296,15 +305,19 @@ export default function Contact() {
                   Photos & files <span>(optional)</span>
                 </legend>
                 <p id="file-help">
-                  Attach up to 5 files, one per attachment (7 MB total).
-                  On a phone, choose “Browse” or “Files” to find STEP and STL
-                  files. For larger files, use the link field below.
+                  Attach up to 5 files, one per attachment (7 MB total). On a
+                  phone, choose “Browse” or “Files” to find STEP and STL files.
+                  For larger files, use the link field below.
                 </p>
                 {/* Netlify supports one file per named field. Keep all five
                     fields in static HTML for detection. Do not use multiple or
                     accept: mobile pickers can hide STEP/STL with extension filters. */}
                 {UPLOAD_SLOTS.map((id) => (
-                  <div className="file-row" key={id} hidden={!files.includes(id)}>
+                  <div
+                    className="file-row"
+                    key={id}
+                    hidden={!files.includes(id)}
+                  >
                     <label htmlFor={`file_${id}`}>
                       Attachment {id}
                       <input
@@ -316,22 +329,41 @@ export default function Contact() {
                         onChange={countBytes}
                       />
                     </label>
-                    <button type="button" className="file-remove"
+                    <button
+                      type="button"
+                      className="file-remove"
                       aria-label={`Remove attachment ${id}`}
                       onClick={() => {
-                        const input = formRef.current?.querySelector<HTMLInputElement>(`#file_${id}`);
+                        const input =
+                          formRef.current?.querySelector<HTMLInputElement>(
+                            `#file_${id}`,
+                          );
                         if (input) input.value = "";
-                        if (files.length > 1) setFiles((current) => current.filter((slot) => slot !== id));
+                        if (files.length > 1)
+                          setFiles((current) =>
+                            current.filter((slot) => slot !== id),
+                          );
                         countBytes();
-                      }}>×</button>
+                      }}
+                    >
+                      ×
+                    </button>
                   </div>
                 ))}
                 <div className="upload-bottom">
                   {files.length < UPLOAD_SLOTS.length && (
-                    <button className="text-button" type="button" onClick={() => {
-                      const next = UPLOAD_SLOTS.find((id) => !files.includes(id))!;
-                      setFiles((current) => [...current, next]);
-                    }}>+ Add another file</button>
+                    <button
+                      className="text-button"
+                      type="button"
+                      onClick={() => {
+                        const next = UPLOAD_SLOTS.find(
+                          (id) => !files.includes(id),
+                        )!;
+                        setFiles((current) => [...current, next]);
+                      }}
+                    >
+                      + Add another file
+                    </button>
                   )}
                   <span
                     id="file-total"

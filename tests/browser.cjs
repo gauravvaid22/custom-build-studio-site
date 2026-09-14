@@ -8,6 +8,8 @@ const routes = [
   "/",
   "/services",
   "/services/3d-printing",
+  "/services/fdm-3d-printing",
+  "/services/resin-3d-printing",
   "/services/cad-design",
   "/services/3d-scanning",
   "/services/cnc-woodworking",
@@ -306,7 +308,7 @@ async function scroll(page) {
   await staticPage.goto(origin + "/services/cnc-woodworking");
   assert(
     await staticPage
-      .getByRole("heading", { name: "CNC Woodworking", exact: true })
+      .getByRole("heading", { name: "CNC Woodworking & Router Services in Edmonton", exact: true })
       .isVisible(),
   );
   await staticPage.goto(origin + "/contact");

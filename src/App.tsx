@@ -17,7 +17,7 @@ import {
   NotFound,
 } from "./pages/Studio";
 import projects from "./data/projects.json";
-import { services } from "./data/services";
+import { allServices as services } from "./data/landing";
 function ValidService() {
   const { id } = useParams();
   return services.some((s) => s.id === id) ? <ServiceDetail /> : <NotFound />;

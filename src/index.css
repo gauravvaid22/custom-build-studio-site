@@ -2298,3 +2298,6 @@ h3 {
     max-height: 65dvh;
   }
 }
+.faq-list + h2 {
+  margin-top: 40px;
+}

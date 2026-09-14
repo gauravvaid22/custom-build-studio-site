@@ -1,4 +1,4 @@
-import { services } from "./services";
+import { allServices as services, serviceDetails } from "./landing";
 import projects from "./projects.json";
 import { business } from "./business";
 export const publicRoutes = [
@@ -61,7 +61,7 @@ export function getSeo(path: string) {
     ],
   };
   const entry = service
-    ? [`${service.name} in Edmonton`, service.intro]
+    ? [serviceDetails[service.id].heading, service.description]
     : project
       ? [`${project.title} | Project Portfolio`, project.description]
       : pages[page] || [
@@ -108,3 +108,48 @@ export const localBusiness = {
     })),
   },
 };
+
+export function getStructuredData(path: string) {
+  const page = path.replace(/\/$/, "") || "/";
+  const service = services.find((s) => page === `/services/${s.id}`);
+  if (!service) return localBusiness;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      localBusiness,
+      {
+        "@type": "Service",
+        "@id": business.origin + page + "#service",
+        name: serviceDetails[service.id].heading,
+        description: service.intro,
+        url: business.origin + page,
+        provider: { "@id": business.origin + "/#business" },
+        areaServed: { "@type": "City", name: "Edmonton" },
+        serviceType: service.name,
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: business.origin + "/",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Services",
+            item: business.origin + "/services",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: service.name,
+            item: business.origin + page,
+          },
+        ],
+      },
+    ],
+  };
+}
