@@ -124,6 +124,45 @@ export function ServiceDetail() {
           </div>
         </div>
       </section>
+      {s.id === "3d-printing" && (
+        <section className="section" id="resin-printing">
+          <div className="container detail-columns">
+            <div>
+              <p className="eyebrow">RESIN 3D PRINTING / EDMONTON</p>
+              <h2>Small details. A smoother finish.</h2>
+              <p>Our Anycubic Photon P1 uses MSLA resin printing to bring fine textures,
+                lettering and intricate shapes into focus. A practical option for
+                miniatures, figurines, scale models and detailed product prototypes.</p>
+              <ul className="check-list">
+                <li>Miniatures, figurines and display pieces</li>
+                <li>Detailed prototypes and small enclosures</li>
+                <li>Jewelry appearance models and master patterns</li>
+                <li>Fine lettering, textures and decorative components</li>
+              </ul>
+              <p className="small">Casting patterns and demanding functional parts require a suitable
+                resin and process review. Material and finish are agreed before printing.</p>
+              <QuoteLink service="resin-printing" />
+            </div>
+            <div className="note-panel">
+              <p className="eyebrow">ANYCUBIC PHOTON P1</p>
+              <h3>Plan around your part.</h3>
+              <p><strong>Nominal build volume: 223 × 126 × 230 mm.</strong> Usable
+                part size depends on orientation, supports and clearance.</p>
+              <p>The printer supports 0.02–0.15 mm layers. We choose settings for
+                your model; layer height and screen resolution are not a guarantee
+                of finished-part dimensional accuracy.</p>
+              <h3>Resin or FDM?</h3>
+              <p>Choose resin for fine detail and smooth surfaces. FDM is often a
+                better starting point for larger parts and applications needing
+                specific toughness or heat resistance. Tell us how the part will be used.</p>
+              <h3>From $30 CAD per job</h3>
+              <p>Final pricing reflects resin volume, supports, print height/time,
+                washing, curing and cleanup. CAD design, specialty resin and additional
+                finishing are quoted separately. Timing and pickup are arranged with you.</p>
+            </div>
+          </div>
+        </section>
+      )}
       <div className="container note-panel">
         <strong>Not sure what file you need?</strong>
         <p>

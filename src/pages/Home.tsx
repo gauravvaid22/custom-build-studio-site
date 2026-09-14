@@ -31,7 +31,7 @@ export default function Home() {
               <span>Built.</span>
             </h1>
             <p className="hero-description">
-              Custom 3D printing, CAD design, 3D scanning and CNC woodworking.
+              FDM & resin 3D printing, CAD design, 3D scanning and CNC woodworking.
               From the first sketch to the finished piece.
             </p>
             <div className="button-row">

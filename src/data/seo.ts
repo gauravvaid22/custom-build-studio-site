@@ -21,11 +21,11 @@ export function getSeo(path: string) {
   const pages: Record<string, [string, string]> = {
     "/": [
       "3D Printing, CAD & CNC Woodworking Edmonton",
-      "Custom 3D printing, CAD design, 3D scanning and CNC woodworking in Edmonton. One-off projects, prototypes and small runs. Request a quote.",
+      "FDM and resin 3D printing, CAD design, 3D scanning and CNC woodworking in Edmonton. One-off projects, prototypes and small runs. Request a quote.",
     ],
     "/services": [
       "Design & Fabrication Services in Edmonton",
-      "Explore custom FDM 3D printing, CAD modeling, 3D scanning, reverse engineering and CNC router services in Edmonton, Alberta.",
+      "Explore custom FDM and resin 3D printing, CAD modeling, 3D scanning, reverse engineering and CNC router services in Edmonton, Alberta.",
     ],
     "/work": [
       "Custom Fabrication Project Portfolio",
@@ -37,7 +37,7 @@ export function getSeo(path: string) {
     ],
     "/pricing": [
       "Custom 3D Printing & CNC Project Pricing",
-      "Plan your custom project with starting prices for FDM 3D printing, CAD modeling, scanning and CNC woodworking. Get a project-specific quote.",
+      "FDM printing from $20 CAD and resin printing from $30 CAD. Explore CAD, scanning and CNC woodworking rates in Edmonton. Final pricing confirmed per project.",
     ],
     "/products": [
       "Studio-Designed Products",
@@ -83,7 +83,7 @@ export const localBusiness = {
   name: business.name,
   url: business.origin,
   description:
-    "Custom 3D printing, CAD design, 3D scanning, reverse engineering and CNC woodworking in Edmonton, Alberta.",
+    "Custom FDM and resin 3D printing, CAD design, 3D scanning, reverse engineering and CNC woodworking in Edmonton, Alberta.",
   telephone: business.telephone,
   email: business.email,
   image: business.origin + "/og-image.jpg",

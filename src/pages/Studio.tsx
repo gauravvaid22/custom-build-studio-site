@@ -41,7 +41,7 @@ export function About() {
               your project.
             </p>
             <p>
-              Our services bring together FDM 3D printing, CAD modeling, 3D
+              Our services bring together FDM and resin 3D printing, CAD modeling, 3D
               scanning and CNC woodworking. That means help with both the
               digital design and the physical piece, without expecting you to
               arrive with every technical decision already made.
@@ -63,7 +63,7 @@ export function About() {
 export function Pricing() {
   const rates = [
     {
-      title: "Custom 3D Printing",
+      title: "FDM 3D Printing",
       price: "From $20",
       label: "Minimum job charge",
       description:
@@ -74,6 +74,19 @@ export function Pricing() {
         "Material and quantity reviewed first",
       ],
       service: "3d-printing",
+    },
+    {
+      title: "Resin 3D Printing",
+      price: "From $30",
+      label: "Minimum job charge · CAD",
+      description:
+        "Fine-detail models and prototypes. Resin volume, supports, print height/time, washing and curing shape the final quote.",
+      items: [
+        "Miniatures, display models & detailed parts",
+        "Resin type and colour confirmed first",
+        "Design, specialty resin & extra finishing quoted separately",
+      ],
+      service: "resin-printing",
     },
     {
       title: "CAD Design & Scanning",

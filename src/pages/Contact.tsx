@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { business } from "../data/business";
-import { services } from "../data/services";
+import { quoteServices } from "../data/services";
 import { PageIntro } from "../components/Shared";
 import { trackQuote } from "../components/Analytics";
 
@@ -12,7 +12,7 @@ const UPLOAD_SLOTS = [1, 2, 3, 4, 5];
 export default function Contact() {
   const [params] = useSearchParams();
   const requested = params.get("service") || "";
-  const initialService = services.some((s) => s.id === requested)
+  const initialService = quoteServices.some((s) => s.id === requested)
     ? requested
     : "";
   const [selectedService, setSelectedService] = useState("");
@@ -232,7 +232,7 @@ export default function Contact() {
                     <option value="" disabled>
                       Select a service
                     </option>
-                    {services.map((s) => (
+                    {quoteServices.map((s) => (
                       <option value={s.id} key={s.id}>
                         {s.name}
                       </option>

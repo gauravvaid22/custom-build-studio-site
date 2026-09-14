@@ -5,17 +5,18 @@ export const services = [
     name: "Custom 3D Printing",
     short: "Your design. A tangible part.",
     description:
-      "Functional prototypes, replacement parts and custom accessories. From a single print to a small production run.",
+      "FDM for functional parts. Resin for fine detail, miniatures and display models. One-off prints and small runs welcome.",
     intro:
-      "Have a ready-to-print file or a part that needs replacing? We help you choose a practical design and material, then manufacture it using FDM 3D printing in Edmonton.",
+      "Custom FDM and resin 3D printing in Edmonton. Bring a file or an idea: we help choose the process and material for functional parts, detailed models and prototypes.",
     applications: [
       "Functional prototypes & enclosures",
       "Replacement components & brackets",
       "Automotive fit-check parts",
       "Fixtures, accessories & small runs",
+      "Resin miniatures, figurines & detailed display models",
     ],
     materials:
-      "PLA, PETG, ABS, ASA, TPU and engineering polymers. Material selection depends on the load, temperature and environment your part will see.",
+      "FDM options include PLA, PETG, ABS, ASA, TPU and engineering polymers. Resin type and colour are confirmed per project. Selection depends on detail, load, temperature and the environment your part will see.",
     bring:
       "STL, STEP or CAD files, a sketch, photos, measurements or the part itself. STEP and other design files may need preparation before printing.",
     image: "/images/work/pa6cf-gear-mount-1.jpg",
@@ -97,3 +98,11 @@ export const services = [
   },
 ];
 export type Service = (typeof services)[number];
+export const quoteServices = services.flatMap((service) =>
+  service.id === "3d-printing"
+    ? [
+        { id: service.id, name: "3D Printing — FDM / help me choose" },
+        { id: "resin-printing", name: "3D Printing — High-detail resin" },
+      ]
+    : [{ id: service.id, name: service.name }],
+);

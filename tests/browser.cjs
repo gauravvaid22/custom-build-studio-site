@@ -187,6 +187,11 @@ async function scroll(page) {
     await page.getByText("Yes. One-off parts, personal projects").isVisible(),
   );
   results.interactions.push("FAQ disclosure");
+  await page.goto(origin + "/services/3d-printing");
+  await page.locator('#resin-printing').getByRole('link', {name: 'Request a Quote'}).click();
+  await page.waitForFunction(() => document.querySelector('#service').value === 'resin-printing');
+  assert.equal(await page.locator('#service').inputValue(), 'resin-printing');
+  results.interactions.push('Resin service CTA preselects high-detail resin quote');
   await page.goto(origin + "/contact?service=cnc-woodworking");
   await page.waitForFunction(
     () => document.querySelector("#service").value === "cnc-woodworking",

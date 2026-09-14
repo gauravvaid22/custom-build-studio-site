@@ -340,6 +340,10 @@ export function Process() {
 export function FAQ() {
   const entries = [
     [
+      "Do you offer resin 3D printing?",
+      "Yes. Our Anycubic Photon P1 prints detailed miniatures, display models and prototypes in resin. Jobs start at $30 CAD, with material, supports, printing and cleanup considered in the final quote. Choose high-detail resin in the quote form, or ask us which process suits your part.",
+    ],
+    [
       "Can I request just one part?",
       "Yes. One-off parts, personal projects and small production runs are welcome. You don’t need a commercial order to get started.",
     ],
