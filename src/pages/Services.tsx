@@ -23,6 +23,7 @@ export function Services() {
         title="What do you want to make?"
         description="A ready-to-print file or a rough idea. A single piece or a small run. We help turn the starting point you have into the result you need."
       />
+      <PrintingLinks />
       <section className="section">
         <div className="container service-list">
           {services.map((s) => (
@@ -52,7 +53,6 @@ export function Services() {
           ))}
         </div>
       </section>
-      <PrintingLinks />
       <Process />
       <CallToAction />
     </>
@@ -130,6 +130,8 @@ export function ServiceDetail() {
           </div>
         </div>
       </section>
+      {s.id === "3d-printing" && <PrintingLinks />}
+      {(s.id === "3d-printing" || s.id === "fdm-3d-printing") && <FdmCapabilities />}
       <section className="section">
         <div className="container note-panel">
           <p className="eyebrow">PROJECT PRICING</p>
@@ -274,6 +276,9 @@ function PrintingLinks() {
           {printingPages.map((s) => (
             <article className="note-panel" key={s.id}>
               <h3>{s.name}</h3>
+              <p><strong>{s.id === "fdm-3d-printing" ? "Functional parts · Engineering filaments" : "Fine detail · Miniatures & display models"}</strong></p>
+              <p className="print-volume">{s.id === "fdm-3d-printing" ? "305 × 305 × 400 mm" : "223 × 126 × 230 mm"}</p>
+              <p className="small">Maximum build envelope · usable part size depends on orientation and supports.</p>
               <p>{s.description}</p>
               <Link className="text-link" to={`/services/${s.id}`}>
                 Explore {s.name} <Arrow />
@@ -284,4 +289,28 @@ function PrintingLinks() {
       </div>
     </section>
   );
+}
+
+function FdmCapabilities() {
+  return <section className="section fdm-capabilities" id="fdm-printing">
+    <div className="container detail-columns">
+      <div>
+        <p className="eyebrow">FDM 3D PRINTING / ENGINEERING MATERIALS</p>
+        <h2>Room for bigger ideas.<br />Materials for real work.</h2>
+        <p>From a replacement bracket to a workshop fixture, enclosure or functional prototype, choose FDM when your part needs to do a job. We help match the filament and print orientation to how it will be used.</p>
+        <div className="fdm-size"><span className="eyebrow">MAXIMUM BUILD ENVELOPE</span><p className="print-volume">305 × 305 × 400 <span>mm</span></p><p>Width × depth × height</p><p className="small">Available part size depends on material, orientation, supports and clearance. Send your model and dimensions so we can confirm the fit.</p></div>
+        <QuoteLink service="3d-printing">Request an FDM Quote</QuoteLink>
+      </div>
+      <div className="note-panel">
+        <p className="eyebrow">MORE THAN STANDARD FILAMENT</p>
+        <h3>Engineering filament options</h3>
+        <p>Carbon-fibre and glass-fibre reinforced options, nylon and other engineering polymers for projects with specific stiffness, heat or service requirements.</p>
+        <div className="fdm-materials">{["ASA-CF", "PET-CF", "PA12", "PA12-GF", "PA12-CF", "PPS-CF"].map(material => <span key={material}>{material}</span>)}</div>
+        <h3>Everyday & versatile materials</h3>
+        <p>PLA · PETG · ABS · ASA · TPU</p>
+        <p className="small">CF means carbon fibre; GF means glass fibre. Material grade, availability and suitability are confirmed with your quote. Tell us about load, heat, outdoor exposure, flexibility and mating parts.</p>
+        <Link className="text-link" to="/work/gear-mount">See a real engineering-material project <Arrow /></Link>
+      </div>
+    </div>
+  </section>;
 }

@@ -5,7 +5,7 @@ export const services = [
     name: "Custom 3D Printing",
     short: "Your design. A tangible part.",
     description:
-      "FDM for functional parts. Resin for fine detail, miniatures and display models. One-off prints and small runs welcome.",
+      "FDM with engineering filaments up to 305 × 305 × 400 mm. Resin for fine detail, miniatures and display models. One-off prints and small runs welcome.",
     intro:
       "Custom FDM and resin 3D printing in Edmonton. Bring a file or an idea: we help choose the process and material for functional parts, detailed models and prototypes.",
     applications: [

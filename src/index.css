@@ -2301,3 +2301,8 @@ h3 {
 .faq-list + h2 {
   margin-top: 40px;
 }
+.fdm-size .print-volume, .note-panel .print-volume { font-size: clamp(1.5rem, 3vw, 2.4rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.04em; color: var(--ink, #171c1d); }
+.fdm-capabilities { background: #edf0ef; }
+.fdm-size { margin: 28px 0; padding: 24px 0; border-top: 1px solid #bbc3c0; border-bottom: 1px solid #bbc3c0; }
+.fdm-materials { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+.fdm-materials span { padding: 9px 13px; background: #1a2021; color: #fff; font-weight: 600; font-size: .9rem; }

@@ -6,9 +6,9 @@ export const printingPages: Service[] = [
     id: "fdm-3d-printing",
     name: "FDM 3D Printing",
     intro:
-      "Custom FDM 3D printing in Edmonton for replacement parts, brackets, enclosures and functional prototypes. Send an STL, STEP file or idea for a single part or small production run.",
+      "Custom FDM 3D printing in Edmonton with engineering filaments and a maximum 305 × 305 × 400 mm build envelope. Replacement parts, fixtures, enclosures and functional prototypes—from one part to a small run.",
     description:
-      "Functional plastic parts, prototypes and small runs. FDM 3D printing in Edmonton from $20 CAD per job.",
+      "FDM 3D printing in Edmonton up to 305 × 305 × 400 mm. Engineering filaments, functional parts and prototypes. Jobs from $20 CAD.",
     applications: [
       "Replacement parts and custom brackets",
       "Functional prototypes and fit-check models",
