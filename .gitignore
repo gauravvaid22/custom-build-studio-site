@@ -6,3 +6,12 @@ dist/
 .sites-runtime/
 *.tsbuildinfo
 test-results/
+.env
+.env.*
+!.env.example
+private-production/
+*.sqlite*
+*.stl
+*.STL
+*.3mf
+*.3MF

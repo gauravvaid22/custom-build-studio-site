@@ -12,9 +12,12 @@
     "typecheck": "tsc --noEmit",
     "preview": "node scripts/preview.cjs",
     "verify": "node scripts/verify-build.mjs",
-    "test:browser": "node tests/browser.cjs"
+    "test:browser": "node tests/browser.cjs",
+    "preview:shop": "node scripts/shop-preview.mjs",
+    "test:shop": "node --test tests/shop.test.mjs"
   },
   "dependencies": {
+    "@netlify/blobs": "^11.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.14.2"

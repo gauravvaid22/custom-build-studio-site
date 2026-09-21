@@ -7,6 +7,8 @@ import Home from "./pages/Home";
 import { Services, ServiceDetail } from "./pages/Services";
 import { Work, ProjectDetail } from "./pages/Work";
 import Contact from "./pages/Contact";
+import { CartProvider } from "./components/Cart";
+import { Shop, ShopProduct, ShopCart, Checkout, OrderConfirmation, ShopAdmin } from "./pages/Shop";
 import {
   About,
   Pricing,
@@ -42,7 +44,7 @@ export default function App() {
     }
   }, [location.pathname, location.hash]);
   return (
-    <>
+    <CartProvider>
       <Seo />
       <Analytics />
       <a className="skip-link" href="#main">
@@ -59,6 +61,12 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/shop/cart" element={<ShopCart />} />
+          <Route path="/shop/checkout" element={<Checkout />} />
+          <Route path="/shop/order" element={<OrderConfirmation />} />
+          <Route path="/shop/admin" element={<ShopAdmin />} />
+          <Route path="/shop/:id" element={<ShopProduct />} />
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/contact" element={<Contact key={location.search} />} />
           <Route path="/privacy" element={<Privacy />} />
@@ -68,6 +76,6 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
-    </>
+    </CartProvider>
   );
 }

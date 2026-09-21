@@ -6,11 +6,14 @@ declare global {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
     cbsAnalyticsLoaded?: boolean;
+    "ga-disable-G-8D08Z57Q3S"?: boolean;
   }
 }
 const production = () =>
   window.location.hostname === "custombuildstudio.ca" ||
   window.location.hostname === "www.custombuildstudio.ca";
+const privateShop = () =>
+  /^\/shop\/(checkout|order|admin)(\/|$)/.test(window.location.pathname);
 const attributionKey = "cbs-campaign";
 const campaignKeys = [
   "utm_source",
@@ -50,7 +53,7 @@ function campaignLocation() {
   return url.href;
 }
 function load() {
-  if (!production() || window.cbsAnalyticsLoaded) return;
+  if (!production() || privateShop() || window.cbsAnalyticsLoaded) return;
   window.cbsAnalyticsLoaded = true;
   window.dataLayer = window.dataLayer || [];
   window.gtag = function () {
@@ -85,7 +88,8 @@ export function trackQuoteStart() {
 export default function Analytics() {
   const { pathname, search } = useLocation();
   useEffect(() => {
-    if (!production()) return;
+    window["ga-disable-G-8D08Z57Q3S"] = privateShop();
+    if (!production() || privateShop()) return;
     captureCampaign();
   }, [pathname, search]);
   useEffect(() => {
@@ -94,7 +98,7 @@ export default function Analytics() {
         event.target instanceof Element
           ? event.target.closest('a[href^="tel:"]')
           : null;
-      if (!link || !production()) return;
+      if (!link || !production() || privateShop()) return;
       load();
       window.gtag?.("event", "phone_click", {
         page_path: window.location.pathname,
@@ -104,7 +108,7 @@ export default function Analytics() {
     return () => document.removeEventListener("click", click);
   }, []);
   useEffect(() => {
-    if (!production()) return;
+    if (!production() || privateShop()) return;
     const timer = window.setTimeout(() => {
       load();
       window.gtag?.("event", "page_view", {

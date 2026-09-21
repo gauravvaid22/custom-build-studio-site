@@ -1,6 +1,7 @@
 import { allServices as services, serviceDetails } from "./landing";
 import projects from "./projects.json";
 import { business } from "./business";
+import products from "../../commerce/products.json";
 export const publicRoutes = [
   "/",
   "/services",
@@ -10,6 +11,8 @@ export const publicRoutes = [
   "/about",
   "/pricing",
   "/products",
+  "/shop",
+  ...products.map((product) => `/shop/${product.id}`),
   "/reviews",
   "/contact",
   "/privacy",
@@ -18,7 +21,25 @@ export function getSeo(path: string) {
   const page = path.replace(/\/$/, "") || "/";
   const service = services.find((s) => page === `/services/${s.id}`);
   const project = projects.find((p) => page === `/work/${p.id}`);
+  const product = products.find((p) => page === `/shop/${p.id}`);
   const pages: Record<string, [string, string]> = {
+    "/shop": [
+      "3D-Printed Gifts in Edmonton",
+      "Discover locally made 3D-printed gifts, creatures, dice towers, planters and seasonal pieces. Physical prints with Edmonton pickup and local delivery.",
+    ],
+    "/shop/cart": ["Your Cart", "Review your physical 3D-printed products."],
+    "/shop/checkout": [
+      "Checkout",
+      "Place an order for physical prints with manual e-Transfer payment.",
+    ],
+    "/shop/order": [
+      "Private Order Confirmation",
+      "Your private order status and payment instructions.",
+    ],
+    "/shop/admin": [
+      "Order Administration",
+      "Private studio order administration.",
+    ],
     "/": [
       "3D Printing, CAD & CNC Woodworking Edmonton",
       "FDM and resin 3D printing, CAD design, 3D scanning and CNC woodworking in Edmonton. One-off projects, prototypes and small runs. Request a quote.",
@@ -60,19 +81,21 @@ export function getSeo(path: string) {
       "Thank you for contacting Custom Build Studio about your custom project.",
     ],
   };
-  const entry = service
-    ? [serviceDetails[service.id].heading, service.description]
-    : project
-      ? [`${project.title} | Project Portfolio`, project.description]
-      : pages[page] || [
-          "Page Not Found",
-          "Find design and fabrication services at Custom Build Studio.",
-        ];
+  const entry = product
+    ? [`${product.name} | Edmonton Printed Gifts`, product.description]
+    : service
+      ? [serviceDetails[service.id].heading, service.description]
+      : project
+        ? [`${project.title} | Project Portfolio`, project.description]
+        : pages[page] || [
+            "Page Not Found",
+            "Find design and fabrication services at Custom Build Studio.",
+          ];
   return {
     title: `${entry[0]} | Custom Build Studio`,
     description: entry[1],
     url: business.origin + (page === "/" ? "/" : page),
-    image: business.origin + "/og-image.jpg",
+    image: business.origin + (product?.images[0]?.src || "/og-image.jpg"),
     noindex: !publicRoutes.includes(page) || page === "/privacy",
   };
 }
@@ -111,6 +134,33 @@ export const localBusiness = {
 
 export function getStructuredData(path: string) {
   const page = path.replace(/\/$/, "") || "/";
+  const product = products.find((item) => page === `/shop/${item.id}`);
+  if (product)
+    return {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: product.name,
+      description: `${product.description} ${product.included} Finished physical print; no digital download.`,
+      url: business.origin + page,
+      image: product.images.map((image) => business.origin + image.src),
+      // Provisional prices are intentionally omitted from merchant offers until reviewed.
+    };
+  if (page === "/shop")
+    return {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: "3D-Printed Gifts in Edmonton",
+      url: business.origin + page,
+      mainEntity: {
+        "@type": "ItemList",
+        itemListElement: products.map((item, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: item.name,
+          url: business.origin + `/shop/${item.id}`,
+        })),
+      },
+    };
   const service = services.find((s) => page === `/services/${s.id}`);
   if (!service) return localBusiness;
   return {

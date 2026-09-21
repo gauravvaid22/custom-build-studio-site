@@ -1,0 +1,16 @@
+{
+  "currency": "CAD",
+  "paymentEmail": "custombuildstudio@gmail.com",
+  "phone": "780-203-0081",
+  "taxBasisPoints": 0,
+  "taxLabel": "GST (not charged)",
+  "productionTime": "2–3 business days after payment is verified",
+  "pickupFeeCents": 0,
+  "pickupInstructions": "We’ll contact you when your order is ready and arrange pickup privately. Questions? Call or text 780-203-0081 with your order number.",
+  "deliveryFeeCents": 500,
+  "deliveryRadiusKm": 50,
+  "deliveryInstructions": "$5 local delivery within 50 km of our Edmonton studio. We check your exact address before requesting payment; a community name alone does not confirm eligibility.",
+  "catalogApproved": true,
+  "pricesAreProvisional": false,
+  "maxQuantityPerProduct": 20
+}

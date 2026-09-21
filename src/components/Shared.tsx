@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import imageData from "../data/images.json";
 import { business } from "../data/business";
 import projects from "../data/projects.json";
+import { useCart } from "./Cart";
 
 const images: Record<string, { base: string; width: number; height: number }> =
   imageData;
@@ -95,6 +96,7 @@ export function Brand() {
   );
 }
 export function Header() {
+  const { items } = useCart();
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const toggle = useRef<HTMLButtonElement>(null);
@@ -134,12 +136,14 @@ export function Header() {
             ["/work", "Our Work"],
             ["/about", "The Studio"],
             ["/pricing", "Pricing"],
+            ["/shop", "Printed Gifts"],
           ].map(([to, label]) => (
             <NavLink key={to} to={to}>
               {label}
             </NavLink>
           ))}
           <QuoteLink />
+          {items.length > 0 && <Link to="/shop/cart" aria-label="View shopping cart">Cart ({items.reduce((sum,item)=>sum+item.quantity,0)})</Link>}
         </nav>
       </div>
     </header>
@@ -165,6 +169,7 @@ export function Footer() {
           <Link to="/services">Services</Link>
           <Link to="/work">Our work</Link>
           <Link to="/products">Products</Link>
+          <Link to="/shop">Edmonton printed gifts</Link>
           <Link to="/about">The studio</Link>
           <Link to="/pricing">Pricing</Link>
           <Link to="/reviews">Customer feedback</Link>
