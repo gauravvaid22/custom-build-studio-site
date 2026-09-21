@@ -18,6 +18,7 @@ export function handler(shop) {
         return response({
           settings,
           ready: shop.ready,
+          setupChecks: shop.setupChecks,
           testMode: shop.testMode,
         });
       if (request.method !== "POST")

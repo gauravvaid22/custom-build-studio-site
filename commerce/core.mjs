@@ -145,6 +145,7 @@ export function createShop({
       Boolean(mailer) &&
       settings.catalogApproved &&
       catalog.every((p) => p.images.length));
+  const setupChecks = {enabled, administratorConfigured: adminKey.length >= 32, emailConfigured: Boolean(mailer), catalogApproved: settings.catalogApproved};
   async function create(input, key) {
     if (!ready)
       fail("The collection is being prepared. Ordering is not live yet.", 503);
@@ -332,6 +333,7 @@ export function createShop({
     rateLimit,
     notifyOwner,
     ready,
+    setupChecks,
     testMode,
   };
 }
