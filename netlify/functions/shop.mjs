@@ -2,13 +2,14 @@ import { getStore } from "@netlify/blobs";
 import { createShop } from "../../commerce/core.mjs";
 import { handler } from "../../commerce/http.mjs";
 import { resendMailer } from "../../commerce/notifications.mjs";
-export default async (request) => {
+export default async (request, context) => {
   // Preview deploys never share orders or payment instructions with production.
-  const production = process.env.CONTEXT === "production";
-  const testMode = ["deploy-preview", "branch-deploy", "dev"].includes(process.env.CONTEXT);
+  const deployContext = context?.deploy?.context || process.env.CONTEXT;
+  const production = deployContext === "production";
+  const testMode = ["deploy-preview", "branch-deploy", "dev"].includes(deployContext);
   const name = production
     ? "shop-orders-v1"
-    : `shop-preview-${process.env.DEPLOY_ID || "local"}`;
+    : `shop-preview-${context?.deploy?.id || process.env.DEPLOY_ID || "local"}`;
   const blobs = getStore({ name, consistency: "strong" });
   const store = {
     get: (key) =>
