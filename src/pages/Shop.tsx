@@ -149,6 +149,10 @@ function AddProduct({
   const { add } = useCart();
   const [quantity, setQuantity] = useState(1);
   const variants = variantsFor(product);
+  const variantLabel =
+    "variantLabel" in product && typeof product.variantLabel === "string"
+      ? product.variantLabel
+      : "Bottle diameter";
   const selectedId = variantId || variants[0]?.id;
   const orderProduct = selectedId ? catalogProduct(selectedId) || product : product;
   return (
@@ -161,11 +165,11 @@ function AddProduct({
     >
       {variants.length > 0 && (
         <label className="shop-variant-select">
-          Bottle diameter
+          {variantLabel}
           <select
             value={selectedId}
             onChange={(event) => onVariantChange?.(event.target.value)}
-            aria-label={`Bottle diameter for ${product.name}`}
+            aria-label={`${variantLabel} for ${product.name}`}
           >
             {variants.map((variant) => (
               <option key={variant.id} value={variant.id}>
@@ -291,7 +295,9 @@ export function Shop() {
                     </p>
                     {variantsFor(product).length ? (
                       <Link className="button" to={`/shop/${product.id}`}>
-                        Choose bottle size ↗
+                        {"variantLabel" in product && product.variantLabel === "Design"
+                          ? "Choose design ↗"
+                          : "Choose bottle size ↗"}
                       </Link>
                     ) : (
                       <AddProduct product={product} />
@@ -443,7 +449,7 @@ export function ShopProduct() {
                   <dt>Approximate size</dt>
                   <dd>{selectedVariant.dimensions.replace("Source model: approximately", "Approximately").replace("Finished size: approximately", "Approximately").replace("Final printed dimensions require production review.", "Finished size may vary slightly.")}</dd>
                 </>}
-                {variants.length > 0 && <>
+                {variants.length > 0 && !("variantLabel" in product && product.variantLabel === "Design") && <>
                   <dt>Size guide</dt>
                   <dd>
                     Choose by the widest diameter of your bottle. A typical 750 mL

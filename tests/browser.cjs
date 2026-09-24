@@ -22,6 +22,8 @@ const routes = [
   "/shop",
   "/shop/night-owl-wall-light",
   "/shop/octopus-wine-bottle-holder",
+  "/shop/mood-ghost",
+  "/shop/ghost-arch-wreath",
   "/reviews",
   "/contact",
   "/privacy",
@@ -315,6 +317,28 @@ async function scroll(page) {
     );
   }
   results.interactions.push("Octopus bottle-size selector price and dimension updates on desktop and mobile");
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto(origin + "/shop/mood-ghost");
+    const design = page.getByRole("combobox", { name: "Design for Mood Ghost" });
+    assert.match(await page.locator(".shop-price").innerText(), /\$16\.00/);
+    await design.selectOption("mood-ghost-design-b");
+    assert.match(await page.locator(".shop-price").innerText(), /\$16\.00/);
+    assert(
+      await page
+        .getByText("Finished size: 85 × 85 × 88 mm.", { exact: true })
+        .isVisible(),
+    );
+    assert.equal(
+      await page.getByText(/Choose by the widest diameter of your bottle/).count(),
+      0,
+    );
+    assert.equal(
+      await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1),
+      false,
+    );
+  }
+  results.interactions.push("Mood Ghost design selector keeps both designs at $16.00 on desktop and mobile");
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto(origin);

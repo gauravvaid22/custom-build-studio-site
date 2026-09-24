@@ -636,5 +636,76 @@
     "images": [{ "src": "/media/shop/octopus-wine-bottle-holder/1-1200.jpg", "thumb": "/media/shop/octopus-wine-bottle-holder/1-480.jpg", "alt": "Blue octopus wine bottle holder holding a wine bottle", "sourceFile": "00_2_d8d5480bf5_350e8bd0a7.png" }],
     "productionReviewed": false,
     "source": "local authorized production variant: Bordeaux_The_Octopus_3_45.stl"
+  },
+  {
+    "id": "mood-ghost",
+    "name": "Mood Ghost",
+    "priceCents": 1600,
+    "category": "Halloween",
+    "seasonal": true,
+    "description": "A cute little ghost with a playful pose and expressive character for a shelf, desk or Halloween display. Choose your favourite Mood Ghost design.",
+    "included": "One physical Mood Ghost print. Display props are not included.",
+    "dimensions": "Finished size: 85 × 85 × 88 mm.",
+    "notes": "Colours will be similar to the selected design photo; shades may vary.",
+    "variantLabel": "Design",
+    "variants": [
+      { "id": "mood-ghost-design-a", "label": "Mood Ghost design A", "priceCents": 1600, "dimensions": "Finished size: 85 × 85 × 88 mm." },
+      { "id": "mood-ghost-design-b", "label": "Mood Ghost design B", "priceCents": 1600, "dimensions": "Finished size: 85 × 85 × 88 mm." }
+    ],
+    "images": [
+      { "src": "/media/shop/mood-ghost/1-1200.jpg", "thumb": "/media/shop/mood-ghost/1-480.jpg", "alt": "Mood Ghost design A with arms raised", "sourceFile": "Mood_Ghost_1_6a0bb3d0ed.png" },
+      { "src": "/media/shop/mood-ghost/2-1200.jpg", "thumb": "/media/shop/mood-ghost/2-480.jpg", "alt": "Mood Ghost design B with open arms", "sourceFile": "Mood_Ghost_6_65f8902f4a.png" }
+    ],
+    "video": "/media/shop/mood-ghost/mood-ghost.webm",
+    "productionReviewed": false,
+    "source": "local authorized media package: WEBSITE PRODUCT/MOOD GHOST/mood-ghost-media-package"
+  },
+  {
+    "id": "mood-ghost-design-a",
+    "name": "Mood Ghost — design A",
+    "priceCents": 1600,
+    "category": "Halloween",
+    "seasonal": true,
+    "description": "Mood Ghost design A.",
+    "included": "One physical Mood Ghost print. Display props are not included.",
+    "dimensions": "Finished size: 85 × 85 × 88 mm.",
+    "notes": "Colours will be similar to the selected design photo; shades may vary.",
+    "variantOf": "mood-ghost",
+    "images": [{ "src": "/media/shop/mood-ghost/1-1200.jpg", "thumb": "/media/shop/mood-ghost/1-480.jpg", "alt": "Mood Ghost design A with arms raised", "sourceFile": "Mood_Ghost_1_6a0bb3d0ed.png" }],
+    "productionReviewed": false,
+    "source": "local authorized production variant: Mood Ghost design A"
+  },
+  {
+    "id": "mood-ghost-design-b",
+    "name": "Mood Ghost — design B",
+    "priceCents": 1600,
+    "category": "Halloween",
+    "seasonal": true,
+    "description": "Mood Ghost design B.",
+    "included": "One physical Mood Ghost print. Display props are not included.",
+    "dimensions": "Finished size: 85 × 85 × 88 mm.",
+    "notes": "Colours will be similar to the selected design photo; shades may vary.",
+    "variantOf": "mood-ghost",
+    "images": [{ "src": "/media/shop/mood-ghost/2-1200.jpg", "thumb": "/media/shop/mood-ghost/2-480.jpg", "alt": "Mood Ghost design B with open arms", "sourceFile": "Mood_Ghost_6_65f8902f4a.png" }],
+    "productionReviewed": false,
+    "source": "local authorized production variant: Mood Ghost design B"
+  },
+  {
+    "id": "ghost-arch-wreath",
+    "name": "Ghost Arch Wreath",
+    "priceCents": 2899,
+    "category": "Halloween",
+    "seasonal": true,
+    "description": "A ghost-filled arch wreath with a tiny graveyard scene, made to bring playful Halloween character to a door, wall or seasonal display.",
+    "included": "One physical Ghost Arch Wreath. Mounting hardware and display props are not included.",
+    "dimensions": "Finished size: 190 × 194 × 33 mm.",
+    "notes": "Colours will be similar to the main photo; shades may vary.",
+    "images": [
+      { "src": "/media/shop/ghost-arch-wreath/1-1200.jpg", "thumb": "/media/shop/ghost-arch-wreath/1-480.jpg", "alt": "Ghost Arch Wreath with ghost arch and graveyard scene", "sourceFile": "Ghost_Arch_Wreath1_7929ad80f1.png" },
+      { "src": "/media/shop/ghost-arch-wreath/2-1200.jpg", "thumb": "/media/shop/ghost-arch-wreath/2-480.jpg", "alt": "Ghost Arch Wreath displayed on a front door", "sourceFile": "Ghost_Arch_Wreath5_ec6d283a33.png" }
+    ],
+    "video": "/media/shop/ghost-arch-wreath/ghost-arch-wreath.webm",
+    "productionReviewed": false,
+    "source": "local authorized media package: WEBSITE PRODUCT/GHOST ARCH WREATH/ghost-arch-wreath-media-package"
   }
 ]
