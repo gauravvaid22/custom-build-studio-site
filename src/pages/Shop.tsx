@@ -89,11 +89,14 @@ function useConfig() {
 }
 export function ShopNav() {
   const { items } = useCart();
+  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
   return (
     <nav className="shop-nav container" aria-label="Shop navigation">
       <Link to="/shop">Edmonton gift collection</Link>
-      <Link to="/shop/cart">
-        Cart ({items.reduce((sum, item) => sum + item.quantity, 0)})
+      <Link className="shop-cart-link" to="/shop/cart">
+        <span aria-hidden="true">Cart</span>
+        <span className="sr-only">Cart items:</span>
+        <span className="shop-cart-count" key={itemCount}>{itemCount}</span>
       </Link>
     </nav>
   );
@@ -148,6 +151,15 @@ function AddProduct({
 }) {
   const { add } = useCart();
   const [quantity, setQuantity] = useState(1);
+  const [confirmation, setConfirmation] = useState("");
+  const [confirmationKey, setConfirmationKey] = useState(0);
+  const confirmationTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (confirmationTimer.current) clearTimeout(confirmationTimer.current);
+    },
+    [],
+  );
   const variants = variantsFor(product);
   const variantLabel =
     "variantLabel" in product && typeof product.variantLabel === "string"
@@ -160,7 +172,11 @@ function AddProduct({
       className="shop-add"
       onSubmit={(e) => {
         e.preventDefault();
-        add(orderProduct.id, quantity);
+        if (!add(orderProduct.id, quantity)) return;
+        setConfirmation(`${quantity} × ${orderProduct.name}`);
+        setConfirmationKey((current) => current + 1);
+        if (confirmationTimer.current) clearTimeout(confirmationTimer.current);
+        confirmationTimer.current = setTimeout(() => setConfirmation(""), 4200);
       }}
     >
       {variants.length > 0 && (
@@ -195,12 +211,33 @@ function AddProduct({
       <button className="button" type="submit">
         Add to Cart <span aria-hidden="true">+</span>
       </button>
+      {confirmation && (
+        <div
+          className="shop-added-confirmation"
+          key={confirmationKey}
+          role="status"
+          aria-live="polite"
+        >
+          <span className="shop-added-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L20 8H7" />
+              <circle cx="10" cy="19" r="1.25" />
+              <circle cx="17" cy="19" r="1.25" />
+              <path d="m10 10 1.6 1.6L15 8.2" />
+            </svg>
+          </span>
+          <span>
+            <strong>Added to cart</strong>
+            <small>{confirmation}</small>
+          </span>
+          <Link to="/shop/cart">View cart →</Link>
+        </div>
+      )}
     </form>
   );
 }
 export function Shop() {
   const [category, setCategory] = useState("All");
-  const { notice } = useCart();
   const categories = [
     "All",
     "Creatures & collectibles",
@@ -267,9 +304,6 @@ export function Shop() {
               </button>
             ))}
           </div>
-          <p className="shop-cart-notice" role="status">
-            {notice}
-          </p>
           <div className="shop-grid">
             {products
               .filter((p) => !isVariant(p))
@@ -348,7 +382,6 @@ export function ShopProduct() {
   const product = products.find((p) => p.id === id);
   const [index, setIndex] = useState(0);
   const [selectedVariantId, setSelectedVariantId] = useState("");
-  const { notice } = useCart();
   useEffect(() => {
     setIndex(0);
     setSelectedVariantId("");
@@ -456,7 +489,6 @@ export function ShopProduct() {
                 variantId={selectedVariant.id}
                 onVariantChange={chooseVariant}
               />
-              <p role="status">{notice}</p>
               <Link className="text-link" to="/shop/cart">
                 View cart & checkout ↗
               </Link>

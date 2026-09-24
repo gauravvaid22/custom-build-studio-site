@@ -4,14 +4,14 @@ export type CartItem = { id: string; quantity: number };
 type CartContextType = {
   items: CartItem[];
   setQuantity: (id: string, quantity: number) => void;
-  add: (id: string, quantity: number) => void;
+  add: (id: string, quantity: number) => boolean;
   clear: () => void;
   notice: string;
 };
 const CartContext = createContext<CartContextType>({
   items: [],
   setQuantity: () => {},
-  add: () => {},
+  add: () => false,
   clear: () => {},
   notice: "",
 });
@@ -61,7 +61,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       quantity < 1 ||
       quantity > 20
     )
-      return;
+      return false;
     setItems((current) => {
       const found = current.find((item) => item.id === id);
       return found
@@ -75,6 +75,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setNotice(
       `${products.find((p) => p.id === id)!.name} added to cart. Maximum 20 of each product.`,
     );
+    return true;
   };
   return (
     <CartContext.Provider

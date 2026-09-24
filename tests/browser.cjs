@@ -339,8 +339,59 @@ async function scroll(page) {
     );
   }
   results.interactions.push("Mood Ghost design selector keeps both designs at $16.00 on desktop and mobile");
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto(origin + "/shop/night-owl-wall-light");
+    await page.evaluate(() => localStorage.removeItem("cbs-cart-v1"));
+    await page.reload();
+    const nightQuantity = page.getByRole("spinbutton", {
+      name: "Quantity for Night Owl Wall Light",
+    });
+    await nightQuantity.fill("21");
+    await page.getByRole("button", { name: "Add to Cart" }).click();
+    assert.equal(await page.locator(".shop-added-confirmation").count(), 0);
+    assert.equal(await page.locator(".shop-cart-count").innerText(), "0");
+    await nightQuantity.fill("1");
+    await page.getByRole("button", { name: "Add to Cart" }).click();
+    assert.match(await page.getByRole("status").innerText(), /Added to cart/);
+    assert(await page.getByRole("link", { name: "View cart →", exact: true }).isVisible());
+    assert.equal(await page.locator(".shop-cart-count").innerText(), "1");
+    await page.goto(origin + "/shop/mood-ghost");
+    await page
+      .getByRole("combobox", { name: "Design for Mood Ghost" })
+      .selectOption("mood-ghost-design-b");
+    await page
+      .getByRole("spinbutton", { name: "Quantity for Mood Ghost" })
+      .fill("2");
+    await page.getByRole("button", { name: "Add to Cart" }).click();
+    assert.match(
+      await page.locator(".shop-added-confirmation").innerText(),
+      /2 × Mood Ghost — design B/,
+    );
+    assert.equal(await page.locator(".shop-cart-count").innerText(), "3");
+    const savedCart = await page.evaluate(() =>
+      JSON.parse(localStorage.getItem("cbs-cart-v1") || "[]"),
+    );
+    assert.deepEqual(savedCart, [
+      { id: "night-owl-wall-light", quantity: 1 },
+      { id: "mood-ghost-design-b", quantity: 2 },
+    ]);
+    assert.equal(
+      await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1),
+      false,
+    );
+  }
+  results.interactions.push("Add-to-cart success, invalid submission, option selection, cart count and persisted contents on desktop and mobile");
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto(origin + "/shop/night-owl-wall-light");
+  await page.getByRole("button", { name: "Add to Cart" }).click();
+  assert.equal(
+    await page
+      .locator(".shop-added-confirmation")
+      .evaluate((el) => getComputedStyle(el).animationName),
+    "none",
+  );
   await page.goto(origin);
   assert.equal(
     await page

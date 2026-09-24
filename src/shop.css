@@ -7,6 +7,24 @@
   font-weight: 650;
   border-bottom: 1px solid #d8dedd;
 }
+.shop-cart-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.shop-cart-count {
+  display: grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: #173c35;
+  color: #fff;
+  font-size: 0.76rem;
+  line-height: 1;
+  animation: shop-count-pop 0.32s ease-out;
+}
 .shop-hero {
   background: #e9eeeb;
   padding: 64px 0;
@@ -177,6 +195,67 @@
   padding: 14px 16px;
   min-height: 47px;
   font-size: 0.85rem;
+}
+.shop-added-confirmation {
+  flex-basis: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  border: 1px solid #bfd2c8;
+  background: #edf5f0;
+  color: #173c35;
+  animation: shop-confirm-in 0.28s ease-out;
+}
+.shop-added-confirmation > span:nth-child(2) {
+  min-width: 0;
+}
+.shop-added-confirmation strong,
+.shop-added-confirmation small {
+  display: block;
+}
+.shop-added-confirmation small {
+  margin-top: 2px;
+  color: #4b5851;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.shop-added-confirmation a {
+  color: #173c35;
+  font-size: 0.82rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+.shop-added-icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #173c35;
+  color: #fff;
+  animation: shop-cart-bump 0.4s ease-out;
+}
+.shop-added-icon svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+@keyframes shop-confirm-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes shop-cart-bump {
+  45% { transform: scale(1.12) rotate(-5deg); }
+}
+@keyframes shop-count-pop {
+  45% { transform: scale(1.18); }
 }
 .shop-reference-note {
   margin-top: 40px;
@@ -439,8 +518,12 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .shop-card-image img {
+  .shop-card-image img,
+  .shop-added-confirmation,
+  .shop-added-icon,
+  .shop-cart-count {
     transition: none;
+    animation: none;
   }
 }
 @media print {
