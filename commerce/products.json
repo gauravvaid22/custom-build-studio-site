@@ -1,7 +1,7 @@
 [
   {
     "id": "skeleton-chameleon",
-    "name": "Skeleton Chameleon",
+    "name": "Skeleton Chameleon Figurine",
     "priceCents": 1500,
     "category": "Creatures & collectibles",
     "seasonal": false,
@@ -13,49 +13,49 @@
       {
         "src": "/media/shop/skeleton-chameleon/1-1200.webp",
         "thumb": "/media/shop/skeleton-chameleon/1-480.webp",
-        "alt": "Skeleton Chameleon — STLFLIX reference photo 1",
+        "alt": "Skeleton Chameleon decorative print",
         "sourceFile": "Skeleton_Chameleon_1_76d170d8ab.jpg"
       },
       {
         "src": "/media/shop/skeleton-chameleon/2-1200.webp",
         "thumb": "/media/shop/skeleton-chameleon/2-480.webp",
-        "alt": "Skeleton Chameleon — STLFLIX reference photo 2",
+        "alt": "Skeleton Chameleon decorative print",
         "sourceFile": "Skeleton_Chameleon_2_084d83ec21.jpg"
       },
       {
         "src": "/media/shop/skeleton-chameleon/3-1200.webp",
         "thumb": "/media/shop/skeleton-chameleon/3-480.webp",
-        "alt": "Skeleton Chameleon — STLFLIX reference photo 3",
+        "alt": "Skeleton Chameleon decorative print",
         "sourceFile": "Skeleton_Chameleon_8_f172cc8d6b.jpg"
       },
       {
         "src": "/media/shop/skeleton-chameleon/4-1200.webp",
         "thumb": "/media/shop/skeleton-chameleon/4-480.webp",
-        "alt": "Skeleton Chameleon — STLFLIX reference photo 4",
+        "alt": "Skeleton Chameleon decorative print",
         "sourceFile": "Skeleton_Chameleon_3_7116e204d4.jpg"
       },
       {
         "src": "/media/shop/skeleton-chameleon/5-1200.webp",
         "thumb": "/media/shop/skeleton-chameleon/5-480.webp",
-        "alt": "Skeleton Chameleon — STLFLIX reference photo 5",
+        "alt": "Skeleton Chameleon decorative print",
         "sourceFile": "Skeleton_Chameleon_4_c0984b1c47.jpg"
       },
       {
         "src": "/media/shop/skeleton-chameleon/6-1200.webp",
         "thumb": "/media/shop/skeleton-chameleon/6-480.webp",
-        "alt": "Skeleton Chameleon — STLFLIX reference photo 6",
+        "alt": "Skeleton Chameleon decorative print",
         "sourceFile": "Skeleton_Chameleon_5_eb99735f60.jpg"
       },
       {
         "src": "/media/shop/skeleton-chameleon/7-1200.webp",
         "thumb": "/media/shop/skeleton-chameleon/7-480.webp",
-        "alt": "Skeleton Chameleon — STLFLIX reference photo 7",
+        "alt": "Skeleton Chameleon decorative print",
         "sourceFile": "Skeleton_Chameleon_6_858d283873.jpg"
       },
       {
         "src": "/media/shop/skeleton-chameleon/8-1200.webp",
         "thumb": "/media/shop/skeleton-chameleon/8-480.webp",
-        "alt": "Skeleton Chameleon — STLFLIX reference photo 8",
+        "alt": "Skeleton Chameleon decorative print",
         "sourceFile": "Skeleton_Chameleon_7_47da395971.jpg"
       }
     ],
@@ -76,31 +76,31 @@
       {
         "src": "/media/shop/basilisk-dice-tower/1-1200.webp",
         "thumb": "/media/shop/basilisk-dice-tower/1-480.webp",
-        "alt": "Basilisk Dice Tower — STLFLIX reference photo 1",
+        "alt": "Basilisk Dice Tower decorative print",
         "sourceFile": "Basilisk_Dice_Tower1_7d481a95af.jpg"
       },
       {
         "src": "/media/shop/basilisk-dice-tower/2-1200.webp",
         "thumb": "/media/shop/basilisk-dice-tower/2-480.webp",
-        "alt": "Basilisk Dice Tower — STLFLIX reference photo 2",
+        "alt": "Basilisk Dice Tower decorative print",
         "sourceFile": "Basilisk_Dice_Tower2_ad064fda98.jpg"
       },
       {
         "src": "/media/shop/basilisk-dice-tower/3-1200.webp",
         "thumb": "/media/shop/basilisk-dice-tower/3-480.webp",
-        "alt": "Basilisk Dice Tower — STLFLIX reference photo 3",
+        "alt": "Basilisk Dice Tower decorative print",
         "sourceFile": "Basilisk_Dice_Tower3_f4c8443a2f.jpg"
       },
       {
         "src": "/media/shop/basilisk-dice-tower/4-1200.webp",
         "thumb": "/media/shop/basilisk-dice-tower/4-480.webp",
-        "alt": "Basilisk Dice Tower — STLFLIX reference photo 4",
+        "alt": "Basilisk Dice Tower decorative print",
         "sourceFile": "Basilisk_Dice_Tower4_af66613690.jpg"
       },
       {
         "src": "/media/shop/basilisk-dice-tower/5-1200.webp",
         "thumb": "/media/shop/basilisk-dice-tower/5-480.webp",
-        "alt": "Basilisk Dice Tower — STLFLIX reference photo 5",
+        "alt": "Basilisk Dice Tower decorative print",
         "sourceFile": "Basilisk_Dice_Tower5_8224c7b305.jpg"
       }
     ],
@@ -109,7 +109,7 @@
   },
   {
     "id": "articulated-baby-dragon",
-    "name": "Articulated Baby Dragon",
+    "name": "Articulated Baby Dragon Figurine",
     "priceCents": 1200,
     "category": "Creatures & collectibles",
     "seasonal": false,
@@ -121,19 +121,19 @@
       {
         "src": "/media/shop/articulated-baby-dragon/1-1200.webp",
         "thumb": "/media/shop/articulated-baby-dragon/1-480.webp",
-        "alt": "Articulated Baby Dragon — STLFLIX reference photo 1",
+        "alt": "Articulated Baby Dragon decorative print",
         "sourceFile": "02_1_ff73e6ba89_5025fbd048.png"
       },
       {
         "src": "/media/shop/articulated-baby-dragon/2-1200.webp",
         "thumb": "/media/shop/articulated-baby-dragon/2-480.webp",
-        "alt": "Articulated Baby Dragon — STLFLIX reference photo 2",
+        "alt": "Articulated Baby Dragon decorative print",
         "sourceFile": "01_1_eaf6dd6f56_2a13272644.png"
       },
       {
         "src": "/media/shop/articulated-baby-dragon/3-1200.webp",
         "thumb": "/media/shop/articulated-baby-dragon/3-480.webp",
-        "alt": "Articulated Baby Dragon — STLFLIX reference photo 3",
+        "alt": "Articulated Baby Dragon decorative print",
         "sourceFile": "03_8fc4a1e502_242919a696.png"
       }
     ],
@@ -142,7 +142,7 @@
   },
   {
     "id": "glutton-ghost-bowl",
-    "name": "Glutton Ghost Bowl",
+    "name": "Glutton Ghost Decorative Bowl",
     "priceCents": 3000,
     "category": "Halloween",
     "seasonal": true,
@@ -154,19 +154,19 @@
       {
         "src": "/media/shop/glutton-ghost-bowl/1-1200.webp",
         "thumb": "/media/shop/glutton-ghost-bowl/1-480.webp",
-        "alt": "Glutton Ghost Bowl — STLFLIX reference photo 1",
+        "alt": "Glutton Ghost Bowl decorative print",
         "sourceFile": "01_2_03277397b1_a934165a8b.png"
       },
       {
         "src": "/media/shop/glutton-ghost-bowl/2-1200.webp",
         "thumb": "/media/shop/glutton-ghost-bowl/2-480.webp",
-        "alt": "Glutton Ghost Bowl — STLFLIX reference photo 2",
+        "alt": "Glutton Ghost Bowl decorative print",
         "sourceFile": "00_4_e7270f8bf3_cb473d70b4.png"
       },
       {
         "src": "/media/shop/glutton-ghost-bowl/3-1200.webp",
         "thumb": "/media/shop/glutton-ghost-bowl/3-480.webp",
-        "alt": "Glutton Ghost Bowl — STLFLIX reference photo 3",
+        "alt": "Glutton Ghost Bowl decorative print",
         "sourceFile": "03_1_a2d4f90cf0_a6859c0288.png"
       }
     ],
@@ -175,11 +175,11 @@
   },
   {
     "id": "grumpy-kitty-planter",
-    "name": "Grumpy Kitty – Planter",
+    "name": "Grumpy Kitty Cat Planter",
     "priceCents": 4000,
     "category": "Home & planters",
     "seasonal": false,
-    "description": "A cat-shaped planter with a wonderfully unimpressed expression. The source design uses moving eyes to indicate the water level.",
+    "description": "A cat-shaped planter with a wonderfully unimpressed expression. A characterful gift for cat lovers and plant collectors; plant not included.",
     "included": "Physical printed planter components. Plant, soil, water wick and display props are not included.",
     "dimensions": "Source model: approximately 140 mm high. Final printed dimensions require production review.",
     "notes": "The watering feature needs a separate 3–4 mm wick. Assembly, water retention and the eye mechanism need production testing before launch.",
@@ -187,67 +187,67 @@
       {
         "src": "/media/shop/grumpy-kitty-planter/1-1200.webp",
         "thumb": "/media/shop/grumpy-kitty-planter/1-480.webp",
-        "alt": "Grumpy Kitty – Planter — STLFLIX reference photo 1",
+        "alt": "Grumpy Kitty – Planter decorative print",
         "sourceFile": "Grumpy_Kitty_Planter_1_514651864f.png"
       },
       {
         "src": "/media/shop/grumpy-kitty-planter/2-1200.webp",
         "thumb": "/media/shop/grumpy-kitty-planter/2-480.webp",
-        "alt": "Grumpy Kitty – Planter — STLFLIX reference photo 2",
+        "alt": "Grumpy Kitty – Planter decorative print",
         "sourceFile": "Grumpy_Kitty_Planter_2_0e41cbfc98.png"
       },
       {
         "src": "/media/shop/grumpy-kitty-planter/3-1200.webp",
         "thumb": "/media/shop/grumpy-kitty-planter/3-480.webp",
-        "alt": "Grumpy Kitty – Planter — STLFLIX reference photo 3",
+        "alt": "Grumpy Kitty – Planter decorative print",
         "sourceFile": "Grumpy_Kitty_Planter_3_e81d2e8e81.png"
       },
       {
         "src": "/media/shop/grumpy-kitty-planter/4-1200.webp",
         "thumb": "/media/shop/grumpy-kitty-planter/4-480.webp",
-        "alt": "Grumpy Kitty – Planter — STLFLIX reference photo 4",
+        "alt": "Grumpy Kitty – Planter decorative print",
         "sourceFile": "Grumpy_Kitty_Planter_4_6c3c5e8ffb.png"
       },
       {
         "src": "/media/shop/grumpy-kitty-planter/5-1200.webp",
         "thumb": "/media/shop/grumpy-kitty-planter/5-480.webp",
-        "alt": "Grumpy Kitty – Planter — STLFLIX reference photo 5",
+        "alt": "Grumpy Kitty – Planter decorative print",
         "sourceFile": "Grumpy_Kitty_Planter_5_74ffd03756.png"
       },
       {
         "src": "/media/shop/grumpy-kitty-planter/6-1200.webp",
         "thumb": "/media/shop/grumpy-kitty-planter/6-480.webp",
-        "alt": "Grumpy Kitty – Planter — STLFLIX reference photo 6",
+        "alt": "Grumpy Kitty – Planter decorative print",
         "sourceFile": "Grumpy_Kitty_Planter_6_ba44ef266c.png"
       },
       {
         "src": "/media/shop/grumpy-kitty-planter/7-1200.webp",
         "thumb": "/media/shop/grumpy-kitty-planter/7-480.webp",
-        "alt": "Grumpy Kitty – Planter — STLFLIX reference photo 7",
+        "alt": "Grumpy Kitty – Planter decorative print",
         "sourceFile": "Grumpy_Kitty_Planter_7_8459aba81a.png"
       },
       {
         "src": "/media/shop/grumpy-kitty-planter/8-1200.webp",
         "thumb": "/media/shop/grumpy-kitty-planter/8-480.webp",
-        "alt": "Grumpy Kitty – Planter — STLFLIX reference photo 8",
+        "alt": "Grumpy Kitty – Planter decorative print",
         "sourceFile": "Grumpy_Kitty_Planter_10_9f4f4d3f0a.png"
       },
       {
         "src": "/media/shop/grumpy-kitty-planter/9-1200.webp",
         "thumb": "/media/shop/grumpy-kitty-planter/9-480.webp",
-        "alt": "Grumpy Kitty – Planter — STLFLIX reference photo 9",
+        "alt": "Grumpy Kitty – Planter decorative print",
         "sourceFile": "Grumpy_Kitty_Planter_9_23033127bc.png"
       },
       {
         "src": "/media/shop/grumpy-kitty-planter/10-1200.webp",
         "thumb": "/media/shop/grumpy-kitty-planter/10-480.webp",
-        "alt": "Grumpy Kitty – Planter — STLFLIX reference photo 10",
+        "alt": "Grumpy Kitty – Planter decorative print",
         "sourceFile": "Grumpy_Kitty_Planter_8_80712d841f.png"
       },
       {
         "src": "/media/shop/grumpy-kitty-planter/12-1200.webp",
         "thumb": "/media/shop/grumpy-kitty-planter/12-480.webp",
-        "alt": "Grumpy Kitty – Planter — STLFLIX reference photo 12",
+        "alt": "Grumpy Kitty – Planter decorative print",
         "sourceFile": "Grumpy_Kitty_Planter_11_04ee27efac.png"
       }
     ],
@@ -268,37 +268,37 @@
       {
         "src": "/media/shop/6-finger-alien-hand-controller-holder/1-1200.webp",
         "thumb": "/media/shop/6-finger-alien-hand-controller-holder/1-480.webp",
-        "alt": "6-Finger Alien Hand Controller Holder — STLFLIX reference photo 1",
+        "alt": "6-Finger Alien Hand Controller Holder decorative print",
         "sourceFile": "DSC_02011_c21f2517dc.jpg"
       },
       {
         "src": "/media/shop/6-finger-alien-hand-controller-holder/2-1200.webp",
         "thumb": "/media/shop/6-finger-alien-hand-controller-holder/2-480.webp",
-        "alt": "6-Finger Alien Hand Controller Holder — STLFLIX reference photo 2",
+        "alt": "6-Finger Alien Hand Controller Holder decorative print",
         "sourceFile": "DSC_02014_840de283d5.jpg"
       },
       {
         "src": "/media/shop/6-finger-alien-hand-controller-holder/3-1200.webp",
         "thumb": "/media/shop/6-finger-alien-hand-controller-holder/3-480.webp",
-        "alt": "6-Finger Alien Hand Controller Holder — STLFLIX reference photo 3",
+        "alt": "6-Finger Alien Hand Controller Holder decorative print",
         "sourceFile": "DSC_02043_31801bbf9d.jpg"
       },
       {
         "src": "/media/shop/6-finger-alien-hand-controller-holder/4-1200.webp",
         "thumb": "/media/shop/6-finger-alien-hand-controller-holder/4-480.webp",
-        "alt": "6-Finger Alien Hand Controller Holder — STLFLIX reference photo 4",
+        "alt": "6-Finger Alien Hand Controller Holder decorative print",
         "sourceFile": "DSC_02050_79ac75e574.jpg"
       },
       {
         "src": "/media/shop/6-finger-alien-hand-controller-holder/5-1200.webp",
         "thumb": "/media/shop/6-finger-alien-hand-controller-holder/5-480.webp",
-        "alt": "6-Finger Alien Hand Controller Holder — STLFLIX reference photo 5",
+        "alt": "6-Finger Alien Hand Controller Holder decorative print",
         "sourceFile": "DSC_02060_95f17c38e9.jpg"
       },
       {
         "src": "/media/shop/6-finger-alien-hand-controller-holder/6-1200.webp",
         "thumb": "/media/shop/6-finger-alien-hand-controller-holder/6-480.webp",
-        "alt": "6-Finger Alien Hand Controller Holder — STLFLIX reference photo 6",
+        "alt": "6-Finger Alien Hand Controller Holder decorative print",
         "sourceFile": "DSC_02054_69513ee4f6.jpg"
       }
     ],
@@ -307,7 +307,7 @@
   },
   {
     "id": "articulated-hermes-the-hermit-crab",
-    "name": "Articulated Hermes, the Hermit Crab",
+    "name": "Hermes Articulated Hermit Crab",
     "priceCents": 2400,
     "category": "Creatures & collectibles",
     "seasonal": false,
@@ -319,55 +319,55 @@
       {
         "src": "/media/shop/articulated-hermes-the-hermit-crab/1-1200.webp",
         "thumb": "/media/shop/articulated-hermes-the-hermit-crab/1-480.webp",
-        "alt": "Articulated Hermes, the Hermit Crab — STLFLIX reference photo 1",
+        "alt": "Articulated Hermes, the Hermit Crab decorative print",
         "sourceFile": "DSC_01322_c8efeb30c7.jpg"
       },
       {
         "src": "/media/shop/articulated-hermes-the-hermit-crab/2-1200.webp",
         "thumb": "/media/shop/articulated-hermes-the-hermit-crab/2-480.webp",
-        "alt": "Articulated Hermes, the Hermit Crab — STLFLIX reference photo 2",
+        "alt": "Articulated Hermes, the Hermit Crab decorative print",
         "sourceFile": "DSC_01337_8c45c6dad9.jpg"
       },
       {
         "src": "/media/shop/articulated-hermes-the-hermit-crab/3-1200.webp",
         "thumb": "/media/shop/articulated-hermes-the-hermit-crab/3-480.webp",
-        "alt": "Articulated Hermes, the Hermit Crab — STLFLIX reference photo 3",
+        "alt": "Articulated Hermes, the Hermit Crab decorative print",
         "sourceFile": "DSC_01328_14185240b5.jpg"
       },
       {
         "src": "/media/shop/articulated-hermes-the-hermit-crab/4-1200.webp",
         "thumb": "/media/shop/articulated-hermes-the-hermit-crab/4-480.webp",
-        "alt": "Articulated Hermes, the Hermit Crab — STLFLIX reference photo 4",
+        "alt": "Articulated Hermes, the Hermit Crab decorative print",
         "sourceFile": "DSC_01324_52cad654c4.jpg"
       },
       {
         "src": "/media/shop/articulated-hermes-the-hermit-crab/5-1200.webp",
         "thumb": "/media/shop/articulated-hermes-the-hermit-crab/5-480.webp",
-        "alt": "Articulated Hermes, the Hermit Crab — STLFLIX reference photo 5",
+        "alt": "Articulated Hermes, the Hermit Crab decorative print",
         "sourceFile": "DSC_01359_ed602bef4e.jpg"
       },
       {
         "src": "/media/shop/articulated-hermes-the-hermit-crab/6-1200.webp",
         "thumb": "/media/shop/articulated-hermes-the-hermit-crab/6-480.webp",
-        "alt": "Articulated Hermes, the Hermit Crab — STLFLIX reference photo 6",
+        "alt": "Articulated Hermes, the Hermit Crab decorative print",
         "sourceFile": "DSC_01327_f8ac17753d.jpg"
       },
       {
         "src": "/media/shop/articulated-hermes-the-hermit-crab/7-1200.webp",
         "thumb": "/media/shop/articulated-hermes-the-hermit-crab/7-480.webp",
-        "alt": "Articulated Hermes, the Hermit Crab — STLFLIX reference photo 7",
+        "alt": "Articulated Hermes, the Hermit Crab decorative print",
         "sourceFile": "DSC_01375_137061e759.jpg"
       },
       {
         "src": "/media/shop/articulated-hermes-the-hermit-crab/8-1200.webp",
         "thumb": "/media/shop/articulated-hermes-the-hermit-crab/8-480.webp",
-        "alt": "Articulated Hermes, the Hermit Crab — STLFLIX reference photo 8",
+        "alt": "Articulated Hermes, the Hermit Crab decorative print",
         "sourceFile": "DSC_01330_91dbd7add3.jpg"
       },
       {
         "src": "/media/shop/articulated-hermes-the-hermit-crab/9-1200.webp",
         "thumb": "/media/shop/articulated-hermes-the-hermit-crab/9-480.webp",
-        "alt": "Articulated Hermes, the Hermit Crab — STLFLIX reference photo 9",
+        "alt": "Articulated Hermes, the Hermit Crab decorative print",
         "sourceFile": "DSC_01346_3ad00653e7.jpg"
       }
     ],
@@ -376,7 +376,7 @@
   },
   {
     "id": "verdant-remains-planter",
-    "name": "Verdant Remains – Planter",
+    "name": "Dragon Skeleton Planter — Verdant Remains",
     "priceCents": 3500,
     "category": "Home & planters",
     "seasonal": false,
@@ -388,37 +388,37 @@
       {
         "src": "/media/shop/verdant-remains-planter/1-1200.webp",
         "thumb": "/media/shop/verdant-remains-planter/1-480.webp",
-        "alt": "Verdant Remains – Planter — STLFLIX reference photo 1",
+        "alt": "Verdant Remains – Planter decorative print",
         "sourceFile": "Verdant_Remains_Planter_1_9b072b6ac6.png"
       },
       {
         "src": "/media/shop/verdant-remains-planter/2-1200.webp",
         "thumb": "/media/shop/verdant-remains-planter/2-480.webp",
-        "alt": "Verdant Remains – Planter — STLFLIX reference photo 2",
+        "alt": "Verdant Remains – Planter decorative print",
         "sourceFile": "Verdant_Remains_Planter_3_6cafcb038f.png"
       },
       {
         "src": "/media/shop/verdant-remains-planter/3-1200.webp",
         "thumb": "/media/shop/verdant-remains-planter/3-480.webp",
-        "alt": "Verdant Remains – Planter — STLFLIX reference photo 3",
+        "alt": "Verdant Remains – Planter decorative print",
         "sourceFile": "Verdant_Remains_Planter_2_ed78a885ff.png"
       },
       {
         "src": "/media/shop/verdant-remains-planter/4-1200.webp",
         "thumb": "/media/shop/verdant-remains-planter/4-480.webp",
-        "alt": "Verdant Remains – Planter — STLFLIX reference photo 4",
+        "alt": "Verdant Remains – Planter decorative print",
         "sourceFile": "Verdant_Remains_Planter_4_56ee5fc9c3.png"
       },
       {
         "src": "/media/shop/verdant-remains-planter/5-1200.webp",
         "thumb": "/media/shop/verdant-remains-planter/5-480.webp",
-        "alt": "Verdant Remains – Planter — STLFLIX reference photo 5",
+        "alt": "Verdant Remains – Planter decorative print",
         "sourceFile": "Verdant_Remains_Planter_5_4c22dcd2ac.png"
       },
       {
         "src": "/media/shop/verdant-remains-planter/6-1200.webp",
         "thumb": "/media/shop/verdant-remains-planter/6-480.webp",
-        "alt": "Verdant Remains – Planter — STLFLIX reference photo 6",
+        "alt": "Verdant Remains – Planter decorative print",
         "sourceFile": "Verdant_Remains_Planter_6_f0d460cf3e.png"
       }
     ],
@@ -427,7 +427,7 @@
   },
   {
     "id": "joyful-axolotl",
-    "name": "Joyful Axolotl",
+    "name": "Joyful Axolotl Figurine",
     "priceCents": 1200,
     "category": "Creatures & collectibles",
     "seasonal": false,
@@ -439,55 +439,55 @@
       {
         "src": "/media/shop/joyful-axolotl/1-1200.webp",
         "thumb": "/media/shop/joyful-axolotl/1-480.webp",
-        "alt": "Joyful Axolotl — STLFLIX reference photo 1",
+        "alt": "Joyful Axolotl decorative print",
         "sourceFile": "Joyful_Axolotl_1_d6362da2ad.png"
       },
       {
         "src": "/media/shop/joyful-axolotl/2-1200.webp",
         "thumb": "/media/shop/joyful-axolotl/2-480.webp",
-        "alt": "Joyful Axolotl — STLFLIX reference photo 2",
+        "alt": "Joyful Axolotl decorative print",
         "sourceFile": "Joyful_Axolotl_3_863821969e.png"
       },
       {
         "src": "/media/shop/joyful-axolotl/3-1200.webp",
         "thumb": "/media/shop/joyful-axolotl/3-480.webp",
-        "alt": "Joyful Axolotl — STLFLIX reference photo 3",
+        "alt": "Joyful Axolotl decorative print",
         "sourceFile": "Joyful_Axolotl_2_c090c6e872.png"
       },
       {
         "src": "/media/shop/joyful-axolotl/4-1200.webp",
         "thumb": "/media/shop/joyful-axolotl/4-480.webp",
-        "alt": "Joyful Axolotl — STLFLIX reference photo 4",
+        "alt": "Joyful Axolotl decorative print",
         "sourceFile": "Joyful_Axolotl_4_b1ee5827bd.png"
       },
       {
         "src": "/media/shop/joyful-axolotl/5-1200.webp",
         "thumb": "/media/shop/joyful-axolotl/5-480.webp",
-        "alt": "Joyful Axolotl — STLFLIX reference photo 5",
+        "alt": "Joyful Axolotl decorative print",
         "sourceFile": "Joyful_Axolotl_6_900005c2e0.png"
       },
       {
         "src": "/media/shop/joyful-axolotl/6-1200.webp",
         "thumb": "/media/shop/joyful-axolotl/6-480.webp",
-        "alt": "Joyful Axolotl — STLFLIX reference photo 6",
+        "alt": "Joyful Axolotl decorative print",
         "sourceFile": "Joyful_Axolotl_5_ee5bb98b71.png"
       },
       {
         "src": "/media/shop/joyful-axolotl/7-1200.webp",
         "thumb": "/media/shop/joyful-axolotl/7-480.webp",
-        "alt": "Joyful Axolotl — STLFLIX reference photo 7",
+        "alt": "Joyful Axolotl decorative print",
         "sourceFile": "Joyful_Axolotl_8_ff0b5fca53.png"
       },
       {
         "src": "/media/shop/joyful-axolotl/8-1200.webp",
         "thumb": "/media/shop/joyful-axolotl/8-480.webp",
-        "alt": "Joyful Axolotl — STLFLIX reference photo 8",
+        "alt": "Joyful Axolotl decorative print",
         "sourceFile": "Joyful_Axolotl_7_aa8430cea2.png"
       },
       {
         "src": "/media/shop/joyful-axolotl/9-1200.webp",
         "thumb": "/media/shop/joyful-axolotl/9-480.webp",
-        "alt": "Joyful Axolotl — STLFLIX reference photo 9",
+        "alt": "Joyful Axolotl decorative print",
         "sourceFile": "Joyful_Axolotl_9_0baec6734d.png"
       }
     ],
@@ -508,31 +508,31 @@
       {
         "src": "/media/shop/pumpkin-fidget-keychain/1-1200.webp",
         "thumb": "/media/shop/pumpkin-fidget-keychain/1-480.webp",
-        "alt": "Pumpkin Fidget Keychain — STLFLIX reference photo 1",
+        "alt": "Pumpkin Fidget Keychain decorative print",
         "sourceFile": "Pumpkin_Fidget_Keychain_1_0b093e9740.jpg"
       },
       {
         "src": "/media/shop/pumpkin-fidget-keychain/2-1200.webp",
         "thumb": "/media/shop/pumpkin-fidget-keychain/2-480.webp",
-        "alt": "Pumpkin Fidget Keychain — STLFLIX reference photo 2",
+        "alt": "Pumpkin Fidget Keychain decorative print",
         "sourceFile": "Pumpkin_Fidget_Keychain_2_6b93cbdb8b.jpg"
       },
       {
         "src": "/media/shop/pumpkin-fidget-keychain/3-1200.webp",
         "thumb": "/media/shop/pumpkin-fidget-keychain/3-480.webp",
-        "alt": "Pumpkin Fidget Keychain — STLFLIX reference photo 3",
+        "alt": "Pumpkin Fidget Keychain decorative print",
         "sourceFile": "Pumpkin_Fidget_Keychain_4_5a55d65248.jpg"
       },
       {
         "src": "/media/shop/pumpkin-fidget-keychain/4-1200.webp",
         "thumb": "/media/shop/pumpkin-fidget-keychain/4-480.webp",
-        "alt": "Pumpkin Fidget Keychain — STLFLIX reference photo 4",
+        "alt": "Pumpkin Fidget Keychain decorative print",
         "sourceFile": "Pumpkin_Fidget_Keychain_3_d9563fd78c.jpg"
       },
       {
         "src": "/media/shop/pumpkin-fidget-keychain/5-1200.webp",
         "thumb": "/media/shop/pumpkin-fidget-keychain/5-480.webp",
-        "alt": "Pumpkin Fidget Keychain — STLFLIX reference photo 5",
+        "alt": "Pumpkin Fidget Keychain decorative print",
         "sourceFile": "Pumpkin_Fidget_Keychain_5_7ccd9a62f8.jpg"
       }
     ],
@@ -578,16 +578,56 @@
     "dimensions": "Choose a bottle diameter to see the finished holder size.",
     "notes": "Bottle shapes vary. Measure the widest point of your bottle before ordering.",
     "variants": [
-      { "id": "octopus-wine-bottle-holder-300", "label": "Fits bottles up to 3.00 in diameter", "priceCents": 8699, "dimensions": "Finished size: 166 × 208 × 210 mm." },
-      { "id": "octopus-wine-bottle-holder-320", "label": "Fits bottles up to 3.20 in diameter", "priceCents": 9899, "dimensions": "Finished size: 176 × 230 × 227 mm." },
-      { "id": "octopus-wine-bottle-holder-345", "label": "Fits bottles up to 3.45 in diameter", "priceCents": 10999, "dimensions": "Finished size: 187 × 244 × 240 mm." }
+      {
+        "id": "octopus-wine-bottle-holder-300",
+        "label": "Fits bottles up to 3.00 in diameter",
+        "priceCents": 8699,
+        "dimensions": "Finished size: 166 × 208 × 210 mm."
+      },
+      {
+        "id": "octopus-wine-bottle-holder-320",
+        "label": "Fits bottles up to 3.20 in diameter",
+        "priceCents": 9899,
+        "dimensions": "Finished size: 176 × 230 × 227 mm."
+      },
+      {
+        "id": "octopus-wine-bottle-holder-345",
+        "label": "Fits bottles up to 3.45 in diameter",
+        "priceCents": 10999,
+        "dimensions": "Finished size: 187 × 244 × 240 mm."
+      }
     ],
     "images": [
-      { "src": "/media/shop/octopus-wine-bottle-holder/1-1200.jpg", "thumb": "/media/shop/octopus-wine-bottle-holder/1-480.jpg", "alt": "Blue octopus wine bottle holder holding a wine bottle", "sourceFile": "00_2_d8d5480bf5_350e8bd0a7.png" },
-      { "src": "/media/shop/octopus-wine-bottle-holder/2-1200.jpg", "thumb": "/media/shop/octopus-wine-bottle-holder/2-480.jpg", "alt": "Octopus wine bottle holder product view", "sourceFile": "01_5_69403c7707_07f9191477.png" },
-      { "src": "/media/shop/octopus-wine-bottle-holder/3-1200.jpg", "thumb": "/media/shop/octopus-wine-bottle-holder/3-480.jpg", "alt": "Octopus wine bottle holder displayed with a bottle", "sourceFile": "02_5_c7edcf417c_2005de8d6d.png" },
-      { "src": "/media/shop/octopus-wine-bottle-holder/4-1200.jpg", "thumb": "/media/shop/octopus-wine-bottle-holder/4-480.jpg", "alt": "Octopus wine bottle holder detail", "sourceFile": "03_5_b4b2ad8e29_32f554bf35.png" },
-      { "src": "/media/shop/octopus-wine-bottle-holder/5-1200.jpg", "thumb": "/media/shop/octopus-wine-bottle-holder/5-480.jpg", "alt": "Octopus wine bottle holder side view", "sourceFile": "04_4_473c168701_a11d61015a.png" }
+      {
+        "src": "/media/shop/octopus-wine-bottle-holder/1-1200.jpg",
+        "thumb": "/media/shop/octopus-wine-bottle-holder/1-480.jpg",
+        "alt": "Blue octopus wine bottle holder holding a wine bottle",
+        "sourceFile": "00_2_d8d5480bf5_350e8bd0a7.png"
+      },
+      {
+        "src": "/media/shop/octopus-wine-bottle-holder/2-1200.jpg",
+        "thumb": "/media/shop/octopus-wine-bottle-holder/2-480.jpg",
+        "alt": "Octopus wine bottle holder product view",
+        "sourceFile": "01_5_69403c7707_07f9191477.png"
+      },
+      {
+        "src": "/media/shop/octopus-wine-bottle-holder/3-1200.jpg",
+        "thumb": "/media/shop/octopus-wine-bottle-holder/3-480.jpg",
+        "alt": "Octopus wine bottle holder displayed with a bottle",
+        "sourceFile": "02_5_c7edcf417c_2005de8d6d.png"
+      },
+      {
+        "src": "/media/shop/octopus-wine-bottle-holder/4-1200.jpg",
+        "thumb": "/media/shop/octopus-wine-bottle-holder/4-480.jpg",
+        "alt": "Octopus wine bottle holder detail",
+        "sourceFile": "03_5_b4b2ad8e29_32f554bf35.png"
+      },
+      {
+        "src": "/media/shop/octopus-wine-bottle-holder/5-1200.jpg",
+        "thumb": "/media/shop/octopus-wine-bottle-holder/5-480.jpg",
+        "alt": "Octopus wine bottle holder side view",
+        "sourceFile": "04_4_473c168701_a11d61015a.png"
+      }
     ],
     "productionReviewed": false,
     "source": "local authorized media package: WEBSITE PRODUCT/OCTOPUS WINE HOLDER/bordeaux-the-octopus-wine-holder-media-package"
@@ -603,7 +643,14 @@
     "dimensions": "Finished size: 166 × 208 × 210 mm.",
     "notes": "Measure the widest point of your bottle before ordering.",
     "variantOf": "octopus-wine-bottle-holder",
-    "images": [{ "src": "/media/shop/octopus-wine-bottle-holder/1-1200.jpg", "thumb": "/media/shop/octopus-wine-bottle-holder/1-480.jpg", "alt": "Blue octopus wine bottle holder holding a wine bottle", "sourceFile": "00_2_d8d5480bf5_350e8bd0a7.png" }],
+    "images": [
+      {
+        "src": "/media/shop/octopus-wine-bottle-holder/1-1200.jpg",
+        "thumb": "/media/shop/octopus-wine-bottle-holder/1-480.jpg",
+        "alt": "Blue octopus wine bottle holder holding a wine bottle",
+        "sourceFile": "00_2_d8d5480bf5_350e8bd0a7.png"
+      }
+    ],
     "productionReviewed": false,
     "source": "local authorized production variant: Bordeaux_The_Octopus.stl"
   },
@@ -618,7 +665,14 @@
     "dimensions": "Finished size: 176 × 230 × 227 mm.",
     "notes": "Measure the widest point of your bottle before ordering.",
     "variantOf": "octopus-wine-bottle-holder",
-    "images": [{ "src": "/media/shop/octopus-wine-bottle-holder/1-1200.jpg", "thumb": "/media/shop/octopus-wine-bottle-holder/1-480.jpg", "alt": "Blue octopus wine bottle holder holding a wine bottle", "sourceFile": "00_2_d8d5480bf5_350e8bd0a7.png" }],
+    "images": [
+      {
+        "src": "/media/shop/octopus-wine-bottle-holder/1-1200.jpg",
+        "thumb": "/media/shop/octopus-wine-bottle-holder/1-480.jpg",
+        "alt": "Blue octopus wine bottle holder holding a wine bottle",
+        "sourceFile": "00_2_d8d5480bf5_350e8bd0a7.png"
+      }
+    ],
     "productionReviewed": false,
     "source": "local authorized production variant: Bordeaux_The_Octopus_3_2.stl"
   },
@@ -633,13 +687,20 @@
     "dimensions": "Finished size: 187 × 244 × 240 mm.",
     "notes": "Measure the widest point of your bottle before ordering.",
     "variantOf": "octopus-wine-bottle-holder",
-    "images": [{ "src": "/media/shop/octopus-wine-bottle-holder/1-1200.jpg", "thumb": "/media/shop/octopus-wine-bottle-holder/1-480.jpg", "alt": "Blue octopus wine bottle holder holding a wine bottle", "sourceFile": "00_2_d8d5480bf5_350e8bd0a7.png" }],
+    "images": [
+      {
+        "src": "/media/shop/octopus-wine-bottle-holder/1-1200.jpg",
+        "thumb": "/media/shop/octopus-wine-bottle-holder/1-480.jpg",
+        "alt": "Blue octopus wine bottle holder holding a wine bottle",
+        "sourceFile": "00_2_d8d5480bf5_350e8bd0a7.png"
+      }
+    ],
     "productionReviewed": false,
     "source": "local authorized production variant: Bordeaux_The_Octopus_3_45.stl"
   },
   {
     "id": "mood-ghost",
-    "name": "Mood Ghost",
+    "name": "Mood Ghost Figurine",
     "priceCents": 1600,
     "category": "Halloween",
     "seasonal": true,
@@ -649,20 +710,90 @@
     "notes": "Colours will be similar to the selected design photo; shades may vary.",
     "variantLabel": "Design",
     "variants": [
-      { "id": "mood-ghost-design-a", "label": "Design A", "priceCents": 1600, "dimensions": "Finished size: 85 × 85 × 88 mm." },
-      { "id": "mood-ghost-design-b", "label": "Design B", "priceCents": 1600, "dimensions": "Finished size: 85 × 85 × 88 mm." }
+      {
+        "id": "mood-ghost-design-a",
+        "label": "Design A",
+        "priceCents": 1600,
+        "dimensions": "Finished size: 85 × 85 × 88 mm."
+      },
+      {
+        "id": "mood-ghost-design-b",
+        "label": "Design B",
+        "priceCents": 1600,
+        "dimensions": "Finished size: 85 × 85 × 88 mm."
+      }
     ],
     "images": [
-      { "src": "/media/shop/mood-ghost/1-1200.jpg", "thumb": "/media/shop/mood-ghost/1-480.jpg", "alt": "Mood Ghost design A product view 1", "design": "Design A", "sourceFile": "Mood_Ghost_1_6a0bb3d0ed.png" },
-      { "src": "/media/shop/mood-ghost/2-1200.jpg", "thumb": "/media/shop/mood-ghost/2-480.jpg", "alt": "Mood Ghost design A product view 2", "design": "Design A", "sourceFile": "Mood_Ghost_2_4645c8f61b.png" },
-      { "src": "/media/shop/mood-ghost/3-1200.jpg", "thumb": "/media/shop/mood-ghost/3-480.jpg", "alt": "Mood Ghost design A product view 3", "design": "Design A", "sourceFile": "Mood_Ghost_6_65f8902f4a.png" },
-      { "src": "/media/shop/mood-ghost/4-1200.jpg", "thumb": "/media/shop/mood-ghost/4-480.jpg", "alt": "Mood Ghost design A product view 4", "design": "Design A", "sourceFile": "Mood_Ghost_7_a567d48c24.png" },
-      { "src": "/media/shop/mood-ghost/5-1200.jpg", "thumb": "/media/shop/mood-ghost/5-480.jpg", "alt": "Mood Ghost design A product view 5", "design": "Design A", "sourceFile": "Mood_Ghost_8_5b965e1a43.png" },
-      { "src": "/media/shop/mood-ghost/6-1200.jpg", "thumb": "/media/shop/mood-ghost/6-480.jpg", "alt": "Mood Ghost design B product view 1", "design": "Design B", "sourceFile": "Mood_Ghost_10_0a9771f0e4.png" },
-      { "src": "/media/shop/mood-ghost/7-1200.jpg", "thumb": "/media/shop/mood-ghost/7-480.jpg", "alt": "Mood Ghost design B product view 2", "design": "Design B", "sourceFile": "Mood_Ghost_3_85d4b8990d.png" },
-      { "src": "/media/shop/mood-ghost/8-1200.jpg", "thumb": "/media/shop/mood-ghost/8-480.jpg", "alt": "Mood Ghost design B product view 3", "design": "Design B", "sourceFile": "Mood_Ghost_4_3c6bad1f58.png" },
-      { "src": "/media/shop/mood-ghost/9-1200.jpg", "thumb": "/media/shop/mood-ghost/9-480.jpg", "alt": "Mood Ghost design B product view 4", "design": "Design B", "sourceFile": "Mood_Ghost_5_27ea5db8c6.png" },
-      { "src": "/media/shop/mood-ghost/10-1200.jpg", "thumb": "/media/shop/mood-ghost/10-480.jpg", "alt": "Mood Ghost design B product view 5", "design": "Design B", "sourceFile": "Mood_Ghost_9_a983584525.png" }
+      {
+        "src": "/media/shop/mood-ghost/1-1200.jpg",
+        "thumb": "/media/shop/mood-ghost/1-480.jpg",
+        "alt": "Mood Ghost design A product view 1",
+        "design": "Design A",
+        "sourceFile": "Mood_Ghost_1_6a0bb3d0ed.png"
+      },
+      {
+        "src": "/media/shop/mood-ghost/2-1200.jpg",
+        "thumb": "/media/shop/mood-ghost/2-480.jpg",
+        "alt": "Mood Ghost design A product view 2",
+        "design": "Design A",
+        "sourceFile": "Mood_Ghost_2_4645c8f61b.png"
+      },
+      {
+        "src": "/media/shop/mood-ghost/3-1200.jpg",
+        "thumb": "/media/shop/mood-ghost/3-480.jpg",
+        "alt": "Mood Ghost design A product view 3",
+        "design": "Design A",
+        "sourceFile": "Mood_Ghost_6_65f8902f4a.png"
+      },
+      {
+        "src": "/media/shop/mood-ghost/4-1200.jpg",
+        "thumb": "/media/shop/mood-ghost/4-480.jpg",
+        "alt": "Mood Ghost design A product view 4",
+        "design": "Design A",
+        "sourceFile": "Mood_Ghost_7_a567d48c24.png"
+      },
+      {
+        "src": "/media/shop/mood-ghost/5-1200.jpg",
+        "thumb": "/media/shop/mood-ghost/5-480.jpg",
+        "alt": "Mood Ghost design A product view 5",
+        "design": "Design A",
+        "sourceFile": "Mood_Ghost_8_5b965e1a43.png"
+      },
+      {
+        "src": "/media/shop/mood-ghost/6-1200.jpg",
+        "thumb": "/media/shop/mood-ghost/6-480.jpg",
+        "alt": "Mood Ghost design B product view 1",
+        "design": "Design B",
+        "sourceFile": "Mood_Ghost_10_0a9771f0e4.png"
+      },
+      {
+        "src": "/media/shop/mood-ghost/7-1200.jpg",
+        "thumb": "/media/shop/mood-ghost/7-480.jpg",
+        "alt": "Mood Ghost design B product view 2",
+        "design": "Design B",
+        "sourceFile": "Mood_Ghost_3_85d4b8990d.png"
+      },
+      {
+        "src": "/media/shop/mood-ghost/8-1200.jpg",
+        "thumb": "/media/shop/mood-ghost/8-480.jpg",
+        "alt": "Mood Ghost design B product view 3",
+        "design": "Design B",
+        "sourceFile": "Mood_Ghost_4_3c6bad1f58.png"
+      },
+      {
+        "src": "/media/shop/mood-ghost/9-1200.jpg",
+        "thumb": "/media/shop/mood-ghost/9-480.jpg",
+        "alt": "Mood Ghost design B product view 4",
+        "design": "Design B",
+        "sourceFile": "Mood_Ghost_5_27ea5db8c6.png"
+      },
+      {
+        "src": "/media/shop/mood-ghost/10-1200.jpg",
+        "thumb": "/media/shop/mood-ghost/10-480.jpg",
+        "alt": "Mood Ghost design B product view 5",
+        "design": "Design B",
+        "sourceFile": "Mood_Ghost_9_a983584525.png"
+      }
     ],
     "video": "/media/shop/mood-ghost/mood-ghost.webm",
     "productionReviewed": false,
@@ -670,7 +801,7 @@
   },
   {
     "id": "mood-ghost-design-a",
-    "name": "Mood Ghost — design A",
+    "name": "Mood Ghost Figurine — design A",
     "priceCents": 1600,
     "category": "Halloween",
     "seasonal": true,
@@ -679,13 +810,20 @@
     "dimensions": "Finished size: 85 × 85 × 88 mm.",
     "notes": "Colours will be similar to the selected design photo; shades may vary.",
     "variantOf": "mood-ghost",
-    "images": [{ "src": "/media/shop/mood-ghost/1-1200.jpg", "thumb": "/media/shop/mood-ghost/1-480.jpg", "alt": "Mood Ghost design A with arms raised", "sourceFile": "Mood_Ghost_1_6a0bb3d0ed.png" }],
+    "images": [
+      {
+        "src": "/media/shop/mood-ghost/1-1200.jpg",
+        "thumb": "/media/shop/mood-ghost/1-480.jpg",
+        "alt": "Mood Ghost design A with arms raised",
+        "sourceFile": "Mood_Ghost_1_6a0bb3d0ed.png"
+      }
+    ],
     "productionReviewed": false,
     "source": "local authorized production variant: Mood Ghost design A"
   },
   {
     "id": "mood-ghost-design-b",
-    "name": "Mood Ghost — design B",
+    "name": "Mood Ghost Figurine — design B",
     "priceCents": 1600,
     "category": "Halloween",
     "seasonal": true,
@@ -694,13 +832,21 @@
     "dimensions": "Finished size: 85 × 85 × 88 mm.",
     "notes": "Colours will be similar to the selected design photo; shades may vary.",
     "variantOf": "mood-ghost",
-    "images": [{ "src": "/media/shop/mood-ghost/2-1200.jpg", "thumb": "/media/shop/mood-ghost/2-480.jpg", "alt": "Mood Ghost design B with open arms", "sourceFile": "Mood_Ghost_6_65f8902f4a.png" }],
+    "images": [
+      {
+        "src": "/media/shop/mood-ghost/6-1200.jpg",
+        "thumb": "/media/shop/mood-ghost/6-480.jpg",
+        "alt": "Mood Ghost design B product view 1",
+        "design": "Design B",
+        "sourceFile": "Mood_Ghost_10_0a9771f0e4.png"
+      }
+    ],
     "productionReviewed": false,
     "source": "local authorized production variant: Mood Ghost design B"
   },
   {
     "id": "ghost-arch-wreath",
-    "name": "Ghost Arch Wreath",
+    "name": "Halloween Ghost Arch Wreath",
     "priceCents": 2899,
     "category": "Halloween",
     "seasonal": true,
@@ -709,12 +855,42 @@
     "dimensions": "Finished size: 190 × 194 × 33 mm.",
     "notes": "Colours will be similar to the main photo; shades may vary.",
     "images": [
-      { "src": "/media/shop/ghost-arch-wreath/1-1200.jpg", "thumb": "/media/shop/ghost-arch-wreath/1-480.jpg", "alt": "Ghost Arch Wreath with ghost arch and graveyard scene", "sourceFile": "Ghost_Arch_Wreath1_7929ad80f1.png" },
-      { "src": "/media/shop/ghost-arch-wreath/2-1200.jpg", "thumb": "/media/shop/ghost-arch-wreath/2-480.jpg", "alt": "Ghost Arch Wreath product view", "sourceFile": "Ghost_Arch_Wreath2_5af02e4734.png" },
-      { "src": "/media/shop/ghost-arch-wreath/3-1200.jpg", "thumb": "/media/shop/ghost-arch-wreath/3-480.jpg", "alt": "Ghost Arch Wreath wall display", "sourceFile": "Ghost_Arch_Wreath3_08891df4b1.png" },
-      { "src": "/media/shop/ghost-arch-wreath/4-1200.jpg", "thumb": "/media/shop/ghost-arch-wreath/4-480.jpg", "alt": "Ghost Arch Wreath wall display detail", "sourceFile": "Ghost_Arch_Wreath4_432f4a0217.png" },
-      { "src": "/media/shop/ghost-arch-wreath/5-1200.jpg", "thumb": "/media/shop/ghost-arch-wreath/5-480.jpg", "alt": "Ghost Arch Wreath displayed on a front door", "sourceFile": "Ghost_Arch_Wreath5_ec6d283a33.png" },
-      { "src": "/media/shop/ghost-arch-wreath/6-1200.jpg", "thumb": "/media/shop/ghost-arch-wreath/6-480.jpg", "alt": "Ghost Arch Wreath rear detail", "sourceFile": "Ghost_Arch_Wreath7_14bec2ccce.png" }
+      {
+        "src": "/media/shop/ghost-arch-wreath/1-1200.jpg",
+        "thumb": "/media/shop/ghost-arch-wreath/1-480.jpg",
+        "alt": "Ghost Arch Wreath with ghost arch and graveyard scene",
+        "sourceFile": "Ghost_Arch_Wreath1_7929ad80f1.png"
+      },
+      {
+        "src": "/media/shop/ghost-arch-wreath/2-1200.jpg",
+        "thumb": "/media/shop/ghost-arch-wreath/2-480.jpg",
+        "alt": "Ghost Arch Wreath product view",
+        "sourceFile": "Ghost_Arch_Wreath2_5af02e4734.png"
+      },
+      {
+        "src": "/media/shop/ghost-arch-wreath/3-1200.jpg",
+        "thumb": "/media/shop/ghost-arch-wreath/3-480.jpg",
+        "alt": "Ghost Arch Wreath wall display",
+        "sourceFile": "Ghost_Arch_Wreath3_08891df4b1.png"
+      },
+      {
+        "src": "/media/shop/ghost-arch-wreath/4-1200.jpg",
+        "thumb": "/media/shop/ghost-arch-wreath/4-480.jpg",
+        "alt": "Ghost Arch Wreath wall display detail",
+        "sourceFile": "Ghost_Arch_Wreath4_432f4a0217.png"
+      },
+      {
+        "src": "/media/shop/ghost-arch-wreath/5-1200.jpg",
+        "thumb": "/media/shop/ghost-arch-wreath/5-480.jpg",
+        "alt": "Ghost Arch Wreath displayed on a front door",
+        "sourceFile": "Ghost_Arch_Wreath5_ec6d283a33.png"
+      },
+      {
+        "src": "/media/shop/ghost-arch-wreath/6-1200.jpg",
+        "thumb": "/media/shop/ghost-arch-wreath/6-480.jpg",
+        "alt": "Ghost Arch Wreath rear detail",
+        "sourceFile": "Ghost_Arch_Wreath7_14bec2ccce.png"
+      }
     ],
     "video": "/media/shop/ghost-arch-wreath/ghost-arch-wreath.webm",
     "productionReviewed": false,

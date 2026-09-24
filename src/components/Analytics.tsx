@@ -1,5 +1,17 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import products from "../../commerce/products.json";
+
+export function trackShop(event: "view_item" | "add_to_cart" | "begin_checkout", lines: {id: string; quantity: number}[]) {
+  if (!production() || privateShop()) return;
+  const items = lines.flatMap(line => {
+    const product = products.find(p => p.id === line.id);
+    return product ? [{item_id: product.id, item_name: product.name, item_category: product.category, price: product.priceCents / 100, quantity: line.quantity}] : [];
+  });
+  if (!items.length) return;
+  load();
+  window.gtag?.("event", event, {send_to: "G-8D08Z57Q3S", currency: "CAD", value: items.reduce((sum,p)=>sum+p.price*p.quantity,0), items, page_location: window.location.origin + window.location.pathname});
+}
 
 declare global {
   interface Window {
@@ -87,6 +99,15 @@ export function trackQuoteStart() {
 }
 export default function Analytics() {
   const { pathname, search } = useLocation();
+  useEffect(() => {
+    const id = pathname.replace(/\/$/, "").split("/")[2];
+    const product = products.find(p => p.id === id);
+    if (pathname.startsWith("/shop/") && product) {
+      const variant = new URLSearchParams(search).get("variant");
+      const selected = products.find(p => p.id === variant && "variantOf" in p && p.variantOf === product.id);
+      trackShop("view_item", [{id: selected?.id || product.id, quantity: 1}]);
+    }
+  }, [pathname, search]);
   useEffect(() => {
     window["ga-disable-G-8D08Z57Q3S"] = privateShop();
     if (!production() || privateShop()) return;

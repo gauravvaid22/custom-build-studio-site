@@ -40,6 +40,7 @@ export default function Seo() {
       description: seo.description,
       url: seo.url,
       image: seo.image,
+      "image:alt": seo.imageAlt,
       type: "website",
       site_name: "Custom Build Studio",
       locale: "en_CA",

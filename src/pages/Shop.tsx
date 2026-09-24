@@ -1,11 +1,12 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import products from "../../commerce/products.json";
 import settings from "../../commerce/settings.json";
 import { PageIntro } from "../components/Shared";
 import { useCart, money } from "../components/Cart";
 import { NotFound } from "./Studio";
 import "../shop.css";
+import { trackShop } from "../components/Analytics";
 
 type Product = (typeof products)[number];
 type ProductVariant = {
@@ -130,7 +131,7 @@ function ProductImage({
       src={large ? image.src : image.thumb}
       srcSet={`${image.thumb} 480w, ${image.src} 1200w`}
       sizes={large ? "(max-width: 700px) 90vw, 45vw" : "(max-width: 700px) 90vw, (max-width: 1000px) 45vw, 30vw"}
-      alt={`${product.name} — product photo ${index + 1}`}
+      alt={image.alt}
       loading={large ? "eager" : "lazy"}
       decoding="async"
       width="900"
@@ -172,7 +173,7 @@ function AddProduct({
       className="shop-add"
       onSubmit={(e) => {
         e.preventDefault();
-        if (!add(orderProduct.id, quantity)) return;
+        if (!add(orderProduct.id, quantity)) { setConfirmation(""); return; }
         setConfirmation(`${quantity} × ${orderProduct.name}`);
         setConfirmationKey((current) => current + 1);
         if (confirmationTimer.current) clearTimeout(confirmationTimer.current);
@@ -236,8 +237,9 @@ function AddProduct({
     </form>
   );
 }
-export function Shop() {
-  const [category, setCategory] = useState("All");
+export function Shop({ halloween = false }: { halloween?: boolean }) {
+  const [category, setCategory] = useState(halloween ? "Halloween" : "All");
+  const featuredProduct = products.find(p => p.id === (halloween ? "ghost-arch-wreath" : "basilisk-dice-tower"))!;
   const categories = [
     "All",
     "Creatures & collectibles",
@@ -255,26 +257,24 @@ export function Shop() {
           <div>
             <p className="eyebrow">MADE IN EDMONTON / THE GIFT COLLECTION</p>
             <h1>
-              Small prints.
+              {halloween ? "Halloween Décor," : "Unique Gifts & Décor,"}
               <br />
-              <span>Big personality.</span>
+              <span>Made in Edmonton.</span>
             </h1>
             <p className="lead">
-              For the game-night regular, the plant collector and the person who
-              already has everything. Discover characterful pieces, printed
-              locally.
+              {halloween ? "Ghost figurines, a graveyard wreath, decorative bowls and pumpkin accessories for your seasonal display. Choose a little character for your desk, shelf or door." : "For the game-night regular, the plant collector and the person who already has everything. Discover characterful gifts and décor, made locally."}
             </p>
             <a className="button" href="#collection">
               Explore the collection ↘
             </a>
             <p className="small">
-              Free local pickup · 2–3 business day production after confirmation
+              Free pickup · Made to order in 2–3 business days after payment verification
             </p>
           </div>
-          <Link to="/shop/basilisk-dice-tower" className="shop-hero-photo">
-            <ProductImage product={products[1]} large />
+          <Link to={`/shop/${featuredProduct.id}/`} className="shop-hero-photo">
+            <ProductImage product={featuredProduct} large />
             <span>
-              Basilisk Dice Tower · {money(products[1].priceCents)} CAD ↗
+              {featuredProduct.name} · {money(featuredProduct.priceCents)} CAD ↗
             </span>
           </Link>
         </div>
@@ -294,7 +294,9 @@ export function Shop() {
             </p>
           </div>
           <div className="shop-filters" aria-label="Product categories">
-            {categories.map((item) => (
+            {!halloween && <Link className="text-link" to="/shop/halloween/">Explore Halloween décor →</Link>}
+            {halloween && <Link className="text-link" to="/shop/">All gifts & décor →</Link>}
+            {(halloween ? [] : categories).map((item) => (
               <button
                 key={item}
                 aria-pressed={category === item}
@@ -379,13 +381,21 @@ export function Shop() {
 }
 export function ShopProduct() {
   const { id } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const product = products.find((p) => p.id === id);
   const [index, setIndex] = useState(0);
   const [selectedVariantId, setSelectedVariantId] = useState("");
   useEffect(() => {
     setIndex(0);
-    setSelectedVariantId("");
-  }, [id]);
+    const requested = searchParams.get("variant") || "";
+    const valid = product && variantsFor(product).some(v => v.id === requested);
+    setSelectedVariantId(valid ? requested : "");
+    if (valid && product) {
+      const label = variantsFor(product).find(v => v.id === requested)?.label;
+      const photo = product.images.findIndex(image => "design" in image && image.design === label);
+      if (photo >= 0) setIndex(photo);
+    }
+  }, [id, searchParams]);
   if (!product) return <NotFound />;
   const video = "video" in product ? product.video : undefined;
   const showingVideo = Boolean(video && index === product.images.length);
@@ -398,6 +408,7 @@ export function ShopProduct() {
       : undefined;
   const chooseVariant = (variantId: string) => {
     setSelectedVariantId(variantId);
+    setSearchParams({ variant: variantId }, { replace: true, preventScrollReset: true });
     const label = variants.find((variant) => variant.id === variantId)?.label;
     const imageIndex = product.images.findIndex(
       (image) => "design" in image && image.design === label,
@@ -410,9 +421,7 @@ export function ShopProduct() {
       <ShopNotice />
       <section className="section">
         <div className="container">
-          <Link className="breadcrumb" to="/shop">
-            ← All printed gifts
-          </Link>
+          <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {product.name}</nav>
           <div className="shop-detail">
             <div>
               <div className="shop-main-image">
@@ -515,6 +524,10 @@ export function ShopProduct() {
                   {settings.productionTime}. Free Edmonton pickup or $5 delivery
                   within 50 km after address review.
                 </dd>
+                <dt>Ordering & payment</dt>
+                <dd>Made to order. Pay by Interac e-Transfer using the instructions after checkout. Special requests and delivery addresses need approval before payment.</dd>
+                <dt>Care</dt>
+                <dd>Handle small moving or separate parts gently. Contact us for material-specific cleaning and care advice.</dd>
               </dl>
               <p className="small">
                 Printed by Custom Build Studio in Edmonton. Handle small moving
@@ -522,6 +535,15 @@ export function ShopProduct() {
               </p>
             </div>
           </div>
+          <aside className="shop-reference-note" aria-label="Related gifts">
+            <h2>More to explore</h2>
+            <div className="shop-filters">
+              {products.filter(p => !isVariant(p) && p.id !== product.id && p.category === product.category).slice(0, 3).map(p => (
+                <Link key={p.id} className="text-link" to={`/shop/${p.id}/`}>{p.name} · {money(p.priceCents)} CAD →</Link>
+              ))}
+              <Link to="/shop/">Browse all gifts & décor →</Link>
+            </div>
+          </aside>
         </div>
       </section>
     </>
@@ -607,7 +629,7 @@ export function ShopCart() {
                   : ""}
                 Standard print? Pay after ordering. Custom request? Wait for approval.
               </p>
-              <Link className="button" to="/shop/checkout">
+              <Link className="button" to="/shop/checkout" onClick={() => trackShop("begin_checkout", items)}>
                 Continue to checkout ↗
               </Link>
             </aside>

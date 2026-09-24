@@ -136,7 +136,7 @@ export function Header() {
             ["/work", "Our Work"],
             ["/about", "The Studio"],
             ["/pricing", "Pricing"],
-            ["/shop", "Printed Gifts"],
+            ["/shop", "Gifts & Décor"],
           ].map(([to, label]) => (
             <NavLink key={to} to={to}>
               {label}
@@ -169,7 +169,7 @@ export function Footer() {
           <Link to="/services">Services</Link>
           <Link to="/work">Our work</Link>
           <Link to="/products">Products</Link>
-          <Link to="/shop">Edmonton printed gifts</Link>
+          <Link to="/shop">Gifts & Décor</Link>
           <Link to="/about">The studio</Link>
           <Link to="/pricing">Pricing</Link>
           <Link to="/reviews">Customer feedback</Link>

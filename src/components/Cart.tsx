@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import products from "../../commerce/products.json";
+import { trackShop } from "./Analytics";
 export type CartItem = { id: string; quantity: number };
 type CartContextType = {
   items: CartItem[];
@@ -62,6 +63,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       quantity > 20
     )
       return false;
+    const existing = items.find(item => item.id === id)?.quantity || 0;
+    if (existing + quantity > 20) return false;
     setItems((current) => {
       const found = current.find((item) => item.id === id);
       return found
@@ -75,6 +78,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setNotice(
       `${products.find((p) => p.id === id)!.name} added to cart. Maximum 20 of each product.`,
     );
+    trackShop("add_to_cart", [{id, quantity}]);
     return true;
   };
   return (

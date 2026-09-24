@@ -320,7 +320,7 @@ async function scroll(page) {
   for (const width of [1440, 390]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto(origin + "/shop/mood-ghost");
-    const design = page.getByRole("combobox", { name: "Design for Mood Ghost" });
+    const design = page.getByRole("combobox", { name: "Design for Mood Ghost Figurine" });
     assert.match(await page.locator(".shop-price").innerText(), /\$16\.00/);
     await design.selectOption("mood-ghost-design-b");
     assert.match(await page.locator(".shop-price").innerText(), /\$16\.00/);
@@ -358,15 +358,15 @@ async function scroll(page) {
     assert.equal(await page.locator(".shop-cart-count").innerText(), "1");
     await page.goto(origin + "/shop/mood-ghost");
     await page
-      .getByRole("combobox", { name: "Design for Mood Ghost" })
+      .getByRole("combobox", { name: "Design for Mood Ghost Figurine" })
       .selectOption("mood-ghost-design-b");
     await page
-      .getByRole("spinbutton", { name: "Quantity for Mood Ghost" })
+      .getByRole("spinbutton", { name: "Quantity for Mood Ghost Figurine" })
       .fill("2");
     await page.getByRole("button", { name: "Add to Cart" }).click();
     assert.match(
       await page.locator(".shop-added-confirmation").innerText(),
-      /2 × Mood Ghost — design B/,
+      /2 × Mood Ghost Figurine — design B/,
     );
     assert.equal(await page.locator(".shop-cart-count").innerText(), "3");
     const savedCart = await page.evaluate(() =>

@@ -3,6 +3,7 @@ import projects from "./projects.json";
 import { business } from "./business";
 import products from "../../commerce/products.json";
 const publicProducts = products.filter((product) => !("variantOf" in product));
+const canonical = (path: string) => business.origin + (path === "/" ? "/" : path.replace(/\/$/, "") + "/");
 export const publicRoutes = [
   "/",
   "/services",
@@ -13,6 +14,7 @@ export const publicRoutes = [
   "/pricing",
   "/products",
   "/shop",
+  "/shop/halloween",
   ...publicProducts.map((product) => `/shop/${product.id}`),
   "/reviews",
   "/contact",
@@ -24,8 +26,9 @@ export function getSeo(path: string) {
   const project = projects.find((p) => page === `/work/${p.id}`);
   const product = products.find((p) => page === `/shop/${p.id}`);
   const pages: Record<string, [string, string]> = {
+    "/shop/halloween": ["Halloween Décor Made in Edmonton", "Discover ghost figurines, a ghost arch wreath, decorative bowls and pumpkin accessories. Made to order in Edmonton with free local pickup."],
     "/shop": [
-      "3D-Printed Gifts in Edmonton",
+      "Unique Gifts & Décor, Made in Edmonton",
       "Discover locally made 3D-printed gifts, creatures, dice towers, planters and seasonal pieces. Physical prints with Edmonton pickup and local delivery.",
     ],
     "/shop/cart": ["Your Cart", "Review your physical 3D-printed products."],
@@ -83,7 +86,7 @@ export function getSeo(path: string) {
     ],
   };
   const entry = product
-    ? [`${product.name} | Edmonton Printed Gifts`, product.description]
+    ? [product.name, `${product.description} Made in Edmonton. Free local pickup.`]
     : service
       ? [serviceDetails[service.id].heading, service.description]
       : project
@@ -95,7 +98,7 @@ export function getSeo(path: string) {
   return {
     title: `${entry[0]} | Custom Build Studio`,
     description: entry[1],
-    url: business.origin + (page === "/" ? "/" : page),
+    url: canonical(page),
     image: business.origin + (product?.images[0]?.src || "/og-image.jpg"),
     imageAlt: product?.images[0]?.alt || "Custom Build Studio design and fabrication project",
     noindex: !publicRoutes.includes(page) || page === "/privacy",
@@ -137,29 +140,48 @@ export const localBusiness = {
 export function getStructuredData(path: string) {
   const page = path.replace(/\/$/, "") || "/";
   const product = products.find((item) => page === `/shop/${item.id}`);
-  if (product)
-    return {
-      "@context": "https://schema.org",
-      "@type": "Product",
-      name: product.name,
-      description: `${product.description} ${product.included} Finished physical print; no digital download.`,
-      url: business.origin + page,
-      image: product.images.map((image) => business.origin + image.src),
-      // Provisional prices are intentionally omitted from merchant offers until reviewed.
-    };
-  if (page === "/shop")
+  if (product) {
+    const variants = "variants" in product ? product.variants || [] : [];
+    const item = (p: typeof product, url: string) => ({
+      "@type": "Product", name: p.name, sku: p.id,
+      description: `${p.description} ${p.included} Made to order in Edmonton.`,
+      image: p.images.map(image => business.origin + image.src),
+      url,
+      offers: { "@type": "Offer", url, priceCurrency: "CAD", price: (p.priceCents / 100).toFixed(2),
+        // Available to order; production starts after manual payment verification.
+        availability: "https://schema.org/InStock", itemCondition: "https://schema.org/NewCondition",
+        seller: { "@type": "Organization", name: business.name } },
+    });
+    return { "@context": "https://schema.org", "@graph": [
+      variants.length ? {
+        "@type": "ProductGroup", name: product.name, description: product.description,
+        productGroupID: product.id, url: canonical(page),
+        variesBy: [product.id === "mood-ghost" ? "https://schema.org/pattern" : "https://schema.org/size"],
+        hasVariant: variants.map(variant => ({
+          ...item(products.find(p => p.id === variant.id)!, canonical(page) + "?variant=" + variant.id),
+          [product.id === "mood-ghost" ? "pattern" : "size"]: variant.label,
+        })),
+      } : item(product, canonical(page)),
+      { "@type": "BreadcrumbList", itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: canonical("/") },
+        { "@type": "ListItem", position: 2, name: "Gifts & Décor", item: canonical("/shop") },
+        { "@type": "ListItem", position: 3, name: product.name, item: canonical(page) },
+      ] },
+    ] };
+  }
+  if (page === "/shop" || page === "/shop/halloween")
     return {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      name: "3D-Printed Gifts in Edmonton",
-      url: business.origin + page,
+      name: page === "/shop/halloween" ? "Halloween Décor Made in Edmonton" : "Unique Gifts & Décor, Made in Edmonton",
+      url: canonical(page),
       mainEntity: {
         "@type": "ItemList",
-        itemListElement: publicProducts.map((item, index) => ({
+        itemListElement: publicProducts.filter(p => page !== "/shop/halloween" || p.category === "Halloween").map((item, index) => ({
           "@type": "ListItem",
           position: index + 1,
           name: item.name,
-          url: business.origin + `/shop/${item.id}`,
+          url: canonical(`/shop/${item.id}`),
         })),
       },
     };

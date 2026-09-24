@@ -178,6 +178,7 @@ export default function Home() {
         </div>
       </section>
       <Process />
+      <section className="section"><div className="container"><p className="eyebrow">MADE IN EDMONTON</p><h2>Gifts with a little character.</h2><p>Discover creature figurines, decorative planters, gaming accessories and seasonal décor, printed to order in our studio.</p><Link className="button" to="/shop/">Explore gifts & décor →</Link></div></section>
       <FAQ />
       <CallToAction />
     </>
