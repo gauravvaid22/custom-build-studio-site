@@ -538,5 +538,33 @@
     ],
     "productionReviewed": false,
     "source": "https://platform.stlflix.com/product/pumpkin-fidget-keychain"
+  },
+  {
+    "id": "night-owl-wall-light",
+    "name": "Night Owl Wall Light",
+    "priceCents": 4999,
+    "category": "Home & lighting",
+    "seasonal": false,
+    "description": "A sculptural owl wall light that adds a warm, characterful glow to a bedroom, reading corner or feature wall.",
+    "included": "One fully finished Night Owl Wall Light with the light, wiring and switch installed and assembled.",
+    "dimensions": "Finished size: approximately 125 × 200 × 91 mm.",
+    "notes": "Sold as a complete finished light. Wall mounting method and battery or power requirements should be confirmed from the finished production unit before fulfillment.",
+    "images": [
+      {
+        "src": "/media/shop/night-owl-wall-light/1-1200.webp",
+        "thumb": "/media/shop/night-owl-wall-light/1-480.webp",
+        "alt": "Night Owl Wall Light illuminated on a wall",
+        "sourceFile": "Night_Owl_Wall_L_Ight_1_2387fce658.jpg"
+      },
+      {
+        "src": "/media/shop/night-owl-wall-light/2-1200.webp",
+        "thumb": "/media/shop/night-owl-wall-light/2-480.webp",
+        "alt": "Night Owl Wall Light product view",
+        "sourceFile": "Night_Owl_Wall_L_Ight_6_35bfbbdbe9.jpg"
+      }
+    ],
+    "video": "/media/shop/night-owl-wall-light/night-owl-wall-light.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/night-owl-wall-light"
   }
 ]

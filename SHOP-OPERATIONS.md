@@ -1,6 +1,6 @@
 # Printed gift collection — preview and operations
 
-The collection is implemented at `/shop`. It has ten product pages, licensed reference galleries, a quantity-aware cart and server-validated manual-payment checkout. Existing service, portfolio and quote pages are preserved.
+The collection is implemented at `/shop`. It has eleven product pages, licensed reference galleries, product video where available, a quantity-aware cart and server-validated manual-payment checkout. Existing service, portfolio and quote pages are preserved.
 
 ## Run the working preview
 

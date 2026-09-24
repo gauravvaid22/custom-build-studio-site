@@ -194,6 +194,13 @@
   aspect-ratio: 1;
   object-fit: contain;
 }
+.shop-main-image video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  background: #101614;
+}
 .shop-thumbs {
   display: flex;
   flex-wrap: wrap;
@@ -214,6 +221,22 @@
   width: 64px;
   height: 64px;
   object-fit: cover;
+}
+.shop-video-thumb {
+  position: relative;
+}
+.shop-video-thumb span {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(23, 60, 53, 0.9);
+  color: white;
+  font-size: 0.75rem;
 }
 .shop-specs {
   margin: 28px 0;

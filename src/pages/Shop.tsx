@@ -165,6 +165,7 @@ export function Shop() {
     "Creatures & collectibles",
     "Gaming & desk",
     "Home & planters",
+    "Home & lighting",
     "Halloween",
   ];
   return (
@@ -298,6 +299,8 @@ export function ShopProduct() {
   const { notice } = useCart();
   useEffect(() => setIndex(0), [id]);
   if (!product) return <NotFound />;
+  const video = "video" in product ? product.video : undefined;
+  const showingVideo = Boolean(video && index === product.images.length);
   return (
     <>
       <ShopNav />
@@ -310,9 +313,25 @@ export function ShopProduct() {
           <div className="shop-detail">
             <div>
               <div className="shop-main-image">
-                <ProductImage product={product} index={index} large />
+                {showingVideo ? (
+                  <video
+                    controls
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    poster={product.images[0].src}
+                    aria-label={`${product.name} product video`}
+                  >
+                    <source src={video} type="video/webm" />
+                    Your browser does not support product video.
+                  </video>
+                ) : (
+                  <ProductImage product={product} index={index} large />
+                )}
               </div>
-              <div className="shop-thumbs" aria-label="Product photographs">
+              <div className="shop-thumbs" aria-label="Product media">
                 {product.images.map((image, i) => (
                   <button
                     key={image.src}
@@ -329,6 +348,17 @@ export function ShopProduct() {
                     />
                   </button>
                 ))}
+                {video && (
+                  <button
+                    className="shop-video-thumb"
+                    aria-label="View product video"
+                    aria-pressed={showingVideo}
+                    onClick={() => setIndex(product.images.length)}
+                  >
+                    <img src={product.images[0].thumb} alt="" loading="lazy" width="90" height="90" />
+                    <span aria-hidden="true">▶</span>
+                  </button>
+                )}
               </div>
               <p className="small">
                 Colours will be similar to the main photo; shades may vary.
@@ -354,9 +384,9 @@ export function ShopProduct() {
               <dl className="shop-specs">
                 <dt>What you receive</dt>
                 <dd>{product.included} No STL or digital download.</dd>
-                {product.dimensions.startsWith("Source model:") && <>
+                {!product.dimensions.startsWith("Final dimensions") && <>
                   <dt>Approximate size</dt>
-                  <dd>{product.dimensions.replace("Source model: approximately", "Approximately").replace("Final printed dimensions require production review.", "Finished size may vary slightly.")}</dd>
+                  <dd>{product.dimensions.replace("Source model: approximately", "Approximately").replace("Finished size: approximately", "Approximately").replace("Final printed dimensions require production review.", "Finished size may vary slightly.")}</dd>
                 </>}
                 <dt>Colour & finish</dt>
                 <dd>Similar to the main photo. Request a different colour at checkout.</dd>

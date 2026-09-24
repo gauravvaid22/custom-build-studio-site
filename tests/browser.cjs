@@ -19,6 +19,8 @@ const routes = [
   "/about",
   "/pricing",
   "/products",
+  "/shop",
+  "/shop/night-owl-wall-light",
   "/reviews",
   "/contact",
   "/privacy",
