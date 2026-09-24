@@ -224,6 +224,17 @@
   gap: 8px;
   margin: 14px 0;
 }
+.shop-design-indicator {
+  margin: 14px 0 -5px;
+  color: #173c35;
+  font-size: 0.9rem;
+}
+.shop-design-indicator strong {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #dce8e2;
+}
 .shop-thumbs button {
   padding: 3px;
   border: 2px solid transparent;

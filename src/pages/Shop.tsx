@@ -358,6 +358,19 @@ export function ShopProduct() {
   const showingVideo = Boolean(video && index === product.images.length);
   const variants = variantsFor(product);
   const selectedVariant = catalogProduct(selectedVariantId || variants[0]?.id || product.id) || product;
+  const selectedImage = !showingVideo ? product.images[index] : undefined;
+  const selectedDesign =
+    selectedImage && "design" in selectedImage && typeof selectedImage.design === "string"
+      ? selectedImage.design
+      : undefined;
+  const chooseVariant = (variantId: string) => {
+    setSelectedVariantId(variantId);
+    const label = variants.find((variant) => variant.id === variantId)?.label;
+    const imageIndex = product.images.findIndex(
+      (image) => "design" in image && image.design === label,
+    );
+    if (imageIndex >= 0) setIndex(imageIndex);
+  };
   return (
     <>
       <ShopNav />
@@ -388,11 +401,16 @@ export function ShopProduct() {
                   <ProductImage product={product} index={index} large />
                 )}
               </div>
+              {selectedDesign && (
+                <p className="shop-design-indicator" role="status">
+                  Viewing <strong>{selectedDesign}</strong>
+                </p>
+              )}
               <div className="shop-thumbs" aria-label="Product media">
                 {product.images.map((image, i) => (
                   <button
                     key={image.src}
-                    aria-label={`View product photo ${i + 1}`}
+                    aria-label={`View ${"design" in image ? `${image.design} ` : ""}product photo ${i + 1}`}
                     aria-pressed={index === i}
                     onClick={() => setIndex(i)}
                   >
@@ -436,7 +454,7 @@ export function ShopProduct() {
               <AddProduct
                 product={product}
                 variantId={selectedVariant.id}
-                onVariantChange={setSelectedVariantId}
+                onVariantChange={chooseVariant}
               />
               <p role="status">{notice}</p>
               <Link className="text-link" to="/shop/cart">

@@ -649,12 +649,20 @@
     "notes": "Colours will be similar to the selected design photo; shades may vary.",
     "variantLabel": "Design",
     "variants": [
-      { "id": "mood-ghost-design-a", "label": "Mood Ghost design A", "priceCents": 1600, "dimensions": "Finished size: 85 × 85 × 88 mm." },
-      { "id": "mood-ghost-design-b", "label": "Mood Ghost design B", "priceCents": 1600, "dimensions": "Finished size: 85 × 85 × 88 mm." }
+      { "id": "mood-ghost-design-a", "label": "Design A", "priceCents": 1600, "dimensions": "Finished size: 85 × 85 × 88 mm." },
+      { "id": "mood-ghost-design-b", "label": "Design B", "priceCents": 1600, "dimensions": "Finished size: 85 × 85 × 88 mm." }
     ],
     "images": [
-      { "src": "/media/shop/mood-ghost/1-1200.jpg", "thumb": "/media/shop/mood-ghost/1-480.jpg", "alt": "Mood Ghost design A with arms raised", "sourceFile": "Mood_Ghost_1_6a0bb3d0ed.png" },
-      { "src": "/media/shop/mood-ghost/2-1200.jpg", "thumb": "/media/shop/mood-ghost/2-480.jpg", "alt": "Mood Ghost design B with open arms", "sourceFile": "Mood_Ghost_6_65f8902f4a.png" }
+      { "src": "/media/shop/mood-ghost/1-1200.jpg", "thumb": "/media/shop/mood-ghost/1-480.jpg", "alt": "Mood Ghost design A product view 1", "design": "Design A", "sourceFile": "Mood_Ghost_1_6a0bb3d0ed.png" },
+      { "src": "/media/shop/mood-ghost/2-1200.jpg", "thumb": "/media/shop/mood-ghost/2-480.jpg", "alt": "Mood Ghost design A product view 2", "design": "Design A", "sourceFile": "Mood_Ghost_2_4645c8f61b.png" },
+      { "src": "/media/shop/mood-ghost/3-1200.jpg", "thumb": "/media/shop/mood-ghost/3-480.jpg", "alt": "Mood Ghost design A product view 3", "design": "Design A", "sourceFile": "Mood_Ghost_6_65f8902f4a.png" },
+      { "src": "/media/shop/mood-ghost/4-1200.jpg", "thumb": "/media/shop/mood-ghost/4-480.jpg", "alt": "Mood Ghost design A product view 4", "design": "Design A", "sourceFile": "Mood_Ghost_7_a567d48c24.png" },
+      { "src": "/media/shop/mood-ghost/5-1200.jpg", "thumb": "/media/shop/mood-ghost/5-480.jpg", "alt": "Mood Ghost design A product view 5", "design": "Design A", "sourceFile": "Mood_Ghost_8_5b965e1a43.png" },
+      { "src": "/media/shop/mood-ghost/6-1200.jpg", "thumb": "/media/shop/mood-ghost/6-480.jpg", "alt": "Mood Ghost design B product view 1", "design": "Design B", "sourceFile": "Mood_Ghost_10_0a9771f0e4.png" },
+      { "src": "/media/shop/mood-ghost/7-1200.jpg", "thumb": "/media/shop/mood-ghost/7-480.jpg", "alt": "Mood Ghost design B product view 2", "design": "Design B", "sourceFile": "Mood_Ghost_3_85d4b8990d.png" },
+      { "src": "/media/shop/mood-ghost/8-1200.jpg", "thumb": "/media/shop/mood-ghost/8-480.jpg", "alt": "Mood Ghost design B product view 3", "design": "Design B", "sourceFile": "Mood_Ghost_4_3c6bad1f58.png" },
+      { "src": "/media/shop/mood-ghost/9-1200.jpg", "thumb": "/media/shop/mood-ghost/9-480.jpg", "alt": "Mood Ghost design B product view 4", "design": "Design B", "sourceFile": "Mood_Ghost_5_27ea5db8c6.png" },
+      { "src": "/media/shop/mood-ghost/10-1200.jpg", "thumb": "/media/shop/mood-ghost/10-480.jpg", "alt": "Mood Ghost design B product view 5", "design": "Design B", "sourceFile": "Mood_Ghost_9_a983584525.png" }
     ],
     "video": "/media/shop/mood-ghost/mood-ghost.webm",
     "productionReviewed": false,
@@ -702,7 +710,11 @@
     "notes": "Colours will be similar to the main photo; shades may vary.",
     "images": [
       { "src": "/media/shop/ghost-arch-wreath/1-1200.jpg", "thumb": "/media/shop/ghost-arch-wreath/1-480.jpg", "alt": "Ghost Arch Wreath with ghost arch and graveyard scene", "sourceFile": "Ghost_Arch_Wreath1_7929ad80f1.png" },
-      { "src": "/media/shop/ghost-arch-wreath/2-1200.jpg", "thumb": "/media/shop/ghost-arch-wreath/2-480.jpg", "alt": "Ghost Arch Wreath displayed on a front door", "sourceFile": "Ghost_Arch_Wreath5_ec6d283a33.png" }
+      { "src": "/media/shop/ghost-arch-wreath/2-1200.jpg", "thumb": "/media/shop/ghost-arch-wreath/2-480.jpg", "alt": "Ghost Arch Wreath product view", "sourceFile": "Ghost_Arch_Wreath2_5af02e4734.png" },
+      { "src": "/media/shop/ghost-arch-wreath/3-1200.jpg", "thumb": "/media/shop/ghost-arch-wreath/3-480.jpg", "alt": "Ghost Arch Wreath wall display", "sourceFile": "Ghost_Arch_Wreath3_08891df4b1.png" },
+      { "src": "/media/shop/ghost-arch-wreath/4-1200.jpg", "thumb": "/media/shop/ghost-arch-wreath/4-480.jpg", "alt": "Ghost Arch Wreath wall display detail", "sourceFile": "Ghost_Arch_Wreath4_432f4a0217.png" },
+      { "src": "/media/shop/ghost-arch-wreath/5-1200.jpg", "thumb": "/media/shop/ghost-arch-wreath/5-480.jpg", "alt": "Ghost Arch Wreath displayed on a front door", "sourceFile": "Ghost_Arch_Wreath5_ec6d283a33.png" },
+      { "src": "/media/shop/ghost-arch-wreath/6-1200.jpg", "thumb": "/media/shop/ghost-arch-wreath/6-480.jpg", "alt": "Ghost Arch Wreath rear detail", "sourceFile": "Ghost_Arch_Wreath7_14bec2ccce.png" }
     ],
     "video": "/media/shop/ghost-arch-wreath/ghost-arch-wreath.webm",
     "productionReviewed": false,
