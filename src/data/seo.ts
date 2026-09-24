@@ -2,6 +2,7 @@ import { allServices as services, serviceDetails } from "./landing";
 import projects from "./projects.json";
 import { business } from "./business";
 import products from "../../commerce/products.json";
+const publicProducts = products.filter((product) => !("variantOf" in product));
 export const publicRoutes = [
   "/",
   "/services",
@@ -12,7 +13,7 @@ export const publicRoutes = [
   "/pricing",
   "/products",
   "/shop",
-  ...products.map((product) => `/shop/${product.id}`),
+  ...publicProducts.map((product) => `/shop/${product.id}`),
   "/reviews",
   "/contact",
   "/privacy",
@@ -153,7 +154,7 @@ export function getStructuredData(path: string) {
       url: business.origin + page,
       mainEntity: {
         "@type": "ItemList",
-        itemListElement: products.map((item, index) => ({
+        itemListElement: publicProducts.map((item, index) => ({
           "@type": "ListItem",
           position: index + 1,
           name: item.name,

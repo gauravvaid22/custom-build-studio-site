@@ -46,6 +46,16 @@ test("integer CAD calculations, pickup, delivery and configurable tax", () => {
   assert.throws(() => totals([{ id: "fake", quantity: 1 }], "pickup"));
   assert.throws(() => totals([...body().items, body().items[0]], "pickup"));
   assert.throws(() => totals(body().items, "shipping"));
+  assert.equal(
+    totals([{ id: "octopus-wine-bottle-holder-320", quantity: 1 }], "pickup")
+      .totalCents,
+    9899,
+  );
+  assert.equal(
+    totals([{ id: "octopus-wine-bottle-holder-345", quantity: 2 }], "pickup")
+      .totalCents,
+    21998,
+  );
 });
 test("order persistence survives reopening database; idempotent retry and immutable prices", async () => {
   const { path, store, shop } = fixture(),

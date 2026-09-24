@@ -15,7 +15,7 @@ async function walk(dir) {
 const htmlFiles = (await walk(root)).filter(
   (path) => extname(path) === ".html",
 );
-assert.equal(htmlFiles.length, 48, "Expected all 48 prerendered routes");
+assert.equal(htmlFiles.length, 49, "Expected all 49 prerendered routes");
 const titles = new Set();
 for (const file of htmlFiles) {
   const html = await readFile(file, "utf8");

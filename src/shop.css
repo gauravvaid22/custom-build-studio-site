@@ -136,9 +136,26 @@
 }
 .shop-add {
   display: flex;
+  flex-wrap: wrap;
   align-items: end;
   gap: 12px;
   margin-top: auto;
+}
+.shop-variant-select {
+  flex-basis: 100%;
+  display: grid;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.shop-variant-select select {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid #718078;
+  background: white;
+  color: #1a2021;
+  font: inherit;
 }
 .shop-add label,
 .shop-cart-line label {

@@ -8,6 +8,16 @@ import { NotFound } from "./Studio";
 import "../shop.css";
 
 type Product = (typeof products)[number];
+type ProductVariant = {
+  id: string;
+  label: string;
+  priceCents: number;
+  dimensions: string;
+};
+const variantsFor = (product: Product): ProductVariant[] =>
+  "variants" in product ? product.variants || [] : [];
+const isVariant = (product: Product) => "variantOf" in product;
+const catalogProduct = (id: string) => products.find((product) => product.id === id);
 type Order = {
   id: string;
   number: string;
@@ -127,17 +137,44 @@ function ProductImage({
     <div className="shop-image-pending">Product photography pending</div>
   );
 }
-function AddProduct({ product }: { product: Product }) {
+function AddProduct({
+  product,
+  variantId,
+  onVariantChange,
+}: {
+  product: Product;
+  variantId?: string;
+  onVariantChange?: (id: string) => void;
+}) {
   const { add } = useCart();
   const [quantity, setQuantity] = useState(1);
+  const variants = variantsFor(product);
+  const selectedId = variantId || variants[0]?.id;
+  const orderProduct = selectedId ? catalogProduct(selectedId) || product : product;
   return (
     <form
       className="shop-add"
       onSubmit={(e) => {
         e.preventDefault();
-        add(product.id, quantity);
+        add(orderProduct.id, quantity);
       }}
     >
+      {variants.length > 0 && (
+        <label className="shop-variant-select">
+          Bottle diameter
+          <select
+            value={selectedId}
+            onChange={(event) => onVariantChange?.(event.target.value)}
+            aria-label={`Bottle diameter for ${product.name}`}
+          >
+            {variants.map((variant) => (
+              <option key={variant.id} value={variant.id}>
+                {variant.label} · {money(variant.priceCents)}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
       <label>
         Quantity
         <input
@@ -166,6 +203,7 @@ export function Shop() {
     "Gaming & desk",
     "Home & planters",
     "Home & lighting",
+    "Home & entertaining",
     "Halloween",
   ];
   return (
@@ -230,6 +268,7 @@ export function Shop() {
           </p>
           <div className="shop-grid">
             {products
+              .filter((p) => !isVariant(p))
               .filter((p) => category === "All" || p.category === category)
               .map((product) => (
                 <article className="shop-card" key={product.id}>
@@ -244,13 +283,19 @@ export function Shop() {
                     </h3>
                     <p>{product.description}</p>
                     <p className="shop-price">
-                      {money(product.priceCents)}{" "}
+                      {variantsFor(product).length ? "From " : ""}{money(product.priceCents)}{" "}
                       <span>
                         CAD
                         {settings.pricesAreProvisional ? " · provisional" : ""}
                       </span>
                     </p>
-                    <AddProduct product={product} />
+                    {variantsFor(product).length ? (
+                      <Link className="button" to={`/shop/${product.id}`}>
+                        Choose bottle size ↗
+                      </Link>
+                    ) : (
+                      <AddProduct product={product} />
+                    )}
                   </div>
                 </article>
               ))}
@@ -296,11 +341,17 @@ export function ShopProduct() {
   const { id } = useParams();
   const product = products.find((p) => p.id === id);
   const [index, setIndex] = useState(0);
+  const [selectedVariantId, setSelectedVariantId] = useState("");
   const { notice } = useCart();
-  useEffect(() => setIndex(0), [id]);
+  useEffect(() => {
+    setIndex(0);
+    setSelectedVariantId("");
+  }, [id]);
   if (!product) return <NotFound />;
   const video = "video" in product ? product.video : undefined;
   const showingVideo = Boolean(video && index === product.images.length);
+  const variants = variantsFor(product);
+  const selectedVariant = catalogProduct(selectedVariantId || variants[0]?.id || product.id) || product;
   return (
     <>
       <ShopNav />
@@ -370,23 +421,36 @@ export function ShopProduct() {
               <h1>{product.name}</h1>
               <p className="lead">{product.description}</p>
               <p className="shop-price">
-                {money(product.priceCents)}{" "}
+                {money(selectedVariant.priceCents)}{" "}
                 <span>
                   CAD
                   {settings.pricesAreProvisional ? " · provisional price" : ""}
                 </span>
               </p>
-              <AddProduct product={product} />
+              <AddProduct
+                product={product}
+                variantId={selectedVariant.id}
+                onVariantChange={setSelectedVariantId}
+              />
               <p role="status">{notice}</p>
               <Link className="text-link" to="/shop/cart">
                 View cart & checkout ↗
               </Link>
               <dl className="shop-specs">
                 <dt>What you receive</dt>
-                <dd>{product.included} No STL or digital download.</dd>
-                {!product.dimensions.startsWith("Final dimensions") && <>
+                <dd>{selectedVariant.included} No STL or digital download.</dd>
+                {!selectedVariant.dimensions.startsWith("Final dimensions") && <>
                   <dt>Approximate size</dt>
-                  <dd>{product.dimensions.replace("Source model: approximately", "Approximately").replace("Finished size: approximately", "Approximately").replace("Final printed dimensions require production review.", "Finished size may vary slightly.")}</dd>
+                  <dd>{selectedVariant.dimensions.replace("Source model: approximately", "Approximately").replace("Finished size: approximately", "Approximately").replace("Final printed dimensions require production review.", "Finished size may vary slightly.")}</dd>
+                </>}
+                {variants.length > 0 && <>
+                  <dt>Size guide</dt>
+                  <dd>
+                    Choose by the widest diameter of your bottle. A typical 750 mL
+                    Bordeaux-style bottle is close to 3 in wide. Burgundy-style
+                    bottles are often wider, around 3.2 in or more. Bottle shapes
+                    vary, so measure your bottle at its widest point before ordering.
+                  </dd>
                 </>}
                 <dt>Colour & finish</dt>
                 <dd>Similar to the main photo. Request a different colour at checkout.</dd>
@@ -445,14 +509,15 @@ export function ShopCart() {
             ) : (
               items.map((item) => {
                 const product = products.find((p) => p.id === item.id)!;
+                const productRoute = "variantOf" in product ? product.variantOf : product.id;
                 return (
                   <article className="shop-cart-line" key={item.id}>
-                    <Link to={`/shop/${item.id}`}>
+                    <Link to={`/shop/${productRoute}`}>
                       <ProductImage product={product} />
                     </Link>
                     <div>
                       <h2>
-                        <Link to={`/shop/${item.id}`}>{product.name}</Link>
+                        <Link to={`/shop/${productRoute}`}>{product.name}</Link>
                       </h2>
                       <p>{money(product.priceCents)} CAD each</p>
                       <label>

@@ -21,6 +21,7 @@ const routes = [
   "/products",
   "/shop",
   "/shop/night-owl-wall-light",
+  "/shop/octopus-wine-bottle-holder",
   "/reviews",
   "/contact",
   "/privacy",
@@ -288,6 +289,32 @@ async function scroll(page) {
   results.interactions.push(
     "One and five independent upload fields, STEP/STL acceptance, remove/re-add, five-file cap, 7 MB limit, failure preservation and mocked multipart success",
   );
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto(origin + "/shop/octopus-wine-bottle-holder");
+    const bottleSize = page.getByRole("combobox", {
+      name: "Bottle diameter for Octopus Wine Bottle Holder",
+    });
+    await bottleSize.selectOption("octopus-wine-bottle-holder-320");
+    assert.match(await page.locator(".shop-price").innerText(), /\$98\.99/);
+    assert(
+      await page
+        .getByText("Finished size: 176 \u00d7 230 \u00d7 227 mm.", { exact: true })
+        .isVisible(),
+    );
+    await bottleSize.selectOption("octopus-wine-bottle-holder-345");
+    assert.match(await page.locator(".shop-price").innerText(), /\$109\.99/);
+    assert(
+      await page
+        .getByText("Finished size: 187 \u00d7 244 \u00d7 240 mm.", { exact: true })
+        .isVisible(),
+    );
+    assert.equal(
+      await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1),
+      false,
+    );
+  }
+  results.interactions.push("Octopus bottle-size selector price and dimension updates on desktop and mobile");
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto(origin);

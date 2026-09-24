@@ -1,6 +1,6 @@
 # Printed gift collection — preview and operations
 
-The collection is implemented at `/shop`. It has eleven product pages, licensed reference galleries, product video where available, a quantity-aware cart and server-validated manual-payment checkout. Existing service, portfolio and quote pages are preserved.
+The collection is implemented at `/shop`. It has twelve product pages, licensed reference galleries, product video where available, a quantity-aware cart and server-validated manual-payment checkout. Existing service, portfolio and quote pages are preserved.
 
 ## Run the working preview
 
@@ -54,7 +54,7 @@ The signed-in STLFLIX profile displayed **Lifetime Commercial License**. Officia
 
 Each catalog row links its original product page and each image records its original filename. The private manifest `../private-production/stlflix/sources.json` records URLs, downloaded sizes and SHA-256 hashes, plus failures. Original marketing photos were retrieved through observed authorized media-package URLs. Public galleries exclude AI-labelled images and slicer screenshots and identify images as STLFLIX references, not completed studio work.
 
-Customer-facing supplier credits have now been removed at the owner's request. Source records remain intact. Dimensions remain in editable catalog data but are hidden on product pages. The owner confirmed prints will use similar colours to the main photo; custom colours require approval.
+Customer-facing supplier credits have now been removed at the owner's request. Source records remain intact. Dimensions remain in editable catalog data and are shown where they help customers choose a product. The owner confirmed prints will use similar colours to the main photo; custom colours require approval.
 
 Production archive downloads were attempted but no STL/3MF archive was verified locally. Two PDF instructions were downloaded initially; additional available instructions are recorded privately. Four Baby Dragon media URLs returned 403; three other photos are usable. Do not claim production sources are complete until those archives are actually obtained. Never publish STL/3MF/PDF production files.
 

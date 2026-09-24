@@ -566,5 +566,75 @@
     "video": "/media/shop/night-owl-wall-light/night-owl-wall-light.webm",
     "productionReviewed": false,
     "source": "https://platform.stlflix.com/product/night-owl-wall-light"
+  },
+  {
+    "id": "octopus-wine-bottle-holder",
+    "name": "Octopus Wine Bottle Holder",
+    "priceCents": 8699,
+    "category": "Home & entertaining",
+    "seasonal": false,
+    "description": "A sculptural octopus bottle holder made for a dramatic bar cart, table or wine display. Choose the holder by measuring the widest diameter of your bottle.",
+    "included": "One physical Octopus Wine Bottle Holder. Wine bottle and display props are not included.",
+    "dimensions": "Choose a bottle diameter to see the finished holder size.",
+    "notes": "Bottle shapes vary. Measure the widest point of your bottle before ordering.",
+    "variants": [
+      { "id": "octopus-wine-bottle-holder-300", "label": "Fits bottles up to 3.00 in diameter", "priceCents": 8699, "dimensions": "Finished size: 166 × 208 × 210 mm." },
+      { "id": "octopus-wine-bottle-holder-320", "label": "Fits bottles up to 3.20 in diameter", "priceCents": 9899, "dimensions": "Finished size: 176 × 230 × 227 mm." },
+      { "id": "octopus-wine-bottle-holder-345", "label": "Fits bottles up to 3.45 in diameter", "priceCents": 10999, "dimensions": "Finished size: 187 × 244 × 240 mm." }
+    ],
+    "images": [
+      { "src": "/media/shop/octopus-wine-bottle-holder/1-1200.jpg", "thumb": "/media/shop/octopus-wine-bottle-holder/1-480.jpg", "alt": "Blue octopus wine bottle holder holding a wine bottle", "sourceFile": "00_2_d8d5480bf5_350e8bd0a7.png" },
+      { "src": "/media/shop/octopus-wine-bottle-holder/2-1200.jpg", "thumb": "/media/shop/octopus-wine-bottle-holder/2-480.jpg", "alt": "Octopus wine bottle holder product view", "sourceFile": "01_5_69403c7707_07f9191477.png" },
+      { "src": "/media/shop/octopus-wine-bottle-holder/3-1200.jpg", "thumb": "/media/shop/octopus-wine-bottle-holder/3-480.jpg", "alt": "Octopus wine bottle holder displayed with a bottle", "sourceFile": "02_5_c7edcf417c_2005de8d6d.png" },
+      { "src": "/media/shop/octopus-wine-bottle-holder/4-1200.jpg", "thumb": "/media/shop/octopus-wine-bottle-holder/4-480.jpg", "alt": "Octopus wine bottle holder detail", "sourceFile": "03_5_b4b2ad8e29_32f554bf35.png" },
+      { "src": "/media/shop/octopus-wine-bottle-holder/5-1200.jpg", "thumb": "/media/shop/octopus-wine-bottle-holder/5-480.jpg", "alt": "Octopus wine bottle holder side view", "sourceFile": "04_4_473c168701_a11d61015a.png" }
+    ],
+    "productionReviewed": false,
+    "source": "local authorized media package: WEBSITE PRODUCT/OCTOPUS WINE HOLDER/bordeaux-the-octopus-wine-holder-media-package"
+  },
+  {
+    "id": "octopus-wine-bottle-holder-300",
+    "name": "Octopus Wine Bottle Holder — up to 3.00 in bottle diameter",
+    "priceCents": 8699,
+    "category": "Home & entertaining",
+    "seasonal": false,
+    "description": "Octopus Wine Bottle Holder sized for bottles up to 3.00 in in diameter.",
+    "included": "One physical Octopus Wine Bottle Holder. Wine bottle and display props are not included.",
+    "dimensions": "Finished size: 166 × 208 × 210 mm.",
+    "notes": "Measure the widest point of your bottle before ordering.",
+    "variantOf": "octopus-wine-bottle-holder",
+    "images": [{ "src": "/media/shop/octopus-wine-bottle-holder/1-1200.jpg", "thumb": "/media/shop/octopus-wine-bottle-holder/1-480.jpg", "alt": "Blue octopus wine bottle holder holding a wine bottle", "sourceFile": "00_2_d8d5480bf5_350e8bd0a7.png" }],
+    "productionReviewed": false,
+    "source": "local authorized production variant: Bordeaux_The_Octopus.stl"
+  },
+  {
+    "id": "octopus-wine-bottle-holder-320",
+    "name": "Octopus Wine Bottle Holder — up to 3.20 in bottle diameter",
+    "priceCents": 9899,
+    "category": "Home & entertaining",
+    "seasonal": false,
+    "description": "Octopus Wine Bottle Holder sized for bottles up to 3.20 in in diameter.",
+    "included": "One physical Octopus Wine Bottle Holder. Wine bottle and display props are not included.",
+    "dimensions": "Finished size: 176 × 230 × 227 mm.",
+    "notes": "Measure the widest point of your bottle before ordering.",
+    "variantOf": "octopus-wine-bottle-holder",
+    "images": [{ "src": "/media/shop/octopus-wine-bottle-holder/1-1200.jpg", "thumb": "/media/shop/octopus-wine-bottle-holder/1-480.jpg", "alt": "Blue octopus wine bottle holder holding a wine bottle", "sourceFile": "00_2_d8d5480bf5_350e8bd0a7.png" }],
+    "productionReviewed": false,
+    "source": "local authorized production variant: Bordeaux_The_Octopus_3_2.stl"
+  },
+  {
+    "id": "octopus-wine-bottle-holder-345",
+    "name": "Octopus Wine Bottle Holder — up to 3.45 in bottle diameter",
+    "priceCents": 10999,
+    "category": "Home & entertaining",
+    "seasonal": false,
+    "description": "Octopus Wine Bottle Holder sized for bottles up to 3.45 in in diameter.",
+    "included": "One physical Octopus Wine Bottle Holder. Wine bottle and display props are not included.",
+    "dimensions": "Finished size: 187 × 244 × 240 mm.",
+    "notes": "Measure the widest point of your bottle before ordering.",
+    "variantOf": "octopus-wine-bottle-holder",
+    "images": [{ "src": "/media/shop/octopus-wine-bottle-holder/1-1200.jpg", "thumb": "/media/shop/octopus-wine-bottle-holder/1-480.jpg", "alt": "Blue octopus wine bottle holder holding a wine bottle", "sourceFile": "00_2_d8d5480bf5_350e8bd0a7.png" }],
+    "productionReviewed": false,
+    "source": "local authorized production variant: Bordeaux_The_Octopus_3_45.stl"
   }
 ]
