@@ -209,7 +209,7 @@ export function Shop() {
               <h2>Find your kind of curious.</h2>
             </div>
             <p>
-              Ten designs. Physical prints.
+                    A growing collection. Physical prints.
               <br />
               Made locally, with a personal touch.
             </p>
