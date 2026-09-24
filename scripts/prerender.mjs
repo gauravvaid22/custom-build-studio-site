@@ -25,7 +25,7 @@ for (const route of [...publicRoutes, "/thank-you", "/404", "/shop/cart", "/shop
 <link rel="canonical" href="${escape(seo.url)}" />
 <meta property="og:type" content="website" /><meta property="og:site_name" content="Custom Build Studio" /><meta property="og:locale" content="en_CA" />
 <meta property="og:title" content="${escape(seo.title)}" /><meta property="og:description" content="${escape(seo.description)}" /><meta property="og:url" content="${escape(seo.url)}" />
-<meta property="og:image" content="${escape(seo.image)}" /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" /><meta property="og:image:alt" content="Custom Build Studio PA6-CF gear and motor mount project" />
+<meta property="og:image" content="${escape(seo.image)}" /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" /><meta property="og:image:alt" content="${escape(seo.imageAlt)}" />
 <meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content="${escape(seo.title)}" /><meta name="twitter:description" content="${escape(seo.description)}" /><meta name="twitter:image" content="${escape(seo.image)}" />
 <script id="structured-data" type="application/ld+json">${JSON.stringify(getStructuredData(route)).replace(/</g, "\\u003c")}</script>`;
   const path =

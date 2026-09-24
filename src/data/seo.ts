@@ -97,6 +97,7 @@ export function getSeo(path: string) {
     description: entry[1],
     url: business.origin + (page === "/" ? "/" : page),
     image: business.origin + (product?.images[0]?.src || "/og-image.jpg"),
+    imageAlt: product?.images[0]?.alt || "Custom Build Studio design and fabrication project",
     noindex: !publicRoutes.includes(page) || page === "/privacy",
   };
 }
