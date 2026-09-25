@@ -10,6 +10,9 @@
   "deliveryFeeCents": 500,
   "deliveryRadiusKm": 50,
   "deliveryInstructions": "$5 local delivery within 50 km of our Edmonton studio. We check your exact address before requesting payment; a community name alone does not confirm eligibility.",
+  "shippingFeeCents": 1000,
+  "shippingLabel": "Standard Tracked Shipping",
+  "shippingInstructions": "$10 CAD flat-rate tracked shipping to Canadian addresses. Tracking details are provided after your order ships.",
   "catalogApproved": true,
   "pricesAreProvisional": false,
   "maxQuantityPerProduct": 20

@@ -308,9 +308,18 @@ export function Privacy() {
             documents. For large project files, you can provide a download link
             and control access through your file-sharing service.
           </p>
-            <h2>Website analytics</h2>
-            <h3>Shop orders</h3>
-            <p>Shop orders store your name, email, phone number, selected products, notes and delivery address when needed. These details are used to confirm your order, verify manual payment and arrange fulfillment. Orders are held in private server storage on our hosting platform, not just in your browser. Your cart is saved on your device; your private order link grants access to that order, so keep it confidential. Contact the studio to request correction or deletion of your information, subject to records we must retain.</p>
+          <h2>Shop orders</h2>
+          <p>
+            Your cart is saved on your device. When you continue to checkout,
+            Shopify processes your contact information, shipping address,
+            payment and order details so your purchase can be completed and
+            fulfilled. Shopify handles payment information on its secure
+            checkout; this website does not receive or store your full card
+            details. Contact the studio to request correction or deletion of
+            information we control, subject to transaction records we must
+            retain.
+          </p>
+          <h2>Website analytics</h2>
           <p>
             We measure quote starts and clicks on the business phone link as
             well as successful requests. Campaign tags and advertising click

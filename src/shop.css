@@ -541,6 +541,22 @@
   font-weight: 700;
   padding: 0 8px;
 }
+
+.shopify-checkout-panel {
+  align-self: start;
+  display: grid;
+  gap: 1rem;
+}
+
+.shopify-checkout-panel h2,
+.shopify-checkout-panel p {
+  margin: 0;
+}
+
+.shopify-checkout-button {
+  justify-self: start;
+  min-width: min(100%, 19rem);
+}
 .shop-test-banner {
   padding: 18px;
   background: #fff0cc;

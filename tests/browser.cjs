@@ -57,6 +57,48 @@ async function scroll(page) {
   });
   const context = await browser.newContext();
   const page = await context.newPage();
+  let shopifyCartInput = null;
+  await page.route("https://aqk73w-k2.myshopify.com/api/**", async (route) => {
+    const request = route.request();
+    const payload = request.postDataJSON();
+    if (payload.query.includes("CatalogForCheckout")) {
+      const data = {};
+      Object.entries(payload.variables).forEach(([key, handle]) => {
+        const index = key.replace("handle", "");
+        const skus = handle === "mood-ghost"
+          ? ["mood-ghost-design-a", "mood-ghost-design-b"]
+          : [handle];
+        data[`product${index}`] = {
+          handle,
+          variants: {
+            nodes: skus.map((sku) => ({
+              id: `gid://shopify/ProductVariant/${sku}`,
+              sku,
+              availableForSale: true,
+              price: { amount: "16.00", currencyCode: "CAD" },
+            })),
+          },
+        };
+      });
+      return route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({ data }),
+      });
+    }
+    shopifyCartInput = payload.variables.input;
+    return route.fulfill({
+      contentType: "application/json",
+      body: JSON.stringify({
+        data: {
+          cartCreate: {
+            cart: { checkoutUrl: `${origin}/shopify-checkout-test` },
+            userErrors: [],
+            warnings: [],
+          },
+        },
+      }),
+    });
+  });
   page.on("pageerror", (e) => results.errors.push(e.message));
   page.on("console", (e) => {
     if (
@@ -387,6 +429,22 @@ async function scroll(page) {
     );
   }
   results.interactions.push("Add-to-cart success, invalid submission, option selection, cart count and persisted contents on desktop and mobile");
+  await page.goto(origin + "/shop/cart");
+  await page.getByRole("link", { name: "Continue to checkout ↗" }).click();
+  await page.getByRole("button", { name: "Continue to secure checkout ↗" }).click();
+  await page.waitForURL(origin + "/shopify-checkout-test");
+  assert.deepEqual(shopifyCartInput.lines, [
+    {
+      merchandiseId: "gid://shopify/ProductVariant/night-owl-wall-light",
+      quantity: 1,
+    },
+    {
+      merchandiseId: "gid://shopify/ProductVariant/mood-ghost-design-b",
+      quantity: 2,
+    },
+  ]);
+  assert.equal(shopifyCartInput.buyerIdentity.countryCode, "CA");
+  results.interactions.push("Cart maps products and options to Shopify variants and opens secure checkout");
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto(origin + "/shop/night-owl-wall-light");

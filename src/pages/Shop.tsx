@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 import products from "../../commerce/products.json";
 import settings from "../../commerce/settings.json";
 import collections from "../../commerce/collections.json";
@@ -8,6 +8,7 @@ import { useCart, money } from "../components/Cart";
 import { NotFound } from "./Studio";
 import "../shop.css";
 import { trackShop } from "../components/Analytics";
+import { createShopifyCheckout, shopifyConfigured } from "../lib/shopify";
 
 type Product = (typeof products)[number];
 type ProductVariant = {
@@ -75,20 +76,6 @@ async function api(
   if (!result.ok) throw Error(data.error || "Unable to complete this request.");
   return data;
 }
-function useConfig() {
-  const [config, setConfig] = useState<{
-    ready: boolean;
-    testMode: boolean;
-    settings: typeof settings;
-  } | null>(null);
-  const [error, setError] = useState("");
-  useEffect(() => {
-    api("config")
-      .then(setConfig)
-      .catch((e) => setError(e.message));
-  }, []);
-  return { config, error };
-}
 export function ShopNav() {
   const { items } = useCart();
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
@@ -111,16 +98,13 @@ export function ShopNav() {
   );
 }
 function ShopNotice() {
-  const { config } = useConfig();
   return (
     <div className="shop-notice container">
-      {config?.testMode
-        ? "Preview only — test orders, no payments. "
-        : settings.pricesAreProvisional
-          ? "Collection preview — prices and production details are being reviewed. "
-          : ""}
-      Finished physical products. No digital files. Free Edmonton pickup · $5
-      local delivery within 50 km.
+      {settings.pricesAreProvisional
+        ? "Collection preview — prices and production details are being reviewed. "
+        : ""}
+      Finished physical products. No digital files. $10 standard tracked
+      shipping across Canada. Secure checkout by Shopify.
     </div>
   );
 }
@@ -301,8 +285,8 @@ function ShopBenefits() {
     <div className="shop-benefits" aria-label="Shopping benefits">
       <div><BenefitIcon type="local"/><span><strong>Made in Edmonton</strong><small>Printed locally</small></span></div>
       <div><BenefitIcon type="made"/><span><strong>Made to order</strong><small>Prepared for you</small></span></div>
-      <div><BenefitIcon type="checkout"/><span><strong>Direct confirmation</strong><small>Order details by email</small></span></div>
-      <div><BenefitIcon type="shipping"/><span><strong>Local delivery</strong><small>$5 within 50 km</small></span></div>
+      <div><BenefitIcon type="checkout"/><span><strong>Secure checkout</strong><small>Powered by Shopify</small></span></div>
+      <div><BenefitIcon type="shipping"/><span><strong>Tracked shipping</strong><small>$10 across Canada</small></span></div>
     </div>
   );
 }
@@ -332,7 +316,7 @@ export function Shop() {
               Shop by collection ↘
             </a>
             <p className="small">
-              Physical products · Free local pickup · Edmonton-area delivery
+              Physical products · Secure payment · Tracked Canadian shipping
             </p>
           </div>
           <Link to={`/shop/${featuredProduct.id}/`} className="shop-hero-photo">
@@ -413,15 +397,15 @@ export function Shop() {
             <p className="eyebrow">FROM YOUR CART TO YOUR DOOR</p>
             <h2>Simple from the first click.</h2>
             <p>
-              Choose a product, add it to your cart and place your order.
-              Need a different colour? Add the request before you pay.
+              Choose a product, add it to your cart and continue to Shopify
+              for your shipping address and secure payment.
             </p>
           </div>
           <div>
-            <h3>Pickup or local delivery.</h3>
+            <h3>Tracked shipping, clearly priced.</h3>
             <p>
-              Pickup is free and arranged privately. Local delivery is $5 within
-              50 km of the Edmonton studio, subject to address review.
+              Standard tracked shipping is $10 across Canada and is itemized
+              before you pay. Contact us first for colour changes or custom work.
             </p>
             <p>{settings.productionTime}.</p>
             <Link className="text-link" to="/products">
@@ -636,14 +620,14 @@ export function ShopProduct() {
                   </dd>
                 </>}
                 <dt>Colour & finish</dt>
-                <dd>Similar to the main photo. Request a different colour at checkout.</dd>
+                <dd>Similar to the main photo. Contact us before checkout to request a different colour.</dd>
                 <dt>Timing & handoff</dt>
                 <dd>
-                  {settings.productionTime}. Free Edmonton pickup or $5 delivery
-                  within 50 km after address review.
+                  {settings.productionTime}. $10 standard tracked shipping
+                  across Canada through Shopify checkout.
                 </dd>
                 <dt>Ordering & payment</dt>
-                <dd>Made to order. Pay by Interac e-Transfer using the instructions after checkout. Special requests and delivery addresses need approval before payment.</dd>
+                <dd>Made to order. Secure payment and shipping are handled through Shopify. Contact us before checkout for special requests.</dd>
                 <dt>Care</dt>
                 <dd>Handle small moving or separate parts gently. Contact us for material-specific cleaning and care advice.</dd>
               </dl>
@@ -740,12 +724,12 @@ export function ShopCart() {
                 <span>Items</span>
                 <strong>{money(subtotal)} CAD</strong>
               </p>
-              <p>Free pickup or $5 local delivery. No GST charged.</p>
+              <p>$10 standard tracked shipping across Canada. No GST charged.</p>
               <p className="small">
                 {settings.pricesAreProvisional
                   ? "Prices are provisional pending production review. "
                   : ""}
-                Standard print? Pay after ordering. Custom request? Wait for approval.
+                Need a different colour or another change? Contact us before checkout.
               </p>
               <Link className="button" to="/shop/checkout" onClick={() => trackShop("begin_checkout", items)}>
                 Continue to checkout ↗
@@ -758,242 +742,81 @@ export function ShopCart() {
   );
 }
 export function Checkout() {
-  const { items, clear } = useCart();
-  const { config, error: configError } = useConfig();
-  const [fulfillment, setFulfillment] = useState("pickup"),
-    [busy, setBusy] = useState(false),
+  const { items } = useCart();
+  const [busy, setBusy] = useState(false),
     [error, setError] = useState("");
-  const [requestMode, setRequestMode] = useState("standard");
-  const navigate = useNavigate();
-  const key = useRef("");
-  const inFlight = useRef(false);
-  const lastPayload = useRef("");
-  useEffect(() => {
-    try {
-      key.current =
-        sessionStorage.getItem("cbs-checkout-key") || crypto.randomUUID();
-      sessionStorage.setItem("cbs-checkout-key", key.current);
-    } catch {
-      key.current = crypto.randomUUID();
-    }
-  }, []);
   const subtotal = items.reduce(
     (sum, item) =>
       sum +
       (products.find((p) => p.id === item.id)?.priceCents || 0) * item.quantity,
     0,
   );
-  const fee = fulfillment === "delivery" ? settings.deliveryFeeCents : settings.pickupFeeCents,
-    tax = Math.round((subtotal + fee) * settings.taxBasisPoints / 10000),
-    total = subtotal + fee + tax;
-  async function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (inFlight.current) return;
-    const form = new FormData(event.currentTarget);
-    const body = {
-      ...Object.fromEntries(form),
-      items,
-      fulfillment,
-      requestMode,
-      accepted: form.get("accepted") === "on",
-      deliveryReview: form.get("deliveryReview") === "on",
-      expectedTotalCents: total,
-    };
-    const serialized = JSON.stringify(body);
-    // Keep retries identical; deliberate edits receive a new idempotency key.
-    if (lastPayload.current && lastPayload.current !== serialized)
-      key.current = crypto.randomUUID();
-    lastPayload.current = serialized;
-    inFlight.current = true;
+
+  async function beginCheckout() {
+    if (busy || !items.length) return;
     setBusy(true);
     setError("");
+    trackShop("begin_checkout", items);
     try {
-      const result = await api("create", body, {
-        "Idempotency-Key": key.current,
-      });
-      try {
-        sessionStorage.setItem("cbs-order-key", result.lookupKey);
-        sessionStorage.removeItem("cbs-checkout-key");
-      } catch {}
-      clear();
-      navigate("/shop/order#" + encodeURIComponent(result.lookupKey));
-    } catch (e) {
-      setError((e as Error).message);
-    } finally {
-      inFlight.current = false;
+      const checkoutUrl = await createShopifyCheckout(items);
+      window.location.assign(checkoutUrl);
+    } catch (checkoutError) {
+      setError((checkoutError as Error).message);
       setBusy(false);
     }
   }
+
   return (
     <>
       <ShopNav />
       <PageIntro
-        eyebrow="PRINTED IN EDMONTON"
-        title="Make it yours."
-        description="A few details. One order. Pay by Interac e-Transfer."
+        eyebrow="SECURE CHECKOUT"
+        title="Ready when you are."
+        description="Review your order, then continue to Shopify for delivery and secure payment."
       />
       <section className="section">
         <div className="container shop-cart-layout">
-          <form className="quote-form shop-checkout" onSubmit={submit}>
-            <OrderSteps review={requestMode === "custom" || fulfillment === "delivery"} />
-            <fieldset>
-              <legend>Your print</legend>
-              <div className="shop-choices">
-                <label className="shop-choice">
-                  <input type="radio" name="requestMode" value="standard" checked={requestMode === "standard"} onChange={() => setRequestMode("standard")} />
-                  <span><strong>As pictured</strong><small>Similar colours. Ready to order.</small></span>
-                </label>
-                <label className="shop-choice">
-                  <input type="radio" name="requestMode" value="custom" checked={requestMode === "custom"} onChange={() => setRequestMode("custom")} />
-                  <span><strong>Request a change</strong><small>Different colour or special request.</small></span>
-                </label>
-              </div>
-              {requestMode === "custom" && <label>What would you like changed?
-                <textarea name="customRequest" required maxLength={1000} rows={3} placeholder="Example: the baby dragon in blue. For multiple items, name each print." />
-                <small>Wait for approval before paying. We’ll confirm availability and any price difference with you.</small>
-              </label>}
-            </fieldset>
-            <h2>Your details</h2>
-            {config?.testMode && (
-              <p className="shop-test-banner">
-                TEST PREVIEW. Use fictional details. Do not send money.
-              </p>
-            )}
-            <div className="form-grid">
-              <label>
-                Name
-                <input
-                  name="name"
-                  required
-                  maxLength={100}
-                  autoComplete="name"
-                />
-              </label>
-              <label>
-                Email
-                <input
-                  name="email"
-                  type="email"
-                  required
-                  maxLength={254}
-                  autoComplete="email"
-                />
-              </label>
-              <label>
-                Phone
-                <input
-                  name="phone"
-                  type="tel"
-                  required
-                  maxLength={30}
-                  autoComplete="tel"
-                />
-              </label>
-            </div>
-            <fieldset>
-              <legend>Pickup or delivery</legend>
-              <label className="shop-radio">
-                <input
-                  type="radio"
-                  name="fulfillment"
-                  value="pickup"
-                  checked={fulfillment === "pickup"}
-                  onChange={() => setFulfillment("pickup")}
-                />
-                Free Edmonton pickup
-              </label>
-              <label className="shop-radio">
-                <input
-                  type="radio"
-                  name="fulfillment"
-                  value="delivery"
-                  checked={fulfillment === "delivery"}
-                  onChange={() => setFulfillment("delivery")}
-                />
-                $5 local delivery · within 50 km
-              </label>
-            </fieldset>
-            {fulfillment === "pickup" ? (
-              <p className="small">We’ll arrange pickup and share the address privately when your order is ready.</p>
-            ) : (
-              <>
-                <p>{settings.deliveryInstructions}</p>
-                <label>
-                  Street address
-                  <input
-                    name="street"
-                    required
-                    maxLength={200}
-                    autoComplete="street-address"
-                  />
-                </label>
-                <div className="form-grid">
-                  <label>
-                    City or community
-                    <input
-                      name="city"
-                      required
-                      maxLength={80}
-                      autoComplete="address-level2"
-                    />
-                  </label>
-                  <label>
-                    Postal code
-                    <input
-                      name="postal"
-                      required
-                      maxLength={7}
-                      pattern="[Tt][0-9][A-Za-z] ?[0-9][A-Za-z][0-9]"
-                      autoComplete="postal-code"
-                    />
-                  </label>
-                </div>
-                <label className="shop-radio">
-                  <input name="deliveryReview" type="checkbox" required />I
-                  understand delivery eligibility must be confirmed before
-                  payment.
-                </label>
-              </>
-            )}
-            <div hidden>
-              <label>
-                Website
-                <input name="website" tabIndex={-1} autoComplete="off" />
-              </label>
-            </div>
-            <label className="shop-radio">
-              <input name="accepted" type="checkbox" required />
-              {requestMode === "custom" || fulfillment === "delivery"
-                ? "I’ll wait for approval before sending my e-Transfer."
-                : "I’ve checked my items and will pay by e-Transfer after placing my order."}
-            </label>
-            <p className="small">
-              Your contact and delivery details are stored to manage your order.{" "}
-              <Link to="/privacy">Privacy information</Link>. Save your order
-              confirmation; an automatic email is not currently sent.
+          <div className="note-panel shopify-checkout-panel">
+            <span className="eyebrow">POWERED BY SHOPIFY</span>
+            <h2>Secure payment and tracked shipping.</h2>
+            <p>
+              Shopify collects your contact information, Canadian shipping
+              address and payment securely. Standard tracked shipping is
+              itemized at checkout.
             </p>
-            {(error || configError) && (
-              <p role="alert">{error || configError}</p>
-            )}
-            {config && !config.ready && (
-              <p role="status">
-                The collection is being prepared. Live checkout is not open yet.
-              </p>
+            <ol className="shop-steps" aria-label="Checkout steps">
+              {["Review", "Address", "Payment"].map((step, index) => (
+                <li key={step}>
+                  <span aria-hidden="true">{index + 1}</span>
+                  <strong>{step}</strong>
+                </li>
+              ))}
+            </ol>
+            <p className="small">
+              Ordering a different colour or requesting a change?{" "}
+              <Link to="/contact?service=3d-printing">
+                Contact us before paying
+              </Link>{" "}
+              so we can confirm availability and pricing.
+            </p>
+            {error && <p role="alert">{error}</p>}
+            {!shopifyConfigured && (
+              <p role="status">Secure checkout is being connected.</p>
             )}
             <button
-              className="button"
-              disabled={busy || !items.length || !config?.ready}
+              type="button"
+              className="button shopify-checkout-button"
+              onClick={beginCheckout}
+              disabled={busy || !items.length || !shopifyConfigured}
             >
               {busy
-                ? "Saving order…"
-                : config?.testMode
-                  ? "Place test order"
-                  : requestMode === "custom" || fulfillment === "delivery" ? "Send order for approval" : "Place order & view payment details"}
+                ? "Opening secure checkout…"
+                : "Continue to secure checkout ↗"}
             </button>
             {!items.length && (
               <Link to="/shop">Add products before checking out.</Link>
             )}
-          </form>
+          </div>
           <aside className="note-panel">
             <h2>Your order</h2>
             {items.map((item) => (
@@ -1015,28 +838,24 @@ export function Checkout() {
               <span>{money(subtotal)}</span>
             </p>
             <p className="shop-total">
-              <span>
-                {fulfillment === "pickup" ? "Pickup" : "Local delivery"}
-              </span>
-              <span>{money(fee)}</span>
+              <span>Standard tracked shipping</span>
+              <span>{money(settings.shippingFeeCents)}</span>
             </p>
             <p className="shop-total">
-              <span>{settings.taxLabel}</span>
-              <span>{money(tax)}</span>
+              <strong>Estimated total CAD</strong>
+              <strong>{money(subtotal + settings.shippingFeeCents)}</strong>
             </p>
-            <p className="shop-total">
-              <strong>Total CAD</strong>
-              <strong>{money(total)}</strong>
+            <p className="small">
+              Final delivery options and total are confirmed in Shopify
+              checkout. Production: 2–3 business days after payment is
+              confirmed.
             </p>
-            <p>{requestMode === "custom" ? "Your request will be reviewed before payment." : fulfillment === "delivery" ? "We’ll check your delivery address before payment." : "Your e-Transfer details appear immediately after ordering."}</p>
-            <p className="small">Production: 2–3 business days after payment is verified.</p>
           </aside>
         </div>
       </section>
     </>
   );
-}
-function OrderSteps({review = false}: {review?: boolean}) {
+}function OrderSteps({review = false}: {review?: boolean}) {
   const steps = review ? ["Place order", "Get approval", "e-Transfer", "We print"] : ["Place order", "e-Transfer", "We print"];
   return <ol className="shop-steps" aria-label="How your order works">{steps.map((step, index) => <li key={step}><span aria-hidden="true">{index + 1}</span><strong>{step}</strong></li>)}</ol>;
 }
