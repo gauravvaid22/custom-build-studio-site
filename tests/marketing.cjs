@@ -64,11 +64,26 @@ const assert = require("node:assert/strict");
     (await events()).filter((x) => x[1] === "phone_click").length,
     1,
   );
+  await page.goto(
+    "https://custombuildstudio.ca/shop/night-owl-wall-light",
+  );
+  await page.waitForFunction(() =>
+    window.dataLayer?.some((args) => Array.from(args)[1] === "view_item"),
+  );
+  let commerceEvents = await events();
+  const viewItem = commerceEvents.find((x) => x[1] === "view_item");
+  assert.deepEqual(viewItem[2].items[0], {
+    item_id: "night-owl-wall-light",
+    item_name: "Night Owl Wall Light",
+    item_category: "Home & lighting",
+    price: 49.99,
+    quantity: 1,
+  });
   await page.reload();
   await page.waitForTimeout(2000);
   assert.equal((await events()).filter((x) => x[1] === "conversion").length, 0);
   console.log(
-    "Passed: service schema, resin preselection, campaign persistence, quote-start deduplication, success-only conversion, phone click, private-field exclusion and thank-you reload. Google network and form submission were mocked.",
+    "Passed: service schema, campaign persistence, quote tracking, phone click, private-field exclusion and dynamic item-view payloads. Google network and form submission were mocked.",
   );
   await browser.close();
 })().catch((error) => {
