@@ -1,5 +1,6 @@
 .shop-nav {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 20px;
   padding-top: 22px;
@@ -7,6 +8,17 @@
   font-weight: 650;
   border-bottom: 1px solid #d8dedd;
 }
+.shop-nav-home { white-space: nowrap; }
+.shop-nav-collections {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  font-size: .82rem;
+  font-weight: 560;
+}
+.shop-nav-collections a { color: #4b5851; }
+.shop-nav-collections a:hover { color: #d95118; }
 .shop-cart-link {
   display: inline-flex;
   align-items: center;
@@ -116,6 +128,13 @@
   object-fit: cover;
   transition: transform 0.25s;
 }
+.shop-card-image .shop-card-alternate {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .28s ease, transform .4s ease;
+}
+.shop-card-image:hover .shop-card-alternate { opacity: 1; transform: scale(1.025); }
 .shop-card-image:hover img {
   transform: scale(1.025);
 }
@@ -138,6 +157,7 @@
 }
 .shop-card h3 {
   font-size: 1.35rem;
+  min-height: 2.5em;
 }
 .shop-card-body > p:not(.eyebrow):not(.shop-price) {
   font-size: 0.93rem;
@@ -263,6 +283,97 @@
   background: #f0f3f0;
   line-height: 1.8;
 }
+.shop-collection-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+.shop-collection-card {
+  position: relative;
+  display: block;
+  min-height: 420px;
+  overflow: hidden;
+  background: #111715;
+}
+.shop-collection-card > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  object-fit: cover;
+  transition: transform .55s cubic-bezier(.2,.7,.2,1), opacity .3s ease;
+}
+.shop-collection-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 38%, rgba(8,13,11,.88));
+}
+.shop-collection-card:hover > img { transform: scale(1.045); opacity: .9; }
+.shop-collection-overlay {
+  position: absolute;
+  z-index: 1;
+  inset: auto 0 0;
+  display: grid;
+  gap: 7px;
+  padding: 28px;
+  color: white;
+}
+.shop-collection-overlay small { text-transform: uppercase; letter-spacing: .12em; opacity: .78; }
+.shop-collection-overlay strong { font-size: clamp(1.45rem, 3vw, 2.25rem); line-height: 1.05; }
+.shop-collection-overlay > span { font-size: .9rem; font-weight: 700; }
+.shop-reveal { animation: shop-reveal .55s ease-out both; animation-delay: var(--delay, 0ms); }
+@keyframes shop-reveal { from { opacity: 0; transform: translateY(16px); } }
+.shop-seasonal-banner {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  align-items: stretch;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background: #171c1e;
+  color: white;
+}
+.shop-seasonal-banner > div { align-self: center; padding: clamp(32px, 6vw, 72px); }
+.shop-seasonal-banner h2 { color: white; font-size: clamp(2.1rem, 4.5vw, 4rem); }
+.shop-seasonal-banner .eyebrow, .shop-related-collections .eyebrow { color: #c7d0cb; }
+.shop-seasonal-banner p:not(.eyebrow) { color: #d4dcd8; max-width: 540px; }
+.shop-seasonal-banner > a { overflow: hidden; min-height: 440px; }
+.shop-seasonal-banner > a img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+.shop-seasonal-banner > a:hover img { transform: scale(1.035); }
+.shop-under-section { background: #eef2ef; }
+.shop-product-strip { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; }
+.shop-product-strip > a { background: white; border: 1px solid #d8ded9; overflow: hidden; }
+.shop-product-strip img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; transition: transform .3s ease; }
+.shop-product-strip a:hover img { transform: scale(1.035); }
+.shop-product-strip span { display: grid; gap: 7px; padding: 17px; font-weight: 700; }
+.shop-product-strip strong { color: #a83b15; font-size: 1.1rem; }
+.shop-benefits {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  border: 1px solid #d2dad4;
+  margin: 20px 0 70px;
+}
+.shop-benefits > div { display: flex; align-items: center; gap: 14px; padding: 24px; border-right: 1px solid #d2dad4; }
+.shop-benefits > div:last-child { border-right: 0; }
+.shop-benefits svg { width: 30px; height: 30px; flex: none; fill: none; stroke: #d95118; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.shop-benefits strong, .shop-benefits small { display: block; }
+.shop-benefits small { margin-top: 3px; color: #627068; }
+.shop-breadcrumbs { display: flex; gap: 9px; padding-top: 18px; padding-bottom: 18px; font-size: .84rem; color: #657169; }
+.shop-breadcrumbs a { color: #173c35; font-weight: 700; }
+.shop-collection-hero { background: #e9eeeb; padding: 60px 0; }
+.shop-collection-hero h1 { font-size: clamp(2.6rem, 5vw, 5rem); line-height: 1.02; letter-spacing: -.055em; }
+.shop-collection-hero-image { min-height: 480px; overflow: hidden; background: #111715; }
+.shop-collection-hero-image img { width: 100%; height: 100%; min-height: 480px; object-fit: cover; }
+.shop-collection-toolbar { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 30px; }
+.shop-collection-toolbar label { display: grid; gap: 7px; font-size: .8rem; font-weight: 700; }
+.shop-collection-toolbar select { min-width: 205px; padding: 12px 36px 12px 12px; border: 1px solid #9da9a1; background: white; font: inherit; }
+.shop-related-collections { background: #171c1e; color: white; }
+.shop-related-collections h2 { color: white; }
+.shop-related-links { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); border-top: 1px solid #46504c; }
+.shop-related-links a { display: flex; justify-content: space-between; padding: 23px 4px; border-bottom: 1px solid #46504c; color: white; font-size: 1.1rem; font-weight: 700; }
+.shop-related-links a:nth-child(odd) { margin-right: 30px; }
+.shop-related-links a:hover { color: #ff7042; }
+.shop-collection-copy { background: #eef2ef; }
 .shop-how {
   background: #e9eeeb;
 }
@@ -478,6 +589,10 @@
   .shop-detail {
     gap: 30px;
   }
+  .shop-nav-collections { gap: 11px; font-size: .75rem; }
+  .shop-benefits { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .shop-benefits > div:nth-child(2) { border-right: 0; }
+  .shop-benefits > div:nth-child(-n+2) { border-bottom: 1px solid #d2dad4; }
 }
 @media (max-width: 700px) {
   .shop-hero-grid,
@@ -497,6 +612,7 @@
   .shop-card-body {
     padding: 20px;
   }
+  .shop-card h3 { min-height: 0; }
   .shop-cart-line {
     grid-template-columns: 70px minmax(0, 1fr);
   }
@@ -511,17 +627,42 @@
     padding: 18px;
   }
   .shop-nav {
+    display: grid;
+    grid-template-columns: 1fr auto;
     font-size: 0.85rem;
+    padding-bottom: 12px;
   }
+  .shop-nav-collections { grid-row: 2; grid-column: 1 / -1; justify-content: flex-start; overflow-x: auto; padding: 5px 0 4px; scrollbar-width: none; }
+  .shop-nav-collections::-webkit-scrollbar { display: none; }
+  .shop-nav-collections a { flex: none; border: 1px solid #c9d1cc; border-radius: 999px; padding: 8px 12px; }
   .shop-detail .lead {
     font-size: 1.1rem;
   }
+  .shop-collection-grid { grid-template-columns: 1fr; }
+  .shop-collection-card, .shop-collection-card > img { min-height: 340px; }
+  .shop-seasonal-banner { grid-template-columns: 1fr; margin-left: 20px; margin-right: 20px; }
+  .shop-seasonal-banner > a { min-height: 320px; }
+  .shop-product-strip { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; }
+  .shop-product-strip > a { min-width: 76vw; scroll-snap-align: start; }
+  .shop-benefits { grid-template-columns: 1fr; margin-bottom: 45px; }
+  .shop-benefits > div { border-right: 0; border-bottom: 1px solid #d2dad4; }
+  .shop-benefits > div:last-child { border-bottom: 0; }
+  .shop-collection-hero { padding: 38px 0; }
+  .shop-collection-hero-image, .shop-collection-hero-image img { min-height: 330px; }
+  .shop-collection-toolbar { align-items: stretch; flex-direction: column; }
+  .shop-collection-toolbar select { width: 100%; }
+  .shop-related-links { grid-template-columns: 1fr; }
+  .shop-related-links a:nth-child(odd) { margin-right: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .shop-card-image img,
   .shop-added-confirmation,
   .shop-added-icon,
-  .shop-cart-count {
+  .shop-cart-count,
+  .shop-reveal,
+  .shop-collection-card > img,
+  .shop-seasonal-banner img,
+  .shop-product-strip img {
     transition: none;
     animation: none;
   }

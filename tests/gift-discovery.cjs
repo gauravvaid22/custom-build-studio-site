@@ -19,7 +19,7 @@ const fs=require('node:fs');
   const page=await browser.newPage();
   for(const width of [1440,390]) {
    await page.setViewportSize({width,height:900});
-   for(const route of ['/shop/','/shop/halloween/','/shop/mood-ghost/?variant=mood-ghost-design-b','/shop/octopus-wine-bottle-holder/?variant=octopus-wine-bottle-holder-345']) {
+   for(const route of ['/shop/','/shop/collectibles/','/shop/gaming-desk/','/shop/home-decor/','/shop/halloween/','/shop/gifts-under-25/','/shop/mood-ghost/?variant=mood-ghost-design-b','/shop/octopus-wine-bottle-holder/?variant=octopus-wine-bottle-holder-345']) {
     await page.goto('http://127.0.0.1:4173'+route);
     await page.waitForTimeout(200);
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);
@@ -29,6 +29,6 @@ const fs=require('node:fs');
    await page.getByRole('button',{name:'Add to Cart',exact:true}).click();
    assert.match(await page.locator('.shop-added-confirmation').innerText(),/3.45/);
   }
-  console.log('14 product schemas/canonicals and desktop/mobile category, variant deep-links and add-to-cart passed.');
+  console.log('14 product schemas/canonicals and desktop/mobile collection, variant deep-links and add-to-cart passed.');
  } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

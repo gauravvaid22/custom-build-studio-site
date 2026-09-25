@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import products from "../../commerce/products.json";
 import settings from "../../commerce/settings.json";
+import collections from "../../commerce/collections.json";
 import { PageIntro } from "../components/Shared";
 import { useCart, money } from "../components/Cart";
 import { NotFound } from "./Studio";
@@ -92,8 +93,15 @@ export function ShopNav() {
   const { items } = useCart();
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
   return (
-    <nav className="shop-nav container" aria-label="Shop navigation">
-      <Link to="/shop">Edmonton gift collection</Link>
+    <nav className="shop-nav container" aria-label="Gift and decor navigation">
+      <Link className="shop-nav-home" to="/shop">Gifts &amp; Décor</Link>
+      <div className="shop-nav-collections">
+        {collections.map((collection) => (
+          <Link key={collection.id} to={`/shop/${collection.id}`}>
+            {collection.shortName}
+          </Link>
+        ))}
+      </div>
       <Link className="shop-cart-link" to="/shop/cart">
         <span aria-hidden="true">Cart</span>
         <span className="sr-only">Cart items:</span>
@@ -111,8 +119,8 @@ function ShopNotice() {
         : settings.pricesAreProvisional
           ? "Collection preview — prices and production details are being reviewed. "
           : ""}
-      Finished physical prints. No digital files. Free Edmonton pickup · $5
-      local delivery (within 50 km).
+      Finished physical products. No digital files. Free Edmonton pickup · $5
+      local delivery within 50 km.
     </div>
   );
 }
@@ -237,38 +245,94 @@ function AddProduct({
     </form>
   );
 }
-export function Shop({ halloween = false }: { halloween?: boolean }) {
-  const [category, setCategory] = useState(halloween ? "Halloween" : "All");
-  const featuredProduct = products.find(p => p.id === (halloween ? "ghost-arch-wreath" : "basilisk-dice-tower"))!;
-  const categories = [
-    "All",
-    "Creatures & collectibles",
-    "Gaming & desk",
-    "Home & planters",
-    "Home & lighting",
-    "Home & entertaining",
-    "Halloween",
-  ];
+function ShopProductCard({ product }: { product: Product }) {
+  const alternate = product.images[1];
+  return (
+    <article className="shop-card">
+      <Link className="shop-card-image" to={`/shop/${product.id}`}>
+        <ProductImage product={product} />
+        {alternate && (
+          <img
+            className="shop-card-alternate"
+            src={alternate.thumb}
+            srcSet={`${alternate.thumb} 480w, ${alternate.src} 1200w`}
+            sizes="(max-width: 700px) 90vw, (max-width: 1000px) 45vw, 30vw"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            width="900"
+            height="900"
+            aria-hidden="true"
+          />
+        )}
+        <span className="shop-badge">{product.category}</span>
+      </Link>
+      <div className="shop-card-body">
+        <p className="eyebrow">MADE IN EDMONTON</p>
+        <h3><Link to={`/shop/${product.id}`}>{product.name}</Link></h3>
+        <p className="shop-price">
+          {variantsFor(product).length ? "From " : ""}{money(product.priceCents)}{" "}
+          <span>CAD</span>
+        </p>
+        {variantsFor(product).length ? (
+          <Link className="button" to={`/shop/${product.id}`}>
+            {"variantLabel" in product && product.variantLabel === "Design"
+              ? "Choose design ↗"
+              : "Choose size ↗"}
+          </Link>
+        ) : <AddProduct product={product} />}
+      </div>
+    </article>
+  );
+}
+
+function BenefitIcon({ type }: { type: string }) {
+  const paths: Record<string, React.ReactNode> = {
+    local: <><path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z"/><circle cx="12" cy="10" r="2"/></>,
+    made: <><path d="M4 17 17 4l3 3L7 20H4v-3Z"/><path d="m14 7 3 3"/></>,
+    checkout: <><rect x="4" y="7" width="16" height="11" rx="2"/><path d="M4 11h16M8 15h3"/></>,
+    shipping: <><path d="M3 6h11v11H3zM14 10h4l3 3v4h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></>,
+  };
+  return <svg viewBox="0 0 24 24" aria-hidden="true">{paths[type]}</svg>;
+}
+
+function ShopBenefits() {
+  return (
+    <div className="shop-benefits" aria-label="Shopping benefits">
+      <div><BenefitIcon type="local"/><span><strong>Made in Edmonton</strong><small>Printed locally</small></span></div>
+      <div><BenefitIcon type="made"/><span><strong>Made to order</strong><small>Prepared for you</small></span></div>
+      <div><BenefitIcon type="checkout"/><span><strong>Direct confirmation</strong><small>Order details by email</small></span></div>
+      <div><BenefitIcon type="shipping"/><span><strong>Local delivery</strong><small>$5 within 50 km</small></span></div>
+    </div>
+  );
+}
+
+export function Shop() {
+  const featuredProduct = catalogProduct("basilisk-dice-tower")!;
+  const primaryCollections = collections.filter((collection) => collection.id !== "gifts-under-25");
+  const under25 = collections.find((collection) => collection.id === "gifts-under-25")!;
+  const featuredIds = ["octopus-wine-bottle-holder", "night-owl-wall-light", "basilisk-dice-tower", "mood-ghost", "skeleton-chameleon", "ghost-arch-wreath"];
   return (
     <>
       <ShopNav />
       <section className="shop-hero">
         <div className="container shop-hero-grid">
           <div>
-            <p className="eyebrow">MADE IN EDMONTON / THE GIFT COLLECTION</p>
+            <p className="eyebrow">MADE IN EDMONTON / GIFTS WITH CHARACTER</p>
             <h1>
-              {halloween ? "Halloween Décor," : "Unique Gifts & Décor,"}
+              Unique Gifts &amp; Décor,
               <br />
               <span>Made in Edmonton.</span>
             </h1>
             <p className="lead">
-              {halloween ? "Ghost figurines, a graveyard wreath, decorative bowls and pumpkin accessories for your seasonal display. Choose a little character for your desk, shelf or door." : "For the game-night regular, the plant collector and the person who already has everything. Discover characterful gifts and décor, made locally."}
+              Find the right gift by interest: collectible creatures, gaming accessories,
+              home décor and playful seasonal pieces.
             </p>
-            <a className="button" href="#collection">
-              Explore the collection ↘
+            <a className="button" href="#collections">
+              Shop by collection ↘
             </a>
             <p className="small">
-              Free pickup · Made to order in 2–3 business days after payment verification
+              Physical products · Free local pickup · Edmonton-area delivery
             </p>
           </div>
           <Link to={`/shop/${featuredProduct.id}/`} className="shop-hero-photo">
@@ -280,100 +344,154 @@ export function Shop({ halloween = false }: { halloween?: boolean }) {
         </div>
       </section>
       <ShopNotice />
-      <section className="section" id="collection">
+      <section className="section shop-collections-section" id="collections">
         <div className="container">
           <div className="section-heading">
             <div>
-              <p className="eyebrow">PRINTED TO ORDER</p>
-              <h2>Find your kind of curious.</h2>
+              <p className="eyebrow">SHOP BY INTEREST</p>
+              <h2>See it. Choose it. Make it yours.</h2>
             </div>
-            <p>
-                    A growing collection. Physical prints.
-              <br />
-              Made locally, with a personal touch.
-            </p>
+            <p>Four clear collections make it easy to find the right piece.</p>
           </div>
-          <div className="shop-filters" aria-label="Product categories">
-            {!halloween && <Link className="text-link" to="/shop/halloween/">Explore Halloween décor →</Link>}
-            {halloween && <Link className="text-link" to="/shop/">All gifts & décor →</Link>}
-            {(halloween ? [] : categories).map((item) => (
-              <button
-                key={item}
-                aria-pressed={category === item}
-                onClick={() => setCategory(item)}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-          <div className="shop-grid">
-            {products
-              .filter((p) => !isVariant(p))
-              .filter((p) => category === "All" || p.category === category)
-              .map((product) => (
-                <article className="shop-card" key={product.id}>
-                  <Link className="shop-card-image" to={`/shop/${product.id}`}>
-                    <ProductImage product={product} />
-                    <span className="shop-badge">{product.category}</span>
-                  </Link>
-                  <div className="shop-card-body">
-                    <p className="eyebrow">PHYSICAL 3D PRINT</p>
-                    <h3>
-                      <Link to={`/shop/${product.id}`}>{product.name}</Link>
-                    </h3>
-                    <p>{product.description}</p>
-                    <p className="shop-price">
-                      {variantsFor(product).length ? "From " : ""}{money(product.priceCents)}{" "}
-                      <span>
-                        CAD
-                        {settings.pricesAreProvisional ? " · provisional" : ""}
-                      </span>
-                    </p>
-                    {variantsFor(product).length ? (
-                      <Link className="button" to={`/shop/${product.id}`}>
-                        {"variantLabel" in product && product.variantLabel === "Design"
-                          ? "Choose design ↗"
-                          : "Choose bottle size ↗"}
-                      </Link>
-                    ) : (
-                      <AddProduct product={product} />
-                    )}
-                  </div>
-                </article>
-              ))}
-          </div>
-          <div className="shop-reference-note">
-            Printed in colours similar to the main photo. Want a different colour?
-            Request it at checkout. Props are not included.
+          <div className="shop-collection-grid">
+            {primaryCollections.map((collection, index) => {
+              const cover = catalogProduct(collection.coverProduct)!;
+              return (
+                <Link className="shop-collection-card shop-reveal" style={{"--delay": `${index * 70}ms`} as React.CSSProperties} key={collection.id} to={`/shop/${collection.id}`}>
+                  <ProductImage product={cover} />
+                  <span className="shop-collection-overlay">
+                    <small>{collection.products.length} products</small>
+                    <strong>{collection.name}</strong>
+                    <span>Explore collection ↗</span>
+                  </span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
+      <section className="container shop-seasonal-banner">
+        <div>
+          <p className="eyebrow">SEASONAL COLLECTION</p>
+          <h2>Halloween has arrived.</h2>
+          <p>Playful ghosts, a graveyard wreath and small spooky details—printed locally for the season.</p>
+          <Link className="button" to="/shop/halloween">Shop Halloween ↗</Link>
+        </div>
+        <Link to="/shop/halloween" aria-label="Explore Halloween decor">
+          <ProductImage product={catalogProduct("ghost-arch-wreath")!} large />
+        </Link>
+      </section>
+      <section className="section shop-under-section">
+        <div className="container">
+          <div className="section-heading">
+            <div><p className="eyebrow">{under25.eyebrow}</p><h2>Small gifts. Easy choices.</h2></div>
+            <Link className="text-link" to="/shop/gifts-under-25">See every gift under $25 →</Link>
+          </div>
+          <div className="shop-product-strip">
+            {under25.products.slice(0, 4).map((id) => {
+              const product = catalogProduct(id)!;
+              return <Link key={id} to={`/shop/${id}`}><ProductImage product={product}/><span>{product.name}<strong>{money(product.priceCents)}</strong></span></Link>;
+            })}
+          </div>
+        </div>
+      </section>
+      <section className="section">
+        <div className="container">
+          <div className="section-heading">
+            <div><p className="eyebrow">FEATURED RIGHT NOW</p><h2>Pieces worth a closer look.</h2></div>
+            <p>Made-to-order physical prints. No digital files.</p>
+          </div>
+          <div className="shop-grid">
+            {featuredIds.map((id) => <ShopProductCard key={id} product={catalogProduct(id)!}/>) }
+          </div>
+        </div>
+      </section>
+      <section className="container"><ShopBenefits/></section>
       <section className="shop-how section">
         <div className="container detail-columns">
           <div>
-            <p className="eyebrow">LOCAL, FROM ORDER TO HANDOFF</p>
-            <h2>A little more personal.</h2>
+            <p className="eyebrow">FROM YOUR CART TO YOUR DOOR</p>
+            <h2>Simple from the first click.</h2>
             <p>
-              Choose your print. Place your order. Send your e-Transfer.
-              Want a different colour or another change? We’ll approve your
-              request before you pay.
+              Choose a product, add it to your cart and place your order.
+              Need a different colour? Add the request before you pay.
             </p>
           </div>
           <div>
-            <h3>Pick it up. Or let us bring it.</h3>
+            <h3>Pickup or local delivery.</h3>
             <p>
-              Free pickup in Edmonton by appointment. Local delivery is $5
-              within 50 km of the studio, subject to address review. Exact
-              pickup details are shared privately.
+              Pickup is free and arranged privately. Local delivery is $5 within
+              50 km of the Edmonton studio, subject to address review.
             </p>
-            <p>
-              {settings.productionTime}. We arrange the pickup or delivery time
-              with you.
-            </p>
+            <p>{settings.productionTime}.</p>
             <Link className="text-link" to="/products">
               Explore our studio-designed charging stand ↗
             </Link>
           </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
+export function ShopCollection({ id }: { id: string }) {
+  const collection = collections.find((item) => item.id === id);
+  const [sort, setSort] = useState("featured");
+  if (!collection) return <NotFound />;
+  const listed = collection.products.map((productId) => catalogProduct(productId)!).filter(Boolean);
+  const sorted = [...listed].sort((a, b) =>
+    sort === "price-low" ? a.priceCents - b.priceCents :
+    sort === "price-high" ? b.priceCents - a.priceCents : 0,
+  );
+  const cover = catalogProduct(collection.coverProduct)!;
+  return (
+    <>
+      <ShopNav />
+      <nav className="container shop-breadcrumbs" aria-label="Breadcrumb">
+        <Link to="/shop">Gifts &amp; Décor</Link><span aria-hidden="true">/</span><span>{collection.name}</span>
+      </nav>
+      <section className="shop-collection-hero">
+        <div className="container shop-hero-grid">
+          <div>
+            <p className="eyebrow">{collection.eyebrow}</p>
+            <h1>{collection.heading}</h1>
+            <p className="lead">{collection.description}</p>
+            <a className="button" href="#products">View {collection.products.length} products ↘</a>
+          </div>
+          <div className="shop-collection-hero-image"><ProductImage product={cover} large/></div>
+        </div>
+      </section>
+      <ShopNotice/>
+      <section className="section" id="products">
+        <div className="container">
+          <div className="shop-collection-toolbar">
+            <div><p className="eyebrow">THE COLLECTION</p><h2>{collection.name}</h2></div>
+            <label>Sort products
+              <select value={sort} onChange={(event) => setSort(event.target.value)}>
+                <option value="featured">Featured</option>
+                <option value="price-low">Price: low to high</option>
+                <option value="price-high">Price: high to low</option>
+              </select>
+            </label>
+          </div>
+          <div className="shop-grid">{sorted.map((product) => <ShopProductCard key={product.id} product={product}/>)}</div>
+        </div>
+      </section>
+      <section className="section shop-related-collections">
+        <div className="container">
+          <div className="section-heading"><div><p className="eyebrow">KEEP EXPLORING</p><h2>Another kind of curious.</h2></div></div>
+          <div className="shop-related-links">
+            {collections.filter((item) => item.id !== collection.id).slice(0, 4).map((item) => (
+              <Link key={item.id} to={`/shop/${item.id}`}>{item.name}<span>↗</span></Link>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="container"><ShopBenefits/></section>
+      <section className="section shop-collection-copy">
+        <div className="container detail-columns">
+          <div><p className="eyebrow">LOCALLY MADE</p><h2>{collection.name} in Edmonton</h2></div>
+          <p>{collection.seoDescription} Every listing is for a finished physical product. Product pages show what is included, available options and the details to check before ordering.</p>
         </div>
       </section>
     </>

@@ -1,0 +1,57 @@
+[
+  {
+    "id": "collectibles",
+    "name": "Collectibles & Figurines",
+    "shortName": "Collectibles",
+    "eyebrow": "CHARACTERS WITH PERSONALITY",
+    "heading": "3D-printed collectibles, made in Edmonton.",
+    "description": "Discover articulated creatures, fantasy figures and characterful shelf companions, printed locally and made to order.",
+    "seoDescription": "Shop locally made 3D-printed collectibles and figurines in Edmonton, including articulated creatures, fantasy characters and unusual desk companions.",
+    "coverProduct": "skeleton-chameleon",
+    "products": ["skeleton-chameleon", "articulated-baby-dragon", "articulated-hermes-the-hermit-crab", "joyful-axolotl"]
+  },
+  {
+    "id": "gaming-desk",
+    "name": "Gaming & Desk Accessories",
+    "shortName": "Gaming & desk",
+    "eyebrow": "FOR GAME NIGHT AND YOUR SETUP",
+    "heading": "Make the desk more interesting.",
+    "description": "Sculptural gaming accessories and conversation-starting desk pieces, printed to order in Edmonton.",
+    "seoDescription": "Shop 3D-printed gaming and desk accessories made in Edmonton, including dice towers, controller holders and distinctive display pieces.",
+    "coverProduct": "basilisk-dice-tower",
+    "products": ["basilisk-dice-tower", "6-finger-alien-hand-controller-holder"]
+  },
+  {
+    "id": "home-decor",
+    "name": "Home Décor & Planters",
+    "shortName": "Home décor",
+    "eyebrow": "SCULPTURAL DETAILS FOR HOME",
+    "heading": "Useful objects with more character.",
+    "description": "Planters, lighting and statement pieces that turn practical objects into memorable gifts and décor.",
+    "seoDescription": "Explore locally made 3D-printed home décor and planters in Edmonton, including character planters, wall lighting and sculptural entertaining pieces.",
+    "coverProduct": "octopus-wine-bottle-holder",
+    "products": ["grumpy-kitty-planter", "verdant-remains-planter", "night-owl-wall-light", "octopus-wine-bottle-holder"]
+  },
+  {
+    "id": "halloween",
+    "name": "Halloween Décor",
+    "shortName": "Halloween",
+    "eyebrow": "PLAYFUL, SPOOKY, MADE LOCALLY",
+    "heading": "Give Halloween more personality.",
+    "description": "Ghosts, pumpkins and graveyard details for desks, shelves, doors and seasonal displays.",
+    "seoDescription": "Shop 3D-printed Halloween décor made in Edmonton, including ghost figurines, wreaths, decorative bowls and pumpkin accessories.",
+    "coverProduct": "ghost-arch-wreath",
+    "products": ["glutton-ghost-bowl", "pumpkin-fidget-keychain", "mood-ghost", "ghost-arch-wreath"]
+  },
+  {
+    "id": "gifts-under-25",
+    "name": "Gifts Under $25",
+    "shortName": "Under $25",
+    "eyebrow": "SMALL GIFTS, BIG PERSONALITY",
+    "heading": "Easy gifts under $25 CAD.",
+    "description": "A quick collection of locally printed characters and small gifts for birthdays, desks and just-because moments.",
+    "seoDescription": "Find locally made 3D-printed gifts under $25 CAD in Edmonton, from articulated creatures to small seasonal and desk gifts.",
+    "coverProduct": "mood-ghost",
+    "products": ["skeleton-chameleon", "articulated-baby-dragon", "articulated-hermes-the-hermit-crab", "joyful-axolotl", "pumpkin-fidget-keychain", "mood-ghost"]
+  }
+]

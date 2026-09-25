@@ -2,6 +2,7 @@ import { allServices as services, serviceDetails } from "./landing";
 import projects from "./projects.json";
 import { business } from "./business";
 import products from "../../commerce/products.json";
+import collections from "../../commerce/collections.json";
 const publicProducts = products.filter((product) => !("variantOf" in product));
 const canonical = (path: string) => business.origin + (path === "/" ? "/" : path.replace(/\/$/, "") + "/");
 export const publicRoutes = [
@@ -14,7 +15,7 @@ export const publicRoutes = [
   "/pricing",
   "/products",
   "/shop",
-  "/shop/halloween",
+  ...collections.map((collection) => `/shop/${collection.id}`),
   ...publicProducts.map((product) => `/shop/${product.id}`),
   "/reviews",
   "/contact",
@@ -25,8 +26,8 @@ export function getSeo(path: string) {
   const service = services.find((s) => page === `/services/${s.id}`);
   const project = projects.find((p) => page === `/work/${p.id}`);
   const product = products.find((p) => page === `/shop/${p.id}`);
+  const collection = collections.find((item) => page === `/shop/${item.id}`);
   const pages: Record<string, [string, string]> = {
-    "/shop/halloween": ["Halloween Décor Made in Edmonton", "Discover ghost figurines, a ghost arch wreath, decorative bowls and pumpkin accessories. Made to order in Edmonton with free local pickup."],
     "/shop": [
       "Unique Gifts & Décor, Made in Edmonton",
       "Discover locally made 3D-printed gifts, creatures, dice towers, planters and seasonal pieces. Physical prints with Edmonton pickup and local delivery.",
@@ -34,7 +35,7 @@ export function getSeo(path: string) {
     "/shop/cart": ["Your Cart", "Review your physical 3D-printed products."],
     "/shop/checkout": [
       "Checkout",
-      "Place an order for physical prints with manual e-Transfer payment.",
+      "Continue your Gift & Decor order from Custom Build Studio.",
     ],
     "/shop/order": [
       "Private Order Confirmation",
@@ -87,6 +88,8 @@ export function getSeo(path: string) {
   };
   const entry = product
     ? [product.name, `${product.description} Made in Edmonton. Free local pickup.`]
+    : collection
+      ? [collection.name === "Gifts Under $25" ? "3D-Printed Gifts Under $25 in Edmonton" : `${collection.name} Made in Edmonton`, collection.seoDescription]
     : service
       ? [serviceDetails[service.id].heading, service.description]
       : project
@@ -99,8 +102,8 @@ export function getSeo(path: string) {
     title: `${entry[0]} | Custom Build Studio`,
     description: entry[1],
     url: canonical(page),
-    image: business.origin + (product?.images[0]?.src || "/og-image.jpg"),
-    imageAlt: product?.images[0]?.alt || "Custom Build Studio design and fabrication project",
+    image: business.origin + (product?.images[0]?.src || (collection ? products.find((item) => item.id === collection.coverProduct)?.images[0]?.src : undefined) || "/og-image.jpg"),
+    imageAlt: product?.images[0]?.alt || (collection ? `${collection.name} from Custom Build Studio` : "Custom Build Studio design and fabrication project"),
     noindex: !publicRoutes.includes(page) || page === "/privacy",
   };
 }
@@ -140,6 +143,7 @@ export const localBusiness = {
 export function getStructuredData(path: string) {
   const page = path.replace(/\/$/, "") || "/";
   const product = products.find((item) => page === `/shop/${item.id}`);
+  const collection = collections.find((item) => page === `/shop/${item.id}`);
   if (product) {
     const variants = "variants" in product ? product.variants || [] : [];
     const item = (p: typeof product, url: string) => ({
@@ -169,22 +173,40 @@ export function getStructuredData(path: string) {
       ] },
     ] };
   }
-  if (page === "/shop" || page === "/shop/halloween")
+  if (page === "/shop" || collection) {
+    const listedProducts = collection
+      ? collection.products.map((id) => publicProducts.find((product) => product.id === id)).filter(Boolean)
+      : publicProducts;
     return {
       "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      name: page === "/shop/halloween" ? "Halloween Décor Made in Edmonton" : "Unique Gifts & Décor, Made in Edmonton",
-      url: canonical(page),
-      mainEntity: {
-        "@type": "ItemList",
-        itemListElement: publicProducts.filter(p => page !== "/shop/halloween" || p.category === "Halloween").map((item, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          name: item.name,
-          url: canonical(`/shop/${item.id}`),
-        })),
-      },
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          name: collection?.name || "Unique Gifts & Décor, Made in Edmonton",
+          description: collection?.seoDescription || getSeo("/shop").description,
+          url: canonical(page),
+          mainEntity: {
+            "@type": "ItemList",
+            numberOfItems: listedProducts.length,
+            itemListElement: listedProducts.map((item, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              name: item!.name,
+              url: canonical(`/shop/${item!.id}`),
+            })),
+          },
+        },
+        {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: canonical("/") },
+            { "@type": "ListItem", position: 2, name: "Gifts & Décor", item: canonical("/shop") },
+            ...(collection ? [{ "@type": "ListItem", position: 3, name: collection.name, item: canonical(page) }] : []),
+          ],
+        },
+      ],
     };
+  }
   const service = services.find((s) => page === `/services/${s.id}`);
   if (!service) return localBusiness;
   return {

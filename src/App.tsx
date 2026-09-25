@@ -8,7 +8,7 @@ import { Services, ServiceDetail } from "./pages/Services";
 import { Work, ProjectDetail } from "./pages/Work";
 import Contact from "./pages/Contact";
 import { CartProvider } from "./components/Cart";
-import { Shop, ShopProduct, ShopCart, Checkout, OrderConfirmation, ShopAdmin } from "./pages/Shop";
+import { Shop, ShopCollection, ShopProduct, ShopCart, Checkout, OrderConfirmation, ShopAdmin } from "./pages/Shop";
 import {
   About,
   Pricing,
@@ -62,7 +62,11 @@ export default function App() {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/products" element={<Products />} />
           <Route path="/shop" element={<Shop />} />
-          <Route path="/shop/halloween" element={<Shop key="halloween" halloween />} />
+          <Route path="/shop/collectibles" element={<ShopCollection id="collectibles" />} />
+          <Route path="/shop/gaming-desk" element={<ShopCollection id="gaming-desk" />} />
+          <Route path="/shop/home-decor" element={<ShopCollection id="home-decor" />} />
+          <Route path="/shop/halloween" element={<ShopCollection id="halloween" />} />
+          <Route path="/shop/gifts-under-25" element={<ShopCollection id="gifts-under-25" />} />
           <Route path="/shop/cart" element={<ShopCart />} />
           <Route path="/shop/checkout" element={<Checkout />} />
           <Route path="/shop/order" element={<OrderConfirmation />} />
