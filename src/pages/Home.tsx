@@ -80,6 +80,45 @@ export default function Home() {
           <span>From digital model to physical part</span>
         </div>
       </div>
+      <section className="home-shop-feature" aria-labelledby="home-shop-title">
+        <div className="container home-shop-feature-grid">
+          <div className="home-shop-copy">
+            <p className="eyebrow">PRINTED IN EDMONTON · SHOP ONLINE</p>
+            <h2 id="home-shop-title">Gifts with character. Made here.</h2>
+            <p>
+              Shop finished 3D-printed gifts, planters, gaming accessories and
+              seasonal décor. Each piece is made to order and checked in our studio.
+            </p>
+            <div className="button-row">
+              <Link className="button" to="/shop/">
+                Shop gifts & décor <Arrow />
+              </Link>
+              <Link className="button button-outline" to="/shop/halloween-special/">
+                Halloween special <Arrow />
+              </Link>
+            </div>
+            <ul className="home-shop-points" aria-label="Shopping benefits">
+              <li>Made in Edmonton</li>
+              <li>Secure Shopify checkout</li>
+              <li>$10 tracked shipping</li>
+            </ul>
+          </div>
+          <div className="home-shop-gallery" aria-label="Featured gifts and décor">
+            <Link className="home-shop-tile home-shop-tile-main" to="/shop/candlelight-pumpkins-table-lamp/">
+              <img src="/media/shop/candlelight-pumpkins-table-lamp/1-1200.webp" alt="Candlelight Pumpkins Table Lamp" loading="lazy" width="900" height="900" />
+              <span><strong>Candlelight Pumpkins</strong><small>$17.25 CAD</small></span>
+            </Link>
+            <Link className="home-shop-tile" to="/shop/mood-ghost/">
+              <img src="/media/shop/mood-ghost/1-1200.jpg" alt="Mood Ghost figurine" loading="lazy" width="900" height="900" />
+              <span><strong>Mood Ghost</strong><small>$16.00 CAD</small></span>
+            </Link>
+            <Link className="home-shop-tile" to="/shop/octopus-wine-bottle-holder/">
+              <img src="/media/shop/octopus-wine-bottle-holder/1-1200.jpg" alt="Octopus Wine Bottle Holder" loading="lazy" width="900" height="900" />
+              <span><strong>Octopus Holder</strong><small>From $86.99 CAD</small></span>
+            </Link>
+          </div>
+        </div>
+      </section>
       <section id="capabilities" className="section">
         <div className="container">
           <SectionHeading
@@ -178,7 +217,6 @@ export default function Home() {
         </div>
       </section>
       <Process />
-      <section className="section"><div className="container"><p className="eyebrow">MADE IN EDMONTON</p><h2>Gifts with a little character.</h2><p>Discover creature figurines, decorative planters, gaming accessories and seasonal décor, printed to order in our studio.</p><Link className="button" to="/shop/">Explore gifts & décor →</Link></div></section>
       <FAQ />
       <CallToAction />
     </>
