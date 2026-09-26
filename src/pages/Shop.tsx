@@ -21,6 +21,12 @@ const variantsFor = (product: Product): ProductVariant[] =>
   "variants" in product ? product.variants || [] : [];
 const isVariant = (product: Product) => "variantOf" in product;
 const catalogProduct = (id: string) => products.find((product) => product.id === id);
+const halloweenSpecialIds = [
+  "candlelight-pumpkins-table-lamp",
+  "ghost-on-a-swing",
+  "skull-web-trinket-dish",
+  "ghost-duo-trinket-dish",
+];
 type Order = {
   id: string;
   number: string;
@@ -357,12 +363,12 @@ export function Shop() {
       <section className="container shop-seasonal-banner">
         <div>
           <p className="eyebrow">SEASONAL COLLECTION</p>
-          <h2>Halloween has arrived.</h2>
-          <p>Playful ghosts, a graveyard wreath and small spooky details—printed locally for the season.</p>
-          <Link className="button" to="/shop/halloween">Shop Halloween ↗</Link>
+          <h2>The Halloween Special is here.</h2>
+          <p>Four new seasonal pieces join our locally printed Halloween collection.</p>
+          <Link className="button" to="/shop/halloween-special">Explore the special ↗</Link>
         </div>
-        <Link to="/shop/halloween" aria-label="Explore Halloween decor">
-          <ProductImage product={catalogProduct("ghost-arch-wreath")!} large />
+        <Link to="/shop/halloween-special" aria-label="Explore the Halloween Special">
+          <ProductImage product={catalogProduct("candlelight-pumpkins-table-lamp")!} large />
         </Link>
       </section>
       <section className="section shop-under-section">
@@ -415,6 +421,89 @@ export function Shop() {
         </div>
       </section>
     </>
+  );
+}
+
+export function HalloweenSpecial() {
+  const featured = halloweenSpecialIds.map((id) => catalogProduct(id)!).filter(Boolean);
+  return (
+    <div className="halloween-special">
+      <ShopNav />
+      <section className="halloween-special-hero">
+        <div className="halloween-fog halloween-fog-one" aria-hidden="true" />
+        <div className="halloween-fog halloween-fog-two" aria-hidden="true" />
+        <span className="halloween-ember halloween-ember-one" aria-hidden="true" />
+        <span className="halloween-ember halloween-ember-two" aria-hidden="true" />
+        <div className="container halloween-special-hero-content">
+          <nav className="halloween-breadcrumbs" aria-label="Breadcrumb">
+            <Link to="/shop">Gifts &amp; Décor</Link>
+            <span aria-hidden="true">/</span>
+            <span>Halloween Special</span>
+          </nav>
+          <p className="eyebrow">LIMITED SEASON / MADE IN EDMONTON</p>
+          <h1>Dark details.<br /><span>Built to haunt.</span></h1>
+          <p className="lead">
+            Four new 3D-printed pieces bring sculptural ghosts, webbed dishes
+            and a warm pumpkin glow to your Halloween setup.
+          </p>
+          <div className="button-row">
+            <a className="button halloween-button" href="#halloween-special-products">
+              Meet the collection ↘
+            </a>
+            <Link className="button button-dark" to="/shop/halloween">
+              Shop all Halloween ↗
+            </Link>
+          </div>
+          <ul className="halloween-special-facts" aria-label="Collection details">
+            <li><strong>4</strong><span>new seasonal pieces</span></li>
+            <li><strong>From $14.98</strong><span>CAD</span></li>
+            <li><strong>Edmonton</strong><span>printed locally</span></li>
+          </ul>
+        </div>
+      </section>
+      <ShopNotice />
+      <section className="section halloween-special-products" id="halloween-special-products">
+        <div className="container">
+          <div className="section-heading halloween-special-heading">
+            <div>
+              <p className="eyebrow">THE HALLOWEEN SPECIAL</p>
+              <h2>Four pieces. One seasonal drop.</h2>
+            </div>
+            <p>Finished physical prints with dimensions and pricing taken from the production files.</p>
+          </div>
+          <div className="shop-grid halloween-special-grid">
+            {featured.map((product, index) => (
+              <div
+                className="halloween-product-reveal"
+                style={{ "--halloween-delay": `${index * 90}ms` } as React.CSSProperties}
+                key={product.id}
+              >
+                <ShopProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="section halloween-special-process">
+        <div className="container detail-columns">
+          <div>
+            <p className="eyebrow">SEASONAL / STRUCTURAL / LOCAL</p>
+            <h2>Halloween character, made with precision.</h2>
+          </div>
+          <div>
+            <p>
+              Each piece is printed to order by Custom Build Studio in Edmonton.
+              Product pages show the finished dimensions, included items, full
+              image galleries and video where available.
+            </p>
+            <Link className="text-link" to="/shop/halloween">
+              Browse the full Halloween collection →
+            </Link>
+          </div>
+        </div>
+      </section>
+      <section className="container"><ShopBenefits /></section>
+    </div>
   );
 }
 

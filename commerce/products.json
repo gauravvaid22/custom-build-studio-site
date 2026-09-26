@@ -895,5 +895,189 @@
     "video": "/media/shop/ghost-arch-wreath/ghost-arch-wreath.webm",
     "productionReviewed": false,
     "source": "local authorized media package: WEBSITE PRODUCT/GHOST ARCH WREATH/ghost-arch-wreath-media-package"
+  },
+  {
+    "id": "skull-web-trinket-dish",
+    "name": "Skull Web Trinket Dish",
+    "priceCents": 1498,
+    "category": "Halloween",
+    "seasonal": true,
+    "description": "A skull-shaped trinket dish traced with spiderweb detail for rings, keys and other small everyday items.",
+    "included": "One physical Skull Web Trinket Dish. Jewelry, candy and display props are not included.",
+    "dimensions": "Finished size: 165 × 181 × 20 mm.",
+    "notes": "Colours will be similar to the main photo; shades may vary. Decorative use only.",
+    "images": [
+      {
+        "src": "/media/shop/skull-web-trinket-dish/1-1200.webp",
+        "thumb": "/media/shop/skull-web-trinket-dish/1-480.webp",
+        "alt": "Skull Web Trinket Dish product view 1",
+        "sourceFile": "Skull_Web_Trinket_Dish1_49cc069613.png"
+      },
+      {
+        "src": "/media/shop/skull-web-trinket-dish/2-1200.webp",
+        "thumb": "/media/shop/skull-web-trinket-dish/2-480.webp",
+        "alt": "Skull Web Trinket Dish product view 2",
+        "sourceFile": "Skull_Web_Trinket_Dish2_57c8b48f2f.png"
+      },
+      {
+        "src": "/media/shop/skull-web-trinket-dish/3-1200.webp",
+        "thumb": "/media/shop/skull-web-trinket-dish/3-480.webp",
+        "alt": "Skull Web Trinket Dish product view 3",
+        "sourceFile": "Skull_Web_Trinket_Dish3_e2035cd357.png"
+      },
+      {
+        "src": "/media/shop/skull-web-trinket-dish/4-1200.webp",
+        "thumb": "/media/shop/skull-web-trinket-dish/4-480.webp",
+        "alt": "Skull Web Trinket Dish product view 4",
+        "sourceFile": "Skull_Web_Trinket_Dish4_fd3d411db9.png"
+      }
+    ],
+    "video": "/media/shop/skull-web-trinket-dish/skull-web-trinket-dish.webm",
+    "productionReviewed": true,
+    "source": "local authorized media package: WEBSITE PRODUCT/SKULL WEB - TRINKET DISH"
+  },
+  {
+    "id": "ghost-on-a-swing",
+    "name": "Ghost on a Swing",
+    "priceCents": 1498,
+    "category": "Halloween",
+    "seasonal": true,
+    "description": "A small ghost relaxes on a swing beneath a twisted branch, complete with pink shoes and a tiny cup for a playful wall display.",
+    "included": "One physical Ghost on a Swing décor piece. Wall mounting hardware and display props are not included.",
+    "dimensions": "Finished size: 146 × 100 × 106 mm.",
+    "notes": "Colours will be similar to the main photo; shades may vary. Secure mounting appropriate for your wall is required.",
+    "images": [
+      {
+        "src": "/media/shop/ghost-on-a-swing/1-1200.webp",
+        "thumb": "/media/shop/ghost-on-a-swing/1-480.webp",
+        "alt": "Ghost on a Swing wall décor product view 1",
+        "sourceFile": "Ghost_on_a_Swing_1_c31b2cc8ad.png"
+      },
+      {
+        "src": "/media/shop/ghost-on-a-swing/2-1200.webp",
+        "thumb": "/media/shop/ghost-on-a-swing/2-480.webp",
+        "alt": "Ghost on a Swing wall décor product view 2",
+        "sourceFile": "Ghost_on_a_Swing_2_157bee90fd.png"
+      },
+      {
+        "src": "/media/shop/ghost-on-a-swing/3-1200.webp",
+        "thumb": "/media/shop/ghost-on-a-swing/3-480.webp",
+        "alt": "Ghost on a Swing wall décor product view 3",
+        "sourceFile": "Ghost_on_a_Swing_3_6494287e4c.png"
+      },
+      {
+        "src": "/media/shop/ghost-on-a-swing/4-1200.webp",
+        "thumb": "/media/shop/ghost-on-a-swing/4-480.webp",
+        "alt": "Ghost on a Swing wall décor product view 4",
+        "sourceFile": "Ghost_on_a_Swing_4_e32cd3ceb1.png"
+      },
+      {
+        "src": "/media/shop/ghost-on-a-swing/5-1200.webp",
+        "thumb": "/media/shop/ghost-on-a-swing/5-480.webp",
+        "alt": "Ghost on a Swing wall décor product view 5",
+        "sourceFile": "Ghost_on_a_Swing_5_372f49a511.png"
+      },
+      {
+        "src": "/media/shop/ghost-on-a-swing/6-1200.webp",
+        "thumb": "/media/shop/ghost-on-a-swing/6-480.webp",
+        "alt": "Ghost on a Swing wall décor product view 6",
+        "sourceFile": "Ghost_on_a_Swing_6_bc20de4569.png"
+      }
+    ],
+    "video": "/media/shop/ghost-on-a-swing/ghost-on-a-swing.webm",
+    "productionReviewed": true,
+    "source": "local authorized media package: WEBSITE PRODUCT/GHOST ON A SWING"
+  },
+  {
+    "id": "candlelight-pumpkins-table-lamp",
+    "name": "Candlelight Pumpkins Table Lamp",
+    "priceCents": 1725,
+    "category": "Halloween",
+    "seasonal": true,
+    "description": "A cluster of carved pumpkins surrounds a melting candle form, creating a warm seasonal centrepiece for a shelf or tabletop.",
+    "included": "One physical printed Candlelight Pumpkins lamp body. LED candle, batteries and display props are not included.",
+    "dimensions": "Finished size: 106 × 104 × 69 mm.",
+    "notes": "Designed for a small flameless LED candle only. Never use an open flame. Colours will be similar to the main photo; shades may vary.",
+    "images": [
+      {
+        "src": "/media/shop/candlelight-pumpkins-table-lamp/1-1200.webp",
+        "thumb": "/media/shop/candlelight-pumpkins-table-lamp/1-480.webp",
+        "alt": "Candlelight Pumpkins Table Lamp product view 1",
+        "sourceFile": "Candlelight_Pumpkins_Table_Lamp_1_8aecf8ce53.png"
+      },
+      {
+        "src": "/media/shop/candlelight-pumpkins-table-lamp/2-1200.webp",
+        "thumb": "/media/shop/candlelight-pumpkins-table-lamp/2-480.webp",
+        "alt": "Candlelight Pumpkins Table Lamp product view 2",
+        "sourceFile": "Candlelight_Pumpkins_Table_Lamp_2_2d3b70bc99.png"
+      },
+      {
+        "src": "/media/shop/candlelight-pumpkins-table-lamp/3-1200.webp",
+        "thumb": "/media/shop/candlelight-pumpkins-table-lamp/3-480.webp",
+        "alt": "Candlelight Pumpkins Table Lamp product view 3",
+        "sourceFile": "Candlelight_Pumpkins_Table_Lamp_3_e98a16f217.png"
+      },
+      {
+        "src": "/media/shop/candlelight-pumpkins-table-lamp/4-1200.webp",
+        "thumb": "/media/shop/candlelight-pumpkins-table-lamp/4-480.webp",
+        "alt": "Candlelight Pumpkins Table Lamp product view 4",
+        "sourceFile": "Candlelight_Pumpkins_Table_Lamp_4_72530abf24.png"
+      },
+      {
+        "src": "/media/shop/candlelight-pumpkins-table-lamp/5-1200.webp",
+        "thumb": "/media/shop/candlelight-pumpkins-table-lamp/5-480.webp",
+        "alt": "Candlelight Pumpkins Table Lamp product view 5",
+        "sourceFile": "Candlelight_Pumpkins_Table_Lamp_5_0f33b1704b.png"
+      },
+      {
+        "src": "/media/shop/candlelight-pumpkins-table-lamp/6-1200.webp",
+        "thumb": "/media/shop/candlelight-pumpkins-table-lamp/6-480.webp",
+        "alt": "Candlelight Pumpkins Table Lamp product view 6",
+        "sourceFile": "Candlelight_Pumpkins_Table_Lamp_6_9ad51c7920.png"
+      }
+    ],
+    "video": "/media/shop/candlelight-pumpkins-table-lamp/candlelight-pumpkins-table-lamp.webm",
+    "productionReviewed": true,
+    "source": "local authorized media package: WEBSITE PRODUCT/CANDLELIGHT PUMPKINS - TABLE LAMP"
+  },
+  {
+    "id": "ghost-duo-trinket-dish",
+    "name": "Ghost Duo Trinket Dish",
+    "priceCents": 1667,
+    "category": "Halloween",
+    "seasonal": true,
+    "description": "Two heart-eyed ghosts form one shallow dish, finished with delicate spiderweb details for small keepsakes and desk essentials.",
+    "included": "One physical Ghost Duo Trinket Dish. Jewelry, candy and display props are not included.",
+    "dimensions": "Finished size: 176 × 175 × 20 mm.",
+    "notes": "Colours will be similar to the main photo; shades may vary. Decorative use only.",
+    "images": [
+      {
+        "src": "/media/shop/ghost-duo-trinket-dish/1-1200.webp",
+        "thumb": "/media/shop/ghost-duo-trinket-dish/1-480.webp",
+        "alt": "Ghost Duo Trinket Dish product view 1",
+        "sourceFile": "Ghost_Duo_Trinket_Dish1_83f545fd4c.png"
+      },
+      {
+        "src": "/media/shop/ghost-duo-trinket-dish/2-1200.webp",
+        "thumb": "/media/shop/ghost-duo-trinket-dish/2-480.webp",
+        "alt": "Ghost Duo Trinket Dish product view 2",
+        "sourceFile": "Ghost_Duo_Trinket_Dish2_58e24cd1bd.png"
+      },
+      {
+        "src": "/media/shop/ghost-duo-trinket-dish/3-1200.webp",
+        "thumb": "/media/shop/ghost-duo-trinket-dish/3-480.webp",
+        "alt": "Ghost Duo Trinket Dish product view 3",
+        "sourceFile": "Ghost_Duo_Trinket_Dish3_9378b043ef.png"
+      },
+      {
+        "src": "/media/shop/ghost-duo-trinket-dish/4-1200.webp",
+        "thumb": "/media/shop/ghost-duo-trinket-dish/4-480.webp",
+        "alt": "Ghost Duo Trinket Dish product view 4",
+        "sourceFile": "Ghost_Duo_Trinket_Dish4_3111beb188.png"
+      }
+    ],
+    "video": "/media/shop/ghost-duo-trinket-dish/ghost-duo-trinket-dish.webm",
+    "productionReviewed": true,
+    "source": "local authorized media package: WEBSITE PRODUCT/GHOST DUO - TRINKET DISH"
   }
 ]

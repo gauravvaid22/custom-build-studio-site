@@ -1,0 +1,58 @@
+[
+  {
+    "id": "skull-web-trinket-dish",
+    "sourceFolder": "SKULL WEB - TRINKET DISH",
+    "priceCents": 1498,
+    "dimensions": "165 × 181 × 20 mm",
+    "images": [
+      "Skull_Web_Trinket_Dish1_49cc069613.png",
+      "Skull_Web_Trinket_Dish2_57c8b48f2f.png",
+      "Skull_Web_Trinket_Dish3_e2035cd357.png",
+      "Skull_Web_Trinket_Dish4_fd3d411db9.png"
+    ],
+    "video": "Skull_Web_5f8d64cf0a.webm"
+  },
+  {
+    "id": "ghost-on-a-swing",
+    "sourceFolder": "GHOST ON A SWING",
+    "priceCents": 1498,
+    "dimensions": "146 × 100 × 106 mm",
+    "images": [
+      "Ghost_on_a_Swing_1_c31b2cc8ad.png",
+      "Ghost_on_a_Swing_2_157bee90fd.png",
+      "Ghost_on_a_Swing_3_6494287e4c.png",
+      "Ghost_on_a_Swing_4_e32cd3ceb1.png",
+      "Ghost_on_a_Swing_5_372f49a511.png",
+      "Ghost_on_a_Swing_6_bc20de4569.png"
+    ],
+    "video": "Ghost_on_a_Swing_4258d59d70.webm"
+  },
+  {
+    "id": "candlelight-pumpkins-table-lamp",
+    "sourceFolder": "CANDLELIGHT PUMPKINS - TABLE LAMP",
+    "priceCents": 1725,
+    "dimensions": "106 × 104 × 69 mm",
+    "images": [
+      "Candlelight_Pumpkins_Table_Lamp_1_8aecf8ce53.png",
+      "Candlelight_Pumpkins_Table_Lamp_2_2d3b70bc99.png",
+      "Candlelight_Pumpkins_Table_Lamp_3_e98a16f217.png",
+      "Candlelight_Pumpkins_Table_Lamp_4_72530abf24.png",
+      "Candlelight_Pumpkins_Table_Lamp_5_0f33b1704b.png",
+      "Candlelight_Pumpkins_Table_Lamp_6_9ad51c7920.png"
+    ],
+    "video": "Canclelight_Pumpkins_72aa383481.webm"
+  },
+  {
+    "id": "ghost-duo-trinket-dish",
+    "sourceFolder": "GHOST DUO - TRINKET DISH",
+    "priceCents": 1667,
+    "dimensions": "176 × 175 × 20 mm",
+    "images": [
+      "Ghost_Duo_Trinket_Dish1_83f545fd4c.png",
+      "Ghost_Duo_Trinket_Dish2_58e24cd1bd.png",
+      "Ghost_Duo_Trinket_Dish3_9378b043ef.png",
+      "Ghost_Duo_Trinket_Dish4_3111beb188.png"
+    ],
+    "video": "Ghost_Duo_1defc1b17d.webm"
+  }
+]

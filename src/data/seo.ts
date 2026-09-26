@@ -4,6 +4,7 @@ import { business } from "./business";
 import products from "../../commerce/products.json";
 import collections from "../../commerce/collections.json";
 const publicProducts = products.filter((product) => !("variantOf" in product));
+const halloweenSpecialIds = ["candlelight-pumpkins-table-lamp", "ghost-on-a-swing", "skull-web-trinket-dish", "ghost-duo-trinket-dish"];
 const canonical = (path: string) => business.origin + (path === "/" ? "/" : path.replace(/\/$/, "") + "/");
 export const publicRoutes = [
   "/",
@@ -15,6 +16,7 @@ export const publicRoutes = [
   "/pricing",
   "/products",
   "/shop",
+  "/shop/halloween-special",
   ...collections.map((collection) => `/shop/${collection.id}`),
   ...publicProducts.map((product) => `/shop/${product.id}`),
   "/reviews",
@@ -31,6 +33,10 @@ export function getSeo(path: string) {
     "/shop": [
       "Unique Gifts & Décor, Made in Edmonton",
       "Discover locally made 3D-printed gifts, creatures, dice towers, planters and seasonal pieces with secure Shopify checkout and tracked Canadian shipping.",
+    ],
+    "/shop/halloween-special": [
+      "Halloween Special: 3D-Printed Décor in Edmonton",
+      "Shop four new locally made Halloween pieces: a pumpkin table lamp, swinging ghost and sculptural trinket dishes. Secure Shopify checkout and Canadian shipping.",
     ],
     "/shop/cart": ["Your Cart", "Review your physical 3D-printed products."],
     "/shop/checkout": [
@@ -102,8 +108,8 @@ export function getSeo(path: string) {
     title: `${entry[0]} | Custom Build Studio`,
     description: entry[1],
     url: canonical(page),
-    image: business.origin + (product?.images[0]?.src || (collection ? products.find((item) => item.id === collection.coverProduct)?.images[0]?.src : undefined) || "/og-image.jpg"),
-    imageAlt: product?.images[0]?.alt || (collection ? `${collection.name} from Custom Build Studio` : "Custom Build Studio design and fabrication project"),
+    image: business.origin + (product?.images[0]?.src || (collection ? products.find((item) => item.id === collection.coverProduct)?.images[0]?.src : undefined) || (page === "/shop/halloween-special" ? "/media/shop/candlelight-pumpkins-table-lamp/1-1200.webp" : "/og-image.jpg")),
+    imageAlt: product?.images[0]?.alt || (collection ? `${collection.name} from Custom Build Studio` : page === "/shop/halloween-special" ? "Candlelight Pumpkins Table Lamp from the Halloween Special" : "Custom Build Studio design and fabrication project"),
     noindex: !publicRoutes.includes(page) || page === "/privacy",
   };
 }
@@ -144,6 +150,7 @@ export function getStructuredData(path: string) {
   const page = path.replace(/\/$/, "") || "/";
   const product = products.find((item) => page === `/shop/${item.id}`);
   const collection = collections.find((item) => page === `/shop/${item.id}`);
+  const halloweenSpecial = page === "/shop/halloween-special";
   if (product) {
     const variants = "variants" in product ? product.variants || [] : [];
     const item = (p: typeof product, url: string) => ({
@@ -173,8 +180,10 @@ export function getStructuredData(path: string) {
       ] },
     ] };
   }
-  if (page === "/shop" || collection) {
-    const listedProducts = collection
+  if (page === "/shop" || collection || halloweenSpecial) {
+    const listedProducts = halloweenSpecial
+      ? halloweenSpecialIds.map((id) => publicProducts.find((product) => product.id === id)).filter(Boolean)
+      : collection
       ? collection.products.map((id) => publicProducts.find((product) => product.id === id)).filter(Boolean)
       : publicProducts;
     return {
@@ -182,8 +191,8 @@ export function getStructuredData(path: string) {
       "@graph": [
         {
           "@type": "CollectionPage",
-          name: collection?.name || "Unique Gifts & Décor, Made in Edmonton",
-          description: collection?.seoDescription || getSeo("/shop").description,
+          name: halloweenSpecial ? "Halloween Special" : collection?.name || "Unique Gifts & Décor, Made in Edmonton",
+          description: halloweenSpecial ? getSeo(page).description : collection?.seoDescription || getSeo("/shop").description,
           url: canonical(page),
           mainEntity: {
             "@type": "ItemList",
@@ -201,7 +210,7 @@ export function getStructuredData(path: string) {
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "Home", item: canonical("/") },
             { "@type": "ListItem", position: 2, name: "Gifts & Décor", item: canonical("/shop") },
-            ...(collection ? [{ "@type": "ListItem", position: 3, name: collection.name, item: canonical(page) }] : []),
+            ...(collection || halloweenSpecial ? [{ "@type": "ListItem", position: 3, name: halloweenSpecial ? "Halloween Special" : collection!.name, item: canonical(page) }] : []),
           ],
         },
       ],

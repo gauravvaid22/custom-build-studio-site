@@ -14,7 +14,8 @@
     "verify": "node scripts/verify-build.mjs",
     "test:browser": "node tests/browser.cjs",
     "preview:shop": "node scripts/shop-preview.mjs",
-    "test:shop": "node --test tests/shop.test.mjs"
+    "test:shop": "node --test tests/shop.test.mjs",
+    "import:halloween": "node scripts/import-halloween-special.mjs"
   },
   "dependencies": {
     "@netlify/blobs": "^11.1.0",

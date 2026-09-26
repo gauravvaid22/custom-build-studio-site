@@ -24,6 +24,7 @@ const routes = [
   "/shop/gaming-desk",
   "/shop/home-decor",
   "/shop/halloween",
+  "/shop/halloween-special",
   "/shop/gifts-under-25",
   "/shop/night-owl-wall-light",
   "/shop/octopus-wine-bottle-holder",

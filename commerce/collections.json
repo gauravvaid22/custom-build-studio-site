@@ -8,7 +8,12 @@
     "description": "Discover articulated creatures, fantasy figures and characterful shelf companions, printed locally and made to order.",
     "seoDescription": "Shop locally made 3D-printed collectibles and figurines in Edmonton, including articulated creatures, fantasy characters and unusual desk companions.",
     "coverProduct": "skeleton-chameleon",
-    "products": ["skeleton-chameleon", "articulated-baby-dragon", "articulated-hermes-the-hermit-crab", "joyful-axolotl"]
+    "products": [
+      "skeleton-chameleon",
+      "articulated-baby-dragon",
+      "articulated-hermes-the-hermit-crab",
+      "joyful-axolotl"
+    ]
   },
   {
     "id": "gaming-desk",
@@ -19,7 +24,10 @@
     "description": "Sculptural gaming accessories and conversation-starting desk pieces, printed to order in Edmonton.",
     "seoDescription": "Shop 3D-printed gaming and desk accessories made in Edmonton, including dice towers, controller holders and distinctive display pieces.",
     "coverProduct": "basilisk-dice-tower",
-    "products": ["basilisk-dice-tower", "6-finger-alien-hand-controller-holder"]
+    "products": [
+      "basilisk-dice-tower",
+      "6-finger-alien-hand-controller-holder"
+    ]
   },
   {
     "id": "home-decor",
@@ -30,7 +38,12 @@
     "description": "Planters, lighting and statement pieces that turn practical objects into memorable gifts and décor.",
     "seoDescription": "Explore locally made 3D-printed home décor and planters in Edmonton, including character planters, wall lighting and sculptural entertaining pieces.",
     "coverProduct": "octopus-wine-bottle-holder",
-    "products": ["grumpy-kitty-planter", "verdant-remains-planter", "night-owl-wall-light", "octopus-wine-bottle-holder"]
+    "products": [
+      "grumpy-kitty-planter",
+      "verdant-remains-planter",
+      "night-owl-wall-light",
+      "octopus-wine-bottle-holder"
+    ]
   },
   {
     "id": "halloween",
@@ -38,10 +51,23 @@
     "shortName": "Halloween",
     "eyebrow": "PLAYFUL, SPOOKY, MADE LOCALLY",
     "heading": "Give Halloween more personality.",
-    "description": "Ghosts, pumpkins and graveyard details for desks, shelves, doors and seasonal displays.",
-    "seoDescription": "Shop 3D-printed Halloween décor made in Edmonton, including ghost figurines, wreaths, decorative bowls and pumpkin accessories.",
-    "coverProduct": "ghost-arch-wreath",
-    "products": ["glutton-ghost-bowl", "pumpkin-fidget-keychain", "mood-ghost", "ghost-arch-wreath"]
+    "description": "Atmospheric lamps, swinging ghosts, skeleton characters, sculptural dishes and graveyard details for shelves, desks, doors and seasonal displays.",
+    "seoDescription": "Shop 3D-printed Halloween décor made in Edmonton, including ghost decorations, pumpkin lamps, skeleton characters, trinket dishes, wreaths and seasonal gifts.",
+    "coverProduct": "candlelight-pumpkins-table-lamp",
+    "products": [
+      "candlelight-pumpkins-table-lamp",
+      "ghost-on-a-swing",
+      "skull-web-trinket-dish",
+      "ghost-duo-trinket-dish",
+      "glutton-ghost-bowl",
+      "pumpkin-fidget-keychain",
+      "mood-ghost",
+      "ghost-arch-wreath",
+      "skeleton-chameleon",
+      "verdant-remains-planter",
+      "6-finger-alien-hand-controller-holder",
+      "night-owl-wall-light"
+    ]
   },
   {
     "id": "gifts-under-25",
@@ -52,6 +78,17 @@
     "description": "A quick collection of locally printed characters and small gifts for birthdays, desks and just-because moments.",
     "seoDescription": "Find locally made 3D-printed gifts under $25 CAD in Edmonton, from articulated creatures to small seasonal and desk gifts.",
     "coverProduct": "mood-ghost",
-    "products": ["skeleton-chameleon", "articulated-baby-dragon", "articulated-hermes-the-hermit-crab", "joyful-axolotl", "pumpkin-fidget-keychain", "mood-ghost"]
+    "products": [
+      "skeleton-chameleon",
+      "articulated-baby-dragon",
+      "articulated-hermes-the-hermit-crab",
+      "joyful-axolotl",
+      "pumpkin-fidget-keychain",
+      "mood-ghost",
+      "skull-web-trinket-dish",
+      "ghost-on-a-swing",
+      "candlelight-pumpkins-table-lamp",
+      "ghost-duo-trinket-dish"
+    ]
   }
 ]
