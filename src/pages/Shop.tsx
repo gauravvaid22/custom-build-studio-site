@@ -301,7 +301,7 @@ export function Shop() {
   const featuredProduct = catalogProduct("basilisk-dice-tower")!;
   const primaryCollections = collections.filter((collection) => collection.id !== "gifts-under-25");
   const under25 = collections.find((collection) => collection.id === "gifts-under-25")!;
-  const featuredIds = ["octopus-wine-bottle-holder", "night-owl-wall-light", "basilisk-dice-tower", "mood-ghost", "skeleton-chameleon", "ghost-arch-wreath"];
+  const featuredIds = ["dinosaur-skeleton-collection", "octopus-wine-bottle-holder", "night-owl-wall-light", "basilisk-dice-tower", "mood-ghost", "ghost-arch-wreath"];
   return (
     <>
       <ShopNav />
@@ -588,8 +588,16 @@ export function ShopProduct() {
     }
   }, [id, searchParams]);
   if (!product) return <NotFound />;
-  const video = "video" in product ? product.video : undefined;
-  const showingVideo = Boolean(video && index === product.images.length);
+  const videos =
+    "videos" in product && Array.isArray(product.videos)
+      ? product.videos
+      : "video" in product && product.video
+        ? [product.video]
+        : [];
+  const showingVideo =
+    index >= product.images.length &&
+    index < product.images.length + videos.length;
+  const activeVideo = showingVideo ? videos[index - product.images.length] : undefined;
   const variants = variantsFor(product);
   const selectedVariant = catalogProduct(selectedVariantId || variants[0]?.id || product.id) || product;
   const selectedImage = !showingVideo ? product.images[index] : undefined;
@@ -627,7 +635,7 @@ export function ShopProduct() {
                     poster={product.images[0].src}
                     aria-label={`${product.name} product video`}
                   >
-                    <source src={video} type="video/webm" />
+                    <source src={activeVideo} type="video/webm" />
                     Your browser does not support product video.
                   </video>
                 ) : (
@@ -656,17 +664,27 @@ export function ShopProduct() {
                     />
                   </button>
                 ))}
-                {video && (
-                  <button
-                    className="shop-video-thumb"
-                    aria-label="View product video"
-                    aria-pressed={showingVideo}
-                    onClick={() => setIndex(product.images.length)}
-                  >
-                    <img src={product.images[0].thumb} alt="" loading="lazy" width="90" height="90" />
-                    <span aria-hidden="true">▶</span>
-                  </button>
-                )}
+                {videos.map((video, videoIndex) => {
+                  const mediaIndex = product.images.length + videoIndex;
+                  return (
+                    <button
+                      className="shop-video-thumb"
+                      key={video}
+                      aria-label={`View product video ${videoIndex + 1}`}
+                      aria-pressed={index === mediaIndex}
+                      onClick={() => setIndex(mediaIndex)}
+                    >
+                      <img
+                        src={product.images[Math.min(videoIndex + 1, product.images.length - 1)].thumb}
+                        alt=""
+                        loading="lazy"
+                        width="90"
+                        height="90"
+                      />
+                      <span aria-hidden="true">▶</span>
+                    </button>
+                  );
+                })}
               </div>
               <p className="small">
                 Colours will be similar to the main photo; shades may vary.
