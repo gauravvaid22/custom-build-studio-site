@@ -148,7 +148,7 @@ function AddProduct({
   onVariantChange?: (id: string) => void;
 }) {
   const { add } = useCart();
-  const { priceFor } = useShopifyCatalog();
+  const { priceFor, nameFor } = useShopifyCatalog();
   const [quantity, setQuantity] = useState(1);
   const [confirmation, setConfirmation] = useState("");
   const [confirmationKey, setConfirmationKey] = useState(0);
@@ -172,7 +172,7 @@ function AddProduct({
       onSubmit={(e) => {
         e.preventDefault();
         if (!add(orderProduct.id, quantity)) { setConfirmation(""); return; }
-        setConfirmation(`${quantity} × ${orderProduct.name}`);
+        setConfirmation(`${quantity} × ${nameFor(orderProduct.id, orderProduct.name)}`);
         setConfirmationKey((current) => current + 1);
         if (confirmationTimer.current) clearTimeout(confirmationTimer.current);
         confirmationTimer.current = setTimeout(() => setConfirmation(""), 4200);
@@ -184,7 +184,7 @@ function AddProduct({
           <select
             value={selectedId}
             onChange={(event) => onVariantChange?.(event.target.value)}
-            aria-label={`${variantLabel} for ${product.name}`}
+            aria-label={`${variantLabel} for ${nameFor(product.id, product.name)}`}
           >
             {variants.map((variant) => (
               <option key={variant.id} value={variant.id}>
@@ -197,7 +197,7 @@ function AddProduct({
       <label>
         Quantity
         <input
-          aria-label={`Quantity for ${product.name}`}
+          aria-label={`Quantity for ${nameFor(product.id, product.name)}`}
           type="number"
           min="1"
           max="20"
@@ -236,7 +236,7 @@ function AddProduct({
   );
 }
 function ShopProductCard({ product }: { product: Product }) {
-  const { priceFor } = useShopifyCatalog();
+  const { priceFor, nameFor } = useShopifyCatalog();
   const alternate = product.images[1];
   return (
     <article className="shop-card">
@@ -260,7 +260,7 @@ function ShopProductCard({ product }: { product: Product }) {
       </Link>
       <div className="shop-card-body">
         <p className="eyebrow">MADE IN EDMONTON</p>
-        <h3><Link to={`/shop/${product.id}`}>{product.name}</Link></h3>
+        <h3><Link to={`/shop/${product.id}`}>{nameFor(product.id, product.name)}</Link></h3>
         <p className="shop-price">
           {variantsFor(product).length ? "From " : ""}{money(priceFor(product.id, product.priceCents))}{" "}
           <span>CAD</span>
@@ -299,7 +299,7 @@ function ShopBenefits() {
 }
 
 export function Shop() {
-  const { priceFor } = useShopifyCatalog();
+  const { priceFor, nameFor } = useShopifyCatalog();
   const content = useSiteContent();
   const featuredProduct = catalogProduct("basilisk-dice-tower")!;
   const primaryCollections = collections.filter((collection) => collection.id !== "gifts-under-25");
@@ -331,7 +331,7 @@ export function Shop() {
           <Link to={`/shop/${featuredProduct.id}/`} className="shop-hero-photo">
             <ProductImage product={featuredProduct} large />
             <span>
-              {featuredProduct.name} · {money(priceFor(featuredProduct.id, featuredProduct.priceCents))} CAD ↗
+              {nameFor(featuredProduct.id, featuredProduct.name)} · {money(priceFor(featuredProduct.id, featuredProduct.priceCents))} CAD ↗
             </span>
           </Link>
         </div>
@@ -383,7 +383,7 @@ export function Shop() {
           <div className="shop-product-strip">
             {under25.products.slice(0, 4).map((id) => {
               const product = catalogProduct(id)!;
-              return <Link key={id} to={`/shop/${id}`}><ProductImage product={product}/><span>{product.name}<strong>{money(priceFor(product.id, product.priceCents))}</strong></span></Link>;
+              return <Link key={id} to={`/shop/${id}`}><ProductImage product={product}/><span>{nameFor(product.id, product.name)}<strong>{money(priceFor(product.id, product.priceCents))}</strong></span></Link>;
             })}
           </div>
         </div>
@@ -575,7 +575,7 @@ export function ShopCollection({ id }: { id: string }) {
   );
 }
 export function ShopProduct() {
-  const { priceFor } = useShopifyCatalog();
+  const { priceFor, nameFor } = useShopifyCatalog();
   const content = useSiteContent();
   const { id } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -626,7 +626,7 @@ export function ShopProduct() {
       <ShopNotice />
       <section className="section">
         <div className="container">
-          <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {product.name}</nav>
+          <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {nameFor(product.id, product.name)}</nav>
           <div className="shop-detail">
             <div>
               <div className="shop-main-image">
@@ -639,7 +639,7 @@ export function ShopProduct() {
                     playsInline
                     preload="metadata"
                     poster={product.images[0].src}
-                    aria-label={`${product.name} product video`}
+                    aria-label={`${nameFor(product.id, product.name)} product video`}
                   >
                     <source src={activeVideo} type="video/webm" />
                     Your browser does not support product video.
@@ -699,7 +699,7 @@ export function ShopProduct() {
             </div>
             <div className="shop-detail-info">
               <p className="eyebrow">{product.category} / MADE IN EDMONTON</p>
-              <h1>{product.name}</h1>
+              <h1>{nameFor(product.id, product.name)}</h1>
               <p className="lead">{product.description}</p>
               <p className="shop-price">
                 {money(priceFor(selectedVariant.id, selectedVariant.priceCents))}{" "}
@@ -754,7 +754,7 @@ export function ShopProduct() {
             <h2>More to explore</h2>
             <div className="shop-filters">
               {products.filter(p => !isVariant(p) && p.id !== product.id && p.category === product.category).slice(0, 3).map(p => (
-                <Link key={p.id} className="text-link" to={`/shop/${p.id}/`}>{p.name} · {money(priceFor(p.id, p.priceCents))} CAD →</Link>
+                <Link key={p.id} className="text-link" to={`/shop/${p.id}/`}>{nameFor(p.id, p.name)} · {money(priceFor(p.id, p.priceCents))} CAD →</Link>
               ))}
               <Link to="/shop/">Browse all gifts & décor →</Link>
             </div>
@@ -774,7 +774,7 @@ function CartQuantity({id,name,quantity}:{id:string;name:string;quantity:number}
 }
 export function ShopCart() {
   const { items, setQuantity } = useCart();
-  const { priceFor } = useShopifyCatalog();
+  const { priceFor, nameFor } = useShopifyCatalog();
   const subtotal = items.reduce(
     (sum, item) =>
       sum +
@@ -811,18 +811,18 @@ export function ShopCart() {
                     </Link>
                     <div>
                       <h2>
-                        <Link to={`/shop/${productRoute}`}>{product.name}</Link>
+                        <Link to={`/shop/${productRoute}`}>{nameFor(product.id, product.name)}</Link>
                       </h2>
                       <p>{money(priceFor(product.id, product.priceCents))} CAD each</p>
                       <label>
                         Quantity
-                        <CartQuantity id={item.id} name={product.name} quantity={item.quantity}/>
+                        <CartQuantity id={item.id} name={nameFor(product.id, product.name)} quantity={item.quantity}/>
                       </label>
                       <button
                         className="text-link"
                         onClick={() => setQuantity(item.id, 0)}
                       >
-                        Remove {product.name}
+                        Remove {nameFor(product.id, product.name)}
                       </button>
                     </div>
                     <strong>{money(priceFor(product.id, product.priceCents) * item.quantity)}</strong>
@@ -857,7 +857,7 @@ export function ShopCart() {
 }
 export function Checkout() {
   const { items } = useCart();
-  const { priceFor } = useShopifyCatalog();
+  const { priceFor, nameFor } = useShopifyCatalog();
   const content = useSiteContent();
   const [busy, setBusy] = useState(false),
     [error, setError] = useState("");
@@ -937,7 +937,7 @@ export function Checkout() {
             {items.map((item) => (
               <p className="shop-total" key={item.id}>
                 <span>
-                  {products.find((p) => p.id === item.id)?.name} ×{" "}
+                  {(() => { const product = products.find((p) => p.id === item.id); return product ? nameFor(product.id, product.name) : "Product"; })()} ×{" "}
                   {item.quantity}
                 </span>
                 <strong>
@@ -1113,7 +1113,7 @@ export function OrderConfirmation() {
 }
 export function ShopAdmin() {
   const publicContent = useSiteContent();
-  const { priceFor } = useShopifyCatalog();
+  const { priceFor, nameFor } = useShopifyCatalog();
   const [key, setKey] = useState(""),
     [orders, setOrders] = useState<Order[]>([]),
     [error, setError] = useState(""),
@@ -1341,13 +1341,13 @@ export function ShopAdmin() {
               )}
               {tab === "products" && (
                 <section className="shop-admin-products">
-                  <div className="section-heading"><div><p className="eyebrow">SHOPIFY IS THE PRICE SOURCE</p><h2>Product prices</h2></div><p>Change prices in Shopify. The website now refreshes them automatically, so checkout and product pages stay aligned.</p></div>
+                  <div className="section-heading"><div><p className="eyebrow">SHOPIFY IS THE CATALOG SOURCE</p><h2>Product names &amp; prices</h2></div><p>Change a product title or price in Shopify. The website refreshes both automatically, so checkout and product pages stay aligned.</p></div>
                   <a className="button" href="https://admin.shopify.com/store/aqk73w-k2/products" target="_blank" rel="noreferrer">Open Shopify products ↗</a>
                   <div className="shop-admin-product-grid">
                     {products.filter((product) => !isVariant(product)).map((product) => (
                       <article key={product.id}>
                         <ProductImage product={product} />
-                        <div><h3>{product.name}</h3><p>{money(priceFor(product.id, product.priceCents))} CAD</p><a className="text-link" href={`https://admin.shopify.com/store/aqk73w-k2/products?query=${encodeURIComponent(product.id)}`} target="_blank" rel="noreferrer">Edit in Shopify →</a></div>
+                        <div><h3>{nameFor(product.id, product.name)}</h3><p>{money(priceFor(product.id, product.priceCents))} CAD</p><a className="text-link" href={`https://admin.shopify.com/store/aqk73w-k2/products?query=${encodeURIComponent(product.id)}`} target="_blank" rel="noreferrer">Edit in Shopify →</a></div>
                       </article>
                     ))}
                   </div>

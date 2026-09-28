@@ -14,7 +14,13 @@ type CatalogVariant = {
 
 type CatalogProduct = {
   handle: string;
+  title: string;
   variants: { nodes: CatalogVariant[] };
+};
+
+export type ShopifyCatalog = {
+  prices: Record<string, number>;
+  names: Record<string, string>;
 };
 
 type GraphResponse<T> = {
@@ -24,8 +30,8 @@ type GraphResponse<T> = {
 
 export const shopifyConfigured = Boolean(storefrontToken);
 
-export async function fetchShopifyPrices() {
-  if (!storefrontToken) return {} as Record<string, number>;
+export async function fetchShopifyCatalog(): Promise<ShopifyCatalog> {
+  if (!storefrontToken) return { prices: {}, names: {} };
   const handles = [
     ...new Set(
       products
@@ -39,7 +45,7 @@ export async function fetchShopifyPrices() {
   const fields = handles
     .map(
       (_, index) =>
-        `product${index}: product(handle: $handle${index}) { variants(first: 100) { nodes { sku price { amount currencyCode } } } }`,
+        `product${index}: product(handle: $handle${index}) { handle title variants(first: 100) { nodes { sku price { amount currencyCode } } } }`,
     )
     .join("\n");
   const variables = Object.fromEntries(
@@ -50,7 +56,9 @@ export async function fetchShopifyPrices() {
     variables,
   );
   const prices: Record<string, number> = {};
-  Object.values(catalog).forEach((product) =>
+  const names: Record<string, string> = {};
+  Object.values(catalog).forEach((product) => {
+    if (product?.handle && product.title) names[product.handle] = product.title;
     product?.variants.nodes.forEach((variant) => {
       if (
         variant.sku &&
@@ -59,9 +67,9 @@ export async function fetchShopifyPrices() {
       ) {
         prices[variant.sku] = Math.round(Number(variant.price.amount) * 100);
       }
-    }),
-  );
-  return prices;
+    });
+  });
+  return { prices, names };
 }
 
 function productHandle(id: string) {

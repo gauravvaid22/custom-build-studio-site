@@ -3,6 +3,7 @@ const { AxeBuilder } = require("@axe-core/playwright");
 const fs = require("fs");
 const assert = require("node:assert/strict");
 const origin = process.env.BASE_URL || "http://127.0.0.1:4173";
+const catalogProducts = JSON.parse(fs.readFileSync("commerce/products.json", "utf8"));
 fs.mkdirSync("test-results", { recursive: true });
 const routes = [
   "/",
@@ -62,6 +63,32 @@ async function scroll(page) {
   await page.route("https://aqk73w-k2.myshopify.com/api/**", async (route) => {
     const request = route.request();
     const payload = request.postDataJSON();
+    if (payload.query.includes("CatalogPrices")) {
+      const data = {};
+      Object.entries(payload.variables).forEach(([key, handle]) => {
+        const index = key.replace("handle", "");
+        const skus = handle === "mood-ghost"
+          ? ["mood-ghost-design-a", "mood-ghost-design-b"]
+          : [handle];
+        data[`product${index}`] = {
+          handle,
+          title: catalogProducts.find((product) => product.id === handle)?.name || handle,
+          variants: {
+            nodes: skus.map((sku) => ({
+              sku,
+              price: {
+                amount: ((catalogProducts.find((product) => product.id === sku)?.priceCents || 1600) / 100).toFixed(2),
+                currencyCode: "CAD",
+              },
+            })),
+          },
+        };
+      });
+      return route.fulfill({
+        contentType: "application/json",
+        body: JSON.stringify({ data }),
+      });
+    }
     if (payload.query.includes("CatalogForCheckout")) {
       const data = {};
       Object.entries(payload.variables).forEach(([key, handle]) => {
