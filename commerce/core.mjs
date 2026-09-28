@@ -1,6 +1,7 @@
 import { createHash, timingSafeEqual } from "node:crypto";
 import catalog from "./products.json" with { type: "json" };
 import settings from "./settings.json" with { type: "json" };
+import defaultSiteContent from "./site-content.json" with { type: "json" };
 import { ownerEmail } from "./notifications.mjs";
 
 export { catalog, settings };
@@ -138,6 +139,42 @@ export function createShop({
   mailer = null,
   clock = () => new Date(),
 }) {
+  const contentNumberFields = [
+    "fdmStartingPriceCents",
+    "resinStartingPriceCents",
+    "cadHourlyRateCents",
+    "scanningHourlyRateCents",
+    "cncStartingPriceCents",
+  ];
+  const contentTextFields = [
+    "fdmBuildVolume",
+    "resinBuildVolume",
+    "productionTime",
+    "shippingMessage",
+  ];
+  function validateSiteContent(input) {
+    if (!input || typeof input !== "object" || Array.isArray(input))
+      fail("Invalid website settings.");
+    const clean = {};
+    for (const field of contentNumberFields) {
+      const value = Number(input[field]);
+      if (!Number.isInteger(value) || value < 0 || value > 10000000)
+        fail("Enter valid prices in cents.");
+      clean[field] = value;
+    }
+    for (const field of contentTextFields)
+      clean[field] = text(input[field], field, 160);
+    return clean;
+  }
+  async function getSiteContent() {
+    const found = await store.get("config/site-content");
+    return { ...defaultSiteContent, ...(found?.data || {}) };
+  }
+  async function saveSiteContent(input) {
+    const content = validateSiteContent(input);
+    await store.put("config/site-content", content, {});
+    return content;
+  }
   const ready =
     testMode ||
     (enabled &&
@@ -332,6 +369,8 @@ export function createShop({
     list,
     rateLimit,
     notifyOwner,
+    getSiteContent,
+    saveSiteContent,
     ready,
     setupChecks,
     testMode,

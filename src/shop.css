@@ -857,6 +857,7 @@
 .halloween-special-grid .shop-card-body { color: #c9d5db; }
 .halloween-special-grid .shop-card h3 a { color: #f4f7f8; }
 .halloween-special-grid .shop-card .shop-price { color: #ff9b42; }
+.halloween-special-grid .shop-card .shop-price span { color: #c9d5db; }
 .halloween-special-grid .shop-card-image { background: #060a0e; }
 .halloween-special-grid .shop-card-image > img { aspect-ratio: 4 / 3; object-fit: cover; }
 .halloween-special-grid .shop-badge { background: rgba(8, 15, 21, .86); color: #dcecf4; border: 1px solid rgba(143, 200, 229, .28); }
@@ -877,8 +878,8 @@
   70% { opacity: .45; transform: scale(.92); }
 }
 @keyframes halloween-card-rise {
-  from { opacity: 0; transform: translateY(22px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { transform: translateY(22px); }
+  to { transform: translateY(0); }
 }
 @media (max-width: 800px) {
   .halloween-special-hero { min-height: auto; background-position: 62% center; }
@@ -902,4 +903,44 @@
   .halloween-fog,
   .halloween-ember,
   .halloween-product-reveal { animation: none; }
+}
+.shop-admin-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+.shop-admin-settings { max-width: none; }
+.shop-admin-field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.shop-admin-products { margin-top: 32px; }
+.shop-admin-product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 28px;
+}
+.shop-admin-product-grid article {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid rgba(135, 167, 183, .28);
+  background: #fff;
+}
+.shop-admin-product-grid img {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+}
+.shop-admin-product-grid h3 { margin: 0 0 6px; font-size: 1rem; }
+.shop-admin-product-grid p { margin: 0 0 8px; }
+@media (max-width: 720px) {
+  .shop-admin-field-grid,
+  .shop-admin-product-grid { grid-template-columns: 1fr; }
+  .shop-admin-tabs .button { flex: 1 1 145px; }
 }

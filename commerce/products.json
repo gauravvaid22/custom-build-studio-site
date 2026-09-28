@@ -2,7 +2,7 @@
   {
     "id": "skeleton-chameleon",
     "name": "Skeleton Chameleon Figurine",
-    "priceCents": 1500,
+    "priceCents": 2500,
     "category": "Creatures & collectibles",
     "seasonal": false,
     "description": "A chameleon with a skeletal twist. An unusual little display piece for a desk, shelf or creature collection.",
@@ -65,7 +65,7 @@
   {
     "id": "basilisk-dice-tower",
     "name": "Basilisk Dice Tower",
-    "priceCents": 3500,
+    "priceCents": 4500,
     "category": "Gaming & desk",
     "seasonal": false,
     "description": "Give game night a mythical centrepiece. A sculpted basilisk dice tower adds character to your tabletop setup.",
@@ -110,7 +110,7 @@
   {
     "id": "articulated-baby-dragon",
     "name": "Articulated Baby Dragon Figurine",
-    "priceCents": 1200,
+    "priceCents": 2200,
     "category": "Creatures & collectibles",
     "seasonal": false,
     "description": "A small dragon with articulated sections and plenty of personality. A playful addition to a fantasy collection or desk.",
@@ -143,7 +143,7 @@
   {
     "id": "glutton-ghost-bowl",
     "name": "Glutton Ghost Decorative Bowl",
-    "priceCents": 3000,
+    "priceCents": 4000,
     "category": "Halloween",
     "seasonal": true,
     "description": "A hungry little ghost for your Halloween display. Its open-mouth bowl makes a characterful home for small decorative items.",
@@ -176,7 +176,7 @@
   {
     "id": "grumpy-kitty-planter",
     "name": "Grumpy Kitty Cat Planter",
-    "priceCents": 4000,
+    "priceCents": 5000,
     "category": "Home & planters",
     "seasonal": false,
     "description": "A cat-shaped planter with a wonderfully unimpressed expression. A characterful gift for cat lovers and plant collectors; plant not included.",
@@ -257,7 +257,7 @@
   {
     "id": "6-finger-alien-hand-controller-holder",
     "name": "6-Finger Alien Hand Controller Holder",
-    "priceCents": 3000,
+    "priceCents": 4000,
     "category": "Gaming & desk",
     "seasonal": false,
     "description": "An extra-terrestrial place to park your controller. This six-finger hand brings a sculptural sci-fi touch to your gaming desk.",
@@ -308,7 +308,7 @@
   {
     "id": "articulated-hermes-the-hermit-crab",
     "name": "Hermes Articulated Hermit Crab",
-    "priceCents": 2400,
+    "priceCents": 3400,
     "category": "Creatures & collectibles",
     "seasonal": false,
     "description": "Meet Hermes: an articulated hermit crab with a separate shell. A distinctive little sea creature for your collection.",
@@ -377,7 +377,7 @@
   {
     "id": "verdant-remains-planter",
     "name": "Dragon Skeleton Planter — Verdant Remains",
-    "priceCents": 3500,
+    "priceCents": 4500,
     "category": "Home & planters",
     "seasonal": false,
     "description": "A skeletal dragon with a place for a small plant. A striking decorative planter for a shelf, desk or fantasy-inspired corner.",
@@ -428,7 +428,7 @@
   {
     "id": "joyful-axolotl",
     "name": "Joyful Axolotl Figurine",
-    "priceCents": 1200,
+    "priceCents": 2200,
     "category": "Creatures & collectibles",
     "seasonal": false,
     "description": "A smiling axolotl with a cheerful sculpted face. A small character piece to brighten a desk or shelf.",
@@ -497,7 +497,7 @@
   {
     "id": "pumpkin-fidget-keychain",
     "name": "Pumpkin Fidget Keychain",
-    "priceCents": 700,
+    "priceCents": 1700,
     "category": "Halloween",
     "seasonal": true,
     "description": "A pocket-sized pumpkin design with a rotating fidget element. A seasonal accent for your own keychain hardware.",
@@ -542,7 +542,7 @@
   {
     "id": "night-owl-wall-light",
     "name": "Night Owl Wall Light",
-    "priceCents": 4999,
+    "priceCents": 5999,
     "category": "Home & lighting",
     "seasonal": false,
     "description": "A sculptural owl wall light that adds a warm, characterful glow to a bedroom, reading corner or feature wall.",
@@ -570,7 +570,7 @@
   {
     "id": "octopus-wine-bottle-holder",
     "name": "Octopus Wine Bottle Holder",
-    "priceCents": 8699,
+    "priceCents": 9699,
     "category": "Home & entertaining",
     "seasonal": false,
     "description": "A sculptural octopus bottle holder made for a dramatic bar cart, table or wine display. Choose the holder by measuring the widest diameter of your bottle.",
@@ -581,19 +581,19 @@
       {
         "id": "octopus-wine-bottle-holder-300",
         "label": "Fits bottles up to 3.00 in diameter",
-        "priceCents": 8699,
+        "priceCents": 9699,
         "dimensions": "Finished size: 166 × 208 × 210 mm."
       },
       {
         "id": "octopus-wine-bottle-holder-320",
         "label": "Fits bottles up to 3.20 in diameter",
-        "priceCents": 9899,
+        "priceCents": 10899,
         "dimensions": "Finished size: 176 × 230 × 227 mm."
       },
       {
         "id": "octopus-wine-bottle-holder-345",
         "label": "Fits bottles up to 3.45 in diameter",
-        "priceCents": 10999,
+        "priceCents": 11999,
         "dimensions": "Finished size: 187 × 244 × 240 mm."
       }
     ],
@@ -635,7 +635,7 @@
   {
     "id": "octopus-wine-bottle-holder-300",
     "name": "Octopus Wine Bottle Holder — up to 3.00 in bottle diameter",
-    "priceCents": 8699,
+    "priceCents": 9699,
     "category": "Home & entertaining",
     "seasonal": false,
     "description": "Octopus Wine Bottle Holder sized for bottles up to 3.00 in in diameter.",
@@ -657,7 +657,7 @@
   {
     "id": "octopus-wine-bottle-holder-320",
     "name": "Octopus Wine Bottle Holder — up to 3.20 in bottle diameter",
-    "priceCents": 9899,
+    "priceCents": 10899,
     "category": "Home & entertaining",
     "seasonal": false,
     "description": "Octopus Wine Bottle Holder sized for bottles up to 3.20 in in diameter.",
@@ -679,7 +679,7 @@
   {
     "id": "octopus-wine-bottle-holder-345",
     "name": "Octopus Wine Bottle Holder — up to 3.45 in bottle diameter",
-    "priceCents": 10999,
+    "priceCents": 11999,
     "category": "Home & entertaining",
     "seasonal": false,
     "description": "Octopus Wine Bottle Holder sized for bottles up to 3.45 in in diameter.",
@@ -701,7 +701,7 @@
   {
     "id": "mood-ghost",
     "name": "Mood Ghost Figurine",
-    "priceCents": 1600,
+    "priceCents": 2600,
     "category": "Halloween",
     "seasonal": true,
     "description": "A cute little ghost with a playful pose and expressive character for a shelf, desk or Halloween display. Choose your favourite Mood Ghost design.",
@@ -713,13 +713,13 @@
       {
         "id": "mood-ghost-design-a",
         "label": "Design A",
-        "priceCents": 1600,
+        "priceCents": 2600,
         "dimensions": "Finished size: 85 × 85 × 88 mm."
       },
       {
         "id": "mood-ghost-design-b",
         "label": "Design B",
-        "priceCents": 1600,
+        "priceCents": 2600,
         "dimensions": "Finished size: 85 × 85 × 88 mm."
       }
     ],
@@ -802,7 +802,7 @@
   {
     "id": "mood-ghost-design-a",
     "name": "Mood Ghost Figurine — design A",
-    "priceCents": 1600,
+    "priceCents": 2600,
     "category": "Halloween",
     "seasonal": true,
     "description": "Mood Ghost design A.",
@@ -824,7 +824,7 @@
   {
     "id": "mood-ghost-design-b",
     "name": "Mood Ghost Figurine — design B",
-    "priceCents": 1600,
+    "priceCents": 2600,
     "category": "Halloween",
     "seasonal": true,
     "description": "Mood Ghost design B.",
@@ -847,7 +847,7 @@
   {
     "id": "ghost-arch-wreath",
     "name": "Halloween Ghost Arch Wreath",
-    "priceCents": 2899,
+    "priceCents": 3899,
     "category": "Halloween",
     "seasonal": true,
     "description": "A ghost-filled arch wreath with a tiny graveyard scene, made to bring playful Halloween character to a door, wall or seasonal display.",
@@ -899,7 +899,7 @@
   {
     "id": "skull-web-trinket-dish",
     "name": "Skull Web Trinket Dish",
-    "priceCents": 1498,
+    "priceCents": 2498,
     "category": "Halloween",
     "seasonal": true,
     "description": "A skull-shaped trinket dish traced with spiderweb detail for rings, keys and other small everyday items.",
@@ -939,7 +939,7 @@
   {
     "id": "ghost-on-a-swing",
     "name": "Ghost on a Swing",
-    "priceCents": 1498,
+    "priceCents": 2498,
     "category": "Halloween",
     "seasonal": true,
     "description": "A small ghost relaxes on a swing beneath a twisted branch, complete with pink shoes and a tiny cup for a playful wall display.",
@@ -991,7 +991,7 @@
   {
     "id": "candlelight-pumpkins-table-lamp",
     "name": "Candlelight Pumpkins Table Lamp",
-    "priceCents": 1725,
+    "priceCents": 2725,
     "category": "Halloween",
     "seasonal": true,
     "description": "A cluster of carved pumpkins surrounds a melting candle form, creating a warm seasonal centrepiece for a shelf or tabletop.",
@@ -1043,7 +1043,7 @@
   {
     "id": "ghost-duo-trinket-dish",
     "name": "Ghost Duo Trinket Dish",
-    "priceCents": 1667,
+    "priceCents": 2667,
     "category": "Halloween",
     "seasonal": true,
     "description": "Two heart-eyed ghosts form one shallow dish, finished with delicate spiderweb details for small keepsakes and desk essentials.",

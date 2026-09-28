@@ -32,11 +32,11 @@ export function getSeo(path: string) {
   const pages: Record<string, [string, string]> = {
     "/shop": [
       "Unique Gifts & Décor, Made in Edmonton",
-      "Discover locally made 3D-printed gifts, creatures, dice towers, planters and seasonal pieces with secure Shopify checkout and tracked Canadian shipping.",
+      "Discover locally made 3D-printed gifts, creatures, dice towers, planters and seasonal pieces with secure Shopify checkout and free tracked Canadian shipping.",
     ],
     "/shop/halloween-special": [
       "Halloween Special: 3D-Printed Décor in Edmonton",
-      "Shop four new locally made Halloween pieces: a pumpkin table lamp, swinging ghost and sculptural trinket dishes. Secure Shopify checkout and Canadian shipping.",
+      "Shop locally made Halloween décor in Edmonton, including ghosts, pumpkin lighting, skeleton characters and trinket dishes, with free tracked Canadian shipping.",
     ],
     "/shop/cart": ["Your Cart", "Review your physical 3D-printed products."],
     "/shop/checkout": [
@@ -93,7 +93,7 @@ export function getSeo(path: string) {
     ],
   };
   const entry = product
-    ? [product.name, `${product.description} Made in Edmonton with tracked Canadian shipping.`]
+    ? [product.name, `${product.description} Made in Edmonton with free tracked Canadian shipping.`]
     : collection
       ? [collection.name === "Gifts Under $25" ? "3D-Printed Gifts Under $25 in Edmonton" : `${collection.name} Made in Edmonton`, collection.seoDescription]
     : service

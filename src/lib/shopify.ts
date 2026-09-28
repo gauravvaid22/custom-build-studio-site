@@ -24,6 +24,46 @@ type GraphResponse<T> = {
 
 export const shopifyConfigured = Boolean(storefrontToken);
 
+export async function fetchShopifyPrices() {
+  if (!storefrontToken) return {} as Record<string, number>;
+  const handles = [
+    ...new Set(
+      products
+        .filter((product) => !("variantOf" in product))
+        .map((product) => product.id),
+    ),
+  ];
+  const variableDefinitions = handles
+    .map((_, index) => `$handle${index}: String!`)
+    .join(", ");
+  const fields = handles
+    .map(
+      (_, index) =>
+        `product${index}: product(handle: $handle${index}) { variants(first: 100) { nodes { sku price { amount currencyCode } } } }`,
+    )
+    .join("\n");
+  const variables = Object.fromEntries(
+    handles.map((handle, index) => [`handle${index}`, handle]),
+  );
+  const catalog = await storefront<Record<string, CatalogProduct | null>>(
+    `query CatalogPrices(${variableDefinitions}) { ${fields} }`,
+    variables,
+  );
+  const prices: Record<string, number> = {};
+  Object.values(catalog).forEach((product) =>
+    product?.variants.nodes.forEach((variant) => {
+      if (
+        variant.sku &&
+        variant.price.currencyCode === "CAD" &&
+        Number.isFinite(Number(variant.price.amount))
+      ) {
+        prices[variant.sku] = Math.round(Number(variant.price.amount) * 100);
+      }
+    }),
+  );
+  return prices;
+}
+
 function productHandle(id: string) {
   const product = products.find((item) => item.id === id);
   if (!product) throw new Error("A cart item is no longer available.");

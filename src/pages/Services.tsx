@@ -14,6 +14,7 @@ import {
   quoteServiceId,
   serviceDetails,
 } from "../data/landing";
+import { useSiteContent, wholeDollars } from "../components/SiteContent";
 
 export function Services() {
   return (
@@ -59,10 +60,23 @@ export function Services() {
   );
 }
 export function ServiceDetail() {
+  const content = useSiteContent();
   const { id } = useParams();
   const s = allServices.find((s) => s.id === id);
   if (!s) return null;
   const detail = serviceDetails[s.id];
+  const displayedPrice =
+    s.id === "3d-printing"
+      ? `FDM from ${wholeDollars(content.fdmStartingPriceCents)} · Resin from ${wholeDollars(content.resinStartingPriceCents)} CAD`
+      : s.id === "fdm-3d-printing"
+        ? `From ${wholeDollars(content.fdmStartingPriceCents)} CAD per job`
+        : s.id === "resin-3d-printing"
+          ? `From ${wholeDollars(content.resinStartingPriceCents)} CAD per job`
+          : s.id === "cad-design"
+            ? `${wholeDollars(content.cadHourlyRateCents)} CAD / hour`
+            : s.id === "3d-scanning"
+              ? `${wholeDollars(content.scanningHourlyRateCents)} CAD / hour`
+              : `From ${wholeDollars(content.cncStartingPriceCents)} CAD per project`;
   return (
     <>
       <section className="page-intro service-intro">
@@ -91,7 +105,7 @@ export function ServiceDetail() {
                   Considered from every angle.
                 </h2>
                 <p>
-                  223 × 126 × 230 mm nominal build volume. Part orientation,
+                  {content.resinBuildVolume} nominal build volume. Part orientation,
                   supports and clearance are reviewed before printing.
                 </p>
                 <div className="material-chips">
@@ -135,7 +149,7 @@ export function ServiceDetail() {
       <section className="section">
         <div className="container note-panel">
           <p className="eyebrow">PROJECT PRICING</p>
-          <h2>{detail.price}</h2>
+          <h2>{displayedPrice}</h2>
           <p>
             {detail.pricing} Applicable taxes and shipping are confirmed in your
             quote.
@@ -199,7 +213,7 @@ export function ServiceDetail() {
               <p className="eyebrow">ANYCUBIC PHOTON P1</p>
               <h3>Plan around your part.</h3>
               <p>
-                <strong>Nominal build volume: 223 × 126 × 230 mm.</strong>{" "}
+                <strong>Nominal build volume: {content.resinBuildVolume}.</strong>{" "}
                 Usable part size depends on orientation, supports and clearance.
               </p>
               <p>
@@ -214,7 +228,7 @@ export function ServiceDetail() {
                 specific toughness or heat resistance. Tell us how the part will
                 be used.
               </p>
-              <h3>From $30 CAD per job</h3>
+              <h3>From {wholeDollars(content.resinStartingPriceCents)} CAD per job</h3>
               <p>
                 Final pricing reflects resin volume, supports, print
                 height/time, washing, curing and cleanup. CAD design, specialty
@@ -267,6 +281,7 @@ export function ServiceDetail() {
 }
 
 function PrintingLinks() {
+  const content = useSiteContent();
   return (
     <section className="section">
       <div className="container">
@@ -277,7 +292,7 @@ function PrintingLinks() {
             <article className="note-panel" key={s.id}>
               <h3>{s.name}</h3>
               <p><strong>{s.id === "fdm-3d-printing" ? "Functional parts · Engineering filaments" : "Fine detail · Miniatures & display models"}</strong></p>
-              <p className="print-volume">{s.id === "fdm-3d-printing" ? "305 × 305 × 400 mm" : "223 × 126 × 230 mm"}</p>
+              <p className="print-volume">{s.id === "fdm-3d-printing" ? content.fdmBuildVolume : content.resinBuildVolume}</p>
               <p className="small">Maximum build envelope · usable part size depends on orientation and supports.</p>
               <p>{s.description}</p>
               <Link className="text-link" to={`/services/${s.id}`}>
@@ -292,13 +307,14 @@ function PrintingLinks() {
 }
 
 function FdmCapabilities() {
+  const content = useSiteContent();
   return <section className="section fdm-capabilities" id="fdm-printing">
     <div className="container detail-columns">
       <div>
         <p className="eyebrow">FDM 3D PRINTING / ENGINEERING MATERIALS</p>
         <h2>Room for bigger ideas.<br />Materials for real work.</h2>
         <p>From a replacement bracket to a workshop fixture, enclosure or functional prototype, choose FDM when your part needs to do a job. We help match the filament and print orientation to how it will be used.</p>
-        <div className="fdm-size"><span className="eyebrow">MAXIMUM BUILD ENVELOPE</span><p className="print-volume">305 × 305 × 400 <span>mm</span></p><p>Width × depth × height</p><p className="small">Available part size depends on material, orientation, supports and clearance. Send your model and dimensions so we can confirm the fit.</p></div>
+        <div className="fdm-size"><span className="eyebrow">MAXIMUM BUILD ENVELOPE</span><p className="print-volume">{content.fdmBuildVolume}</p><p>Width × depth × height</p><p className="small">Available part size depends on material, orientation, supports and clearance. Send your model and dimensions so we can confirm the fit.</p></div>
         <QuoteLink service="3d-printing">Request an FDM Quote</QuoteLink>
       </div>
       <div className="note-panel">

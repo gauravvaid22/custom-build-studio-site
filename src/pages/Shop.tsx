@@ -9,6 +9,8 @@ import { NotFound } from "./Studio";
 import "../shop.css";
 import { trackShop } from "../components/Analytics";
 import { createShopifyCheckout, shopifyConfigured } from "../lib/shopify";
+import { useShopifyCatalog } from "../components/ShopifyCatalog";
+import { type SiteContent, useSiteContent } from "../components/SiteContent";
 
 type Product = (typeof products)[number];
 type ProductVariant = {
@@ -21,12 +23,8 @@ const variantsFor = (product: Product): ProductVariant[] =>
   "variants" in product ? product.variants || [] : [];
 const isVariant = (product: Product) => "variantOf" in product;
 const catalogProduct = (id: string) => products.find((product) => product.id === id);
-const halloweenSpecialIds = [
-  "candlelight-pumpkins-table-lamp",
-  "ghost-on-a-swing",
-  "skull-web-trinket-dish",
-  "ghost-duo-trinket-dish",
-];
+const halloweenSpecialIds =
+  collections.find((collection) => collection.id === "halloween")?.products || [];
 type Order = {
   id: string;
   number: string;
@@ -104,13 +102,14 @@ export function ShopNav() {
   );
 }
 function ShopNotice() {
+  const content = useSiteContent();
   return (
     <div className="shop-notice container">
       {settings.pricesAreProvisional
         ? "Collection preview — prices and production details are being reviewed. "
         : ""}
-      Finished physical products. No digital files. $10 standard tracked
-      shipping across Canada. Secure checkout by Shopify.
+      Finished physical products. No digital files. {content.shippingMessage}.
+      Secure checkout by Shopify.
     </div>
   );
 }
@@ -149,6 +148,7 @@ function AddProduct({
   onVariantChange?: (id: string) => void;
 }) {
   const { add } = useCart();
+  const { priceFor } = useShopifyCatalog();
   const [quantity, setQuantity] = useState(1);
   const [confirmation, setConfirmation] = useState("");
   const [confirmationKey, setConfirmationKey] = useState(0);
@@ -188,7 +188,7 @@ function AddProduct({
           >
             {variants.map((variant) => (
               <option key={variant.id} value={variant.id}>
-                {variant.label} · {money(variant.priceCents)}
+                {variant.label} · {money(priceFor(variant.id, variant.priceCents))}
               </option>
             ))}
           </select>
@@ -236,6 +236,7 @@ function AddProduct({
   );
 }
 function ShopProductCard({ product }: { product: Product }) {
+  const { priceFor } = useShopifyCatalog();
   const alternate = product.images[1];
   return (
     <article className="shop-card">
@@ -261,7 +262,7 @@ function ShopProductCard({ product }: { product: Product }) {
         <p className="eyebrow">MADE IN EDMONTON</p>
         <h3><Link to={`/shop/${product.id}`}>{product.name}</Link></h3>
         <p className="shop-price">
-          {variantsFor(product).length ? "From " : ""}{money(product.priceCents)}{" "}
+          {variantsFor(product).length ? "From " : ""}{money(priceFor(product.id, product.priceCents))}{" "}
           <span>CAD</span>
         </p>
         {variantsFor(product).length ? (
@@ -292,12 +293,14 @@ function ShopBenefits() {
       <div><BenefitIcon type="local"/><span><strong>Made in Edmonton</strong><small>Printed locally</small></span></div>
       <div><BenefitIcon type="made"/><span><strong>Made to order</strong><small>Prepared for you</small></span></div>
       <div><BenefitIcon type="checkout"/><span><strong>Secure checkout</strong><small>Powered by Shopify</small></span></div>
-      <div><BenefitIcon type="shipping"/><span><strong>Tracked shipping</strong><small>$10 across Canada</small></span></div>
+      <div><BenefitIcon type="shipping"/><span><strong>Free tracked shipping</strong><small>Across Canada</small></span></div>
     </div>
   );
 }
 
 export function Shop() {
+  const { priceFor } = useShopifyCatalog();
+  const content = useSiteContent();
   const featuredProduct = catalogProduct("basilisk-dice-tower")!;
   const primaryCollections = collections.filter((collection) => collection.id !== "gifts-under-25");
   const under25 = collections.find((collection) => collection.id === "gifts-under-25")!;
@@ -322,13 +325,13 @@ export function Shop() {
               Shop by collection ↘
             </a>
             <p className="small">
-              Physical products · Secure payment · Tracked Canadian shipping
+              Physical products · Secure payment · Free tracked Canadian shipping
             </p>
           </div>
           <Link to={`/shop/${featuredProduct.id}/`} className="shop-hero-photo">
             <ProductImage product={featuredProduct} large />
             <span>
-              {featuredProduct.name} · {money(featuredProduct.priceCents)} CAD ↗
+              {featuredProduct.name} · {money(priceFor(featuredProduct.id, featuredProduct.priceCents))} CAD ↗
             </span>
           </Link>
         </div>
@@ -364,7 +367,7 @@ export function Shop() {
         <div>
           <p className="eyebrow">SEASONAL COLLECTION</p>
           <h2>The Halloween Special is here.</h2>
-          <p>Four new seasonal pieces join our locally printed Halloween collection.</p>
+          <p>Explore every spooky piece in our locally printed Halloween collection.</p>
           <Link className="button" to="/shop/halloween-special">Explore the special ↗</Link>
         </div>
         <Link to="/shop/halloween-special" aria-label="Explore the Halloween Special">
@@ -380,7 +383,7 @@ export function Shop() {
           <div className="shop-product-strip">
             {under25.products.slice(0, 4).map((id) => {
               const product = catalogProduct(id)!;
-              return <Link key={id} to={`/shop/${id}`}><ProductImage product={product}/><span>{product.name}<strong>{money(product.priceCents)}</strong></span></Link>;
+              return <Link key={id} to={`/shop/${id}`}><ProductImage product={product}/><span>{product.name}<strong>{money(priceFor(product.id, product.priceCents))}</strong></span></Link>;
             })}
           </div>
         </div>
@@ -408,12 +411,12 @@ export function Shop() {
             </p>
           </div>
           <div>
-            <h3>Tracked shipping, clearly priced.</h3>
+            <h3>Tracked shipping is included.</h3>
             <p>
-              Standard tracked shipping is $10 across Canada and is itemized
-              before you pay. Contact us first for colour changes or custom work.
+              Standard tracked shipping is free across Canada. Contact us first
+              for colour changes or custom work.
             </p>
-            <p>{settings.productionTime}.</p>
+            <p>{content.productionTime}.</p>
             <Link className="text-link" to="/products">
               Explore our studio-designed charging stand ↗
             </Link>
@@ -443,8 +446,8 @@ export function HalloweenSpecial() {
           <p className="eyebrow">LIMITED SEASON / MADE IN EDMONTON</p>
           <h1>Dark details.<br /><span>Built to haunt.</span></h1>
           <p className="lead">
-            Four new 3D-printed pieces bring sculptural ghosts, webbed dishes
-            and a warm pumpkin glow to your Halloween setup.
+            Explore the complete seasonal collection: sculptural ghosts,
+            pumpkin lights, skeleton characters, dishes and graveyard details.
           </p>
           <div className="button-row">
             <a className="button halloween-button" href="#halloween-special-products">
@@ -455,8 +458,8 @@ export function HalloweenSpecial() {
             </Link>
           </div>
           <ul className="halloween-special-facts" aria-label="Collection details">
-            <li><strong>4</strong><span>new seasonal pieces</span></li>
-            <li><strong>From $14.98</strong><span>CAD</span></li>
+            <li><strong>{featured.length}</strong><span>Halloween pieces</span></li>
+            <li><strong>Free</strong><span>tracked Canadian shipping</span></li>
             <li><strong>Edmonton</strong><span>printed locally</span></li>
           </ul>
         </div>
@@ -467,7 +470,7 @@ export function HalloweenSpecial() {
           <div className="section-heading halloween-special-heading">
             <div>
               <p className="eyebrow">THE HALLOWEEN SPECIAL</p>
-              <h2>Four pieces. One seasonal drop.</h2>
+              <h2>Every Halloween piece, in one place.</h2>
             </div>
             <p>Finished physical prints with dimensions and pricing taken from the production files.</p>
           </div>
@@ -509,12 +512,13 @@ export function HalloweenSpecial() {
 
 export function ShopCollection({ id }: { id: string }) {
   const collection = collections.find((item) => item.id === id);
+  const { priceFor } = useShopifyCatalog();
   const [sort, setSort] = useState("featured");
   if (!collection) return <NotFound />;
   const listed = collection.products.map((productId) => catalogProduct(productId)!).filter(Boolean);
   const sorted = [...listed].sort((a, b) =>
-    sort === "price-low" ? a.priceCents - b.priceCents :
-    sort === "price-high" ? b.priceCents - a.priceCents : 0,
+    sort === "price-low" ? priceFor(a.id, a.priceCents) - priceFor(b.id, b.priceCents) :
+    sort === "price-high" ? priceFor(b.id, b.priceCents) - priceFor(a.id, a.priceCents) : 0,
   );
   const cover = catalogProduct(collection.coverProduct)!;
   return (
@@ -571,6 +575,8 @@ export function ShopCollection({ id }: { id: string }) {
   );
 }
 export function ShopProduct() {
+  const { priceFor } = useShopifyCatalog();
+  const content = useSiteContent();
   const { id } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const product = products.find((p) => p.id === id);
@@ -696,7 +702,7 @@ export function ShopProduct() {
               <h1>{product.name}</h1>
               <p className="lead">{product.description}</p>
               <p className="shop-price">
-                {money(selectedVariant.priceCents)}{" "}
+                {money(priceFor(selectedVariant.id, selectedVariant.priceCents))}{" "}
                 <span>
                   CAD
                   {settings.pricesAreProvisional ? " · provisional price" : ""}
@@ -730,7 +736,7 @@ export function ShopProduct() {
                 <dd>Similar to the main photo. Contact us before checkout to request a different colour.</dd>
                 <dt>Timing & handoff</dt>
                 <dd>
-                  {settings.productionTime}. $10 standard tracked shipping
+                  {content.productionTime}. Free standard tracked shipping
                   across Canada through Shopify checkout.
                 </dd>
                 <dt>Ordering & payment</dt>
@@ -748,7 +754,7 @@ export function ShopProduct() {
             <h2>More to explore</h2>
             <div className="shop-filters">
               {products.filter(p => !isVariant(p) && p.id !== product.id && p.category === product.category).slice(0, 3).map(p => (
-                <Link key={p.id} className="text-link" to={`/shop/${p.id}/`}>{p.name} · {money(p.priceCents)} CAD →</Link>
+                <Link key={p.id} className="text-link" to={`/shop/${p.id}/`}>{p.name} · {money(priceFor(p.id, p.priceCents))} CAD →</Link>
               ))}
               <Link to="/shop/">Browse all gifts & décor →</Link>
             </div>
@@ -768,10 +774,11 @@ function CartQuantity({id,name,quantity}:{id:string;name:string;quantity:number}
 }
 export function ShopCart() {
   const { items, setQuantity } = useCart();
+  const { priceFor } = useShopifyCatalog();
   const subtotal = items.reduce(
     (sum, item) =>
       sum +
-      (products.find((p) => p.id === item.id)?.priceCents || 0) * item.quantity,
+      (() => { const product = products.find((p) => p.id === item.id); return product ? priceFor(product.id, product.priceCents) : 0; })() * item.quantity,
     0,
   );
   return (
@@ -806,7 +813,7 @@ export function ShopCart() {
                       <h2>
                         <Link to={`/shop/${productRoute}`}>{product.name}</Link>
                       </h2>
-                      <p>{money(product.priceCents)} CAD each</p>
+                      <p>{money(priceFor(product.id, product.priceCents))} CAD each</p>
                       <label>
                         Quantity
                         <CartQuantity id={item.id} name={product.name} quantity={item.quantity}/>
@@ -818,7 +825,7 @@ export function ShopCart() {
                         Remove {product.name}
                       </button>
                     </div>
-                    <strong>{money(product.priceCents * item.quantity)}</strong>
+                    <strong>{money(priceFor(product.id, product.priceCents) * item.quantity)}</strong>
                   </article>
                 );
               })
@@ -831,7 +838,7 @@ export function ShopCart() {
                 <span>Items</span>
                 <strong>{money(subtotal)} CAD</strong>
               </p>
-              <p>$10 standard tracked shipping across Canada. No GST charged.</p>
+              <p>Free standard tracked shipping across Canada. No GST charged.</p>
               <p className="small">
                 {settings.pricesAreProvisional
                   ? "Prices are provisional pending production review. "
@@ -850,12 +857,14 @@ export function ShopCart() {
 }
 export function Checkout() {
   const { items } = useCart();
+  const { priceFor } = useShopifyCatalog();
+  const content = useSiteContent();
   const [busy, setBusy] = useState(false),
     [error, setError] = useState("");
   const subtotal = items.reduce(
     (sum, item) =>
       sum +
-      (products.find((p) => p.id === item.id)?.priceCents || 0) * item.quantity,
+      (() => { const product = products.find((p) => p.id === item.id); return product ? priceFor(product.id, product.priceCents) : 0; })() * item.quantity,
     0,
   );
 
@@ -885,11 +894,10 @@ export function Checkout() {
         <div className="container shop-cart-layout">
           <div className="note-panel shopify-checkout-panel">
             <span className="eyebrow">POWERED BY SHOPIFY</span>
-            <h2>Secure payment and tracked shipping.</h2>
+            <h2>Secure payment and free tracked shipping.</h2>
             <p>
               Shopify collects your contact information, Canadian shipping
-              address and payment securely. Standard tracked shipping is
-              itemized at checkout.
+              address and payment securely. Standard tracked shipping is free.
             </p>
             <ol className="shop-steps" aria-label="Checkout steps">
               {["Review", "Address", "Payment"].map((step, index) => (
@@ -934,8 +942,7 @@ export function Checkout() {
                 </span>
                 <strong>
                   {money(
-                    (products.find((p) => p.id === item.id)?.priceCents || 0) *
-                      item.quantity,
+                    (() => { const product = products.find((p) => p.id === item.id); return product ? priceFor(product.id, product.priceCents) : 0; })() * item.quantity,
                   )}
                 </strong>
               </p>
@@ -945,8 +952,8 @@ export function Checkout() {
               <span>{money(subtotal)}</span>
             </p>
             <p className="shop-total">
-              <span>Standard tracked shipping</span>
-              <span>{money(settings.shippingFeeCents)}</span>
+              <span>Free tracked shipping</span>
+              <span>Free</span>
             </p>
             <p className="shop-total">
               <strong>Estimated total CAD</strong>
@@ -954,8 +961,7 @@ export function Checkout() {
             </p>
             <p className="small">
               Final delivery options and total are confirmed in Shopify
-              checkout. Production: 2–3 business days after payment is
-              confirmed.
+              checkout. Production: {content.productionTime}.
             </p>
           </aside>
         </div>
@@ -1106,19 +1112,60 @@ export function OrderConfirmation() {
   );
 }
 export function ShopAdmin() {
+  const publicContent = useSiteContent();
+  const { priceFor } = useShopifyCatalog();
   const [key, setKey] = useState(""),
     [orders, setOrders] = useState<Order[]>([]),
     [error, setError] = useState(""),
     [logged, setLogged] = useState(false),
-    [busy, setBusy] = useState(false);
+    [busy, setBusy] = useState(false),
+    [content, setContent] = useState<SiteContent>(publicContent),
+    [tab, setTab] = useState<"orders" | "website" | "products">("orders"),
+    [saved, setSaved] = useState("");
   async function load() {
     try {
-      const data = await api("list", {}, { Authorization: "Bearer " + key });
-      setOrders(data.orders);
+      const [orderData, contentData] = await Promise.all([
+        api("list", {}, { Authorization: "Bearer " + key }),
+        api("get-content", {}, { Authorization: "Bearer " + key }),
+      ]);
+      setOrders(orderData.orders);
+      setContent(contentData.siteContent);
       setLogged(true);
       setError("");
     } catch (e) {
       setError((e as Error).message);
+    }
+  }
+  async function saveWebsite(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const dollars = (name: string) => Math.round(Number(form.get(name)) * 100);
+    const next: SiteContent = {
+      fdmStartingPriceCents: dollars("fdmStartingPrice"),
+      resinStartingPriceCents: dollars("resinStartingPrice"),
+      cadHourlyRateCents: dollars("cadHourlyRate"),
+      scanningHourlyRateCents: dollars("scanningHourlyRate"),
+      cncStartingPriceCents: dollars("cncStartingPrice"),
+      fdmBuildVolume: String(form.get("fdmBuildVolume") || ""),
+      resinBuildVolume: String(form.get("resinBuildVolume") || ""),
+      productionTime: String(form.get("productionTime") || ""),
+      shippingMessage: String(form.get("shippingMessage") || ""),
+    };
+    setBusy(true);
+    setSaved("");
+    try {
+      const data = await api(
+        "save-content",
+        { siteContent: next },
+        { Authorization: "Bearer " + key },
+      );
+      setContent(data.siteContent);
+      setSaved("Website settings saved. Refresh the public page to see the update.");
+      setError("");
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
     }
   }
   async function update(event: FormEvent<HTMLFormElement>, order: Order) {
@@ -1147,8 +1194,8 @@ export function ShopAdmin() {
     <>
       <PageIntro
         eyebrow="PRIVATE / STUDIO ADMINISTRATION"
-        title="Orders."
-        description="Verify e-Transfers in your banking account before confirming payment. Customer claims do not count as payment verification."
+        title="Studio control panel."
+        description="Review legacy orders, update website service details and open Shopify product pricing from one private page."
       />
       <section className="section">
         <div className="container">
@@ -1174,10 +1221,10 @@ export function ShopAdmin() {
             </form>
           ) : (
             <>
-              <div className="button-row">
-                <button className="button" onClick={load}>
-                  Refresh orders
-                </button>
+              <div className="shop-admin-tabs" role="tablist" aria-label="Administration sections">
+                <button className={tab === "orders" ? "button" : "button button-dark"} onClick={() => setTab("orders")}>Orders</button>
+                <button className={tab === "website" ? "button" : "button button-dark"} onClick={() => setTab("website")}>Website settings</button>
+                <button className={tab === "products" ? "button" : "button button-dark"} onClick={() => setTab("products")}>Product prices</button>
                 <button
                   className="button button-dark"
                   onClick={() => {
@@ -1189,7 +1236,9 @@ export function ShopAdmin() {
                   Sign out
                 </button>
               </div>
-              {!orders.length && <p>No orders yet.</p>}
+              {tab === "orders" && <>
+              <button className="text-link" onClick={load}>Refresh orders</button>
+              {!orders.length && <p>No legacy orders yet. New Shopify orders appear in Shopify Admin.</p>}
               {orders.map((order) => (
                 <article className="shop-admin-order" key={order.id}>
                   <h2>{order.number}</h2>
@@ -1271,7 +1320,39 @@ export function ShopAdmin() {
                     ))}
                   </details>
                 </article>
-              ))}
+              ))}</>}
+              {tab === "website" && (
+                <form className="quote-form shop-admin-settings" onSubmit={saveWebsite} key={JSON.stringify(content)}>
+                  <div className="section-heading"><div><p className="eyebrow">PUBLIC WEBSITE SETTINGS</p><h2>Services and shop details</h2></div><p>These values are stored securely in Netlify and appear after the next page refresh.</p></div>
+                  <div className="shop-admin-field-grid">
+                    <label>FDM minimum job price (CAD)<input name="fdmStartingPrice" type="number" min="0" step="0.01" required defaultValue={(content.fdmStartingPriceCents / 100).toFixed(2)} /></label>
+                    <label>Resin minimum job price (CAD)<input name="resinStartingPrice" type="number" min="0" step="0.01" required defaultValue={(content.resinStartingPriceCents / 100).toFixed(2)} /></label>
+                    <label>CAD hourly rate (CAD)<input name="cadHourlyRate" type="number" min="0" step="0.01" required defaultValue={(content.cadHourlyRateCents / 100).toFixed(2)} /></label>
+                    <label>Scanning hourly rate (CAD)<input name="scanningHourlyRate" type="number" min="0" step="0.01" required defaultValue={(content.scanningHourlyRateCents / 100).toFixed(2)} /></label>
+                    <label>CNC minimum project price (CAD)<input name="cncStartingPrice" type="number" min="0" step="0.01" required defaultValue={(content.cncStartingPriceCents / 100).toFixed(2)} /></label>
+                    <label>FDM maximum build volume<input name="fdmBuildVolume" maxLength={160} required defaultValue={content.fdmBuildVolume} /></label>
+                    <label>Resin maximum build volume<input name="resinBuildVolume" maxLength={160} required defaultValue={content.resinBuildVolume} /></label>
+                    <label>Production timing<input name="productionTime" maxLength={160} required defaultValue={content.productionTime} /></label>
+                  </div>
+                  <label>Shipping message<input name="shippingMessage" maxLength={160} required defaultValue={content.shippingMessage} /></label>
+                  <button className="button" disabled={busy}>{busy ? "Saving…" : "Save website settings"}</button>
+                  {saved && <p role="status">{saved}</p>}
+                </form>
+              )}
+              {tab === "products" && (
+                <section className="shop-admin-products">
+                  <div className="section-heading"><div><p className="eyebrow">SHOPIFY IS THE PRICE SOURCE</p><h2>Product prices</h2></div><p>Change prices in Shopify. The website now refreshes them automatically, so checkout and product pages stay aligned.</p></div>
+                  <a className="button" href="https://admin.shopify.com/store/aqk73w-k2/products" target="_blank" rel="noreferrer">Open Shopify products ↗</a>
+                  <div className="shop-admin-product-grid">
+                    {products.filter((product) => !isVariant(product)).map((product) => (
+                      <article key={product.id}>
+                        <ProductImage product={product} />
+                        <div><h3>{product.name}</h3><p>{money(priceFor(product.id, product.priceCents))} CAD</p><a className="text-link" href={`https://admin.shopify.com/store/aqk73w-k2/products?query=${encodeURIComponent(product.id)}`} target="_blank" rel="noreferrer">Edit in Shopify →</a></div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              )}
             </>
           )}
           {error && <p role="alert">{error}</p>}

@@ -12,6 +12,7 @@ const fs=require('node:fs');
  ]);
  for(const sourceItem of halloweenSource) {
   const product=products.find(p=>p.id===sourceItem.id);
+  assert.equal(product.priceCents,sourceItem.priceCents+1000,`${sourceItem.id} includes the free-shipping price adjustment`);
   assert.equal(product.images.length,sourceItem.images.length,`${sourceItem.id} gallery follows the source folder`);
   assert.equal(Boolean(product.video),Boolean(sourceItem.video),`${sourceItem.id} video follows the source folder`);
  }
@@ -37,7 +38,7 @@ const fs=require('node:fs');
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);
     assert.equal(await page.locator('h1').count(),1);
    }
-   assert.match(await page.locator('.shop-price').innerText(),/109.99/);
+   assert.match(await page.locator('.shop-price').innerText(),/119.99/);
    await page.getByRole('button',{name:'Add to Cart',exact:true}).click();
    assert.match(await page.locator('.shop-added-confirmation').innerText(),/3.45/);
   }

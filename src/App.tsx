@@ -8,6 +8,8 @@ import { Services, ServiceDetail } from "./pages/Services";
 import { Work, ProjectDetail } from "./pages/Work";
 import Contact from "./pages/Contact";
 import { CartProvider } from "./components/Cart";
+import { ShopifyCatalogProvider } from "./components/ShopifyCatalog";
+import { SiteContentProvider } from "./components/SiteContent";
 import { Shop, HalloweenSpecial, ShopCollection, ShopProduct, ShopCart, Checkout, OrderConfirmation, ShopAdmin } from "./pages/Shop";
 import {
   About,
@@ -45,6 +47,8 @@ export default function App() {
   }, [location.pathname, location.hash]);
   return (
     <CartProvider>
+      <SiteContentProvider>
+        <ShopifyCatalogProvider>
       <Seo />
       <Analytics />
       <a className="skip-link" href="#main">
@@ -82,6 +86,8 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+        </ShopifyCatalogProvider>
+      </SiteContentProvider>
     </CartProvider>
   );
 }

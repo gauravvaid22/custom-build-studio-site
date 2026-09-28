@@ -9,6 +9,7 @@ import {
 } from "../components/Shared";
 import Gallery from "../components/Gallery";
 import { business, verifiedReviews } from "../data/business";
+import { useSiteContent, wholeDollars } from "../components/SiteContent";
 
 export function About() {
   return (
@@ -61,10 +62,11 @@ export function About() {
   );
 }
 export function Pricing() {
+  const content = useSiteContent();
   const rates = [
     {
       title: "FDM 3D Printing",
-      price: "From $20",
+      price: `From ${wholeDollars(content.fdmStartingPriceCents)}`,
       label: "Minimum job charge",
       description:
         "The quote depends on size, material, print time and part complexity.",
@@ -77,7 +79,7 @@ export function Pricing() {
     },
     {
       title: "Resin 3D Printing",
-      price: "From $30",
+      price: `From ${wholeDollars(content.resinStartingPriceCents)}`,
       label: "Minimum job charge · CAD",
       description:
         "Fine-detail models and prototypes. Resin volume, supports, print height/time, washing and curing shape the final quote.",
@@ -90,7 +92,7 @@ export function Pricing() {
     },
     {
       title: "CAD Design & Scanning",
-      price: "$75 / hour",
+      price: `${wholeDollars(content.cadHourlyRateCents)} / hour`,
       label: "Design & reverse engineering",
       description:
         "Simple parts may be quoted at a fixed fee once the scope is clear.",
@@ -103,7 +105,7 @@ export function Pricing() {
     },
     {
       title: "CNC Woodworking",
-      price: "From $100",
+      price: `From ${wholeDollars(content.cncStartingPriceCents)}`,
       label: "Project-based quotes",
       description:
         "Material, setup, routing time and any design or finishing work shape the quote.",

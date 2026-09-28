@@ -1,6 +1,6 @@
 # Custom Build Studio
 
-React + TypeScript + Vite website for the Edmonton design and fabrication studio. The production build prerenders all public routes into static HTML, then hydrates them for navigation, filtering, galleries and quote-form feedback. Netlify hosts the static output and processes the contact form. No runtime server or secret environment variables are required.
+React + TypeScript + Vite website for the Edmonton design and fabrication studio. The production build prerenders public routes into static HTML, then hydrates them for navigation, filtering, galleries, quote-form feedback and Shopify checkout. Netlify hosts the static output, processes the contact form and stores administrator-editable site settings in Netlify Blobs.
 
 ## Run locally
 
@@ -60,7 +60,10 @@ Backend delivery, spam classification, notification settings and storage quotas 
 - `src/data/services.ts`: the four services, descriptions and materials guidance.
 - `src/data/projects.json`: portfolio content. Add a unique `id`, title, description, material, service IDs and real photographs. Service IDs control filtering. A new project automatically gets a detail page and sitemap entry on the next build.
 - `src/data/images.json`: responsive image mapping. The original photos remain in `public/images`; pages use the optimized WebP files in `public/media`.
-- `src/pages/Studio.tsx`: existing starting rates and the charging-stand product.
+- `/shop/admin`: edits public service prices, machine build volumes, production time and shipping copy without a code deploy. Shopify Admin remains the source of truth for product prices and checkout.
+- `commerce/products.json`: product content and fallback prices used during prerendering or if Shopify is unavailable.
+- `commerce/site-content.json`: fallback values for administrator-editable website settings.
+- `src/pages/Studio.tsx`: studio and pricing-page structure.
 - `src/data/seo.ts`: page metadata, generated routes and LocalBusiness data.
 
 There are no fabricated CNC portfolio images, testimonials, star ratings, client logos, certifications, turnaround guarantees or equipment specifications. The old review text was marked as replacement content in the source and is not published until its direct sources are confirmed. Add verified reviews to the data array when ready.

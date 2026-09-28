@@ -19,7 +19,7 @@ const body = () => ({
   email: "test@example.invalid",
   phone: "7805550100",
   accepted: true,
-  expectedTotalCents: 6500,
+  expectedTotalCents: 9500,
   notes: "",
 });
 function fixture() {
@@ -32,12 +32,12 @@ function fixture() {
   return { path, store, shop };
 }
 test("integer CAD calculations, pickup, delivery and configurable tax", () => {
-  assert.equal(totals(body().items, "pickup").totalCents, 6500);
-  assert.equal(totals(body().items, "delivery").totalCents, 7000);
+  assert.equal(totals(body().items, "pickup").totalCents, 9500);
+  assert.equal(totals(body().items, "delivery").totalCents, 10000);
   assert.equal(
     totals(body().items, "delivery", { ...settings, taxBasisPoints: 500 })
       .taxCents,
-    350,
+    500,
   );
   for (const quantity of [0, -1, 1.5, 21, "2", NaN])
     assert.throws(() =>
@@ -49,12 +49,12 @@ test("integer CAD calculations, pickup, delivery and configurable tax", () => {
   assert.equal(
     totals([{ id: "octopus-wine-bottle-holder-320", quantity: 1 }], "pickup")
       .totalCents,
-    9899,
+    10899,
   );
   assert.equal(
     totals([{ id: "octopus-wine-bottle-holder-345", quantity: 2 }], "pickup")
       .totalCents,
-    21998,
+    23998,
   );
 });
 test("order persistence survives reopening database; idempotent retry and immutable prices", async () => {
@@ -67,7 +67,7 @@ test("order persistence survives reopening database; idempotent retry and immuta
   const first = await shop.create(input, key),
     second = await shop.create(input, key);
   assert.equal(first.order.number, second.order.number);
-  assert.equal(first.order.totalCents, 6500);
+  assert.equal(first.order.totalCents, 9500);
   assert.equal(first.order.paymentStatus, "Awaiting payment");
   assert.equal(first.order.canPay, false);
   assert.equal(first.order.fulfillmentStatus, "Not started");
@@ -94,7 +94,7 @@ test("manual payment verification, address review, state transitions and concurr
       street: "Test address",
       city: "Edmonton",
       postal: "T6A1A1",
-      expectedTotalCents: 7000,
+      expectedTotalCents: 10000,
     },
     randomUUID(),
   );
@@ -161,7 +161,7 @@ test("validation and production gate prevent unsafe orders", async () => {
     { website: "bot" },
     { expectedTotalCents: 1 },
     { paymentStatus: "Paid", expectedTotalCents: 0 },
-    { fulfillment: "delivery", expectedTotalCents: 7000 },
+    { fulfillment: "delivery", expectedTotalCents: 10000 },
   ])
     await assert.rejects(shop.create({ ...body(), ...change }, randomUUID()));
   const production = createShop({ store, enabled: true, adminKey });

@@ -17,6 +17,7 @@ export function handler(shop) {
       if (request.method === "GET" && action === "config")
         return response({
           settings,
+          siteContent: await shop.getSiteContent(),
           ready: shop.ready,
           setupChecks: shop.setupChecks,
           testMode: shop.testMode,
@@ -54,6 +55,10 @@ export function handler(shop) {
         (request.headers.get("authorization") || "").replace(/^Bearer /, ""),
       );
       if (action === "list") return response({ orders: await shop.list() });
+      if (action === "get-content")
+        return response({ siteContent: await shop.getSiteContent() });
+      if (action === "save-content")
+        return response({ siteContent: await shop.saveSiteContent(body.siteContent) });
       if (action === "retry-email") {
         await shop.notifyOwner(body.id);
         return response({orders: await shop.list()});

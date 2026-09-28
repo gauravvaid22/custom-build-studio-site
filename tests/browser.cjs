@@ -346,14 +346,14 @@ async function scroll(page) {
       name: "Bottle diameter for Octopus Wine Bottle Holder",
     });
     await bottleSize.selectOption("octopus-wine-bottle-holder-320");
-    assert.match(await page.locator(".shop-price").innerText(), /\$98\.99/);
+    assert.match(await page.locator(".shop-price").innerText(), /\$108\.99/);
     assert(
       await page
         .getByText("Finished size: 176 \u00d7 230 \u00d7 227 mm.", { exact: true })
         .isVisible(),
     );
     await bottleSize.selectOption("octopus-wine-bottle-holder-345");
-    assert.match(await page.locator(".shop-price").innerText(), /\$109\.99/);
+    assert.match(await page.locator(".shop-price").innerText(), /\$119\.99/);
     assert(
       await page
         .getByText("Finished size: 187 \u00d7 244 \u00d7 240 mm.", { exact: true })
@@ -369,9 +369,9 @@ async function scroll(page) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto(origin + "/shop/mood-ghost");
     const design = page.getByRole("combobox", { name: "Design for Mood Ghost Figurine" });
-    assert.match(await page.locator(".shop-price").innerText(), /\$16\.00/);
+    assert.match(await page.locator(".shop-price").innerText(), /\$26\.00/);
     await design.selectOption("mood-ghost-design-b");
-    assert.match(await page.locator(".shop-price").innerText(), /\$16\.00/);
+    assert.match(await page.locator(".shop-price").innerText(), /\$26\.00/);
     assert(
       await page
         .getByText("Finished size: 85 × 85 × 88 mm.", { exact: true })
@@ -386,7 +386,7 @@ async function scroll(page) {
       false,
     );
   }
-  results.interactions.push("Mood Ghost design selector keeps both designs at $16.00 on desktop and mobile");
+  results.interactions.push("Mood Ghost design selector keeps both designs at $26.00 on desktop and mobile");
   for (const width of [1440, 390]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto(origin + "/shop/night-owl-wall-light");
