@@ -1079,5 +1079,60 @@
     "video": "/media/shop/ghost-duo-trinket-dish/ghost-duo-trinket-dish.webm",
     "productionReviewed": true,
     "source": "local authorized media package: WEBSITE PRODUCT/GHOST DUO - TRINKET DISH"
+  },
+  {
+    "id": "dinosaur-skeleton-collection",
+    "name": "Dinosaur Skeleton Collection — Set of 6",
+    "priceCents": 4999,
+    "category": "Creatures & collectibles",
+    "seasonal": false,
+    "description": "Build a miniature prehistoric display with six detailed dinosaur skeletons. This complete set is a fun gift for dinosaur fans and an eye-catching collection for desks, shelves, play displays and classroom décor.",
+    "included": "Six finished dinosaur skeleton figurines: Ankylosaurus, T-Rex, Triceratops, Stegosaurus, Velociraptor and Parasaurolophus. Display props are not included.",
+    "dimensions": "Six-piece set. Individual models are approximately 30–40 mm high.",
+    "notes": "Standard colour is a cream bone tone similar to the photos. Contact us before checkout to request another colour. Small decorative pieces; not intended for children under 3 years.",
+    "images": [
+      {
+        "src": "/media/shop/dinosaur-skeleton-collection/1-1200.webp",
+        "thumb": "/media/shop/dinosaur-skeleton-collection/1-480.webp",
+        "alt": "Ankylosaurus skeleton figurine included in the six-piece dinosaur collection",
+        "sourceFile": "Skeleton_Ankylosaurus1_6e2bd62010.webp"
+      },
+      {
+        "src": "/media/shop/dinosaur-skeleton-collection/2-1200.webp",
+        "thumb": "/media/shop/dinosaur-skeleton-collection/2-480.webp",
+        "alt": "T-Rex skeleton figurine included in the six-piece dinosaur collection",
+        "sourceFile": "Skeleton_T_Rex_1_cfe71eb080.webp"
+      },
+      {
+        "src": "/media/shop/dinosaur-skeleton-collection/3-1200.webp",
+        "thumb": "/media/shop/dinosaur-skeleton-collection/3-480.webp",
+        "alt": "Triceratops skeleton figurine included in the six-piece dinosaur collection",
+        "sourceFile": "Skeleton_Triceratops1_c8cec75dce.webp"
+      },
+      {
+        "src": "/media/shop/dinosaur-skeleton-collection/4-1200.webp",
+        "thumb": "/media/shop/dinosaur-skeleton-collection/4-480.webp",
+        "alt": "Stegosaurus skeleton figurine included in the six-piece dinosaur collection",
+        "sourceFile": "Skeleton_Stegosaurus1_f811e6793d.webp"
+      },
+      {
+        "src": "/media/shop/dinosaur-skeleton-collection/5-1200.webp",
+        "thumb": "/media/shop/dinosaur-skeleton-collection/5-480.webp",
+        "alt": "Velociraptor skeleton figurine included in the six-piece dinosaur collection",
+        "sourceFile": "Skeleton_Velociraptor1_4a2220a65e.webp"
+      },
+      {
+        "src": "/media/shop/dinosaur-skeleton-collection/6-1200.webp",
+        "thumb": "/media/shop/dinosaur-skeleton-collection/6-480.webp",
+        "alt": "Parasaurolophus skeleton figurine included in the six-piece dinosaur collection",
+        "sourceFile": "Skeleton_Parasaurolophus1_1e476165a1.webp"
+      }
+    ],
+    "videos": [
+      "/media/shop/dinosaur-skeleton-collection/t-rex.webm",
+      "/media/shop/dinosaur-skeleton-collection/triceratops.webm"
+    ],
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/drops/drop-275"
   }
 ]
