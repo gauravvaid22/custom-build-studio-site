@@ -271,12 +271,12 @@ async function scroll(page) {
   results.interactions.push("FAQ disclosure");
   await page.goto(origin + "/services/3d-printing");
   await page.locator('#resin-printing').getByRole('link', {name: 'Request a Quote'}).click();
-  await page.waitForFunction(() => document.querySelector('#service').value === 'resin-printing');
+  await page.waitForFunction(() => document.querySelector('#service')?.value === 'resin-printing');
   assert.equal(await page.locator('#service').inputValue(), 'resin-printing');
   results.interactions.push('Resin service CTA preselects high-detail resin quote');
   await page.goto(origin + "/contact?service=cnc-woodworking");
   await page.waitForFunction(
-    () => document.querySelector("#service").value === "cnc-woodworking",
+    () => document.querySelector("#service")?.value === "cnc-woodworking",
   );
   assert.equal(await page.locator("#service").inputValue(), "cnc-woodworking");
   await page.getByRole("button", { name: "Send Quote Request" }).click();
@@ -458,8 +458,7 @@ async function scroll(page) {
   }
   results.interactions.push("Add-to-cart success, invalid submission, option selection, cart count and persisted contents on desktop and mobile");
   await page.goto(origin + "/shop/cart");
-  await page.getByRole("link", { name: "Continue to checkout ↗" }).click();
-  await page.getByRole("button", { name: "Continue to secure checkout ↗" }).click();
+  await page.getByRole("button", { name: "Secure checkout ↗" }).click();
   await page.waitForURL(origin + "/shopify-checkout-test");
   assert.deepEqual(shopifyCartInput.lines, [
     {

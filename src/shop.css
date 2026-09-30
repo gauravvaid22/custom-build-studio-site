@@ -172,6 +172,37 @@
   font-weight: 500;
   color: #4b5851;
 }
+.shop-purchase-facts {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 20px;
+  padding: 15px 18px;
+  list-style: none;
+  background: #edf3ef;
+  border-left: 3px solid #d95118;
+  color: #26362f;
+  font-size: .9rem;
+}
+.shop-purchase-facts li::before {
+  content: "✓";
+  margin-right: 9px;
+  color: #173c35;
+  font-weight: 800;
+}
+.shop-trust-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: -6px 0 22px;
+  font-size: .82rem;
+  font-weight: 700;
+}
+.shop-trust-links a {
+  color: #173c35;
+  text-decoration: underline;
+  text-decoration-color: #a8b9b0;
+  text-underline-offset: 4px;
+}
 .shop-add {
   display: flex;
   flex-wrap: wrap;
@@ -509,6 +540,23 @@
 }
 .shop-total span:first-child {
   max-width: 75%;
+}
+.shop-cart-total {
+  padding-top: 4px;
+  font-size: 1.08rem;
+}
+.shop-checkout-error {
+  padding: 11px 13px;
+  border-left: 3px solid #bd361c;
+  background: #fff0ec;
+  color: #722412;
+  font-size: .88rem;
+}
+.shop-secure-note {
+  margin: 10px 0 0;
+  color: #56635c;
+  font-size: .75rem;
+  text-align: center;
 }
 .shop-checkout label,
 .shop-admin-actions label {

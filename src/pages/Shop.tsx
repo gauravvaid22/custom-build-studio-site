@@ -108,8 +108,9 @@ function ShopNotice() {
       {settings.pricesAreProvisional
         ? "Collection preview — prices and production details are being reviewed. "
         : ""}
-      Finished physical products. No digital files. {content.shippingMessage}.
-      Secure checkout by Shopify.
+      Finished physical products <span aria-hidden="true">·</span> No digital files{" "}
+      <span aria-hidden="true">·</span> {content.shippingMessage}{" "}
+      <span aria-hidden="true">·</span> Secure Shopify checkout
     </div>
   );
 }
@@ -238,6 +239,10 @@ function AddProduct({
 function ShopProductCard({ product }: { product: Product }) {
   const { priceFor, nameFor } = useShopifyCatalog();
   const alternate = product.images[1];
+  const variants = variantsFor(product);
+  const hasPriceRange = variants.length > 1 && variants.some(
+    (variant) => priceFor(variant.id, variant.priceCents) !== priceFor(variants[0].id, variants[0].priceCents),
+  );
   return (
     <article className="shop-card">
       <Link className="shop-card-image" to={`/shop/${product.id}`}>
@@ -262,7 +267,7 @@ function ShopProductCard({ product }: { product: Product }) {
         <p className="eyebrow">MADE IN EDMONTON</p>
         <h3><Link to={`/shop/${product.id}`}>{nameFor(product.id, product.name)}</Link></h3>
         <p className="shop-price">
-          {variantsFor(product).length ? "From " : ""}{money(priceFor(product.id, product.priceCents))}{" "}
+          {hasPriceRange ? "From " : ""}{money(priceFor(product.id, product.priceCents))}{" "}
           <span>CAD</span>
         </p>
         {variantsFor(product).length ? (
@@ -290,7 +295,7 @@ function BenefitIcon({ type }: { type: string }) {
 function ShopBenefits() {
   return (
     <div className="shop-benefits" aria-label="Shopping benefits">
-      <div><BenefitIcon type="local"/><span><strong>Made in Edmonton</strong><small>Printed locally</small></span></div>
+      <div><BenefitIcon type="local"/><span><strong>Made in Edmonton</strong><small>Prepared locally</small></span></div>
       <div><BenefitIcon type="made"/><span><strong>Made to order</strong><small>Prepared for you</small></span></div>
       <div><BenefitIcon type="checkout"/><span><strong>Secure checkout</strong><small>Powered by Shopify</small></span></div>
       <div><BenefitIcon type="shipping"/><span><strong>Free tracked shipping</strong><small>Across Canada</small></span></div>
@@ -378,7 +383,7 @@ export function Shop() {
         <div className="container">
           <div className="section-heading">
             <div><p className="eyebrow">{under25.eyebrow}</p><h2>Small gifts. Easy choices.</h2></div>
-            <Link className="text-link" to="/shop/gifts-under-25">See every gift under $25 →</Link>
+            <Link className="text-link" to="/shop/gifts-under-25">See every gift at $25 or less →</Link>
           </div>
           <div className="shop-product-strip">
             {under25.products.slice(0, 4).map((id) => {
@@ -708,6 +713,17 @@ export function ShopProduct() {
                   {settings.pricesAreProvisional ? " · provisional price" : ""}
                 </span>
               </p>
+              <ul className="shop-purchase-facts" aria-label="Purchase details">
+                <li>Free tracked shipping in Canada</li>
+                <li>{content.productionTime}</li>
+                <li>Secure payment through Shopify</li>
+              </ul>
+              <div className="shop-trust-links">
+                <a href="https://share.google/r0qV4iw8FxD8SLkLL" target="_blank" rel="noreferrer">
+                  Read customer reviews on Google ↗
+                </a>
+                <a href="tel:+17802030081">Questions? Call or text 780-203-0081</a>
+              </div>
               <AddProduct
                 product={product}
                 variantId={selectedVariant.id}
@@ -741,6 +757,8 @@ export function ShopProduct() {
                 </dd>
                 <dt>Ordering & payment</dt>
                 <dd>Made to order. Secure payment and shipping are handled through Shopify. Contact us before checkout for special requests.</dd>
+                <dt>Material</dt>
+                <dd>Decorative pieces are generally made in PLA. We use PETG where extra toughness or moisture resistance is useful. Contact us before ordering if the exact material matters for your use.</dd>
                 <dt>Care</dt>
                 <dd>Handle small moving or separate parts gently. Contact us for material-specific cleaning and care advice.</dd>
               </dl>
@@ -775,19 +793,34 @@ function CartQuantity({id,name,quantity}:{id:string;name:string;quantity:number}
 export function ShopCart() {
   const { items, setQuantity } = useCart();
   const { priceFor, nameFor } = useShopifyCatalog();
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
   const subtotal = items.reduce(
     (sum, item) =>
       sum +
       (() => { const product = products.find((p) => p.id === item.id); return product ? priceFor(product.id, product.priceCents) : 0; })() * item.quantity,
     0,
   );
+  async function beginCheckout() {
+    if (busy || !items.length) return;
+    setBusy(true);
+    setError("");
+    trackShop("begin_checkout", items);
+    try {
+      const checkoutUrl = await createShopifyCheckout(items);
+      window.location.assign(checkoutUrl);
+    } catch (checkoutError) {
+      setError((checkoutError as Error).message);
+      setBusy(false);
+    }
+  }
   return (
     <>
       <ShopNav />
       <PageIntro
         eyebrow="YOUR COLLECTION"
         title="Your cart."
-        description="Review your physical prints. Pickup or delivery is selected at checkout."
+        description="Review your items, then pay securely through Shopify. Free tracked shipping is included across Canada."
       />
       <section className="section">
         <div className="container shop-cart-layout">
@@ -838,16 +871,30 @@ export function ShopCart() {
                 <span>Items</span>
                 <strong>{money(subtotal)} CAD</strong>
               </p>
-              <p>Free standard tracked shipping across Canada. No GST charged.</p>
+              <p className="shop-total">
+                <span>Tracked shipping across Canada</span>
+                <strong>Free</strong>
+              </p>
+              <p className="shop-total shop-cart-total">
+                <strong>Total</strong>
+                <strong>{money(subtotal)} CAD</strong>
+              </p>
               <p className="small">
                 {settings.pricesAreProvisional
                   ? "Prices are provisional pending production review. "
                   : ""}
                 Need a different colour or another change? Contact us before checkout.
               </p>
-              <Link className="button" to="/shop/checkout" onClick={() => trackShop("begin_checkout", items)}>
-                Continue to checkout ↗
-              </Link>
+              {error && <p className="shop-checkout-error" role="alert">{error}</p>}
+              <button
+                className="button shopify-checkout-button"
+                type="button"
+                disabled={busy || !shopifyConfigured}
+                onClick={beginCheckout}
+              >
+                {busy ? "Opening secure checkout…" : "Secure checkout ↗"}
+              </button>
+              <p className="shop-secure-note">Shop Pay · Credit card · PayPal · Google Pay</p>
             </aside>
           )}
         </div>

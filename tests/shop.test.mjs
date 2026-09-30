@@ -223,6 +223,25 @@ test("concurrent identical checkout creates exactly one order", async () => {
   store.close();
 });
 
+test("legacy e-Transfer timing copy is migrated without replacing other admin settings", async () => {
+  const {store, shop} = fixture();
+  await store.put("config/site-content", {
+    fdmStartingPriceCents: 2100,
+    resinStartingPriceCents: 3000,
+    cadHourlyRateCents: 7500,
+    scanningHourlyRateCents: 7500,
+    cncStartingPriceCents: 10000,
+    fdmBuildVolume: "305 × 305 × 400 mm",
+    resinBuildVolume: "223 × 126 × 230 mm",
+    productionTime: "2–3 business days after payment is verified",
+    shippingMessage: "Free tracked shipping across Canada",
+  }, {});
+  const content = await shop.getSiteContent();
+  assert.equal(content.productionTime, "Usually ready to ship in 2–3 business days");
+  assert.equal(content.fdmStartingPriceCents, 2100);
+  store.close();
+});
+
 test("standard orders skip approval; any special request is held until admin approval", async () => {
   const {store, shop} = fixture();
   const standard = await shop.create({...body(), requestMode:"standard"}, randomUUID());

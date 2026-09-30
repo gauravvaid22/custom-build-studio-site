@@ -168,7 +168,12 @@ export function createShop({
   }
   async function getSiteContent() {
     const found = await store.get("config/site-content");
-    return { ...defaultSiteContent, ...(found?.data || {}) };
+    const content = { ...defaultSiteContent, ...(found?.data || {}) };
+    // Remove the wording left by the retired manual e-Transfer workflow.
+    // Keep all other administrator edits intact.
+    if (content.productionTime === "2–3 business days after payment is verified")
+      content.productionTime = defaultSiteContent.productionTime;
+    return content;
   }
   async function saveSiteContent(input) {
     const content = validateSiteContent(input);

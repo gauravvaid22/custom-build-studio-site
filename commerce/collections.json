@@ -72,12 +72,12 @@
   },
   {
     "id": "gifts-under-25",
-    "name": "Gifts Under $25",
-    "shortName": "Under $25",
+    "name": "Gifts $25 & Under",
+    "shortName": "$25 & under",
     "eyebrow": "SMALL GIFTS, BIG PERSONALITY",
-    "heading": "Easy gifts under $25 CAD.",
+    "heading": "Easy gifts at $25 CAD or less.",
     "description": "A quick collection of locally printed characters and small gifts for birthdays, desks and just-because moments.",
-    "seoDescription": "Find locally made 3D-printed gifts under $25 CAD in Edmonton, from articulated creatures to small seasonal and desk gifts.",
+    "seoDescription": "Find locally made 3D-printed gifts at $25 CAD or less in Edmonton, from articulated creatures to small seasonal and desk gifts.",
     "coverProduct": "mood-ghost",
     "products": [
       "skeleton-chameleon",
