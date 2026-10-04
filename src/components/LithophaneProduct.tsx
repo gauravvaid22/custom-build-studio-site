@@ -149,7 +149,7 @@ export function LithophaneProduct() {
             <p className="lead">{product.description}</p>
             <p className="shop-price">{money(displayedPrice)} <span>CAD</span></p>
             <ul className="shop-purchase-facts" aria-label="Purchase details">
-              <li>Warm-white LED base and USB inline switch included</li>
+              <li>Wooden warm-white LED base and USB inline switch included</li>
               <li>{product.leadTime}</li>
               <li>Free tracked shipping across Canada</li>
             </ul>
@@ -201,7 +201,7 @@ export function LithophaneProduct() {
           <div className="section-heading"><div><p className="eyebrow">THREE SIMPLE STEPS</p><h2>From photo to finished light.</h2></div></div>
           <ol>
             <li><span>01</span><div><strong>Upload your photo</strong><p>Choose a clear, high-contrast image and preview how it wraps around the cylinder.</p></div></li>
-            <li><span>02</span><div><strong>Precision production</strong><p>We prepare the crop, manufacture the shade at a fine 0.12 mm layer height, and assemble the LED base.</p></div></li>
+            <li><span>02</span><div><strong>Precision production</strong><p>We prepare the crop, manufacture the shade at a fine 0.12 mm layer height, and assemble it with the wooden LED base.</p></div></li>
             <li><span>03</span><div><strong>Shipped to your door</strong><p>Every lamp is hand-inspected in Edmonton before free tracked Canadian shipping.</p></div></li>
           </ol>
         </section>
