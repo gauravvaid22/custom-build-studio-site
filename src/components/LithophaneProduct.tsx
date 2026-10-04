@@ -56,7 +56,6 @@ export function LithophaneProduct() {
   const { add } = useCart();
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageIndex, setImageIndex] = useState(0);
-  const [lightsOn, setLightsOn] = useState(true);
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
   const [tipsOpen, setTipsOpen] = useState(false);
@@ -129,7 +128,7 @@ export function LithophaneProduct() {
         </nav>
         <div className="lithophane-hero">
           <div className="lithophane-visual-column">
-            <div className={`lithophane-hero-media ${lightsOn ? "is-lit" : "is-unlit"}`}>
+            <div className="lithophane-hero-media is-lit">
               <img src={activeImage.src} alt={activeImage.alt} />
               {activeImage.concept && <span className="lithophane-concept-label">Concept preview</span>}
               <div className="lithophane-glow" aria-hidden="true" />
@@ -142,10 +141,6 @@ export function LithophaneProduct() {
                   </button>
                 ))}
               </div>
-              <button className="lithophane-light-switch" type="button" role="switch" aria-checked={lightsOn} onClick={() => setLightsOn((value) => !value)}>
-                <span aria-hidden="true" />
-                Lights {lightsOn ? "on" : "off"}
-              </button>
             </div>
           </div>
           <div className="lithophane-summary">
@@ -178,7 +173,7 @@ export function LithophaneProduct() {
               </div>
               {preview && (
                 <div className="lithophane-customer-preview">
-                  <div className={`lithophane-preview-cylinder ${lightsOn ? "is-lit" : ""}`} style={{ backgroundImage: `url(${preview})` }} aria-label="Approximate cylindrical preview of your uploaded photograph" />
+                  <div className="lithophane-preview-cylinder is-lit" style={{ backgroundImage: `url(${preview})` }} aria-label="Approximate illuminated cylindrical preview of your uploaded photograph" />
                   <div><strong>Approximate wrap preview</strong><small>The final crop and brightness are reviewed before production.</small></div>
                 </div>
               )}

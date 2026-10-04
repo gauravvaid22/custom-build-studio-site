@@ -18,28 +18,28 @@
         "id": "real-lit-front",
         "src": "/media/shop/lithophane-table-lamp/2-1200.webp",
         "thumb": "/media/shop/lithophane-table-lamp/2-480.webp",
-        "alt": "Real finished cylindrical lithophane lamp illuminated with warm light",
+        "alt": "Illuminated cylindrical lithophane lamp displayed on a walnut console in a modern living room",
         "concept": false
       },
       {
-        "id": "real-unlit-front",
+        "id": "real-entryway-display",
         "src": "/media/shop/lithophane-table-lamp/3-1200.webp",
         "thumb": "/media/shop/lithophane-table-lamp/3-480.webp",
-        "alt": "Real finished cylindrical lithophane lamp switched off, showing the white relief texture and wooden base",
+        "alt": "Illuminated cylindrical lithophane lamp on a refined entryway console",
         "concept": false
       },
       {
-        "id": "real-lit-side",
+        "id": "real-daylight-display",
         "src": "/media/shop/lithophane-table-lamp/4-1200.webp",
         "thumb": "/media/shop/lithophane-table-lamp/4-480.webp",
-        "alt": "Real illuminated cylindrical lithophane lamp viewed from the pumpkin side",
+        "alt": "Illuminated cylindrical lithophane lamp in a bright modern bedroom",
         "concept": false
       },
       {
-        "id": "real-relief-detail",
+        "id": "real-illuminated-detail",
         "src": "/media/shop/lithophane-table-lamp/5-1200.webp",
         "thumb": "/media/shop/lithophane-table-lamp/5-480.webp",
-        "alt": "Close detail of the real lithophane relief surface and pale wooden base",
+        "alt": "Illuminated close detail of the real lithophane relief surface and pale wooden base",
         "concept": false
       }
     ]

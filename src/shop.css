@@ -768,18 +768,12 @@
 .lithophane-visual-column { min-width: 0; position: sticky; top: 88px; }
 .lithophane-hero-media { position: relative; isolation: isolate; overflow: hidden; min-height: 610px; background: #111c2b; border: 1px solid rgba(125,211,252,.18); box-shadow: 0 32px 90px rgba(0,0,0,.38); transition: filter .45s ease, box-shadow .45s ease; }
 .lithophane-hero-media img { width: 100%; height: 100%; min-height: 610px; object-fit: cover; display: block; transition: filter .45s ease, transform .6s ease, opacity .45s ease; }
-.lithophane-hero-media.is-unlit img { filter: grayscale(1) brightness(.7) contrast(1.18); opacity: .82; }
 .lithophane-hero-media.is-lit { box-shadow: 0 34px 110px rgba(245,158,11,.16), 0 32px 90px rgba(0,0,0,.38); }
 .lithophane-glow { position: absolute; z-index: -1; width: 54%; aspect-ratio: 1; right: 4%; bottom: 5%; border-radius: 50%; background: rgba(251,191,36,.22); filter: blur(70px); opacity: 0; transition: opacity .45s ease; }
 .is-lit .lithophane-glow { opacity: 1; }
 .lithophane-concept-label { position: absolute; left: 18px; bottom: 18px; background: rgba(8,15,26,.88); border: 1px solid rgba(255,255,255,.24); color: white; padding: 8px 11px; font-size: .73rem; letter-spacing: .09em; text-transform: uppercase; }
-.lithophane-media-controls { display: flex; justify-content: space-between; gap: 20px; align-items: center; margin-top: 16px; }
+.lithophane-media-controls { display: flex; justify-content: flex-start; gap: 20px; align-items: center; margin-top: 16px; }
 .lithophane-page .shop-thumbs { margin: 0; }
-.lithophane-light-switch { display: inline-flex; align-items: center; gap: 10px; border: 1px solid rgba(125,211,252,.42); background: #111c2b; color: #e6f5ff; padding: 10px 14px; cursor: pointer; font: inherit; white-space: nowrap; }
-.lithophane-light-switch span { width: 34px; height: 18px; border-radius: 999px; background: #25364b; position: relative; transition: background .25s ease; }
-.lithophane-light-switch span::after { content: ""; position: absolute; width: 12px; height: 12px; left: 3px; top: 3px; border-radius: 50%; background: #cbd5e1; transition: transform .25s ease, background .25s ease; }
-.lithophane-light-switch[aria-checked="true"] span { background: #0ea5e9; }
-.lithophane-light-switch[aria-checked="true"] span::after { transform: translateX(16px); background: white; }
 .lithophane-summary { padding-top: clamp(14px, 3vw, 46px); }
 .lithophane-page .eyebrow, .lithophane-page .small { color: #a9bdcc; }
 .lithophane-summary h1 { color: white; max-width: 720px; font-size: clamp(2.7rem, 5.2vw, 5.2rem); line-height: .96; letter-spacing: -.045em; margin: 12px 0 20px; }
@@ -872,7 +866,6 @@
 @media (prefers-reduced-motion: reduce) {
   .lithophane-scroll-in { animation: none !important; transform: none !important; filter: none !important; opacity: 1 !important; }
   .lithophane-hero-media, .lithophane-hero-media img, .lithophane-glow,
-  .lithophane-light-switch span, .lithophane-light-switch span::after,
   .lithophane-upload, .lithophane-preview-cylinder { transition: none; }
 }
 

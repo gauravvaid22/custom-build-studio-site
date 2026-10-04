@@ -432,10 +432,8 @@ async function scroll(page) {
     await page.evaluate(() => localStorage.removeItem("cbs-cart-v1"));
     await page.reload();
     assert(await page.getByRole("heading", { name: "Custom Cylindrical Lithophane Table Lamp" }).isVisible());
-    const light = page.getByRole("switch");
-    await light.click();
-    assert.equal(await light.getAttribute("aria-checked"), "false");
-    await light.click();
+    assert.equal(await page.getByRole("switch").count(), 0);
+    assert(await page.locator(".lithophane-hero-media.is-lit").isVisible());
     await page.locator('input[type="file"]').first().setInputFiles("public/media/shop/lithophane-table-lamp/1-480.webp");
     await page.getByText("Approximate wrap preview").waitFor();
     await page.getByRole("button", { name: "Upload photo & add to cart" }).click();
@@ -445,7 +443,7 @@ async function scroll(page) {
     assert.equal(personalized[0].attributes.find((item) => item.key === "Original filename").value, "family-photo.jpg");
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false);
   }
-  results.interactions.push("Lithophane lights toggle, customer photo preview, chunked upload metadata and personalized cart line on desktop and mobile");
+  results.interactions.push("Always-illuminated lithophane gallery, customer photo preview, chunked upload metadata and personalized cart line on desktop and mobile");
   for (const width of [1440, 390]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto(origin + "/shop/night-owl-wall-light");
