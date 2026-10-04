@@ -10,7 +10,9 @@ import "../shop.css";
 import { trackShop } from "../components/Analytics";
 import { createShopifyCheckout, shopifyConfigured } from "../lib/shopify";
 import { useShopifyCatalog } from "../components/ShopifyCatalog";
-import { type SiteContent, useSiteContent } from "../components/SiteContent";
+import { type ProductContent, type SiteContent, useProductContent, useSiteContent } from "../components/SiteContent";
+import { LithophaneProduct } from "../components/LithophaneProduct";
+import { LithophaneAdmin } from "../components/LithophaneAdmin";
 
 type Product = (typeof products)[number];
 type ProductVariant = {
@@ -238,6 +240,10 @@ function AddProduct({
 }
 function ShopProductCard({ product }: { product: Product }) {
   const { priceFor, nameFor } = useShopifyCatalog();
+  const managedProducts = useProductContent();
+  const managed = product.id === "lithophane-table-lamp" ? managedProducts["lithophane-table-lamp"] : null;
+  const displayName = managed?.name || nameFor(product.id, product.name);
+  const displayPrice = managed ? managed.priceCents : priceFor(product.id, product.priceCents);
   const alternate = product.images[1];
   const variants = variantsFor(product);
   const hasPriceRange = variants.length > 1 && variants.some(
@@ -265,12 +271,14 @@ function ShopProductCard({ product }: { product: Product }) {
       </Link>
       <div className="shop-card-body">
         <p className="eyebrow">MADE IN EDMONTON</p>
-        <h3><Link to={`/shop/${product.id}`}>{nameFor(product.id, product.name)}</Link></h3>
+        <h3><Link to={`/shop/${product.id}`}>{displayName}</Link></h3>
         <p className="shop-price">
-          {hasPriceRange ? "From " : ""}{money(priceFor(product.id, product.priceCents))}{" "}
+          {hasPriceRange ? "From " : ""}{money(displayPrice)}{" "}
           <span>CAD</span>
         </p>
-        {variantsFor(product).length ? (
+        {managed ? (
+          <Link className="button" to={`/shop/${product.id}`}>{managed.available ? "Personalize yours ↗" : "View details ↗"}</Link>
+        ) : variantsFor(product).length ? (
           <Link className="button" to={`/shop/${product.id}`}>
             {"variantLabel" in product && product.variantLabel === "Design"
               ? "Choose design ↗"
@@ -309,7 +317,7 @@ export function Shop() {
   const featuredProduct = catalogProduct("basilisk-dice-tower")!;
   const primaryCollections = collections.filter((collection) => collection.id !== "gifts-under-25");
   const under25 = collections.find((collection) => collection.id === "gifts-under-25")!;
-  const featuredIds = ["dinosaur-skeleton-collection", "octopus-wine-bottle-holder", "night-owl-wall-light", "basilisk-dice-tower", "mood-ghost", "ghost-arch-wreath"];
+  const featuredIds = ["lithophane-table-lamp", "dinosaur-skeleton-collection", "octopus-wine-bottle-holder", "night-owl-wall-light", "basilisk-dice-tower", "mood-ghost"];
   return (
     <>
       <ShopNav />
@@ -599,6 +607,7 @@ export function ShopProduct() {
     }
   }, [id, searchParams]);
   if (!product) return <NotFound />;
+  if (product.id === "lithophane-table-lamp") return <><ShopNav /><ShopNotice /><LithophaneProduct /></>;
   const videos =
     "videos" in product && Array.isArray(product.videos)
       ? product.videos
@@ -847,6 +856,14 @@ export function ShopCart() {
                         <Link to={`/shop/${productRoute}`}>{nameFor(product.id, product.name)}</Link>
                       </h2>
                       <p>{money(priceFor(product.id, product.priceCents))} CAD each</p>
+                      {item.attributes?.length ? (
+                        <p className="shop-personalization-summary">
+                          ✓ Personalization photo attached
+                          {item.attributes.find((attribute) => attribute.key === "Original filename")?.value
+                            ? ` · ${item.attributes.find((attribute) => attribute.key === "Original filename")?.value}`
+                            : ""}
+                        </p>
+                      ) : null}
                       <label>
                         Quantity
                         <CartQuantity id={item.id} name={nameFor(product.id, product.name)} quantity={item.quantity}/>
@@ -982,7 +999,7 @@ export function Checkout() {
           <aside className="note-panel">
             <h2>Your order</h2>
             {items.map((item) => (
-              <p className="shop-total" key={item.id}>
+              <div className="shop-checkout-line" key={item.id}><p className="shop-total">
                 <span>
                   {(() => { const product = products.find((p) => p.id === item.id); return product ? nameFor(product.id, product.name) : "Product"; })()} ×{" "}
                   {item.quantity}
@@ -992,7 +1009,7 @@ export function Checkout() {
                     (() => { const product = products.find((p) => p.id === item.id); return product ? priceFor(product.id, product.priceCents) : 0; })() * item.quantity,
                   )}
                 </strong>
-              </p>
+              </p>{item.attributes?.length ? <small>Personalization photo attached to this item.</small> : null}</div>
             ))}
             <p className="shop-total">
               <span>Subtotal</span>
@@ -1160,6 +1177,7 @@ export function OrderConfirmation() {
 }
 export function ShopAdmin() {
   const publicContent = useSiteContent();
+  const publicProductContent = useProductContent();
   const { priceFor, nameFor } = useShopifyCatalog();
   const [key, setKey] = useState(""),
     [orders, setOrders] = useState<Order[]>([]),
@@ -1167,16 +1185,19 @@ export function ShopAdmin() {
     [logged, setLogged] = useState(false),
     [busy, setBusy] = useState(false),
     [content, setContent] = useState<SiteContent>(publicContent),
-    [tab, setTab] = useState<"orders" | "website" | "products">("orders"),
+    [productContent, setProductContent] = useState<ProductContent>(publicProductContent),
+    [tab, setTab] = useState<"orders" | "website" | "products" | "lithophane">("orders"),
     [saved, setSaved] = useState("");
   async function load() {
     try {
-      const [orderData, contentData] = await Promise.all([
+      const [orderData, contentData, productData] = await Promise.all([
         api("list", {}, { Authorization: "Bearer " + key }),
         api("get-content", {}, { Authorization: "Bearer " + key }),
+        api("get-product-content", {}, { Authorization: "Bearer " + key }),
       ]);
       setOrders(orderData.orders);
       setContent(contentData.siteContent);
+      setProductContent(productData.productContent);
       setLogged(true);
       setError("");
     } catch (e) {
@@ -1272,6 +1293,7 @@ export function ShopAdmin() {
                 <button className={tab === "orders" ? "button" : "button button-dark"} onClick={() => setTab("orders")}>Orders</button>
                 <button className={tab === "website" ? "button" : "button button-dark"} onClick={() => setTab("website")}>Website settings</button>
                 <button className={tab === "products" ? "button" : "button button-dark"} onClick={() => setTab("products")}>Product prices</button>
+                <button className={tab === "lithophane" ? "button" : "button button-dark"} onClick={() => setTab("lithophane")}>Lithophane product</button>
                 <button
                   className="button button-dark"
                   onClick={() => {
@@ -1399,6 +1421,13 @@ export function ShopAdmin() {
                     ))}
                   </div>
                 </section>
+              )}
+              {tab === "lithophane" && (
+                <LithophaneAdmin
+                  adminKey={key}
+                  initial={productContent["lithophane-table-lamp"]}
+                  onSaved={(value) => setProductContent({ ...productContent, "lithophane-table-lamp": value })}
+                />
               )}
             </>
           )}

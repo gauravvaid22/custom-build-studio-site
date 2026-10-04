@@ -1,0 +1,26 @@
+{
+  "lithophane-table-lamp": {
+    "name": "Custom Cylindrical Lithophane Table Lamp",
+    "description": "Turn a favourite photograph into a warm, dimensional light. The cylindrical shade appears as an elegant embossed white sculpture when unlit, then reveals the image through soft light and shadow when switched on.",
+    "priceCents": 7999,
+    "available": true,
+    "leadTime": "Made to order. Allow 4–6 business days before shipping.",
+    "details": "Base and cylinder diameter: 100 mm\nApproximate height: 170 mm; varies slightly with photo aspect ratio\nWarm-white internal LED base\nUSB power with inline switch\nFine 0.12 mm layer height for photographic detail",
+    "images": [
+      {
+        "id": "concept-lifestyle",
+        "src": "/media/shop/lithophane-table-lamp/1-1200.webp",
+        "thumb": "/media/shop/lithophane-table-lamp/1-480.webp",
+        "alt": "Concept preview of a personalized cylindrical lithophane lamp glowing on a dark walnut nightstand",
+        "concept": true
+      },
+      {
+        "id": "concept-close-up",
+        "src": "/media/shop/lithophane-table-lamp/2-1200.webp",
+        "thumb": "/media/shop/lithophane-table-lamp/2-480.webp",
+        "alt": "Concept close-up showing the embossed surface and warm illuminated detail of a cylindrical lithophane lamp",
+        "concept": true
+      }
+    ]
+  }
+}

@@ -2,6 +2,40 @@ import { getStore } from "@netlify/blobs";
 import { createShop } from "../../commerce/core.mjs";
 import { handler } from "../../commerce/http.mjs";
 import { resendMailer } from "../../commerce/notifications.mjs";
+
+const shopifyCatalogSync = (token) => token ? async ({id, name, priceCents}) => {
+  const endpoint = "https://aqk73w-k2.myshopify.com/admin/api/2026-07/graphql.json";
+  const call = async (query, variables) => {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Shopify-Access-Token": token },
+      body: JSON.stringify({ query, variables }),
+    });
+    const payload = await response.json();
+    if (!response.ok || payload.errors?.length)
+      throw new Error(payload.errors?.[0]?.message || "Shopify catalog sync failed.");
+    return payload.data;
+  };
+  const lookup = await call(
+    `query ProductForWebsite($handle: String!) { productByIdentifier(identifier: {handle: $handle}) { id variants(first: 1) { nodes { id } } } }`,
+    { handle: id },
+  );
+  const product = lookup.productByIdentifier;
+  if (!product?.id || !product.variants?.nodes?.[0]?.id)
+    throw new Error("Create the Lithophane Table Lamp product in Shopify before changing its website name or price.");
+  const update = await call(
+    `mutation UpdateWebsiteProduct($product: ProductUpdateInput!) { productUpdate(product: $product) { product { id } userErrors { message } } }`,
+    { product: { id: product.id, title: name } },
+  );
+  const titleError = update.productUpdate.userErrors?.[0]?.message;
+  if (titleError) throw new Error(titleError);
+  const variants = await call(
+    `mutation UpdateWebsitePrice($productId: ID!, $variants: [ProductVariantsBulkInput!]!) { productVariantsBulkUpdate(productId: $productId, variants: $variants) { productVariants { id } userErrors { message } } }`,
+    { productId: product.id, variants: [{ id: product.variants.nodes[0].id, price: (priceCents / 100).toFixed(2) }] },
+  );
+  const priceError = variants.productVariantsBulkUpdate.userErrors?.[0]?.message;
+  if (priceError) throw new Error(priceError);
+} : null;
 export default async (request, context) => {
   // Preview deploys never share orders or payment instructions with production.
   const deployContext = context?.deploy?.context || process.env.CONTEXT;
@@ -25,6 +59,7 @@ export default async (request, context) => {
       enabled: production && process.env.SHOP_LIVE_ENABLED === "true",
       adminKey: process.env.SHOP_ADMIN_KEY || "",
       mailer: production ? resendMailer({apiKey: process.env.RESEND_API_KEY, from: process.env.SHOP_EMAIL_FROM}) : null,
+      catalogSync: production ? shopifyCatalogSync(process.env.SHOPIFY_ADMIN_ACCESS_TOKEN || "") : null,
     }),
   )(request);
 };

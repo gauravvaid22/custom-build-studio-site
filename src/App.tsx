@@ -10,6 +10,7 @@ import Contact from "./pages/Contact";
 import { CartProvider } from "./components/Cart";
 import { ShopifyCatalogProvider } from "./components/ShopifyCatalog";
 import { SiteContentProvider } from "./components/SiteContent";
+import { UploadedPhotoViewer } from "./components/LithophaneProduct";
 import { Shop, HalloweenSpecial, ShopCollection, ShopProduct, ShopCart, Checkout, OrderConfirmation, ShopAdmin } from "./pages/Shop";
 import {
   About,
@@ -76,6 +77,7 @@ export default function App() {
           <Route path="/shop/checkout" element={<Checkout />} />
           <Route path="/shop/order" element={<OrderConfirmation />} />
           <Route path="/shop/admin" element={<ShopAdmin />} />
+          <Route path="/shop/photo" element={<UploadedPhotoViewer />} />
           <Route path="/shop/:id" element={<ShopProduct />} />
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/contact" element={<Contact key={location.search} />} />

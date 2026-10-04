@@ -60,9 +60,10 @@ Backend delivery, spam classification, notification settings and storage quotas 
 - `src/data/services.ts`: the four services, descriptions and materials guidance.
 - `src/data/projects.json`: portfolio content. Add a unique `id`, title, description, material, service IDs and real photographs. Service IDs control filtering. A new project automatically gets a detail page and sitemap entry on the next build.
 - `src/data/images.json`: responsive image mapping. The original photos remain in `public/images`; pages use the optimized WebP files in `public/media`.
-- `/shop/admin`: edits public service prices, machine build volumes, production time and shipping copy without a code deploy. Shopify Admin remains the source of truth for product prices and checkout.
+- `/shop/admin`: edits public service details and the lithophane lamp's copy, availability, lead time and gallery without a code deploy. Product name and price updates sync to Shopify when `SHOPIFY_ADMIN_ACCESS_TOKEN` is configured with `write_products` access.
 - `commerce/products.json`: product content and fallback prices used during prerendering or if Shopify is unavailable.
 - `commerce/site-content.json`: fallback values for administrator-editable website settings.
+- `commerce/product-content.json`: fallback lithophane product content used before Netlify Blob overrides load.
 - `src/pages/Studio.tsx`: studio and pricing-page structure.
 - `src/data/seo.ts`: page metadata, generated routes and LocalBusiness data.
 

@@ -2,6 +2,7 @@ import { createHash, timingSafeEqual } from "node:crypto";
 import catalog from "./products.json" with { type: "json" };
 import settings from "./settings.json" with { type: "json" };
 import defaultSiteContent from "./site-content.json" with { type: "json" };
+import defaultProductContent from "./product-content.json" with { type: "json" };
 import { ownerEmail } from "./notifications.mjs";
 
 export { catalog, settings };
@@ -137,6 +138,7 @@ export function createShop({
   enabled = false,
   adminKey = "",
   mailer = null,
+  catalogSync = null,
   clock = () => new Date(),
 }) {
   const contentNumberFields = [
@@ -179,6 +181,79 @@ export function createShop({
     const content = validateSiteContent(input);
     await store.put("config/site-content", content, {});
     return content;
+  }
+  function validateProductContent(input) {
+    if (!input || typeof input !== "object" || Array.isArray(input))
+      fail("Invalid product settings.");
+    const defaults = defaultProductContent["lithophane-table-lamp"];
+    const name = text(input.name, "product name", 120);
+    const description = text(input.description, "product description", 1200);
+    const details = text(input.details, "product details", 2000);
+    const leadTime = text(input.leadTime, "lead time", 180);
+    const priceCents = Number(input.priceCents);
+    if (!Number.isInteger(priceCents) || priceCents < 100 || priceCents > 10000000)
+      fail("Enter a valid product price in cents.");
+    if (!Array.isArray(input.images) || input.images.length < 1 || input.images.length > 12)
+      fail("Keep between 1 and 12 showcase images.");
+    const images = input.images.map((image) => {
+      if (!image || typeof image !== "object" || Array.isArray(image))
+        fail("Invalid showcase image.");
+      const id = text(image.id, "image identifier", 100);
+      const src = text(image.src, "image URL", 700);
+      const thumb = text(image.thumb || image.src, "thumbnail URL", 700);
+      const alt = text(image.alt || `${name} showcase image`, "image description", 220);
+      const allowed = (value) =>
+        value.startsWith("/media/shop/lithophane-table-lamp/") ||
+        value.startsWith("/.netlify/functions/shop-media?id=");
+      if (!allowed(src) || !allowed(thumb)) fail("Use an approved product image URL.");
+      return { id, src, thumb, alt, concept: image.concept === true };
+    });
+    return {
+      ...defaults,
+      name,
+      description,
+      details,
+      leadTime,
+      priceCents,
+      available: input.available === true,
+      images,
+    };
+  }
+  async function getProductContent() {
+    const found = await store.get("config/product-content");
+    return {
+      ...defaultProductContent,
+      ...(found?.data || {}),
+      "lithophane-table-lamp": {
+        ...defaultProductContent["lithophane-table-lamp"],
+        ...(found?.data?.["lithophane-table-lamp"] || {}),
+      },
+    };
+  }
+  async function saveProductContent(input) {
+    const current = await getProductContent();
+    const product = validateProductContent(input);
+    const previous = current["lithophane-table-lamp"];
+    const catalogChanged = previous.name !== product.name || previous.priceCents !== product.priceCents;
+    if (enabled && catalogChanged && !catalogSync)
+      fail("Shopify catalog sync is not configured. Add SHOPIFY_ADMIN_ACCESS_TOKEN before changing the public product name or price.", 503);
+    if (
+      catalogSync &&
+      catalogChanged
+    ) {
+      try {
+        await catalogSync({
+          id: "lithophane-table-lamp",
+          name: product.name,
+          priceCents: product.priceCents,
+        });
+      } catch (error) {
+        fail(error instanceof Error ? error.message : "Shopify catalog sync failed.", 502);
+      }
+    }
+    const productContent = { ...current, "lithophane-table-lamp": product };
+    await store.put("config/product-content", productContent, {});
+    return productContent;
   }
   const ready =
     testMode ||
@@ -376,6 +451,8 @@ export function createShop({
     notifyOwner,
     getSiteContent,
     saveSiteContent,
+    getProductContent,
+    saveProductContent,
     ready,
     setupChecks,
     testMode,

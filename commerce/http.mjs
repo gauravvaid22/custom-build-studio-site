@@ -18,6 +18,7 @@ export function handler(shop) {
         return response({
           settings,
           siteContent: await shop.getSiteContent(),
+          productContent: await shop.getProductContent(),
           ready: shop.ready,
           setupChecks: shop.setupChecks,
           testMode: shop.testMode,
@@ -59,6 +60,10 @@ export function handler(shop) {
         return response({ siteContent: await shop.getSiteContent() });
       if (action === "save-content")
         return response({ siteContent: await shop.saveSiteContent(body.siteContent) });
+      if (action === "get-product-content")
+        return response({ productContent: await shop.getProductContent() });
+      if (action === "save-product-content")
+        return response({ productContent: await shop.saveProductContent(body.product) });
       if (action === "retry-email") {
         await shop.notifyOwner(body.id);
         return response({orders: await shop.list()});

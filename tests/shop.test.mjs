@@ -242,6 +242,27 @@ test("legacy e-Transfer timing copy is migrated without replacing other admin se
   store.close();
 });
 
+test("lithophane product content persists with validated gallery images", async () => {
+  const {store, shop} = fixture();
+  const defaults = await shop.getProductContent();
+  const lamp = defaults["lithophane-table-lamp"];
+  assert.equal(lamp.name, "Custom Cylindrical Lithophane Table Lamp");
+  const saved = await shop.saveProductContent({
+    ...lamp,
+    description: "A saved test description for the personalized lamp.",
+    leadTime: "TEST: four business days",
+    images: [lamp.images[1], lamp.images[0]],
+  });
+  assert.equal(saved["lithophane-table-lamp"].images[0].id, "concept-close-up");
+  assert.equal((await shop.getProductContent())["lithophane-table-lamp"].leadTime, "TEST: four business days");
+  await assert.rejects(
+    shop.saveProductContent({...lamp, images: [{...lamp.images[0], src: "https://evil.example/image.jpg"}]}),
+    /approved product image URL/,
+  );
+  await assert.rejects(shop.saveProductContent({...lamp, priceCents: 0}), /valid product price/);
+  store.close();
+});
+
 test("standard orders skip approval; any special request is held until admin approval", async () => {
   const {store, shop} = fixture();
   const standard = await shop.create({...body(), requestMode:"standard"}, randomUUID());

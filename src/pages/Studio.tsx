@@ -321,6 +321,15 @@ export function Privacy() {
             information we control, subject to transaction records we must
             retain.
           </p>
+          <h2>Personalized product photos</h2>
+          <p>
+            If you order a personalized lithophane lamp, the photograph you
+            provide is stored in private, unlisted Netlify Blob storage and a
+            reference is attached to the Shopify order. Custom Build Studio
+            uses the image only to prepare and produce your order. Do not
+            upload sensitive documents or images you do not have permission to
+            use. Contact the studio to request deletion after fulfillment.
+          </p>
           <h2>Website analytics</h2>
           <p>
             We measure quote starts and clicks on the business phone link as

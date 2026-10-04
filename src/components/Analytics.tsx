@@ -25,7 +25,7 @@ const production = () =>
 // These routes can contain private order or administration data. The public
 // Shopify handoff page remains tracked so the full customer funnel is visible.
 const privateRoute = () =>
-  /^\/shop\/(order|admin)(\/|$)/.test(window.location.pathname);
+  /^\/shop\/(order|admin|photo)(\/|$)/.test(window.location.pathname);
 const validMeasurementId = () => Boolean(measurementId?.match(/^G-[A-Z0-9]+$/));
 const validAdsId = () => Boolean(googleAdsId?.match(/^AW-\d+$/));
 const analyticsDisabledKey = () =>

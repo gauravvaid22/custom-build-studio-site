@@ -31,6 +31,7 @@ const routes = [
   "/shop/octopus-wine-bottle-holder",
   "/shop/mood-ghost",
   "/shop/ghost-arch-wreath",
+  "/shop/lithophane-table-lamp",
   "/reviews",
   "/contact",
   "/privacy",
@@ -126,6 +127,16 @@ async function scroll(page) {
         },
       }),
     });
+  });
+  await page.route("**/.netlify/functions/shop-media**", async (route) => {
+    const url = new URL(route.request().url());
+    const action = url.searchParams.get("action");
+    const bodies = {
+      start: { id: "11111111-1111-4111-8111-111111111111", token: "test-upload-token", chunkBytes: 3145728, parts: 1 },
+      chunk: { received: 0 },
+      complete: { id: "11111111-1111-4111-8111-111111111111", name: "family-photo.jpg", referenceUrl: "/shop/photo?id=11111111-1111-4111-8111-111111111111&token=test-upload-token" },
+    };
+    await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(bodies[action] || {}) });
   });
   page.on("pageerror", (e) => results.errors.push(e.message));
   page.on("console", (e) => {
@@ -414,6 +425,26 @@ async function scroll(page) {
     );
   }
   results.interactions.push("Mood Ghost design selector keeps both designs at $26.00 on desktop and mobile");
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(origin + "/shop/lithophane-table-lamp");
+    await page.evaluate(() => localStorage.removeItem("cbs-cart-v1"));
+    await page.reload();
+    assert(await page.getByRole("heading", { name: "Custom Cylindrical Lithophane Table Lamp" }).isVisible());
+    const light = page.getByRole("switch");
+    await light.click();
+    assert.equal(await light.getAttribute("aria-checked"), "false");
+    await light.click();
+    await page.locator('input[type="file"]').first().setInputFiles("public/media/shop/lithophane-table-lamp/1-480.webp");
+    await page.getByText("Approximate wrap preview").waitFor();
+    await page.getByRole("button", { name: "Upload photo & add to cart" }).click();
+    await page.getByText("Photo attached and lamp added.").waitFor();
+    const personalized = await page.evaluate(() => JSON.parse(localStorage.getItem("cbs-cart-v1") || "[]"));
+    assert.equal(personalized[0].id, "lithophane-table-lamp");
+    assert.equal(personalized[0].attributes.find((item) => item.key === "Original filename").value, "family-photo.jpg");
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false);
+  }
+  results.interactions.push("Lithophane lights toggle, customer photo preview, chunked upload metadata and personalized cart line on desktop and mobile");
   for (const width of [1440, 390]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto(origin + "/shop/night-owl-wall-light");

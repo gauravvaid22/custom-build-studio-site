@@ -137,7 +137,21 @@ async function merchandiseFor(items: CartItem[]) {
       const name = products.find((product) => product.id === item.id)?.name;
       throw new Error(`${name || "A product"} is not available at checkout.`);
     }
-    return { merchandiseId: variant.id, quantity: item.quantity };
+    return {
+      merchandiseId: variant.id,
+      quantity: item.quantity,
+      ...(item.attributes?.length
+        ? {
+            attributes: item.attributes
+              .filter((attribute) => attribute.key && attribute.value)
+              .slice(0, 10)
+              .map((attribute) => ({
+                key: attribute.key.slice(0, 80),
+                value: attribute.value.slice(0, 500),
+              })),
+          }
+        : {}),
+    };
   });
 }
 

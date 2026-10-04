@@ -1,11 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import products from "../../commerce/products.json";
 import { trackShop } from "./Analytics";
-export type CartItem = { id: string; quantity: number };
+export type CartAttribute = { key: string; value: string };
+export type CartItem = { id: string; quantity: number; attributes?: CartAttribute[] };
 type CartContextType = {
   items: CartItem[];
   setQuantity: (id: string, quantity: number) => void;
-  add: (id: string, quantity: number) => boolean;
+  add: (id: string, quantity: number, attributes?: CartAttribute[]) => boolean;
   clear: () => void;
   notice: string;
 };
@@ -55,7 +56,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         : current.map((item) => (item.id === id ? { id, quantity } : item)),
     );
   };
-  const add = (id: string, quantity: number) => {
+  const add = (id: string, quantity: number, attributes?: CartAttribute[]) => {
     if (
       !products.some((p) => p.id === id) ||
       !Number.isInteger(quantity) ||
@@ -70,10 +71,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return found
         ? current.map((item) =>
             item.id === id
-              ? { id, quantity: Math.min(20, item.quantity + quantity) }
+              ? {
+                  id,
+                  quantity: Math.min(20, item.quantity + quantity),
+                  ...(attributes?.length ? { attributes } : item.attributes ? { attributes: item.attributes } : {}),
+                }
               : item,
           )
-        : [...current, { id, quantity }];
+        : [...current, { id, quantity, ...(attributes?.length ? { attributes } : {}) }];
     });
     setNotice(
       `${products.find((p) => p.id === id)!.name} added to cart. Maximum 20 of each product.`,

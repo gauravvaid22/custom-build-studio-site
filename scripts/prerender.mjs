@@ -16,7 +16,7 @@ const escape = (value) =>
       ],
   );
 const preview = process.env.CONTEXT && process.env.CONTEXT !== "production";
-for (const route of [...publicRoutes, "/thank-you", "/404", "/shop/cart", "/shop/checkout", "/shop/order", "/shop/admin"]) {
+for (const route of [...publicRoutes, "/thank-you", "/404", "/shop/cart", "/shop/checkout", "/shop/order", "/shop/admin", "/shop/photo"]) {
   const seo = getSeo(route);
   const head = `<title>${escape(seo.title)}</title>
 <meta name="build-context" content="${preview ? "preview" : "production"}" />
@@ -58,5 +58,5 @@ await writeFile(
 );
 // Only client assets and generated HTML are deployed; the SSR intermediate is never published.
 console.log(
-  `Prerendered ${publicRoutes.length + 6} pages with route-specific metadata and a crawlable sitemap.`,
+  `Prerendered ${publicRoutes.length + 7} pages with route-specific metadata and a crawlable sitemap.`,
 );

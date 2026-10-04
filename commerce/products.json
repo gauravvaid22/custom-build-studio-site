@@ -1081,6 +1081,36 @@
     "source": "local authorized media package: WEBSITE PRODUCT/GHOST DUO - TRINKET DISH"
   },
   {
+    "id": "lithophane-table-lamp",
+    "name": "Custom Cylindrical Lithophane Table Lamp",
+    "priceCents": 7999,
+    "category": "Home décor",
+    "seasonal": false,
+    "personalized": true,
+    "description": "Turn a favourite photograph into a warm, dimensional light. The cylindrical shade appears as an elegant embossed white sculpture when unlit, then reveals the image through soft light and shadow when switched on.",
+    "included": "One personalized cylindrical lithophane lamp with warm-white internal LED base, USB power cable and inline switch. Customer photo must be supplied before checkout.",
+    "dimensions": "Base diameter: 100 mm. Cylinder diameter: 100 mm. Approximate height: 170 mm; final height can vary slightly with the supplied photo aspect ratio.",
+    "notes": "Made from your uploaded photograph at a fine 0.12 mm layer height. Concept images demonstrate the intended effect; your finished lamp will use the photo you provide.",
+    "images": [
+      {
+        "src": "/media/shop/lithophane-table-lamp/1-1200.webp",
+        "thumb": "/media/shop/lithophane-table-lamp/1-480.webp",
+        "alt": "Concept preview of a personalized cylindrical lithophane lamp glowing on a dark walnut nightstand",
+        "concept": true,
+        "sourceFile": "AI-generated concept visual"
+      },
+      {
+        "src": "/media/shop/lithophane-table-lamp/2-1200.webp",
+        "thumb": "/media/shop/lithophane-table-lamp/2-480.webp",
+        "alt": "Concept close-up showing the embossed surface and warm illuminated detail of a cylindrical lithophane lamp",
+        "concept": true,
+        "sourceFile": "AI-generated concept visual"
+      }
+    ],
+    "productionReviewed": false,
+    "source": "Custom Build Studio personalized product concept"
+  },
+  {
     "id": "dinosaur-skeleton-collection",
     "name": "Dinosaur Skeleton Collection — Set of 6",
     "priceCents": 4999,

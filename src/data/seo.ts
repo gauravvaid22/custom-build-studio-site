@@ -51,6 +51,10 @@ export function getSeo(path: string) {
       "Order Administration",
       "Private studio order administration.",
     ],
+    "/shop/photo": [
+      "Private Personalization Photo",
+      "Private customer-supplied production reference.",
+    ],
     "/": [
       "3D Printing, CAD & CNC Woodworking Edmonton",
       "FDM and resin 3D printing, CAD design, 3D scanning and CNC woodworking in Edmonton. One-off projects, prototypes and small runs. Request a quote.",
@@ -159,7 +163,7 @@ export function getStructuredData(path: string) {
       image: p.images.map(image => business.origin + image.src),
       url,
       offers: { "@type": "Offer", url, priceCurrency: "CAD", price: (p.priceCents / 100).toFixed(2),
-        // Available to order; production starts after manual payment verification.
+        // Available to order through the connected Shopify catalog.
         availability: "https://schema.org/InStock", itemCondition: "https://schema.org/NewCondition",
         seller: { "@type": "Organization", name: business.name } },
     });
