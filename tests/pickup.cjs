@@ -68,6 +68,7 @@ const money = cents => '$' + (cents / 100).toFixed(2);
       const accessibility = await new AxeBuilder({ page }).include('.fulfillment-selector').analyze();
       assert.equal(accessibility.violations.length, 0, JSON.stringify(accessibility.violations));
       await page.screenshot({ path: `test-results/pickup-cart-${width}.png`, fullPage: true });
+      if (width === 1440) await page.locator('.fulfillment-selector').screenshot({ path: 'test-results/pickup-selector.png' });
       await page.getByRole('button', { name: 'Secure checkout' }).click();
       await page.waitForURL(origin + '/shopify-checkout-test');
       assert.deepEqual(cartInput.lines.map(l => [l.merchandiseId, l.quantity]), [

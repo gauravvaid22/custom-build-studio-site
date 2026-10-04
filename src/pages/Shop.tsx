@@ -733,7 +733,7 @@ export function ShopProduct() {
               </p>
               <ul className="shop-purchase-facts" aria-label="Purchase details">
                 <li>{mode === "pickup" ? "Pickup in Southeast Edmonton by appointment" : "Free tracked shipping in Canada"}</li>
-                <li>{content.productionTime}</li>
+                <li>{content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship")}</li>
                 <li>Secure payment through Shopify</li>
               </ul>
               <div className="shop-trust-links">
@@ -770,10 +770,10 @@ export function ShopProduct() {
                 <dd>Similar to the main photo. Contact us before checkout to request a different colour.</dd>
                 <dt>Timing & handoff</dt>
                 <dd>
-                  {content.productionTime}. {mode === "pickup" ? "Pickup by appointment in Southeast Edmonton. We email your private pickup details after ordering." : "Free standard tracked shipping across Canada through Shopify checkout."}
+                  {content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship")}. {mode === "pickup" ? "Pickup by appointment in Southeast Edmonton. We email your private pickup details after ordering." : "Free standard tracked shipping across Canada through Shopify checkout."}
                 </dd>
                 <dt>Ordering & payment</dt>
-                <dd>Made to order. Secure payment and shipping are handled through Shopify. Contact us before checkout for special requests.</dd>
+                <dd>Made to order. Secure payment is handled through Shopify. Contact us before checkout for special requests.</dd>
                 <dt>Material</dt>
                 <dd>Decorative pieces are generally made in PLA. We use PETG where extra toughness or moisture resistance is useful. Contact us before ordering if the exact material matters for your use.</dd>
                 <dt>Care</dt>
