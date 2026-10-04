@@ -8,10 +8,11 @@ import { useCart, money } from "../components/Cart";
 import { NotFound } from "./Studio";
 import "../shop.css";
 import { trackShop } from "../components/Analytics";
-import { createShopifyCheckout, shopifyConfigured } from "../lib/shopify";
+import { createShopifyCheckout, fulfillmentSku, shopifyConfigured } from "../lib/shopify";
 import { useShopifyCatalog } from "../components/ShopifyCatalog";
 import { type ProductContent, type SiteContent, useProductContent, useSiteContent } from "../components/SiteContent";
 import { LithophaneProduct } from "../components/LithophaneProduct";
+import { FulfillmentSelector, useFulfillment } from "../components/Fulfillment";
 import { LithophaneAdmin } from "../components/LithophaneAdmin";
 
 type Product = (typeof products)[number];
@@ -86,6 +87,7 @@ export function ShopNav() {
   const { items } = useCart();
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
   return (
+    <>
     <nav className="shop-nav container" aria-label="Gift and decor navigation">
       <Link className="shop-nav-home" to="/shop">Gifts &amp; Décor</Link>
       <div className="shop-nav-collections">
@@ -101,9 +103,12 @@ export function ShopNav() {
         <span className="shop-cart-count" key={itemCount}>{itemCount}</span>
       </Link>
     </nav>
+    <FulfillmentSelector welcome />
+    </>
   );
 }
 function ShopNotice() {
+  const { mode } = useFulfillment();
   const content = useSiteContent();
   return (
     <div className="shop-notice container">
@@ -111,7 +116,7 @@ function ShopNotice() {
         ? "Collection preview — prices and production details are being reviewed. "
         : ""}
       Finished physical products <span aria-hidden="true">·</span> No digital files{" "}
-      <span aria-hidden="true">·</span> {content.shippingMessage}{" "}
+      <span aria-hidden="true">·</span> {mode === "pickup" ? "Edmonton pickup by appointment" : content.shippingMessage}{" "}
       <span aria-hidden="true">·</span> Secure Shopify checkout
     </div>
   );
@@ -243,7 +248,7 @@ function ShopProductCard({ product }: { product: Product }) {
   const managedProducts = useProductContent();
   const managed = product.id === "lithophane-table-lamp" ? managedProducts["lithophane-table-lamp"] : null;
   const displayName = managed?.name || nameFor(product.id, product.name);
-  const displayPrice = managed ? managed.priceCents : priceFor(product.id, product.priceCents);
+  const displayPrice = priceFor(product.id, managed?.priceCents ?? product.priceCents);
   const alternate = product.images[1];
   const variants = variantsFor(product);
   const hasPriceRange = variants.length > 1 && variants.some(
@@ -301,17 +306,19 @@ function BenefitIcon({ type }: { type: string }) {
 }
 
 function ShopBenefits() {
+  const { mode } = useFulfillment();
   return (
     <div className="shop-benefits" aria-label="Shopping benefits">
       <div><BenefitIcon type="local"/><span><strong>Made in Edmonton</strong><small>Prepared locally</small></span></div>
       <div><BenefitIcon type="made"/><span><strong>Made to order</strong><small>Prepared for you</small></span></div>
       <div><BenefitIcon type="checkout"/><span><strong>Secure checkout</strong><small>Powered by Shopify</small></span></div>
-      <div><BenefitIcon type="shipping"/><span><strong>Free tracked shipping</strong><small>Across Canada</small></span></div>
+      <div><BenefitIcon type="shipping"/><span><strong>{mode === "pickup" ? "Edmonton pickup" : "Free tracked shipping"}</strong><small>{mode === "pickup" ? "By appointment" : "Across Canada"}</small></span></div>
     </div>
   );
 }
 
 export function Shop() {
+  const { mode } = useFulfillment();
   const { priceFor, nameFor } = useShopifyCatalog();
   const content = useSiteContent();
   const featuredProduct = catalogProduct("lithophane-table-lamp")!;
@@ -394,7 +401,7 @@ export function Shop() {
             <Link className="text-link" to="/shop/gifts-under-25">See every gift at $25 or less →</Link>
           </div>
           <div className="shop-product-strip">
-            {under25.products.slice(0, 4).map((id) => {
+            {products.filter(p => !isVariant(p) && priceFor(p.id, p.priceCents) <= 2500).slice(0, 4).map(({id}) => {
               const product = catalogProduct(id)!;
               return <Link key={id} to={`/shop/${id}`}><ProductImage product={product}/><span>{nameFor(product.id, product.name)}<strong>{money(priceFor(product.id, product.priceCents))}</strong></span></Link>;
             })}
@@ -424,9 +431,9 @@ export function Shop() {
             </p>
           </div>
           <div>
-            <h3>Tracked shipping is included.</h3>
+            <h3>{mode === "pickup" ? "Your pickup. Your schedule." : "Tracked shipping is included."}</h3>
             <p>
-              Standard tracked shipping is free across Canada. Contact us first
+              {mode === "pickup" ? "Collect in Southeast Edmonton by appointment. We email the private address after ordering." : "Standard tracked shipping is free across Canada."} Contact us first
               for colour changes or custom work.
             </p>
             <p>{content.productionTime}.</p>
@@ -441,6 +448,7 @@ export function Shop() {
 }
 
 export function HalloweenSpecial() {
+  const { mode } = useFulfillment();
   const featured = halloweenSpecialIds.map((id) => catalogProduct(id)!).filter(Boolean);
   return (
     <div className="halloween-special">
@@ -472,7 +480,7 @@ export function HalloweenSpecial() {
           </div>
           <ul className="halloween-special-facts" aria-label="Collection details">
             <li><strong>{featured.length}</strong><span>Halloween pieces</span></li>
-            <li><strong>Free</strong><span>tracked Canadian shipping</span></li>
+            <li><strong>{mode === "pickup" ? "Local" : "Free"}</strong><span>{mode === "pickup" ? "Edmonton pickup" : "tracked Canadian shipping"}</span></li>
             <li><strong>Edmonton</strong><span>printed locally</span></li>
           </ul>
         </div>
@@ -528,7 +536,7 @@ export function ShopCollection({ id }: { id: string }) {
   const { priceFor } = useShopifyCatalog();
   const [sort, setSort] = useState("featured");
   if (!collection) return <NotFound />;
-  const listed = collection.products.map((productId) => catalogProduct(productId)!).filter(Boolean);
+  const listed = id === "gifts-under-25" ? products.filter(p => !isVariant(p) && priceFor(p.id, p.priceCents) <= 2500) : collection.products.map((productId) => catalogProduct(productId)!).filter(Boolean);
   const sorted = [...listed].sort((a, b) =>
     sort === "price-low" ? priceFor(a.id, a.priceCents) - priceFor(b.id, b.priceCents) :
     sort === "price-high" ? priceFor(b.id, b.priceCents) - priceFor(a.id, a.priceCents) : 0,
@@ -588,6 +596,7 @@ export function ShopCollection({ id }: { id: string }) {
   );
 }
 export function ShopProduct() {
+  const { mode } = useFulfillment();
   const { priceFor, nameFor } = useShopifyCatalog();
   const content = useSiteContent();
   const { id } = useParams();
@@ -723,7 +732,7 @@ export function ShopProduct() {
                 </span>
               </p>
               <ul className="shop-purchase-facts" aria-label="Purchase details">
-                <li>Free tracked shipping in Canada</li>
+                <li>{mode === "pickup" ? "Pickup in Southeast Edmonton by appointment" : "Free tracked shipping in Canada"}</li>
                 <li>{content.productionTime}</li>
                 <li>Secure payment through Shopify</li>
               </ul>
@@ -761,8 +770,7 @@ export function ShopProduct() {
                 <dd>Similar to the main photo. Contact us before checkout to request a different colour.</dd>
                 <dt>Timing & handoff</dt>
                 <dd>
-                  {content.productionTime}. Free standard tracked shipping
-                  across Canada through Shopify checkout.
+                  {content.productionTime}. {mode === "pickup" ? "Pickup by appointment in Southeast Edmonton. We email your private pickup details after ordering." : "Free standard tracked shipping across Canada through Shopify checkout."}
                 </dd>
                 <dt>Ordering & payment</dt>
                 <dd>Made to order. Secure payment and shipping are handled through Shopify. Contact us before checkout for special requests.</dd>
@@ -800,6 +808,7 @@ function CartQuantity({id,name,quantity}:{id:string;name:string;quantity:number}
     onBlur={()=>setDraft(String(quantity))}/>;
 }
 export function ShopCart() {
+  const { mode, lock } = useFulfillment();
   const { items, setQuantity } = useCart();
   const { priceFor, nameFor } = useShopifyCatalog();
   const [busy, setBusy] = useState(false);
@@ -814,13 +823,16 @@ export function ShopCart() {
     if (busy || !items.length) return;
     setBusy(true);
     setError("");
-    trackShop("begin_checkout", items);
+    lock(true);
     try {
-      const checkoutUrl = await createShopifyCheckout(items);
+      const expectedPrices = Object.fromEntries(items.map(item => { const product = catalogProduct(item.id)!; return [item.id, priceFor(item.id, product.priceCents)]; }));
+      const checkoutUrl = await createShopifyCheckout(items, mode, expectedPrices);
+      trackShop("begin_checkout", items.map(item => ({ ...item, priceCents: expectedPrices[item.id] })), mode);
       window.location.assign(checkoutUrl);
     } catch (checkoutError) {
       setError((checkoutError as Error).message);
       setBusy(false);
+      lock(false);
     }
   }
   return (
@@ -829,7 +841,7 @@ export function ShopCart() {
       <PageIntro
         eyebrow="YOUR COLLECTION"
         title="Your cart."
-        description="Review your items, then pay securely through Shopify. Free tracked shipping is included across Canada."
+        description={mode === "pickup" ? "Review your pickup order, then pay securely through Shopify. We’ll arrange your collection time after ordering." : "Review your items, then pay securely through Shopify. Free tracked shipping is included across Canada."}
       />
       <section className="section">
         <div className="container shop-cart-layout">
@@ -847,7 +859,7 @@ export function ShopCart() {
                 const product = products.find((p) => p.id === item.id)!;
                 const productRoute = "variantOf" in product ? product.variantOf : product.id;
                 return (
-                  <article className="shop-cart-line" key={item.id}>
+                  <article className="shop-cart-line" key={item.lineId || item.id}>
                     <Link to={`/shop/${productRoute}`}>
                       <ProductImage product={product} />
                     </Link>
@@ -866,11 +878,11 @@ export function ShopCart() {
                       ) : null}
                       <label>
                         Quantity
-                        <CartQuantity id={item.id} name={nameFor(product.id, product.name)} quantity={item.quantity}/>
+                        <CartQuantity id={item.lineId || item.id} name={nameFor(product.id, product.name)} quantity={item.quantity}/>
                       </label>
                       <button
                         className="text-link"
-                        onClick={() => setQuantity(item.id, 0)}
+                        onClick={() => setQuantity(item.lineId || item.id, 0)}
                       >
                         Remove {nameFor(product.id, product.name)}
                       </button>
@@ -889,7 +901,7 @@ export function ShopCart() {
                 <strong>{money(subtotal)} CAD</strong>
               </p>
               <p className="shop-total">
-                <span>Tracked shipping across Canada</span>
+                <span>{mode === "pickup" ? "Edmonton pickup by appointment" : "Tracked shipping across Canada"}</span>
                 <strong>Free</strong>
               </p>
               <p className="shop-total shop-cart-total">
@@ -911,6 +923,7 @@ export function ShopCart() {
               >
                 {busy ? "Opening secure checkout…" : "Secure checkout ↗"}
               </button>
+              <p className="small">{mode === "pickup" ? "Choose Edmonton pickup at Shopify checkout. Your contact address does not request delivery. We’ll email your pickup arrangements after ordering." : "Delivered to your Canadian address. Shipping included."}</p>
               <p className="shop-secure-note">Shop Pay · Credit card · PayPal · Google Pay</p>
             </aside>
           )}
@@ -920,6 +933,7 @@ export function ShopCart() {
   );
 }
 export function Checkout() {
+  const { mode, lock } = useFulfillment();
   const { items } = useCart();
   const { priceFor, nameFor } = useShopifyCatalog();
   const content = useSiteContent();
@@ -936,13 +950,16 @@ export function Checkout() {
     if (busy || !items.length) return;
     setBusy(true);
     setError("");
-    trackShop("begin_checkout", items);
+    lock(true);
     try {
-      const checkoutUrl = await createShopifyCheckout(items);
+      const expectedPrices = Object.fromEntries(items.map(item => { const product = catalogProduct(item.id)!; return [item.id, priceFor(item.id, product.priceCents)]; }));
+      const checkoutUrl = await createShopifyCheckout(items, mode, expectedPrices);
+      trackShop("begin_checkout", items.map(item => ({ ...item, priceCents: expectedPrices[item.id] })), mode);
       window.location.assign(checkoutUrl);
     } catch (checkoutError) {
       setError((checkoutError as Error).message);
       setBusy(false);
+      lock(false);
     }
   }
 
@@ -958,10 +975,9 @@ export function Checkout() {
         <div className="container shop-cart-layout">
           <div className="note-panel shopify-checkout-panel">
             <span className="eyebrow">POWERED BY SHOPIFY</span>
-            <h2>Secure payment and free tracked shipping.</h2>
+            <h2>{mode === "pickup" ? "Secure payment. Local pickup." : "Secure payment and free tracked shipping."}</h2>
             <p>
-              Shopify collects your contact information, Canadian shipping
-              address and payment securely. Standard tracked shipping is free.
+              {mode === "pickup" ? "Pay securely through Shopify, then we’ll email to arrange your pickup time and private address. Choose Edmonton pickup at checkout. Shopify asks for your contact address; this order will not be delivered." : "Shopify collects your contact information, Canadian shipping address and payment securely. Standard tracked shipping is free."}
             </p>
             <ol className="shop-steps" aria-label="Checkout steps">
               {["Review", "Address", "Payment"].map((step, index) => (
@@ -999,7 +1015,7 @@ export function Checkout() {
           <aside className="note-panel">
             <h2>Your order</h2>
             {items.map((item) => (
-              <div className="shop-checkout-line" key={item.id}><p className="shop-total">
+              <div className="shop-checkout-line" key={item.lineId || item.id}><p className="shop-total">
                 <span>
                   {(() => { const product = products.find((p) => p.id === item.id); return product ? nameFor(product.id, product.name) : "Product"; })()} ×{" "}
                   {item.quantity}
@@ -1016,7 +1032,7 @@ export function Checkout() {
               <span>{money(subtotal)}</span>
             </p>
             <p className="shop-total">
-              <span>Free tracked shipping</span>
+              <span>{mode === "pickup" ? "Edmonton pickup" : "Free tracked shipping"}</span>
               <span>Free</span>
             </p>
             <p className="shop-total">
@@ -1178,7 +1194,7 @@ export function OrderConfirmation() {
 export function ShopAdmin() {
   const publicContent = useSiteContent();
   const publicProductContent = useProductContent();
-  const { priceFor, nameFor } = useShopifyCatalog();
+  const { prices, deliveredPriceFor: priceFor, nameFor } = useShopifyCatalog();
   const [key, setKey] = useState(""),
     [orders, setOrders] = useState<Order[]>([]),
     [error, setError] = useState(""),
@@ -1416,7 +1432,7 @@ export function ShopAdmin() {
                     {products.filter((product) => !isVariant(product)).map((product) => (
                       <article key={product.id}>
                         <ProductImage product={product} />
-                        <div><h3>{nameFor(product.id, product.name)}</h3><p>{money(priceFor(product.id, product.priceCents))} CAD</p><a className="text-link" href={`https://admin.shopify.com/store/aqk73w-k2/products?query=${encodeURIComponent(product.id)}`} target="_blank" rel="noreferrer">Edit in Shopify →</a></div>
+                        <div><h3>{nameFor(product.id, product.name)}</h3><p>Delivered: {money(priceFor(product.id, product.priceCents))} CAD</p><p>Pickup: {money(prices[fulfillmentSku(product.id, "pickup")] ?? Math.max(0, priceFor(product.id, product.priceCents) - 1000))} CAD</p>{Object.keys(prices).length > 0 && prices[fulfillmentSku(product.id, "pickup")] !== priceFor(product.id, product.priceCents) - 1000 && <p role="status">Check Shopify: pickup price must be $10 below the delivered price.</p>}<a className="text-link" href={`https://admin.shopify.com/store/aqk73w-k2/products?query=${encodeURIComponent(product.id)}`} target="_blank" rel="noreferrer">Edit in Shopify →</a></div>
                       </article>
                     ))}
                   </div>

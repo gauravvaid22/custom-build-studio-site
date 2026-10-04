@@ -1,3 +1,4 @@
+import { useFulfillment } from "./Fulfillment";
 import { DragEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { money, useCart } from "./Cart";
@@ -65,6 +66,7 @@ export function LithophaneProduct() {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
   const [added, setAdded] = useState(false);
+  const { mode } = useFulfillment();
   const displayedPrice = priceFor(productId, product.priceCents);
   const activeImage = product.images[imageIndex] || product.images[0];
   const details = useMemo(() => product.details.split("\n").filter(Boolean), [product.details]);
@@ -152,7 +154,7 @@ export function LithophaneProduct() {
             <ul className="shop-purchase-facts" aria-label="Purchase details">
               <li>Wooden warm-white LED base and USB inline switch included</li>
               <li>{product.leadTime}</li>
-              <li>Free tracked shipping across Canada</li>
+              <li>{mode === "pickup" ? "Pickup in Southeast Edmonton by appointment" : "Free tracked shipping across Canada"}</li>
             </ul>
             {!product.available && <p className="lithophane-unavailable" role="status">Temporarily unavailable while new orders are prepared.</p>}
             <form className="lithophane-order" onSubmit={submit}>
@@ -203,7 +205,7 @@ export function LithophaneProduct() {
           <ol>
             <li><span>01</span><div className="lithophane-step-icon"><StepIcon type="photo" /></div><div><strong>Upload your photo</strong><p>Choose a clear, high-contrast image and preview how it wraps around the cylinder.</p></div></li>
             <li><span>02</span><div className="lithophane-step-icon"><StepIcon type="make" /></div><div><strong>Precision production</strong><p>We prepare the crop, manufacture the shade at a fine 0.12 mm layer height, and assemble it with the wooden LED base.</p></div></li>
-            <li><span>03</span><div className="lithophane-step-icon"><StepIcon type="ship" /></div><div><strong>Free tracked shipping</strong><p>Every lamp is hand-inspected in Edmonton, then shipped to your door anywhere in Canada at no extra charge.</p></div></li>
+            <li><span>03</span><div className="lithophane-step-icon"><StepIcon type="ship" /></div><div><strong>{mode === "pickup" ? "Collect your keepsake" : "Free tracked shipping"}</strong><p>{mode === "pickup" ? "We email your pickup time and private Southeast Edmonton address after ordering." : "Every lamp is hand-inspected in Edmonton, then shipped to your door anywhere in Canada at no extra charge."}</p></div></li>
           </ol>
         </section>
       </div>

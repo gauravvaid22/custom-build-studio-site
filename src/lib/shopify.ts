@@ -1,4 +1,5 @@
 import type { CartItem } from "../components/Cart";
+import type { FulfillmentMode } from "../components/Fulfillment";
 import products from "../../commerce/products.json";
 
 const storeDomain = "aqk73w-k2.myshopify.com";
@@ -29,6 +30,12 @@ type GraphResponse<T> = {
 };
 
 export const shopifyConfigured = Boolean(storefrontToken);
+
+export function fulfillmentSku(id: string, mode: FulfillmentMode) {
+  const product = products.find(item => item.id === id);
+  const sku = product && "variants" in product && product.variants?.length ? product.variants[0].id : id;
+  return mode === "pickup" ? `${sku}-pickup` : sku;
+}
 
 function shopifyHandleFor(product: (typeof products)[number]) {
   if ("shopifyHandle" in product && product.shopifyHandle) return product.shopifyHandle;
@@ -110,7 +117,7 @@ async function storefront<T>(query: string, variables: Record<string, unknown>) 
   return payload.data;
 }
 
-async function merchandiseFor(items: CartItem[]) {
+async function merchandiseFor(items: CartItem[], mode: FulfillmentMode, expectedPrices: Record<string, number>) {
   const handles = [...new Set(items.map((item) => productHandle(item.id)))];
   const variableDefinitions = handles
     .map((_, index) => `$handle${index}: String!`)
@@ -137,10 +144,18 @@ async function merchandiseFor(items: CartItem[]) {
   );
 
   return items.map((item) => {
-    const variant = variants.get(item.id);
+    const variant = variants.get(fulfillmentSku(item.id, mode));
     if (!variant || !variant.availableForSale) {
       const name = products.find((product) => product.id === item.id)?.name;
       throw new Error(`${name || "A product"} is not available at checkout.`);
+    }
+    const cents = Math.round(Number(variant.price.amount) * 100);
+    if (variant.price.currencyCode !== "CAD" || !Number.isSafeInteger(cents) || cents <= 0 ||
+        !Number.isInteger(item.quantity) || item.quantity < 1 || item.quantity > 20) {
+      throw new Error("This item cannot be checked out. Please review your cart.");
+    }
+    if (expectedPrices[item.id] !== cents) {
+      throw new Error("A product price has changed. Refresh this page to review the updated total before paying.");
     }
     return {
       merchandiseId: variant.id,
@@ -160,9 +175,9 @@ async function merchandiseFor(items: CartItem[]) {
   });
 }
 
-export async function createShopifyCheckout(items: CartItem[]) {
+export async function createShopifyCheckout(items: CartItem[], mode: FulfillmentMode, expectedPrices: Record<string, number>) {
   if (!items.length) throw new Error("Your cart is empty.");
-  const lines = await merchandiseFor(items);
+  const lines = await merchandiseFor(items, mode, expectedPrices);
   const result = await storefront<{
     cartCreate: {
       cart: { checkoutUrl: string } | null;
@@ -181,13 +196,14 @@ export async function createShopifyCheckout(items: CartItem[]) {
       input: {
         lines,
         buyerIdentity: { countryCode: "CA" },
-        attributes: [{ key: "Storefront", value: "custombuildstudio.ca" }],
+        attributes: [{ key: "Storefront", value: "custombuildstudio.ca" }, { key: "Order handoff", value: mode === "pickup" ? "Edmonton pickup by appointment — no delivery" : "Delivered — free Canadian tracked shipping" }],
+        ...(mode === "pickup" ? { note: "EDMONTON PICKUP ONLY. Arrange a time and privately send the address after ordering. Do not ship this order." } : {}),
       },
     },
   );
   const error = result.cartCreate.userErrors[0]?.message;
-  if (error || !result.cartCreate.cart?.checkoutUrl) {
-    throw new Error(error || "Shopify could not start checkout. Please try again.");
+  if (error || result.cartCreate.warnings?.length || !result.cartCreate.cart?.checkoutUrl) {
+    throw new Error(error || result.cartCreate.warnings?.[0]?.message || "Shopify could not start checkout. Please try again.");
   }
   return result.cartCreate.cart.checkoutUrl;
 }

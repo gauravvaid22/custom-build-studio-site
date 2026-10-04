@@ -105,7 +105,7 @@ async function scroll(page) {
               id: `gid://shopify/ProductVariant/${sku}`,
               sku,
               availableForSale: true,
-              price: { amount: "16.00", currencyCode: "CAD" },
+              price: { amount: ((catalogProducts.find(product => product.id === sku)?.priceCents || 1600) / 100).toFixed(2), currencyCode: "CAD" },
             })),
           },
         };
@@ -458,7 +458,7 @@ async function scroll(page) {
     assert.equal(await page.locator(".shop-cart-count").innerText(), "0");
     await nightQuantity.fill("1");
     await page.getByRole("button", { name: "Add to Cart" }).click();
-    assert.match(await page.getByRole("status").innerText(), /Added to cart/);
+    assert.match(await page.locator(".shop-added-confirmation").innerText(), /Added to cart/);
     assert(await page.getByRole("link", { name: "View cart →", exact: true }).isVisible());
     assert.equal(await page.locator(".shop-cart-count").innerText(), "1");
     await page.goto(origin + "/shop/mood-ghost");

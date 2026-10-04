@@ -1101,3 +1101,21 @@
   .shop-admin-product-grid { grid-template-columns: 1fr; }
   .shop-admin-tabs .button { flex: 1 1 145px; }
 }
+.fulfillment-selector { margin-top: 1rem; margin-bottom: 1.25rem; }
+.fulfillment-choices { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; }
+.fulfillment-choices button { display: flex; align-items: center; gap: .8rem; text-align: left; padding: 1rem 1.1rem; border: 1px solid #475569; border-radius: 12px; color: #e2e8f0; background: #0f172a; cursor: pointer; transition: border-color .18s, background .18s; }
+.fulfillment-choices button[aria-pressed="true"] { background: #102b3c; border-color: #7dd3fc; }
+.fulfillment-choices button:focus-visible { outline: 3px solid #7dd3fc; outline-offset: 3px; }
+.fulfillment-choices button:disabled { opacity: .7; cursor: wait; }
+.fulfillment-choices svg { width: 30px; height: 30px; flex-shrink: 0; color: #7dd3fc; }
+.fulfillment-choices strong, .fulfillment-choices small { display: block; }
+.fulfillment-choices small { color: #cbd5e1; font-size: .8rem; margin-top: .2rem; }
+.fulfillment-check { margin-left: auto; min-width: 20px; color: #7dd3fc; }
+.fulfillment-help { font-size: .8rem; color: #4b5851; margin: .65rem 0 0; }
+.halloween-special .fulfillment-help { color: #cbd5e1; }
+.halloween-special .fulfillment-selector .eyebrow { color: #ff9b42; }
+.fulfillment-welcome { padding-top: .75rem; padding-bottom: .5rem; }
+.fulfillment-welcome h2 { font-size: clamp(1.3rem, 3vw, 1.9rem); margin: .3rem 0 1rem; }
+.fulfillment-welcome .fulfillment-choices button { padding: 1.3rem; }
+@media (max-width: 620px) { .fulfillment-choices { grid-template-columns: 1fr; gap: .5rem; } .fulfillment-choices button { padding: .8rem; } .fulfillment-choices svg { width: 25px; height: 25px; } }
+@media (prefers-reduced-motion: reduce) { .fulfillment-choices button { transition: none; } }

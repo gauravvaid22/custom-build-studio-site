@@ -24,6 +24,18 @@ Open `http://127.0.0.1:4180/shop`. Shopify checkout requires the public Storefro
 - The Canada shipping profile is **Free Tracked Shipping**. The added amount is included in the displayed product prices.
 - No residential pickup address is published on the storefront.
 
+### Pickup and delivered prices
+
+The shop remembers one fulfillment choice for the whole cart. Delivered prices include free Canadian tracked shipping; Edmonton pickup prices are $10 less per catalog unit (a five-keychain set is one unit). Size/design choices and personalization photos survive switching modes. Checkout rechecks Shopify availability and price before redirecting.
+
+Each physical Shopify variant has a Delivered SKU and a corresponding `-pickup` SKU. Keep each pickup price exactly $10 below its delivered partner. The website admin price panel shows both and warns about missing or mismatched pickup prices. The personalized lamp price editor synchronizes both when Shopify Admin API integration is configured; otherwise use its Shopify edit link.
+
+All 23 pickup variants belong to **Edmonton pickup only**, whose sole free Canada rate is **Edmonton pickup by appointment — no delivery**. Delivered variants remain in the General free-shipping profile. Do not move pickup variants into General, or Shopify could offer shipping at the pickup price.
+
+This is manual scheduled collection, not Shopify native local pickup: native pickup would expose the residential location before payment. Shopify still requests the customer's contact address. After receiving a pickup order, email the customer privately to arrange a time and provide the pickup address, then mark it fulfilled after collection. Never send a shipping label for a pickup order. No additional app subscription is required. Shopify's order-confirmation template detects `-pickup` SKUs and explains collection arrangements; its fulfillment email uses a collected-order message for those SKUs. Delivered-order body copy remains intact.
+
+Tracked inventory is separate for the two fulfillment variants. The existing five dinosaur sets were allocated as three Delivered and two Pickup, retaining five total. Rebalance these counters as needed; no shared-stock synchronization is installed. Other existing made-to-order products retain their original untracked inventory settings.
+
 ## Before a Netlify launch
 
 1. Obtain/verify each production archive, slice/test the intended version, and confirm material, finish and assembly/hardware before manufacturing. `productionReviewed` records physical production review separately from storefront approval.

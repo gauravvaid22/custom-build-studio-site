@@ -17,12 +17,16 @@ const shopifyCatalogSync = (token) => token ? async ({id, name, priceCents}) => 
     return payload.data;
   };
   const lookup = await call(
-    `query ProductForWebsite($handle: String!) { productByIdentifier(identifier: {handle: $handle}) { id variants(first: 1) { nodes { id } } } }`,
+    `query ProductForWebsite($handle: String!) { productByIdentifier(identifier: {handle: $handle}) { id variants(first: 100) { nodes { id sku } } } }`,
     { handle: id === "lithophane-table-lamp" ? "custom-cylindrical-lithophane-table-lamp" : id },
   );
   const product = lookup.productByIdentifier;
   if (!product?.id || !product.variants?.nodes?.[0]?.id)
     throw new Error("Create the Lithophane Table Lamp product in Shopify before changing its website name or price.");
+  if (priceCents <= 1000) throw new Error("The delivered price must be more than $10 to support pickup pricing.");
+  const delivered = product.variants.nodes.find(variant => variant.sku === id);
+  const pickup = product.variants.nodes.find(variant => variant.sku === `${id}-pickup`);
+  if (!delivered || !pickup) throw new Error("Both delivered and pickup variants must exist in Shopify before updating prices.");
   const update = await call(
     `mutation UpdateWebsiteProduct($product: ProductUpdateInput!) { productUpdate(product: $product) { product { id } userErrors { message } } }`,
     { product: { id: product.id, title: name } },
@@ -31,7 +35,7 @@ const shopifyCatalogSync = (token) => token ? async ({id, name, priceCents}) => 
   if (titleError) throw new Error(titleError);
   const variants = await call(
     `mutation UpdateWebsitePrice($productId: ID!, $variants: [ProductVariantsBulkInput!]!) { productVariantsBulkUpdate(productId: $productId, variants: $variants) { productVariants { id } userErrors { message } } }`,
-    { productId: product.id, variants: [{ id: product.variants.nodes[0].id, price: (priceCents / 100).toFixed(2) }] },
+    { productId: product.id, variants: [{ id: delivered.id, price: (priceCents / 100).toFixed(2) }, { id: pickup.id, price: ((priceCents - 1000) / 100).toFixed(2) }] },
   );
   const priceError = variants.productVariantsBulkUpdate.userErrors?.[0]?.message;
   if (priceError) throw new Error(priceError);

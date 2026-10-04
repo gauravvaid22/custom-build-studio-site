@@ -1,9 +1,11 @@
+import { useShopifyCatalog } from "./ShopifyCatalog";
+import { useFulfillment } from "./Fulfillment";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import products from "../../commerce/products.json";
 
 type ShopEvent = "view_item" | "add_to_cart" | "begin_checkout";
-type ShopLine = { id: string; quantity: number };
+type ShopLine = { id: string; quantity: number; priceCents?: number };
 
 const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID?.trim();
 const googleAdsId = import.meta.env.VITE_GOOGLE_ADS_ID?.trim();
@@ -111,7 +113,7 @@ function shopItems(lines: ShopLine[]) {
         item_id: product.id,
         item_name: product.name,
         item_category: product.category,
-        price: product.priceCents / 100,
+        price: (line.priceCents ?? product.priceCents) / 100,
         quantity: line.quantity,
       },
     ];
@@ -119,13 +121,14 @@ function shopItems(lines: ShopLine[]) {
 }
 
 /** Tracks a GA4 ecommerce action after the corresponding shop action succeeds. */
-export function trackShop(event: ShopEvent, lines: ShopLine[]) {
+export function trackShop(event: ShopEvent, lines: ShopLine[], fulfillment?: string) {
   if (!loadAnalytics()) return;
   const items = shopItems(lines);
   if (!items.length) return;
   window.gtag?.("event", event, {
     send_to: measurementId,
     currency: "CAD",
+    ...(fulfillment ? { fulfillment_method: fulfillment } : {}),
     value: items.reduce((sum, item) => sum + item.price * item.quantity, 0),
     items,
     page_location: campaignLocation(),
@@ -146,6 +149,8 @@ export function trackQuoteStart() {
 
 export default function Analytics() {
   const { pathname, search } = useLocation();
+  const { mode } = useFulfillment();
+  const { priceFor } = useShopifyCatalog();
 
   useEffect(() => {
     const disabled = privateRoute();
@@ -175,9 +180,9 @@ export default function Analytics() {
         item.variantOf === product.id,
     );
     trackShop("view_item", [
-      { id: selectedVariant?.id || product.id, quantity: 1 },
-    ]);
-  }, [pathname, search]);
+      { id: selectedVariant?.id || product.id, quantity: 1, priceCents: priceFor(selectedVariant?.id || product.id, selectedVariant?.priceCents || product.priceCents) },
+    ], mode);
+  }, [pathname, search, mode]);
 
   useEffect(() => {
     const click = (event: MouseEvent) => {
