@@ -14,6 +14,12 @@ type UploadResult = {
   referenceUrl: string;
 };
 
+function StepIcon({ type }: { type: "photo" | "make" | "ship" }) {
+  if (type === "photo") return <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="6" width="24" height="20" rx="3"/><circle cx="12" cy="13" r="2.5"/><path d="m7 23 6-6 4 4 3-3 5 5"/></svg>;
+  if (type === "make") return <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4v4M16 24v4M4 16h4M24 16h4M7.5 7.5l3 3M21.5 21.5l3 3M24.5 7.5l-3 3M10.5 21.5l-3 3"/><circle cx="16" cy="16" r="6"/><path d="M13 16h6M16 13v6"/></svg>;
+  return <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 10 16 4l12 6-12 6L4 10Z"/><path d="M4 10v12l12 6 12-6V10M16 16v12"/><path d="m22 19 2 2 4-5"/></svg>;
+}
+
 async function uploadPhoto(file: File, onProgress: (progress: number) => void) {
   const start = await fetch("/.netlify/functions/shop-media?action=start", {
     method: "POST",
@@ -188,21 +194,21 @@ export function LithophaneProduct() {
           </div>
         </div>
 
-        <section className="lithophane-explainer">
+        <section className="lithophane-explainer lithophane-scroll-in">
           <div><p className="eyebrow">THE EFFECT</p><h2>White sculpture by day.<br />A photograph in light.</h2></div>
           <p>Variable wall thickness translates the light and dark values in your photograph into warm gradients. Thicker areas block more light; thinner areas glow brighter, revealing the image when the lamp is switched on.</p>
         </section>
 
-        <section className="lithophane-spec-grid" aria-label="Product specifications">
+        <section className="lithophane-spec-grid lithophane-scroll-in" aria-label="Product specifications">
           {details.map((detail, index) => <div key={detail}><span>{String(index + 1).padStart(2, "0")}</span><strong>{detail}</strong></div>)}
         </section>
 
-        <section className="lithophane-steps">
+        <section className="lithophane-steps lithophane-scroll-in">
           <div className="section-heading"><div><p className="eyebrow">THREE SIMPLE STEPS</p><h2>From photo to finished light.</h2></div></div>
           <ol>
-            <li><span>01</span><div><strong>Upload your photo</strong><p>Choose a clear, high-contrast image and preview how it wraps around the cylinder.</p></div></li>
-            <li><span>02</span><div><strong>Precision production</strong><p>We prepare the crop, manufacture the shade at a fine 0.12 mm layer height, and assemble it with the wooden LED base.</p></div></li>
-            <li><span>03</span><div><strong>Shipped to your door</strong><p>Every lamp is hand-inspected in Edmonton before free tracked Canadian shipping.</p></div></li>
+            <li><span>01</span><div className="lithophane-step-icon"><StepIcon type="photo" /></div><div><strong>Upload your photo</strong><p>Choose a clear, high-contrast image and preview how it wraps around the cylinder.</p></div></li>
+            <li><span>02</span><div className="lithophane-step-icon"><StepIcon type="make" /></div><div><strong>Precision production</strong><p>We prepare the crop, manufacture the shade at a fine 0.12 mm layer height, and assemble it with the wooden LED base.</p></div></li>
+            <li><span>03</span><div className="lithophane-step-icon"><StepIcon type="ship" /></div><div><strong>Free tracked shipping</strong><p>Every lamp is hand-inspected in Edmonton, then shipped to your door anywhere in Canada at no extra charge.</p></div></li>
           </ol>
         </section>
       </div>
