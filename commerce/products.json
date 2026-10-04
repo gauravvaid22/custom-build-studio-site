@@ -1122,6 +1122,20 @@
         "thumb": "/media/shop/lithophane-table-lamp/5-480.webp",
         "alt": "Illuminated close detail of the real lithophane relief surface and pale wooden base",
         "sourceFile": "Owner-supplied Photo 1 with background styling"
+      },
+      {
+        "src": "/media/shop/lithophane-table-lamp/6-1200.webp",
+        "thumb": "/media/shop/lithophane-table-lamp/6-480.webp",
+        "alt": "Personalization example showing a glowing family photograph lamp on a bedroom side table",
+        "concept": true,
+        "sourceFile": "AI-generated personalization example"
+      },
+      {
+        "src": "/media/shop/lithophane-table-lamp/7-1200.webp",
+        "thumb": "/media/shop/lithophane-table-lamp/7-480.webp",
+        "alt": "Personalization example showing an illuminated mountain landscape relief in close detail",
+        "concept": true,
+        "sourceFile": "AI-generated personalization example"
       }
     ],
     "productionReviewed": false,

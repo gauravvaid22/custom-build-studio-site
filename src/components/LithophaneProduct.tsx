@@ -130,7 +130,7 @@ export function LithophaneProduct() {
           <div className="lithophane-visual-column">
             <div className="lithophane-hero-media is-lit">
               <img src={activeImage.src} alt={activeImage.alt} />
-              {activeImage.concept && <span className="lithophane-concept-label">Concept preview</span>}
+              {activeImage.concept && <span className="lithophane-concept-label">Personalization example</span>}
               <div className="lithophane-glow" aria-hidden="true" />
             </div>
             <div className="lithophane-media-controls">
