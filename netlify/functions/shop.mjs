@@ -18,7 +18,7 @@ const shopifyCatalogSync = (token) => token ? async ({id, name, priceCents}) => 
   };
   const lookup = await call(
     `query ProductForWebsite($handle: String!) { productByIdentifier(identifier: {handle: $handle}) { id variants(first: 1) { nodes { id } } } }`,
-    { handle: id },
+    { handle: id === "lithophane-table-lamp" ? "custom-cylindrical-lithophane-table-lamp" : id },
   );
   const product = lookup.productByIdentifier;
   if (!product?.id || !product.variants?.nodes?.[0]?.id)

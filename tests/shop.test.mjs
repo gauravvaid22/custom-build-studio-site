@@ -253,13 +253,38 @@ test("lithophane product content persists with validated gallery images", async 
     leadTime: "TEST: four business days",
     images: [lamp.images[1], lamp.images[0]],
   });
-  assert.equal(saved["lithophane-table-lamp"].images[0].id, "concept-close-up");
+  assert.equal(saved["lithophane-table-lamp"].images[0].id, lamp.images[1].id);
   assert.equal((await shop.getProductContent())["lithophane-table-lamp"].leadTime, "TEST: four business days");
   await assert.rejects(
     shop.saveProductContent({...lamp, images: [{...lamp.images[0], src: "https://evil.example/image.jpg"}]}),
     /approved product image URL/,
   );
   await assert.rejects(shop.saveProductContent({...lamp, priceCents: 0}), /valid product price/);
+  store.close();
+});
+
+test("legacy lithophane concept gallery migrates to real product photos", async () => {
+  const {store, shop} = fixture();
+  await store.put("config/product-content", {
+    "lithophane-table-lamp": {
+      name: "Custom Cylindrical Lithophane Table Lamp",
+      description: "Saved description",
+      priceCents: 7999,
+      available: true,
+      leadTime: "Saved lead time",
+      details: "Base and cylinder diameter: 100 mm\nApproximate height: 170 mm; varies slightly with photo aspect ratio",
+      images: [
+        {id: "concept-lifestyle", src: "/media/shop/lithophane-table-lamp/1-1200.webp", thumb: "/media/shop/lithophane-table-lamp/1-480.webp", alt: "Concept", concept: true},
+        {id: "concept-close-up", src: "/media/shop/lithophane-table-lamp/2-1200.webp", thumb: "/media/shop/lithophane-table-lamp/2-480.webp", alt: "Concept", concept: true},
+      ],
+    },
+  }, {});
+  const lamp = (await shop.getProductContent())["lithophane-table-lamp"];
+  assert.equal(lamp.images.length, 5);
+  assert.equal(lamp.images[0].id, "real-lifestyle");
+  assert.match(lamp.details, /230 mm/);
+  assert.equal(lamp.description, "Saved description");
+  assert.equal(lamp.leadTime, "Saved lead time");
   store.close();
 });
 

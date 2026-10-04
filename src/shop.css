@@ -818,12 +818,12 @@
 .lithophane-steps li + li { padding-left: 28px; border-left: 1px solid #32455a; }
 .lithophane-steps li > span { color: #38bdf8; font: 700 .78rem/1 monospace; }
 .lithophane-steps li strong { color: white; font-size: 1.1rem; }
-.lithophane-steps li p { color: #91a4b5; line-height: 1.65; }
+.lithophane-steps li p { color: #a7b8c6; line-height: 1.65; }
 .lithophane-step-icon { width: 48px; height: 48px; display: grid; place-items: center; border: 1px solid rgba(56,189,248,.34); border-radius: 50%; background: radial-gradient(circle at 35% 30%, rgba(56,189,248,.22), rgba(14,165,233,.05)); box-shadow: 0 0 28px rgba(14,165,233,.09); }
 .lithophane-step-icon svg { width: 25px; height: 25px; fill: none; stroke: #7dd3fc; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 @supports (animation-timeline: view()) {
   .lithophane-scroll-in { animation: lithophane-scroll-in linear both; animation-timeline: view(); animation-range: entry 4% cover 27%; }
-  @keyframes lithophane-scroll-in { from { opacity: .18; transform: translateY(28px) scale(.99); filter: blur(3px); } to { opacity: 1; transform: none; filter: none; } }
+  @keyframes lithophane-scroll-in { from { transform: translateY(28px) scale(.99); } to { transform: none; } }
 }
 .lithophane-modal-backdrop { position: fixed; z-index: 1000; inset: 0; display: grid; place-items: center; background: rgba(2,6,12,.82); backdrop-filter: blur(8px); padding: 20px; }
 .lithophane-modal { width: min(620px, 100%); position: relative; background: #111c2b; color: #dbe8f2; border: 1px solid rgba(125,211,252,.3); box-shadow: 0 30px 100px rgba(0,0,0,.55); padding: clamp(28px, 5vw, 54px); }

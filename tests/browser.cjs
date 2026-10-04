@@ -31,6 +31,7 @@ const routes = [
   "/shop/octopus-wine-bottle-holder",
   "/shop/mood-ghost",
   "/shop/ghost-arch-wreath",
+  "/shop/personalized-gifts",
   "/shop/lithophane-table-lamp",
   "/reviews",
   "/contact",

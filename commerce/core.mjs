@@ -221,12 +221,21 @@ export function createShop({
   }
   async function getProductContent() {
     const found = await store.get("config/product-content");
+    const savedLamp = found?.data?.["lithophane-table-lamp"] || {};
+    const defaultLamp = defaultProductContent["lithophane-table-lamp"];
+    const legacyConceptGallery = Array.isArray(savedLamp.images) &&
+      savedLamp.images.length === 2 &&
+      savedLamp.images.every((image) => image?.concept === true);
+    const legacyDimensions = typeof savedLamp.details === "string" &&
+      savedLamp.details.includes("Approximate height: 170 mm");
     return {
       ...defaultProductContent,
       ...(found?.data || {}),
       "lithophane-table-lamp": {
-        ...defaultProductContent["lithophane-table-lamp"],
-        ...(found?.data?.["lithophane-table-lamp"] || {}),
+        ...defaultLamp,
+        ...savedLamp,
+        ...(legacyConceptGallery ? { images: defaultLamp.images } : {}),
+        ...(legacyDimensions ? { details: defaultLamp.details } : {}),
       },
     };
   }

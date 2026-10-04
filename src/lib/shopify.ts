@@ -30,13 +30,18 @@ type GraphResponse<T> = {
 
 export const shopifyConfigured = Boolean(storefrontToken);
 
+function shopifyHandleFor(product: (typeof products)[number]) {
+  if ("shopifyHandle" in product && product.shopifyHandle) return product.shopifyHandle;
+  return "variantOf" in product ? product.variantOf : product.id;
+}
+
 export async function fetchShopifyCatalog(): Promise<ShopifyCatalog> {
   if (!storefrontToken) return { prices: {}, names: {} };
   const handles = [
     ...new Set(
       products
         .filter((product) => !("variantOf" in product))
-        .map((product) => product.id),
+        .map(shopifyHandleFor),
     ),
   ];
   const variableDefinitions = handles
@@ -75,7 +80,7 @@ export async function fetchShopifyCatalog(): Promise<ShopifyCatalog> {
 function productHandle(id: string) {
   const product = products.find((item) => item.id === id);
   if (!product) throw new Error("A cart item is no longer available.");
-  return "variantOf" in product ? product.variantOf : product.id;
+  return shopifyHandleFor(product);
 }
 
 async function storefront<T>(query: string, variables: Record<string, unknown>) {

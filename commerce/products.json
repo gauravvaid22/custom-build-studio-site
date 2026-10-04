@@ -1082,6 +1082,7 @@
   },
   {
     "id": "lithophane-table-lamp",
+    "shopifyHandle": "custom-cylindrical-lithophane-table-lamp",
     "name": "Custom Cylindrical Lithophane Table Lamp",
     "priceCents": 7999,
     "category": "Home décor",
@@ -1089,22 +1090,38 @@
     "personalized": true,
     "description": "Turn a favourite photograph into a warm, dimensional light. The cylindrical shade appears as an elegant embossed white sculpture when unlit, then reveals the image through soft light and shadow when switched on.",
     "included": "One personalized cylindrical lithophane lamp with wooden warm-white LED base, USB power cable and inline switch. Customer photo must be supplied before checkout.",
-    "dimensions": "Base diameter: 100 mm. Cylinder diameter: 100 mm. Approximate height: 170 mm; final height can vary slightly with the supplied photo aspect ratio.",
+    "dimensions": "Base and cylinder diameter: 100 mm. Approximate overall height: 230 mm.",
     "notes": "Made from your uploaded photograph at a fine 0.12 mm layer height and finished with a wooden base. Concept images demonstrate the intended effect; your finished lamp will use the photo you provide.",
     "images": [
       {
         "src": "/media/shop/lithophane-table-lamp/1-1200.webp",
         "thumb": "/media/shop/lithophane-table-lamp/1-480.webp",
-        "alt": "Concept preview of a personalized cylindrical lithophane lamp glowing on a dark walnut nightstand",
-        "concept": true,
-        "sourceFile": "AI-generated concept visual"
+        "alt": "Real cylindrical lithophane lamp glowing on a dark walnut bedside table",
+        "sourceFile": "Owner-supplied product photo with background styling"
       },
       {
         "src": "/media/shop/lithophane-table-lamp/2-1200.webp",
         "thumb": "/media/shop/lithophane-table-lamp/2-480.webp",
-        "alt": "Concept close-up showing the embossed surface and warm illuminated detail of a cylindrical lithophane lamp",
-        "concept": true,
-        "sourceFile": "AI-generated concept visual"
+        "alt": "Real finished cylindrical lithophane lamp illuminated with warm light",
+        "sourceFile": "Photo 3.jpg"
+      },
+      {
+        "src": "/media/shop/lithophane-table-lamp/3-1200.webp",
+        "thumb": "/media/shop/lithophane-table-lamp/3-480.webp",
+        "alt": "Real finished cylindrical lithophane lamp switched off, showing the white relief texture and wooden base",
+        "sourceFile": "Photo 2.jpg"
+      },
+      {
+        "src": "/media/shop/lithophane-table-lamp/4-1200.webp",
+        "thumb": "/media/shop/lithophane-table-lamp/4-480.webp",
+        "alt": "Real illuminated cylindrical lithophane lamp viewed from the pumpkin side",
+        "sourceFile": "Photo 4.jpg"
+      },
+      {
+        "src": "/media/shop/lithophane-table-lamp/5-1200.webp",
+        "thumb": "/media/shop/lithophane-table-lamp/5-480.webp",
+        "alt": "Close detail of the real lithophane relief surface and pale wooden base",
+        "sourceFile": "Photo 1.jpg"
       }
     ],
     "productionReviewed": false,

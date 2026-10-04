@@ -5,21 +5,42 @@
     "priceCents": 7999,
     "available": true,
     "leadTime": "Made to order. Allow 4–6 business days before shipping.",
-    "details": "Base and cylinder diameter: 100 mm\nApproximate height: 170 mm; varies slightly with photo aspect ratio\nWooden base with warm-white internal LED\nUSB power with inline switch\nFine 0.12 mm layer height for photographic detail",
+    "details": "Base and cylinder diameter: 100 mm\nApproximate overall height: 230 mm\nWooden base with warm-white internal LED\nUSB power with inline switch\nFine 0.12 mm layer height for photographic detail",
     "images": [
       {
-        "id": "concept-lifestyle",
+        "id": "real-lifestyle",
         "src": "/media/shop/lithophane-table-lamp/1-1200.webp",
         "thumb": "/media/shop/lithophane-table-lamp/1-480.webp",
-        "alt": "Concept preview of a personalized cylindrical lithophane lamp glowing on a dark walnut nightstand",
-        "concept": true
+        "alt": "Real cylindrical lithophane lamp glowing on a dark walnut bedside table",
+        "concept": false
       },
       {
-        "id": "concept-close-up",
+        "id": "real-lit-front",
         "src": "/media/shop/lithophane-table-lamp/2-1200.webp",
         "thumb": "/media/shop/lithophane-table-lamp/2-480.webp",
-        "alt": "Concept close-up showing the embossed surface and warm illuminated detail of a cylindrical lithophane lamp",
-        "concept": true
+        "alt": "Real finished cylindrical lithophane lamp illuminated with warm light",
+        "concept": false
+      },
+      {
+        "id": "real-unlit-front",
+        "src": "/media/shop/lithophane-table-lamp/3-1200.webp",
+        "thumb": "/media/shop/lithophane-table-lamp/3-480.webp",
+        "alt": "Real finished cylindrical lithophane lamp switched off, showing the white relief texture and wooden base",
+        "concept": false
+      },
+      {
+        "id": "real-lit-side",
+        "src": "/media/shop/lithophane-table-lamp/4-1200.webp",
+        "thumb": "/media/shop/lithophane-table-lamp/4-480.webp",
+        "alt": "Real illuminated cylindrical lithophane lamp viewed from the pumpkin side",
+        "concept": false
+      },
+      {
+        "id": "real-relief-detail",
+        "src": "/media/shop/lithophane-table-lamp/5-1200.webp",
+        "thumb": "/media/shop/lithophane-table-lamp/5-480.webp",
+        "alt": "Close detail of the real lithophane relief surface and pale wooden base",
+        "concept": false
       }
     ]
   }
