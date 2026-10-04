@@ -8,6 +8,13 @@
     "details": "Base and cylinder diameter: 100 mm\nApproximate overall height: 230 mm\nWooden base with warm-white internal LED\nUSB power with inline switch\nFine 0.12 mm layer height for photographic detail",
     "images": [
       {
+        "id": "family-bedside-example",
+        "src": "/media/shop/lithophane-table-lamp/6-1200.webp",
+        "thumb": "/media/shop/lithophane-table-lamp/6-480.webp",
+        "alt": "Personalization example showing a glowing family photograph lamp on a bedroom side table",
+        "concept": true
+      },
+      {
         "id": "real-lifestyle",
         "src": "/media/shop/lithophane-table-lamp/1-1200.webp",
         "thumb": "/media/shop/lithophane-table-lamp/1-480.webp",
@@ -41,13 +48,6 @@
         "thumb": "/media/shop/lithophane-table-lamp/5-480.webp",
         "alt": "Illuminated close detail of the real lithophane relief surface and pale wooden base",
         "concept": false
-      },
-      {
-        "id": "family-bedside-example",
-        "src": "/media/shop/lithophane-table-lamp/6-1200.webp",
-        "thumb": "/media/shop/lithophane-table-lamp/6-480.webp",
-        "alt": "Personalization example showing a glowing family photograph lamp on a bedroom side table",
-        "concept": true
       },
       {
         "id": "landscape-relief-example",

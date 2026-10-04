@@ -1094,6 +1094,13 @@
     "notes": "Made from your uploaded photograph at a fine 0.12 mm layer height and finished with a wooden base. Concept images demonstrate the intended effect; your finished lamp will use the photo you provide.",
     "images": [
       {
+        "src": "/media/shop/lithophane-table-lamp/6-1200.webp",
+        "thumb": "/media/shop/lithophane-table-lamp/6-480.webp",
+        "alt": "Personalization example showing a glowing family photograph lamp on a bedroom side table",
+        "concept": true,
+        "sourceFile": "AI-generated personalization example"
+      },
+      {
         "src": "/media/shop/lithophane-table-lamp/1-1200.webp",
         "thumb": "/media/shop/lithophane-table-lamp/1-480.webp",
         "alt": "Real cylindrical lithophane lamp glowing on a dark walnut bedside table",
@@ -1122,13 +1129,6 @@
         "thumb": "/media/shop/lithophane-table-lamp/5-480.webp",
         "alt": "Illuminated close detail of the real lithophane relief surface and pale wooden base",
         "sourceFile": "Owner-supplied Photo 1 with background styling"
-      },
-      {
-        "src": "/media/shop/lithophane-table-lamp/6-1200.webp",
-        "thumb": "/media/shop/lithophane-table-lamp/6-480.webp",
-        "alt": "Personalization example showing a glowing family photograph lamp on a bedroom side table",
-        "concept": true,
-        "sourceFile": "AI-generated personalization example"
       },
       {
         "src": "/media/shop/lithophane-table-lamp/7-1200.webp",

@@ -281,7 +281,7 @@ test("legacy lithophane concept gallery migrates to real product photos", async 
   }, {});
   const lamp = (await shop.getProductContent())["lithophane-table-lamp"];
   assert.equal(lamp.images.length, 7);
-  assert.equal(lamp.images[0].id, "real-lifestyle");
+  assert.equal(lamp.images[0].id, "family-bedside-example");
   assert.match(lamp.details, /230 mm/);
   assert.equal(lamp.description, "Saved description");
   assert.equal(lamp.leadTime, "Saved lead time");
