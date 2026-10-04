@@ -314,7 +314,7 @@ function ShopBenefits() {
 export function Shop() {
   const { priceFor, nameFor } = useShopifyCatalog();
   const content = useSiteContent();
-  const featuredProduct = catalogProduct("basilisk-dice-tower")!;
+  const featuredProduct = catalogProduct("lithophane-table-lamp")!;
   const primaryCollections = collections.filter((collection) => collection.id !== "gifts-under-25");
   const under25 = collections.find((collection) => collection.id === "gifts-under-25")!;
   const featuredIds = ["lithophane-table-lamp", "dinosaur-skeleton-collection", "octopus-wine-bottle-holder", "night-owl-wall-light", "basilisk-dice-tower", "mood-ghost"];
@@ -331,7 +331,7 @@ export function Shop() {
               <span>Made in Edmonton.</span>
             </h1>
             <p className="lead">
-              Find the right gift by interest: collectible creatures, gaming accessories,
+              Find personalized gifts, collectible creatures, gaming accessories,
               home décor and playful seasonal pieces.
             </p>
             <a className="button" href="#collections">
@@ -357,7 +357,7 @@ export function Shop() {
               <p className="eyebrow">SHOP BY INTEREST</p>
               <h2>See it. Choose it. Make it yours.</h2>
             </div>
-            <p>Four clear collections make it easy to find the right piece.</p>
+            <p>Focused collections make it easy to find the right piece.</p>
           </div>
           <div className="shop-collection-grid">
             {primaryCollections.map((collection, index) => {
@@ -546,7 +546,7 @@ export function ShopCollection({ id }: { id: string }) {
             <p className="eyebrow">{collection.eyebrow}</p>
             <h1>{collection.heading}</h1>
             <p className="lead">{collection.description}</p>
-            <a className="button" href="#products">View {collection.products.length} products ↘</a>
+            <a className="button" href="#products">View {collection.products.length} {collection.products.length === 1 ? "product" : "products"} ↘</a>
           </div>
           <div className="shop-collection-hero-image"><ProductImage product={cover} large/></div>
         </div>

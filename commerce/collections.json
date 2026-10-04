@@ -1,5 +1,18 @@
 [
   {
+    "id": "personalized-gifts",
+    "name": "Personalized Gifts",
+    "shortName": "Personalized gifts",
+    "eyebrow": "YOUR PHOTO / MADE INTO LIGHT",
+    "heading": "A personal memory, made to glow.",
+    "description": "Meaningful made-to-order gifts created from your own photo, with a clear preview and secure image upload before checkout.",
+    "seoDescription": "Shop personalized gifts made in Edmonton, including custom photo lithophane lamps with wooden LED bases and secure photo upload.",
+    "coverProduct": "lithophane-table-lamp",
+    "products": [
+      "lithophane-table-lamp"
+    ]
+  },
+  {
     "id": "collectibles",
     "name": "Collectibles & Figurines",
     "shortName": "Collectibles",
