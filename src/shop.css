@@ -58,6 +58,8 @@
 .shop-hero .small {
   margin-top: 24px;
 }
+.shop-hero .button-outline { color: #1a2525; border-color: #8b9992; }
+.shop-hero .button-outline:hover { color: white; background: #1a2525; border-color: #1a2525; }
 .shop-hero-photo {
   position: relative;
   display: block;
@@ -355,22 +357,29 @@
 .shop-collection-overlay > span { font-size: .9rem; font-weight: 700; }
 .shop-reveal { animation: shop-reveal .55s ease-out both; animation-delay: var(--delay, 0ms); }
 @keyframes shop-reveal { from { opacity: 0; transform: translateY(16px); } }
-.shop-seasonal-banner {
+.shop-mask-feature {
   display: grid;
-  grid-template-columns: 1fr 1.15fr;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
   align-items: stretch;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  background: #171c1e;
+  margin-top: 18px;
+  margin-bottom: 0;
+  background: #101820;
   color: white;
+  overflow: hidden;
 }
-.shop-seasonal-banner > div { align-self: center; padding: clamp(32px, 6vw, 72px); }
-.shop-seasonal-banner h2 { color: white; font-size: clamp(2.1rem, 4.5vw, 4rem); }
-.shop-seasonal-banner .eyebrow, .shop-related-collections .eyebrow { color: #c7d0cb; }
-.shop-seasonal-banner p:not(.eyebrow) { color: #d4dcd8; max-width: 540px; }
-.shop-seasonal-banner > a { overflow: hidden; min-height: 440px; }
-.shop-seasonal-banner > a img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
-.shop-seasonal-banner > a:hover img { transform: scale(1.035); }
+.shop-mask-feature-copy { align-self: center; padding: clamp(32px, 5vw, 66px); }
+.shop-mask-feature .eyebrow { color: #ff9b42; }
+.shop-mask-feature h2 { color: white; font-size: clamp(2.5rem, 4.5vw, 4.6rem); line-height: .95; }
+.shop-mask-feature-copy > p:not(.eyebrow) { color: #d4dfe5; max-width: 470px; line-height: 1.65; }
+.shop-mask-feature-images { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; min-height: 390px; }
+.shop-mask-feature-images a { position: relative; overflow: hidden; background: #060a0e; color: white; }
+.shop-mask-feature-images a::after { content: ""; position: absolute; inset: 45% 0 0; background: linear-gradient(transparent, rgba(0,0,0,.88)); pointer-events: none; }
+.shop-mask-feature-images img { display: block; width: 100%; height: 100%; min-height: 390px; object-fit: cover; transition: transform .4s ease; }
+.shop-mask-feature-images a:hover img { transform: scale(1.04); }
+.shop-mask-feature-images span { position: absolute; z-index: 1; left: 18px; right: 18px; bottom: 17px; display: grid; gap: 3px; }
+.shop-mask-feature-images strong { font-size: clamp(1.15rem, 2vw, 1.7rem); line-height: 1.1; }
+.shop-mask-feature-images small { color: #b7def0; font-weight: 700; }
+.shop-mask-feature + .shop-collections-section { padding-top: clamp(56px, 7vw, 92px); }
 .shop-under-section { background: #eef2ef; }
 .shop-product-strip { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; }
 .shop-product-strip > a { background: white; border: 1px solid #d8ded9; overflow: hidden; }
@@ -400,6 +409,7 @@
 .shop-collection-toolbar select { min-width: 205px; padding: 12px 36px 12px 12px; border: 1px solid #9da9a1; background: white; font: inherit; }
 .shop-related-collections { background: #171c1e; color: white; }
 .shop-related-collections h2 { color: white; }
+.shop-related-collections .eyebrow { color: #c7d0cb; }
 .shop-related-links { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); border-top: 1px solid #46504c; }
 .shop-related-links a { display: flex; justify-content: space-between; padding: 23px 4px; border-bottom: 1px solid #46504c; color: white; font-size: 1.1rem; font-weight: 700; }
 .shop-related-links a:nth-child(odd) { margin-right: 30px; }
@@ -704,8 +714,9 @@
   }
   .shop-collection-grid { grid-template-columns: 1fr; }
   .shop-collection-card, .shop-collection-card > img { min-height: 340px; }
-  .shop-seasonal-banner { grid-template-columns: 1fr; margin-left: 20px; margin-right: 20px; }
-  .shop-seasonal-banner > a { min-height: 320px; }
+  .shop-mask-feature { grid-template-columns: 1fr; }
+  .shop-mask-feature-images { min-height: 270px; }
+  .shop-mask-feature-images img { min-height: 270px; }
   .shop-product-strip { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; }
   .shop-product-strip > a { min-width: 76vw; scroll-snap-align: start; }
   .shop-benefits { grid-template-columns: 1fr; margin-bottom: 45px; }
@@ -725,7 +736,7 @@
   .shop-cart-count,
   .shop-reveal,
   .shop-collection-card > img,
-  .shop-seasonal-banner img,
+  .shop-mask-feature-images img,
   .shop-product-strip img {
     transition: none;
     animation: none;
@@ -1000,6 +1011,8 @@
 .halloween-ember-two { right: 8%; bottom: 44%; animation-delay: -1.3s; }
 .halloween-special .shop-notice { color: #aabac3; border-bottom: 1px solid rgba(166, 202, 221, .12); }
 .halloween-special-products { background: #0d141a; }
+.halloween-mask-section { background: #101a21; scroll-margin-top: 24px; }
+.halloween-mask-section .section-heading { margin-bottom: 30px; }
 .halloween-special-heading h2,
 .halloween-special-process h2 { color: #f2f6f8; }
 .halloween-special-heading > p { color: #9fb0b9; }

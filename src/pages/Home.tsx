@@ -41,6 +41,9 @@ export default function Home() {
               </Link>
             </div>
             <p className="hero-note">One-off projects & small runs welcome.</p>
+            <Link className="hero-seasonal-link" to="/shop/halloween-special/#halloween-masks">
+              <span>NEW FOR HALLOWEEN</span> Explore our wearable masks <Arrow />
+            </Link>
           </div>
           <div className="hero-visual">
             <div className="hero-frame">
@@ -83,18 +86,18 @@ export default function Home() {
       <section className="home-shop-feature" aria-labelledby="home-shop-title">
         <div className="container home-shop-feature-grid">
           <div className="home-shop-copy">
-            <p className="eyebrow">PRINTED IN EDMONTON · SHOP ONLINE</p>
+            <p className="eyebrow">HALLOWEEN MASKS · GIFTS & DÉCOR · EDMONTON</p>
             <h2 id="home-shop-title">Gifts with character. Made here.</h2>
             <p>
-              Shop finished 3D-printed gifts, planters, gaming accessories and
-              seasonal décor. Each piece is made to order and checked in our studio.
+              Explore finished Halloween masks alongside locally made gifts,
+              planters, gaming accessories and seasonal décor.
             </p>
             <div className="button-row">
-              <Link className="button" to="/shop/">
-                Shop gifts & décor <Arrow />
+              <Link className="button" to="/shop/halloween-special/#halloween-masks">
+                Explore the masks <Arrow />
               </Link>
-              <Link className="button button-outline" to="/shop/halloween-special/">
-                Halloween special <Arrow />
+              <Link className="button button-outline" to="/shop/">
+                Shop all gifts & décor <Arrow />
               </Link>
             </div>
             <ul className="home-shop-points" aria-label="Shopping benefits">
@@ -104,17 +107,17 @@ export default function Home() {
             </ul>
           </div>
           <div className="home-shop-gallery" aria-label="Featured gifts and décor">
-            <Link className="home-shop-tile home-shop-tile-main" to="/shop/candlelight-pumpkins-table-lamp/">
+            <Link className="home-shop-tile home-shop-tile-main" to="/shop/pumpkin-head-halloween-mask/">
+              <img src="/media/shop/pumpkin-head-halloween-mask/2-1200.webp" alt="Person wearing the full-head Pumpkin Head Halloween Mask" loading="lazy" width="900" height="900" />
+              <span><strong>Pumpkin Head Mask</strong><small>Full-head costume · choose your size ↗</small></span>
+            </Link>
+            <Link className="home-shop-tile" to="/shop/carved-in-fear-halloween-mask/">
+              <img src="/media/shop/carved-in-fear-halloween-mask/3-1200.webp" alt="Person wearing the Carved in Fear front-face Halloween Mask" loading="lazy" width="900" height="900" />
+              <span><strong>Carved in Fear Mask</strong><small>Front-face costume ↗</small></span>
+            </Link>
+            <Link className="home-shop-tile" to="/shop/candlelight-pumpkins-table-lamp/">
               <img src="/media/shop/candlelight-pumpkins-table-lamp/1-1200.webp" alt="Candlelight Pumpkins Table Lamp" loading="lazy" width="900" height="900" />
-              <span><strong>Candlelight Pumpkins</strong><small>$17.25 CAD</small></span>
-            </Link>
-            <Link className="home-shop-tile" to="/shop/mood-ghost/">
-              <img src="/media/shop/mood-ghost/1-1200.jpg" alt="Mood Ghost figurine" loading="lazy" width="900" height="900" />
-              <span><strong>Mood Ghost</strong><small>$16.00 CAD</small></span>
-            </Link>
-            <Link className="home-shop-tile" to="/shop/octopus-wine-bottle-holder/">
-              <img src="/media/shop/octopus-wine-bottle-holder/1-1200.jpg" alt="Octopus Wine Bottle Holder" loading="lazy" width="900" height="900" />
-              <span><strong>Octopus Holder</strong><small>From $86.99 CAD</small></span>
+              <span><strong>Candlelight Pumpkins</strong><small>Explore Halloween décor ↗</small></span>
             </Link>
           </div>
         </div>

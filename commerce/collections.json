@@ -62,14 +62,16 @@
   },
   {
     "id": "halloween",
-    "name": "Halloween Décor",
+    "name": "Halloween Masks & Décor",
     "shortName": "Halloween",
     "eyebrow": "PLAYFUL, SPOOKY, MADE LOCALLY",
-    "heading": "Give Halloween more personality.",
-    "description": "Atmospheric lamps, swinging ghosts, skeleton characters, sculptural dishes and graveyard details for shelves, desks, doors and seasonal displays.",
-    "seoDescription": "Shop 3D-printed Halloween décor made in Edmonton, including ghost decorations, pumpkin lamps, skeleton characters, trinket dishes, wreaths and seasonal gifts.",
-    "coverProduct": "candlelight-pumpkins-table-lamp",
+    "heading": "Halloween masks & décor, made here.",
+    "description": "Finished wearable masks, atmospheric lamps, swinging ghosts, skeleton characters and sculptural décor for Halloween.",
+    "seoDescription": "Shop finished Halloween masks and locally made Halloween décor in Edmonton, including pumpkin costumes, ghost decorations, seasonal lamps and trinket dishes.",
+    "coverProduct": "pumpkin-head-halloween-mask",
     "products": [
+      "pumpkin-head-halloween-mask",
+      "carved-in-fear-halloween-mask",
       "candlelight-pumpkins-table-lamp",
       "ghost-on-a-swing",
       "skull-web-trinket-dish",
@@ -81,9 +83,7 @@
       "skeleton-chameleon",
       "verdant-remains-planter",
       "6-finger-alien-hand-controller-holder",
-      "night-owl-wall-light",
-      "pumpkin-head-halloween-mask",
-      "carved-in-fear-halloween-mask"
+      "night-owl-wall-light"
     ]
   },
   {

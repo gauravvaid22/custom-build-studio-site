@@ -342,6 +342,21 @@ main:focus {
   color: #a9afb1;
   margin-top: 20px;
 }
+.hero-seasonal-link {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  color: #e5f3fa;
+  font-size: .87rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(148, 207, 235, .55);
+  padding-bottom: 5px;
+}
+.hero-seasonal-link span { color: #ff9b42; font-size: .7rem; letter-spacing: .1em; }
+.hero-seasonal-link:hover { color: #ff9b42; border-bottom-color: #ff9b42; }
 .hero-visual {
   min-width: 0;
 }

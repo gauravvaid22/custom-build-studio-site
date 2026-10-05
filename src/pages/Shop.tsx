@@ -321,7 +321,9 @@ export function Shop() {
   const { mode } = useFulfillment();
   const { priceFor, nameFor } = useShopifyCatalog();
   const content = useSiteContent();
-  const featuredProduct = catalogProduct("lithophane-table-lamp")!;
+  const featuredProduct = catalogProduct("pumpkin-head-halloween-mask")!;
+  const pumpkinMask = catalogProduct("pumpkin-head-halloween-mask")!;
+  const carvedMask = catalogProduct("carved-in-fear-halloween-mask")!;
   const primaryCollections = collections.filter((collection) => collection.id !== "gifts-under-25");
   const under25 = collections.find((collection) => collection.id === "gifts-under-25")!;
   const featuredIds = ["lithophane-table-lamp", "dinosaur-skeleton-collection", "octopus-wine-bottle-holder", "night-owl-wall-light", "basilisk-dice-tower", "mood-ghost"];
@@ -331,19 +333,20 @@ export function Shop() {
       <section className="shop-hero">
         <div className="container shop-hero-grid">
           <div>
-            <p className="eyebrow">MADE IN EDMONTON / GIFTS WITH CHARACTER</p>
+            <p className="eyebrow">NEW HALLOWEEN MASKS / MADE IN EDMONTON</p>
             <h1>
               Unique Gifts &amp; Décor,
               <br />
               <span>Made in Edmonton.</span>
             </h1>
             <p className="lead">
-              Find personalized gifts, collectible creatures, gaming accessories,
-              home décor and playful seasonal pieces.
+              Finished, wearable Halloween masks are here. Explore them alongside
+              personalized gifts, collectible creatures, gaming pieces and home décor.
             </p>
-            <a className="button" href="#collections">
-              Shop by collection ↘
-            </a>
+            <div className="button-row">
+              <a className="button" href="#shop-mask-feature-title">Explore the masks ↘</a>
+              <a className="button button-outline" href="#collections">Shop all collections ↘</a>
+            </div>
             <p className="small">
               Physical products · Secure payment · Free tracked Canadian shipping
             </p>
@@ -357,6 +360,24 @@ export function Shop() {
         </div>
       </section>
       <ShopNotice />
+      <section className="container shop-mask-feature" aria-labelledby="shop-mask-feature-title">
+        <div className="shop-mask-feature-copy">
+          <p className="eyebrow">NEW / HALLOWEEN COSTUMES</p>
+          <h2 id="shop-mask-feature-title">Meet the masks.</h2>
+          <p>Choose a full pumpkin head with connecting magnets, or a front-face mask that ties behind your head. Both arrive finished and wearable.</p>
+          <Link className="button halloween-button" to="/shop/halloween-special/#halloween-masks">Explore Halloween masks ↗</Link>
+        </div>
+        <div className="shop-mask-feature-images">
+          <Link to={`/shop/${pumpkinMask.id}/`} aria-label="Explore the Pumpkin Head full-head mask">
+            <ProductImage product={pumpkinMask} large />
+            <span><strong>Pumpkin Head</strong><small>Full-head mask ↗</small></span>
+          </Link>
+          <Link to={`/shop/${carvedMask.id}/`} aria-label="Explore the Carved in Fear front-face mask">
+            <ProductImage product={carvedMask} large />
+            <span><strong>Carved in Fear</strong><small>Front-face mask ↗</small></span>
+          </Link>
+        </div>
+      </section>
       <section className="section shop-collections-section" id="collections">
         <div className="container">
           <div className="section-heading">
@@ -382,17 +403,6 @@ export function Shop() {
             })}
           </div>
         </div>
-      </section>
-      <section className="container shop-seasonal-banner">
-        <div>
-          <p className="eyebrow">SEASONAL COLLECTION</p>
-          <h2>The Halloween Special is here.</h2>
-          <p>Explore every spooky piece in our locally printed Halloween collection.</p>
-          <Link className="button" to="/shop/halloween-special">Explore the special ↗</Link>
-        </div>
-        <Link to="/shop/halloween-special" aria-label="Explore the Halloween Special">
-          <ProductImage product={catalogProduct("candlelight-pumpkins-table-lamp")!} large />
-        </Link>
       </section>
       <section className="section shop-under-section">
         <div className="container">
@@ -450,6 +460,9 @@ export function Shop() {
 export function HalloweenSpecial() {
   const { mode } = useFulfillment();
   const featured = halloweenSpecialIds.map((id) => catalogProduct(id)!).filter(Boolean);
+  const masks = ["pumpkin-head-halloween-mask", "carved-in-fear-halloween-mask"]
+    .map((id) => catalogProduct(id)!).filter(Boolean);
+  const otherPieces = featured.filter((product) => !masks.some((mask) => mask.id === product.id));
   return (
     <div className="halloween-special">
       <ShopNav />
@@ -471,8 +484,8 @@ export function HalloweenSpecial() {
             pumpkin lights, wearable masks, skeleton characters, dishes and graveyard details.
           </p>
           <div className="button-row">
-            <a className="button halloween-button" href="#halloween-special-products">
-              Meet the collection ↘
+            <a className="button halloween-button" href="#halloween-masks">
+              Explore the masks ↘
             </a>
             <Link className="button button-dark" to="/shop/halloween">
               Shop all Halloween ↗
@@ -486,17 +499,35 @@ export function HalloweenSpecial() {
         </div>
       </section>
       <ShopNotice />
+      <section className="section halloween-special-products halloween-mask-section" id="halloween-masks" aria-labelledby="halloween-mask-heading">
+        <div className="container">
+          <div className="section-heading halloween-special-heading">
+            <div>
+              <p className="eyebrow">FINISHED & WEARABLE</p>
+              <h2 id="halloween-mask-heading">Two masks. Two ways to haunt.</h2>
+            </div>
+            <p>Pick your style, then choose a size. See the full gallery and video on each product page.</p>
+          </div>
+          <div className="shop-grid halloween-special-grid">
+            {masks.map((product, index) => (
+              <div className="halloween-product-reveal" style={{ "--halloween-delay": `${index * 90}ms` } as React.CSSProperties} key={product.id}>
+                <ShopProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <section className="section halloween-special-products" id="halloween-special-products">
         <div className="container">
           <div className="section-heading halloween-special-heading">
             <div>
               <p className="eyebrow">THE HALLOWEEN SPECIAL</p>
-              <h2>Every Halloween piece, in one place.</h2>
+              <h2>More Halloween character.</h2>
             </div>
-            <p>Finished physical pieces with clear size options, galleries and Canadian shipping included.</p>
+            <p>Explore the rest of the seasonal collection, made locally in Edmonton.</p>
           </div>
           <div className="shop-grid halloween-special-grid">
-            {featured.map((product, index) => (
+            {otherPieces.map((product, index) => (
               <div
                 className="halloween-product-reveal"
                 style={{ "--halloween-delay": `${index * 90}ms` } as React.CSSProperties}
