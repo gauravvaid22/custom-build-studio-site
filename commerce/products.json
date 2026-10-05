@@ -1195,5 +1195,259 @@
     ],
     "productionReviewed": false,
     "source": "https://platform.stlflix.com/drops/drop-275"
+  },
+  {
+    "id": "pumpkin-head-halloween-mask",
+    "name": "Pumpkin Head Halloween Mask",
+    "priceCents": 9999,
+    "category": "Halloween costumes",
+    "seasonal": true,
+    "description": "A complete pumpkin head that surrounds your head for a dramatic Halloween costume. Its finished sections connect with fitted magnets, so you receive one assembled, wearable mask rather than loose parts. Check the approximate inner size before ordering; costume fit varies from person to person.",
+    "included": "One finished, wearable full-head Pumpkin Head mask with its sections and connecting magnets installed. Clothing, display props and other costume pieces are not included.",
+    "dimensions": "Choose a size to see its approximate source-model inner measurement.",
+    "notes": "Orange and green colouring will be similar to the reference photos; shades and hand-finished detail may vary. Contact us before checkout with fit or colour questions.",
+    "variantLabel": "Mask size",
+    "variants": [
+      {
+        "id": "pumpkin-head-halloween-mask-small",
+        "label": "Small",
+        "priceCents": 9999,
+        "dimensions": "Approximate source-model inner size: 126 mm."
+      },
+      {
+        "id": "pumpkin-head-halloween-mask-medium",
+        "label": "Medium",
+        "priceCents": 10999,
+        "dimensions": "Approximate source-model inner size: 130 mm."
+      },
+      {
+        "id": "pumpkin-head-halloween-mask-large",
+        "label": "Large",
+        "priceCents": 11999,
+        "dimensions": "Approximate source-model inner size: 136 mm."
+      }
+    ],
+    "images": [
+      {
+        "src": "/media/shop/pumpkin-head-halloween-mask/1-1200.webp",
+        "thumb": "/media/shop/pumpkin-head-halloween-mask/1-480.webp",
+        "alt": "Finished orange Pumpkin Head Halloween Mask with green stem, front view",
+        "sourceFile": "Pumpkin_Head_Halloween_Mask_1_d8038339c2.jpg"
+      },
+      {
+        "src": "/media/shop/pumpkin-head-halloween-mask/2-1200.webp",
+        "thumb": "/media/shop/pumpkin-head-halloween-mask/2-480.webp",
+        "alt": "Person wearing the Pumpkin Head Halloween Mask",
+        "sourceFile": "Pumpkin_Head_Halloween_Mask_2_17a1af6dd0.jpg"
+      },
+      {
+        "src": "/media/shop/pumpkin-head-halloween-mask/3-1200.webp",
+        "thumb": "/media/shop/pumpkin-head-halloween-mask/3-480.webp",
+        "alt": "Side view of the full Pumpkin Head Halloween Mask",
+        "sourceFile": "Pumpkin_Head_Halloween_Mask_4_2108262c19.jpg"
+      },
+      {
+        "src": "/media/shop/pumpkin-head-halloween-mask/4-1200.webp",
+        "thumb": "/media/shop/pumpkin-head-halloween-mask/4-480.webp",
+        "alt": "Rear view of the pumpkin mask showing its full-head shape",
+        "sourceFile": "Pumpkin_Head_Halloween_Mask_8_830ac7347c.jpg"
+      }
+    ],
+    "video": "/media/shop/pumpkin-head-halloween-mask/pumpkin-head-halloween-mask.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/pumpkin-head-halloween-mask"
+  },
+  {
+    "id": "pumpkin-head-halloween-mask-small",
+    "name": "Pumpkin Head Halloween Mask — Small",
+    "priceCents": 9999,
+    "category": "Halloween costumes",
+    "seasonal": true,
+    "description": "A complete pumpkin head that surrounds your head for a dramatic Halloween costume. Its finished sections connect with fitted magnets, so you receive one assembled, wearable mask rather than loose parts. Check the approximate inner size before ordering; costume fit varies from person to person.",
+    "included": "One finished, wearable full-head Pumpkin Head mask with its sections and connecting magnets installed. Clothing, display props and other costume pieces are not included.",
+    "dimensions": "Approximate source-model inner size: 126 mm.",
+    "notes": "Orange and green colouring will be similar to the reference photos; shades and hand-finished detail may vary. Contact us before checkout with fit or colour questions.",
+    "variantOf": "pumpkin-head-halloween-mask",
+    "images": [
+      {
+        "src": "/media/shop/pumpkin-head-halloween-mask/1-1200.webp",
+        "thumb": "/media/shop/pumpkin-head-halloween-mask/1-480.webp",
+        "alt": "Finished orange Pumpkin Head Halloween Mask with green stem, front view",
+        "sourceFile": "Pumpkin_Head_Halloween_Mask_1_d8038339c2.jpg"
+      }
+    ],
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/pumpkin-head-halloween-mask"
+  },
+  {
+    "id": "pumpkin-head-halloween-mask-medium",
+    "name": "Pumpkin Head Halloween Mask — Medium",
+    "priceCents": 10999,
+    "category": "Halloween costumes",
+    "seasonal": true,
+    "description": "A complete pumpkin head that surrounds your head for a dramatic Halloween costume. Its finished sections connect with fitted magnets, so you receive one assembled, wearable mask rather than loose parts. Check the approximate inner size before ordering; costume fit varies from person to person.",
+    "included": "One finished, wearable full-head Pumpkin Head mask with its sections and connecting magnets installed. Clothing, display props and other costume pieces are not included.",
+    "dimensions": "Approximate source-model inner size: 130 mm.",
+    "notes": "Orange and green colouring will be similar to the reference photos; shades and hand-finished detail may vary. Contact us before checkout with fit or colour questions.",
+    "variantOf": "pumpkin-head-halloween-mask",
+    "images": [
+      {
+        "src": "/media/shop/pumpkin-head-halloween-mask/1-1200.webp",
+        "thumb": "/media/shop/pumpkin-head-halloween-mask/1-480.webp",
+        "alt": "Finished orange Pumpkin Head Halloween Mask with green stem, front view",
+        "sourceFile": "Pumpkin_Head_Halloween_Mask_1_d8038339c2.jpg"
+      }
+    ],
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/pumpkin-head-halloween-mask"
+  },
+  {
+    "id": "pumpkin-head-halloween-mask-large",
+    "name": "Pumpkin Head Halloween Mask — Large",
+    "priceCents": 11999,
+    "category": "Halloween costumes",
+    "seasonal": true,
+    "description": "A complete pumpkin head that surrounds your head for a dramatic Halloween costume. Its finished sections connect with fitted magnets, so you receive one assembled, wearable mask rather than loose parts. Check the approximate inner size before ordering; costume fit varies from person to person.",
+    "included": "One finished, wearable full-head Pumpkin Head mask with its sections and connecting magnets installed. Clothing, display props and other costume pieces are not included.",
+    "dimensions": "Approximate source-model inner size: 136 mm.",
+    "notes": "Orange and green colouring will be similar to the reference photos; shades and hand-finished detail may vary. Contact us before checkout with fit or colour questions.",
+    "variantOf": "pumpkin-head-halloween-mask",
+    "images": [
+      {
+        "src": "/media/shop/pumpkin-head-halloween-mask/1-1200.webp",
+        "thumb": "/media/shop/pumpkin-head-halloween-mask/1-480.webp",
+        "alt": "Finished orange Pumpkin Head Halloween Mask with green stem, front view",
+        "sourceFile": "Pumpkin_Head_Halloween_Mask_1_d8038339c2.jpg"
+      }
+    ],
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/pumpkin-head-halloween-mask"
+  },
+  {
+    "id": "carved-in-fear-halloween-mask",
+    "name": "Carved in Fear Halloween Mask",
+    "priceCents": 5999,
+    "category": "Halloween costumes",
+    "seasonal": true,
+    "description": "A sculpted pumpkin-face mask for Halloween costumes and photo shoots. It covers the front of your face and ties behind your head with an elastic band; it is not a full-head mask. Check the approximate inner size before ordering.",
+    "included": "One finished, wearable front-face Carved in Fear mask with an elastic band attached for tying at the back. Clothing, display props and other costume pieces are not included.",
+    "dimensions": "Choose a size to see its approximate source-model inner measurement.",
+    "notes": "Orange and green colouring will be similar to the reference photos; shades and hand-finished detail may vary. Contact us before checkout with fit or colour questions.",
+    "variantLabel": "Mask size",
+    "variants": [
+      {
+        "id": "carved-in-fear-halloween-mask-small",
+        "label": "Small",
+        "priceCents": 5999,
+        "dimensions": "Approximate source-model inner size: 145 mm."
+      },
+      {
+        "id": "carved-in-fear-halloween-mask-medium",
+        "label": "Medium",
+        "priceCents": 6999,
+        "dimensions": "Approximate source-model inner size: 160 mm."
+      },
+      {
+        "id": "carved-in-fear-halloween-mask-large",
+        "label": "Large",
+        "priceCents": 7999,
+        "dimensions": "Approximate source-model inner size: 170 mm."
+      }
+    ],
+    "images": [
+      {
+        "src": "/media/shop/carved-in-fear-halloween-mask/1-1200.webp",
+        "thumb": "/media/shop/carved-in-fear-halloween-mask/1-480.webp",
+        "alt": "Finished orange Carved in Fear Halloween Mask with green stem, front view",
+        "sourceFile": "Carved_in_Fear_Halloween_Mask1_ecaee03d1b.jpg"
+      },
+      {
+        "src": "/media/shop/carved-in-fear-halloween-mask/2-1200.webp",
+        "thumb": "/media/shop/carved-in-fear-halloween-mask/2-480.webp",
+        "alt": "Angled view showing the carved pumpkin face and mask depth",
+        "sourceFile": "Carved_in_Fear_Halloween_Mask2_85ee053281.jpg"
+      },
+      {
+        "src": "/media/shop/carved-in-fear-halloween-mask/3-1200.webp",
+        "thumb": "/media/shop/carved-in-fear-halloween-mask/3-480.webp",
+        "alt": "Person wearing the Carved in Fear Halloween Mask, front view",
+        "sourceFile": "Carved_in_Fear_Halloween_Mask5_6ec0f3a610.jpg"
+      },
+      {
+        "src": "/media/shop/carved-in-fear-halloween-mask/4-1200.webp",
+        "thumb": "/media/shop/carved-in-fear-halloween-mask/4-480.webp",
+        "alt": "Person wearing the Carved in Fear Halloween Mask, angled view",
+        "sourceFile": "Carved_in_Fear_Halloween_Mask6_5919f38c00.jpg"
+      }
+    ],
+    "video": "/media/shop/carved-in-fear-halloween-mask/carved-in-fear-halloween-mask.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/carved-in-fear-halloween-mask"
+  },
+  {
+    "id": "carved-in-fear-halloween-mask-small",
+    "name": "Carved in Fear Halloween Mask — Small",
+    "priceCents": 5999,
+    "category": "Halloween costumes",
+    "seasonal": true,
+    "description": "A sculpted pumpkin-face mask for Halloween costumes and photo shoots. It covers the front of your face and ties behind your head with an elastic band; it is not a full-head mask. Check the approximate inner size before ordering.",
+    "included": "One finished, wearable front-face Carved in Fear mask with an elastic band attached for tying at the back. Clothing, display props and other costume pieces are not included.",
+    "dimensions": "Approximate source-model inner size: 145 mm.",
+    "notes": "Orange and green colouring will be similar to the reference photos; shades and hand-finished detail may vary. Contact us before checkout with fit or colour questions.",
+    "variantOf": "carved-in-fear-halloween-mask",
+    "images": [
+      {
+        "src": "/media/shop/carved-in-fear-halloween-mask/1-1200.webp",
+        "thumb": "/media/shop/carved-in-fear-halloween-mask/1-480.webp",
+        "alt": "Finished orange Carved in Fear Halloween Mask with green stem, front view",
+        "sourceFile": "Carved_in_Fear_Halloween_Mask1_ecaee03d1b.jpg"
+      }
+    ],
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/carved-in-fear-halloween-mask"
+  },
+  {
+    "id": "carved-in-fear-halloween-mask-medium",
+    "name": "Carved in Fear Halloween Mask — Medium",
+    "priceCents": 6999,
+    "category": "Halloween costumes",
+    "seasonal": true,
+    "description": "A sculpted pumpkin-face mask for Halloween costumes and photo shoots. It covers the front of your face and ties behind your head with an elastic band; it is not a full-head mask. Check the approximate inner size before ordering.",
+    "included": "One finished, wearable front-face Carved in Fear mask with an elastic band attached for tying at the back. Clothing, display props and other costume pieces are not included.",
+    "dimensions": "Approximate source-model inner size: 160 mm.",
+    "notes": "Orange and green colouring will be similar to the reference photos; shades and hand-finished detail may vary. Contact us before checkout with fit or colour questions.",
+    "variantOf": "carved-in-fear-halloween-mask",
+    "images": [
+      {
+        "src": "/media/shop/carved-in-fear-halloween-mask/1-1200.webp",
+        "thumb": "/media/shop/carved-in-fear-halloween-mask/1-480.webp",
+        "alt": "Finished orange Carved in Fear Halloween Mask with green stem, front view",
+        "sourceFile": "Carved_in_Fear_Halloween_Mask1_ecaee03d1b.jpg"
+      }
+    ],
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/carved-in-fear-halloween-mask"
+  },
+  {
+    "id": "carved-in-fear-halloween-mask-large",
+    "name": "Carved in Fear Halloween Mask — Large",
+    "priceCents": 7999,
+    "category": "Halloween costumes",
+    "seasonal": true,
+    "description": "A sculpted pumpkin-face mask for Halloween costumes and photo shoots. It covers the front of your face and ties behind your head with an elastic band; it is not a full-head mask. Check the approximate inner size before ordering.",
+    "included": "One finished, wearable front-face Carved in Fear mask with an elastic band attached for tying at the back. Clothing, display props and other costume pieces are not included.",
+    "dimensions": "Approximate source-model inner size: 170 mm.",
+    "notes": "Orange and green colouring will be similar to the reference photos; shades and hand-finished detail may vary. Contact us before checkout with fit or colour questions.",
+    "variantOf": "carved-in-fear-halloween-mask",
+    "images": [
+      {
+        "src": "/media/shop/carved-in-fear-halloween-mask/1-1200.webp",
+        "thumb": "/media/shop/carved-in-fear-halloween-mask/1-480.webp",
+        "alt": "Finished orange Carved in Fear Halloween Mask with green stem, front view",
+        "sourceFile": "Carved_in_Fear_Halloween_Mask1_ecaee03d1b.jpg"
+      }
+    ],
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/carved-in-fear-halloween-mask"
   }
 ]

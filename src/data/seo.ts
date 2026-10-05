@@ -4,7 +4,7 @@ import { business } from "./business";
 import products from "../../commerce/products.json";
 import collections from "../../commerce/collections.json";
 const publicProducts = products.filter((product) => !("variantOf" in product));
-const halloweenSpecialIds = ["candlelight-pumpkins-table-lamp", "ghost-on-a-swing", "skull-web-trinket-dish", "ghost-duo-trinket-dish"];
+const halloweenSpecialIds = collections.find((collection) => collection.id === "halloween")?.products || [];
 const canonical = (path: string) => business.origin + (path === "/" ? "/" : path.replace(/\/$/, "") + "/");
 export const publicRoutes = [
   "/",
@@ -36,7 +36,7 @@ export function getSeo(path: string) {
     ],
     "/shop/halloween-special": [
       "Halloween Special: 3D-Printed Décor in Edmonton",
-      "Shop locally made Halloween décor in Edmonton, including ghosts, pumpkin lighting, skeleton characters and trinket dishes, with free tracked Canadian shipping.",
+      "Shop locally made Halloween décor and wearable masks in Edmonton, including ghosts, pumpkin lighting and seasonal gifts, with free tracked Canadian shipping.",
     ],
     "/shop/cart": ["Your Cart", "Review your physical 3D-printed products."],
     "/shop/checkout": [

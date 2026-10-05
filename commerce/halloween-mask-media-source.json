@@ -1,0 +1,29 @@
+{
+  "source": "Official STLFLIX product galleries; seller states a lifetime commercial printing subscription with marketing rights. Public gallery and video URLs were read from each product page on 2026-10-05.",
+  "assetBaseUrl": "https://s3.us-east-2.amazonaws.com/static.stlflix.com/",
+  "productionFiles": "Not included in the website or repository.",
+  "products": {
+    "pumpkin-head-halloween-mask": {
+      "page": "https://platform.stlflix.com/product/pumpkin-head-halloween-mask",
+      "selectedImageFiles": [
+        "Pumpkin_Head_Halloween_Mask_1_d8038339c2.jpg",
+        "Pumpkin_Head_Halloween_Mask_2_17a1af6dd0.jpg",
+        "Pumpkin_Head_Halloween_Mask_4_2108262c19.jpg",
+        "Pumpkin_Head_Halloween_Mask_8_830ac7347c.jpg"
+      ],
+      "selectedVideoFile": "Pumpkin_Head_Halloween_Mask_7a40ae2536.webm",
+      "excluded": "Other angles duplicate the selected views; the separated-parts photo could suggest assembly is required; WB images duplicate the black-background images."
+    },
+    "carved-in-fear-halloween-mask": {
+      "page": "https://platform.stlflix.com/product/carved-in-fear-halloween-mask",
+      "selectedImageFiles": [
+        "Carved_in_Fear_Halloween_Mask1_ecaee03d1b.jpg",
+        "Carved_in_Fear_Halloween_Mask2_85ee053281.jpg",
+        "Carved_in_Fear_Halloween_Mask5_6ec0f3a610.jpg",
+        "Carved_in_Fear_Halloween_Mask6_5919f38c00.jpg"
+      ],
+      "selectedVideoFile": "Carved_in_Fear_3d13330813.webm",
+      "excluded": "Other studio angles repeat the chosen images; the three print-bed renders show production parts rather than the delivered mask."
+    }
+  }
+}

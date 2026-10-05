@@ -468,7 +468,7 @@ export function HalloweenSpecial() {
           <h1>Dark details.<br /><span>Built to haunt.</span></h1>
           <p className="lead">
             Explore the complete seasonal collection: sculptural ghosts,
-            pumpkin lights, skeleton characters, dishes and graveyard details.
+            pumpkin lights, wearable masks, skeleton characters, dishes and graveyard details.
           </p>
           <div className="button-row">
             <a className="button halloween-button" href="#halloween-special-products">
@@ -493,7 +493,7 @@ export function HalloweenSpecial() {
               <p className="eyebrow">THE HALLOWEEN SPECIAL</p>
               <h2>Every Halloween piece, in one place.</h2>
             </div>
-            <p>Finished physical prints with dimensions and pricing taken from the production files.</p>
+            <p>Finished physical pieces with clear size options, galleries and Canadian shipping included.</p>
           </div>
           <div className="shop-grid halloween-special-grid">
             {featured.map((product, index) => (
@@ -629,6 +629,10 @@ export function ShopProduct() {
   const activeVideo = showingVideo ? videos[index - product.images.length] : undefined;
   const variants = variantsFor(product);
   const selectedVariant = catalogProduct(selectedVariantId || variants[0]?.id || product.id) || product;
+  const isHalloweenMask = product.id === "pumpkin-head-halloween-mask" || product.id === "carved-in-fear-halloween-mask";
+  const productionMessage = isHalloweenMask
+    ? "Made to order; we confirm the completion date after ordering"
+    : content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship");
   const selectedImage = !showingVideo ? product.images[index] : undefined;
   const selectedDesign =
     selectedImage && "design" in selectedImage && typeof selectedImage.design === "string"
@@ -733,7 +737,7 @@ export function ShopProduct() {
               </p>
               <ul className="shop-purchase-facts" aria-label="Purchase details">
                 <li>{mode === "pickup" ? "Pickup in Southeast Edmonton by appointment" : "Free tracked shipping in Canada"}</li>
-                <li>{content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship")}</li>
+                <li>{productionMessage}</li>
                 <li>Secure payment through Shopify</li>
               </ul>
               <div className="shop-trust-links">
@@ -757,7 +761,7 @@ export function ShopProduct() {
                   <dt>Approximate size</dt>
                   <dd>{selectedVariant.dimensions.replace("Source model: approximately", "Approximately").replace("Finished size: approximately", "Approximately").replace("Final printed dimensions require production review.", "Finished size may vary slightly.")}</dd>
                 </>}
-                {variants.length > 0 && !("variantLabel" in product && product.variantLabel === "Design") && <>
+                {variants.length > 0 && product.id === "octopus-wine-bottle-holder" && <>
                   <dt>Size guide</dt>
                   <dd>
                     Choose by the widest diameter of your bottle. A typical 750 mL
@@ -766,11 +770,15 @@ export function ShopProduct() {
                     vary, so measure your bottle at its widest point before ordering.
                   </dd>
                 </>}
+                {isHalloweenMask && <>
+                  <dt>Fit guide</dt>
+                  <dd>The listed inner measurement comes from the model designer. It is not a head-circumference measurement and does not guarantee fit. Contact us before checkout if you are unsure which size to choose.</dd>
+                </>}
                 <dt>Colour & finish</dt>
-                <dd>Similar to the main photo. Contact us before checkout to request a different colour.</dd>
+                <dd>{isHalloweenMask ? "Orange and green colouring will be similar to the reference photos; exact shades and hand-finished details may vary. Contact us before checkout with colour questions." : "Similar to the main photo. Contact us before checkout to request a different colour."}</dd>
                 <dt>Timing & handoff</dt>
                 <dd>
-                  {content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship")}. {mode === "pickup" ? "Pickup by appointment in Southeast Edmonton. We email your private pickup details after ordering." : "Free standard tracked shipping across Canada through Shopify checkout."}
+                  {productionMessage.replace(/\.$/, "")}. {mode === "pickup" ? "Pickup by appointment in Southeast Edmonton. We email your private pickup details after ordering." : "Free standard tracked shipping across Canada through Shopify checkout."}
                 </dd>
                 <dt>Ordering & payment</dt>
                 <dd>Made to order. Secure payment is handled through Shopify. Contact us before checkout for special requests.</dd>
