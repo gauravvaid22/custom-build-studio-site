@@ -845,7 +845,7 @@ export function ShopProduct() {
                 <dd>{isHalloweenMask ? "Orange and green colouring will be similar to the reference photos; exact shades and hand-finished details may vary. Contact us before checkout with colour questions." : "Similar to the main photo. Contact us before checkout to request a different colour."}</dd>
                 <dt>Timing & handoff</dt>
                 <dd>
-                  {productionMessage.replace(/\.$/, "")}. {mode === "pickup" ? "Pickup by appointment in Southeast Edmonton. We email your private pickup details after ordering." : `${deliveryEstimate} Free standard tracked shipping across Canada through Shopify checkout.`}
+                  {`${productionMessage.replace(/\.$/, "")}. ${mode === "pickup" ? "Pickup by appointment in Southeast Edmonton. We email your private pickup details after ordering." : `${deliveryEstimate} Free standard tracked shipping across Canada through Shopify checkout.`}`}
                 </dd>
                 <dt>Ordering & payment</dt>
                 <dd>Made to order. Secure payment is handled through Shopify. Contact us before checkout for special requests.</dd>
