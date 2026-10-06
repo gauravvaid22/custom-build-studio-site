@@ -848,7 +848,7 @@ export function ShopProduct() {
                   {`${productionMessage.replace(/\.$/, "")}. ${mode === "pickup" ? "Pickup by appointment in Southeast Edmonton. We email your private pickup details after ordering." : `${deliveryEstimate} Free standard tracked shipping across Canada through Shopify checkout.`}`}
                 </dd>
                 <dt>Ordering & payment</dt>
-                <dd>Made to order. Secure payment is handled through Shopify. Contact us before checkout for special requests.</dd>
+                <dd>Secure payment is handled through Shopify. Contact us before checkout for special requests.</dd>
                 <dt>Material</dt>
                 <dd>Decorative pieces are generally made in PLA. We use PETG where extra toughness or moisture resistance is useful. Contact us before ordering if the exact material matters for your use.</dd>
                 <dt>Care</dt>
