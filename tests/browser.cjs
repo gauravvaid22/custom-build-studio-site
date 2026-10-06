@@ -219,6 +219,14 @@ async function scroll(page) {
   assert(await page.locator(".mobile-quick-paths a[href='/shop']").isVisible());
   await page.locator(".hero-paths a[href='/shop']").click();
   assert.equal(new URL(page.url()).pathname, "/shop");
+  await page.locator(".shop-collection-card").first().scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => document.querySelector(".shop-collection-card")?.classList.contains("shop-card-visible"));
+  assert.match(await page.locator(".shop-collection-card").first().innerText(), /1 product\b/i);
+  assert(await page.locator(".shop-collection-card").first().getByText("View products").isVisible());
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto(origin + "/shop");
+  assert.equal(await page.locator("#collections").evaluate((el) => el.classList.contains("shop-scroll-ready")), false);
+  await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto(origin + "/shop/all");
   assert.equal(await page.locator(".shop-card").count(), catalogProducts.filter((product) => !("variantOf" in product)).length);
   await page.goto(origin);
@@ -250,7 +258,7 @@ async function scroll(page) {
       .getAttribute("aria-expanded"),
     "false",
   );
-  results.interactions.push("Homepage scroll reveal and reduced motion, shop/service paths, complete catalog, mobile category menu, Escape and route close");
+  results.interactions.push("Homepage and shop category scroll motion, reduced motion, product paths, complete catalog, mobile menu and route close");
   await page.getByRole("button", { name: "3D Scanning", exact: true }).click();
   assert.equal(await page.locator(".project-card").count(), 1);
   await page

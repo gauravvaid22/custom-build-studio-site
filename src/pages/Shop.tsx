@@ -325,6 +325,27 @@ export function Shop() {
   const primaryCollections = departmentCollections;
   const under25 = collections.find((collection) => collection.id === "gifts-under-25")!;
   const featuredIds = ["lithophane-table-lamp", "dinosaur-skeleton-collection", "octopus-wine-bottle-holder", "night-owl-wall-light", "basilisk-dice-tower", "mood-ghost"];
+  useEffect(() => {
+    const section = document.getElementById("collections");
+    if (!section || window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+    const cards = section.querySelectorAll<HTMLElement>(".shop-collection-card");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("shop-card-visible");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.16, rootMargin: "0px 0px -5% 0px" });
+    cards.forEach((card) => {
+      if (card.getBoundingClientRect().top < window.innerHeight * 0.85) card.classList.add("shop-card-visible");
+      else observer.observe(card);
+    });
+    section.classList.add("shop-scroll-ready");
+    return () => {
+      observer.disconnect();
+      section.classList.remove("shop-scroll-ready");
+    };
+  }, []);
   return (
     <>
       <ShopNav showFulfillment={false} />
@@ -371,12 +392,12 @@ export function Shop() {
             {primaryCollections.map((collection, index) => {
               const cover = catalogProduct(collection.coverProduct)!;
               return (
-                <Link className="shop-collection-card shop-reveal" style={{"--delay": `${index * 70}ms`} as React.CSSProperties} key={collection.id} to={`/shop/${collection.id}`}>
+                <Link className="shop-collection-card" style={{"--delay": `${(index % 2) * 90}ms`} as React.CSSProperties} key={collection.id} to={`/shop/${collection.id}`}>
                   <ProductImage product={cover} />
                   <span className="shop-collection-overlay">
-                    <small>{collection.products.length} products</small>
+                    <small>{collection.products.length} {collection.products.length === 1 ? "product" : "products"}</small>
                     <strong>{collection.name}</strong>
-                    <span>Explore collection ↗</span>
+                    <span>View products</span>
                   </span>
                 </Link>
               );

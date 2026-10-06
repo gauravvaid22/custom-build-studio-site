@@ -355,8 +355,6 @@
 .shop-collection-overlay small { text-transform: uppercase; letter-spacing: .12em; opacity: .78; }
 .shop-collection-overlay strong { font-size: clamp(1.45rem, 3vw, 2.25rem); line-height: 1.05; }
 .shop-collection-overlay > span { font-size: .9rem; font-weight: 700; }
-.shop-reveal { animation: shop-reveal .55s ease-out both; animation-delay: var(--delay, 0ms); }
-@keyframes shop-reveal { from { opacity: 0; transform: translateY(16px); } }
 .shop-mask-feature {
   display: grid;
   grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
@@ -734,7 +732,6 @@
   .shop-added-confirmation,
   .shop-added-icon,
   .shop-cart-count,
-  .shop-reveal,
   .shop-collection-card > img,
   .shop-mask-feature-images img,
   .shop-product-strip img {
@@ -790,6 +787,67 @@
 .shop-collection-card::after { background: linear-gradient(180deg, rgba(8,13,11,.08), transparent 30%, rgba(8,13,11,.92)); }
 .shop-collection-overlay small { color: #b6e5f4; opacity: 1; }
 .shop-collection-overlay > span { color: #fff; }
+.shop-collection-overlay { gap: 9px; padding: clamp(18px, 2.2vw, 30px); }
+.shop-collection-overlay small {
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: .76rem;
+  font-weight: 750;
+  letter-spacing: .07em;
+  line-height: 1.2;
+}
+.shop-collection-overlay strong {
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: clamp(1.55rem, 2.5vw, 2.2rem);
+  font-weight: 720;
+  line-height: 1.08;
+  letter-spacing: -.045em;
+  text-wrap: balance;
+}
+.shop-collection-overlay > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  width: max-content;
+  max-width: 100%;
+  padding-top: 9px;
+  border-top: 1px solid rgba(255, 255, 255, .58);
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: .83rem;
+  font-weight: 650;
+  line-height: 1.2;
+}
+.shop-collection-overlay > span::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  transform: rotate(45deg);
+}
+@media (max-width: 600px) {
+  .shop-collection-grid { grid-template-columns: 1fr; gap: 12px; }
+  .shop-collection-card, .shop-collection-card > img { min-height: 260px; }
+  .shop-collection-card > img { height: 260px; }
+  .shop-collection-overlay { padding: 23px; }
+  .shop-collection-overlay strong { font-size: clamp(1.75rem, 7vw, 2.25rem); }
+  .shop-collection-overlay small { font-size: .78rem; }
+  .shop-collection-overlay > span { font-size: .9rem; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .shop-scroll-ready .shop-collection-card:not(.shop-card-visible) { transform: translateY(18px); }
+  .shop-scroll-ready .shop-collection-card.shop-card-visible {
+    animation: shop-card-enter .7s cubic-bezier(.2, .7, .2, 1) both;
+    animation-delay: var(--delay, 0ms);
+  }
+  .shop-scroll-ready .shop-collection-card:not(.shop-card-visible) > img { transform: scale(1.065); }
+  .shop-scroll-ready .shop-collection-card.shop-card-visible > img { transform: scale(1); transition: transform .85s cubic-bezier(.2, .7, .2, 1); }
+  .shop-scroll-ready .shop-collection-card.shop-card-visible:hover > img { transform: scale(1.045); }
+  @keyframes shop-card-enter {
+    from { transform: translateY(18px); }
+    to { transform: translateY(0); }
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .shop-collection-card > img { transition: none; }
 }
