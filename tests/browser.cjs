@@ -21,9 +21,11 @@ const routes = [
   "/pricing",
   "/products",
   "/shop",
+  "/shop/all",
   "/shop/collectibles",
   "/shop/gaming-desk",
   "/shop/home-decor",
+  "/shop/masks-costumes",
   "/shop/halloween",
   "/shop/halloween-special",
   "/shop/gifts-under-25",
@@ -204,7 +206,25 @@ async function scroll(page) {
   }
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(origin);
+  await page.waitForFunction(() => document.getElementById("main")?.classList.contains("home-motion-active"));
+  assert.notEqual(await page.locator(".studio-copy").evaluate((el) => getComputedStyle(el).transform), "none");
+  await page.locator(".studio-copy").scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => getComputedStyle(document.querySelector(".studio-copy")).transform === "matrix(1, 0, 0, 1, 0, 0)");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto(origin);
+  assert.equal(await page.locator(".studio-copy").evaluate((el) => getComputedStyle(el).transform), "none");
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto(origin);
+  assert.equal(await page.locator(".hero-paths a").count(), 2);
+  assert(await page.locator(".mobile-quick-paths a[href='/shop']").isVisible());
+  await page.locator(".hero-paths a[href='/shop']").click();
+  assert.equal(new URL(page.url()).pathname, "/shop");
+  await page.goto(origin + "/shop/all");
+  assert.equal(await page.locator(".shop-card").count(), catalogProducts.filter((product) => !("variantOf" in product)).length);
+  await page.goto(origin);
   await page.getByRole("button", { name: "Menu" }).click();
+  await page.getByRole("button", { name: "Show shop categories" }).click();
+  assert(await page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Masks & Costumes" }).isVisible());
   assert.equal(
     await page
       .getByRole("button", { name: "Close" })
@@ -230,7 +250,7 @@ async function scroll(page) {
       .getAttribute("aria-expanded"),
     "false",
   );
-  results.interactions.push("Mobile menu, Escape, route close");
+  results.interactions.push("Homepage scroll reveal and reduced motion, shop/service paths, complete catalog, mobile category menu, Escape and route close");
   await page.getByRole("button", { name: "3D Scanning", exact: true }).click();
   assert.equal(await page.locator(".project-card").count(), 1);
   await page

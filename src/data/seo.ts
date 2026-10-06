@@ -16,6 +16,7 @@ export const publicRoutes = [
   "/pricing",
   "/products",
   "/shop",
+  "/shop/all",
   "/shop/halloween-special",
   ...collections.map((collection) => `/shop/${collection.id}`),
   ...publicProducts.map((product) => `/shop/${product.id}`),
@@ -33,6 +34,10 @@ export function getSeo(path: string) {
     "/shop": [
       "Unique Gifts & Décor, Made in Edmonton",
       "Discover locally made 3D-printed gifts, creatures, dice towers, planters and seasonal pieces with secure Shopify checkout and free tracked Canadian shipping.",
+    ],
+    "/shop/all": [
+      "Shop All Gifts, Décor & Accessories Made in Edmonton",
+      "Browse every finished product from Custom Build Studio, including personalized gifts, figurines, gaming accessories, home décor and wearable masks. Made in Edmonton.",
     ],
     "/shop/halloween-special": [
       "Halloween Special: 3D-Printed Décor in Edmonton",
@@ -179,12 +184,12 @@ export function getStructuredData(path: string) {
       } : item(product, canonical(page)),
       { "@type": "BreadcrumbList", itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: canonical("/") },
-        { "@type": "ListItem", position: 2, name: "Gifts & Décor", item: canonical("/shop") },
+        { "@type": "ListItem", position: 2, name: "Shop", item: canonical("/shop") },
         { "@type": "ListItem", position: 3, name: product.name, item: canonical(page) },
       ] },
     ] };
   }
-  if (page === "/shop" || collection || halloweenSpecial) {
+  if (page === "/shop" || page === "/shop/all" || collection || halloweenSpecial) {
     const listedProducts = halloweenSpecial
       ? halloweenSpecialIds.map((id) => publicProducts.find((product) => product.id === id)).filter(Boolean)
       : collection
@@ -195,7 +200,7 @@ export function getStructuredData(path: string) {
       "@graph": [
         {
           "@type": "CollectionPage",
-          name: halloweenSpecial ? "Halloween Special" : collection?.name || "Unique Gifts & Décor, Made in Edmonton",
+          name: halloweenSpecial ? "Halloween Special" : collection?.name || (page === "/shop/all" ? "Shop All Products" : "Unique Gifts & Décor, Made in Edmonton"),
           description: halloweenSpecial ? getSeo(page).description : collection?.seoDescription || getSeo("/shop").description,
           url: canonical(page),
           mainEntity: {
@@ -213,8 +218,8 @@ export function getStructuredData(path: string) {
           "@type": "BreadcrumbList",
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "Home", item: canonical("/") },
-            { "@type": "ListItem", position: 2, name: "Gifts & Décor", item: canonical("/shop") },
-            ...(collection || halloweenSpecial ? [{ "@type": "ListItem", position: 3, name: halloweenSpecial ? "Halloween Special" : collection!.name, item: canonical(page) }] : []),
+            { "@type": "ListItem", position: 2, name: "Shop", item: canonical("/shop") },
+            ...(collection || halloweenSpecial || page === "/shop/all" ? [{ "@type": "ListItem", position: 3, name: halloweenSpecial ? "Halloween Special" : collection?.name || "Shop All Products", item: canonical(page) }] : []),
           ],
         },
       ],

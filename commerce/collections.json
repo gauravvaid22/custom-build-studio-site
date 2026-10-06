@@ -1,6 +1,7 @@
 [
   {
     "id": "personalized-gifts",
+    "kind": "department",
     "name": "Personalized Gifts",
     "shortName": "Personalized gifts",
     "eyebrow": "YOUR PHOTO / MADE INTO LIGHT",
@@ -14,23 +15,27 @@
   },
   {
     "id": "collectibles",
-    "name": "Collectibles & Figurines",
-    "shortName": "Collectibles",
+    "kind": "department",
+    "name": "Figurines & Fidgets",
+    "shortName": "Figures & fidgets",
     "eyebrow": "CHARACTERS WITH PERSONALITY",
-    "heading": "3D-printed collectibles, made in Edmonton.",
-    "description": "Discover articulated creatures, fantasy figures and characterful shelf companions, printed locally and made to order.",
-    "seoDescription": "Shop locally made 3D-printed collectibles and figurines in Edmonton, including articulated creatures, fantasy characters and unusual desk companions.",
+    "heading": "Little characters. Big personality.",
+    "description": "Explore articulated creatures, collectible sets, character figurines and fidget gifts made in Edmonton.",
+    "seoDescription": "Shop figurines, articulated creatures, collectible sets and fidget gifts made in Edmonton, Alberta.",
     "coverProduct": "skeleton-chameleon",
     "products": [
       "dinosaur-skeleton-collection",
       "skeleton-chameleon",
       "articulated-baby-dragon",
       "articulated-hermes-the-hermit-crab",
-      "joyful-axolotl"
+      "joyful-axolotl",
+      "mood-ghost",
+      "pumpkin-fidget-keychain"
     ]
   },
   {
     "id": "gaming-desk",
+    "kind": "department",
     "name": "Gaming & Desk Accessories",
     "shortName": "Gaming & desk",
     "eyebrow": "FOR GAME NIGHT AND YOUR SETUP",
@@ -45,23 +50,46 @@
   },
   {
     "id": "home-decor",
-    "name": "Home Décor & Planters",
-    "shortName": "Home décor",
+    "kind": "department",
+    "name": "Home & Living",
+    "shortName": "Home & living",
     "eyebrow": "SCULPTURAL DETAILS FOR HOME",
     "heading": "Useful objects with more character.",
-    "description": "Planters, lighting and statement pieces that turn practical objects into memorable gifts and décor.",
-    "seoDescription": "Explore locally made 3D-printed home décor and planters in Edmonton, including character planters, wall lighting and sculptural entertaining pieces.",
+    "description": "Discover lighting, planters, sculptural accessories and decorative pieces for your home.",
+    "seoDescription": "Explore locally made home décor in Edmonton, including planters, lighting, decorative dishes, wreaths and sculptural entertaining pieces.",
     "coverProduct": "octopus-wine-bottle-holder",
     "products": [
       "lithophane-table-lamp",
       "grumpy-kitty-planter",
       "verdant-remains-planter",
       "night-owl-wall-light",
-      "octopus-wine-bottle-holder"
+      "octopus-wine-bottle-holder",
+      "glutton-ghost-bowl",
+      "ghost-arch-wreath",
+      "skull-web-trinket-dish",
+      "ghost-on-a-swing",
+      "candlelight-pumpkins-table-lamp",
+      "ghost-duo-trinket-dish"
+    ]
+  },
+  {
+    "id": "masks-costumes",
+    "kind": "department",
+    "name": "Masks & Costumes",
+    "shortName": "Masks & costumes",
+    "eyebrow": "FINISHED AND WEARABLE",
+    "heading": "Choose your Halloween character.",
+    "description": "Finished wearable masks made in Edmonton. Compare full-head and front-face styles, then choose the size that fits your plans.",
+    "seoDescription": "Shop finished wearable Halloween masks made in Edmonton. Explore full-head and front-face styles, fastening methods and size options.",
+    "coverProduct": "pumpkin-head-halloween-mask",
+    "products": [
+      "pumpkin-head-halloween-mask",
+      "carved-in-fear-halloween-mask"
     ]
   },
   {
     "id": "halloween",
+    "kind": "seasonal",
     "name": "Halloween Masks & Décor",
     "shortName": "Halloween",
     "eyebrow": "PLAYFUL, SPOOKY, MADE LOCALLY",
@@ -88,6 +116,7 @@
   },
   {
     "id": "gifts-under-25",
+    "kind": "curated",
     "name": "Gifts $25 & Under",
     "shortName": "$25 & under",
     "eyebrow": "SMALL GIFTS, BIG PERSONALITY",

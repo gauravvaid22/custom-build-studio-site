@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Arrow,
@@ -14,6 +15,36 @@ import projects from "../data/projects.json";
 import { business } from "../data/business";
 
 export default function Home() {
+  useEffect(() => {
+    const main = document.getElementById("main");
+    if (!main || window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+
+    const targets = main.querySelectorAll<HTMLElement>(
+      ".home-shop-copy, .home-shop-gallery, #capabilities .section-heading, #capabilities .service-card, " +
+      ".work-section .section-heading, .work-section .project-card, .studio-section .studio-photo, " +
+      ".studio-section .studio-copy, .process-section .section-heading, .process-grid li, " +
+      ".faq-layout > div, .cta-section .cta-inner > div, .cta-section .cta-inner > a",
+    );
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -6% 0px" });
+
+    targets.forEach((target) => {
+      target.classList.add("home-reveal-target");
+      if (target.getBoundingClientRect().top < window.innerHeight * 0.88) target.classList.add("is-visible");
+      else observer.observe(target);
+    });
+    main.classList.add("home-motion-active");
+    return () => {
+      observer.disconnect();
+      main.classList.remove("home-motion-active");
+    };
+  }, []);
+
   return (
     <>
       <section className="hero">
@@ -23,24 +54,28 @@ export default function Home() {
               <span className="orange-line" />
               DESIGN & FABRICATION · EDMONTON, AB
             </p>
-            <h1>
-              Ideas.
+            <h1 className="home-hero-title">
+              Made for your home.
               <br />
-              Designed.
-              <br />
-              <span>Built.</span>
+              <span>Built for your ideas.</span>
             </h1>
             <p className="hero-description">
-              FDM & resin 3D printing, CAD design, 3D scanning and CNC woodworking.
-              From the first sketch to the finished piece.
+              Shop finished gifts and décor, or bring us an idea for custom 3D printing,
+              CAD design, scanning or CNC woodworking in Edmonton.
             </p>
-            <div className="button-row">
-              <QuoteLink />
-              <Link className="button button-outline" to="/work">
-                View Our Work <Arrow />
+            <div className="hero-paths" aria-label="Choose what you need">
+              <Link className="hero-path" to="/shop">
+                <span className="hero-path-icon" aria-hidden="true">◇</span>
+                <span><strong>Shop products</strong><small>Finished gifts, décor and accessories</small></span>
+                <Arrow />
+              </Link>
+              <Link className="hero-path" to="/services">
+                <span className="hero-path-icon" aria-hidden="true">✳</span>
+                <span><strong>Custom services</strong><small>Design and fabrication for your project</small></span>
+                <Arrow />
               </Link>
             </div>
-            <p className="hero-note">One-off projects & small runs welcome.</p>
+            <p className="hero-note">Have a sketch, file or broken part? <Link to="/contact">Request a custom quote ↗</Link></p>
             <Link className="hero-seasonal-link" to="/shop/halloween-special/#halloween-masks">
               <span>NEW FOR HALLOWEEN</span> Explore our wearable masks <Arrow />
             </Link>

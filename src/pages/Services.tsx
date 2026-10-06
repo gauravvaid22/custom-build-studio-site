@@ -2,7 +2,6 @@ import { Link, useParams } from "react-router-dom";
 import {
   Arrow,
   CallToAction,
-  PageIntro,
   Photo,
   Process,
   QuoteLink,
@@ -16,14 +15,56 @@ import {
 } from "../data/landing";
 import { useSiteContent, wholeDollars } from "../components/SiteContent";
 
+function ServiceStartIcon({ type }: { type: "file" | "part" | "idea" | "wood" }) {
+  const paths = {
+    file: <><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h4M9 12h6M9 16h5"/></>,
+    part: <><path d="m4 8 8-5 8 5v9l-8 5-8-5zM4 8l8 5 8-5M12 13v9"/><circle cx="12" cy="8" r="2"/></>,
+    idea: <><path d="M8 14c-1.4-1.2-2-2.6-2-4.2a6 6 0 0 1 12 0c0 1.6-.6 3-2 4.2-.8.7-1 1.2-1 2H9c0-.8-.2-1.3-1-2ZM9 19h6M10 22h4"/></>,
+    wood: <><path d="M4 5h16v14H4zM8 5v14M15 5v14M4 11h16M11 8c1 1 1 2 0 3M18 13c-1 1-1 2 0 3"/></>,
+  };
+  return <svg className="service-start-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[type]}</svg>;
+}
+
 export function Services() {
   return (
     <>
-      <PageIntro
-        eyebrow="CAPABILITIES / EDMONTON, ALBERTA"
-        title="What do you want to make?"
-        description="A ready-to-print file or a rough idea. A single piece or a small run. We help turn the starting point you have into the result you need."
-      />
+      <section className="page-intro service-page-intro">
+        <div className="container service-intro-layout">
+          <div>
+            <p className="eyebrow">CAPABILITIES / EDMONTON, ALBERTA</p>
+            <h1>What do you want to make?</h1>
+            <p className="lead">A ready-to-print file or a rough idea. A single piece or a small run. We help turn the starting point you have into the result you need.</p>
+          </div>
+          <div className="service-intro-graphic" aria-hidden="true">
+            <span className="service-graphic-index">CBS / DESIGN → BUILD</span>
+            <svg viewBox="0 0 440 320" fill="none" role="presentation">
+              <path className="service-graphic-ghost" d="M91 101h179l77 58v96H168l-77-58v-96Z" />
+              <path className="service-graphic-shell" d="M107 85h179l61 74v80H168l-61-58V85Z" />
+              <path className="service-graphic-face" d="M107 85h179l61 74H168l-61-74Z" />
+              <path className="service-graphic-edge" d="M168 159v80M347 159v80M107 85v96l61 58" />
+              <circle className="service-graphic-hole" cx="229" cy="121" r="28" />
+              <circle className="service-graphic-hole-inner" cx="229" cy="121" r="14" />
+              <path className="service-graphic-measure" d="M102 59h188M102 52v14M290 52v14M370 157v84M363 157h14M363 241h14M78 82v102M71 82h14M71 184h14" />
+              <circle className="service-graphic-point" cx="107" cy="85" r="4" />
+              <circle className="service-graphic-point" cx="347" cy="159" r="4" />
+            </svg>
+            <span className="service-graphic-caption">A starting point can become a finished part.</span>
+          </div>
+        </div>
+      </section>
+      <section className="section service-start-section" aria-labelledby="service-start-title">
+        <div className="container">
+          <p className="eyebrow">START WHERE YOU ARE</p>
+          <h2 id="service-start-title">What do you have in hand?</h2>
+          <div className="service-start-grid">
+            <Link to="/services/3d-printing"><ServiceStartIcon type="file"/><strong>A file to make</strong><small>STL, STEP or an existing design</small><Arrow /></Link>
+            <Link to="/services/3d-scanning"><ServiceStartIcon type="part"/><strong>A part to recreate</strong><small>Broken, discontinued or custom-fit</small><Arrow /></Link>
+            <Link to="/services/cad-design"><ServiceStartIcon type="idea"/><strong>An idea or sketch</strong><small>Get it designed for production</small><Arrow /></Link>
+            <Link to="/services/cnc-woodworking"><ServiceStartIcon type="wood"/><strong>A wood project</strong><small>Signs, panels, carving and more</small><Arrow /></Link>
+          </div>
+          <p>Not sure which service fits? <Link to="/contact">Send us what you have ↗</Link></p>
+        </div>
+      </section>
       <PrintingLinks />
       <section className="section">
         <div className="container service-list">

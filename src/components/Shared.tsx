@@ -4,6 +4,7 @@ import imageData from "../data/images.json";
 import { business } from "../data/business";
 import projects from "../data/projects.json";
 import { useCart } from "./Cart";
+import collections from "../../commerce/collections.json";
 
 const images: Record<string, { base: string; width: number; height: number }> =
   imageData;
@@ -98,24 +99,31 @@ export function Brand() {
 export function Header() {
   const { items } = useCart();
   const [open, setOpen] = useState(false);
+  const [activePanel, setActivePanel] = useState<"shop" | "services" | null>(null);
   const location = useLocation();
   const toggle = useRef<HTMLButtonElement>(null);
-  useEffect(() => setOpen(false), [location.pathname]);
+  const departments = collections.filter((collection) => collection.kind === "department");
+  const cartCount = items.reduce((sum, item) => sum + item.quantity, 0);
+  useEffect(() => { setOpen(false); setActivePanel(null); }, [location.pathname]);
   useEffect(() => {
-    if (!open) return;
     const close = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setOpen(false);
+        setActivePanel(null);
         toggle.current?.focus();
       }
     };
     window.addEventListener("keydown", close);
     return () => window.removeEventListener("keydown", close);
-  }, [open]);
+  }, []);
   return (
     <header className="site-header">
       <div className="container header-inner">
         <Brand />
+        <div className="mobile-quick-paths" aria-label="Choose how to work with us">
+          <NavLink to="/shop" className={({ isActive }) => isActive || location.pathname.startsWith("/shop/") ? "is-current" : ""}>Shop products</NavLink>
+          <NavLink to="/services" className={({ isActive }) => isActive || location.pathname.startsWith("/services/") ? "is-current" : ""}>Custom services</NavLink>
+        </div>
         <button
           ref={toggle}
           className="menu-toggle"
@@ -131,19 +139,32 @@ export function Header() {
           className={open ? "main-nav is-open" : "main-nav"}
           aria-label="Main navigation"
         >
-          {[
-            ["/services", "Services"],
-            ["/work", "Our Work"],
-            ["/about", "The Studio"],
-            ["/pricing", "Pricing"],
-            ["/shop", "Gifts & Décor"],
-          ].map(([to, label]) => (
-            <NavLink key={to} to={to}>
-              {label}
-            </NavLink>
-          ))}
+          <div className="nav-group">
+            <NavLink to="/shop" className={location.pathname.startsWith("/shop") ? "active" : ""}>Shop</NavLink>
+            <button type="button" className="nav-group-toggle" aria-label="Show shop categories" aria-expanded={activePanel === "shop"} aria-controls="shop-navigation-panel" onClick={() => setActivePanel(activePanel === "shop" ? null : "shop")}>⌄</button>
+            <div id="shop-navigation-panel" className={`nav-panel ${activePanel === "shop" ? "is-open" : ""}`}>
+              <Link to="/shop/all">Shop all products</Link>
+              {departments.map((collection) => <Link key={collection.id} to={`/shop/${collection.id}`}>{collection.name}</Link>)}
+              <Link to="/shop/halloween">Halloween collection</Link>
+              <Link to="/shop/gifts-under-25">Gifts $25 &amp; under</Link>
+            </div>
+          </div>
+          <div className="nav-group">
+            <NavLink to="/services" className={location.pathname.startsWith("/services") ? "active" : ""}>Custom Services</NavLink>
+            <button type="button" className="nav-group-toggle" aria-label="Show custom services" aria-expanded={activePanel === "services"} aria-controls="services-navigation-panel" onClick={() => setActivePanel(activePanel === "services" ? null : "services")}>⌄</button>
+            <div id="services-navigation-panel" className={`nav-panel ${activePanel === "services" ? "is-open" : ""}`}>
+              <Link to="/services/3d-printing">3D Printing · FDM &amp; Resin</Link>
+              <Link to="/services/cad-design">CAD Design</Link>
+              <Link to="/services/3d-scanning">3D Scanning</Link>
+              <Link to="/services/cnc-woodworking">CNC Woodworking</Link>
+              <Link to="/pricing">Service Pricing</Link>
+              <Link to="/contact">Request a quote</Link>
+            </div>
+          </div>
+          <NavLink to="/work">Our Work</NavLink>
+          <NavLink to="/about">About</NavLink>
           <QuoteLink />
-          {items.length > 0 && <Link to="/shop/cart" aria-label="View shopping cart">Cart ({items.reduce((sum,item)=>sum+item.quantity,0)})</Link>}
+          <Link to="/shop/cart" className="nav-cart" aria-label={`Cart, ${cartCount} ${cartCount === 1 ? "item" : "items"}`}>Cart <span className="shop-cart-count">{cartCount}</span></Link>
         </nav>
       </div>
     </header>
@@ -168,8 +189,8 @@ export function Footer() {
           <h2>Explore</h2>
           <Link to="/services">Services</Link>
           <Link to="/work">Our work</Link>
-          <Link to="/products">Products</Link>
-          <Link to="/shop">Gifts & Décor</Link>
+          <Link to="/shop">Shop all products</Link>
+          <Link to="/shop/personalized-gifts">Personalized gifts</Link>
           <Link to="/about">The studio</Link>
           <Link to="/pricing">Pricing</Link>
           <Link to="/reviews">Customer feedback</Link>

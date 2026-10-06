@@ -28,6 +28,8 @@ const isVariant = (product: Product) => "variantOf" in product;
 const catalogProduct = (id: string) => products.find((product) => product.id === id);
 const halloweenSpecialIds =
   collections.find((collection) => collection.id === "halloween")?.products || [];
+const departmentCollections = collections.filter((collection) => collection.kind === "department");
+const evergreenProducts = products.filter((product) => !("variantOf" in product));
 type Order = {
   id: string;
   number: string;
@@ -83,27 +85,23 @@ async function api(
   if (!result.ok) throw Error(data.error || "Unable to complete this request.");
   return data;
 }
-export function ShopNav() {
-  const { items } = useCart();
-  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
+export function ShopNav({ showFulfillment = true }: { showFulfillment?: boolean } = {}) {
   return (
     <>
-    <nav className="shop-nav container" aria-label="Gift and decor navigation">
-      <Link className="shop-nav-home" to="/shop">Gifts &amp; Décor</Link>
+    <nav className="shop-nav container" aria-label="Shop categories">
+      <Link className="shop-nav-home" to="/shop">Shop</Link>
       <div className="shop-nav-collections">
-        {collections.map((collection) => (
+        <Link to="/shop/all">Shop all</Link>
+        {departmentCollections.map((collection) => (
           <Link key={collection.id} to={`/shop/${collection.id}`}>
             {collection.shortName}
           </Link>
         ))}
+        <Link to="/shop/halloween">Halloween</Link>
+        <Link to="/shop/gifts-under-25">$25 &amp; under</Link>
       </div>
-      <Link className="shop-cart-link" to="/shop/cart">
-        <span aria-hidden="true">Cart</span>
-        <span className="sr-only">Cart items:</span>
-        <span className="shop-cart-count" key={itemCount}>{itemCount}</span>
-      </Link>
     </nav>
-    <FulfillmentSelector welcome />
+    {showFulfillment && <FulfillmentSelector />}
     </>
   );
 }
@@ -324,31 +322,31 @@ export function Shop() {
   const featuredProduct = catalogProduct("pumpkin-head-halloween-mask")!;
   const pumpkinMask = catalogProduct("pumpkin-head-halloween-mask")!;
   const carvedMask = catalogProduct("carved-in-fear-halloween-mask")!;
-  const primaryCollections = collections.filter((collection) => collection.id !== "gifts-under-25");
+  const primaryCollections = departmentCollections;
   const under25 = collections.find((collection) => collection.id === "gifts-under-25")!;
   const featuredIds = ["lithophane-table-lamp", "dinosaur-skeleton-collection", "octopus-wine-bottle-holder", "night-owl-wall-light", "basilisk-dice-tower", "mood-ghost"];
   return (
     <>
-      <ShopNav />
-      <section className="shop-hero">
+      <ShopNav showFulfillment={false} />
+      <section className="shop-hero shop-hub-hero">
         <div className="container shop-hero-grid">
           <div>
-            <p className="eyebrow">NEW HALLOWEEN MASKS / MADE IN EDMONTON</p>
+            <p className="eyebrow">MADE IN EDMONTON / SHOP ONLINE</p>
             <h1>
-              Unique Gifts &amp; Décor,
+              Find something
               <br />
-              <span>Made in Edmonton.</span>
+              <span>made for you.</span>
             </h1>
             <p className="lead">
-              Finished, wearable Halloween masks are here. Explore them alongside
-              personalized gifts, collectible creatures, gaming pieces and home décor.
+              Explore finished products, from personalized lights and home décor
+              to gaming accessories, character gifts and Halloween masks.
             </p>
             <div className="button-row">
-              <a className="button" href="#shop-mask-feature-title">Explore the masks ↘</a>
-              <a className="button button-outline" href="#collections">Shop all collections ↘</a>
+              <a className="button" href="#collections">Shop by category ↘</a>
+              <Link className="button button-outline" to="/shop/all">See every product ↗</Link>
             </div>
             <p className="small">
-              Physical products · Secure payment · Free tracked Canadian shipping
+              Physical products · Secure Shopify checkout · {mode === "pickup" ? "Edmonton pickup by appointment" : "Free tracked Canadian shipping"}
             </p>
           </div>
           <Link to={`/shop/${featuredProduct.id}/`} className="shop-hero-photo">
@@ -360,32 +358,14 @@ export function Shop() {
         </div>
       </section>
       <ShopNotice />
-      <section className="container shop-mask-feature" aria-labelledby="shop-mask-feature-title">
-        <div className="shop-mask-feature-copy">
-          <p className="eyebrow">NEW / HALLOWEEN COSTUMES</p>
-          <h2 id="shop-mask-feature-title">Meet the masks.</h2>
-          <p>Choose a full pumpkin head with connecting magnets, or a front-face mask that ties behind your head. Both arrive finished and wearable.</p>
-          <Link className="button halloween-button" to="/shop/halloween-special/#halloween-masks">Explore Halloween masks ↗</Link>
-        </div>
-        <div className="shop-mask-feature-images">
-          <Link to={`/shop/${pumpkinMask.id}/`} aria-label="Explore the Pumpkin Head full-head mask">
-            <ProductImage product={pumpkinMask} large />
-            <span><strong>Pumpkin Head</strong><small>Full-head mask ↗</small></span>
-          </Link>
-          <Link to={`/shop/${carvedMask.id}/`} aria-label="Explore the Carved in Fear front-face mask">
-            <ProductImage product={carvedMask} large />
-            <span><strong>Carved in Fear</strong><small>Front-face mask ↗</small></span>
-          </Link>
-        </div>
-      </section>
       <section className="section shop-collections-section" id="collections">
         <div className="container">
           <div className="section-heading">
             <div>
-              <p className="eyebrow">SHOP BY INTEREST</p>
-              <h2>See it. Choose it. Make it yours.</h2>
+              <p className="eyebrow">FIND YOUR KIND OF PRODUCT</p>
+              <h2>Shop by category.</h2>
             </div>
-            <p>Focused collections make it easy to find the right piece.</p>
+            <p>Start with what you are looking for, then explore the details.</p>
           </div>
           <div className="shop-collection-grid">
             {primaryCollections.map((collection, index) => {
@@ -402,6 +382,29 @@ export function Shop() {
               );
             })}
           </div>
+          <div className="shop-collection-shortcuts">
+            <Link to="/shop/all">See all {evergreenProducts.length} products ↗</Link>
+            <Link to="/shop/halloween">Halloween collection ↗</Link>
+          </div>
+        </div>
+      </section>
+      <FulfillmentSelector />
+      <section className="container shop-mask-feature" aria-labelledby="shop-mask-feature-title">
+        <div className="shop-mask-feature-copy">
+          <p className="eyebrow">HALLOWEEN / MADE IN EDMONTON</p>
+          <h2 id="shop-mask-feature-title">Meet the masks.</h2>
+          <p>Choose a full pumpkin head with connecting magnets, or a front-face mask that ties behind your head. Both arrive finished and wearable.</p>
+          <Link className="button halloween-button" to="/shop/masks-costumes">Shop wearable masks ↗</Link>
+        </div>
+        <div className="shop-mask-feature-images">
+          <Link to={`/shop/${pumpkinMask.id}/`} aria-label="Explore the Pumpkin Head full-head mask">
+            <ProductImage product={pumpkinMask} large />
+            <span><strong>Pumpkin Head</strong><small>Full-head mask ↗</small></span>
+          </Link>
+          <Link to={`/shop/${carvedMask.id}/`} aria-label="Explore the Carved in Fear front-face mask">
+            <ProductImage product={carvedMask} large />
+            <span><strong>Carved in Fear</strong><small>Front-face mask ↗</small></span>
+          </Link>
         </div>
       </section>
       <section className="section shop-under-section">
@@ -465,7 +468,7 @@ export function HalloweenSpecial() {
   const otherPieces = featured.filter((product) => !masks.some((mask) => mask.id === product.id));
   return (
     <div className="halloween-special">
-      <ShopNav />
+      <ShopNav showFulfillment={false} />
       <section className="halloween-special-hero">
         <div className="halloween-fog halloween-fog-one" aria-hidden="true" />
         <div className="halloween-fog halloween-fog-two" aria-hidden="true" />
@@ -498,6 +501,7 @@ export function HalloweenSpecial() {
           </ul>
         </div>
       </section>
+      <FulfillmentSelector />
       <ShopNotice />
       <section className="section halloween-special-products halloween-mask-section" id="halloween-masks" aria-labelledby="halloween-mask-heading">
         <div className="container">
@@ -563,7 +567,18 @@ export function HalloweenSpecial() {
 }
 
 export function ShopCollection({ id }: { id: string }) {
-  const collection = collections.find((item) => item.id === id);
+  const collection = id === "all" ? {
+    id: "all",
+    name: "Shop All Products",
+    shortName: "Shop all",
+    eyebrow: "THE COMPLETE COLLECTION",
+    heading: "Find your next favourite.",
+    description: "Explore every finished product made by Custom Build Studio, from useful accessories to personalized gifts and seasonal pieces.",
+    seoDescription: "Browse all finished Custom Build Studio products made in Edmonton, including gifts, home décor, gaming accessories, figurines and Halloween masks.",
+    coverProduct: "lithophane-table-lamp",
+    products: evergreenProducts.map((product) => product.id),
+    kind: "curated",
+  } : collections.find((item) => item.id === id);
   const { priceFor } = useShopifyCatalog();
   const [sort, setSort] = useState("featured");
   if (!collection) return <NotFound />;
@@ -575,21 +590,22 @@ export function ShopCollection({ id }: { id: string }) {
   const cover = catalogProduct(collection.coverProduct)!;
   return (
     <>
-      <ShopNav />
+      <ShopNav showFulfillment={false} />
       <nav className="container shop-breadcrumbs" aria-label="Breadcrumb">
-        <Link to="/shop">Gifts &amp; Décor</Link><span aria-hidden="true">/</span><span>{collection.name}</span>
+        <Link to="/shop">Shop</Link><span aria-hidden="true">/</span><span>{collection.name}</span>
       </nav>
-      <section className="shop-collection-hero">
+      <section className="shop-collection-hero shop-category-hero">
         <div className="container shop-hero-grid">
           <div>
             <p className="eyebrow">{collection.eyebrow}</p>
             <h1>{collection.heading}</h1>
             <p className="lead">{collection.description}</p>
-            <a className="button" href="#products">View {collection.products.length} {collection.products.length === 1 ? "product" : "products"} ↘</a>
+            <a className="button" href="#products">View {listed.length} {listed.length === 1 ? "product" : "products"} ↘</a>
           </div>
           <div className="shop-collection-hero-image"><ProductImage product={cover} large/></div>
         </div>
       </section>
+      <FulfillmentSelector />
       <ShopNotice/>
       <section className="section" id="products">
         <div className="container">
@@ -610,7 +626,7 @@ export function ShopCollection({ id }: { id: string }) {
         <div className="container">
           <div className="section-heading"><div><p className="eyebrow">KEEP EXPLORING</p><h2>Another kind of curious.</h2></div></div>
           <div className="shop-related-links">
-            {collections.filter((item) => item.id !== collection.id).slice(0, 4).map((item) => (
+            {departmentCollections.filter((item) => item.id !== collection.id).slice(0, 4).map((item) => (
               <Link key={item.id} to={`/shop/${item.id}`}>{item.name}<span>↗</span></Link>
             ))}
           </div>
