@@ -698,9 +698,8 @@ export function ShopProduct() {
   const variants = variantsFor(product);
   const selectedVariant = catalogProduct(selectedVariantId || variants[0]?.id || product.id) || product;
   const isHalloweenMask = product.id === "pumpkin-head-halloween-mask" || product.id === "carved-in-fear-halloween-mask";
-  const productionMessage = isHalloweenMask
-    ? "Made to order; we confirm the completion date after ordering"
-    : content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship");
+  const productionMessage = content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship");
+  const deliveryEstimate = "Estimated delivery: about one week for most Canadian addresses; remote areas may take longer.";
   const selectedImage = !showingVideo ? product.images[index] : undefined;
   const selectedDesign =
     selectedImage && "design" in selectedImage && typeof selectedImage.design === "string"
@@ -805,7 +804,7 @@ export function ShopProduct() {
               </p>
               <ul className="shop-purchase-facts" aria-label="Purchase details">
                 <li>{mode === "pickup" ? "Pickup in Southeast Edmonton by appointment" : "Free tracked shipping in Canada"}</li>
-                <li>{productionMessage}</li>
+                <li>{mode === "pickup" ? productionMessage : deliveryEstimate}</li>
                 <li>Secure payment through Shopify</li>
               </ul>
               <div className="shop-trust-links">
@@ -846,7 +845,7 @@ export function ShopProduct() {
                 <dd>{isHalloweenMask ? "Orange and green colouring will be similar to the reference photos; exact shades and hand-finished details may vary. Contact us before checkout with colour questions." : "Similar to the main photo. Contact us before checkout to request a different colour."}</dd>
                 <dt>Timing & handoff</dt>
                 <dd>
-                  {productionMessage.replace(/\.$/, "")}. {mode === "pickup" ? "Pickup by appointment in Southeast Edmonton. We email your private pickup details after ordering." : "Free standard tracked shipping across Canada through Shopify checkout."}
+                  {productionMessage.replace(/\.$/, "")}. {mode === "pickup" ? "Pickup by appointment in Southeast Edmonton. We email your private pickup details after ordering." : `${deliveryEstimate} Free standard tracked shipping across Canada through Shopify checkout.`}
                 </dd>
                 <dt>Ordering & payment</dt>
                 <dd>Made to order. Secure payment is handled through Shopify. Contact us before checkout for special requests.</dd>
