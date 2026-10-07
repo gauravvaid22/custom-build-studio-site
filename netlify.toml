@@ -16,6 +16,12 @@
     X-Robots-Tag = "noindex"
 
 [[headers]]
+  for = "/.netlify/functions/shop-sale"
+  [headers.values]
+    Cache-Control = "no-store"
+    X-Robots-Tag = "noindex"
+
+[[headers]]
   for = "/shop/order/*"
   [headers.values]
     Referrer-Policy = "no-referrer"

@@ -1,7 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import pricing from "../../commerce/pricing.json";
 
 export type FulfillmentMode = "delivered" | "pickup";
-export const PICKUP_PRICE_DIFFERENCE = 1000;
+export const PICKUP_PRICE_DIFFERENCE = pricing.pickupPriceDifferenceCents;
 const Context = createContext({ mode: "delivered" as FulfillmentMode, chosen: false, locked: false, choose: (_mode: FulfillmentMode) => {}, lock: (_value: boolean) => {} });
 
 export function FulfillmentProvider({ children }: { children: React.ReactNode }) {

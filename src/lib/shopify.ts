@@ -11,6 +11,7 @@ type CatalogVariant = {
   sku: string | null;
   availableForSale: boolean;
   price: { amount: string; currencyCode: string };
+  compareAtPrice?: { amount: string; currencyCode: string } | null;
 };
 
 type CatalogProduct = {
@@ -21,6 +22,7 @@ type CatalogProduct = {
 
 export type ShopifyCatalog = {
   prices: Record<string, number>;
+  compareAtPrices: Record<string, number>;
   names: Record<string, string>;
 };
 
@@ -43,7 +45,7 @@ function shopifyHandleFor(product: (typeof products)[number]) {
 }
 
 export async function fetchShopifyCatalog(): Promise<ShopifyCatalog> {
-  if (!storefrontToken) return { prices: {}, names: {} };
+  if (!storefrontToken) return { prices: {}, compareAtPrices: {}, names: {} };
   const handles = [
     ...new Set(
       products
@@ -57,7 +59,7 @@ export async function fetchShopifyCatalog(): Promise<ShopifyCatalog> {
   const fields = handles
     .map(
       (_, index) =>
-        `product${index}: product(handle: $handle${index}) { handle title variants(first: 100) { nodes { sku price { amount currencyCode } } } }`,
+        `product${index}: product(handle: $handle${index}) { handle title variants(first: 100) { nodes { sku price { amount currencyCode } compareAtPrice { amount currencyCode } } } }`,
     )
     .join("\n");
   const variables = Object.fromEntries(
@@ -68,6 +70,7 @@ export async function fetchShopifyCatalog(): Promise<ShopifyCatalog> {
     variables,
   );
   const prices: Record<string, number> = {};
+  const compareAtPrices: Record<string, number> = {};
   const names: Record<string, string> = {};
   Object.values(catalog).forEach((product) => {
     if (product?.handle && product.title) names[product.handle] = product.title;
@@ -78,10 +81,12 @@ export async function fetchShopifyCatalog(): Promise<ShopifyCatalog> {
         Number.isFinite(Number(variant.price.amount))
       ) {
         prices[variant.sku] = Math.round(Number(variant.price.amount) * 100);
+        if (variant.compareAtPrice?.currencyCode === "CAD" && Number.isFinite(Number(variant.compareAtPrice.amount)))
+          compareAtPrices[variant.sku] = Math.round(Number(variant.compareAtPrice.amount) * 100);
       }
     });
   });
-  return { prices, names };
+  return { prices, compareAtPrices, names };
 }
 
 function productHandle(id: string) {

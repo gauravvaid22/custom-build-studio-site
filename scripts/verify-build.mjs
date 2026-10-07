@@ -17,7 +17,7 @@ const htmlFiles = (await walk(root)).filter(
 );
 const sitemap = await readFile(join(root, "sitemap.xml"), "utf8");
 const indexedRoutes = (sitemap.match(/<url>/g) || []).length;
-assert.equal(htmlFiles.length, indexedRoutes + 8, "Expected indexed routes plus privacy and seven private/system pages");
+assert.equal(htmlFiles.length, indexedRoutes + 9, "Expected indexed routes plus privacy and eight private/system pages");
 const titles = new Set();
 for (const file of htmlFiles) {
   const html = await readFile(file, "utf8");
@@ -75,6 +75,7 @@ assert(
     "noindex,follow",
   ),
 );
+assert((await readFile(join(root, "shop/sale/index.html"), "utf8")).includes("noindex,follow"));
 console.log(
   `Verified ${htmlFiles.length} HTML pages, internal links, images, metadata, 404 and Netlify form schema.`,
 );

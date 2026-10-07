@@ -53,7 +53,7 @@ async function uploadPhoto(file: File, onProgress: (progress: number) => void) {
 
 export function LithophaneProduct() {
   const product = useProductContent()[productId];
-  const { priceFor } = useShopifyCatalog();
+  const { priceFor, compareAtFor } = useShopifyCatalog();
   const { add } = useCart();
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageIndex, setImageIndex] = useState(0);
@@ -151,6 +151,7 @@ export function LithophaneProduct() {
             <p className="lithophane-value">Turn your memories into three-dimensional light.</p>
             <p className="lead">{product.description}</p>
             <p className="shop-price">{money(displayedPrice)} <span>CAD</span></p>
+            {compareAtFor(productId) && <p className="shop-regular-price">Regular {money(compareAtFor(productId)!)} CAD · Sale price shown above</p>}
             <ul className="shop-purchase-facts" aria-label="Purchase details">
               <li>Wooden warm-white LED base and USB inline switch included</li>
               <li>{product.leadTime}</li>

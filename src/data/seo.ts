@@ -39,6 +39,10 @@ export function getSeo(path: string) {
       "Shop All Gifts, Décor & Accessories Made in Edmonton",
       "Browse every finished product from Custom Build Studio, including personalized gifts, figurines, gaming accessories, home décor and wearable masks. Made in Edmonton.",
     ],
+    "/shop/sale": [
+      "Current Shop Sale",
+      "Explore current Custom Build Studio sale prices on finished gifts and décor made in Edmonton.",
+    ],
     "/shop/halloween-special": [
       "Halloween Special: 3D-Printed Décor in Edmonton",
       "Shop locally made Halloween décor and wearable masks in Edmonton, including ghosts, pumpkin lighting and seasonal gifts, with free tracked Canadian shipping.",
@@ -155,7 +159,7 @@ export const localBusiness = {
   },
 };
 
-export function getStructuredData(path: string) {
+export function getStructuredData(path: string, livePrices: Record<string, number> = {}) {
   const page = path.replace(/\/$/, "") || "/";
   const product = products.find((item) => page === `/shop/${item.id}`);
   const collection = collections.find((item) => page === `/shop/${item.id}`);
@@ -167,10 +171,10 @@ export function getStructuredData(path: string) {
       description: `${p.description} ${p.included} Made to order in Edmonton.`,
       image: p.images.map(image => business.origin + image.src),
       url,
-      offers: { "@type": "Offer", url, priceCurrency: "CAD", price: (p.priceCents / 100).toFixed(2),
+      ...(Number.isInteger(livePrices[p.id]) ? { offers: { "@type": "Offer", url, priceCurrency: "CAD", price: (livePrices[p.id] / 100).toFixed(2),
         // Available to order through the connected Shopify catalog.
         availability: "https://schema.org/InStock", itemCondition: "https://schema.org/NewCondition",
-        seller: { "@type": "Organization", name: business.name } },
+        seller: { "@type": "Organization", name: business.name } } } : {}),
     });
     return { "@context": "https://schema.org", "@graph": [
       variants.length ? {

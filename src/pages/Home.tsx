@@ -13,8 +13,10 @@ import {
 import { services } from "../data/services";
 import projects from "../data/projects.json";
 import { business } from "../data/business";
+import { useShopifyCatalog } from "../components/ShopifyCatalog";
 
 export default function Home() {
+  const { sale } = useShopifyCatalog();
   useEffect(() => {
     const main = document.getElementById("main");
     if (!main || window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
@@ -157,6 +159,14 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {sale && <section className="container shop-sale-feature home-sale-feature" aria-label="Current shop sale">
+        <div>
+          <p className="eyebrow">CURRENT SHOP SALE</p>
+          <h2>{sale.title}</h2>
+          <p>Explore {sale.productIds.length} selected {sale.productIds.length === 1 ? "product" : "products"} at sale prices, with Edmonton pickup or free tracked shipping across Canada.</p>
+          <Link className="button" to="/shop/sale">Shop the sale <Arrow /></Link>
+        </div>
+      </section>}
       <section id="capabilities" className="section">
         <div className="container">
           <SectionHeading

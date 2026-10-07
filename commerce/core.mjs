@@ -245,7 +245,7 @@ export function createShop({
     const previous = current["lithophane-table-lamp"];
     const catalogChanged = previous.name !== product.name || previous.priceCents !== product.priceCents;
     if (enabled && catalogChanged && !catalogSync)
-      fail("Shopify catalog sync is not configured. Add SHOPIFY_ADMIN_ACCESS_TOKEN before changing the public product name or price.", 503);
+      fail("Shopify catalog sync is not configured. Add private Shopify Admin app credentials in Netlify before changing the public product name or price.", 503);
     if (
       catalogSync &&
       catalogChanged

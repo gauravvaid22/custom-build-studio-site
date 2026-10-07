@@ -1,38 +1,67 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { fetchShopifyCatalog, type ShopifyCatalog } from "../lib/shopify";
-
-import { useFulfillment } from "./Fulfillment";
+import { PICKUP_PRICE_DIFFERENCE, useFulfillment } from "./Fulfillment";
 import { fulfillmentSku } from "../lib/shopify";
 
-const emptyCatalog: ShopifyCatalog = { prices: {}, names: {} };
-const ShopifyCatalogContext = createContext<ShopifyCatalog>(emptyCatalog);
+export type ActiveSale = {
+  status: "active";
+  title: string;
+  percentage: number;
+  scope: string;
+  productIds: string[];
+  collectionId: string | null;
+  variants: Record<string, { priceCents: number; compareAtCents: number }>;
+};
+
+const emptyCatalog: ShopifyCatalog = { prices: {}, compareAtPrices: {}, names: {} };
+const ShopifyCatalogContext = createContext<{
+  catalog: ShopifyCatalog;
+  sale: ActiveSale | null;
+  refresh: () => Promise<void>;
+}>({ catalog: emptyCatalog, sale: null, refresh: async () => {} });
 
 export function ShopifyCatalogProvider({ children }: { children: React.ReactNode }) {
   const [catalog, setCatalog] = useState<ShopifyCatalog>(emptyCatalog);
-  useEffect(() => {
-    let active = true;
-    fetchShopifyCatalog()
-      .then((next) => active && setCatalog(next))
-      .catch(() => undefined);
-    return () => {
-      active = false;
-    };
+  const [sale, setSale] = useState<ActiveSale | null>(null);
+  const refresh = useCallback(async () => {
+    const [nextCatalog, saleResult] = await Promise.all([
+      fetchShopifyCatalog(),
+      fetch("/.netlify/functions/shop-sale?action=status", { cache: "no-store", signal: AbortSignal.timeout(12000) })
+        .then((response) => response.ok ? response.json() : null).catch(() => null),
+    ]);
+    setCatalog(nextCatalog);
+    const candidate: ActiveSale | null = saleResult?.sale?.status === "active" ? saleResult.sale : null;
+    // Never advertise a sale until every scoped Shopify variant reflects its verified price.
+    const verified = candidate && Object.entries(candidate.variants).every(([sku, variant]) =>
+      nextCatalog.prices[sku] === variant.priceCents && nextCatalog.compareAtPrices[sku] === variant.compareAtCents,
+    );
+    setSale(verified ? candidate : null);
   }, []);
-  const value = useMemo(() => catalog, [catalog]);
-  return (
-    <ShopifyCatalogContext.Provider value={value}>
-      {children}
-    </ShopifyCatalogContext.Provider>
-  );
+  useEffect(() => {
+    void refresh().catch(() => setSale(null));
+    const interval = window.setInterval(() => { void refresh().catch(() => setSale(null)); }, 180000);
+    const onVisible = () => { if (document.visibilityState === "visible") void refresh().catch(() => setSale(null)); };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => { window.clearInterval(interval); document.removeEventListener("visibilitychange", onVisible); };
+  }, [refresh]);
+  const value = useMemo(() => ({ catalog, sale, refresh }), [catalog, sale, refresh]);
+  return <ShopifyCatalogContext.Provider value={value}>{children}</ShopifyCatalogContext.Provider>;
 }
 
 export function useShopifyCatalog() {
-  const { prices, names } = useContext(ShopifyCatalogContext);
+  const { catalog: { prices, compareAtPrices, names }, sale, refresh } = useContext(ShopifyCatalogContext);
   const { mode } = useFulfillment();
+  const priceFor = (id: string, fallback: number) => prices[fulfillmentSku(id, mode)] ?? Math.max(0, fallback - (mode === "pickup" ? PICKUP_PRICE_DIFFERENCE : 0));
+  const compareAtFor = (id: string) => {
+    if (!sale) return null;
+    const sku = fulfillmentSku(id, mode);
+    const old = compareAtPrices[sku];
+    return old && old > prices[sku] && sale.variants[sku] ? old : null;
+  };
   return {
-    prices,
-    names,
-    priceFor: (id: string, fallback: number) => prices[fulfillmentSku(id, mode)] ?? Math.max(0, fallback - (mode === "pickup" ? 1000 : 0)),
+    prices, compareAtPrices, names, sale, refresh,
+    priceFor, compareAtFor,
+    onSale: (id: string) => Boolean(sale?.productIds.includes(id)),
     deliveredPriceFor: (id: string, fallback: number) => prices[fulfillmentSku(id, "delivered")] ?? fallback,
     nameFor: (id: string, fallback: string) => names[id] ?? fallback,
   };

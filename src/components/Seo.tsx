@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { getSeo, getStructuredData } from "../data/seo";
+import { useShopifyCatalog } from "./ShopifyCatalog";
 export default function Seo() {
   const { pathname } = useLocation();
+  const { prices } = useShopifyCatalog();
   useEffect(() => {
     const seo = getSeo(pathname);
     document.title = seo.title;
@@ -13,7 +15,7 @@ export default function Seo() {
       structured.setAttribute("type", "application/ld+json");
       document.head.appendChild(structured);
     }
-    structured.textContent = JSON.stringify(getStructuredData(pathname));
+    structured.textContent = JSON.stringify(getStructuredData(pathname, prices));
     const meta = (attr: string, key: string, value: string) => {
       let tag = document.head.querySelector<HTMLMetaElement>(
         `meta[${attr}="${key}"]`,
@@ -62,6 +64,6 @@ export default function Seo() {
       document.head.appendChild(link);
     }
     link.href = seo.url;
-  }, [pathname]);
+  }, [pathname, prices]);
   return null;
 }

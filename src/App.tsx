@@ -12,7 +12,7 @@ import { CartProvider } from "./components/Cart";
 import { ShopifyCatalogProvider } from "./components/ShopifyCatalog";
 import { SiteContentProvider } from "./components/SiteContent";
 import { UploadedPhotoViewer } from "./components/LithophaneProduct";
-import { Shop, HalloweenSpecial, ShopCollection, ShopProduct, ShopCart, Checkout, OrderConfirmation, ShopAdmin } from "./pages/Shop";
+import { Shop, ShopSale, HalloweenSpecial, ShopCollection, ShopProduct, ShopCart, Checkout, OrderConfirmation, ShopAdmin } from "./pages/Shop";
 import {
   About,
   Pricing,
@@ -71,6 +71,7 @@ export default function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/shop/all" element={<ShopCollection id="all" />} />
+          <Route path="/shop/sale" element={<ShopSale />} />
           <Route path="/shop/halloween-special" element={<HalloweenSpecial />} />
           <Route path="/shop/collectibles" element={<ShopCollection id="collectibles" />} />
           <Route path="/shop/personalized-gifts" element={<ShopCollection id="personalized-gifts" />} />
