@@ -698,6 +698,10 @@ export function ShopProduct() {
   const variants = variantsFor(product);
   const selectedVariant = catalogProduct(selectedVariantId || variants[0]?.id || product.id) || product;
   const isHalloweenMask = product.id === "pumpkin-head-halloween-mask" || product.id === "carved-in-fear-halloween-mask";
+  const isPumpkinHeadMask = product.id === "pumpkin-head-halloween-mask";
+  const maskSizeEmail = isHalloweenMask
+    ? `mailto:custombuildstudio@gmail.com?subject=${encodeURIComponent(`Custom ear-to-ear size for ${product.name}`)}&body=${encodeURIComponent(`Hi Custom Build Studio,\n\nI would like a custom ear-to-ear size for the ${product.name}. My measurement is: ___ mm.\n\nPlease let me know the price and fit details before I order.\n`)}`
+    : "";
   const productionMessage = content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship");
   const deliveryEstimate = "Estimated delivery: about one week for most Canadian addresses; remote areas may take longer.";
   const selectedImage = !showingVideo ? product.images[index] : undefined;
@@ -813,6 +817,28 @@ export function ShopProduct() {
                 </a>
                 <a href="tel:+17802030081">Questions? Call or text 780-203-0081</a>
               </div>
+              {isHalloweenMask && (
+                <div className="shop-mask-fit-guide" aria-label="Halloween mask size guide">
+                  <div className="shop-mask-fit-heading">
+                    <svg viewBox="0 0 112 76" role="img" aria-label="Straight line across the face from ear to ear">
+                      <path d="M20 45c-7-3-9 3-6 11 2 6 6 8 10 7M92 45c7-3 9 3 6 11-2 6-6 8-10 7M22 50C20 25 31 9 56 9s36 16 34 41c-2 19-17 26-34 26S24 69 22 50Z" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                      <path d="M16 49h80m-80 0 7-4m-7 4 7 4m73-4-7-4m7 4-7 4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    </svg>
+                    <div><strong>Choose your ear-to-ear size</strong><span>Measure straight across at ear level, not around your head.</span></div>
+                  </div>
+                  <div className="shop-mask-fit-sizes">
+                    {variants.map((variant) => (
+                      <span key={variant.id} className={selectedVariant.id === variant.id ? "is-selected" : ""}>
+                        {variant.label} <strong>{variant.dimensions.match(/\b\d+ mm\b/)?.[0]}</strong>
+                      </span>
+                    ))}
+                  </div>
+                  <p>{isPumpkinHeadMask
+                    ? "These are planned inner ear-to-ear sizes for Pumpkin Head. Its final fit has not yet been verified; ask us before ordering if fit is critical."
+                    : "These are measured inner spans across the Carved in Fear mask at ear level. Fit can still vary by wearer."}</p>
+                  <a href={maskSizeEmail}>Need a custom ear-to-ear size? Email us for a quote →</a>
+                </div>
+              )}
               <AddProduct
                 product={product}
                 variantId={selectedVariant.id}
@@ -825,7 +851,7 @@ export function ShopProduct() {
                 <dt>What you receive</dt>
                 <dd>{selectedVariant.included} No STL or digital download.</dd>
                 {!selectedVariant.dimensions.startsWith("Final dimensions") && <>
-                  <dt>Approximate size</dt>
+                  <dt>{isHalloweenMask ? "Ear-to-ear size" : "Approximate size"}</dt>
                   <dd>{selectedVariant.dimensions.replace("Source model: approximately", "Approximately").replace("Finished size: approximately", "Approximately").replace("Final printed dimensions require production review.", "Finished size may vary slightly.")}</dd>
                 </>}
                 {variants.length > 0 && product.id === "octopus-wine-bottle-holder" && <>
@@ -839,7 +865,7 @@ export function ShopProduct() {
                 </>}
                 {isHalloweenMask && <>
                   <dt>Fit guide</dt>
-                  <dd>The listed inner measurement comes from the model designer. It is not a head-circumference measurement and does not guarantee fit. Contact us before checkout if you are unsure which size to choose.</dd>
+                  <dd>Measure straight across at ear level, from one ear to the other. Do not measure around your head. This inner span alone cannot guarantee a comfortable fit. For a custom ear-to-ear size, <a href={maskSizeEmail}>email us before checkout</a> for a quote.</dd>
                 </>}
                 <dt>Colour & finish</dt>
                 <dd>{isHalloweenMask ? "Orange and green colouring will be similar to the reference photos; exact shades and hand-finished details may vary. Contact us before checkout with colour questions." : "Similar to the main photo. Contact us before checkout to request a different colour."}</dd>

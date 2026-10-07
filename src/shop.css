@@ -498,6 +498,69 @@
 .shop-specs {
   margin: 28px 0;
 }
+.shop-mask-fit-guide {
+  margin: 24px 0;
+  padding: 18px;
+  border: 1px solid #cbdad4;
+  border-radius: 14px;
+  background: #f3f7f4;
+  color: #193e35;
+}
+.shop-mask-fit-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.shop-mask-fit-heading svg {
+  width: 86px;
+  height: 62px;
+  flex: none;
+  color: #d95118;
+}
+.shop-mask-fit-heading strong,
+.shop-mask-fit-heading span {
+  display: block;
+}
+.shop-mask-fit-heading span {
+  margin-top: 3px;
+  font-size: 0.89rem;
+  line-height: 1.4;
+}
+.shop-mask-fit-sizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 10px;
+}
+.shop-mask-fit-sizes span {
+  padding: 7px 10px;
+  border: 1px solid #cad8d2;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 0.88rem;
+}
+.shop-mask-fit-sizes span.is-selected {
+  border-color: #d95118;
+  box-shadow: inset 0 0 0 1px #d95118;
+}
+.shop-mask-fit-sizes strong {
+  white-space: nowrap;
+}
+.shop-mask-fit-guide p {
+  margin: 0 0 10px;
+  font-size: 0.87rem;
+  line-height: 1.5;
+}
+.shop-mask-fit-guide a {
+  color: #145849;
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+@media (max-width: 480px) {
+  .shop-mask-fit-guide { padding: 14px; }
+  .shop-mask-fit-heading { gap: 10px; }
+  .shop-mask-fit-heading svg { width: 64px; height: 50px; }
+}
 .shop-specs dt {
   font-weight: 700;
   border-top: 1px solid #d8ded9;

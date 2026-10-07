@@ -1202,29 +1202,29 @@
     "priceCents": 9999,
     "category": "Halloween costumes",
     "seasonal": true,
-    "description": "A complete pumpkin head that surrounds your head for a dramatic Halloween costume. Its finished sections connect with fitted magnets, so you receive one assembled, wearable mask rather than loose parts. Check the approximate inner size before ordering; costume fit varies from person to person.",
+    "description": "A complete pumpkin head that surrounds your head for a dramatic Halloween costume. Its finished sections connect with fitted magnets, so you receive one assembled, wearable mask rather than loose parts. Choose a planned ear-to-ear size below, or ask us about a custom fit.",
     "included": "One finished, wearable full-head Pumpkin Head mask with its sections and connecting magnets installed. Clothing, display props and other costume pieces are not included.",
-    "dimensions": "Choose a size to see its approximate source-model inner measurement.",
+    "dimensions": "Choose a planned ear-to-ear size. Pumpkin Head fit has not yet been verified.",
     "notes": "Orange and green colouring will be similar to the reference photos; shades and hand-finished detail may vary. Contact us before checkout with fit or colour questions.",
-    "variantLabel": "Mask size",
+    "variantLabel": "Ear-to-ear size",
     "variants": [
       {
         "id": "pumpkin-head-halloween-mask-small",
         "label": "Small",
         "priceCents": 9999,
-        "dimensions": "Approximate source-model inner size: 126 mm."
+        "dimensions": "Planned ear-to-ear inner span: 145 mm. Final Pumpkin Head fit has not yet been verified."
       },
       {
         "id": "pumpkin-head-halloween-mask-medium",
         "label": "Medium",
         "priceCents": 10999,
-        "dimensions": "Approximate source-model inner size: 130 mm."
+        "dimensions": "Planned ear-to-ear inner span: 158 mm. Final Pumpkin Head fit has not yet been verified."
       },
       {
         "id": "pumpkin-head-halloween-mask-large",
         "label": "Large",
         "priceCents": 11999,
-        "dimensions": "Approximate source-model inner size: 136 mm."
+        "dimensions": "Planned ear-to-ear inner span: 170 mm. Final Pumpkin Head fit has not yet been verified."
       }
     ],
     "images": [
@@ -1263,9 +1263,9 @@
     "priceCents": 9999,
     "category": "Halloween costumes",
     "seasonal": true,
-    "description": "A complete pumpkin head that surrounds your head for a dramatic Halloween costume. Its finished sections connect with fitted magnets, so you receive one assembled, wearable mask rather than loose parts. Check the approximate inner size before ordering; costume fit varies from person to person.",
+    "description": "A complete pumpkin head that surrounds your head for a dramatic Halloween costume. Its finished sections connect with fitted magnets, so you receive one assembled, wearable mask rather than loose parts. Choose a planned ear-to-ear size below, or ask us about a custom fit.",
     "included": "One finished, wearable full-head Pumpkin Head mask with its sections and connecting magnets installed. Clothing, display props and other costume pieces are not included.",
-    "dimensions": "Approximate source-model inner size: 126 mm.",
+    "dimensions": "Planned ear-to-ear inner span: 145 mm. Final Pumpkin Head fit has not yet been verified.",
     "notes": "Orange and green colouring will be similar to the reference photos; shades and hand-finished detail may vary. Contact us before checkout with fit or colour questions.",
     "variantOf": "pumpkin-head-halloween-mask",
     "images": [
@@ -1285,9 +1285,9 @@
     "priceCents": 10999,
     "category": "Halloween costumes",
     "seasonal": true,
-    "description": "A complete pumpkin head that surrounds your head for a dramatic Halloween costume. Its finished sections connect with fitted magnets, so you receive one assembled, wearable mask rather than loose parts. Check the approximate inner size before ordering; costume fit varies from person to person.",
+    "description": "A complete pumpkin head that surrounds your head for a dramatic Halloween costume. Its finished sections connect with fitted magnets, so you receive one assembled, wearable mask rather than loose parts. Choose a planned ear-to-ear size below, or ask us about a custom fit.",
     "included": "One finished, wearable full-head Pumpkin Head mask with its sections and connecting magnets installed. Clothing, display props and other costume pieces are not included.",
-    "dimensions": "Approximate source-model inner size: 130 mm.",
+    "dimensions": "Planned ear-to-ear inner span: 158 mm. Final Pumpkin Head fit has not yet been verified.",
     "notes": "Orange and green colouring will be similar to the reference photos; shades and hand-finished detail may vary. Contact us before checkout with fit or colour questions.",
     "variantOf": "pumpkin-head-halloween-mask",
     "images": [
@@ -1307,9 +1307,9 @@
     "priceCents": 11999,
     "category": "Halloween costumes",
     "seasonal": true,
-    "description": "A complete pumpkin head that surrounds your head for a dramatic Halloween costume. Its finished sections connect with fitted magnets, so you receive one assembled, wearable mask rather than loose parts. Check the approximate inner size before ordering; costume fit varies from person to person.",
+    "description": "A complete pumpkin head that surrounds your head for a dramatic Halloween costume. Its finished sections connect with fitted magnets, so you receive one assembled, wearable mask rather than loose parts. Choose a planned ear-to-ear size below, or ask us about a custom fit.",
     "included": "One finished, wearable full-head Pumpkin Head mask with its sections and connecting magnets installed. Clothing, display props and other costume pieces are not included.",
-    "dimensions": "Approximate source-model inner size: 136 mm.",
+    "dimensions": "Planned ear-to-ear inner span: 170 mm. Final Pumpkin Head fit has not yet been verified.",
     "notes": "Orange and green colouring will be similar to the reference photos; shades and hand-finished detail may vary. Contact us before checkout with fit or colour questions.",
     "variantOf": "pumpkin-head-halloween-mask",
     "images": [
@@ -1329,29 +1329,29 @@
     "priceCents": 5999,
     "category": "Halloween costumes",
     "seasonal": true,
-    "description": "A sculpted pumpkin-face mask for Halloween costumes and photo shoots. It covers the front of your face and ties behind your head with an elastic band; it is not a full-head mask. Check the approximate inner size before ordering.",
+    "description": "A sculpted pumpkin-face mask for Halloween costumes and photo shoots. It covers the front of your face and ties behind your head with an elastic band; it is not a full-head mask. Choose an ear-to-ear size below, or ask us about a custom fit.",
     "included": "One finished, wearable front-face Carved in Fear mask with an elastic band attached for tying at the back. Clothing, display props and other costume pieces are not included.",
-    "dimensions": "Choose a size to see its approximate source-model inner measurement.",
+    "dimensions": "Choose a size to see the measured ear-to-ear inner span.",
     "notes": "Orange and green colouring will be similar to the reference photos; shades and hand-finished detail may vary. Contact us before checkout with fit or colour questions.",
-    "variantLabel": "Mask size",
+    "variantLabel": "Ear-to-ear size",
     "variants": [
       {
         "id": "carved-in-fear-halloween-mask-small",
         "label": "Small",
         "priceCents": 5999,
-        "dimensions": "Approximate source-model inner size: 145 mm."
+        "dimensions": "Measured ear-to-ear inner span: 145 mm."
       },
       {
         "id": "carved-in-fear-halloween-mask-medium",
         "label": "Medium",
         "priceCents": 6999,
-        "dimensions": "Approximate source-model inner size: 160 mm."
+        "dimensions": "Measured ear-to-ear inner span: 158 mm."
       },
       {
         "id": "carved-in-fear-halloween-mask-large",
         "label": "Large",
         "priceCents": 7999,
-        "dimensions": "Approximate source-model inner size: 170 mm."
+        "dimensions": "Measured ear-to-ear inner span: 170 mm."
       }
     ],
     "images": [
@@ -1390,9 +1390,9 @@
     "priceCents": 5999,
     "category": "Halloween costumes",
     "seasonal": true,
-    "description": "A sculpted pumpkin-face mask for Halloween costumes and photo shoots. It covers the front of your face and ties behind your head with an elastic band; it is not a full-head mask. Check the approximate inner size before ordering.",
+    "description": "A sculpted pumpkin-face mask for Halloween costumes and photo shoots. It covers the front of your face and ties behind your head with an elastic band; it is not a full-head mask. Choose an ear-to-ear size below, or ask us about a custom fit.",
     "included": "One finished, wearable front-face Carved in Fear mask with an elastic band attached for tying at the back. Clothing, display props and other costume pieces are not included.",
-    "dimensions": "Approximate source-model inner size: 145 mm.",
+    "dimensions": "Measured ear-to-ear inner span: 145 mm.",
     "notes": "Orange and green colouring will be similar to the reference photos; shades and hand-finished detail may vary. Contact us before checkout with fit or colour questions.",
     "variantOf": "carved-in-fear-halloween-mask",
     "images": [
@@ -1412,9 +1412,9 @@
     "priceCents": 6999,
     "category": "Halloween costumes",
     "seasonal": true,
-    "description": "A sculpted pumpkin-face mask for Halloween costumes and photo shoots. It covers the front of your face and ties behind your head with an elastic band; it is not a full-head mask. Check the approximate inner size before ordering.",
+    "description": "A sculpted pumpkin-face mask for Halloween costumes and photo shoots. It covers the front of your face and ties behind your head with an elastic band; it is not a full-head mask. Choose an ear-to-ear size below, or ask us about a custom fit.",
     "included": "One finished, wearable front-face Carved in Fear mask with an elastic band attached for tying at the back. Clothing, display props and other costume pieces are not included.",
-    "dimensions": "Approximate source-model inner size: 160 mm.",
+    "dimensions": "Measured ear-to-ear inner span: 158 mm.",
     "notes": "Orange and green colouring will be similar to the reference photos; shades and hand-finished detail may vary. Contact us before checkout with fit or colour questions.",
     "variantOf": "carved-in-fear-halloween-mask",
     "images": [
@@ -1434,9 +1434,9 @@
     "priceCents": 7999,
     "category": "Halloween costumes",
     "seasonal": true,
-    "description": "A sculpted pumpkin-face mask for Halloween costumes and photo shoots. It covers the front of your face and ties behind your head with an elastic band; it is not a full-head mask. Check the approximate inner size before ordering.",
+    "description": "A sculpted pumpkin-face mask for Halloween costumes and photo shoots. It covers the front of your face and ties behind your head with an elastic band; it is not a full-head mask. Choose an ear-to-ear size below, or ask us about a custom fit.",
     "included": "One finished, wearable front-face Carved in Fear mask with an elastic band attached for tying at the back. Clothing, display props and other costume pieces are not included.",
-    "dimensions": "Approximate source-model inner size: 170 mm.",
+    "dimensions": "Measured ear-to-ear inner span: 170 mm.",
     "notes": "Orange and green colouring will be similar to the reference photos; shades and hand-finished detail may vary. Contact us before checkout with fit or colour questions.",
     "variantOf": "carved-in-fear-halloween-mask",
     "images": [
