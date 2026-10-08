@@ -7,6 +7,7 @@ export default async (request: Request, context: { next: () => Promise<Response>
   try {
     const endpoint = new URL("/.netlify/functions/shop-discovery", url.origin);
     endpoint.searchParams.set("id", id || "");
+    if (url.searchParams.has("variant")) endpoint.searchParams.set("variant", url.searchParams.get("variant")!);
     const dataResponse = await fetch(endpoint, { signal: AbortSignal.timeout(2500) });
     if (!dataResponse.ok) return response;
     const data = await dataResponse.json();
@@ -27,4 +28,18 @@ export const config = { path: [
   "/shop/block-hub-headphone-and-phone-holder/*",
   "/shop/tower-trio-headphone-and-phone-holder/*",
   "/shop/arch-stand-headphone-holder/*",
+  "/shop/pumpkin-head-halloween-mask/*",
+  "/shop/carved-in-fear-halloween-mask/*",
+  "/shop/candlelight-pumpkins-table-lamp/*",
+  "/shop/ghost-on-a-swing/*",
+  "/shop/skull-web-trinket-dish/*",
+  "/shop/ghost-duo-trinket-dish/*",
+  "/shop/glutton-ghost-bowl/*",
+  "/shop/pumpkin-fidget-keychain/*",
+  "/shop/mood-ghost/*",
+  "/shop/ghost-arch-wreath/*",
+  "/shop/skeleton-chameleon/*",
+  "/shop/verdant-remains-planter/*",
+  "/shop/6-finger-alien-hand-controller-holder/*",
+  "/shop/night-owl-wall-light/*",
 ] };

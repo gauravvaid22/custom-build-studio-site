@@ -4,6 +4,7 @@ import { business } from "./business";
 import products from "../../commerce/products.json";
 import collections from "../../commerce/collections.json";
 import headphoneSearch from "../../commerce/headphone-search.json";
+import maskSearch from "../../commerce/mask-search.json";
 const publicProducts = products.filter((product) => !("variantOf" in product));
 const halloweenSpecialIds = collections.find((collection) => collection.id === "halloween")?.products || [];
 const canonical = (path: string) => business.origin + (path === "/" ? "/" : path.replace(/\/$/, "") + "/");
@@ -107,8 +108,9 @@ export function getSeo(path: string) {
     ],
   };
   const headphoneSeo = product && headphoneSearch.products[product.id as keyof typeof headphoneSearch.products];
+  const maskSeo = product && maskSearch[product.id as keyof typeof maskSearch];
   const entry = product
-    ? [headphoneSeo?.title || product.name, headphoneSeo?.description || `${product.description} Made in Edmonton with free tracked Canadian shipping.`]
+    ? [maskSeo?.title || headphoneSeo?.title || product.name, maskSeo?.description || headphoneSeo?.description || `${product.description} Made in Edmonton with free tracked Canadian shipping.`]
     : collection
       ? [collection.name === "Gifts Under $25" ? "3D-Printed Gifts Under $25 in Edmonton" : `${collection.name} Made in Edmonton`, collection.seoDescription]
     : service

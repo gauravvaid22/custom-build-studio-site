@@ -1,4 +1,5 @@
 /thank-you.html /thank-you 301
 /google-headphones.xml /.netlify/functions/shop-discovery?format=xml 200
+/google-products.xml /.netlify/functions/shop-discovery?format=xml 200
 # All known routes are generated as HTML. Unknown URLs return a real 404.
 /* /404.html 404

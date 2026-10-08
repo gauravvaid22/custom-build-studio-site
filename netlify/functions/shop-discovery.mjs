@@ -16,10 +16,11 @@ export default async request => {
   try {
     const data = await catalog();
     const headers = { "Cache-Control": "public, max-age=60, must-revalidate", "X-Content-Type-Options": "nosniff" };
-    if (url.pathname === "/google-headphones.xml" || url.searchParams.get("format") === "xml") return new Response(merchantFeed(data), { headers: { ...headers, "Content-Type": "application/xml; charset=utf-8" } });
+    if (["/google-headphones.xml", "/google-products.xml"].includes(url.pathname) || url.searchParams.get("format") === "xml") return new Response(merchantFeed(data), { headers: { ...headers, "Content-Type": "application/xml; charset=utf-8" } });
     const product = data.find(p => p.id === url.searchParams.get("id"));
     if (!product) return new Response("Not found", { status: 404 });
-    return Response.json({ schema: discoverySchema(product), price: product.livePrice }, { headers });
+    const selected = product.liveVariants.find(v => v.id === url.searchParams.get("variant")) || product.liveVariants[0];
+    return Response.json({ schema: discoverySchema(product), price: selected.livePrice }, { headers });
   } catch {
     return new Response("Product data temporarily unavailable", { status: 503, headers: { "Cache-Control": "no-store" } });
   }

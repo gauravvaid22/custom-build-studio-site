@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { getSeo, getStructuredData } from "../data/seo";
 import { useShopifyCatalog } from "./ShopifyCatalog";
+import discovery from "../../commerce/search-discovery.json";
+import collections from "../../commerce/collections.json";
+const discoveryIds = new Set(collections.filter(c => discovery.collectionIds.includes(c.id)).flatMap(c => c.products));
 export default function Seo() {
   const { pathname } = useLocation();
   const { prices } = useShopifyCatalog();
@@ -64,6 +67,21 @@ export default function Seo() {
       document.head.appendChild(link);
     }
     link.href = seo.url;
+  }, [pathname, prices]);
+  useEffect(() => {
+    const id = pathname.split("/").filter(Boolean).pop() || "";
+    if (!discoveryIds.has(id)) return;
+    const controller = new AbortController();
+    // Keep client navigation aligned with the verified offers in the initial HTML.
+    // Leave normal page metadata intact if the Shopify connection is temporarily unavailable.
+    void fetch(`/.netlify/functions/shop-discovery?id=${encodeURIComponent(id)}`, { signal: controller.signal })
+      .then(response => response.ok ? response.json() : null)
+      .then(data => {
+        if (!data?.schema || controller.signal.aborted) return;
+        const structured = document.getElementById("structured-data");
+        if (structured) structured.textContent = JSON.stringify(data.schema);
+      }).catch(() => {});
+    return () => controller.abort();
   }, [pathname, prices]);
   return null;
 }
