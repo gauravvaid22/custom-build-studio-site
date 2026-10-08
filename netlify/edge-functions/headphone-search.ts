@@ -13,8 +13,9 @@ export default async (request: Request, context: { next: () => Promise<Response>
     const data = await dataResponse.json();
     const html = await response.text();
     const schema = JSON.stringify(data.schema).replace(/</g, "\\u003c");
-    const enhanced = html.replace(/(<script id="structured-data" type="application\/ld\+json">)[\s\S]*?(<\/script>)/, (_, start, end) => start + schema + end)
-      .replace(/(<p class="shop-price">)[\s\S]*?(<\/p>)/, (_, start, end) => `${start}$${data.price} <span>CAD</span>${end}`);
+    // Metadata is outside React's root. Preserve the server-rendered component
+    // markup so React can hydrate; the existing catalog updates visible prices.
+    const enhanced = html.replace(/(<script id="structured-data" type="application\/ld\+json">)[\s\S]*?(<\/script>)/, (_, start, end) => start + schema + end);
     const headers = new Headers(response.headers);
     headers.delete("content-length"); headers.delete("etag");
     headers.set("Cache-Control", "public, max-age=60, must-revalidate");
