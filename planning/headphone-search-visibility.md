@@ -42,3 +42,15 @@ Google approval, indexing, rankings and traffic cannot be guaranteed. For later 
 - https://developers.google.com/search/docs/crawling-indexing/ask-google-to-recrawl
 - https://support.google.com/merchants/answer/7052112
 - https://support.google.com/merchants/answer/14987622
+
+## Store readiness follow-up — 2026-10-08
+
+- Owner approved 30-day returns for unused standard products, buyer-paid postage, no restocking fee; personalized/custom-size products excluded from change-of-mind returns. Damaged/faulty/incorrect orders can be reported for resolution.
+- Published /shipping-returns/ and footer/product policy links. Shared configurable values are in commerce/store-policy.json. Product delivery estimates now match preparation 2–3 plus transit 2–8 business days (total 4–11). Commit 5a4311f deployed successfully.
+- Shopify written refund, shipping and business contact policies published. Private pickup address remains off public policy pages.
+- Merchant Center now explicitly displays SETUP COMPLETED, 6 of 6 tasks. Canada shipping service: free, all products, 4–11 business days, 2 p.m. Edmonton cutoff, Monday–Friday. Approved returns submitted; Google says return-policy review can take up to 10 days. Product approval remains separate from setup completion.
+- Actual Shopify checkout handoff verified: Custom Build Studio branding, credit cards and express payment options, two delivered products totaling CAD53.59, Canada-only country selector. A partial public Ottawa test destination returned Standard Tracked Shipping at zero cost and zero tax. Test destination subsequently cleared; no contact details/payment/order submitted.
+- Production build and verify pass for 78 HTML pages. All 24 discovery, sale, order and Shopify-admin tests pass. Live policy page HTTP200, actual browser page has no captured console errors. Browser viewport override did not alter rendered viewport; do not claim a mobile test from that attempt.
+- Search Console confirms homepage URL is on Google / page indexed / HTTPS. Sitemap still reports Couldn't fetch despite public valid application/xml HTTP200 with 69 URLs, including a request using Googlebot user agent. No demonstrated site-side block; Google fetch report remains unresolved. Previously accepted priority indexing requests are retained; avoid repeatedly submitting them.
+- Shopify admin displayed a billing payment-method alert. Owner must check Billing and resolve their own payment method. Do not make payments or claim billing resolved.
+- Current Merchant feed scope remains headphones and Halloween (25 options), not the entire catalog. Remaining collections can be reviewed and added later, including personalized return-policy exceptions where needed. Existing public sitemap includes the full website.
