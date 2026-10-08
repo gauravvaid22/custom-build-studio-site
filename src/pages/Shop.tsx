@@ -15,6 +15,7 @@ import { LithophaneProduct } from "../components/LithophaneProduct";
 import { FulfillmentSelector, PICKUP_PRICE_DIFFERENCE, useFulfillment } from "../components/Fulfillment";
 import { LithophaneAdmin } from "../components/LithophaneAdmin";
 import { SaleAdmin } from "../components/SaleAdmin";
+import { HeadphonePricingAdmin } from "../components/HeadphonePricingAdmin";
 
 type Product = (typeof products)[number];
 type ProductVariant = {
@@ -636,7 +637,7 @@ export function ShopCollection({ id }: { id: string }) {
       <nav className="container shop-breadcrumbs" aria-label="Breadcrumb">
         <Link to="/shop">Shop</Link><span aria-hidden="true">/</span><span>{collection.name}</span>
       </nav>
-      <section className="shop-collection-hero shop-category-hero">
+      <section className={`shop-collection-hero shop-category-hero${id === "headphone-stands" ? " shop-headphone-hero" : ""}`}>
         <div className="container shop-hero-grid">
           <div>
             <p className="eyebrow">{collection.eyebrow}</p>
@@ -745,7 +746,7 @@ export function ShopProduct() {
       <ShopNotice />
       <section className="section">
         <div className="container">
-          <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {nameFor(product.id, product.name)}</nav>
+          <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {product.category === "Headphone stands" && <><Link to="/shop/headphone-stands">Headphone Stands</Link> / </>}{nameFor(product.id, product.name)}</nav>
           <div className="shop-detail">
             <div>
               <div className="shop-main-image">
@@ -898,13 +899,12 @@ export function ShopProduct() {
                 <dt>Ordering & payment</dt>
                 <dd>Secure payment is handled through Shopify. Contact us before checkout for special requests.</dd>
                 <dt>Material</dt>
-                <dd>Decorative pieces are generally made in PLA. We use PETG where extra toughness or moisture resistance is useful. Contact us before ordering if the exact material matters for your use.</dd>
+                <dd>{product.category === "Headphone stands" ? "Made from a polymer suited to the finished stand. Contact us before ordering if you need a particular material." : "Decorative pieces are generally made in PLA. We use PETG where extra toughness or moisture resistance is useful. Contact us before ordering if the exact material matters for your use."}</dd>
                 <dt>Care</dt>
-                <dd>Handle small moving or separate parts gently. Contact us for material-specific cleaning and care advice.</dd>
+                <dd>{product.category === "Headphone stands" ? "Keep away from high heat and wipe clean with a soft, damp cloth. If your headset has an unusual size or shape, ask us about fit before ordering." : "Handle small moving or separate parts gently. Contact us for material-specific cleaning and care advice."}</dd>
               </dl>
               <p className="small">
-                Printed by Custom Build Studio in Edmonton. Handle small moving
-                or separate parts with care.
+                {product.category === "Headphone stands" ? "Made by Custom Build Studio in Edmonton. Reference photos show the design; your finished colour may vary slightly." : "Printed by Custom Build Studio in Edmonton. Handle small moving or separate parts with care."}
               </p>
             </div>
           </div>
@@ -1552,6 +1552,7 @@ export function ShopAdmin() {
               {tab === "products" && (
                 <section className="shop-admin-products">
                   <div className="section-heading"><div><p className="eyebrow">SHOPIFY IS THE CATALOG SOURCE</p><h2>Product names &amp; prices</h2></div><p>Change a product title or price in Shopify. The website refreshes both automatically, so checkout and product pages stay aligned.</p></div>
+                  <HeadphonePricingAdmin adminKey={key} />
                   <a className="button" href="https://admin.shopify.com/store/aqk73w-k2/products" target="_blank" rel="noreferrer">Open Shopify products ↗</a>
                   <div className="shop-admin-product-grid">
                     {products.filter((product) => !isVariant(product)).map((product) => (

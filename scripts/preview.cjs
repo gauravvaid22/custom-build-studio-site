@@ -13,6 +13,7 @@ const mime = {
   ".png": "image/png",
   ".ico": "image/x-icon",
   ".mp4": "video/mp4",
+  ".webm": "video/webm",
   ".xml": "application/xml",
   ".txt": "text/plain",
 };

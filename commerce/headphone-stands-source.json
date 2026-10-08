@@ -1,0 +1,66 @@
+{
+  "drop": "https://platform.stlflix.com/drops/drop-338",
+  "sourceNote": "Commercial media packages for physical finished products only. Source files and slicer screenshots must never be published.",
+  "products": [
+    {
+      "id": "flow-stand-headphone-and-phone-holder",
+      "name": "Flow Headphone & Phone Stand",
+      "priceCents": 3999,
+      "heightMm": 210,
+      "description": "A flowing, sculptural place for your headphones, with a front slot for your phone. A tidy accent for a desk, gaming setup or bedside table.",
+      "source": "https://platform.stlflix.com/product/flow-stand-headphone-and-phone-holder",
+      "photos": ["1_69da26b86e.jpg", "2_c277dd31de.jpg", "3_cd63ca8f78.jpg", "4_d99327d111.jpg", "5_b80ee56695.jpg", "6_23e7cdf362.jpg"],
+      "video": "Flow_Stand_WEBM_85999ab454.webm"
+    },
+    {
+      "id": "curve-caddy-headphone-holder",
+      "name": "Curve Caddy Headphone Stand",
+      "priceCents": 4999,
+      "heightMm": 180,
+      "description": "Keep headphones off the desktop and pens or small tools close at hand. The curved silhouette brings a useful focal point to your workspace.",
+      "source": "https://platform.stlflix.com/product/curve-caddy-headphone-holder",
+      "photos": ["Curve_Caddy_Headphone_Holder_1_5e230be935.png", "Curve_Caddy_Headphone_Holder_2_238b63fa5b.png", "Curve_Caddy_Headphone_Holder_3_8db1de27aa.png", "Curve_Caddy_Headphone_Holder_4_038ce19949.png", "Curve_Caddy_Headphone_Holder_5_8b1c9411ae.png", "Curve_Caddy_Headphone_Holder_6_243dcf8f5d.png"],
+      "video": "Curve_Caddy_WEBM_f9d75735d1.webm"
+    },
+    {
+      "id": "ring-dock-headphone-holder",
+      "name": "Ring Dock Headphone Stand",
+      "priceCents": 4999,
+      "heightMm": 200,
+      "description": "A bold circular stand that gives your headphones a home between listening sessions. The open ring looks considered even when your headphones are in use.",
+      "source": "https://platform.stlflix.com/product/ring-dock-headphone-holder",
+      "photos": ["1_a4905cc374.jpg", "2_4885bd7405.jpg", "3_5dccee648d.jpg", "4_7cb912578f.jpg", "5_86c25a74fd.jpg", "6_082f722695.jpg", "7_a4f5b40e75.jpg"],
+      "video": "Ring_Dock_WEBM_a9e39287ab.webm"
+    },
+    {
+      "id": "block-hub-headphone-and-phone-holder",
+      "name": "Block Hub Headphone & Phone Stand",
+      "priceCents": 4999,
+      "heightMm": 210,
+      "description": "Give your headphones, phone and pens their own places in one compact desk organizer. Angular lines suit a modern gaming or work setup.",
+      "source": "https://platform.stlflix.com/product/block-hub-headphone-and-phone-holder",
+      "photos": ["Block_Hub_Headphone_and_Phone_Holder_1_7ff1c92512.png", "Block_Hub_Headphone_and_Phone_Holder_2_ff3f591ecf.png", "Block_Hub_Headphone_and_Phone_Holder_3_6adbfa5671.png", "Block_Hub_Headphone_and_Phone_Holder_4_118ab0cf01.png", "Block_Hub_Headphone_and_Phone_Holder_7_193e7309d3.png", "Block_Hub_Headphone_and_Phone_Holder_8_3784fecf7d.png"],
+      "video": "Block_Hub_WEBM_7d6dde64c8.webm"
+    },
+    {
+      "id": "tower-trio-headphone-and-phone-holder",
+      "name": "Tower Trio Headphone & Phone Stand",
+      "priceCents": 5999,
+      "heightMm": 210,
+      "description": "One vertical station for headphones, a phone and pens. A useful choice when you want to keep a busy desk organized without a row of separate holders.",
+      "source": "https://platform.stlflix.com/product/tower-trio-headphone-and-phone-holder",
+      "photos": ["Tower_Trio_Headphone_and_Phone_Holder_1_1f68c39d00.png", "Tower_Trio_Headphone_and_Phone_Holder_2_0173f58c83.png", "Tower_Trio_Headphone_and_Phone_Holder_3_0bd91cf5a5.png", "Tower_Trio_Headphone_and_Phone_Holder_4_8af5f29a8f.png", "Tower_Trio_Headphone_and_Phone_Holder_5_cb227cd055.png", "Tower_Trio_Headphone_and_Phone_Holder_6_67d74c651a.png"],
+      "video": "Tower_Trio_WEBM_e2350ea111.webm"
+    },
+    {
+      "id": "arch-stand-headphone-holder",
+      "name": "Arch Headphone Stand",
+      "priceCents": 4499,
+      "heightMm": 200,
+      "description": "A simple architectural arch for displaying and storing your headphones. Its clean lines make it easy to place beside a monitor or on a shelf.",
+      "source": "https://platform.stlflix.com/product/arch-stand-headphone-holder",
+      "photos": ["1_33f7a78ac0.jpg", "2_741ab840cc.jpg", "3_5ac0fd9d84.jpg", "4_9fa5f7294a.jpg", "5_202c376690.jpg", "6_2330d0ff41.jpg"],
+      "video": "Arch_Stand_WEBM_d4e829cc60.webm"
+    }
+  ]
+}

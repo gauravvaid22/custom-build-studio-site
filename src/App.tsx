@@ -76,6 +76,7 @@ export default function App() {
           <Route path="/shop/collectibles" element={<ShopCollection id="collectibles" />} />
           <Route path="/shop/personalized-gifts" element={<ShopCollection id="personalized-gifts" />} />
           <Route path="/shop/gaming-desk" element={<ShopCollection id="gaming-desk" />} />
+          <Route path="/shop/headphone-stands" element={<ShopCollection id="headphone-stands" />} />
           <Route path="/shop/home-decor" element={<ShopCollection id="home-decor" />} />
           <Route path="/shop/masks-costumes" element={<ShopCollection id="masks-costumes" />} />
           <Route path="/shop/halloween" element={<ShopCollection id="halloween" />} />

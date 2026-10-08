@@ -45,7 +45,32 @@
     "coverProduct": "basilisk-dice-tower",
     "products": [
       "basilisk-dice-tower",
-      "6-finger-alien-hand-controller-holder"
+      "6-finger-alien-hand-controller-holder",
+      "flow-stand-headphone-and-phone-holder",
+      "curve-caddy-headphone-holder",
+      "ring-dock-headphone-holder",
+      "block-hub-headphone-and-phone-holder",
+      "tower-trio-headphone-and-phone-holder",
+      "arch-stand-headphone-holder"
+    ]
+  },
+  {
+    "id": "headphone-stands",
+    "kind": "department",
+    "name": "Headphone Stands",
+    "shortName": "Headphone stands",
+    "eyebrow": "A BETTER HOME FOR YOUR HEADPHONES",
+    "heading": "Clear the desk. Keep the character.",
+    "description": "Six sculptural stands for headphones, including designs with a place for your phone or pens. Choose a shape that suits your setup. Finished physical products made to order in Edmonton.",
+    "seoDescription": "Shop sculptural 3D-printed headphone stands and headset holders made in Edmonton, Alberta. Explore desk organizers with phone and pen storage, with free tracked shipping in Canada or local pickup.",
+    "coverProduct": "flow-stand-headphone-and-phone-holder",
+    "products": [
+      "flow-stand-headphone-and-phone-holder",
+      "curve-caddy-headphone-holder",
+      "ring-dock-headphone-holder",
+      "block-hub-headphone-and-phone-holder",
+      "tower-trio-headphone-and-phone-holder",
+      "arch-stand-headphone-holder"
     ]
   },
   {

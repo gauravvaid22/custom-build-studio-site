@@ -1449,5 +1449,323 @@
     ],
     "productionReviewed": false,
     "source": "https://platform.stlflix.com/product/carved-in-fear-halloween-mask"
+  },
+  {
+    "id": "flow-stand-headphone-and-phone-holder",
+    "name": "Flow Headphone & Phone Stand",
+    "priceCents": 3999,
+    "category": "Headphone stands",
+    "seasonal": false,
+    "description": "A flowing, sculptural place for your headphones, with a front slot for your phone. A tidy accent for a desk, gaming setup or bedside table.",
+    "included": "One assembled physical headphone stand. Headphones, phone, pens and other photo props are not included.",
+    "dimensions": "Source model: approximately 210 mm high. Finished size may vary slightly.",
+    "notes": "Made to order in a colour similar to the reference photos; exact shades and finish may vary. Ask about other colours before checkout. Check device fit with us if you have an unusually large headset or phone case.",
+    "images": [
+      {
+        "src": "/media/shop/flow-stand-headphone-and-phone-holder/1-1200.webp",
+        "thumb": "/media/shop/flow-stand-headphone-and-phone-holder/1-480.webp",
+        "alt": "Flow Headphone & Phone Stand — front view",
+        "sourceFile": "1_69da26b86e.jpg"
+      },
+      {
+        "src": "/media/shop/flow-stand-headphone-and-phone-holder/2-1200.webp",
+        "thumb": "/media/shop/flow-stand-headphone-and-phone-holder/2-480.webp",
+        "alt": "Flow Headphone & Phone Stand — view 2",
+        "sourceFile": "2_c277dd31de.jpg"
+      },
+      {
+        "src": "/media/shop/flow-stand-headphone-and-phone-holder/3-1200.webp",
+        "thumb": "/media/shop/flow-stand-headphone-and-phone-holder/3-480.webp",
+        "alt": "Flow Headphone & Phone Stand — view 3",
+        "sourceFile": "3_cd63ca8f78.jpg"
+      },
+      {
+        "src": "/media/shop/flow-stand-headphone-and-phone-holder/4-1200.webp",
+        "thumb": "/media/shop/flow-stand-headphone-and-phone-holder/4-480.webp",
+        "alt": "Flow Headphone & Phone Stand — view 4",
+        "sourceFile": "4_d99327d111.jpg"
+      },
+      {
+        "src": "/media/shop/flow-stand-headphone-and-phone-holder/5-1200.webp",
+        "thumb": "/media/shop/flow-stand-headphone-and-phone-holder/5-480.webp",
+        "alt": "Flow Headphone & Phone Stand — view 5",
+        "sourceFile": "5_b80ee56695.jpg"
+      },
+      {
+        "src": "/media/shop/flow-stand-headphone-and-phone-holder/6-1200.webp",
+        "thumb": "/media/shop/flow-stand-headphone-and-phone-holder/6-480.webp",
+        "alt": "Flow Headphone & Phone Stand — view 6",
+        "sourceFile": "6_23e7cdf362.jpg"
+      }
+    ],
+    "video": "/media/shop/flow-stand-headphone-and-phone-holder/flow-stand-headphone-and-phone-holder.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/flow-stand-headphone-and-phone-holder"
+  },
+  {
+    "id": "curve-caddy-headphone-holder",
+    "name": "Curve Caddy Headphone Stand",
+    "priceCents": 4999,
+    "category": "Headphone stands",
+    "seasonal": false,
+    "description": "Keep headphones off the desktop and pens or small tools close at hand. The curved silhouette brings a useful focal point to your workspace.",
+    "included": "One assembled physical headphone stand. Headphones, phone, pens and other photo props are not included.",
+    "dimensions": "Source model: approximately 180 mm high. Finished size may vary slightly.",
+    "notes": "Made to order in a colour similar to the reference photos; exact shades and finish may vary. Ask about other colours before checkout. Check device fit with us if you have an unusually large headset or phone case.",
+    "images": [
+      {
+        "src": "/media/shop/curve-caddy-headphone-holder/1-1200.webp",
+        "thumb": "/media/shop/curve-caddy-headphone-holder/1-480.webp",
+        "alt": "Curve Caddy Headphone Stand — front view",
+        "sourceFile": "Curve_Caddy_Headphone_Holder_1_5e230be935.png"
+      },
+      {
+        "src": "/media/shop/curve-caddy-headphone-holder/2-1200.webp",
+        "thumb": "/media/shop/curve-caddy-headphone-holder/2-480.webp",
+        "alt": "Curve Caddy Headphone Stand — view 2",
+        "sourceFile": "Curve_Caddy_Headphone_Holder_2_238b63fa5b.png"
+      },
+      {
+        "src": "/media/shop/curve-caddy-headphone-holder/3-1200.webp",
+        "thumb": "/media/shop/curve-caddy-headphone-holder/3-480.webp",
+        "alt": "Curve Caddy Headphone Stand — view 3",
+        "sourceFile": "Curve_Caddy_Headphone_Holder_3_8db1de27aa.png"
+      },
+      {
+        "src": "/media/shop/curve-caddy-headphone-holder/4-1200.webp",
+        "thumb": "/media/shop/curve-caddy-headphone-holder/4-480.webp",
+        "alt": "Curve Caddy Headphone Stand — view 4",
+        "sourceFile": "Curve_Caddy_Headphone_Holder_4_038ce19949.png"
+      },
+      {
+        "src": "/media/shop/curve-caddy-headphone-holder/5-1200.webp",
+        "thumb": "/media/shop/curve-caddy-headphone-holder/5-480.webp",
+        "alt": "Curve Caddy Headphone Stand — view 5",
+        "sourceFile": "Curve_Caddy_Headphone_Holder_5_8b1c9411ae.png"
+      },
+      {
+        "src": "/media/shop/curve-caddy-headphone-holder/6-1200.webp",
+        "thumb": "/media/shop/curve-caddy-headphone-holder/6-480.webp",
+        "alt": "Curve Caddy Headphone Stand — view 6",
+        "sourceFile": "Curve_Caddy_Headphone_Holder_6_243dcf8f5d.png"
+      }
+    ],
+    "video": "/media/shop/curve-caddy-headphone-holder/curve-caddy-headphone-holder.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/curve-caddy-headphone-holder"
+  },
+  {
+    "id": "ring-dock-headphone-holder",
+    "name": "Ring Dock Headphone Stand",
+    "priceCents": 4999,
+    "category": "Headphone stands",
+    "seasonal": false,
+    "description": "A bold circular stand that gives your headphones a home between listening sessions. The open ring looks considered even when your headphones are in use.",
+    "included": "One assembled physical headphone stand. Headphones, phone, pens and other photo props are not included.",
+    "dimensions": "Source model: approximately 200 mm high. Finished size may vary slightly.",
+    "notes": "Made to order in a colour similar to the reference photos; exact shades and finish may vary. Ask about other colours before checkout. Check device fit with us if you have an unusually large headset or phone case.",
+    "images": [
+      {
+        "src": "/media/shop/ring-dock-headphone-holder/1-1200.webp",
+        "thumb": "/media/shop/ring-dock-headphone-holder/1-480.webp",
+        "alt": "Ring Dock Headphone Stand — front view",
+        "sourceFile": "1_a4905cc374.jpg"
+      },
+      {
+        "src": "/media/shop/ring-dock-headphone-holder/2-1200.webp",
+        "thumb": "/media/shop/ring-dock-headphone-holder/2-480.webp",
+        "alt": "Ring Dock Headphone Stand — view 2",
+        "sourceFile": "2_4885bd7405.jpg"
+      },
+      {
+        "src": "/media/shop/ring-dock-headphone-holder/3-1200.webp",
+        "thumb": "/media/shop/ring-dock-headphone-holder/3-480.webp",
+        "alt": "Ring Dock Headphone Stand — view 3",
+        "sourceFile": "3_5dccee648d.jpg"
+      },
+      {
+        "src": "/media/shop/ring-dock-headphone-holder/4-1200.webp",
+        "thumb": "/media/shop/ring-dock-headphone-holder/4-480.webp",
+        "alt": "Ring Dock Headphone Stand — view 4",
+        "sourceFile": "4_7cb912578f.jpg"
+      },
+      {
+        "src": "/media/shop/ring-dock-headphone-holder/5-1200.webp",
+        "thumb": "/media/shop/ring-dock-headphone-holder/5-480.webp",
+        "alt": "Ring Dock Headphone Stand — view 5",
+        "sourceFile": "5_86c25a74fd.jpg"
+      },
+      {
+        "src": "/media/shop/ring-dock-headphone-holder/6-1200.webp",
+        "thumb": "/media/shop/ring-dock-headphone-holder/6-480.webp",
+        "alt": "Ring Dock Headphone Stand — view 6",
+        "sourceFile": "6_082f722695.jpg"
+      },
+      {
+        "src": "/media/shop/ring-dock-headphone-holder/7-1200.webp",
+        "thumb": "/media/shop/ring-dock-headphone-holder/7-480.webp",
+        "alt": "Ring Dock Headphone Stand — view 7",
+        "sourceFile": "7_a4f5b40e75.jpg"
+      }
+    ],
+    "video": "/media/shop/ring-dock-headphone-holder/ring-dock-headphone-holder.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/ring-dock-headphone-holder"
+  },
+  {
+    "id": "block-hub-headphone-and-phone-holder",
+    "name": "Block Hub Headphone & Phone Stand",
+    "priceCents": 4999,
+    "category": "Headphone stands",
+    "seasonal": false,
+    "description": "Give your headphones, phone and pens their own places in one compact desk organizer. Angular lines suit a modern gaming or work setup.",
+    "included": "One assembled physical headphone stand. Headphones, phone, pens and other photo props are not included.",
+    "dimensions": "Source model: approximately 210 mm high. Finished size may vary slightly.",
+    "notes": "Made to order in a colour similar to the reference photos; exact shades and finish may vary. Ask about other colours before checkout. Check device fit with us if you have an unusually large headset or phone case.",
+    "images": [
+      {
+        "src": "/media/shop/block-hub-headphone-and-phone-holder/1-1200.webp",
+        "thumb": "/media/shop/block-hub-headphone-and-phone-holder/1-480.webp",
+        "alt": "Block Hub Headphone & Phone Stand — front view",
+        "sourceFile": "Block_Hub_Headphone_and_Phone_Holder_1_7ff1c92512.png"
+      },
+      {
+        "src": "/media/shop/block-hub-headphone-and-phone-holder/2-1200.webp",
+        "thumb": "/media/shop/block-hub-headphone-and-phone-holder/2-480.webp",
+        "alt": "Block Hub Headphone & Phone Stand — view 2",
+        "sourceFile": "Block_Hub_Headphone_and_Phone_Holder_2_ff3f591ecf.png"
+      },
+      {
+        "src": "/media/shop/block-hub-headphone-and-phone-holder/3-1200.webp",
+        "thumb": "/media/shop/block-hub-headphone-and-phone-holder/3-480.webp",
+        "alt": "Block Hub Headphone & Phone Stand — view 3",
+        "sourceFile": "Block_Hub_Headphone_and_Phone_Holder_3_6adbfa5671.png"
+      },
+      {
+        "src": "/media/shop/block-hub-headphone-and-phone-holder/4-1200.webp",
+        "thumb": "/media/shop/block-hub-headphone-and-phone-holder/4-480.webp",
+        "alt": "Block Hub Headphone & Phone Stand — view 4",
+        "sourceFile": "Block_Hub_Headphone_and_Phone_Holder_4_118ab0cf01.png"
+      },
+      {
+        "src": "/media/shop/block-hub-headphone-and-phone-holder/5-1200.webp",
+        "thumb": "/media/shop/block-hub-headphone-and-phone-holder/5-480.webp",
+        "alt": "Block Hub Headphone & Phone Stand — view 5",
+        "sourceFile": "Block_Hub_Headphone_and_Phone_Holder_7_193e7309d3.png"
+      },
+      {
+        "src": "/media/shop/block-hub-headphone-and-phone-holder/6-1200.webp",
+        "thumb": "/media/shop/block-hub-headphone-and-phone-holder/6-480.webp",
+        "alt": "Block Hub Headphone & Phone Stand — view 6",
+        "sourceFile": "Block_Hub_Headphone_and_Phone_Holder_8_3784fecf7d.png"
+      }
+    ],
+    "video": "/media/shop/block-hub-headphone-and-phone-holder/block-hub-headphone-and-phone-holder.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/block-hub-headphone-and-phone-holder"
+  },
+  {
+    "id": "tower-trio-headphone-and-phone-holder",
+    "name": "Tower Trio Headphone & Phone Stand",
+    "priceCents": 5999,
+    "category": "Headphone stands",
+    "seasonal": false,
+    "description": "One vertical station for headphones, a phone and pens. A useful choice when you want to keep a busy desk organized without a row of separate holders.",
+    "included": "One assembled physical headphone stand. Headphones, phone, pens and other photo props are not included.",
+    "dimensions": "Source model: approximately 210 mm high. Finished size may vary slightly.",
+    "notes": "Made to order in a colour similar to the reference photos; exact shades and finish may vary. Ask about other colours before checkout. Check device fit with us if you have an unusually large headset or phone case.",
+    "images": [
+      {
+        "src": "/media/shop/tower-trio-headphone-and-phone-holder/1-1200.webp",
+        "thumb": "/media/shop/tower-trio-headphone-and-phone-holder/1-480.webp",
+        "alt": "Tower Trio Headphone & Phone Stand — front view",
+        "sourceFile": "Tower_Trio_Headphone_and_Phone_Holder_1_1f68c39d00.png"
+      },
+      {
+        "src": "/media/shop/tower-trio-headphone-and-phone-holder/2-1200.webp",
+        "thumb": "/media/shop/tower-trio-headphone-and-phone-holder/2-480.webp",
+        "alt": "Tower Trio Headphone & Phone Stand — view 2",
+        "sourceFile": "Tower_Trio_Headphone_and_Phone_Holder_2_0173f58c83.png"
+      },
+      {
+        "src": "/media/shop/tower-trio-headphone-and-phone-holder/3-1200.webp",
+        "thumb": "/media/shop/tower-trio-headphone-and-phone-holder/3-480.webp",
+        "alt": "Tower Trio Headphone & Phone Stand — view 3",
+        "sourceFile": "Tower_Trio_Headphone_and_Phone_Holder_3_0bd91cf5a5.png"
+      },
+      {
+        "src": "/media/shop/tower-trio-headphone-and-phone-holder/4-1200.webp",
+        "thumb": "/media/shop/tower-trio-headphone-and-phone-holder/4-480.webp",
+        "alt": "Tower Trio Headphone & Phone Stand — view 4",
+        "sourceFile": "Tower_Trio_Headphone_and_Phone_Holder_4_8af5f29a8f.png"
+      },
+      {
+        "src": "/media/shop/tower-trio-headphone-and-phone-holder/5-1200.webp",
+        "thumb": "/media/shop/tower-trio-headphone-and-phone-holder/5-480.webp",
+        "alt": "Tower Trio Headphone & Phone Stand — view 5",
+        "sourceFile": "Tower_Trio_Headphone_and_Phone_Holder_5_cb227cd055.png"
+      },
+      {
+        "src": "/media/shop/tower-trio-headphone-and-phone-holder/6-1200.webp",
+        "thumb": "/media/shop/tower-trio-headphone-and-phone-holder/6-480.webp",
+        "alt": "Tower Trio Headphone & Phone Stand — view 6",
+        "sourceFile": "Tower_Trio_Headphone_and_Phone_Holder_6_67d74c651a.png"
+      }
+    ],
+    "video": "/media/shop/tower-trio-headphone-and-phone-holder/tower-trio-headphone-and-phone-holder.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/tower-trio-headphone-and-phone-holder"
+  },
+  {
+    "id": "arch-stand-headphone-holder",
+    "name": "Arch Headphone Stand",
+    "priceCents": 4499,
+    "category": "Headphone stands",
+    "seasonal": false,
+    "description": "A simple architectural arch for displaying and storing your headphones. Its clean lines make it easy to place beside a monitor or on a shelf.",
+    "included": "One assembled physical headphone stand. Headphones, phone, pens and other photo props are not included.",
+    "dimensions": "Source model: approximately 200 mm high. Finished size may vary slightly.",
+    "notes": "Made to order in a colour similar to the reference photos; exact shades and finish may vary. Ask about other colours before checkout. Check device fit with us if you have an unusually large headset or phone case.",
+    "images": [
+      {
+        "src": "/media/shop/arch-stand-headphone-holder/1-1200.webp",
+        "thumb": "/media/shop/arch-stand-headphone-holder/1-480.webp",
+        "alt": "Arch Headphone Stand — front view",
+        "sourceFile": "1_33f7a78ac0.jpg"
+      },
+      {
+        "src": "/media/shop/arch-stand-headphone-holder/2-1200.webp",
+        "thumb": "/media/shop/arch-stand-headphone-holder/2-480.webp",
+        "alt": "Arch Headphone Stand — view 2",
+        "sourceFile": "2_741ab840cc.jpg"
+      },
+      {
+        "src": "/media/shop/arch-stand-headphone-holder/3-1200.webp",
+        "thumb": "/media/shop/arch-stand-headphone-holder/3-480.webp",
+        "alt": "Arch Headphone Stand — view 3",
+        "sourceFile": "3_5ac0fd9d84.jpg"
+      },
+      {
+        "src": "/media/shop/arch-stand-headphone-holder/4-1200.webp",
+        "thumb": "/media/shop/arch-stand-headphone-holder/4-480.webp",
+        "alt": "Arch Headphone Stand — view 4",
+        "sourceFile": "4_9fa5f7294a.jpg"
+      },
+      {
+        "src": "/media/shop/arch-stand-headphone-holder/5-1200.webp",
+        "thumb": "/media/shop/arch-stand-headphone-holder/5-480.webp",
+        "alt": "Arch Headphone Stand — view 5",
+        "sourceFile": "5_202c376690.jpg"
+      },
+      {
+        "src": "/media/shop/arch-stand-headphone-holder/6-1200.webp",
+        "thumb": "/media/shop/arch-stand-headphone-holder/6-480.webp",
+        "alt": "Arch Headphone Stand — view 6",
+        "sourceFile": "6_2330d0ff41.jpg"
+      }
+    ],
+    "video": "/media/shop/arch-stand-headphone-holder/arch-stand-headphone-holder.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/arch-stand-headphone-holder"
   }
 ]
