@@ -25,7 +25,7 @@ Merchant Center onboarding uses online store, no staffed physical retail store (
 
 ## Next actions
 
-Complete Google indexing requests and Merchant Center free listings onboarding. If asked for private address or binding terms, obtain the specific necessary approval. Check approved shipping/returns against the website and Shopify; do not invent policies. Rankings and traffic cannot be guaranteed.
+Google accepted explicit indexing requests for the headphone collection and Flow product into its priority crawl queue. All six products are in the submitted sitemap. Complete Merchant Center free listings onboarding after terms approval, and review Google's sitemap fetch status. If asked for private address or binding terms, obtain the specific necessary approval. Check approved shipping/returns against the website and Shopify; do not invent policies. Rankings and traffic cannot be guaranteed.
 
 ## Primary references
 
