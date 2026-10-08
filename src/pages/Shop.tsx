@@ -100,11 +100,11 @@ export function ShopNav({ showFulfillment = true }: { showFulfillment?: boolean 
           </Link>
         ))}
         <Link to="/shop/halloween">Halloween</Link>
-        {sale && <Link className="shop-sale-nav-link" to="/shop/sale">Sale</Link>}
+        {sale && <Link className="shop-sale-nav-link" to="/shop/sale">{sale.percentage}% off</Link>}
         <Link to="/shop/gifts-under-25">$25 &amp; under</Link>
       </div>
     </nav>
-    {sale && <Link className="shop-sale-ribbon" to="/shop/sale"><strong>{sale.title}</strong><span>Explore sale products ↗</span></Link>}
+    {sale && <Link className="shop-sale-ribbon" to="/shop/sale"><strong>{sale.percentage}% off · {sale.title}</strong><span>Shop before {new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric" }).format(new Date(sale.endAt))} ↗</span></Link>}
     {showFulfillment && <FulfillmentSelector />}
     </>
   );
@@ -246,7 +246,7 @@ function AddProduct({
   );
 }
 function ShopProductCard({ product }: { product: Product }) {
-  const { priceFor, nameFor, compareAtFor } = useShopifyCatalog();
+  const { priceFor, nameFor, compareAtFor, sale } = useShopifyCatalog();
   const managedProducts = useProductContent();
   const managed = product.id === "lithophane-table-lamp" ? managedProducts["lithophane-table-lamp"] : null;
   const displayName = managed?.name || nameFor(product.id, product.name);
@@ -276,7 +276,7 @@ function ShopProductCard({ product }: { product: Product }) {
           />
         )}
         <span className="shop-badge">{product.category}</span>
-        {regularPrice && <span className="shop-sale-badge">SALE</span>}
+        {regularPrice && <span className="shop-sale-badge">{sale?.percentage}% OFF</span>}
       </Link>
       <div className="shop-card-body">
         <p className="eyebrow">MADE IN EDMONTON</p>
@@ -385,7 +385,7 @@ export function Shop() {
           </Link>
         </div>
       </section>
-      {sale && <section className="container shop-sale-feature" aria-label="Current shop sale"><div><p className="eyebrow">CURRENT SHOP SALE</p><h2>{sale.title}</h2><p>{sale.productIds.length} selected products at sale prices. Choose delivery or Edmonton pickup and see the price before checkout.</p><Link className="button" to="/shop/sale">Explore the sale ↗</Link></div></section>}
+      {sale && <section className="container shop-sale-feature" aria-label="Current shop sale"><div><p className="eyebrow">LIMITED-TIME OFFER · {sale.percentage}% OFF</p><h2>{sale.title}</h2><p>{sale.productIds.length} selected products at sale prices. Choose delivery or Edmonton pickup and see the price before checkout.</p><Link className="button" to="/shop/sale">Shop {sale.percentage}% off ↗</Link></div></section>}
       <ShopNotice />
       <section className="section shop-collections-section" id="collections">
         <div className="container">
@@ -495,7 +495,7 @@ export function ShopSale() {
   const featured = sale.productIds.map((id) => catalogProduct(id)).filter((product): product is Product => Boolean(product));
   return <>
     <ShopNav showFulfillment={false}/>
-    <section className="shop-sale-hero"><div className="container"><p className="eyebrow">CUSTOM BUILD STUDIO / LIMITED PROMOTION</p><h1>{sale.title}</h1><p>Explore selected pieces at sale prices. Every item is a finished physical product made in Edmonton.</p><a className="button" href="#sale-products">Shop the sale ↘</a></div></section>
+    <section className="shop-sale-hero"><div className="container"><p className="eyebrow">CUSTOM BUILD STUDIO / LIMITED PROMOTION</p><div className="shop-sale-hero-percent">{sale.percentage}% OFF</div><h1>{sale.title}</h1><p>Explore selected pieces at sale prices. Every item is a finished physical product made in Edmonton.</p><p className="shop-sale-deadline">Ends {new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(sale.endAt))}</p><a className="button" href="#sale-products">Shop the sale ↘</a></div></section>
     <FulfillmentSelector/><ShopNotice/>
     <section className="section" id="sale-products"><div className="container"><div className="section-heading"><div><p className="eyebrow">ON SALE NOW</p><h2>{featured.length} {featured.length === 1 ? "product" : "products"} to explore.</h2></div><p>The price shown reflects your pickup or delivery choice. Sale prices carry through to secure Shopify checkout.</p></div><div className="shop-grid">{featured.map((product) => <ShopProductCard key={product.id} product={product}/>)}</div></div></section>
     <section className="container"><ShopBenefits/></section>
@@ -686,7 +686,7 @@ export function ShopCollection({ id }: { id: string }) {
 }
 export function ShopProduct() {
   const { mode } = useFulfillment();
-  const { priceFor, nameFor, compareAtFor } = useShopifyCatalog();
+  const { priceFor, nameFor, compareAtFor, sale } = useShopifyCatalog();
   const content = useSiteContent();
   const { id } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -827,7 +827,7 @@ export function ShopProduct() {
                   {settings.pricesAreProvisional ? " · provisional price" : ""}
                 </span>
               </p>
-              {compareAtFor(selectedVariant.id) && <p className="shop-regular-price">Regular {money(compareAtFor(selectedVariant.id)!)} CAD · Sale price shown above</p>}
+              {compareAtFor(selectedVariant.id) && <p className="shop-regular-price"><strong className="shop-sale-inline">{sale?.percentage}% OFF</strong> Regular {money(compareAtFor(selectedVariant.id)!)} CAD</p>}
               <ul className="shop-purchase-facts" aria-label="Purchase details">
                 <li>{mode === "pickup" ? "Pickup in Southeast Edmonton by appointment" : "Free tracked shipping in Canada"}</li>
                 <li>{mode === "pickup" ? productionMessage : deliveryEstimate}</li>

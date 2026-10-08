@@ -4,7 +4,9 @@ import { createSaleService } from "../commerce/sales.mjs";
 import products from "../commerce/products.json" with { type: "json" };
 import collections from "../commerce/collections.json" with { type: "json" };
 
-function fixture({ failProduct = "" } = {}) {
+const endAt = new Date(Date.now() + 14 * 86400000).toISOString();
+
+function fixture({ failProduct = "", time } = {}) {
   const catalog = new Map([
     ["skeleton-chameleon", { id: "gid://shopify/Product/1", variants: { nodes: [
       { id: "v1", sku: "skeleton-chameleon", price: "40.00", compareAtPrice: null },
@@ -38,12 +40,12 @@ function fixture({ failProduct = "" } = {}) {
       }
     },
   };
-  return { catalog, store, shopify, sale: createSaleService({ store, shopify, production: true }) };
+  return { catalog, store, shopify, sale: createSaleService({ store, shopify, production: true, clock: time ? () => new Date(time.value) : undefined }) };
 }
 
 test("product sale previews, publishes, and restores both fulfillment prices", async () => {
   const { catalog, sale } = fixture();
-  const config = { title: "October studio sale", percentage: 25, scope: "products", productIds: ["skeleton-chameleon"] };
+  const config = { title: "October studio sale", percentage: 25, scope: "products", productIds: ["skeleton-chameleon"], endAt };
   const preview = await sale.preview(config);
   assert.deepEqual(preview.rows.map((r) => [r.regularDelivered, r.saleDelivered, r.regularPickup, r.salePickup]), [[4000, 3000, 3000, 2000]]);
   await sale.publish(config, preview.fingerprint, true);
@@ -59,7 +61,7 @@ test("product sale previews, publishes, and restores both fulfillment prices", a
 
 test("all options are included once and stale previews are rejected", async () => {
   const { sale, catalog } = fixture();
-  const config = { title: "Ghost sale", percentage: 10, scope: "products", productIds: ["mood-ghost"] };
+  const config = { title: "Ghost sale", percentage: 10, scope: "products", productIds: ["mood-ghost"], endAt };
   const preview = await sale.preview(config);
   assert.equal(preview.rows.length, 2);
   assert.equal(preview.rows[0].saleDelivered - preview.rows[0].salePickup, 1000);
@@ -70,7 +72,7 @@ test("all options are included once and stale previews are rejected", async () =
 
 test("a partial Shopify failure restores already updated products", async () => {
   const { sale, catalog } = fixture({ failProduct: "/2" });
-  const config = { title: "Two products", percentage: 10, scope: "products", productIds: ["skeleton-chameleon", "mood-ghost"] };
+  const config = { title: "Two products", percentage: 10, scope: "products", productIds: ["skeleton-chameleon", "mood-ghost"], endAt };
   const preview = await sale.preview(config);
   await assert.rejects(sale.publish(config, preview.fingerprint, true), /not fully activated/i);
   assert.equal((await sale.status()).status, "inactive");
@@ -79,7 +81,7 @@ test("a partial Shopify failure restores already updated products", async () => 
 
 test("ending refuses to overwrite a manual Shopify price edit", async () => {
   const { sale, catalog } = fixture();
-  const config = { title: "Sale", percentage: 10, scope: "products", productIds: ["skeleton-chameleon"] };
+  const config = { title: "Sale", percentage: 10, scope: "products", productIds: ["skeleton-chameleon"], endAt };
   const preview = await sale.preview(config);
   await sale.publish(config, preview.fingerprint, true);
   catalog.get("skeleton-chameleon").variants.nodes[0].price = "35.00";
@@ -106,11 +108,43 @@ test("whole-shop and Halloween scopes include every size/design once", async () 
   const mock = { read: async (handles) => new Map(handles.map((handle) => [handle, byHandle.get(handle)])), update: async () => {} };
   const store = { get: async () => null, put: async () => ({ modified: true }) };
   const sale = createSaleService({ store, shopify: mock, production: true });
-  const all = await sale.preview({ title: "Shop sale", percentage: 10, scope: "all" });
+  const all = await sale.preview({ title: "Shop sale", percentage: 10, scope: "all", endAt });
   assert.equal(all.config.productIds.length, bases.length);
   assert.equal(all.rows.length, bases.reduce((sum, p) => sum + (p.variants?.length || 1), 0));
   const halloween = collections.find((c) => c.id === "halloween");
-  const seasonal = await sale.preview({ title: "Halloween sale", percentage: 10, scope: "collection", collectionId: halloween.id });
+  const seasonal = await sale.preview({ title: "Halloween sale", percentage: 10, scope: "collection", collectionId: halloween.id, endAt });
   assert.deepEqual(new Set(seasonal.config.productIds), new Set(halloween.products));
   assert.equal(new Set(seasonal.rows.map((row) => row.sku)).size, seasonal.rows.length);
+});
+
+test("scheduled sale starts and ends automatically, restoring Shopify prices", async () => {
+  const time = { value: "2026-10-07T18:00:00.000Z" };
+  const { sale, catalog } = fixture({ time });
+  const config = { title: "Timed sale", percentage: 20, scope: "products", productIds: ["skeleton-chameleon"], startAt: "2026-10-08T18:00:00.000Z", endAt: "2026-10-09T18:00:00.000Z" };
+  const preview = await sale.preview(config);
+  await sale.schedule(config, preview.fingerprint, true);
+  assert.equal((await sale.runSchedule()).status, "scheduled");
+  assert.equal(catalog.get("skeleton-chameleon").variants.nodes[0].price, "40.00");
+  time.value = config.startAt;
+  assert.equal((await sale.runSchedule()).status, "active");
+  assert.equal(catalog.get("skeleton-chameleon").variants.nodes[0].price, "32.00");
+  time.value = config.endAt;
+  assert.equal((await sale.status()).status, "inactive", "the public sale stops at the deadline");
+  assert.equal((await sale.runSchedule()).status, "inactive");
+  assert.equal(catalog.get("skeleton-chameleon").variants.nodes[0].price, "40.00");
+});
+
+test("a scheduled sale can be cancelled and rejects a stale Shopify price", async () => {
+  const time = { value: "2026-10-07T18:00:00.000Z" };
+  const { sale, catalog } = fixture({ time });
+  const config = { title: "Timed sale", percentage: 20, scope: "products", productIds: ["skeleton-chameleon"], startAt: "2026-10-08T18:00:00.000Z", endAt: "2026-10-09T18:00:00.000Z" };
+  const preview = await sale.preview(config);
+  await sale.schedule(config, preview.fingerprint, true);
+  assert.equal((await sale.cancelSchedule()).status, "inactive");
+  await sale.schedule(config, preview.fingerprint, true);
+  catalog.get("skeleton-chameleon").variants.nodes[0].price = "41.00";
+  time.value = config.startAt;
+  assert.equal((await sale.runSchedule()).status, "schedule-error");
+  assert.equal(catalog.get("skeleton-chameleon").variants.nodes[0].price, "41.00");
+  assert.equal((await sale.cancelSchedule()).status, "inactive");
 });

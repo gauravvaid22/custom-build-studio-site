@@ -43,9 +43,7 @@ const json = (body, status = 200) => new Response(JSON.stringify(body), {
   headers: { "Content-Type": "application/json", "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" },
 });
 
-export default async function shopSale(request, context) {
-  const url = new URL(request.url);
-  const action = url.searchParams.get("action") || "status";
+export function createService(context) {
   const deployContext = context?.deploy?.context || process.env.CONTEXT;
   const production = deployContext === "production";
   const name = production ? "shop-orders-v1" : `shop-preview-${context?.deploy?.id || process.env.DEPLOY_ID || "local"}`;
@@ -54,12 +52,18 @@ export default async function shopSale(request, context) {
     get: (key) => blobs.getWithMetadata(key, { type: "json", consistency: "strong" }),
     put: (key, data, conditions) => blobs.setJSON(key, data, conditions),
   };
-  const service = createSaleService({ store, shopify: shopifyClient(admin), production });
+  return createSaleService({ store, shopify: shopifyClient(admin), production });
+}
+
+export default async function shopSale(request, context) {
+  const url = new URL(request.url);
+  const action = url.searchParams.get("action") || "status";
+  const service = createService(context);
   try {
     if (request.method === "GET" && action === "status") {
       const sale = await service.status();
       return json({ sale: { status: sale.status, ...(sale.status === "active" ? {
-        title: sale.title, percentage: sale.percentage, scope: sale.scope, productIds: sale.productIds,
+        title: sale.title, percentage: sale.percentage, endAt: sale.endAt, scope: sale.scope, productIds: sale.productIds,
         collectionId: sale.collectionId, variants: sale.variants,
       } : {}) } });
     }
@@ -76,6 +80,8 @@ export default async function shopSale(request, context) {
     if (action === "admin-status") return json({ sale: await service.adminStatus(), shopifyAdminConfigured: Boolean(admin) });
     if (action === "preview") return json({ preview: await service.preview(body.config) });
     if (action === "publish") return json({ sale: await service.publish(body.config, body.fingerprint, body.discountsChecked) });
+    if (action === "schedule") return json({ sale: await service.schedule(body.config, body.fingerprint, body.discountsChecked) });
+    if (action === "cancel-schedule") return json({ sale: await service.cancelSchedule() });
     if (action === "end") return json({ sale: await service.end() });
     return json({ error: "Not found" }, 404);
   } catch (error) {

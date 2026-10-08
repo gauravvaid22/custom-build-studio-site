@@ -1321,6 +1321,10 @@
   color: #fff; background: #a83b15; font-size: .72rem;
   font-weight: 800; letter-spacing: .12em;
 }
+.shop-sale-inline { display: inline-block; margin-right: .5rem; padding: .28rem .55rem; color: #fff; background: #a83b15; font-size: .78rem; letter-spacing: .06em; }
+.shop-sale-hero-percent { display: inline-block; margin-top: 1rem; padding: .35rem .75rem; color: #fff; background: #b64b21; font-size: clamp(2rem, 5vw, 4rem); font-weight: 900; line-height: 1; letter-spacing: -.05em; transform: rotate(-2deg); box-shadow: 7px 7px 0 rgba(0,0,0,.3); }
+.shop-sale-hero .shop-sale-deadline { display: inline-block; padding: .4rem .75rem; border: 1px solid rgba(255,255,255,.55); color: #fff !important; font-weight: 700; }
+.shop-sale-hero .shop-sale-deadline + .button { margin-left: .7rem; }
 .shop-regular-price { color: #6b7280; font-size: .86rem; margin: -.4rem 0 1rem; }
 .shop-card .shop-regular-price { margin-top: -.7rem; }
 .shop-sale-hero {
@@ -1367,3 +1371,4 @@
   .shop-sale-hero .container { padding-top: 4.5rem; padding-bottom: 4.5rem; }
 }
 @media (prefers-reduced-motion: reduce) { .shop-sale-ribbon { transition: none; } }
+@media (max-width: 600px) { .shop-sale-hero .shop-sale-deadline + .button { margin-left: 0; } }

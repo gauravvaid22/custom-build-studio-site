@@ -17,7 +17,7 @@ fs.mkdirSync("test-results", { recursive: true });
   await page.route("**/.netlify/functions/shop-sale?action=status", (route) => route.fulfill({
     contentType: "application/json",
     body: JSON.stringify({ sale: {
-      status: "active", title: "October studio sale", percentage: 25, scope: "products",
+      status: "active", title: "October studio sale", percentage: 25, endAt: "2027-10-31T06:00:00.000Z", scope: "products",
       productIds: ["skeleton-chameleon"], collectionId: null,
       variants: {
         "skeleton-chameleon": { priceCents: 3000, compareAtCents: 4000 },
@@ -44,6 +44,8 @@ fs.mkdirSync("test-results", { recursive: true });
   await page.getByRole("heading", { name: "October studio sale" }).waitFor();
   await page.getByText("Regular $40.00 CAD").waitFor();
   assert.equal(await page.locator(".shop-sale-badge").count(), 1);
+  assert.match(await page.locator(".shop-sale-badge").innerText(), /25% OFF/);
+  await page.getByText("25% OFF", { exact: true }).first().waitFor();
   await page.screenshot({ path: "test-results/sale-desktop.png", fullPage: true });
   await page.goto(`${origin}/shop/skeleton-chameleon`);
   await page.getByText("Regular $40.00 CAD").waitFor();
@@ -52,7 +54,7 @@ fs.mkdirSync("test-results", { recursive: true });
   await page.getByRole("heading", { name: "October studio sale" }).waitFor();
   await page.goto(origin);
   await page.getByRole("heading", { name: "October studio sale" }).waitFor();
-  assert.equal(await page.getByRole("link", { name: /Shop the sale/ }).count(), 1);
+  assert.equal(await page.getByRole("link", { name: /Shop 25% off/ }).count(), 1);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(`${origin}/shop/sale`);
   await page.getByRole("heading", { name: "October studio sale" }).waitFor();
@@ -66,18 +68,26 @@ fs.mkdirSync("test-results", { recursive: true });
   });
   await page.route("**/.netlify/functions/shop-sale?action=admin-status", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify({ sale: { status: "inactive", admin: { status: "inactive" } }, shopifyAdminConfigured: true }) }));
   await page.route("**/.netlify/functions/shop-sale?action=preview", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify({ preview: {
-    fingerprint: "test-preview", config: { title: "Studio sale", percentage: 10, productIds: ["skeleton-chameleon"] },
+    fingerprint: "test-preview", config: { ...route.request().postDataJSON().config, productIds: ["skeleton-chameleon"] },
     rows: [{ productId: "skeleton-chameleon", name: "Skeleton Chameleon Figurine", sku: "skeleton-chameleon", regularDelivered: 4000, saleDelivered: 3600, regularPickup: 3000, salePickup: 2600 }],
   } }) }));
   await page.goto(`${origin}/shop/admin`);
   await page.getByLabel("Administrator key").fill("test-admin-key");
   await page.getByRole("button", { name: "Open orders" }).click();
   await page.getByRole("button", { name: "Sales", exact: true }).click();
+  assert.equal(await page.getByLabel("End date and time").count(), 1);
   await page.getByRole("button", { name: "Preview sale prices" }).click();
   await page.getByText("Review 1 priced option").waitFor();
   assert.equal(await page.getByRole("button", { name: "Turn on this sale" }).isDisabled(), true);
   await page.getByLabel(/I checked Shopify discounts/).check();
   assert.equal(await page.getByRole("button", { name: "Turn on this sale" }).isEnabled(), true);
+  await page.getByLabel("Start later").check();
+  await page.getByLabel("End date and time").fill("2027-10-31T12:00");
+  await page.getByRole("button", { name: "Preview sale prices" }).click();
+  await page.getByText("Review 1 priced option").waitFor();
+  assert.equal(await page.getByRole("button", { name: "Schedule this sale" }).isDisabled(), true);
+  await page.getByLabel(/I checked Shopify discounts/).check();
+  assert.equal(await page.getByRole("button", { name: "Schedule this sale" }).isEnabled(), true);
   await page.screenshot({ path: "test-results/sale-admin.png", fullPage: true });
   assert.deepEqual(errors, []);
   await browser.close();

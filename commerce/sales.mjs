@@ -37,7 +37,13 @@ function validateConfig(input) {
     throw new SaleError("Choose at least one valid product.");
   const productIds = [...new Set(requested)];
   if (productIds.some((id) => !baseById.has(id))) throw new SaleError("The sale includes an unknown product.");
-  return { title, percentage, minimumPickupPriceCents, scope, collectionId: collection?.id || null, productIds };
+  const startAt = input.startAt ? String(input.startAt) : null;
+  const endAt = String(input.endAt || "");
+  const validTime = (value) => /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(value) && !Number.isNaN(Date.parse(value));
+  if (startAt && !validTime(startAt)) throw new SaleError("Choose a valid sale start date and time.");
+  if (!validTime(endAt)) throw new SaleError("Choose a valid sale end date and time.");
+  if (startAt && Date.parse(startAt) >= Date.parse(endAt)) throw new SaleError("The end must be after the start.");
+  return { title, percentage, minimumPickupPriceCents, scope, collectionId: collection?.id || null, productIds, startAt, endAt };
 }
 
 function cents(value) {
@@ -89,6 +95,7 @@ function publicSale(record) {
   if (record?.status !== "active") return { status: "inactive" };
   return {
     status: "active", title: record.config.title, percentage: record.config.percentage,
+    endAt: record.config.endAt,
     scope: record.config.scope, productIds: record.config.productIds,
     collectionId: record.config.collectionId,
     variants: Object.fromEntries(record.groups.flatMap((group) => group.variants.map((variant) =>
@@ -100,7 +107,9 @@ export function createSaleService({ store, shopify, production = false, clock = 
   async function current() { return await store.get(recordKey); }
   async function status() {
     const found = await current();
-    return { ...publicSale(found?.data), admin: found?.data ? {
+    const visible = found?.data?.status === "active" && Date.parse(found.data.config.endAt) <= clock().getTime()
+      ? { status: "inactive" } : publicSale(found?.data);
+    return { ...visible, admin: found?.data ? {
       status: found.data.status, config: found.data.config, lastError: found.data.lastError || "",
       updatedAt: found.data.updatedAt, count: found.data.groups?.length || 0,
     } : { status: "inactive" } };
@@ -117,6 +126,7 @@ export function createSaleService({ store, shopify, production = false, clock = 
   async function preview(input) {
     if (!shopify) throw new SaleError("Shopify Admin access is not configured for this deploy.", 503);
     const config = validateConfig(input);
+    if (Date.parse(config.endAt) <= clock().getTime()) throw new SaleError("The sale end must be in the future.");
     const catalog = await shopify.read(config.productIds.map((id) => baseById.get(id).shopifyHandle || id));
     const plan = planFromCatalog(config, catalog);
     return { config, rows: plan.rows, fingerprint: hash({ config, groups: plan.groups }) };
@@ -128,6 +138,9 @@ export function createSaleService({ store, shopify, production = false, clock = 
     if (found?.data?.status && found.data.status !== "inactive")
       throw new SaleError("A sale or recovery operation is already in progress. Refresh the sale dashboard.", 409);
     const config = validateConfig(input);
+    if (config.startAt && Date.parse(config.startAt) > clock().getTime())
+      throw new SaleError("This sale starts in the future. Schedule it instead.");
+    if (Date.parse(config.endAt) <= clock().getTime()) throw new SaleError("The sale end must be in the future.");
     const catalog = await shopify.read(config.productIds.map((id) => baseById.get(id).shopifyHandle || id));
     const plan = planFromCatalog(config, catalog);
     if (fingerprint !== hash({ config, groups: plan.groups })) throw new SaleError("Shopify prices changed since the preview. Review the sale again.", 409);
@@ -198,5 +211,84 @@ export function createSaleService({ store, shopify, production = false, clock = 
       throw new SaleError(`Sale recovery needs attention: ${error.message}`, 502);
     }
   }
-  return { status, adminStatus, preview, publish, end };
+  async function schedule(input, fingerprint, discountsChecked = false) {
+    if (!production || !shopify) throw new SaleError("Sale scheduling is available only on the configured production site.", 503);
+    if (discountsChecked !== true) throw new SaleError("Review existing Shopify discounts before scheduling this sale.", 409);
+    const config = validateConfig(input);
+    if (!config.startAt || Date.parse(config.startAt) <= clock().getTime()) throw new SaleError("Choose a future start date to schedule the sale.");
+    const found = await current();
+    if (found?.data?.status && found.data.status !== "inactive") throw new SaleError("A sale is already scheduled or active.", 409);
+    const catalog = await shopify.read(config.productIds.map((id) => baseById.get(id).shopifyHandle || id));
+    const plan = planFromCatalog(config, catalog);
+    if (fingerprint !== hash({ config, groups: plan.groups })) throw new SaleError("Shopify prices changed since the preview. Review the sale again.", 409);
+    const record = { status: "scheduled", config, fingerprint, updatedAt: clock().toISOString() };
+    const claim = await store.put(recordKey, record, found ? { onlyIfMatch: found.etag } : { onlyIfNew: true });
+    if (!claim.modified) throw new SaleError("Sale settings changed. Refresh and try again.", 409);
+    return status();
+  }
+  async function cancelSchedule() {
+    const found = await current();
+    if (!found?.data || !["scheduled", "schedule-error"].includes(found.data.status)) throw new SaleError("There is no scheduled sale to cancel.", 409);
+    const claim = await store.put(recordKey, { ...found.data, status: "inactive", lastError: "", updatedAt: clock().toISOString() }, { onlyIfMatch: found.etag });
+    if (!claim.modified) throw new SaleError("Sale status changed. Refresh and try again.", 409);
+    return status();
+  }
+  async function runSchedule() {
+    if (!production || !shopify) return { status: "skipped" };
+    const found = await current();
+    const record = found?.data;
+    if (!record) return { status: "inactive" };
+    if (record.status === "scheduled" && clock().getTime() >= Date.parse(record.config.startAt)) {
+      if (clock().getTime() >= Date.parse(record.config.endAt)) {
+        const claim = await store.put(recordKey, { ...record, status: "inactive", lastError: "The scheduled window passed before the sale started.", updatedAt: clock().toISOString() }, { onlyIfMatch: found.etag });
+        return { status: claim.modified ? "expired" : "changed" };
+      }
+      const catalog = await shopify.read(record.config.productIds.map((id) => baseById.get(id).shopifyHandle || id));
+      let plan;
+      try {
+        plan = planFromCatalog(record.config, catalog);
+        if (record.fingerprint !== hash({ config: record.config, groups: plan.groups })) throw new SaleError("Shopify prices changed after scheduling. Preview and schedule the sale again.", 409);
+      } catch (error) {
+        await store.put(recordKey, { ...record, status: "schedule-error", lastError: error.message, updatedAt: clock().toISOString() }, { onlyIfMatch: found.etag });
+        return { status: "schedule-error" };
+      }
+      const claim = await store.put(recordKey, { ...record, status: "publishing", groups: plan.groups, updatedAt: clock().toISOString() }, { onlyIfMatch: found.etag });
+      if (!claim.modified) return { status: "changed" };
+      return runSchedule();
+    }
+    if (record.status === "publishing") {
+      try {
+        const catalog = await shopify.read(record.groups.map((g) => g.handle));
+        for (const group of record.groups) {
+          const byId = new Map((catalog.get(group.handle)?.variants.nodes || []).map((v) => [v.id, v]));
+          const changes = [];
+          for (const variant of group.variants) {
+            const live = byId.get(variant.id);
+            if (!live) throw new SaleError(`${variant.sku} disappeared from Shopify.`, 409);
+            if (cents(live.price) === variant.sale && live.compareAtPrice === money(variant.regular)) continue;
+            if (cents(live.price) !== variant.regular || (live.compareAtPrice || null) !== (variant.originalCompareAt || null))
+              throw new SaleError(`${variant.sku} was edited in Shopify. Review it before activating the sale.`, 409);
+            changes.push({ id: variant.id, price: money(variant.sale), compareAtPrice: money(variant.regular) });
+          }
+          if (changes.length) await shopify.update(group.productGraphqlId, changes);
+        }
+        await verify(record.groups, true);
+        await store.put(recordKey, { ...record, status: "active", lastError: "", updatedAt: clock().toISOString() }, {});
+        return { status: "active" };
+      } catch (error) {
+        await store.put(recordKey, { ...record, status: "needs-attention", lastError: error.message, updatedAt: clock().toISOString() }, {});
+        return { status: "needs-attention" };
+      }
+    }
+    if (record.status === "active" && clock().getTime() >= Date.parse(record.config.endAt)) {
+      try { await end(); return { status: "inactive" }; }
+      catch (error) { return { status: "needs-attention", error: error.message }; }
+    }
+    if (["ending", "needs-attention"].includes(record.status)) {
+      try { await end(); return { status: "inactive" }; }
+      catch (error) { return { status: "needs-attention", error: error.message }; }
+    }
+    return { status: record.status };
+  }
+  return { status, adminStatus, preview, publish, end, schedule, cancelSchedule, runSchedule };
 }

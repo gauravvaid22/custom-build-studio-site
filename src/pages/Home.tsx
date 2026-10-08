@@ -161,10 +161,10 @@ export default function Home() {
       </section>
       {sale && <section className="container shop-sale-feature home-sale-feature" aria-label="Current shop sale">
         <div>
-          <p className="eyebrow">CURRENT SHOP SALE</p>
+          <p className="eyebrow">LIMITED-TIME OFFER · {sale.percentage}% OFF</p>
           <h2>{sale.title}</h2>
           <p>Explore {sale.productIds.length} selected {sale.productIds.length === 1 ? "product" : "products"} at sale prices, with Edmonton pickup or free tracked shipping across Canada.</p>
-          <Link className="button" to="/shop/sale">Shop the sale <Arrow /></Link>
+          <Link className="button" to="/shop/sale">Shop {sale.percentage}% off <Arrow /></Link>
         </div>
       </section>}
       <section id="capabilities" className="section">
