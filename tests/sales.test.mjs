@@ -91,6 +91,24 @@ test("ending refuses to overwrite a manual Shopify price edit", async () => {
   assert.equal(catalog.get("skeleton-chameleon").variants.nodes[0].price, "35.00");
 });
 
+test("a legacy active sale without a deadline stays public until an end date is saved", async () => {
+  const { sale, store, catalog } = fixture();
+  const config = { title: "Legacy sale", percentage: 20, scope: "products", productIds: ["skeleton-chameleon"], endAt };
+  const preview = await sale.preview(config);
+  await sale.publish(config, preview.fingerprint, true);
+  const found = await store.get();
+  delete found.data.config.endAt;
+  await store.put("config/shop-sale", found.data, { onlyIfMatch: found.etag });
+  assert.equal((await sale.status()).status, "active");
+  assert.equal((await sale.status()).endAt, undefined);
+  assert.equal((await sale.runSchedule()).status, "active");
+  const before = structuredClone(catalog.get("skeleton-chameleon"));
+  const updated = await sale.setEnd(endAt);
+  assert.equal(updated.endAt, endAt);
+  assert.deepEqual(catalog.get("skeleton-chameleon"), before, "setting a deadline must not change Shopify prices");
+  await assert.rejects(sale.setEnd("2020-01-01T00:00:00.000Z"), /future/i);
+});
+
 test("whole-shop and Halloween scopes include every size/design once", async () => {
   const bases = products.filter((p) => !("variantOf" in p));
   const byHandle = new Map(bases.map((base, index) => {

@@ -50,12 +50,12 @@ export function SaleAdmin({ adminKey }: { adminKey: string }) {
     return () => { active = false; };
   }, [adminKey]);
   const change = (next: Config) => { setConfig(next); setPreview(null); setDiscountsChecked(false); setNotice(""); };
-  async function run(action: "preview" | "publish" | "schedule" | "end" | "cancel-schedule") {
+  async function run(action: "preview" | "publish" | "schedule" | "end" | "cancel-schedule" | "set-end") {
     setBusy(true); setError(""); setNotice("");
     try {
-      const result = await saleApi(action, adminKey, action === "preview" ? { config: toApiConfig(config) } : ["publish", "schedule"].includes(action) ? { config: preview?.config, fingerprint: preview?.fingerprint, discountsChecked } : {});
+      const result = await saleApi(action, adminKey, action === "preview" ? { config: toApiConfig(config) } : ["publish", "schedule"].includes(action) ? { config: preview?.config, fingerprint: preview?.fingerprint, discountsChecked } : action === "set-end" ? { endAt: new Date(config.endAt).toISOString() } : {});
       if (action === "preview") { setPreview(result.preview); setNotice("Review the prices below before turning on the sale."); }
-      else { setStatus(result.sale); setPreview(null); if (["end", "cancel-schedule"].includes(action)) setConfig((old) => ({ ...old, startAt: "", endAt: initialConfig().endAt })); setNotice(action === "publish" ? "Sale prices verified in Shopify. The public sale is now active." : action === "schedule" ? "Sale scheduled. Shopify prices will change after the selected start time." : action === "cancel-schedule" ? "Scheduled sale cancelled. Shopify prices were not changed." : "Original Shopify prices restored. The public sale is off."); }
+      else { setStatus(result.sale); setPreview(null); if (["end", "cancel-schedule"].includes(action)) setConfig((old) => ({ ...old, startAt: "", endAt: initialConfig().endAt })); setNotice(action === "publish" ? "Sale prices verified in Shopify. The public sale is now active." : action === "schedule" ? "Sale scheduled. Shopify prices will change after the selected start time." : action === "cancel-schedule" ? "Scheduled sale cancelled. Shopify prices were not changed." : action === "set-end" ? "End date saved. Shopify prices will be restored automatically after that time." : "Original Shopify prices restored. The public sale is off."); }
     } catch (err) { setError((err as Error).message); }
     finally { setBusy(false); }
   }
@@ -76,6 +76,7 @@ export function SaleAdmin({ adminKey }: { adminKey: string }) {
     {configured === false && <p className="sale-admin-error" role="alert">Shopify Admin access is not connected yet. Add SHOPIFY_CLIENT_ID and SHOPIFY_CLIENT_SECRET as private Netlify environment variables after installing a Shopify app with product read/write access. This sale cannot be turned on until then.</p>}
     <button type="button" className="text-link" onClick={() => void saleApi("admin-status", adminKey).then((result) => { setStatus(result.sale); setConfigured(result.shopifyAdminConfigured === true); }).catch((err) => setError(err.message))}>Refresh Shopify sale status ↗</button>
     {scheduled || scheduleError ? <div className="sale-admin-actions"><p>{scheduleError ? "Shopify prices changed or the scheduled start could not be completed. Cancel and preview again." : "The sale will begin automatically after the selected start time. You can cancel before it starts."}</p><button className="button" type="button" disabled={busy} onClick={() => void run("cancel-schedule")}>{busy ? "Working…" : "Cancel scheduled sale"}</button></div> : active || attention ? <div className="sale-admin-actions">
+      {active && <div className="sale-admin-end-date"><label>End this active sale on<input type="datetime-local" required value={config.endAt} onChange={(event) => setConfig((old) => ({ ...old, endAt: event.target.value }))}/></label><button className="button button-dark" type="button" disabled={busy || !config.endAt} onClick={() => void run("set-end")}>Save end date</button><p className="small">{status?.admin?.config?.endAt ? "You can change this deadline without changing current Shopify prices." : "This sale began before scheduling was added. Set its deadline so it ends automatically."}</p></div>}
       <p>{attention ? "Recovery will restore variants that still match the sale prices. A manual Shopify edit will be flagged instead of overwritten." : "Ending restores the saved regular prices and removes the sale display."}</p>
       <button className="button" type="button" disabled={busy} onClick={() => void run("end")}>{busy ? "Working with Shopify…" : attention ? "Recover original prices" : "End sale & restore prices"}</button>
     </div> : <>

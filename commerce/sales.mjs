@@ -233,6 +233,18 @@ export function createSaleService({ store, shopify, production = false, clock = 
     if (!claim.modified) throw new SaleError("Sale status changed. Refresh and try again.", 409);
     return status();
   }
+  async function setEnd(endAt) {
+    if (!production) throw new SaleError("Sale dates can be changed only on the production site.", 503);
+    const found = await current();
+    if (found?.data?.status !== "active") throw new SaleError("There is no active sale to update.", 409);
+    const value = String(endAt || "");
+    if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(value) || Number.isNaN(Date.parse(value)) || Date.parse(value) <= clock().getTime())
+      throw new SaleError("Choose an end date and time in the future.");
+    const next = { ...found.data, config: { ...found.data.config, endAt: value }, updatedAt: clock().toISOString() };
+    const claim = await store.put(recordKey, next, { onlyIfMatch: found.etag });
+    if (!claim.modified) throw new SaleError("Sale settings changed. Refresh and try again.", 409);
+    return status();
+  }
   async function runSchedule() {
     if (!production || !shopify) return { status: "skipped" };
     const found = await current();
@@ -290,5 +302,5 @@ export function createSaleService({ store, shopify, production = false, clock = 
     }
     return { status: record.status };
   }
-  return { status, adminStatus, preview, publish, end, schedule, cancelSchedule, runSchedule };
+  return { status, adminStatus, preview, publish, end, schedule, cancelSchedule, setEnd, runSchedule };
 }

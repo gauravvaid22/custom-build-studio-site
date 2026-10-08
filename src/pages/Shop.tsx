@@ -104,7 +104,7 @@ export function ShopNav({ showFulfillment = true }: { showFulfillment?: boolean 
         <Link to="/shop/gifts-under-25">$25 &amp; under</Link>
       </div>
     </nav>
-    {sale && <Link className="shop-sale-ribbon" to="/shop/sale"><strong>{sale.percentage}% off · {sale.title}</strong><span>Shop before {new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric" }).format(new Date(sale.endAt))} ↗</span></Link>}
+    {sale && <Link className="shop-sale-ribbon" to="/shop/sale"><strong>{sale.percentage}% off · {sale.title}</strong><span>{sale.endAt ? `Shop before ${new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric" }).format(new Date(sale.endAt))} ↗` : "Shop sale products ↗"}</span></Link>}
     {showFulfillment && <FulfillmentSelector />}
     </>
   );
@@ -495,7 +495,7 @@ export function ShopSale() {
   const featured = sale.productIds.map((id) => catalogProduct(id)).filter((product): product is Product => Boolean(product));
   return <>
     <ShopNav showFulfillment={false}/>
-    <section className="shop-sale-hero"><div className="container"><p className="eyebrow">CUSTOM BUILD STUDIO / LIMITED PROMOTION</p><div className="shop-sale-hero-percent">{sale.percentage}% OFF</div><h1>{sale.title}</h1><p>Explore selected pieces at sale prices. Every item is a finished physical product made in Edmonton.</p><p className="shop-sale-deadline">Ends {new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(sale.endAt))}</p><a className="button" href="#sale-products">Shop the sale ↘</a></div></section>
+    <section className="shop-sale-hero"><div className="container"><p className="eyebrow">CUSTOM BUILD STUDIO / LIMITED PROMOTION</p><div className="shop-sale-hero-percent">{sale.percentage}% OFF</div><h1>{sale.title}</h1><p>Explore selected pieces at sale prices. Every item is a finished physical product made in Edmonton.</p>{sale.endAt && <p className="shop-sale-deadline">Ends {new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(sale.endAt))}</p>}<a className="button" href="#sale-products">Shop the sale ↘</a></div></section>
     <FulfillmentSelector/><ShopNotice/>
     <section className="section" id="sale-products"><div className="container"><div className="section-heading"><div><p className="eyebrow">ON SALE NOW</p><h2>{featured.length} {featured.length === 1 ? "product" : "products"} to explore.</h2></div><p>The price shown reflects your pickup or delivery choice. Sale prices carry through to secure Shopify checkout.</p></div><div className="shop-grid">{featured.map((product) => <ShopProductCard key={product.id} product={product}/>)}</div></div></section>
     <section className="container"><ShopBenefits/></section>

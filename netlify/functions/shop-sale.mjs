@@ -82,6 +82,7 @@ export default async function shopSale(request, context) {
     if (action === "publish") return json({ sale: await service.publish(body.config, body.fingerprint, body.discountsChecked) });
     if (action === "schedule") return json({ sale: await service.schedule(body.config, body.fingerprint, body.discountsChecked) });
     if (action === "cancel-schedule") return json({ sale: await service.cancelSchedule() });
+    if (action === "set-end") return json({ sale: await service.setEnd(body.endAt) });
     if (action === "end") return json({ sale: await service.end() });
     return json({ error: "Not found" }, 404);
   } catch (error) {

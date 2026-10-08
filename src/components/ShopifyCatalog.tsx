@@ -7,7 +7,7 @@ export type ActiveSale = {
   status: "active";
   title: string;
   percentage: number;
-  endAt: string;
+  endAt?: string;
   scope: string;
   productIds: string[];
   collectionId: string | null;
@@ -31,7 +31,7 @@ export function ShopifyCatalogProvider({ children }: { children: React.ReactNode
         .then((response) => response.ok ? response.json() : null).catch(() => null),
     ]);
     setCatalog(nextCatalog);
-    const candidate: ActiveSale | null = saleResult?.sale?.status === "active" && Date.parse(saleResult.sale.endAt) > Date.now() ? saleResult.sale : null;
+    const candidate: ActiveSale | null = saleResult?.sale?.status === "active" && (!saleResult.sale.endAt || Date.parse(saleResult.sale.endAt) > Date.now()) ? saleResult.sale : null;
     // Never advertise a sale until every scoped Shopify variant reflects its verified price.
     const verified = candidate && Object.entries(candidate.variants).every(([sku, variant]) =>
       nextCatalog.prices[sku] === variant.priceCents && nextCatalog.compareAtPrices[sku] === variant.compareAtCents,
@@ -46,7 +46,7 @@ export function ShopifyCatalogProvider({ children }: { children: React.ReactNode
     return () => { window.clearInterval(interval); document.removeEventListener("visibilitychange", onVisible); };
   }, [refresh]);
   useEffect(() => {
-    if (!sale) return;
+    if (!sale?.endAt) return;
     const remaining = Date.parse(sale.endAt) - Date.now();
     if (remaining <= 0) { setSale(null); return; }
     const timeout = window.setTimeout(() => setSale(null), Math.min(remaining, 2147483647));
