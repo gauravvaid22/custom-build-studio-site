@@ -7,6 +7,8 @@ import headphoneSearch from "../../commerce/headphone-search.json";
 import { PageIntro } from "../components/Shared";
 import { useCart, money } from "../components/Cart";
 import { NotFound } from "./Studio";
+import { shippingEstimate } from "./StorePolicy";
+import storePolicy from "../../commerce/store-policy.json";
 import "../shop.css";
 import { trackShop } from "../components/Analytics";
 import { createShopifyCheckout, fulfillmentSku, shopifyConfigured } from "../lib/shopify";
@@ -730,7 +732,7 @@ export function ShopProduct() {
     ? `mailto:custombuildstudio@gmail.com?subject=${encodeURIComponent(`Custom ear-to-ear size for ${product.name}`)}&body=${encodeURIComponent(`Hi Custom Build Studio,\n\nI would like a custom ear-to-ear size for the ${product.name}. My measurement is: ___ mm.\n\nPlease let me know the price and fit details before I order.\n`)}`
     : "";
   const productionMessage = content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship");
-  const deliveryEstimate = "Estimated delivery: about one week for most Canadian addresses; remote areas may take longer.";
+  const deliveryEstimate = shippingEstimate;
   const selectedImage = !showingVideo ? product.images[index] : undefined;
   const selectedDesign =
     selectedImage && "design" in selectedImage && typeof selectedImage.design === "string"
@@ -903,6 +905,8 @@ export function ShopProduct() {
                 </dd>
                 <dt>Ordering & payment</dt>
                 <dd>Secure payment is handled through Shopify. Contact us before checkout for special requests.</dd>
+                <dt>Returns</dt>
+                <dd>Unused standard products: request a return within {storePolicy.returnWindowDays} days of delivery. Personalized and custom-size orders are excluded from change-of-mind returns. <Link to="/shipping-returns">Read shipping & returns</Link>.</dd>
                 <dt>Material</dt>
                 <dd>{product.category === "Headphone stands" ? "Made from a polymer suited to the finished stand. Contact us before ordering if you need a particular material." : "Decorative pieces are generally made in PLA. We use PETG where extra toughness or moisture resistance is useful. Contact us before ordering if the exact material matters for your use."}</dd>
                 <dt>Care</dt>
@@ -1585,3 +1589,4 @@ export function ShopAdmin() {
     </>
   );
 }
+

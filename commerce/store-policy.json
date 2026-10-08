@@ -1,0 +1,9 @@
+{
+  "returnWindowDays": 30,
+  "shippingCountry": "Canada",
+  "handlingMinDays": 2,
+  "handlingMaxDays": 3,
+  "transitMinDays": 2,
+  "transitMaxDays": 8,
+  "restockingFee": 0
+}

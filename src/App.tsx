@@ -4,6 +4,7 @@ import { Header, Footer } from "./components/Shared";
 import Analytics from "./components/Analytics";
 import Seo from "./components/Seo";
 import Home from "./pages/Home";
+import StorePolicy from "./pages/StorePolicy";
 import { Services, ServiceDetail } from "./pages/Services";
 import { Work, ProjectDetail } from "./pages/Work";
 import Contact from "./pages/Contact";
@@ -90,6 +91,7 @@ export default function App() {
           <Route path="/reviews" element={<Reviews />} />
           <Route path="/contact" element={<Contact key={location.search} />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/shipping-returns" element={<StorePolicy />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/thank-you.html" element={<ThankYou />} />
           <Route path="*" element={<NotFound />} />

@@ -217,6 +217,7 @@ export function Footer() {
         <span>© {new Date().getFullYear()} Custom Build Studio</span>
         <span>Edmonton, AB · Serving projects near and far</span>
         <Link to="/privacy">Privacy</Link>
+        <Link to="/shipping-returns">Shipping & returns</Link>
       </div>
     </footer>
   );
