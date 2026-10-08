@@ -13,7 +13,7 @@ async function walk(dir) {
   return files;
 }
 const htmlFiles = (await walk(root)).filter(
-  (path) => extname(path) === ".html",
+  (path) => extname(path) === ".html" && !/[/\\]google[0-9a-f]+\.html$/.test(path),
 );
 const sitemap = await readFile(join(root, "sitemap.xml"), "utf8");
 const indexedRoutes = (sitemap.match(/<url>/g) || []).length;

@@ -3,6 +3,7 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import products from "../../commerce/products.json";
 import settings from "../../commerce/settings.json";
 import collections from "../../commerce/collections.json";
+import headphoneSearch from "../../commerce/headphone-search.json";
 import { PageIntro } from "../components/Shared";
 import { useCart, money } from "../components/Cart";
 import { NotFound } from "./Studio";
@@ -641,7 +642,7 @@ export function ShopCollection({ id }: { id: string }) {
         <div className="container shop-hero-grid">
           <div>
             <p className="eyebrow">{collection.eyebrow}</p>
-            <h1>{collection.heading}</h1>
+              <h1>{id === "headphone-stands" ? "Headphone stands. A better desk." : collection.heading}</h1>
             <p className="lead">{collection.description}</p>
             <a className="button" href="#products">View {listed.length} {listed.length === 1 ? "product" : "products"} ↘</a>
           </div>
@@ -676,6 +677,10 @@ export function ShopCollection({ id }: { id: string }) {
         </div>
       </section>
       <section className="container"><ShopBenefits/></section>
+      {id === "headphone-stands" && <section className="section"><div className="container faq-layout">
+        <div><p className="eyebrow">FIND YOUR DESK COMPANION</p><h2>Choosing your headphone stand.</h2><Link className="text-link" to="/contact">Ask us about fit or colour ↗</Link></div>
+        <div className="faq-list">{headphoneSearch.faqs.map(([question, answer]) => <details key={question}><summary>{question}<span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div>
+      </div></section>}
       <section className="section shop-collection-copy">
         <div className="container detail-columns">
           <div><p className="eyebrow">LOCALLY MADE</p><h2>{collection.name} in Edmonton</h2></div>

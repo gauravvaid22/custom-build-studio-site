@@ -11,6 +11,12 @@ export function FulfillmentProvider({ children }: { children: React.ReactNode })
   const [locked, lock] = useState(false);
   useEffect(() => {
     try {
+      const requested = new URLSearchParams(window.location.search).get("fulfillment");
+      if (requested === "delivered" || requested === "pickup") {
+        setMode(requested); setChosen(true);
+        localStorage.setItem("cbs-fulfillment-v1", requested);
+        return;
+      }
       const saved = localStorage.getItem("cbs-fulfillment-v1");
       if (saved === "pickup" || saved === "delivered") { setMode(saved); setChosen(true); }
     } catch { /* Browsing still works without device storage. */ }
