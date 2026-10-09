@@ -34,4 +34,8 @@ Photo upload reuses the existing Netlify Blobs chunk-upload function. Its privat
 
 ## Verification
 
-Production TypeScript/client/server build and 92-page verification pass. Existing commerce tests plus the two new frame mapping/feed tests pass (26 tests). Desktop/mobile image loading, no horizontal overflow, pickup display and WebM playback checked. Complete live upload/Shopify sales-channel/checkout verification after deployment and product creation; never transfer money or place a real customer order to test.
+Production TypeScript/client/server build and 92-page verification pass. Existing commerce tests plus the two new frame mapping/feed tests pass (26 tests). Desktop/mobile image loading, no horizontal overflow, pickup display and WebM playback checked. The corrected square photo guide is live and uses the shared photo-size variables.
+
+All 13 Shopify products were created and published to the existing My Store Headless channel. All 13 Edmonton Pickup variants were added to the existing Edmonton pickup only shipping profile (29 to 42 products); delivered variants remain in General. Admin price saving was tested with the unchanged Daisy CAD 29.99 price and confirmed all 26 delivered/pickup prices.
+
+Live photo upload succeeded using a licensed marketing image as non-personal test media. Shopify checkout received quantity 2, CAD 59.98 line total, the private photo reference, original filename, the 2.5 × 2.5 inch included-photo detail and TEST — do not manufacture instructions. A second pickup upload survived cart reload and showed CAD 19.99. No payment or order was submitted. The test cart item was removed and the owner's two pre-existing cart items retained. All 13 products were verified in the live public Google product feed. Indexing and Merchant Center approval remain controlled by Google.
