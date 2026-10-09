@@ -21,6 +21,8 @@ import { SaleAdmin } from "../components/SaleAdmin";
 import { HeadphonePricingAdmin } from "../components/HeadphonePricingAdmin";
 import { PhotoPrintOrder } from "../components/PhotoPrintOrder";
 import frameSource from "../../commerce/photo-frames-source.json";
+import consoleSource from "../../commerce/console-stands-source.json";
+const consolePriceItems = consoleSource.products.flatMap(product => product.options.map(option => ({ ...option, name: `${product.name} — ${option.label}` })));
 
 type Product = (typeof products)[number];
 type ProductVariant = {
@@ -300,7 +302,7 @@ function ShopProductCard({ product }: { product: Product }) {
           <Link className="button" to={`/shop/${product.id}`}>
             {"variantLabel" in product && product.variantLabel === "Design"
               ? "Choose design ↗"
-              : "Choose size ↗"}
+              : "variantLabel" in product && product.variantLabel === "Console model" ? "Choose console model ↗" : "Choose size ↗"}
           </Link>
         ) : <AddProduct product={product} />}
       </div>
@@ -650,6 +652,7 @@ export function ShopCollection({ id }: { id: string }) {
             <p className="eyebrow">{collection.eyebrow}</p>
               <h1>{id === "headphone-stands" ? "Headphone stands. A better desk." : collection.heading}</h1>
             <p className="lead">{collection.description}</p>
+            {id === "gaming-desk" && <p><Link className="text-link" to="/shop/console-stands">Explore PS5 console stands →</Link></p>}
             {id === "personalized-gifts" && <p><Link className="text-link" to="/shop/photo-frames">Explore 13 photo holders · photo print included →</Link></p>}
             <a className="button" href="#products">View {listed.length} {listed.length === 1 ? "product" : "products"} ↘</a>
           </div>
@@ -758,7 +761,7 @@ export function ShopProduct() {
       <ShopNotice />
       <section className="section">
         <div className="container">
-          <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {"personalization" in product && <><Link to="/shop/personalized-gifts">Personalized Gifts</Link> / <Link to="/shop/photo-frames">Photo Holders</Link> / </>}{product.category === "Headphone stands" && <><Link to="/shop/headphone-stands">Headphone Stands</Link> / </>}{nameFor(product.id, product.name)}</nav>
+          <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {"personalization" in product && <><Link to="/shop/personalized-gifts">Personalized Gifts</Link> / <Link to="/shop/photo-frames">Photo Holders</Link> / </>}{product.category === "PS5 console stands" && <><Link to="/shop/console-stands">PS5 Console Stands</Link> / </>}{product.category === "Headphone stands" && <><Link to="/shop/headphone-stands">Headphone Stands</Link> / </>}{nameFor(product.id, product.name)}</nav>
           <div className="shop-detail">
             <div>
               <div className="shop-main-image">
@@ -874,6 +877,11 @@ export function ShopProduct() {
                   <a href={maskSizeEmail}>Need a custom ear-to-ear size? Email us for a quote →</a>
                 </div>
               )}
+              {product.category === "PS5 console stands" && <div className="shop-mask-fit-guide" aria-label="PS5 compatibility guide">
+                <strong>Match your console before ordering</strong>
+                <p>Choose Original PS5 or PS5 Slim using the model selector. These are different fitted versions. PS5 Pro compatibility is not offered. The console in the photos is shown for scale and is not included.</p>
+                <a href={`mailto:custombuildstudio@gmail.com?subject=${encodeURIComponent(`Fit question: ${product.name}`)}`}>Not sure which PS5 you have? Send us a photo →</a>
+              </div>}
               {"personalization" in product ? <PhotoPrintOrder key={product.id} productId={product.id} /> : <AddProduct
                 product={product}
                 variantId={selectedVariant.id}
@@ -914,12 +922,12 @@ export function ShopProduct() {
                 <dt>Returns</dt>
                 <dd>Unused standard products: request a return within {storePolicy.returnWindowDays} days of delivery. Personalized and custom-size orders are excluded from change-of-mind returns. <Link to="/shipping-returns">Read shipping & returns</Link>.</dd>
                 <dt>Material</dt>
-                <dd>{product.category === "Headphone stands" ? "Made from a polymer suited to the finished stand. Contact us before ordering if you need a particular material." : "Decorative pieces are generally made in PLA. We use PETG where extra toughness or moisture resistance is useful. Contact us before ordering if the exact material matters for your use."}</dd>
+                <dd>{product.category === "PS5 console stands" ? "PETG for the functional support. Contact us before ordering if you need a particular finish." : product.category === "Headphone stands" ? "Made from a polymer suited to the finished stand. Contact us before ordering if you need a particular material." : "Decorative pieces are generally made in PLA. We use PETG where extra toughness or moisture resistance is useful. Contact us before ordering if the exact material matters for your use."}</dd>
                 <dt>Care</dt>
-                <dd>{product.category === "Headphone stands" ? "Keep away from high heat and wipe clean with a soft, damp cloth. If your headset has an unusual size or shape, ask us about fit before ordering." : "Handle small moving or separate parts gently. Contact us for material-specific cleaning and care advice."}</dd>
+                <dd>{product.category === "PS5 console stands" ? "Install on a level surface with the correct mounting hardware. Keep ventilation clear, away from heat, and clean with a soft damp cloth. Not compatible with PS5 Pro." : product.category === "Headphone stands" ? "Keep away from high heat and wipe clean with a soft, damp cloth. If your headset has an unusual size or shape, ask us about fit before ordering." : "Handle small moving or separate parts gently. Contact us for material-specific cleaning and care advice."}</dd>
               </dl>
               <p className="small">
-                {product.category === "Headphone stands" ? "Made by Custom Build Studio in Edmonton. Reference photos show the design; your finished colour may vary slightly." : "Printed by Custom Build Studio in Edmonton. Handle small moving or separate parts with care."}
+                {["Headphone stands", "PS5 console stands"].includes(product.category) ? "Made by Custom Build Studio in Edmonton. Reference photos show the design; your finished colour may vary slightly." : "Printed by Custom Build Studio in Edmonton. Handle small moving or separate parts with care."}
               </p>
             </div>
           </div>
@@ -1569,6 +1577,7 @@ export function ShopAdmin() {
                   <div className="section-heading"><div><p className="eyebrow">SHOPIFY IS THE CATALOG SOURCE</p><h2>Product names &amp; prices</h2></div><p>Change a product title or price in Shopify. The website refreshes both automatically, so checkout and product pages stay aligned.</p></div>
                   <HeadphonePricingAdmin adminKey={key} />
                   <HeadphonePricingAdmin adminKey={key} items={frameSource.products} heading="PERSONALIZED PHOTO HOLDERS" />
+                  <HeadphonePricingAdmin adminKey={key} items={consolePriceItems} heading="PS5 CONSOLE STANDS" />
                   <a className="button" href="https://admin.shopify.com/store/aqk73w-k2/products" target="_blank" rel="noreferrer">Open Shopify products ↗</a>
                   <div className="shop-admin-product-grid">
                     {products.filter((product) => !isVariant(product)).map((product) => (

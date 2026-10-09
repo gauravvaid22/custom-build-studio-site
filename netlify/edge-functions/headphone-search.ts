@@ -23,6 +23,13 @@ export default async (request: Request, context: { next: () => Promise<Response>
   } catch { return response; }
 };
 export const config = { path: [
+  "/shop/neon-cityscape-console-stand/*",
+  "/shop/organic-grid-console-stand/*",
+  "/shop/runestone-console-stand/*",
+  "/shop/cyber-core-console-stand/*",
+  "/shop/crescent-moon-console-stand/*",
+  "/shop/mecha-moon-console-stand/*",
+
   "/shop/daisy-duo-photo-frame/*",
   "/shop/sunflower-duo-photo-frame/*",
   "/shop/up-in-the-clouds-photo-frame/*",

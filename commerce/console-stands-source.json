@@ -1,0 +1,278 @@
+{
+  "drop": "https://platform.stlflix.com/drops/community-drop-26",
+  "reviewedAt": "2026-10-08",
+  "collection": "console-stands",
+  "launchReady": false,
+  "releaseBlockers": [
+    "Owner confirmation of mounting screw supplied and original PS5 / PS5 Slim fit and stability testing.",
+    "Cyber Core source text says horizontal but marketing images show upright. Verify intended installation before release."
+  ],
+  "pricingAssumptions": {
+    "currency": "CAD",
+    "shippingAllowanceCents": 1000,
+    "material": "PETG for functional support; owner previously confirmed functional materials. Finish/colour must be production-reviewed.",
+    "machineHourlyAllowanceCad": 1,
+    "labourHourlyAllowanceCad": 25,
+    "assemblyMinutesAllowance": 20,
+    "materialHardwarePackagingAllowanceCad": [
+      10,
+      18
+    ],
+    "notes": "Provisional launch estimates, not measured costs. Source print times are Bambu P1S estimates. Multipart assembly chosen for colour designs; multicolour purging may cost more. Review slicer grams, screw specification, fitting, finish and actual postage before launch."
+  },
+  "benchmarks": [
+    {
+      "url": "https://www.canadacomputers.com/en/ps5-gaming-controllers/247957/sony-playstation-5-slim-vertical-stand-711719578918.html",
+      "priceCad": 39.99,
+      "note": "Official Sony stand, different design; retailer listed sold out at review."
+    }
+  ],
+  "products": [
+    {
+      "id": "neon-cityscape-console-stand",
+      "name": "Neon Cityscape PS5 Console Stand",
+      "priceCents": 6499,
+      "heightMm": 120,
+      "printMinutes": {
+        "original": 634,
+        "slim": 552
+      },
+      "description": "A colourful sunset skyline gives your PlayStation 5 setup a retro arcade feel. A sculptural console support with palm trees and bold city lettering.",
+      "source": "https://platform.stlflix.com/product/neon-cityscape-console-stand",
+      "tags": [
+        "PS5 console stand",
+        "gaming accessory",
+        "Edmonton made"
+      ],
+      "options": [
+        {
+          "id": "neon-cityscape-console-stand-original",
+          "label": "Original PS5",
+          "priceCents": 6499
+        },
+        {
+          "id": "neon-cityscape-console-stand-slim",
+          "label": "PS5 Slim",
+          "priceCents": 6499
+        }
+      ],
+      "photos": [
+        "Neon_Cityscape_Console_Stand_3_20d34ff2f6.png",
+        "Neon_Cityscape_Console_Stand_1_dc8064c14f.png",
+        "Neon_Cityscape_Console_Stand_2_0e3a64720a.png",
+        "Neon_Cityscape_Console_Stand_4_d9fd918e98.png",
+        "Neon_Cityscape_Console_Stand_5_5da716a97b.png",
+        "Neon_Cityscape_Console_Stand_6_81ebc82ad1.png",
+        "Neon_Cityscape_Console_Stand_7_061813443e.png",
+        "Neon_Cityscape_Console_Stand_8_35d40f72ca.png"
+      ],
+      "videoSource": "Neon_Cityscape_WEBM_717786ef98.webm"
+    },
+    {
+      "id": "organic-grid-console-stand",
+      "name": "Organic Grid PS5 Console Stand",
+      "priceCents": 5499,
+      "heightMm": 140,
+      "printMinutes": {
+        "original": 466,
+        "slim": 406
+      },
+      "description": "An open, sculptural lattice gives your PlayStation 5 a distinctive home. Its flowing organic shape adds texture to a gaming desk or media shelf.",
+      "source": "https://platform.stlflix.com/product/organic-grid-console-stand",
+      "tags": [
+        "PS5 console stand",
+        "gaming accessory",
+        "Edmonton made"
+      ],
+      "options": [
+        {
+          "id": "organic-grid-console-stand-original",
+          "label": "Original PS5",
+          "priceCents": 5499
+        },
+        {
+          "id": "organic-grid-console-stand-slim",
+          "label": "PS5 Slim",
+          "priceCents": 5499
+        }
+      ],
+      "photos": [
+        "Organic_Grid_Console_Stand_4_227d3ab4ae.png",
+        "Organic_Grid_Console_Stand_1_fe847b60e0.png",
+        "Organic_Grid_Console_Stand_2_f7d3db5905.png",
+        "Organic_Grid_Console_Stand_3_af15991ab7.png",
+        "Organic_Grid_Console_Stand_5_552da1e0f2.png",
+        "Organic_Grid_Console_Stand_6_cdeac9ab0b.png",
+        "Organic_Grid_Console_Stand_7_40886b4008.png"
+      ],
+      "videoSource": "Organic_Grid_WEBM_9c4503217c.webm"
+    },
+    {
+      "id": "runestone-console-stand",
+      "name": "Runestone PS5 Console Stand",
+      "priceCents": 5999,
+      "heightMm": 150,
+      "printMinutes": {
+        "original": 520,
+        "slim": 451
+      },
+      "description": "A rugged stone-inspired base with turquoise runic details for a fantasy-themed PlayStation 5 setup. Bring a little RPG atmosphere to your gaming shelf.",
+      "source": "https://platform.stlflix.com/product/runestone-console-stand",
+      "tags": [
+        "PS5 console stand",
+        "gaming accessory",
+        "Edmonton made"
+      ],
+      "options": [
+        {
+          "id": "runestone-console-stand-original",
+          "label": "Original PS5",
+          "priceCents": 5999
+        },
+        {
+          "id": "runestone-console-stand-slim",
+          "label": "PS5 Slim",
+          "priceCents": 5999
+        }
+      ],
+      "photos": [
+        "Runestone_Console_Stand_3_f5e759eca5.png",
+        "Runestone_Console_Stand_1_28999ed310.png",
+        "Runestone_Console_Stand_2_3c2edd7ffb.png",
+        "Runestone_Console_Stand_4_5699458fe5.png",
+        "Runestone_Console_Stand_5_ae2afd7ae4.png",
+        "Runestone_Console_Stand_6_2eebeaa018.png"
+      ],
+      "videoSource": "Runestone_WEBM_d220f0a304.webm"
+    },
+    {
+      "id": "cyber-core-console-stand",
+      "name": "Cyber Core PS5 Console Stand",
+      "priceCents": 4999,
+      "heightMm": 80,
+      "printMinutes": {
+        "original": 360,
+        "slim": 299
+      },
+      "description": "A sci-fi console support with mechanical detailing and a bold circular accent. A compact statement piece for a futuristic PlayStation 5 setup.",
+      "source": "https://platform.stlflix.com/product/cyber-core-console-stand",
+      "tags": [
+        "PS5 console stand",
+        "gaming accessory",
+        "Edmonton made"
+      ],
+      "options": [
+        {
+          "id": "cyber-core-console-stand-original",
+          "label": "Original PS5",
+          "priceCents": 4999
+        },
+        {
+          "id": "cyber-core-console-stand-slim",
+          "label": "PS5 Slim",
+          "priceCents": 4999
+        }
+      ],
+      "photos": [
+        "Cyber_Core_Console_Stand4_47b78a0a82.png",
+        "Cyber_Core_Console_Stand1_8d6393e538.png",
+        "Cyber_Core_Console_Stand2_465c7d87dc.png",
+        "Cyber_Core_Console_Stand3_54b24614b8.png",
+        "Cyber_Core_Console_Stand5_92c5d47766.png",
+        "Cyber_Core_Console_Stand6_d5e1626d6e.png",
+        "Cyber_Core_Console_Stand7_8c1345ec01.png"
+      ],
+      "videoSource": "Cyber_Core_WEBM_85baa38805.webm"
+    },
+    {
+      "id": "crescent-moon-console-stand",
+      "name": "Crescent Moon PS5 Console Stand",
+      "priceCents": 4999,
+      "heightMm": 190,
+      "printMinutes": {
+        "original": 361,
+        "slim": 297
+      },
+      "description": "A clean crescent moon shape frames your PlayStation 5 with a simple, sculptural silhouette. A subtle statement for a desk or living-room setup.",
+      "source": "https://platform.stlflix.com/product/crescent-moon-console-stand",
+      "tags": [
+        "PS5 console stand",
+        "gaming accessory",
+        "Edmonton made"
+      ],
+      "options": [
+        {
+          "id": "crescent-moon-console-stand-original",
+          "label": "Original PS5",
+          "priceCents": 4999
+        },
+        {
+          "id": "crescent-moon-console-stand-slim",
+          "label": "PS5 Slim",
+          "priceCents": 4999
+        }
+      ],
+      "photos": [
+        "Crescent_Moon_Console_Stand4_dec7218911.png",
+        "Crescent_Moon_Console_Stand1_78af04cf6d.png",
+        "Crescent_Moon_Console_Stand2_f02a3abc26.png",
+        "Crescent_Moon_Console_Stand3_5864503ffe.png",
+        "Crescent_Moon_Console_Stand5_b03570c9ef.png",
+        "Crescent_Moon_Console_Stand7_0a84fc3459.png"
+      ],
+      "videoSource": "Crescent_Moon_WEBM_3ae9c4bf59.webm"
+    },
+    {
+      "id": "mecha-moon-console-stand",
+      "name": "Mecha Moon PS5 Console Stand",
+      "priceCents": 5499,
+      "heightMm": 190,
+      "printMinutes": {
+        "original": 464,
+        "slim": 417
+      },
+      "description": "A crescent moon filled with mechanical detail gives your PlayStation 5 setup a sci-fi look. Intricate panel textures make it a distinctive gaming gift.",
+      "source": "https://platform.stlflix.com/product/mecha-moon-console-stand",
+      "tags": [
+        "PS5 console stand",
+        "gaming accessory",
+        "Edmonton made"
+      ],
+      "options": [
+        {
+          "id": "mecha-moon-console-stand-original",
+          "label": "Original PS5",
+          "priceCents": 5499
+        },
+        {
+          "id": "mecha-moon-console-stand-slim",
+          "label": "PS5 Slim",
+          "priceCents": 5499
+        }
+      ],
+      "photos": [
+        "Mecha_Moon_Console_Stand4_6e526fe9e6.png",
+        "Mecha_Moon_Console_Stand1_fcbb0a2010.png",
+        "Mecha_Moon_Console_Stand2_143e8bbf6f.png",
+        "Mecha_Moon_Console_Stand3_f57359e05e.png",
+        "Mecha_Moon_Console_Stand5_2404edbde6.png",
+        "Mecha_Moon_Console_Stand6_3e84488482.png",
+        "Mecha_Moon_Console_Stand7_59a6310e84.png"
+      ],
+      "videoSource": "Mecha_Moon_WEBM_5e2b611a09.webm"
+    }
+  ],
+  "licenseEvidence": {
+    "ownerConfirmed": "Lifetime commercial printing subscription in project history; authenticated downloads available on 2026-10-08.",
+    "officialMediaRights": "https://help.stlflix.com/pt-BR/articles/14844512-diferenca-entre-plano-pessoal-e-comercial",
+    "notes": "Commercial plan explicitly provides marketing photos and videos for physical-product sales. No redistribution of production files."
+  },
+  "productionArchives": [
+    "Crescent_Moon_Console_Stand_563628beb9.zip",
+    "Cyber_Core_Console_Stand_6b81782e3e.zip",
+    "Mecha_Moon_Console_Stand_73f842297d.zip",
+    "Neon_Cityscape_Console_Stand_c03690306c.zip",
+    "Organic_Grid_Console_Stand_51bf0c4c73.zip",
+    "Runestone_Console_Stand_d2d30ed61e.zip"
+  ]
+}

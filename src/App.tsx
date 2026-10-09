@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import shopCollections from "../commerce/collections.json";
 import { Routes, Route, useLocation, useParams } from "react-router-dom";
 import { Header, Footer } from "./components/Shared";
 import Analytics from "./components/Analytics";
@@ -71,17 +72,10 @@ export default function App() {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/products" element={<Products />} />
           <Route path="/shop" element={<Shop />} />
+          {shopCollections.map(collection => <Route key={collection.id} path={`/shop/${collection.id}`} element={<ShopCollection id={collection.id} />} />)}
           <Route path="/shop/all" element={<ShopCollection id="all" />} />
           <Route path="/shop/sale" element={<ShopSale />} />
           <Route path="/shop/halloween-special" element={<HalloweenSpecial />} />
-          <Route path="/shop/collectibles" element={<ShopCollection id="collectibles" />} />
-          <Route path="/shop/personalized-gifts" element={<ShopCollection id="personalized-gifts" />} />
-          <Route path="/shop/gaming-desk" element={<ShopCollection id="gaming-desk" />} />
-          <Route path="/shop/headphone-stands" element={<ShopCollection id="headphone-stands" />} />
-          <Route path="/shop/home-decor" element={<ShopCollection id="home-decor" />} />
-          <Route path="/shop/masks-costumes" element={<ShopCollection id="masks-costumes" />} />
-          <Route path="/shop/halloween" element={<ShopCollection id="halloween" />} />
-          <Route path="/shop/gifts-under-25" element={<ShopCollection id="gifts-under-25" />} />
           <Route path="/shop/cart" element={<ShopCart />} />
           <Route path="/shop/checkout" element={<Checkout />} />
           <Route path="/shop/order" element={<OrderConfirmation />} />

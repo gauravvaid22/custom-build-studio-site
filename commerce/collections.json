@@ -64,7 +64,13 @@
       "ring-dock-headphone-holder",
       "block-hub-headphone-and-phone-holder",
       "tower-trio-headphone-and-phone-holder",
-      "arch-stand-headphone-holder"
+      "arch-stand-headphone-holder",
+      "neon-cityscape-console-stand",
+      "organic-grid-console-stand",
+      "runestone-console-stand",
+      "cyber-core-console-stand",
+      "crescent-moon-console-stand",
+      "mecha-moon-console-stand"
     ]
   },
   {
@@ -195,6 +201,25 @@
       "dino-peek-photo-frame",
       "t-rex-peek-photo-frame",
       "analog-days-photo-frame"
+    ]
+  },
+  {
+    "id": "console-stands",
+    "kind": "collection",
+    "name": "PS5 Console Stands",
+    "shortName": "Console stands",
+    "eyebrow": "YOUR CONSOLE / YOUR STYLE",
+    "heading": "Give your PS5 a stand with character.",
+    "description": "Explore six sculptural PS5 console stands, from crescent moons to retro cityscapes. Choose your design and console model. Made in Edmonton, with free tracked Canadian shipping or local pickup.",
+    "seoDescription": "Shop decorative PS5 console stands for original PlayStation 5 and PS5 Slim. Moon, sci-fi, runestone and retro gaming designs made in Edmonton. Free Canadian shipping.",
+    "coverProduct": "neon-cityscape-console-stand",
+    "products": [
+      "neon-cityscape-console-stand",
+      "organic-grid-console-stand",
+      "runestone-console-stand",
+      "cyber-core-console-stand",
+      "crescent-moon-console-stand",
+      "mecha-moon-console-stand"
     ]
   }
 ]
