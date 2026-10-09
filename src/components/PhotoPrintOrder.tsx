@@ -52,7 +52,17 @@ export function PhotoPrintOrder({ productId }: { productId: string }) {
   return <form className="photo-print-order" onSubmit={submit}>
     <div className="photo-print-steps" aria-label="How to personalize"><span>① Choose your holder</span><span>② Upload your photo</span><span>③ We print & fit it</span></div>
     <strong>One photo print included</strong>
-    <span>{frames.photoPrint.widthInches} × {frames.photoPrint.heightInches} inches · {frames.photoPrint.widthMm} × {frames.photoPrint.heightMm} mm</span>
+    <figure className="photo-print-size-guide">
+      <svg viewBox="0 0 240 190" role="img" aria-label={`Square photo: ${frames.photoPrint.widthInches} by ${frames.photoPrint.heightInches} inches. Diagram not to scale.`}>
+        <rect x="60" y="48" width="120" height="120" rx="4" fill="currentColor" fillOpacity=".06" stroke="currentColor" strokeWidth="2" />
+        <path d="M60 34H180 M60 29V39 M180 29V39 M44 48V168 M39 48H49 M39 168H49" fill="none" stroke="currentColor" strokeWidth="1.5" />
+        <text x="120" y="22" textAnchor="middle">{frames.photoPrint.widthInches} inches</text>
+        <text x="27" y="108" textAnchor="middle" transform="rotate(-90 27 108)">{frames.photoPrint.heightInches} inches</text>
+        <text x="120" y="106" textAnchor="middle">Your photo</text>
+        <text x="120" y="126" textAnchor="middle" fontSize="12">Square print</text>
+      </svg>
+      <figcaption><strong>{frames.photoPrint.widthInches} × {frames.photoPrint.heightInches} inch photo</strong><span>{frames.photoPrint.widthMm} × {frames.photoPrint.heightMm} mm · printed & fitted</span><small>Photo size, not holder size. Diagram not to scale.</small></figcaption>
+    </figure>
     <p className="small">Upload the original photo. We crop and trim it to suit this small desk holder. Example photos shown in the gallery are replaced with yours.</p>
     <label className="photo-print-file">Your photo
       <input type="file" required disabled={busy} accept=".jpg,.jpeg,.png,.webp,.heic,.heif,image/jpeg,image/png,image/webp,image/heic,image/heif" onChange={event => choose(event.target.files?.[0])} />
