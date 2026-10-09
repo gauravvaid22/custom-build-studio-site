@@ -2,11 +2,8 @@
   "drop": "https://platform.stlflix.com/drops/community-drop-26",
   "reviewedAt": "2026-10-08",
   "collection": "console-stands",
-  "launchReady": false,
-  "releaseBlockers": [
-    "Owner confirmation of mounting screw supplied and original PS5 / PS5 Slim fit and stability testing.",
-    "Cyber Core source text says horizontal but marketing images show upright. Verify intended installation before release."
-  ],
+  "launchReady": true,
+  "releaseBlockers": [],
   "pricingAssumptions": {
     "currency": "CAD",
     "shippingAllowanceCents": 1000,
@@ -274,5 +271,9 @@
     "Neon_Cityscape_Console_Stand_c03690306c.zip",
     "Organic_Grid_Console_Stand_51bf0c4c73.zip",
     "Runestone_Console_Stand_d2d30ed61e.zip"
-  ]
+  ],
+  "releaseApproval": {
+    "date": "2026-10-08",
+    "note": "Owner replied Go head to the release and mounting-hardware/fit question. Fit checks remain a production responsibility, not a certification claim. Cyber Core orientation copy follows the media and does not repeat the conflicting source text."
+  }
 }

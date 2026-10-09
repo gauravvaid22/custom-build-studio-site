@@ -47,7 +47,7 @@ for item in source['products']:
         raise ValueError(f'Expected one video for {slug}')
     shutil.copyfile(videos[0], destination / f'{slug}.webm')
     item.update({'photos': [photo.name for _, photo in photos], 'videoSource': videos[0].name})
-    included = 'One assembled decorative PS5 console stand for the selected console model. Console, controller, games and other display props are not included. No lighting or charging electronics.'
+    included = 'One assembled decorative PS5 console stand for the selected console model, with its matching mounting screw. Console, controller, games and other display props are not included. No lighting or charging electronics.'
     notes = 'Choose Original PS5 or PS5 Slim to match your console; PS5 Pro compatibility is not offered. Similar colours to the reference photos; exact shades may vary. Keep console ventilation clear. Independent accessory; not made or endorsed by Sony.'
     dimensions = f"Approximately {item['heightMm']} mm high (stand only). Width and depth are pending production measurement; console not included in these dimensions."
     variants = [{'id': v['id'], 'label': v['label'], 'priceCents': v['priceCents'], 'dimensions': v['label'] + ' version. ' + dimensions} for v in item['options']]
