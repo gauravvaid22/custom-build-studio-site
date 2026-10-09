@@ -26,14 +26,15 @@ export async function uploadPhoto(file: File, onProgress: (progress: number) => 
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ purpose: "customer-photo", name: file.name, type: file.type, size: file.size }),
+    signal: AbortSignal.timeout(20000),
   });
-  const session = await start.json();
+  const session = await start.json().catch(() => ({ error: "Photo uploads are temporarily unavailable. Please try again." }));
   if (!start.ok) throw new Error(session.error || "Unable to start the photo upload.");
   for (let index = 0; index < session.parts; index++) {
     const chunk = file.slice(index * session.chunkBytes, Math.min(file.size, (index + 1) * session.chunkBytes));
     const response = await fetch(
       `/.netlify/functions/shop-media?action=chunk&id=${encodeURIComponent(session.id)}&index=${index}`,
-      { method: "POST", headers: { "Content-Type": "application/octet-stream", "X-Upload-Token": session.token }, body: chunk },
+      { method: "POST", headers: { "Content-Type": "application/octet-stream", "X-Upload-Token": session.token }, body: chunk, signal: AbortSignal.timeout(20000) },
     );
     if (!response.ok) {
       const payload = await response.json().catch(() => ({}));
@@ -43,9 +44,9 @@ export async function uploadPhoto(file: File, onProgress: (progress: number) => 
   }
   const complete = await fetch(
     `/.netlify/functions/shop-media?action=complete&id=${encodeURIComponent(session.id)}`,
-    { method: "POST", headers: { "Content-Type": "application/json", "X-Upload-Token": session.token }, body: "{}" },
+    { method: "POST", headers: { "Content-Type": "application/json", "X-Upload-Token": session.token }, body: "{}", signal: AbortSignal.timeout(20000) },
   );
-  const result = (await complete.json()) as UploadResult & { error?: string };
+  const result = (await complete.json().catch(() => ({ error: "Unable to finish the photo upload. Please try again." }))) as UploadResult & { error?: string };
   if (!complete.ok) throw new Error(result.error || "Unable to finish the photo upload.");
   onProgress(100);
   return result;
