@@ -1,0 +1,69 @@
+/* Shared reading scale. Keep product identity and commerce values in their data sources. */
+@font-face {
+  font-family: "Source Sans 3";
+  src: url("/fonts/source-sans-3/source-sans-3-upright.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+}
+:root {
+  --font-family-ui: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+  --text-body: 1.0625rem;
+  --text-help: .9375rem;
+  --text-label: 1rem;
+  --text-card-title: 1.25rem;
+  --text-collection-title: 1.75rem;
+  --text-page-title: clamp(2.125rem, 4.5vw, 3.25rem);
+  --weight-body: 400;
+  --weight-emphasis: 600;
+  --leading-body: 1.6;
+}
+p { font-size: var(--text-body); line-height: var(--leading-body); }
+h1, h2, h3 { font-weight: var(--weight-emphasis); }
+h3 { letter-spacing: 0; line-height: 1.25; }
+.hero h1, .shop-hero h1, .shop-collection-hero h1, .lithophane-summary h1,
+.halloween-special-hero h1, .shop-sale-hero h1, .page-intro h1 {
+  font-size: var(--text-page-title); line-height: 1.15; letter-spacing: -.015em;
+}
+.hero h1 { font-size: clamp(2.25rem, 5vw, 4rem); }
+.section-heading h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.2; }
+.lead { font-size: 1.1875rem; line-height: 1.6; }
+.eyebrow { font-size: .875rem; font-weight: 600; letter-spacing: .045em; }
+.small, .form-heading p, .form-hint, .field-help, .upload-box > p,
+.file-row label, .file-row input, .fulfillment-help, .shop-notice,
+.shop-add > label, .shop-card .shop-added-confirmation { font-size: var(--text-help); line-height: 1.5; }
+.button, .shop-search button, .shop-collection-shortcuts a { font-size: var(--text-label); font-weight: 600; letter-spacing: 0; }
+.quote-form label, .shop-discovery-filters label, .shop-collection-toolbar label { font-size: var(--text-label); line-height: 1.4; }
+input, select, textarea, .shop-add input { font-size: 1rem; }
+.shop-collection-overlay { gap: 10px; background: linear-gradient(0deg, rgba(8,13,15,.98), rgba(8,13,15,.92) 72%, rgba(8,13,15,.7)); padding: 20px 24px; }
+.shop-collection-overlay small { font-size: .875rem; font-weight: 400; letter-spacing: 0; line-height: 1.4; text-transform: none; color: #d3e5eb; }
+.shop-collection-overlay strong { font-size: var(--text-collection-title); font-weight: 600; letter-spacing: 0; line-height: 1.2; text-wrap: pretty; }
+.shop-collection-overlay > span { font-size: 1rem; font-weight: 600; line-height: 1.4; padding-top: 8px; border-top-color: rgba(255,255,255,.22); width: auto; }
+.shop-card h3 { font-size: var(--text-card-title); font-weight: 600; line-height: 1.3; letter-spacing: 0; }
+.shop-card-body .eyebrow { font-size: .8125rem; letter-spacing: 0; }
+.shop-card .shop-price, .shop-detail .shop-price, .lithophane-price { font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: 0; }
+.shop-card .shop-price span, .shop-compare-price, .shop-sale-inline, .shop-badge { font-size: .875rem; letter-spacing: 0; }
+.shop-card .shop-add > label, .shop-card .shop-added-confirmation { font-size: .875rem; }
+.shop-card .shop-add .button, .shop-card-body > .button { font-size: 1rem; min-height: 48px; }
+.shop-mobile-purchase strong { line-height: 1.3; font-weight: 600; }
+.shop-mobile-purchase small { font-size: .9375rem; }
+.shop-mobile-purchase .button { font-size: .9375rem; }
+.fulfillment-choices strong { font-weight: 600; }
+.fulfillment-choices small { font-size: .9375rem; line-height: 1.4; }
+.shop-core-details { font-size: 1rem; line-height: 1.5; }
+.shop-core-details dt { font-weight: 600; }
+.shop-detail > div > p, .studio-copy > p, .service-copy > p { max-width: 65ch; }
+@media (max-width: 700px) {
+  :root { --text-body: 1rem; --text-help: .875rem; --text-collection-title: 1.5rem; --text-card-title: 1.125rem; }
+  .shop-collection-overlay { padding: 18px 20px; }
+  .shop-card .shop-add .button, .shop-card-body > .button { font-size: .9375rem; padding-inline: 10px; gap: 8px; }
+  .shop-card .shop-price span { font-size: .875rem; }
+  .shop-card .shop-price { font-size: 1.375rem; line-height: 1.35; }
+  .shop-card h3 { min-height: 0; }
+  .shop-badge { font-size: .8125rem; }
+  .fulfillment-compact .fulfillment-choices strong { font-size: .9375rem; line-height: 1.3; }
+  .fulfillment-compact .fulfillment-help { font-size: .875rem; }
+}
+@media (max-width: 380px) {
+  .shop-grid { grid-template-columns: 1fr; }
+}

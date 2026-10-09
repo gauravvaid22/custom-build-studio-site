@@ -240,7 +240,7 @@ function AddProduct({
         />
       </label>
       <button className="button" type="submit">
-        Add to Cart <span aria-hidden="true">+</span>
+        Add to cart <span aria-hidden="true">+</span>
       </button>
       {addError && <p className="shop-checkout-error" role="alert">{addError}</p>}
       {confirmation && (
@@ -306,7 +306,7 @@ function ShopProductCard({ product, listId }: { product: Product; listId?: strin
         {regularPrice && <span className="shop-sale-badge">{sale?.percentage}% OFF</span>}
       </Link>
       <div className="shop-card-body">
-        <p className="eyebrow">MADE IN EDMONTON</p>
+        <p className="eyebrow">Made in Edmonton</p>
         <h3><Link to={`/shop/${product.id}`}>{displayName}</Link></h3>
         <p className="shop-price">
           {hasPriceRange ? "From " : ""}{money(displayPrice)}{" "}
@@ -387,14 +387,14 @@ function CollectionTiles({ ids, compact = false }: { ids: string[]; compact?: bo
       const cover = collection && catalogProduct(collection.coverProduct);
       if (!collection || !cover) return null;
       return <Link className="shop-collection-card" style={{ "--delay": `${(index % 3) * 70}ms` } as React.CSSProperties} key={id} to={`/shop/${id}`}>
-        <ProductImage product={cover} /><span className="shop-collection-overlay"><small>{collection.products.length} products</small><strong>{collection.name}</strong><span>Explore collection ↗</span></span>
+        <ProductImage product={cover} /><span className="shop-collection-overlay"><small>{collection.products.length} products</small><strong>{collection.name}</strong><span>Shop collection →</span></span>
       </Link>;
     })}
   </div>;
 }
 function StudioProof() {
   return <section className="container shop-studio-proof" aria-labelledby="shop-studio-proof-title">
-    <div className="shop-studio-proof-copy"><p className="eyebrow">THE PEOPLE BEHIND YOUR ORDER</p><h2 id="shop-studio-proof-title">Made here. Help is right here, too.</h2><p>Custom Build Studio designs and makes products in Edmonton. Have a fit question or a custom idea? Talk directly with the studio.</p><div className="button-row"><a className="text-link" href={business.googleProfile} target="_blank" rel="noreferrer">Read our Google reviews ↗</a><Link className="text-link" to="/work">See our studio work ↗</Link></div></div>
+    <div className="shop-studio-proof-copy"><p className="eyebrow">YOUR EDMONTON STUDIO</p><h2 id="shop-studio-proof-title">Made in Edmonton. Here to help.</h2><p>Custom Build Studio designs and makes products in Edmonton. Have a fit question or a custom idea? Talk directly with the studio.</p><div className="button-row"><a className="text-link" href={business.googleProfile} target="_blank" rel="noreferrer">Read our Google reviews ↗</a><Link className="text-link" to="/work">See our studio work ↗</Link></div></div>
     <div className="shop-studio-assurances"><Link to="/shipping-returns"><BenefitIcon type="shipping"/><span><strong>Clear shipping & returns</strong><small>Check the details before ordering →</small></span></Link><Link to="/contact"><BenefitIcon type="local"/><span><strong>A question before you buy?</strong><small>Ask us about size, colour or custom work →</small></span></Link></div>
   </section>;
 }
@@ -417,7 +417,7 @@ export function Shop() {
     <FulfillmentSelector compact />
     <section className="section shop-featured-section" id="featured"><div className="container"><div className="section-heading"><div><p className="eyebrow">FEATURED RIGHT NOW</p><h2>{feature.featuredTitle}</h2></div><Link className="text-link" to="/shop/all">See all products →</Link></div><ProductGrid listed={featured} listId="shop_featured" /></div></section>
     {sale && <section className="container shop-sale-feature shop-sale-feature-compact" aria-label="Current shop sale"><div><p className="eyebrow">{sale.percentage}% OFF · LIMITED TIME</p><h2>{sale.title}</h2><Link className="button" to="/shop/sale">Explore sale products ↗</Link></div></section>}
-    <section className="section shop-collections-section" id="collections"><div className="container"><div className="section-heading"><div><p className="eyebrow">FOLLOW YOUR CURIOSITY</p><h2>Find your kind of gift.</h2></div><p>Choose a collection. See what catches your eye.</p></div><CollectionTiles ids={merchandising.departments} /><div className="shop-collection-shortcuts"><Link to="/shop/all">Browse all {evergreenProducts.length} products ↗</Link><Link to="/shop/headphone-stands">Headphone stands ↗</Link><Link to="/shop/photo-frames">Photo holders ↗</Link></div></div></section>
+    <section className="section shop-collections-section" id="collections"><div className="container"><div className="section-heading"><div><p className="eyebrow">SHOP BY CATEGORY</p><h2>Find your kind of gift.</h2></div><p>Choose a collection. See what catches your eye.</p></div><CollectionTiles ids={merchandising.departments} /><div className="shop-collection-shortcuts"><Link to="/shop/all">Browse all {evergreenProducts.length} products ↗</Link><Link to="/shop/headphone-stands">Headphone stands ↗</Link><Link to="/shop/photo-frames">Photo holders ↗</Link></div></div></section>
     {merchandising.showBudgetGifts && budget.length > 0 && <section className="section shop-under-section"><div className="container"><div className="section-heading"><div><p className="eyebrow">LITTLE GIFTS / $25 & UNDER</p><h2>Small gifts. Easy choices.</h2></div><Link className="text-link" to="/shop/gifts-under-25">Explore gifts $25 & under →</Link></div><ProductGrid listed={budget} listId="shop_budget_gifts" /></div></section>}
     {merchandising.showStudioProof && <StudioProof />}
     <section className="container"><ShopBenefits /></section>
@@ -458,7 +458,7 @@ export function HalloweenSpecial() {
             <span aria-hidden="true">/</span>
             <span>Halloween Special</span>
           </nav>
-          <p className="eyebrow">LIMITED SEASON / MADE IN EDMONTON</p>
+          <p className="eyebrow">LIMITED SEASON / Made in Edmonton</p>
           <h1>Dark details.<br /><span>Built to haunt.</span></h1>
           <p className="lead">
             Explore the complete seasonal collection: sculptural ghosts,
@@ -607,7 +607,7 @@ export function ShopCollection({ id }: { id: string }) {
       <ShopNotice/>
       <section className="section" id="products">
         <div className="container">
-          <div className="shop-collection-toolbar"><div><p className="eyebrow">THE COLLECTION</p><h2>{collection.name}</h2></div></div>
+          <div className="shop-collection-toolbar"><div><h2>{collection.name}</h2></div></div>
           <div className="shop-discovery-filters" aria-label="Filter products">
             <label className="shop-filter-query">Search this collection<input type="search" maxLength={80} value={query} placeholder="Product name or idea" onChange={event => updateFilter("q", event.target.value)} /></label>
             {id === "all" && <label>Category<select value={category?.id || ""} onChange={event => updateFilter("category", event.target.value)}><option value="">All categories</option>{departmentCollections.map(item => <option value={item.id} key={item.id}>{item.name}</option>)}</select></label>}
@@ -776,7 +776,7 @@ export function ShopProduct() {
               </p>
             </div>
             <div className="shop-detail-info">
-              <p className="eyebrow">{product.category} / MADE IN EDMONTON</p>
+              <p className="eyebrow">{product.category} / Made in Edmonton</p>
               <h1>{nameFor(product.id, product.name)}</h1>
               <p className="lead">{product.description}</p>
               <p className="shop-price">

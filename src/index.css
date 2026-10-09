@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  font-family: var(--font-family-ui);
   color: #24272a;
   background: #fff;
   font-synthesis: none;
@@ -70,19 +70,19 @@ p {
 h1,
 h2,
 h3 {
-  line-height: 1.12;
-  letter-spacing: -0.045em;
-  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -.015em;
+  font-weight: 600;
 }
 h1 {
-  font-size: clamp(2.7rem, 5.7vw, 5rem);
+  font-size: clamp(2.125rem, 5vw, 4rem);
 }
 h2 {
-  font-size: clamp(2rem, 3.3vw, 3rem);
+  font-size: clamp(1.75rem, 3.3vw, 2.5rem);
 }
 h3 {
   font-size: 1.4rem;
-  letter-spacing: -0.025em;
+  letter-spacing: -.015em;
 }
 p {
   color: var(--muted);
@@ -114,7 +114,7 @@ main:focus {
 .eyebrow {
   font-size: 0.75rem;
   letter-spacing: 0.14em;
-  font-weight: 650;
+  font-weight: 600;
   line-height: 1.5;
   margin-bottom: 22px;
   color: var(--muted);
@@ -136,7 +136,7 @@ main:focus {
   color: #191c1e;
   border: 1px solid var(--orange);
   padding: 15px 23px;
-  font-weight: 650;
+  font-weight: 600;
   font-size: 0.92rem;
   min-height: 54px;
   line-height: 1.5;
@@ -183,7 +183,7 @@ main:focus {
   align-items: center;
   gap: 18px;
   font-size: 0.9rem;
-  font-weight: 650;
+  font-weight: 600;
   min-height: 44px;
   border-bottom: 1px solid #bbb;
 }
@@ -324,7 +324,7 @@ main:focus {
   font-size: clamp(4rem, 7.8vw, 7.4rem);
   font-weight: 600;
   line-height: 0.99;
-  letter-spacing: -0.065em;
+  letter-spacing: -.015em;
 }
 .hero h1 > span {
   color: var(--orange);
@@ -503,7 +503,7 @@ main:focus {
 .service-card h3 {
   min-height: 60px;
   font-size: 1.4rem;
-  letter-spacing: -0.035em;
+  letter-spacing: -.015em;
 }
 .service-card p {
   font-size: 0.9rem;
@@ -681,7 +681,7 @@ main:focus {
 .process-grid h3 {
   font-size: 1.15rem;
   margin: 30px 0 13px;
-  letter-spacing: -0.025em;
+  letter-spacing: -.015em;
 }
 .process-grid p {
   font-size: 0.85rem;
@@ -713,7 +713,7 @@ summary {
   gap: 24px;
   padding: 24px 0;
   font-size: 0.98rem;
-  font-weight: 550;
+  font-weight: 500;
   list-style: none;
   line-height: 1.5;
 }
@@ -1198,7 +1198,7 @@ summary {
 .price-card .price,
 .price {
   font-size: 2.5rem;
-  letter-spacing: -0.05em;
+  letter-spacing: -.015em;
   line-height: 1.2;
   color: var(--ink);
   margin: 22px 0 8px;
@@ -2316,7 +2316,7 @@ h3 {
 .faq-list + h2 {
   margin-top: 40px;
 }
-.fdm-size .print-volume, .note-panel .print-volume { font-size: clamp(1.5rem, 3vw, 2.4rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.04em; color: var(--ink, #171c1d); }
+.fdm-size .print-volume, .note-panel .print-volume { font-size: clamp(1.5rem, 3vw, 2.4rem); font-weight: 700; line-height: 1.2; letter-spacing: -.015em; color: var(--ink, #171c1d); }
 .fdm-capabilities { background: #edf0ef; }
 .fdm-size { margin: 28px 0; padding: 24px 0; border-top: 1px solid #bbc3c0; border-bottom: 1px solid #bbc3c0; }
 .fdm-materials { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
@@ -2340,7 +2340,7 @@ h3 {
   color: #fff;
   font-size: clamp(2.6rem, 5vw, 5.25rem);
   line-height: .98;
-  letter-spacing: -.055em;
+  letter-spacing: -.015em;
   max-width: 750px;
 }
 .home-shop-copy > p:not(.eyebrow) {
@@ -2455,7 +2455,7 @@ h3 {
 .hero-path .arrow { margin-left: auto; align-self: flex-start; color: #9bd6ed; }
 .hero-note a { color: #addbef; border-bottom: 1px solid #6aa3bc; }
 .service-start-section { background: #edf1ef; padding-block: 48px 54px; }
-.service-start-section h2 { margin: 10px 0 25px; font-size: clamp(2rem, 3vw, 3rem); letter-spacing: -.04em; }
+.service-start-section h2 { margin: 10px 0 25px; font-size: clamp(2rem, 3vw, 3rem); letter-spacing: -.015em; }
 .service-start-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .service-start-grid a { display: grid; grid-template-rows: 42px auto auto 1fr; gap: 7px; padding: 22px; min-height: 165px; background: #fff; border: 1px solid #d5dfdb; transition: border-color .2s, transform .2s; }
 .service-start-grid a:hover { border-color: #6793a5; transform: translateY(-2px); }
@@ -2520,7 +2520,7 @@ h3 {
 .service-page-intro .lead { max-width: 620px; }
 .service-intro-graphic { position: relative; display: flex; flex-direction: column; justify-content: space-between; min-height: 355px; overflow: hidden; padding: 20px; border: 1px solid #adbfbb; background: radial-gradient(circle at 70% 35%, rgba(140, 193, 204, .2), transparent 50%), linear-gradient(rgba(50, 93, 102, .075) 1px, transparent 1px), linear-gradient(90deg, rgba(50, 93, 102, .075) 1px, transparent 1px), #f4f8f6; background-size: auto, 27px 27px, 27px 27px, auto; }
 .service-intro-graphic::after { content: "+"; position: absolute; top: 45px; right: 26px; color: #5a878e; font-size: 1.2rem; font-weight: 300; }
-.service-graphic-index, .service-graphic-caption { position: relative; z-index: 1; color: #4c6970; font-size: .7rem; font-weight: 750; letter-spacing: .11em; }
+.service-graphic-index, .service-graphic-caption { position: relative; z-index: 1; color: #4c6970; font-size: .7rem; font-weight: 600; letter-spacing: .11em; }
 .service-graphic-caption { align-self: flex-end; letter-spacing: .02em; text-align: right; }
 .service-intro-graphic svg { position: absolute; inset: 18px 0 0; width: 100%; height: calc(100% - 18px); }
 .service-graphic-ghost { stroke: #87acb2; stroke-width: 1.4; stroke-dasharray: 7 7; }

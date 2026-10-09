@@ -62,7 +62,7 @@ export function Arrow() {
 }
 export function QuoteLink({
   service,
-  children = "Request a Quote",
+  children = "Request a quote",
   className = "",
 }: {
   service?: string;
@@ -151,7 +151,7 @@ export function Header() {
             </div>
           </div>
           <div className="nav-group">
-            <NavLink to="/services" className={location.pathname.startsWith("/services") ? "active" : ""}>Custom Services</NavLink>
+            <NavLink to="/services" className={location.pathname.startsWith("/services") ? "active" : ""}>Custom services</NavLink>
             <button type="button" className="nav-group-toggle" aria-label="Show custom services" aria-expanded={activePanel === "services"} aria-controls="services-navigation-panel" onClick={() => setActivePanel(activePanel === "services" ? null : "services")}>⌄</button>
             <div id="services-navigation-panel" className={`nav-panel ${activePanel === "services" ? "is-open" : ""}`}>
               <Link to="/services/3d-printing">3D Printing · FDM &amp; Resin</Link>
@@ -162,7 +162,7 @@ export function Header() {
               <Link to="/contact">Request a quote</Link>
             </div>
           </div>
-          <NavLink to="/work">Our Work</NavLink>
+          <NavLink to="/work">Our work</NavLink>
           <NavLink to="/about">About</NavLink>
           <QuoteLink />
           <Link to="/shop/cart" className="nav-cart" aria-label={`Cart, ${cartCount} ${cartCount === 1 ? "item" : "items"}`}>Cart <span className="shop-cart-count">{cartCount}</span></Link>

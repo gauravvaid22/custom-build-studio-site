@@ -2,7 +2,7 @@
   {
     "id": "personalized-gifts",
     "kind": "department",
-    "name": "Personalized Gifts",
+    "name": "Personalized gifts",
     "shortName": "Personalized gifts",
     "eyebrow": "YOUR PHOTOS / PERSONAL KEEPSAKES",
     "heading": "Your memories. Made personal.",
@@ -29,7 +29,7 @@
   {
     "id": "collectibles",
     "kind": "department",
-    "name": "Figurines & Fidgets",
+    "name": "Figurines & fidgets",
     "shortName": "Figures & fidgets",
     "eyebrow": "CHARACTERS WITH PERSONALITY",
     "heading": "Little characters. Big personality.",
@@ -49,7 +49,7 @@
   {
     "id": "gaming-desk",
     "kind": "department",
-    "name": "Gaming & Desk Accessories",
+    "name": "Gaming & desk accessories",
     "shortName": "Gaming & desk",
     "eyebrow": "FOR GAME NIGHT AND YOUR SETUP",
     "heading": "Make the desk more interesting.",
@@ -76,7 +76,7 @@
   {
     "id": "headphone-stands",
     "kind": "collection",
-    "name": "Headphone Stands",
+    "name": "Headphone stands",
     "shortName": "Headphone stands",
     "eyebrow": "A BETTER HOME FOR YOUR HEADPHONES",
     "heading": "Clear the desk. Keep the character.",
@@ -95,7 +95,7 @@
   {
     "id": "home-decor",
     "kind": "department",
-    "name": "Home & Living",
+    "name": "Home & living",
     "shortName": "Home & living",
     "eyebrow": "SCULPTURAL DETAILS FOR HOME",
     "heading": "Useful objects with more character.",
@@ -119,7 +119,7 @@
   {
     "id": "seasonal",
     "kind": "department",
-    "name": "Seasonal Gifts & Decor",
+    "name": "Seasonal gifts & décor",
     "shortName": "Seasonal",
     "eyebrow": "FOR YOUR NEXT CELEBRATION",
     "heading": "Make the season your own.",
@@ -146,7 +146,7 @@
   {
     "id": "masks-costumes",
     "kind": "collection",
-    "name": "Masks & Costumes",
+    "name": "Masks & costumes",
     "shortName": "Masks & costumes",
     "eyebrow": "FINISHED AND WEARABLE",
     "heading": "Choose your Halloween character.",
@@ -161,7 +161,7 @@
   {
     "id": "halloween",
     "kind": "seasonal",
-    "name": "Halloween Masks & Décor",
+    "name": "Halloween masks & décor",
     "shortName": "Halloween",
     "eyebrow": "PLAYFUL, SPOOKY, MADE LOCALLY",
     "heading": "Halloween masks & décor, made here.",
@@ -188,7 +188,7 @@
   {
     "id": "gifts-under-25",
     "kind": "curated",
-    "name": "Gifts $25 & Under",
+    "name": "Gifts $25 & under",
     "shortName": "$25 & under",
     "eyebrow": "SMALL GIFTS, BIG PERSONALITY",
     "heading": "Easy gifts at $25 CAD or less.",
@@ -207,7 +207,7 @@
   {
     "id": "photo-frames",
     "kind": "collection",
-    "name": "Personalized Photo Holders",
+    "name": "Personalized photo holders",
     "shortName": "Photo holders",
     "eyebrow": "SMALL FRAMES / REAL MEMORIES",
     "heading": "A little home for your favourite photo.",
@@ -233,7 +233,7 @@
   {
     "id": "console-stands",
     "kind": "collection",
-    "name": "PS5 Console Stands",
+    "name": "PS5 console stands",
     "shortName": "Console stands",
     "eyebrow": "YOUR CONSOLE / YOUR STYLE",
     "heading": "Give your PS5 a stand with character.",
