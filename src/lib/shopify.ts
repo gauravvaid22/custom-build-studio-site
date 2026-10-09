@@ -149,6 +149,13 @@ async function merchandiseFor(items: CartItem[], mode: FulfillmentMode, expected
   );
 
   return items.map((item) => {
+    const product = products.find(product => product.id === item.id);
+    if (product && "personalization" in product) {
+      const photo = item.attributes?.find(attribute => attribute.key === "Personalization photo")?.value;
+      const reference = photo ? new URL(photo, "https://custombuildstudio.ca") : null;
+      if (!reference || reference.pathname.replace(/\/$/, "") !== "/shop/photo" || !reference.searchParams.get("id") || !reference.searchParams.get("token"))
+        throw new Error(`Upload your photo on the ${product.name} page before checkout.`);
+    }
     const variant = variants.get(fulfillmentSku(item.id, mode));
     if (!variant || !variant.availableForSale) {
       const name = products.find((product) => product.id === item.id)?.name;

@@ -3,7 +3,7 @@ import source from "../../commerce/headphone-stands-source.json";
 import { useShopifyCatalog } from "./ShopifyCatalog";
 import { money } from "./Cart";
 
-export function HeadphonePricingAdmin({ adminKey }: { adminKey: string }) {
+export function HeadphonePricingAdmin({ adminKey, items = source.products, heading = "HEADPHONE STANDS" }: { adminKey: string; items?: {id: string; name: string; priceCents: number}[]; heading?: string }) {
   const { prices, refresh } = useShopifyCatalog();
   const [drafts, setDrafts] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState("");
@@ -11,10 +11,10 @@ export function HeadphonePricingAdmin({ adminKey }: { adminKey: string }) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    setDrafts((current) => Object.fromEntries(source.products.map((item) => [
+    setDrafts((current) => Object.fromEntries(items.map((item) => [
       item.id, current[item.id] ?? ((prices[item.id] ?? item.priceCents) / 100).toFixed(2),
     ])));
-  }, [prices]);
+  }, [prices, items]);
 
   async function action(id: string, task: "create-missing" | "update-price", priceCents?: number) {
     setBusy(id); setError(""); setMessage("");
@@ -42,10 +42,10 @@ export function HeadphonePricingAdmin({ adminKey }: { adminKey: string }) {
     await action(id, "update-price", Math.round(Number(value) * 100));
   }
 
-  return <section className="shop-admin-headphones" aria-label="Headphone stand prices">
-    <div className="section-heading"><div><p className="eyebrow">HEADPHONE STANDS</p><h3>Edit delivered prices here</h3></div><p>Pickup is always CA$10 lower. Saving changes both Shopify variants and the live website price.</p></div>
+  return <section className="shop-admin-headphones" aria-label={`${heading} prices`}>
+    <div className="section-heading"><div><p className="eyebrow">{heading}</p><h3>Edit delivered prices here</h3></div><p>Pickup is always CA$10 lower. Saving changes both Shopify variants and the live website price.</p></div>
     <div className="shop-admin-headphone-grid">
-      {source.products.map((item) => <form key={item.id} onSubmit={(event) => void save(event, item.id)}>
+      {items.map((item) => <form key={item.id} onSubmit={(event) => void save(event, item.id)}>
         <strong>{item.name}</strong>
         <label>Delivered price (CAD)
           <input type="number" inputMode="decimal" min="15" max="1000" step="0.01" required value={drafts[item.id] || ""} onChange={(event) => setDrafts({ ...drafts, [item.id]: event.target.value })} />

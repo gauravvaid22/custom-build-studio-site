@@ -1,0 +1,299 @@
+{
+  "drop": "https://platform.stlflix.com/drops/drop-367",
+  "reviewedAt": "2026-10-08",
+  "photoCount": 1,
+  "offering": "Assembled desk version with one customer photo printed, trimmed and fitted. No magnetic version offered.",
+  "dimensionNote": "Source dimensions describe the holder body, not the included photograph or the overall display with a photo fitted. Axis labels and photo aperture sizes were not specified reliably in the source.",
+  "pricingAssumptions": {
+    "currency": "CAD",
+    "shippingAllowance": 10,
+    "photoAllowance": 1,
+    "packagingAllowance": 1.5,
+    "labourMinutes": 15,
+    "labourHourlyRate": 25,
+    "machineHourlyAllowance": 1,
+    "paymentFeePercent": 3,
+    "paymentFeeFixed": 0.3,
+    "materialAndWasteAllowance": [
+      1,
+      3
+    ],
+    "notes": "Planning allowances, not measured production costs. Use separately printed parts and assembly to avoid 9–28 hour multicolour runs. Review actual slicer weight, hands-on time, postage, print quality and fees before discounting. No guaranteed margin. Photo printing may have order minimums or travel costs."
+  },
+  "benchmarks": [
+    {
+      "url": "https://www.michaelspressroom.com/news/detail/5031/michaels-debuts-10-minute-custom-framing-in-canada",
+      "note": "Canadian printed, framed, gift-boxed photo offer advertised at CAD 29; different construction and size, shipping not established."
+    },
+    {
+      "url": "https://www.peterboroughprint.ca/product/custom-framed-photos/",
+      "note": "Custom framed photos advertised from CAD 17.48; size and delivery affect comparison."
+    },
+    {
+      "url": "https://www.walmartphotocentre.ca/en/product-price/",
+      "note": "Canadian photo-print supplier reference; CAD 1 used as a planning allowance rather than a verified quote for a custom trimmed print."
+    }
+  ],
+  "products": [
+    {
+      "id": "daisy-duo-photo-frame",
+      "name": "Daisy Duo Personalized Photo Holder",
+      "priceCents": 2999,
+      "bodyMm": [
+        30,
+        50,
+        20
+      ],
+      "multipartMinutes": 60,
+      "description": "A pair of cheerful daisies keeps your favourite photo on display. A small, personal touch for a desk, shelf or bedside table.",
+      "source": "https://platform.stlflix.com/product/daisy-duo-photo-frame",
+      "photos": [
+        "1_883c83bd06.jpg",
+        "2_cdb80f452a.jpg",
+        "3_15902984cf.jpg",
+        "4_eab888fee1.jpg"
+      ],
+      "videoSource": "Daisy_Duo_WEBM_5dc37c024c.webm"
+    },
+    {
+      "id": "sunflower-duo-photo-frame",
+      "name": "Sunflower Duo Personalized Photo Holder",
+      "priceCents": 2999,
+      "bodyMm": [
+        40,
+        60,
+        20
+      ],
+      "multipartMinutes": 60,
+      "description": "Bright sunflower blooms turn your favourite snapshot into a little desk keepsake. A thoughtful gift with your own photo included.",
+      "source": "https://platform.stlflix.com/product/sunflower-duo-photo-frame",
+      "photos": [
+        "Sunflower_Duo_Photo_Frame_1_f46e95234a.png",
+        "Sunflower_Duo_Photo_Frame_2_af5e1785f6.png",
+        "Sunflower_Duo_Photo_Frame_3_f9b85a4d8e.png",
+        "Sunflower_Duo_Photo_Frame_4_999b8512a6.png"
+      ],
+      "videoSource": "Sunflower_Duo_WEBM_5993c68889.webm"
+    },
+    {
+      "id": "up-in-the-clouds-photo-frame",
+      "name": "Up in the Clouds Personalized Photo Holder",
+      "priceCents": 3499,
+      "bodyMm": [
+        90,
+        70,
+        70
+      ],
+      "multipartMinutes": 125,
+      "description": "A miniature airplane rests among soft clouds beside your photo. Keep a favourite trip, adventure or special person close to hand.",
+      "source": "https://platform.stlflix.com/product/up-in-the-clouds-photo-frame",
+      "photos": [
+        "1_900722653c.jpg",
+        "2_509ebc6489.jpg",
+        "3_55a2c47fa7.jpg",
+        "4_f6c13f5195.jpg"
+      ],
+      "videoSource": "Up_in_the_Clouds_WEBM_039f6f3f1e.webm"
+    },
+    {
+      "id": "stoneside-photo-frame",
+      "name": "Stoneside Personalized Photo Holder",
+      "priceCents": 2999,
+      "bodyMm": [
+        90,
+        50,
+        30
+      ],
+      "multipartMinutes": 58,
+      "description": "Rounded stone shapes give your photo a simple, sculptural home. An understated keepsake for a desk or shelf, finished with your own snapshot.",
+      "source": "https://platform.stlflix.com/product/stoneside-photo-frame",
+      "photos": [
+        "Stoneside_Photo_Frame_1_174872efa3.png",
+        "Stoneside_Photo_Frame_2_9e0d084cab.png",
+        "Stoneside_Photo_Frame_3_bb4417f600.png",
+        "Stoneside_Photo_Frame_4_03b9892178.png"
+      ],
+      "videoSource": "Stoneside_WEBM_e4959268e8.webm"
+    },
+    {
+      "id": "paw-hold-photo-frame",
+      "name": "Paw Hold Personalized Photo Holder",
+      "priceCents": 2999,
+      "bodyMm": [
+        40,
+        30,
+        60
+      ],
+      "multipartMinutes": 58,
+      "description": "A little paw holds your favourite photo upright. Give a pet lover a personal keepsake, or keep a beloved companion on your desk.",
+      "source": "https://platform.stlflix.com/product/paw-hold-photo-frame",
+      "photos": [
+        "Paw_Hold_Photo_Frame_1_1d04030e74.png",
+        "Paw_Hold_Photo_Frame_2_769266b66e.png",
+        "Paw_Hold_Photo_Frame_3_99727755be.png",
+        "Paw_Hold_Photo_Frame_4_22fae33525.png"
+      ],
+      "videoSource": "Paw_Hold_WEBM_06ff9fa9fb.webm"
+    },
+    {
+      "id": "sealed-letter-photo-frame",
+      "name": "Sealed Letter Personalized Photo Holder",
+      "priceCents": 3499,
+      "bodyMm": [
+        100,
+        20,
+        70
+      ],
+      "multipartMinutes": 132,
+      "description": "An envelope with a decorative seal holds a memory worth keeping. A small romantic gift or a personal reminder of someone special.",
+      "source": "https://platform.stlflix.com/product/sealed-letter-photo-frame",
+      "photos": [
+        "Sealed_Letter_Photo_Frame_1_e1bf58db8b.png",
+        "Sealed_Letter_Photo_Frame_2_67b4d0bb6d.png",
+        "Sealed_Letter_Photo_Frame_3_d302d9eed7.png",
+        "Sealed_Letter_Photo_Frame_4_0bd4546fd9.png"
+      ],
+      "videoSource": "Sealed_Letter_WEBM_1017734957.webm"
+    },
+    {
+      "id": "sakura-duo-photo-frame",
+      "name": "Sakura Duo Personalized Photo Holder",
+      "priceCents": 2999,
+      "bodyMm": [
+        80,
+        30,
+        20
+      ],
+      "multipartMinutes": 68,
+      "description": "Soft cherry-blossom shapes frame your favourite moment from below. Add your own photo for a gentle, personal desk or shelf accent.",
+      "source": "https://platform.stlflix.com/product/sakura-duo-photo-frame",
+      "photos": [
+        "1_c3c71b3d21.jpg",
+        "2_fafc61a2f0.jpg",
+        "3_76e3c89d0b.jpg",
+        "4_6638084774.jpg"
+      ],
+      "videoSource": "Sakura_Duo_WEBM_cbdbb56cd7.webm"
+    },
+    {
+      "id": "love-letter-photo-frame",
+      "name": "Love Letter Personalized Photo Holder",
+      "priceCents": 3499,
+      "bodyMm": [
+        100,
+        20,
+        70
+      ],
+      "multipartMinutes": 119,
+      "description": "A pink envelope and heart detail turn a favourite photo into a love note. A personal keepsake for a partner, friend or family member.",
+      "source": "https://platform.stlflix.com/product/love-letter-photo-frame",
+      "photos": [
+        "Love_Letter_Photo_Frame_1_006fadf19d.png",
+        "Love_Letter_Photo_Frame_2_9c4ace7dd1.png",
+        "Love_Letter_Photo_Frame_3_b1ecede471.png",
+        "Love_Letter_Photo_Frame_4_eb8e04a670.png"
+      ],
+      "videoSource": "Love_Letter_WEBM_3593fa5fcf.webm"
+    },
+    {
+      "id": "lavender-duo-photo-frame",
+      "name": "Lavender Duo Personalized Photo Holder",
+      "priceCents": 2999,
+      "bodyMm": [
+        80,
+        30,
+        20
+      ],
+      "multipartMinutes": 70,
+      "description": "Lavender-shaped blooms add a calm splash of colour beneath your photo. A compact keepsake for a shelf, workspace or thoughtful gift.",
+      "source": "https://platform.stlflix.com/product/lavender-duo-photo-frame",
+      "photos": [
+        "Lavender_Duo_Photo_Frame_1_6edd12621a.png",
+        "Lavender_Duo_Photo_Frame_2_8544482389.png",
+        "Lavender_Duo_Photo_Frame_3_49767ee684.png",
+        "Lavender_Duo_Photo_Frame_4_3faf286fec.png"
+      ],
+      "videoSource": "Lavender_Duo_WEBM_075e3b9c00.webm"
+    },
+    {
+      "id": "retro-cam-photo-frame",
+      "name": "Retro Cam Personalized Photo Holder",
+      "priceCents": 3999,
+      "bodyMm": [
+        110,
+        30,
+        80
+      ],
+      "multipartMinutes": 207,
+      "description": "A vintage instant-camera design displays your photo like a freshly captured memory. A playful keepsake for photographers and anyone with a favourite snapshot.",
+      "source": "https://platform.stlflix.com/product/retro-cam-photo-frame",
+      "photos": [
+        "1_7097ddfc84.jpg",
+        "2_f9d5049c0c.jpg",
+        "3_aee6478e5e.jpg",
+        "4_a8e3852394.jpg"
+      ],
+      "videoSource": "Retro_Cam_WEBM_f9ae21608d.webm"
+    },
+    {
+      "id": "dino-peek-photo-frame",
+      "name": "Dino Peek Personalized Photo Holder",
+      "priceCents": 3499,
+      "bodyMm": [
+        120,
+        50,
+        120
+      ],
+      "multipartMinutes": 130,
+      "description": "A friendly long-necked dinosaur peeks around your favourite photo. Add a little personality to a desk or shelf with a memory of your own.",
+      "source": "https://platform.stlflix.com/product/dino-peek-photo-frame",
+      "photos": [
+        "1_70100516de.jpg",
+        "2_9dcfccf543.jpg",
+        "3_2c6beda248.jpg",
+        "4_c190bd445c.jpg"
+      ],
+      "videoSource": "Dino_Peek_WEBM_02f641bd54.webm"
+    },
+    {
+      "id": "t-rex-peek-photo-frame",
+      "name": "T-Rex Peek Personalized Photo Holder",
+      "priceCents": 3499,
+      "bodyMm": [
+        70,
+        50,
+        50
+      ],
+      "multipartMinutes": 119,
+      "description": "A tiny T-Rex brings big character to your photo display. A fun personal keepsake for a dinosaur fan, with your selected photo printed and fitted.",
+      "source": "https://platform.stlflix.com/product/t-rex-peek-photo-frame",
+      "photos": [
+        "T_Rex_Peek_Photo_Frame_1_970b486463.png",
+        "T_Rex_Peek_Photo_Frame_2_64c73d3830.png",
+        "T_Rex_Peek_Photo_Frame_3_9997876911.png",
+        "T_Rex_Peek_Photo_Frame_4_55155a11a3.png"
+      ],
+      "videoSource": "T_Rex_Peek_WEBM_42e2c87559.webm"
+    },
+    {
+      "id": "analog-days-photo-frame",
+      "name": "Analog Days Personalized Photo Holder",
+      "priceCents": 3999,
+      "bodyMm": [
+        120,
+        40,
+        80
+      ],
+      "multipartMinutes": 175,
+      "description": "A compact vintage-camera shape gives a favourite photo a place outside your phone. A nostalgic desk gift, personalized with your own memory.",
+      "source": "https://platform.stlflix.com/product/analog-days-photo-frame",
+      "photos": [
+        "1_23716ef48c.jpg",
+        "2_7407ce96b4.jpg",
+        "3_33141774f3.jpg",
+        "4_8381805d71.jpg"
+      ],
+      "videoSource": "Analog_Days_WEBM_d6117cc5e9.webm"
+    }
+  ]
+}

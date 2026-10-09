@@ -2,10 +2,12 @@ import { getStore } from "@netlify/blobs";
 import { equal } from "../../commerce/core.mjs";
 import products from "../../commerce/products.json" with { type: "json" };
 import source from "../../commerce/headphone-stands-source.json" with { type: "json" };
+import frames from "../../commerce/photo-frames-source.json" with { type: "json" };
 import pricing from "../../commerce/pricing.json" with { type: "json" };
 import { createShopifyAdmin } from "../../commerce/shopify-admin.mjs";
 
-const ids = new Set(source.products.map((item) => item.id));
+const managedProducts = [...source.products, ...frames.products];
+const ids = new Set(managedProducts.map((item) => item.id));
 const admin = createShopifyAdmin({
   legacyToken: process.env.SHOPIFY_ADMIN_ACCESS_TOKEN || "",
   clientId: process.env.SHOPIFY_CLIENT_ID || "",
@@ -38,7 +40,6 @@ async function createMissing(item) {
   if (current) return { id: item.id, status: "already-exists" };
   const product = products.find((entry) => entry.id === item.id);
   if (!product) throw new Error("The website product is missing.");
-  const imageUrl = `https://custombuildstudio.ca${product.images[0].src}`;
   const result = await admin.call(
     `mutation CreateHeadphoneProduct($input: ProductSetInput!) {
       productSet(input: $input, synchronous: true) {
@@ -49,10 +50,10 @@ async function createMissing(item) {
     { input: {
       handle: item.id,
       title: item.name,
-      descriptionHtml: `<p>${escapeHtml(item.description)}</p><p>${escapeHtml(product.included)}</p><p>Approximately ${item.heightMm} mm high. Colours are similar to the reference photos and may vary slightly. Finished physical product; no digital files.</p>`,
-      productType: "Headphone Stands",
+      descriptionHtml: `<p>${escapeHtml(item.description)}</p><p>${escapeHtml(product.included)}</p><p>${escapeHtml(product.dimensions)}</p><p>${escapeHtml(product.notes)}</p><p>Finished physical product; no digital files.</p>`,
+      productType: product.category,
       vendor: "Custom Build Studio",
-      tags: ["headphone stand", "desk accessory", "Edmonton made", "headset holder"],
+      tags: product.personalization ? ["personalized gifts", "photo holder", "photo print included", "Edmonton made"] : ["headphone stand", "desk accessory", "Edmonton made", "headset holder"],
       status: "ACTIVE",
       seo: { title: `${item.name} | Custom Build Studio`, description: `${item.description} Made in Edmonton. Free tracked shipping in Canada or local pickup.` },
       productOptions: [{ name: "Fulfillment", position: 1, values: [{ name: "Delivery" }, { name: "Edmonton Pickup" }] }],
@@ -60,7 +61,7 @@ async function createMissing(item) {
         { optionValues: [{ optionName: "Fulfillment", name: "Delivery" }], sku: item.id, price: money(item.priceCents), taxable: false, inventoryItem: { tracked: false, requiresShipping: true, countryCodeOfOrigin: "CA" } },
         { optionValues: [{ optionName: "Fulfillment", name: "Edmonton Pickup" }], sku: `${item.id}-pickup`, price: money(item.priceCents - pricing.pickupPriceDifferenceCents), taxable: false, inventoryItem: { tracked: false, requiresShipping: true, countryCodeOfOrigin: "CA" } },
       ],
-      files: [{ originalSource: imageUrl, filename: `${item.id}.webp`, alt: product.images[0].alt, contentType: "IMAGE" }],
+      files: product.images.map((image, index) => ({ originalSource: `https://custombuildstudio.ca${image.src}`, filename: `${item.id}-${index + 1}.webp`, alt: image.alt, contentType: "IMAGE" })),
     } },
   );
   const errors = result.productSet?.userErrors || [];
@@ -115,8 +116,8 @@ export default async function shopHeadphones(request, context) {
     const raw = await request.text();
     if (raw.length > 2000) return json({ error: "Request too large" }, 413);
     const body = JSON.parse(raw || "{}");
-    if (!ids.has(body.id)) return json({ error: "Unknown headphone stand" }, 400);
-    const item = source.products.find((entry) => entry.id === body.id);
+    if (!ids.has(body.id)) return json({ error: "Unknown managed product" }, 400);
+    const item = managedProducts.find((entry) => entry.id === body.id);
     if (body.action === "create-missing") return json(await createMissing(item));
     if (body.action === "update-price") return json(await updatePrice(body.id, body.priceCents));
     return json({ error: "Unknown action" }, 404);

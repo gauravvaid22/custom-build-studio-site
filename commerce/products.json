@@ -1767,5 +1767,577 @@
     "video": "/media/shop/arch-stand-headphone-holder/arch-stand-headphone-holder.webm",
     "productionReviewed": false,
     "source": "https://platform.stlflix.com/product/arch-stand-headphone-holder"
+  },
+  {
+    "id": "daisy-duo-photo-frame",
+    "name": "Daisy Duo Personalized Photo Holder",
+    "priceCents": 2999,
+    "category": "Personalized photo holders",
+    "seasonal": false,
+    "personalization": {
+      "kind": "photo-print",
+      "photoCount": 1
+    },
+    "description": "A pair of cheerful daisies keeps your favourite photo on display. A small, personal touch for a desk, shelf or bedside table.",
+    "included": "One assembled desk photo holder with one customer-supplied photo printed, trimmed and fitted. Reference photographs are examples; other props are not included.",
+    "dimensions": "Holder body: approximately 30 × 50 × 20 mm. The photo extends above the holder; these are not photo-print dimensions.",
+    "notes": "Small decorative desktop keepsake, not a standard 4 × 6 inch frame. Photo is cropped to suit the holder. Similar colours to the reference photos; exact shades may vary. Desk version only; no magnets. Keep away from heat and moisture.",
+    "images": [
+      {
+        "src": "/media/shop/daisy-duo-photo-frame/1-1200.webp",
+        "thumb": "/media/shop/daisy-duo-photo-frame/1-480.webp",
+        "alt": "Daisy Duo Personalized Photo Holder — photo display example",
+        "sourceFile": "1_883c83bd06.jpg"
+      },
+      {
+        "src": "/media/shop/daisy-duo-photo-frame/2-1200.webp",
+        "thumb": "/media/shop/daisy-duo-photo-frame/2-480.webp",
+        "alt": "Daisy Duo Personalized Photo Holder — desk holder view 2",
+        "sourceFile": "2_cdb80f452a.jpg"
+      },
+      {
+        "src": "/media/shop/daisy-duo-photo-frame/3-1200.webp",
+        "thumb": "/media/shop/daisy-duo-photo-frame/3-480.webp",
+        "alt": "Daisy Duo Personalized Photo Holder — desk holder view 3",
+        "sourceFile": "3_15902984cf.jpg"
+      },
+      {
+        "src": "/media/shop/daisy-duo-photo-frame/4-1200.webp",
+        "thumb": "/media/shop/daisy-duo-photo-frame/4-480.webp",
+        "alt": "Daisy Duo Personalized Photo Holder — desk holder view 4",
+        "sourceFile": "4_eab888fee1.jpg"
+      }
+    ],
+    "video": "/media/shop/daisy-duo-photo-frame/daisy-duo-photo-frame.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/daisy-duo-photo-frame"
+  },
+  {
+    "id": "sunflower-duo-photo-frame",
+    "name": "Sunflower Duo Personalized Photo Holder",
+    "priceCents": 2999,
+    "category": "Personalized photo holders",
+    "seasonal": false,
+    "personalization": {
+      "kind": "photo-print",
+      "photoCount": 1
+    },
+    "description": "Bright sunflower blooms turn your favourite snapshot into a little desk keepsake. A thoughtful gift with your own photo included.",
+    "included": "One assembled desk photo holder with one customer-supplied photo printed, trimmed and fitted. Reference photographs are examples; other props are not included.",
+    "dimensions": "Holder body: approximately 40 × 60 × 20 mm. The photo extends above the holder; these are not photo-print dimensions.",
+    "notes": "Small decorative desktop keepsake, not a standard 4 × 6 inch frame. Photo is cropped to suit the holder. Similar colours to the reference photos; exact shades may vary. Desk version only; no magnets. Keep away from heat and moisture.",
+    "images": [
+      {
+        "src": "/media/shop/sunflower-duo-photo-frame/1-1200.webp",
+        "thumb": "/media/shop/sunflower-duo-photo-frame/1-480.webp",
+        "alt": "Sunflower Duo Personalized Photo Holder — photo display example",
+        "sourceFile": "Sunflower_Duo_Photo_Frame_1_f46e95234a.png"
+      },
+      {
+        "src": "/media/shop/sunflower-duo-photo-frame/2-1200.webp",
+        "thumb": "/media/shop/sunflower-duo-photo-frame/2-480.webp",
+        "alt": "Sunflower Duo Personalized Photo Holder — desk holder view 2",
+        "sourceFile": "Sunflower_Duo_Photo_Frame_2_af5e1785f6.png"
+      },
+      {
+        "src": "/media/shop/sunflower-duo-photo-frame/3-1200.webp",
+        "thumb": "/media/shop/sunflower-duo-photo-frame/3-480.webp",
+        "alt": "Sunflower Duo Personalized Photo Holder — desk holder view 3",
+        "sourceFile": "Sunflower_Duo_Photo_Frame_3_f9b85a4d8e.png"
+      },
+      {
+        "src": "/media/shop/sunflower-duo-photo-frame/4-1200.webp",
+        "thumb": "/media/shop/sunflower-duo-photo-frame/4-480.webp",
+        "alt": "Sunflower Duo Personalized Photo Holder — desk holder view 4",
+        "sourceFile": "Sunflower_Duo_Photo_Frame_4_999b8512a6.png"
+      }
+    ],
+    "video": "/media/shop/sunflower-duo-photo-frame/sunflower-duo-photo-frame.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/sunflower-duo-photo-frame"
+  },
+  {
+    "id": "up-in-the-clouds-photo-frame",
+    "name": "Up in the Clouds Personalized Photo Holder",
+    "priceCents": 3499,
+    "category": "Personalized photo holders",
+    "seasonal": false,
+    "personalization": {
+      "kind": "photo-print",
+      "photoCount": 1
+    },
+    "description": "A miniature airplane rests among soft clouds beside your photo. Keep a favourite trip, adventure or special person close to hand.",
+    "included": "One assembled desk photo holder with one customer-supplied photo printed, trimmed and fitted. Reference photographs are examples; other props are not included.",
+    "dimensions": "Holder body: approximately 90 × 70 × 70 mm. The photo extends above the holder; these are not photo-print dimensions.",
+    "notes": "Small decorative desktop keepsake, not a standard 4 × 6 inch frame. Photo is cropped to suit the holder. Similar colours to the reference photos; exact shades may vary. Desk version only; no magnets. Keep away from heat and moisture.",
+    "images": [
+      {
+        "src": "/media/shop/up-in-the-clouds-photo-frame/1-1200.webp",
+        "thumb": "/media/shop/up-in-the-clouds-photo-frame/1-480.webp",
+        "alt": "Up in the Clouds Personalized Photo Holder — photo display example",
+        "sourceFile": "1_900722653c.jpg"
+      },
+      {
+        "src": "/media/shop/up-in-the-clouds-photo-frame/2-1200.webp",
+        "thumb": "/media/shop/up-in-the-clouds-photo-frame/2-480.webp",
+        "alt": "Up in the Clouds Personalized Photo Holder — desk holder view 2",
+        "sourceFile": "2_509ebc6489.jpg"
+      },
+      {
+        "src": "/media/shop/up-in-the-clouds-photo-frame/3-1200.webp",
+        "thumb": "/media/shop/up-in-the-clouds-photo-frame/3-480.webp",
+        "alt": "Up in the Clouds Personalized Photo Holder — desk holder view 3",
+        "sourceFile": "3_55a2c47fa7.jpg"
+      },
+      {
+        "src": "/media/shop/up-in-the-clouds-photo-frame/4-1200.webp",
+        "thumb": "/media/shop/up-in-the-clouds-photo-frame/4-480.webp",
+        "alt": "Up in the Clouds Personalized Photo Holder — desk holder view 4",
+        "sourceFile": "4_f6c13f5195.jpg"
+      }
+    ],
+    "video": "/media/shop/up-in-the-clouds-photo-frame/up-in-the-clouds-photo-frame.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/up-in-the-clouds-photo-frame"
+  },
+  {
+    "id": "stoneside-photo-frame",
+    "name": "Stoneside Personalized Photo Holder",
+    "priceCents": 2999,
+    "category": "Personalized photo holders",
+    "seasonal": false,
+    "personalization": {
+      "kind": "photo-print",
+      "photoCount": 1
+    },
+    "description": "Rounded stone shapes give your photo a simple, sculptural home. An understated keepsake for a desk or shelf, finished with your own snapshot.",
+    "included": "One assembled desk photo holder with one customer-supplied photo printed, trimmed and fitted. Reference photographs are examples; other props are not included.",
+    "dimensions": "Holder body: approximately 90 × 50 × 30 mm. The photo extends above the holder; these are not photo-print dimensions.",
+    "notes": "Small decorative desktop keepsake, not a standard 4 × 6 inch frame. Photo is cropped to suit the holder. Similar colours to the reference photos; exact shades may vary. Desk version only; no magnets. Keep away from heat and moisture.",
+    "images": [
+      {
+        "src": "/media/shop/stoneside-photo-frame/1-1200.webp",
+        "thumb": "/media/shop/stoneside-photo-frame/1-480.webp",
+        "alt": "Stoneside Personalized Photo Holder — photo display example",
+        "sourceFile": "Stoneside_Photo_Frame_1_174872efa3.png"
+      },
+      {
+        "src": "/media/shop/stoneside-photo-frame/2-1200.webp",
+        "thumb": "/media/shop/stoneside-photo-frame/2-480.webp",
+        "alt": "Stoneside Personalized Photo Holder — desk holder view 2",
+        "sourceFile": "Stoneside_Photo_Frame_2_9e0d084cab.png"
+      },
+      {
+        "src": "/media/shop/stoneside-photo-frame/3-1200.webp",
+        "thumb": "/media/shop/stoneside-photo-frame/3-480.webp",
+        "alt": "Stoneside Personalized Photo Holder — desk holder view 3",
+        "sourceFile": "Stoneside_Photo_Frame_3_bb4417f600.png"
+      },
+      {
+        "src": "/media/shop/stoneside-photo-frame/4-1200.webp",
+        "thumb": "/media/shop/stoneside-photo-frame/4-480.webp",
+        "alt": "Stoneside Personalized Photo Holder — desk holder view 4",
+        "sourceFile": "Stoneside_Photo_Frame_4_03b9892178.png"
+      }
+    ],
+    "video": "/media/shop/stoneside-photo-frame/stoneside-photo-frame.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/stoneside-photo-frame"
+  },
+  {
+    "id": "paw-hold-photo-frame",
+    "name": "Paw Hold Personalized Photo Holder",
+    "priceCents": 2999,
+    "category": "Personalized photo holders",
+    "seasonal": false,
+    "personalization": {
+      "kind": "photo-print",
+      "photoCount": 1
+    },
+    "description": "A little paw holds your favourite photo upright. Give a pet lover a personal keepsake, or keep a beloved companion on your desk.",
+    "included": "One assembled desk photo holder with one customer-supplied photo printed, trimmed and fitted. Reference photographs are examples; other props are not included.",
+    "dimensions": "Holder body: approximately 40 × 30 × 60 mm. The photo extends above the holder; these are not photo-print dimensions.",
+    "notes": "Small decorative desktop keepsake, not a standard 4 × 6 inch frame. Photo is cropped to suit the holder. Similar colours to the reference photos; exact shades may vary. Desk version only; no magnets. Keep away from heat and moisture.",
+    "images": [
+      {
+        "src": "/media/shop/paw-hold-photo-frame/1-1200.webp",
+        "thumb": "/media/shop/paw-hold-photo-frame/1-480.webp",
+        "alt": "Paw Hold Personalized Photo Holder — photo display example",
+        "sourceFile": "Paw_Hold_Photo_Frame_1_1d04030e74.png"
+      },
+      {
+        "src": "/media/shop/paw-hold-photo-frame/2-1200.webp",
+        "thumb": "/media/shop/paw-hold-photo-frame/2-480.webp",
+        "alt": "Paw Hold Personalized Photo Holder — desk holder view 2",
+        "sourceFile": "Paw_Hold_Photo_Frame_2_769266b66e.png"
+      },
+      {
+        "src": "/media/shop/paw-hold-photo-frame/3-1200.webp",
+        "thumb": "/media/shop/paw-hold-photo-frame/3-480.webp",
+        "alt": "Paw Hold Personalized Photo Holder — desk holder view 3",
+        "sourceFile": "Paw_Hold_Photo_Frame_3_99727755be.png"
+      },
+      {
+        "src": "/media/shop/paw-hold-photo-frame/4-1200.webp",
+        "thumb": "/media/shop/paw-hold-photo-frame/4-480.webp",
+        "alt": "Paw Hold Personalized Photo Holder — desk holder view 4",
+        "sourceFile": "Paw_Hold_Photo_Frame_4_22fae33525.png"
+      }
+    ],
+    "video": "/media/shop/paw-hold-photo-frame/paw-hold-photo-frame.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/paw-hold-photo-frame"
+  },
+  {
+    "id": "sealed-letter-photo-frame",
+    "name": "Sealed Letter Personalized Photo Holder",
+    "priceCents": 3499,
+    "category": "Personalized photo holders",
+    "seasonal": false,
+    "personalization": {
+      "kind": "photo-print",
+      "photoCount": 1
+    },
+    "description": "An envelope with a decorative seal holds a memory worth keeping. A small romantic gift or a personal reminder of someone special.",
+    "included": "One assembled desk photo holder with one customer-supplied photo printed, trimmed and fitted. Reference photographs are examples; other props are not included.",
+    "dimensions": "Holder body: approximately 100 × 20 × 70 mm. The photo extends above the holder; these are not photo-print dimensions.",
+    "notes": "Small decorative desktop keepsake, not a standard 4 × 6 inch frame. Photo is cropped to suit the holder. Similar colours to the reference photos; exact shades may vary. Desk version only; no magnets. Keep away from heat and moisture.",
+    "images": [
+      {
+        "src": "/media/shop/sealed-letter-photo-frame/1-1200.webp",
+        "thumb": "/media/shop/sealed-letter-photo-frame/1-480.webp",
+        "alt": "Sealed Letter Personalized Photo Holder — photo display example",
+        "sourceFile": "Sealed_Letter_Photo_Frame_1_e1bf58db8b.png"
+      },
+      {
+        "src": "/media/shop/sealed-letter-photo-frame/2-1200.webp",
+        "thumb": "/media/shop/sealed-letter-photo-frame/2-480.webp",
+        "alt": "Sealed Letter Personalized Photo Holder — desk holder view 2",
+        "sourceFile": "Sealed_Letter_Photo_Frame_2_67b4d0bb6d.png"
+      },
+      {
+        "src": "/media/shop/sealed-letter-photo-frame/3-1200.webp",
+        "thumb": "/media/shop/sealed-letter-photo-frame/3-480.webp",
+        "alt": "Sealed Letter Personalized Photo Holder — desk holder view 3",
+        "sourceFile": "Sealed_Letter_Photo_Frame_3_d302d9eed7.png"
+      },
+      {
+        "src": "/media/shop/sealed-letter-photo-frame/4-1200.webp",
+        "thumb": "/media/shop/sealed-letter-photo-frame/4-480.webp",
+        "alt": "Sealed Letter Personalized Photo Holder — desk holder view 4",
+        "sourceFile": "Sealed_Letter_Photo_Frame_4_0bd4546fd9.png"
+      }
+    ],
+    "video": "/media/shop/sealed-letter-photo-frame/sealed-letter-photo-frame.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/sealed-letter-photo-frame"
+  },
+  {
+    "id": "sakura-duo-photo-frame",
+    "name": "Sakura Duo Personalized Photo Holder",
+    "priceCents": 2999,
+    "category": "Personalized photo holders",
+    "seasonal": false,
+    "personalization": {
+      "kind": "photo-print",
+      "photoCount": 1
+    },
+    "description": "Soft cherry-blossom shapes frame your favourite moment from below. Add your own photo for a gentle, personal desk or shelf accent.",
+    "included": "One assembled desk photo holder with one customer-supplied photo printed, trimmed and fitted. Reference photographs are examples; other props are not included.",
+    "dimensions": "Holder body: approximately 80 × 30 × 20 mm. The photo extends above the holder; these are not photo-print dimensions.",
+    "notes": "Small decorative desktop keepsake, not a standard 4 × 6 inch frame. Photo is cropped to suit the holder. Similar colours to the reference photos; exact shades may vary. Desk version only; no magnets. Keep away from heat and moisture.",
+    "images": [
+      {
+        "src": "/media/shop/sakura-duo-photo-frame/1-1200.webp",
+        "thumb": "/media/shop/sakura-duo-photo-frame/1-480.webp",
+        "alt": "Sakura Duo Personalized Photo Holder — photo display example",
+        "sourceFile": "1_c3c71b3d21.jpg"
+      },
+      {
+        "src": "/media/shop/sakura-duo-photo-frame/2-1200.webp",
+        "thumb": "/media/shop/sakura-duo-photo-frame/2-480.webp",
+        "alt": "Sakura Duo Personalized Photo Holder — desk holder view 2",
+        "sourceFile": "2_fafc61a2f0.jpg"
+      },
+      {
+        "src": "/media/shop/sakura-duo-photo-frame/3-1200.webp",
+        "thumb": "/media/shop/sakura-duo-photo-frame/3-480.webp",
+        "alt": "Sakura Duo Personalized Photo Holder — desk holder view 3",
+        "sourceFile": "3_76e3c89d0b.jpg"
+      },
+      {
+        "src": "/media/shop/sakura-duo-photo-frame/4-1200.webp",
+        "thumb": "/media/shop/sakura-duo-photo-frame/4-480.webp",
+        "alt": "Sakura Duo Personalized Photo Holder — desk holder view 4",
+        "sourceFile": "4_6638084774.jpg"
+      }
+    ],
+    "video": "/media/shop/sakura-duo-photo-frame/sakura-duo-photo-frame.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/sakura-duo-photo-frame"
+  },
+  {
+    "id": "love-letter-photo-frame",
+    "name": "Love Letter Personalized Photo Holder",
+    "priceCents": 3499,
+    "category": "Personalized photo holders",
+    "seasonal": false,
+    "personalization": {
+      "kind": "photo-print",
+      "photoCount": 1
+    },
+    "description": "A pink envelope and heart detail turn a favourite photo into a love note. A personal keepsake for a partner, friend or family member.",
+    "included": "One assembled desk photo holder with one customer-supplied photo printed, trimmed and fitted. Reference photographs are examples; other props are not included.",
+    "dimensions": "Holder body: approximately 100 × 20 × 70 mm. The photo extends above the holder; these are not photo-print dimensions.",
+    "notes": "Small decorative desktop keepsake, not a standard 4 × 6 inch frame. Photo is cropped to suit the holder. Similar colours to the reference photos; exact shades may vary. Desk version only; no magnets. Keep away from heat and moisture.",
+    "images": [
+      {
+        "src": "/media/shop/love-letter-photo-frame/1-1200.webp",
+        "thumb": "/media/shop/love-letter-photo-frame/1-480.webp",
+        "alt": "Love Letter Personalized Photo Holder — photo display example",
+        "sourceFile": "Love_Letter_Photo_Frame_1_006fadf19d.png"
+      },
+      {
+        "src": "/media/shop/love-letter-photo-frame/2-1200.webp",
+        "thumb": "/media/shop/love-letter-photo-frame/2-480.webp",
+        "alt": "Love Letter Personalized Photo Holder — desk holder view 2",
+        "sourceFile": "Love_Letter_Photo_Frame_2_9c4ace7dd1.png"
+      },
+      {
+        "src": "/media/shop/love-letter-photo-frame/3-1200.webp",
+        "thumb": "/media/shop/love-letter-photo-frame/3-480.webp",
+        "alt": "Love Letter Personalized Photo Holder — desk holder view 3",
+        "sourceFile": "Love_Letter_Photo_Frame_3_b1ecede471.png"
+      },
+      {
+        "src": "/media/shop/love-letter-photo-frame/4-1200.webp",
+        "thumb": "/media/shop/love-letter-photo-frame/4-480.webp",
+        "alt": "Love Letter Personalized Photo Holder — desk holder view 4",
+        "sourceFile": "Love_Letter_Photo_Frame_4_eb8e04a670.png"
+      }
+    ],
+    "video": "/media/shop/love-letter-photo-frame/love-letter-photo-frame.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/love-letter-photo-frame"
+  },
+  {
+    "id": "lavender-duo-photo-frame",
+    "name": "Lavender Duo Personalized Photo Holder",
+    "priceCents": 2999,
+    "category": "Personalized photo holders",
+    "seasonal": false,
+    "personalization": {
+      "kind": "photo-print",
+      "photoCount": 1
+    },
+    "description": "Lavender-shaped blooms add a calm splash of colour beneath your photo. A compact keepsake for a shelf, workspace or thoughtful gift.",
+    "included": "One assembled desk photo holder with one customer-supplied photo printed, trimmed and fitted. Reference photographs are examples; other props are not included.",
+    "dimensions": "Holder body: approximately 80 × 30 × 20 mm. The photo extends above the holder; these are not photo-print dimensions.",
+    "notes": "Small decorative desktop keepsake, not a standard 4 × 6 inch frame. Photo is cropped to suit the holder. Similar colours to the reference photos; exact shades may vary. Desk version only; no magnets. Keep away from heat and moisture.",
+    "images": [
+      {
+        "src": "/media/shop/lavender-duo-photo-frame/1-1200.webp",
+        "thumb": "/media/shop/lavender-duo-photo-frame/1-480.webp",
+        "alt": "Lavender Duo Personalized Photo Holder — photo display example",
+        "sourceFile": "Lavender_Duo_Photo_Frame_1_6edd12621a.png"
+      },
+      {
+        "src": "/media/shop/lavender-duo-photo-frame/2-1200.webp",
+        "thumb": "/media/shop/lavender-duo-photo-frame/2-480.webp",
+        "alt": "Lavender Duo Personalized Photo Holder — desk holder view 2",
+        "sourceFile": "Lavender_Duo_Photo_Frame_2_8544482389.png"
+      },
+      {
+        "src": "/media/shop/lavender-duo-photo-frame/3-1200.webp",
+        "thumb": "/media/shop/lavender-duo-photo-frame/3-480.webp",
+        "alt": "Lavender Duo Personalized Photo Holder — desk holder view 3",
+        "sourceFile": "Lavender_Duo_Photo_Frame_3_49767ee684.png"
+      },
+      {
+        "src": "/media/shop/lavender-duo-photo-frame/4-1200.webp",
+        "thumb": "/media/shop/lavender-duo-photo-frame/4-480.webp",
+        "alt": "Lavender Duo Personalized Photo Holder — desk holder view 4",
+        "sourceFile": "Lavender_Duo_Photo_Frame_4_3faf286fec.png"
+      }
+    ],
+    "video": "/media/shop/lavender-duo-photo-frame/lavender-duo-photo-frame.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/lavender-duo-photo-frame"
+  },
+  {
+    "id": "retro-cam-photo-frame",
+    "name": "Retro Cam Personalized Photo Holder",
+    "priceCents": 3999,
+    "category": "Personalized photo holders",
+    "seasonal": false,
+    "personalization": {
+      "kind": "photo-print",
+      "photoCount": 1
+    },
+    "description": "A vintage instant-camera design displays your photo like a freshly captured memory. A playful keepsake for photographers and anyone with a favourite snapshot.",
+    "included": "One assembled desk photo holder with one customer-supplied photo printed, trimmed and fitted. Reference photographs are examples; other props are not included.",
+    "dimensions": "Holder body: approximately 110 × 30 × 80 mm. The photo extends above the holder; these are not photo-print dimensions.",
+    "notes": "Small decorative desktop keepsake, not a standard 4 × 6 inch frame. Photo is cropped to suit the holder. Similar colours to the reference photos; exact shades may vary. Desk version only; no magnets. Keep away from heat and moisture.",
+    "images": [
+      {
+        "src": "/media/shop/retro-cam-photo-frame/1-1200.webp",
+        "thumb": "/media/shop/retro-cam-photo-frame/1-480.webp",
+        "alt": "Retro Cam Personalized Photo Holder — photo display example",
+        "sourceFile": "1_7097ddfc84.jpg"
+      },
+      {
+        "src": "/media/shop/retro-cam-photo-frame/2-1200.webp",
+        "thumb": "/media/shop/retro-cam-photo-frame/2-480.webp",
+        "alt": "Retro Cam Personalized Photo Holder — desk holder view 2",
+        "sourceFile": "2_f9d5049c0c.jpg"
+      },
+      {
+        "src": "/media/shop/retro-cam-photo-frame/3-1200.webp",
+        "thumb": "/media/shop/retro-cam-photo-frame/3-480.webp",
+        "alt": "Retro Cam Personalized Photo Holder — desk holder view 3",
+        "sourceFile": "3_aee6478e5e.jpg"
+      },
+      {
+        "src": "/media/shop/retro-cam-photo-frame/4-1200.webp",
+        "thumb": "/media/shop/retro-cam-photo-frame/4-480.webp",
+        "alt": "Retro Cam Personalized Photo Holder — desk holder view 4",
+        "sourceFile": "4_a8e3852394.jpg"
+      }
+    ],
+    "video": "/media/shop/retro-cam-photo-frame/retro-cam-photo-frame.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/retro-cam-photo-frame"
+  },
+  {
+    "id": "dino-peek-photo-frame",
+    "name": "Dino Peek Personalized Photo Holder",
+    "priceCents": 3499,
+    "category": "Personalized photo holders",
+    "seasonal": false,
+    "personalization": {
+      "kind": "photo-print",
+      "photoCount": 1
+    },
+    "description": "A friendly long-necked dinosaur peeks around your favourite photo. Add a little personality to a desk or shelf with a memory of your own.",
+    "included": "One assembled desk photo holder with one customer-supplied photo printed, trimmed and fitted. Reference photographs are examples; other props are not included.",
+    "dimensions": "Holder body: approximately 120 × 50 × 120 mm. The photo extends above the holder; these are not photo-print dimensions.",
+    "notes": "Small decorative desktop keepsake, not a standard 4 × 6 inch frame. Photo is cropped to suit the holder. Similar colours to the reference photos; exact shades may vary. Desk version only; no magnets. Keep away from heat and moisture.",
+    "images": [
+      {
+        "src": "/media/shop/dino-peek-photo-frame/1-1200.webp",
+        "thumb": "/media/shop/dino-peek-photo-frame/1-480.webp",
+        "alt": "Dino Peek Personalized Photo Holder — photo display example",
+        "sourceFile": "1_70100516de.jpg"
+      },
+      {
+        "src": "/media/shop/dino-peek-photo-frame/2-1200.webp",
+        "thumb": "/media/shop/dino-peek-photo-frame/2-480.webp",
+        "alt": "Dino Peek Personalized Photo Holder — desk holder view 2",
+        "sourceFile": "2_9dcfccf543.jpg"
+      },
+      {
+        "src": "/media/shop/dino-peek-photo-frame/3-1200.webp",
+        "thumb": "/media/shop/dino-peek-photo-frame/3-480.webp",
+        "alt": "Dino Peek Personalized Photo Holder — desk holder view 3",
+        "sourceFile": "3_2c6beda248.jpg"
+      },
+      {
+        "src": "/media/shop/dino-peek-photo-frame/4-1200.webp",
+        "thumb": "/media/shop/dino-peek-photo-frame/4-480.webp",
+        "alt": "Dino Peek Personalized Photo Holder — desk holder view 4",
+        "sourceFile": "4_c190bd445c.jpg"
+      }
+    ],
+    "video": "/media/shop/dino-peek-photo-frame/dino-peek-photo-frame.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/dino-peek-photo-frame"
+  },
+  {
+    "id": "t-rex-peek-photo-frame",
+    "name": "T-Rex Peek Personalized Photo Holder",
+    "priceCents": 3499,
+    "category": "Personalized photo holders",
+    "seasonal": false,
+    "personalization": {
+      "kind": "photo-print",
+      "photoCount": 1
+    },
+    "description": "A tiny T-Rex brings big character to your photo display. A fun personal keepsake for a dinosaur fan, with your selected photo printed and fitted.",
+    "included": "One assembled desk photo holder with one customer-supplied photo printed, trimmed and fitted. Reference photographs are examples; other props are not included.",
+    "dimensions": "Holder body: approximately 70 × 50 × 50 mm. The photo extends above the holder; these are not photo-print dimensions.",
+    "notes": "Small decorative desktop keepsake, not a standard 4 × 6 inch frame. Photo is cropped to suit the holder. Similar colours to the reference photos; exact shades may vary. Desk version only; no magnets. Keep away from heat and moisture.",
+    "images": [
+      {
+        "src": "/media/shop/t-rex-peek-photo-frame/1-1200.webp",
+        "thumb": "/media/shop/t-rex-peek-photo-frame/1-480.webp",
+        "alt": "T-Rex Peek Personalized Photo Holder — photo display example",
+        "sourceFile": "T_Rex_Peek_Photo_Frame_1_970b486463.png"
+      },
+      {
+        "src": "/media/shop/t-rex-peek-photo-frame/2-1200.webp",
+        "thumb": "/media/shop/t-rex-peek-photo-frame/2-480.webp",
+        "alt": "T-Rex Peek Personalized Photo Holder — desk holder view 2",
+        "sourceFile": "T_Rex_Peek_Photo_Frame_2_64c73d3830.png"
+      },
+      {
+        "src": "/media/shop/t-rex-peek-photo-frame/3-1200.webp",
+        "thumb": "/media/shop/t-rex-peek-photo-frame/3-480.webp",
+        "alt": "T-Rex Peek Personalized Photo Holder — desk holder view 3",
+        "sourceFile": "T_Rex_Peek_Photo_Frame_3_9997876911.png"
+      },
+      {
+        "src": "/media/shop/t-rex-peek-photo-frame/4-1200.webp",
+        "thumb": "/media/shop/t-rex-peek-photo-frame/4-480.webp",
+        "alt": "T-Rex Peek Personalized Photo Holder — desk holder view 4",
+        "sourceFile": "T_Rex_Peek_Photo_Frame_4_55155a11a3.png"
+      }
+    ],
+    "video": "/media/shop/t-rex-peek-photo-frame/t-rex-peek-photo-frame.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/t-rex-peek-photo-frame"
+  },
+  {
+    "id": "analog-days-photo-frame",
+    "name": "Analog Days Personalized Photo Holder",
+    "priceCents": 3999,
+    "category": "Personalized photo holders",
+    "seasonal": false,
+    "personalization": {
+      "kind": "photo-print",
+      "photoCount": 1
+    },
+    "description": "A compact vintage-camera shape gives a favourite photo a place outside your phone. A nostalgic desk gift, personalized with your own memory.",
+    "included": "One assembled desk photo holder with one customer-supplied photo printed, trimmed and fitted. Reference photographs are examples; other props are not included.",
+    "dimensions": "Holder body: approximately 120 × 40 × 80 mm. The photo extends above the holder; these are not photo-print dimensions.",
+    "notes": "Small decorative desktop keepsake, not a standard 4 × 6 inch frame. Photo is cropped to suit the holder. Similar colours to the reference photos; exact shades may vary. Desk version only; no magnets. Keep away from heat and moisture.",
+    "images": [
+      {
+        "src": "/media/shop/analog-days-photo-frame/1-1200.webp",
+        "thumb": "/media/shop/analog-days-photo-frame/1-480.webp",
+        "alt": "Analog Days Personalized Photo Holder — photo display example",
+        "sourceFile": "1_23716ef48c.jpg"
+      },
+      {
+        "src": "/media/shop/analog-days-photo-frame/2-1200.webp",
+        "thumb": "/media/shop/analog-days-photo-frame/2-480.webp",
+        "alt": "Analog Days Personalized Photo Holder — desk holder view 2",
+        "sourceFile": "2_7407ce96b4.jpg"
+      },
+      {
+        "src": "/media/shop/analog-days-photo-frame/3-1200.webp",
+        "thumb": "/media/shop/analog-days-photo-frame/3-480.webp",
+        "alt": "Analog Days Personalized Photo Holder — desk holder view 3",
+        "sourceFile": "3_33141774f3.jpg"
+      },
+      {
+        "src": "/media/shop/analog-days-photo-frame/4-1200.webp",
+        "thumb": "/media/shop/analog-days-photo-frame/4-480.webp",
+        "alt": "Analog Days Personalized Photo Holder — desk holder view 4",
+        "sourceFile": "4_8381805d71.jpg"
+      }
+    ],
+    "video": "/media/shop/analog-days-photo-frame/analog-days-photo-frame.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/analog-days-photo-frame"
   }
 ]

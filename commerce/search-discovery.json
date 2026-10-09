@@ -2,7 +2,7 @@
   "origin": "https://custombuildstudio.ca",
   "storeDomain": "aqk73w-k2.myshopify.com",
   "apiVersion": "2026-07",
-  "collectionIds": ["headphone-stands", "halloween"],
+  "collectionIds": ["headphone-stands", "halloween", "photo-frames"],
   "shippingCountry": "CA",
   "shippingPrice": "0.00"
 }

@@ -23,6 +23,19 @@ export default async (request: Request, context: { next: () => Promise<Response>
   } catch { return response; }
 };
 export const config = { path: [
+  "/shop/daisy-duo-photo-frame/*",
+  "/shop/sunflower-duo-photo-frame/*",
+  "/shop/up-in-the-clouds-photo-frame/*",
+  "/shop/stoneside-photo-frame/*",
+  "/shop/paw-hold-photo-frame/*",
+  "/shop/sealed-letter-photo-frame/*",
+  "/shop/sakura-duo-photo-frame/*",
+  "/shop/love-letter-photo-frame/*",
+  "/shop/lavender-duo-photo-frame/*",
+  "/shop/retro-cam-photo-frame/*",
+  "/shop/dino-peek-photo-frame/*",
+  "/shop/t-rex-peek-photo-frame/*",
+  "/shop/analog-days-photo-frame/*",
   "/shop/flow-stand-headphone-and-phone-holder/*",
   "/shop/curve-caddy-headphone-holder/*",
   "/shop/ring-dock-headphone-holder/*",

@@ -1384,3 +1384,11 @@
 }
 @media (prefers-reduced-motion: reduce) { .shop-sale-ribbon { transition: none; } }
 @media (max-width: 600px) { .shop-sale-hero .shop-sale-deadline + .button { margin-left: 0; } }
+.photo-print-order { display: grid; gap: 1rem; padding: 1.25rem; margin: 1.25rem 0; border: 1px solid var(--line, #384956); border-radius: 12px; background: rgba(125, 211, 252, .04); }
+.photo-print-order label { display: grid; gap: .4rem; }
+.photo-print-order input, .photo-print-order textarea { width: 100%; max-width: 100%; min-width: 0; padding: .7rem; color: inherit; background: transparent; border: 1px solid var(--line, #384956); border-radius: 6px; }
+.photo-print-order input[type=number] { max-width: 6rem; }
+.photo-print-steps { display: flex; flex-wrap: wrap; gap: .6rem 1rem; font-size: .85rem; color: #075985; }
+.photo-print-preview { margin: 0; }
+.photo-print-preview img { max-width: 100%; max-height: 220px; object-fit: contain; border-radius: 6px; }
+.photo-print-preview figcaption { font-size: .8rem; opacity: .75; margin-top: .4rem; }

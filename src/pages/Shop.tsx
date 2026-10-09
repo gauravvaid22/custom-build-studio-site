@@ -19,6 +19,8 @@ import { FulfillmentSelector, PICKUP_PRICE_DIFFERENCE, useFulfillment } from "..
 import { LithophaneAdmin } from "../components/LithophaneAdmin";
 import { SaleAdmin } from "../components/SaleAdmin";
 import { HeadphonePricingAdmin } from "../components/HeadphonePricingAdmin";
+import { PhotoPrintOrder } from "../components/PhotoPrintOrder";
+import frameSource from "../../commerce/photo-frames-source.json";
 
 type Product = (typeof products)[number];
 type ProductVariant = {
@@ -290,7 +292,9 @@ function ShopProductCard({ product }: { product: Product }) {
           <span>CAD</span>
         </p>
         {regularPrice && <p className="shop-regular-price">Regular {money(regularPrice)} CAD</p>}
-        {managed ? (
+        {"personalization" in product ? (
+          <><p className="small">Your photo print included</p><Link className="button" to={`/shop/${product.id}`}>Personalize yours ↗</Link></>
+        ) : managed ? (
           <Link className="button" to={`/shop/${product.id}`}>{managed.available ? "Personalize yours ↗" : "View details ↗"}</Link>
         ) : variantsFor(product).length ? (
           <Link className="button" to={`/shop/${product.id}`}>
@@ -646,6 +650,7 @@ export function ShopCollection({ id }: { id: string }) {
             <p className="eyebrow">{collection.eyebrow}</p>
               <h1>{id === "headphone-stands" ? "Headphone stands. A better desk." : collection.heading}</h1>
             <p className="lead">{collection.description}</p>
+            {id === "personalized-gifts" && <p><Link className="text-link" to="/shop/photo-frames">Explore 13 photo holders · photo print included →</Link></p>}
             <a className="button" href="#products">View {listed.length} {listed.length === 1 ? "product" : "products"} ↘</a>
           </div>
           <div className="shop-collection-hero-image"><ProductImage product={cover} large/></div>
@@ -753,7 +758,7 @@ export function ShopProduct() {
       <ShopNotice />
       <section className="section">
         <div className="container">
-          <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {product.category === "Headphone stands" && <><Link to="/shop/headphone-stands">Headphone Stands</Link> / </>}{nameFor(product.id, product.name)}</nav>
+          <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {"personalization" in product && <><Link to="/shop/personalized-gifts">Personalized Gifts</Link> / <Link to="/shop/photo-frames">Photo Holders</Link> / </>}{product.category === "Headphone stands" && <><Link to="/shop/headphone-stands">Headphone Stands</Link> / </>}{nameFor(product.id, product.name)}</nav>
           <div className="shop-detail">
             <div>
               <div className="shop-main-image">
@@ -869,11 +874,11 @@ export function ShopProduct() {
                   <a href={maskSizeEmail}>Need a custom ear-to-ear size? Email us for a quote →</a>
                 </div>
               )}
-              <AddProduct
+              {"personalization" in product ? <PhotoPrintOrder key={product.id} productId={product.id} /> : <AddProduct
                 product={product}
                 variantId={selectedVariant.id}
                 onVariantChange={chooseVariant}
-              />
+              />}
               <Link className="text-link" to="/shop/cart">
                 View cart & checkout ↗
               </Link>
@@ -899,6 +904,7 @@ export function ShopProduct() {
                 </>}
                 <dt>Colour & finish</dt>
                 <dd>{isHalloweenMask ? "Orange and green colouring will be similar to the reference photos; exact shades and hand-finished details may vary. Contact us before checkout with colour questions." : "Similar to the main photo. Contact us before checkout to request a different colour."}</dd>
+                {"personalization" in product && <><dt>Photo & size guide</dt><dd>{product.notes} The photo print is included in the price. Upload a clear original image; we crop it for the holder and follow your notes where practical. Camera designs are decorative holders, not working cameras.</dd></>}
                 <dt>Timing & handoff</dt>
                 <dd>
                   {`${productionMessage.replace(/\.$/, "")}. ${mode === "pickup" ? "Pickup by appointment in Southeast Edmonton. We email your private pickup details after ordering." : `${deliveryEstimate} Free standard tracked shipping across Canada through Shopify checkout.`}`}
@@ -1562,6 +1568,7 @@ export function ShopAdmin() {
                 <section className="shop-admin-products">
                   <div className="section-heading"><div><p className="eyebrow">SHOPIFY IS THE CATALOG SOURCE</p><h2>Product names &amp; prices</h2></div><p>Change a product title or price in Shopify. The website refreshes both automatically, so checkout and product pages stay aligned.</p></div>
                   <HeadphonePricingAdmin adminKey={key} />
+                  <HeadphonePricingAdmin adminKey={key} items={frameSource.products} heading="PERSONALIZED PHOTO HOLDERS" />
                   <a className="button" href="https://admin.shopify.com/store/aqk73w-k2/products" target="_blank" rel="noreferrer">Open Shopify products ↗</a>
                   <div className="shop-admin-product-grid">
                     {products.filter((product) => !isVariant(product)).map((product) => (

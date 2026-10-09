@@ -21,7 +21,7 @@ function StepIcon({ type }: { type: "photo" | "make" | "ship" }) {
   return <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 10 16 4l12 6-12 6L4 10Z"/><path d="M4 10v12l12 6 12-6V10M16 16v12"/><path d="m22 19 2 2 4-5"/></svg>;
 }
 
-async function uploadPhoto(file: File, onProgress: (progress: number) => void) {
+export async function uploadPhoto(file: File, onProgress: (progress: number) => void) {
   const start = await fetch("/.netlify/functions/shop-media?action=start", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

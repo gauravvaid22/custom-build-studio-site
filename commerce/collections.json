@@ -4,13 +4,26 @@
     "kind": "department",
     "name": "Personalized Gifts",
     "shortName": "Personalized gifts",
-    "eyebrow": "YOUR PHOTO / MADE INTO LIGHT",
-    "heading": "A personal memory, made to glow.",
-    "description": "Meaningful made-to-order gifts created from your own photo, with a clear preview and secure image upload before checkout.",
-    "seoDescription": "Shop personalized gifts made in Edmonton, including custom photo lithophane lamps with wooden LED bases and secure photo upload.",
+    "eyebrow": "YOUR PHOTOS / PERSONAL KEEPSAKES",
+    "heading": "Your memories. Made personal.",
+    "description": "Personal photo lamps and small photo holders, made in Edmonton. Upload your favourite image and we turn it into a keepsake, ready to gift.",
+    "seoDescription": "Shop personalized photo gifts made in Edmonton: custom photo lamps and decorative photo holders with your photo print included. Free tracked Canadian shipping or Edmonton pickup.",
     "coverProduct": "lithophane-table-lamp",
     "products": [
-      "lithophane-table-lamp"
+      "lithophane-table-lamp",
+      "daisy-duo-photo-frame",
+      "sunflower-duo-photo-frame",
+      "up-in-the-clouds-photo-frame",
+      "stoneside-photo-frame",
+      "paw-hold-photo-frame",
+      "sealed-letter-photo-frame",
+      "sakura-duo-photo-frame",
+      "love-letter-photo-frame",
+      "lavender-duo-photo-frame",
+      "retro-cam-photo-frame",
+      "dino-peek-photo-frame",
+      "t-rex-peek-photo-frame",
+      "analog-days-photo-frame"
     ]
   },
   {
@@ -156,6 +169,32 @@
       "pumpkin-fidget-keychain",
       "skull-web-trinket-dish",
       "ghost-on-a-swing"
+    ]
+  },
+  {
+    "id": "photo-frames",
+    "kind": "collection",
+    "name": "Personalized Photo Holders",
+    "shortName": "Photo holders",
+    "eyebrow": "SMALL FRAMES / REAL MEMORIES",
+    "heading": "A little home for your favourite photo.",
+    "description": "Choose a floral, dinosaur, camera or travel-inspired desk holder. Upload one photo and we print, trim and fit it for you. Small personalized gifts made in Edmonton, with Canadian shipping included.",
+    "seoDescription": "Personalized mini photo frames and desk photo holders with a photo print included. Floral, dinosaur, camera and pet-inspired designs made in Edmonton. Free Canadian shipping.",
+    "coverProduct": "daisy-duo-photo-frame",
+    "products": [
+      "daisy-duo-photo-frame",
+      "sunflower-duo-photo-frame",
+      "up-in-the-clouds-photo-frame",
+      "stoneside-photo-frame",
+      "paw-hold-photo-frame",
+      "sealed-letter-photo-frame",
+      "sakura-duo-photo-frame",
+      "love-letter-photo-frame",
+      "lavender-duo-photo-frame",
+      "retro-cam-photo-frame",
+      "dino-peek-photo-frame",
+      "t-rex-peek-photo-frame",
+      "analog-days-photo-frame"
     ]
   }
 ]
