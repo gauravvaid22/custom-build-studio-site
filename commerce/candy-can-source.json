@@ -1,0 +1,365 @@
+{
+  "reviewedAt": "2026-10-09",
+  "drop": "https://platform.stlflix.com/drops/drop-310",
+  "licenseEvidence": [
+    "https://help.stlflix.com/pt-BR/articles/14844512-diferenca-entre-plano-pessoal-e-comercial",
+    "https://help.stlflix.com/pt-BR/articles/17338035-planos-e-beneficios-da-stlflix-e-da-stlai"
+  ],
+  "privateProductionRoot": "../private-production/candy-can-2026-10-09",
+  "pricingAssumptions": {
+    "currency": "CAD",
+    "pickupDifferenceCents": 1000,
+    "shippingAllowanceCad": 10,
+    "filamentPerKgCad": 25,
+    "machineHourlyAllowanceCad": 1,
+    "labourHourlyAllowanceCad": 25,
+    "assemblyMinutesAllowance": [
+      10,
+      20
+    ],
+    "packagingAllowanceCad": [
+      1.5,
+      3
+    ],
+    "notes": "Estimates only. Do not infer material grams from photos or guarantee profitability. Multipart times are Bambu P1S estimates, candy times use older printers. Prices assume efficient multipart assembly, not high-purge AMS printing. Keep these new products out of additional automatic discounts until costs are measured."
+  },
+  "benchmarks": [
+    {
+      "url": "https://contrive3d.com/products/spectral-candy-holder-3d-printed-candy-dish",
+      "price": 30,
+      "currency": "USD",
+      "shipping": "included"
+    },
+    {
+      "url": "https://www.olijprinting.com/product-page/knight-armor-can-holder",
+      "price": 12.5,
+      "currency": "USD",
+      "shipping": "not established; tax excluded"
+    },
+    {
+      "url": "https://poppadaycarecreations.bigcartel.com/product/%F0%9F%A4%B5-suit-can-holder",
+      "price": 12.99,
+      "currency": "USD",
+      "shipping": "not established"
+    },
+    {
+      "url": "https://lolymeko.com/products/melting-pumpkin-candy-holder",
+      "price": 39.99,
+      "currency": "USD",
+      "shipping": "$6.85 under $45 threshold; different seller specifications"
+    }
+  ],
+  "products": [
+    {
+      "id": "melting-pumpkin-candy-dispenser",
+      "name": "Melting Pumpkin Candy Dispenser",
+      "priceCents": 4999,
+      "heightMm": 160,
+      "photoNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "category": "Halloween candy holders",
+      "description": "A grinning jack-o’-lantern with flowing, melted details and a removable stem lid. A striking place to keep wrapped treats on your Halloween table.",
+      "source": "https://platform.stlflix.com/product/melting-pumpkin-candy-dispenser",
+      "productionEstimates": {
+        "legacyEstimate": "01 Day 27 Hours 31 Minutes; source wording is ambiguous"
+      },
+      "tags": [
+        "Halloween",
+        "candy holder",
+        "Edmonton made"
+      ],
+      "priceRationale": "Provisional finished, multipart colour design with $10 Canadian shipping allowance. Actual sliced grams, assembly labour and postage must be reviewed; not a guaranteed margin.",
+      "photos": [
+        "Melting_Pumpkin_Candy_Dispenser_1_e5bc6bddcf.jpg",
+        "Melting_Pumpkin_Candy_Dispenser_2_76336db33a.jpg",
+        "Melting_Pumpkin_Candy_Dispenser_3_952f88fc10.jpg",
+        "Melting_Pumpkin_Candy_Dispenser_4_1e734287a9.jpg",
+        "Melting_Pumpkin_Candy_Dispenser_5_f2fa0f15d0.jpg"
+      ],
+      "videoSource": "Melting_Pumpkin_Candy_Dispenser_WEBM_be507fbac3.webm"
+    },
+    {
+      "id": "spectral-candy-holder",
+      "name": "Spectral Ghost Candy Bowl",
+      "priceCents": 3999,
+      "heightMm": 90,
+      "photoNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "category": "Halloween candy holders",
+      "description": "A ring of ghostly faces turns a simple candy bowl into a spooky centrepiece. Fill it with wrapped treats for an entryway, party table or Halloween display.",
+      "source": "https://platform.stlflix.com/product/spectral-candy-holder",
+      "productionEstimates": {
+        "ender3Minutes": 1434
+      },
+      "tags": [
+        "Halloween",
+        "candy holder",
+        "Edmonton made"
+      ],
+      "priceRationale": "Provisional finished, multipart colour design with $10 Canadian shipping allowance. Actual sliced grams, assembly labour and postage must be reviewed; not a guaranteed margin.",
+      "photos": [
+        "Spectral_Candy_Holder1_d0bde03a78.jpg",
+        "Spectral_Candy_Holder2_d7f772e6bf.jpg",
+        "Spectral_Candy_Holder3_82d2c375f9.jpg",
+        "Spectral_Candy_Holder4_08b7d9ffbb.jpg",
+        "Spectral_Candy_Holder5_f0e26f7e60.jpg",
+        "Spectral_Candy_Holder6_4e8f5502a9.jpg",
+        "Spectral_Candy_Holder7_33fac44b5e.jpg"
+      ],
+      "videoSource": "SPECTRAL_CANDY_WEBM_4301a2f6b3.webm"
+    },
+    {
+      "id": "walkin-pumpkin-candy-holder",
+      "name": "Walkin’ Pumpkin Candy Holder",
+      "priceCents": 4499,
+      "heightMm": 200,
+      "photoNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "category": "Halloween candy holders",
+      "description": "A smiling pumpkin bucket with a handle and articulated legs. Sit it on a shelf or table for a playful Halloween display filled with wrapped treats.",
+      "source": "https://platform.stlflix.com/product/walkin-pumpkin-candy-holder",
+      "productionEstimates": {
+        "ender3Minutes": 1422
+      },
+      "tags": [
+        "Halloween",
+        "candy holder",
+        "Edmonton made"
+      ],
+      "priceRationale": "Provisional finished, multipart colour design with $10 Canadian shipping allowance. Actual sliced grams, assembly labour and postage must be reviewed; not a guaranteed margin.",
+      "photos": [
+        "Walkin_Pumpkin_Candy_Holder_1_dd630e5a5b.jpg",
+        "Walkin_Pumpkin_Candy_Holder_2_7e007407f3.jpg",
+        "Walkin_Pumpkin_Candy_Holder_3_ed88c73be4.jpg",
+        "Walkin_Pumpkin_Candy_Holder_4_d5141eb330.jpg",
+        "Walkin_Pumpkin_Candy_Holder_5_bff697522b.jpg",
+        "Walkin_Pumpkin_Candy_Holder_6_1177452d7c.jpg",
+        "Walkin_Pumpkin_Candy_Holder_7_872760612f.jpg"
+      ],
+      "videoSource": "WALKING_PUMPKIN_WEBM_bee3714531.webm"
+    },
+    {
+      "id": "suit-can-holder",
+      "name": "Suit & Tie Can Holder",
+      "priceCents": 2999,
+      "heightMm": 115,
+      "photoNumbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "category": "Can holders",
+      "description": "Dress up your drink in a miniature suit and tie. A playful desk accessory or gift for someone whose beverage deserves to look smart.",
+      "source": "https://platform.stlflix.com/product/suit-can-holder",
+      "productionEstimates": {
+        "monoMinutes": 182,
+        "multipartMinutes": 256,
+        "multicolorMinutes": 842
+      },
+      "tags": [
+        "can holder",
+        "novelty drink accessory",
+        "Edmonton made"
+      ],
+      "priceRationale": "Provisional finished, multipart colour design with $10 Canadian shipping allowance. Actual sliced grams, assembly labour and postage must be reviewed; not a guaranteed margin.",
+      "photos": [
+        "Suit_Can_Holder_1_f543a19be4.png",
+        "Suit_Can_Holder_2_d8af92a406.png",
+        "Suit_Can_Holder_3_b60a4896dc.png",
+        "Suit_Can_Holder_4_7510505846.png"
+      ],
+      "videoSource": "Suit_WEBM_91068e5dba.webm"
+    },
+    {
+      "id": "overalls-can-holder",
+      "name": "Overalls Can Holder",
+      "priceCents": 3299,
+      "heightMm": 115,
+      "photoNumbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "category": "Can holders",
+      "description": "Blue overalls and a pink shirt give your drink a little workshop character. A colourful conversation piece for a desk, game night or casual gift.",
+      "source": "https://platform.stlflix.com/product/overalls-can-holder",
+      "productionEstimates": {
+        "monoMinutes": 231,
+        "multipartMinutes": 302,
+        "multicolorMinutes": 1702
+      },
+      "tags": [
+        "can holder",
+        "novelty drink accessory",
+        "Edmonton made"
+      ],
+      "priceRationale": "Provisional finished, multipart colour design with $10 Canadian shipping allowance. Actual sliced grams, assembly labour and postage must be reviewed; not a guaranteed margin.",
+      "photos": [
+        "Overalls_Can_Holder_1_dd14044002.png",
+        "Overalls_Can_Holder_2_52d47dbc68.png",
+        "Overalls_Can_Holder_3_9c4eb01c0b.png",
+        "Overalls_Can_Holder_4_abb8b25900.png"
+      ],
+      "videoSource": "Overalls_WEBM_9f1e43ab61.webm"
+    },
+    {
+      "id": "kimono-can-holder",
+      "name": "Kimono Can Holder",
+      "priceCents": 3499,
+      "heightMm": 115,
+      "photoNumbers": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "category": "Can holders",
+      "description": "A white kimono-style wrap with a red belt gives your beverage a distinctive look. A small, sculptural gift for a desk or table.",
+      "source": "https://platform.stlflix.com/product/kimono-can-holder",
+      "productionEstimates": {
+        "monoMinutes": 351,
+        "multipartMinutes": 584,
+        "multicolorMinutes": 750
+      },
+      "tags": [
+        "can holder",
+        "novelty drink accessory",
+        "Edmonton made"
+      ],
+      "priceRationale": "Provisional finished, multipart colour design with $10 Canadian shipping allowance. Actual sliced grams, assembly labour and postage must be reviewed; not a guaranteed margin.",
+      "photos": [
+        "Kimono_Can_Holder_1_3aa05ac5e0.png",
+        "Kimono_Can_Holder_2_fc25e4a8d6.png",
+        "Kimono_Can_Holder_3_eb627ab24f.png",
+        "Kimono_Can_Holder_4_bc8b1425be.png"
+      ],
+      "videoSource": "Kimono_WEBM_c6a83a1af4.webm"
+    },
+    {
+      "id": "apron-can-holder",
+      "name": "Apron Can Holder",
+      "priceCents": 3999,
+      "heightMm": 115,
+      "photoNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "category": "Can holders",
+      "description": "A miniature apron with a chef motif dresses up your drink. A fun gift for a cooking enthusiast or a playful addition to a kitchen table.",
+      "source": "https://platform.stlflix.com/product/apron-can-holder",
+      "productionEstimates": {
+        "monoMinutes": 628,
+        "multipartMinutes": 764,
+        "multicolorMinutes": 2668
+      },
+      "tags": [
+        "can holder",
+        "novelty drink accessory",
+        "Edmonton made"
+      ],
+      "priceRationale": "Provisional finished, multipart colour design with $10 Canadian shipping allowance. Actual sliced grams, assembly labour and postage must be reviewed; not a guaranteed margin.",
+      "photos": [
+        "Apron_Can_Holder1_f2b9644d01.png",
+        "Apron_Can_Holder2_815e297e90.png",
+        "Apron_Can_Holder3_2ade96e1d9.png",
+        "Apron_Can_Holder4_157d84fc91.png",
+        "Apron_Can_Holder5_26586497eb.png"
+      ],
+      "videoSource": "Apron_WEBM_e462f0bcd2.webm"
+    },
+    {
+      "id": "knight-armor-can-holder",
+      "name": "Knight Armor Can Holder",
+      "priceCents": 3499,
+      "heightMm": 115,
+      "photoNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "category": "Can holders",
+      "description": "Detailed armour, sculpted gauntlets and a red cross turn your drink into a miniature knight. A conversation piece for a gaming desk or tabletop.",
+      "source": "https://platform.stlflix.com/product/knight-armor-can-holder",
+      "productionEstimates": {
+        "monoMinutes": 274,
+        "multipartMinutes": 344,
+        "multicolorMinutes": 667
+      },
+      "tags": [
+        "can holder",
+        "novelty drink accessory",
+        "Edmonton made"
+      ],
+      "priceRationale": "Provisional finished, multipart colour design with $10 Canadian shipping allowance. Actual sliced grams, assembly labour and postage must be reviewed; not a guaranteed margin.",
+      "photos": [
+        "Knight_Armor_Can_Holder1_d7acbe71b2.png",
+        "Knight_Armor_Can_Holder2_d091dece87.png",
+        "Knight_Armor_Can_Holder3_f23753b762.png",
+        "Knight_Armor_Can_Holder4_eb0deaf160.png",
+        "Knight_Armor_Can_Holder5_f7939dbb3b.png"
+      ],
+      "videoSource": "Knight_Armor_WEBM_25f1dcc53b.webm"
+    },
+    {
+      "id": "overcoat-can-holder",
+      "name": "Overcoat Can Holder",
+      "priceCents": 2999,
+      "heightMm": 115,
+      "photoNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "category": "Can holders",
+      "description": "A grey belted overcoat gives your can a tailored look. A quirky desk accessory and an easy gift for someone who likes everyday objects with personality.",
+      "source": "https://platform.stlflix.com/product/overcoat-can-holder",
+      "productionEstimates": {
+        "monoMinutes": 246,
+        "multipartMinutes": 283,
+        "multicolorMinutes": 472
+      },
+      "tags": [
+        "can holder",
+        "novelty drink accessory",
+        "Edmonton made"
+      ],
+      "priceRationale": "Provisional finished, multipart colour design with $10 Canadian shipping allowance. Actual sliced grams, assembly labour and postage must be reviewed; not a guaranteed margin.",
+      "photos": [
+        "Overcoat_Can_Holder1_0e4e8cf087.png",
+        "Overcoat_Can_Holder2_20290ac776.png",
+        "Overcoat_Can_Holder3_e023a4c6dc.png",
+        "Overcoat_Can_Holder4_3059248783.png",
+        "Overcoat_Can_Holder5_d3cb3b6f90.png"
+      ],
+      "videoSource": "Overcoat_WEBM_3413dca445.webm"
+    }
+  ]
+}

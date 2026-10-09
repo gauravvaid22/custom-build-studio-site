@@ -113,7 +113,16 @@
       "skull-web-trinket-dish",
       "ghost-on-a-swing",
       "candlelight-pumpkins-table-lamp",
-      "ghost-duo-trinket-dish"
+      "ghost-duo-trinket-dish",
+      "suit-can-holder",
+      "overalls-can-holder",
+      "kimono-can-holder",
+      "apron-can-holder",
+      "knight-armor-can-holder",
+      "overcoat-can-holder",
+      "melting-pumpkin-candy-dispenser",
+      "spectral-candy-holder",
+      "walkin-pumpkin-candy-holder"
     ]
   },
   {
@@ -140,7 +149,10 @@
       "skeleton-chameleon",
       "verdant-remains-planter",
       "6-finger-alien-hand-controller-holder",
-      "night-owl-wall-light"
+      "night-owl-wall-light",
+      "melting-pumpkin-candy-dispenser",
+      "spectral-candy-holder",
+      "walkin-pumpkin-candy-holder"
     ]
   },
   {
@@ -182,7 +194,10 @@
       "skeleton-chameleon",
       "verdant-remains-planter",
       "6-finger-alien-hand-controller-holder",
-      "night-owl-wall-light"
+      "night-owl-wall-light",
+      "melting-pumpkin-candy-dispenser",
+      "spectral-candy-holder",
+      "walkin-pumpkin-candy-holder"
     ]
   },
   {
@@ -247,6 +262,25 @@
       "cyber-core-console-stand",
       "crescent-moon-console-stand",
       "mecha-moon-console-stand"
+    ]
+  },
+  {
+    "id": "can-holders",
+    "kind": "collection",
+    "name": "Novelty can holders",
+    "shortName": "Can holders",
+    "eyebrow": "A LITTLE CHARACTER / EVERYDAY DRINKS",
+    "heading": "Give your drink some character.",
+    "description": "Shop six clothing-inspired beverage can holders, from a suit and tie to knight armour. Finished gifts made in Edmonton for desks, game nights and tables. Beverage cans are not included.",
+    "seoDescription": "Novelty soda and beverage can holders made in Edmonton: suit, overalls, kimono, apron, knight armour and overcoat designs. Free Canadian shipping or Edmonton pickup.",
+    "coverProduct": "knight-armor-can-holder",
+    "products": [
+      "suit-can-holder",
+      "overalls-can-holder",
+      "kimono-can-holder",
+      "apron-can-holder",
+      "knight-armor-can-holder",
+      "overcoat-can-holder"
     ]
   }
 ]

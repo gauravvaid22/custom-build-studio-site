@@ -4,11 +4,12 @@ import products from "../../commerce/products.json" with { type: "json" };
 import source from "../../commerce/headphone-stands-source.json" with { type: "json" };
 import frames from "../../commerce/photo-frames-source.json" with { type: "json" };
 import consoles from "../../commerce/console-stands-source.json" with { type: "json" };
+import candyCans from "../../commerce/candy-can-source.json" with { type: "json" };
 import { managedVariantInput } from "../../commerce/managed-product-input.mjs";
 import pricing from "../../commerce/pricing.json" with { type: "json" };
 import { createShopifyAdmin } from "../../commerce/shopify-admin.mjs";
 
-const managedProducts = [...source.products, ...frames.products, ...consoles.products];
+const managedProducts = [...source.products, ...frames.products, ...consoles.products, ...candyCans.products];
 const ids = new Set(managedProducts.flatMap((item) => [item.id, ...(item.options || []).map(option => option.id)]));
 const admin = createShopifyAdmin({
   legacyToken: process.env.SHOPIFY_ADMIN_ACCESS_TOKEN || "",

@@ -28,6 +28,7 @@ import { HeadphonePricingAdmin } from "../components/HeadphonePricingAdmin";
 import { PhotoPrintOrder } from "../components/PhotoPrintOrder";
 import frameSource from "../../commerce/photo-frames-source.json";
 import consoleSource from "../../commerce/console-stands-source.json";
+import candyCanSource from "../../commerce/candy-can-source.json";
 const consolePriceItems = consoleSource.products.flatMap(product => product.options.map(option => ({ ...option, name: `${product.name} — ${option.label}` })));
 
 type Product = (typeof products)[number];
@@ -1523,6 +1524,7 @@ export function ShopAdmin() {
                   <HeadphonePricingAdmin adminKey={key} />
                   <HeadphonePricingAdmin adminKey={key} items={frameSource.products} heading="PERSONALIZED PHOTO HOLDERS" />
                   <HeadphonePricingAdmin adminKey={key} items={consolePriceItems} heading="PS5 CONSOLE STANDS" />
+                  <HeadphonePricingAdmin adminKey={key} items={candyCanSource.products} heading="CANDY & CAN HOLDERS" />
                   <a className="button" href="https://admin.shopify.com/store/aqk73w-k2/products" target="_blank" rel="noreferrer">Open Shopify products ↗</a>
                   <div className="shop-admin-product-grid">
                     {products.filter((product) => !isVariant(product)).map((product) => (
