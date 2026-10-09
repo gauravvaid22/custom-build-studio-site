@@ -1,7 +1,8 @@
 # Community Drop 26 — console stands
 
 Prepared 2026-10-08. Local preview: http://127.0.0.1:4181/shop/console-stands
-Not deployed and not created in Shopify yet. The existing live shop is unchanged.
+Published to Netlify main@24cd318. Live collection: https://custombuildstudio.ca/shop/console-stands/
+Six Shopify products created and published to My Store Headless on 2026-10-09.
 
 ## Products and proposed CAD prices
 
@@ -38,34 +39,36 @@ at review: https://www.canadacomputers.com/en/ps5-gaming-controllers/247957/sony
 - Prerendered metadata/sitemap, search-discovery collection membership and edge offer-enrichment paths.
 - Production archives and STL/3MF files are private and Git-ignored.
 
-## Required owner information before release
+## Release status — 2026-10-09
 
-An asynchronous question is pending: will the owner supply the correct mounting screw
-and verify the original PS5 / PS5 Slim fits and stability before selling?
-Do not claim included mounting hardware until that is confirmed. Do not invent screw
-specifications or assume that Sony's different console models use interchangeable hardware.
-Cyber Core's source description says horizontal, but its source marketing images show
-an upright console. Buyer copy intentionally avoids an unverified orientation claim;
-confirm the installation before release.
+Owner approved release with “Go head” in reply to the mounting-hardware/fit question.
+Included-items copy now includes the matching mounting screw. Source launchReady is true.
+Do not claim source fits have been physically tested. Check fit, mounting and ventilation
+in production; Cyber Core copy deliberately avoids conflicting source orientation claims.
 
-`commerce/console-stands-source.json` has `launchReady: false` and release notes.
-The protected Shopify creation endpoint refuses release until these details are resolved.
-All current changes are a local preview; do not report live checkout verification.
+Products were created through a focused Shopify CSV import because the owner deferred
+unlocking website admin. Import preview: 6 products, 24 SKUs, 41 photos; no overwrite.
+All six published ONLY to My Store Headless. No other catalog products were changed.
 
-## Release steps after confirmation
+| Handle | Shopify product ID |
+|---|---|
+| neon-cityscape-console-stand | 15413777629483 |
+| organic-grid-console-stand | 15413777727787 |
+| runestone-console-stand | 15413777760555 |
+| cyber-core-console-stand | 15413777826091 |
+| crescent-moon-console-stand | 15413777891627 |
+| mecha-moon-console-stand | 15413777924395 |
 
-1. Update included-items/installation copy and the source release notes using the owner's answer.
-2. Set `launchReady` only when the offering is confirmed; rerun the importer if modifying source descriptions.
-3. Build and push the focused changes to the connected Netlify repository.
-4. Load the updated admin dashboard; owner must unlock it again if its temporary session cleared.
-5. In Product prices → PS5 Console Stands, create each of the six Shopify products once.
-   The Original and Slim controls refer to the same parent handle; creation is idempotent.
-6. Publish those six products to the existing My Store Headless sales channel.
-7. Assign only their twelve pickup variants to the existing Edmonton pickup shipping profile.
-   Leave delivered variants under the free tracked Canadian shipping profile.
-8. Verify all 24 Shopify variant prices/SKUs, each fit selector, delivery/pickup cart lines,
-   hosted checkout shipping method and merchant-feed entries. Do not pay or place a real order.
-9. Save the verified live URLs/status here.
+Each product has Console model (Original PS5 / PS5 Slim) × Fulfillment
+(Delivery / Edmonton Pickup). Delivered SKU equals child website ID;
+pickup SKU adds -pickup. Inventory untracked, physical shipping required, taxable false.
+No production weights were invented. All 12 pickup variants assigned to shipping profile
+136310980907 (Edmonton pickup only), preserving previous selections. Its sole free rate
+is “Edmonton pickup by appointment — no delivery”. Delivery variants remain General profile.
+
+Protected admin login check remains deferred by owner. The 12 editable controls were deployed;
+creation recognizes existing handles and price saving targets the matching child SKUs.
+Do not create duplicate products. Owner should unlock admin for read-only final verification.
 
 ## Assets and source record
 
@@ -92,4 +95,16 @@ Reimport command: `python scripts/import-console-stands.py private-production/co
 - Two Neon Cityscape Slim units: pickup CAD $109.98; delivered CAD $129.98, shipping free.
 - Cart survived reload; test items removed afterwards.
 - Video gallery selects the WebM source with `preload=metadata`; no browser console errors observed.
-- Live Shopify creation, checkout and publishing remain pending as described above.
+- Shopify saved export audit passed: 24 exact SKUs/prices, physical shipping true,
+  taxable false, inventory untracked; 41 photo records.
+- Hosted checkout verified Neon Cityscape PS5 Slim / Delivery at CAD64.99 and
+  PS5 Slim / Edmonton Pickup at CAD54.99; mixed cart totals118.58/88.58 correct.
+  No email/address/payment entered, no order placed. Shipping-rate selection with a
+  real destination was not submitted; pickup profile configuration verified in Shopify.
+- Original two owner cart items preserved; only test stand removed and delivered mode restored.
+- Public /google-products.xml contains all12 Original/Slim delivered offers with correct
+  prices and variant URLs. Google indexing/ranking is not guaranteed or instant.
+- Website videos remain available; Shopify CSV imports photos only.
+- Shopify displays an existing failed CAD1.05 billing alert. Owner must resolve billing
+  in Shopify; no billing/payment settings changed.
+- Proof: ../console-stands-live.jpg.
