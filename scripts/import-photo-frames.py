@@ -45,7 +45,7 @@ for item in SOURCE['products']:
                'category': 'Personalized photo holders', 'seasonal': False,
                'personalization': {'kind': 'photo-print', 'photoCount': SOURCE['photoCount']},
                'description': item['description'],
-               'included': 'One assembled desk photo holder with one customer-supplied photo printed, trimmed and fitted. Reference photographs are examples; other props are not included.',
+               'included': f"One assembled desk photo holder with one customer-supplied {SOURCE['photoPrint']['widthInches']} × {SOURCE['photoPrint']['heightInches']} inch ({SOURCE['photoPrint']['widthMm']} × {SOURCE['photoPrint']['heightMm']} mm) photo printed, trimmed and fitted. Reference photographs are examples; other props are not included.",
                'dimensions': 'Holder body: approximately ' + ' × '.join(map(str, item['bodyMm'])) + ' mm. The photo extends above the holder; these are not photo-print dimensions.',
                'notes': 'Small decorative desktop keepsake, not a standard 4 × 6 inch frame. Photo is cropped to suit the holder. Similar colours to the reference photos; exact shades may vary. Desk version only; no magnets. Keep away from heat and moisture.',
                'images': images, 'video': f'/media/shop/{slug}/{slug}.webm',

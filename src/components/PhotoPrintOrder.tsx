@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "./Cart";
 import { uploadPhoto } from "./LithophaneProduct";
+import frames from "../../commerce/photo-frames-source.json";
 
 export function PhotoPrintOrder({ productId }: { productId: string }) {
   const { add } = useCart();
@@ -40,7 +41,7 @@ export function PhotoPrintOrder({ productId }: { productId: string }) {
       const attributes = [
         { key: "Personalization photo", value: new URL(uploaded.referenceUrl, window.location.origin).href },
         { key: "Original filename", value: uploaded.name },
-        { key: "Included photo print", value: "One photo printed, trimmed and fitted per holder" },
+        { key: "Included photo print", value: `One ${frames.photoPrint.widthInches} × ${frames.photoPrint.heightInches} inch photo printed, trimmed and fitted per holder` },
         ...(note.trim() ? [{ key: "Photo instructions", value: note.trim().slice(0, 500) }] : []),
       ];
       if (!add(productId, quantity, attributes)) throw new Error("Unable to add this quantity. Check your cart; the limit is 20 per item.");
@@ -51,6 +52,7 @@ export function PhotoPrintOrder({ productId }: { productId: string }) {
   return <form className="photo-print-order" onSubmit={submit}>
     <div className="photo-print-steps" aria-label="How to personalize"><span>① Choose your holder</span><span>② Upload your photo</span><span>③ We print & fit it</span></div>
     <strong>One photo print included</strong>
+    <span>{frames.photoPrint.widthInches} × {frames.photoPrint.heightInches} inches · {frames.photoPrint.widthMm} × {frames.photoPrint.heightMm} mm</span>
     <p className="small">Upload the original photo. We crop and trim it to suit this small desk holder. Example photos shown in the gallery are replaced with yours.</p>
     <label className="photo-print-file">Your photo
       <input type="file" required disabled={busy} accept=".jpg,.jpeg,.png,.webp,.heic,.heif,image/jpeg,image/png,image/webp,image/heic,image/heif" onChange={event => choose(event.target.files?.[0])} />

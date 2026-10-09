@@ -4,7 +4,7 @@ Added 2026-10-08. Source: https://platform.stlflix.com/drops/drop-367
 
 ## Offering and prices
 
-Each order unit is one assembled **desk-version** holder plus one customer-supplied photo, printed, trimmed and fitted. Gallery photos are personalization examples. No magnets, digital files or other props are included. These are small decorative keepsakes, not conventional full-size picture frames. Source body dimensions are recorded without inventing axis labels or photo aperture dimensions.
+Each order unit is one assembled **desk-version** holder plus one customer-supplied photo, printed, trimmed and fitted. Owner confirmed the photo size as **2.5 × 3.5 inches (63.5 × 88.9 mm)** on 2026-10-08. Gallery photos are personalization examples. No magnets, digital files or other props are included. These are small decorative keepsakes, not conventional full-size picture frames. Source body dimensions are recorded without inventing axis labels; photo dimensions are separate.
 
 | Designs | Delivered CAD | Edmonton pickup CAD |
 | --- | ---: | ---: |

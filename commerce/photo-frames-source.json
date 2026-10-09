@@ -2,6 +2,13 @@
   "drop": "https://platform.stlflix.com/drops/drop-367",
   "reviewedAt": "2026-10-08",
   "photoCount": 1,
+  "photoPrint": {
+    "widthInches": 2.5,
+    "heightInches": 3.5,
+    "widthMm": 63.5,
+    "heightMm": 88.9,
+    "confirmedByOwner": "2026-10-08"
+  },
   "offering": "Assembled desk version with one customer photo printed, trimmed and fitted. No magnetic version offered.",
   "dimensionNote": "Source dimensions describe the holder body, not the included photograph or the overall display with a photo fitted. Axis labels and photo aperture sizes were not specified reliably in the source.",
   "pricingAssumptions": {
