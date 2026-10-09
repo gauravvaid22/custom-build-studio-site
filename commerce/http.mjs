@@ -18,6 +18,7 @@ export function handler(shop) {
         return response({
           settings,
           siteContent: await shop.getSiteContent(),
+          merchandising: await shop.getMerchandising(),
           productContent: await shop.getProductContent(),
           ready: shop.ready,
           setupChecks: shop.setupChecks,
@@ -60,6 +61,10 @@ export function handler(shop) {
         return response({ siteContent: await shop.getSiteContent() });
       if (action === "save-content")
         return response({ siteContent: await shop.saveSiteContent(body.siteContent) });
+      if (action === "get-merchandising")
+        return response({ merchandising: await shop.getMerchandising() });
+      if (action === "save-merchandising")
+        return response({ merchandising: await shop.saveMerchandising(body.merchandising) });
       if (action === "get-product-content")
         return response({ productContent: await shop.getProductContent() });
       if (action === "save-product-content")

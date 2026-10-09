@@ -1,3 +1,6 @@
+import { GalleryImage } from "./GalleryImage";
+import { MobilePurchaseBar } from "./MobilePurchaseBar";
+import { trackShopInteraction } from "./Analytics";
 import { useFulfillment } from "./Fulfillment";
 import { DragEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
@@ -108,6 +111,7 @@ export function LithophaneProduct() {
     setError("");
     try {
       const upload = await uploadPhoto(file, setProgress);
+      trackShopInteraction("personalization_upload", { item_id: productId });
       const absoluteReference = new URL(upload.referenceUrl, window.location.origin).href;
       const attributes = [
         { key: "Personalization photo", value: absoluteReference },
@@ -132,7 +136,7 @@ export function LithophaneProduct() {
         <div className="lithophane-hero">
           <div className="lithophane-visual-column">
             <div className="lithophane-hero-media is-lit">
-              <img src={activeImage.src} alt={activeImage.alt} />
+              <GalleryImage mediaKey={activeImage.src}><img src={activeImage.src} alt={activeImage.alt} /></GalleryImage>
               {activeImage.concept && <span className="lithophane-concept-label">Personalization example</span>}
               <div className="lithophane-glow" aria-hidden="true" />
             </div>
@@ -159,7 +163,7 @@ export function LithophaneProduct() {
               <li>{mode === "pickup" ? "Pickup in Southeast Edmonton by appointment" : "Free tracked shipping across Canada"}</li>
             </ul>
             {!product.available && <p className="lithophane-unavailable" role="status">Temporarily unavailable while new orders are prepared.</p>}
-            <form className="lithophane-order" onSubmit={submit}>
+            <form id="lithophane-purchase-form" className="lithophane-order" onSubmit={submit}>
               <label
                 className={`lithophane-upload ${dragging ? "is-dragging" : ""}`}
                 onDragOver={(event) => { event.preventDefault(); setDragging(true); }}
@@ -196,7 +200,8 @@ export function LithophaneProduct() {
         <section className="lithophane-explainer lithophane-scroll-in">
           <div><p className="eyebrow">THE EFFECT</p><h2>White sculpture by day.<br />A photograph in light.</h2></div>
           <p>Variable wall thickness translates the light and dark values in your photograph into warm gradients. Thicker areas block more light; thinner areas glow brighter, revealing the image when the lamp is switched on.</p>
-        </section>
+          <MobilePurchaseBar name={product.name} priceCents={displayedPrice} targetId="lithophane-purchase-form" chooseOptions />
+    </section>
 
         <section className="lithophane-spec-grid lithophane-scroll-in" aria-label="Product specifications">
           {details.map((detail, index) => <div key={detail}><span>{String(index + 1).padStart(2, "0")}</span><strong>{detail}</strong></div>)}

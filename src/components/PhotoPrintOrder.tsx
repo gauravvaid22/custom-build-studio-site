@@ -1,3 +1,4 @@
+import { trackShopInteraction } from "./Analytics";
 import { FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "./Cart";
@@ -38,6 +39,7 @@ export function PhotoPrintOrder({ productId }: { productId: string }) {
     setBusy(true); setProgress(0); setError(""); setAdded(false);
     try {
       const uploaded = await uploadPhoto(file, setProgress);
+      trackShopInteraction("personalization_upload", { item_id: productId });
       const attributes = [
         { key: "Personalization photo", value: new URL(uploaded.referenceUrl, window.location.origin).href },
         { key: "Original filename", value: uploaded.name },
@@ -49,7 +51,7 @@ export function PhotoPrintOrder({ productId }: { productId: string }) {
     } catch (failure) { setError((failure as Error).message); }
     finally { setBusy(false); }
   }
-  return <form className="photo-print-order" onSubmit={submit}>
+  return <form id="product-purchase-form" className="photo-print-order" onSubmit={submit}>
     <div className="photo-print-steps" aria-label="How to personalize"><span>① Choose your holder</span><span>② Upload your photo</span><span>③ We print & fit it</span></div>
     <strong>One photo print included</strong>
     <figure className="photo-print-size-guide">
@@ -73,7 +75,7 @@ export function PhotoPrintOrder({ productId }: { productId: string }) {
     <label>Photo instructions (optional)<textarea rows={2} maxLength={500} disabled={busy} value={note} onChange={event => setNote(event.target.value)} placeholder="Keep both faces in the crop, for example." /></label>
     <label>Quantity<input type="number" min="1" max="20" step="1" required disabled={busy} value={quantity} onChange={event => { setQuantity(Number(event.target.value)); setAdded(false); }} /></label>
     <p className="small">Multiple copies use the same photo. To use a different photo, add another personalized item separately.</p>
-    {busy && <p role="status">Attaching your photo… {progress}%</p>}
+    {busy && <div className="photo-upload-progress" role="progressbar" aria-label="Attaching your photo" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}><span style={{ width: `${progress}%` }} /><strong>Attaching your photo… {progress}%</strong></div>}
     {error && <p className="shop-checkout-error" role="alert">{error}</p>}
     <button className="button" disabled={!file || busy} type="submit">{busy ? "Uploading photo…" : "Personalize & add to cart"}</button>
     {added && <div className="shop-added-confirmation" role="status"><strong>Photo attached · added to cart</strong><Link to="/shop/cart">View cart →</Link></div>}

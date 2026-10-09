@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import products from "../../commerce/products.json";
+import { useShopFeature } from "../components/SiteContent";
 import { Link } from "react-router-dom";
 import {
   Arrow,
@@ -16,36 +17,10 @@ import { business } from "../data/business";
 import { useShopifyCatalog } from "../components/ShopifyCatalog";
 
 export default function Home() {
-  const { sale } = useShopifyCatalog();
-  useEffect(() => {
-    const main = document.getElementById("main");
-    if (!main || window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
-
-    const targets = main.querySelectorAll<HTMLElement>(
-      ".home-shop-copy, .home-shop-gallery, #capabilities .section-heading, #capabilities .service-card, " +
-      ".work-section .section-heading, .work-section .project-card, .studio-section .studio-photo, " +
-      ".studio-section .studio-copy, .process-section .section-heading, .process-grid li, " +
-      ".faq-layout > div, .cta-section .cta-inner > div, .cta-section .cta-inner > a",
-    );
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("is-visible");
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: 0.1, rootMargin: "0px 0px -6% 0px" });
-
-    targets.forEach((target) => {
-      target.classList.add("home-reveal-target");
-      if (target.getBoundingClientRect().top < window.innerHeight * 0.88) target.classList.add("is-visible");
-      else observer.observe(target);
-    });
-    main.classList.add("home-motion-active");
-    return () => {
-      observer.disconnect();
-      main.classList.remove("home-motion-active");
-    };
-  }, []);
+  const { sale, nameFor } = useShopifyCatalog();
+  const feature = useShopFeature();
+  const coverProduct = products.find(product => product.id === feature.coverProduct)!;
+  const shopTiles = [coverProduct, ...feature.featuredIds.filter(id => id !== coverProduct.id).map(id => products.find(product => product.id === id)!).filter(Boolean)].slice(0, 3);
 
   return (
     <>
@@ -78,8 +53,8 @@ export default function Home() {
               </Link>
             </div>
             <p className="hero-note">Have a sketch, file or broken part? <Link to="/contact">Request a custom quote ↗</Link></p>
-            <Link className="hero-seasonal-link" to="/shop/halloween-special/#halloween-masks">
-              <span>NEW FOR HALLOWEEN</span> Explore our wearable masks <Arrow />
+            <Link className="hero-seasonal-link" to={`/shop/${feature.destination}`}>
+              <span>{feature.eyebrow}</span> {feature.buttonLabel} <Arrow />
             </Link>
           </div>
           <div className="hero-visual">
@@ -123,15 +98,12 @@ export default function Home() {
       <section className="home-shop-feature" aria-labelledby="home-shop-title">
         <div className="container home-shop-feature-grid">
           <div className="home-shop-copy">
-            <p className="eyebrow">HALLOWEEN MASKS · GIFTS & DÉCOR · EDMONTON</p>
-            <h2 id="home-shop-title">Gifts with character. Made here.</h2>
-            <p>
-              Explore finished Halloween masks alongside locally made gifts,
-              planters, gaming accessories and seasonal décor.
-            </p>
+            <p className="eyebrow">{feature.eyebrow}</p>
+            <h2 id="home-shop-title">{feature.title}</h2>
+            <p>{feature.description}</p>
             <div className="button-row">
-              <Link className="button" to="/shop/halloween-special/#halloween-masks">
-                Explore the masks <Arrow />
+              <Link className="button" to={`/shop/${feature.destination}`}>
+                {feature.buttonLabel} <Arrow />
               </Link>
               <Link className="button button-outline" to="/shop/">
                 Shop all gifts & décor <Arrow />
@@ -144,18 +116,10 @@ export default function Home() {
             </ul>
           </div>
           <div className="home-shop-gallery" aria-label="Featured gifts and décor">
-            <Link className="home-shop-tile home-shop-tile-main" to="/shop/pumpkin-head-halloween-mask/">
-              <img src="/media/shop/pumpkin-head-halloween-mask/2-1200.webp" alt="Person wearing the full-head Pumpkin Head Halloween Mask" loading="lazy" width="900" height="900" />
-              <span><strong>Pumpkin Head Mask</strong><small>Full-head costume · choose your size ↗</small></span>
-            </Link>
-            <Link className="home-shop-tile" to="/shop/carved-in-fear-halloween-mask/">
-              <img src="/media/shop/carved-in-fear-halloween-mask/3-1200.webp" alt="Person wearing the Carved in Fear front-face Halloween Mask" loading="lazy" width="900" height="900" />
-              <span><strong>Carved in Fear Mask</strong><small>Front-face costume ↗</small></span>
-            </Link>
-            <Link className="home-shop-tile" to="/shop/candlelight-pumpkins-table-lamp/">
-              <img src="/media/shop/candlelight-pumpkins-table-lamp/1-1200.webp" alt="Candlelight Pumpkins Table Lamp" loading="lazy" width="900" height="900" />
-              <span><strong>Candlelight Pumpkins</strong><small>Explore Halloween décor ↗</small></span>
-            </Link>
+            {shopTiles.map((product, index) => <Link className={`home-shop-tile${index === 0 ? " home-shop-tile-main" : ""}`} key={product.id} to={`/shop/${product.id}/`}>
+              <img src={product.images[index === 0 ? feature.imageIndex : 0].src} alt={product.images[index === 0 ? feature.imageIndex : 0].alt} loading="lazy" width="900" height="900" />
+              <span><strong>{nameFor(product.id, product.name)}</strong><small>Explore this product ↗</small></span>
+            </Link>)}
           </div>
         </div>
       </section>

@@ -1,16 +1,22 @@
+import { GalleryImage } from "../components/GalleryImage";
 import { FormEvent, useEffect, useRef, useState } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import products from "../../commerce/products.json";
 import settings from "../../commerce/settings.json";
 import collections from "../../commerce/collections.json";
 import headphoneSearch from "../../commerce/headphone-search.json";
+import { business } from "../data/business";
+import { ShopDisplayAdmin } from "../components/ShopDisplayAdmin";
+import { MobilePurchaseBar } from "../components/MobilePurchaseBar";
+import { analyticsSearchTerm, lowestProductPrice, matchesProductSearch, subcollections } from "../lib/shopDiscovery";
+import { useShopFeature, useShopMerchandising } from "../components/SiteContent";
 import { PageIntro } from "../components/Shared";
 import { useCart, money } from "../components/Cart";
 import { NotFound } from "./Studio";
 import { shippingEstimate } from "./StorePolicy";
 import storePolicy from "../../commerce/store-policy.json";
 import "../shop.css";
-import { trackShop } from "../components/Analytics";
+import { trackShop, trackShopInteraction } from "../components/Analytics";
 import { createShopifyCheckout, fulfillmentSku, shopifyConfigured } from "../lib/shopify";
 import { useShopifyCatalog } from "../components/ShopifyCatalog";
 import { type ProductContent, type SiteContent, useProductContent, useSiteContent } from "../components/SiteContent";
@@ -96,23 +102,26 @@ async function api(
 }
 export function ShopNav({ showFulfillment = true }: { showFulfillment?: boolean } = {}) {
   const { sale } = useShopifyCatalog();
+  const merchandising = useShopMerchandising();
+  const departments = merchandising.departments.map(id => departmentCollections.find(collection => collection.id === id)).filter(Boolean);
   return (
     <>
     <nav className="shop-nav container" aria-label="Shop categories">
       <Link className="shop-nav-home" to="/shop">Shop</Link>
       <div className="shop-nav-collections">
         <Link to="/shop/all">Shop all</Link>
-        {departmentCollections.map((collection) => (
-          <Link key={collection.id} to={`/shop/${collection.id}`}>
-            {collection.shortName}
+        {departments.map((collection) => (
+          <Link key={collection!.id} to={`/shop/${collection!.id}`}>
+            {collection!.shortName}
           </Link>
         ))}
-        <Link to="/shop/halloween">Halloween</Link>
+
         {sale && <Link className="shop-sale-nav-link" to="/shop/sale">{sale.percentage}% off</Link>}
         <Link to="/shop/gifts-under-25">$25 &amp; under</Link>
       </div>
     </nav>
     {sale && <Link className="shop-sale-ribbon" to="/shop/sale"><strong>{sale.percentage}% off · {sale.title}</strong><span>{sale.endAt ? `Shop before ${new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric" }).format(new Date(sale.endAt))} ↗` : "Shop sale products ↗"}</span></Link>}
+    <ShopSearch />
     {showFulfillment && <FulfillmentSelector />}
     </>
   );
@@ -160,14 +169,17 @@ function AddProduct({
   product,
   variantId,
   onVariantChange,
+  formId,
 }: {
   product: Product;
   variantId?: string;
   onVariantChange?: (id: string) => void;
+  formId?: string;
 }) {
   const { add } = useCart();
   const { priceFor, nameFor } = useShopifyCatalog();
   const [quantity, setQuantity] = useState(1);
+  const [addError, setAddError] = useState("");
   const [confirmation, setConfirmation] = useState("");
   const [confirmationKey, setConfirmationKey] = useState(0);
   const confirmationTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -186,10 +198,12 @@ function AddProduct({
   const orderProduct = selectedId ? catalogProduct(selectedId) || product : product;
   return (
     <form
+      id={formId}
       className="shop-add"
       onSubmit={(e) => {
         e.preventDefault();
-        if (!add(orderProduct.id, quantity)) { setConfirmation(""); return; }
+        setAddError("");
+        if (!add(orderProduct.id, quantity)) { setConfirmation(""); setAddError("Check your cart: you can add up to 20 of each item. Choose a whole-number quantity from 1 to 20."); return; }
         setConfirmation(`${quantity} × ${nameFor(orderProduct.id, orderProduct.name)}`);
         setConfirmationKey((current) => current + 1);
         if (confirmationTimer.current) clearTimeout(confirmationTimer.current);
@@ -228,6 +242,7 @@ function AddProduct({
       <button className="button" type="submit">
         Add to Cart <span aria-hidden="true">+</span>
       </button>
+      {addError && <p className="shop-checkout-error" role="alert">{addError}</p>}
       {confirmation && (
         <div
           className="shop-added-confirmation"
@@ -240,7 +255,7 @@ function AddProduct({
               <path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L20 8H7" />
               <circle cx="10" cy="19" r="1.25" />
               <circle cx="17" cy="19" r="1.25" />
-              <path d="m10 10 1.6 1.6L15 8.2" />
+              <polyline points="10,10 11.6,11.6 15,8.2" />
             </svg>
           </span>
           <span>
@@ -253,20 +268,24 @@ function AddProduct({
     </form>
   );
 }
-function ShopProductCard({ product }: { product: Product }) {
+function ShopProductCard({ product, listId }: { product: Product; listId?: string }) {
   const { priceFor, nameFor, compareAtFor, sale } = useShopifyCatalog();
   const managedProducts = useProductContent();
   const managed = product.id === "lithophane-table-lamp" ? managedProducts["lithophane-table-lamp"] : null;
   const displayName = managed?.name || nameFor(product.id, product.name);
-  const displayPrice = priceFor(product.id, managed?.priceCents ?? product.priceCents);
-  const regularPrice = compareAtFor(variantsFor(product)[0]?.id || product.id);
+  const displayPrice = managed ? priceFor(product.id, managed.priceCents) : lowestProductPrice(product, priceFor);
+  const lowestVariant = [...variantsFor(product)].sort((a, b) => priceFor(a.id, a.priceCents) - priceFor(b.id, b.priceCents))[0];
+  const regularPrice = compareAtFor(managed ? product.id : lowestVariant?.id || product.id);
   const alternate = product.images[1];
   const variants = variantsFor(product);
   const hasPriceRange = variants.length > 1 && variants.some(
     (variant) => priceFor(variant.id, variant.priceCents) !== priceFor(variants[0].id, variants[0].priceCents),
   );
   return (
-    <article className="shop-card">
+    <article className="shop-card" onClick={(event) => {
+      const link = event.target instanceof Element ? event.target.closest("a") : null;
+      if (link?.getAttribute("href")?.startsWith(`/shop/${product.id}`)) trackShop("select_item", [{ id: product.id, quantity: 1, priceCents: displayPrice }], undefined, listId);
+    }}>
       <Link className="shop-card-image" to={`/shop/${product.id}`}>
         <ProductImage product={product} />
         {alternate && (
@@ -322,181 +341,88 @@ function BenefitIcon({ type }: { type: string }) {
 
 function ShopBenefits() {
   const { mode } = useFulfillment();
+  const content = useSiteContent();
   return (
     <div className="shop-benefits" aria-label="Shopping benefits">
       <div><BenefitIcon type="local"/><span><strong>Made in Edmonton</strong><small>Prepared locally</small></span></div>
-      <div><BenefitIcon type="made"/><span><strong>Made to order</strong><small>Prepared for you</small></span></div>
+      <div><BenefitIcon type="made"/><span><strong>Prepared locally</strong><small>{content.productionTime.replace(/Usually /, "")}</small></span></div>
       <div><BenefitIcon type="checkout"/><span><strong>Secure checkout</strong><small>Powered by Shopify</small></span></div>
       <div><BenefitIcon type="shipping"/><span><strong>{mode === "pickup" ? "Edmonton pickup" : "Free tracked shipping"}</strong><small>{mode === "pickup" ? "By appointment" : "Across Canada"}</small></span></div>
     </div>
   );
 }
 
+function ShopSearch() {
+  const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const [query, setQuery] = useState(params.get("q") || "");
+  useEffect(() => setQuery(params.get("q") || ""), [params]);
+  return <form className="container shop-search" role="search" onSubmit={event => {
+    event.preventDefault();
+    navigate(`/shop/all${query.trim() ? `?q=${encodeURIComponent(query.trim().slice(0, 80))}` : ""}#products`);
+  }}>
+    <label className="shop-search-field"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg><span className="sr-only">Search shop products</span><input type="search" maxLength={80} placeholder="Find a gift, mask or desk accessory…" value={query} onChange={event => setQuery(event.target.value)} /></label>
+    <button type="submit">Search <span aria-hidden="true">→</span></button>
+  </form>;
+}
+function ProductGrid({ listed, listId }: { listed: Product[]; listId: string }) {
+  const grid = useRef<HTMLDivElement>(null);
+  const { mode } = useFulfillment();
+  const { priceFor } = useShopifyCatalog();
+  const signature = listed.map(product => `${product.id}:${lowestProductPrice(product, priceFor)}`).join(",");
+  useEffect(() => {
+    if (!grid.current || !listed.length) return;
+    const track = () => trackShop("view_item_list", listed.map(product => ({ id: product.id, quantity: 1, priceCents: lowestProductPrice(product, priceFor) })), mode, listId);
+    if (!("IntersectionObserver" in window)) { track(); return; }
+    const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) { track(); observer.disconnect(); } }, { threshold: 0.1 });
+    observer.observe(grid.current);
+    return () => observer.disconnect();
+  }, [listId, signature, mode]);
+  return <div className="shop-grid" ref={grid} data-list-id={listId}>{listed.map(product => <ShopProductCard key={product.id} product={product} listId={listId} />)}</div>;
+}
+function CollectionTiles({ ids, compact = false }: { ids: string[]; compact?: boolean }) {
+  return <div className={compact ? "shop-subcollection-grid" : "shop-collection-grid"}>
+    {ids.map((id, index) => {
+      const collection = collections.find(item => item.id === id);
+      const cover = collection && catalogProduct(collection.coverProduct);
+      if (!collection || !cover) return null;
+      return <Link className="shop-collection-card" style={{ "--delay": `${(index % 3) * 70}ms` } as React.CSSProperties} key={id} to={`/shop/${id}`}>
+        <ProductImage product={cover} /><span className="shop-collection-overlay"><small>{collection.products.length} products</small><strong>{collection.name}</strong><span>Explore collection ↗</span></span>
+      </Link>;
+    })}
+  </div>;
+}
+function StudioProof() {
+  return <section className="container shop-studio-proof" aria-labelledby="shop-studio-proof-title">
+    <div className="shop-studio-proof-copy"><p className="eyebrow">THE PEOPLE BEHIND YOUR ORDER</p><h2 id="shop-studio-proof-title">Made here. Help is right here, too.</h2><p>Custom Build Studio designs and makes products in Edmonton. Have a fit question or a custom idea? Talk directly with the studio.</p><div className="button-row"><a className="text-link" href={business.googleProfile} target="_blank" rel="noreferrer">Read our Google reviews ↗</a><Link className="text-link" to="/work">See our studio work ↗</Link></div></div>
+    <div className="shop-studio-assurances"><Link to="/shipping-returns"><BenefitIcon type="shipping"/><span><strong>Clear shipping & returns</strong><small>Check the details before ordering →</small></span></Link><Link to="/contact"><BenefitIcon type="local"/><span><strong>A question before you buy?</strong><small>Ask us about size, colour or custom work →</small></span></Link></div>
+  </section>;
+}
 export function Shop() {
   const { mode } = useFulfillment();
   const { priceFor, nameFor, sale } = useShopifyCatalog();
   const content = useSiteContent();
-  const featuredProduct = catalogProduct("pumpkin-head-halloween-mask")!;
-  const pumpkinMask = catalogProduct("pumpkin-head-halloween-mask")!;
-  const carvedMask = catalogProduct("carved-in-fear-halloween-mask")!;
-  const primaryCollections = departmentCollections;
-  const under25 = collections.find((collection) => collection.id === "gifts-under-25")!;
-  const featuredIds = ["lithophane-table-lamp", "dinosaur-skeleton-collection", "octopus-wine-bottle-holder", "night-owl-wall-light", "basilisk-dice-tower", "mood-ghost"];
-  useEffect(() => {
-    const section = document.getElementById("collections");
-    if (!section || window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
-    const cards = section.querySelectorAll<HTMLElement>(".shop-collection-card");
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("shop-card-visible");
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: 0.16, rootMargin: "0px 0px -5% 0px" });
-    cards.forEach((card) => {
-      if (card.getBoundingClientRect().top < window.innerHeight * 0.85) card.classList.add("shop-card-visible");
-      else observer.observe(card);
-    });
-    section.classList.add("shop-scroll-ready");
-    return () => {
-      observer.disconnect();
-      section.classList.remove("shop-scroll-ready");
-    };
-  }, []);
-  return (
-    <>
-      <ShopNav showFulfillment={false} />
-      <section className="shop-hero shop-hub-hero">
-        <div className="container shop-hero-grid">
-          <div>
-            <p className="eyebrow">MADE IN EDMONTON / SHOP ONLINE</p>
-            <h1>
-              Find something
-              <br />
-              <span>made for you.</span>
-            </h1>
-            <p className="lead">
-              Explore finished products, from personalized lights and home décor
-              to gaming accessories, character gifts and Halloween masks.
-            </p>
-            <div className="button-row">
-              <a className="button" href="#collections">Shop by category ↘</a>
-              <Link className="button button-outline" to="/shop/all">See every product ↗</Link>
-            </div>
-            <p className="small">
-              Physical products · Secure Shopify checkout · {mode === "pickup" ? "Edmonton pickup by appointment" : "Free tracked Canadian shipping"}
-            </p>
-          </div>
-          <Link to={`/shop/${featuredProduct.id}/`} className="shop-hero-photo">
-            <ProductImage product={featuredProduct} large />
-            <span>
-              {nameFor(featuredProduct.id, featuredProduct.name)} · {money(priceFor(featuredProduct.id, featuredProduct.priceCents))} CAD ↗
-            </span>
-          </Link>
-        </div>
-      </section>
-      {sale && <section className="container shop-sale-feature" aria-label="Current shop sale"><div><p className="eyebrow">LIMITED-TIME OFFER · {sale.percentage}% OFF</p><h2>{sale.title}</h2><p>{sale.productIds.length} selected products at sale prices. Choose delivery or Edmonton pickup and see the price before checkout.</p><Link className="button" to="/shop/sale">Shop {sale.percentage}% off ↗</Link></div></section>}
-      <ShopNotice />
-      <section className="section shop-collections-section" id="collections">
-        <div className="container">
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">FIND YOUR KIND OF PRODUCT</p>
-              <h2>Shop by category.</h2>
-            </div>
-            <p>Start with what you are looking for, then explore the details.</p>
-          </div>
-          <div className="shop-collection-grid">
-            {primaryCollections.map((collection, index) => {
-              const cover = catalogProduct(collection.coverProduct)!;
-              return (
-                <Link className="shop-collection-card" style={{"--delay": `${(index % 2) * 90}ms`} as React.CSSProperties} key={collection.id} to={`/shop/${collection.id}`}>
-                  <ProductImage product={cover} />
-                  <span className="shop-collection-overlay">
-                    <small>{collection.products.length} {collection.products.length === 1 ? "product" : "products"}</small>
-                    <strong>{collection.name}</strong>
-                    <span>View products</span>
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-          <div className="shop-collection-shortcuts">
-            <Link to="/shop/all">See all {evergreenProducts.length} products ↗</Link>
-            <Link to="/shop/halloween">Halloween collection ↗</Link>
-          </div>
-        </div>
-      </section>
-      <FulfillmentSelector />
-      <section className="container shop-mask-feature" aria-labelledby="shop-mask-feature-title">
-        <div className="shop-mask-feature-copy">
-          <p className="eyebrow">HALLOWEEN / MADE IN EDMONTON</p>
-          <h2 id="shop-mask-feature-title">Meet the masks.</h2>
-          <p>Choose a full pumpkin head with connecting magnets, or a front-face mask that ties behind your head. Both arrive finished and wearable.</p>
-          <Link className="button halloween-button" to="/shop/masks-costumes">Shop wearable masks ↗</Link>
-        </div>
-        <div className="shop-mask-feature-images">
-          <Link to={`/shop/${pumpkinMask.id}/`} aria-label="Explore the Pumpkin Head full-head mask">
-            <ProductImage product={pumpkinMask} large />
-            <span><strong>Pumpkin Head</strong><small>Full-head mask ↗</small></span>
-          </Link>
-          <Link to={`/shop/${carvedMask.id}/`} aria-label="Explore the Carved in Fear front-face mask">
-            <ProductImage product={carvedMask} large />
-            <span><strong>Carved in Fear</strong><small>Front-face mask ↗</small></span>
-          </Link>
-        </div>
-      </section>
-      <section className="section shop-under-section">
-        <div className="container">
-          <div className="section-heading">
-            <div><p className="eyebrow">{under25.eyebrow}</p><h2>Small gifts. Easy choices.</h2></div>
-            <Link className="text-link" to="/shop/gifts-under-25">See every gift at $25 or less →</Link>
-          </div>
-          <div className="shop-product-strip">
-            {products.filter(p => !isVariant(p) && priceFor(p.id, p.priceCents) <= 2500).slice(0, 4).map(({id}) => {
-              const product = catalogProduct(id)!;
-              return <Link key={id} to={`/shop/${id}`}><ProductImage product={product}/><span>{nameFor(product.id, product.name)}<strong>{money(priceFor(product.id, product.priceCents))}</strong></span></Link>;
-            })}
-          </div>
-        </div>
-      </section>
-      <section className="section">
-        <div className="container">
-          <div className="section-heading">
-            <div><p className="eyebrow">FEATURED RIGHT NOW</p><h2>Pieces worth a closer look.</h2></div>
-            <p>Made-to-order physical prints. No digital files.</p>
-          </div>
-          <div className="shop-grid">
-            {featuredIds.map((id) => <ShopProductCard key={id} product={catalogProduct(id)!}/>) }
-          </div>
-        </div>
-      </section>
-      <section className="container"><ShopBenefits/></section>
-      <section className="shop-how section">
-        <div className="container detail-columns">
-          <div>
-            <p className="eyebrow">FROM YOUR CART TO YOUR DOOR</p>
-            <h2>Simple from the first click.</h2>
-            <p>
-              Choose a product, add it to your cart and continue to Shopify
-              for your shipping address and secure payment.
-            </p>
-          </div>
-          <div>
-            <h3>{mode === "pickup" ? "Your pickup. Your schedule." : "Tracked shipping is included."}</h3>
-            <p>
-              {mode === "pickup" ? "Collect in Southeast Edmonton by appointment. We email the private address after ordering." : "Standard tracked shipping is free across Canada."} Contact us first
-              for colour changes or custom work.
-            </p>
-            <p>{content.productionTime}.</p>
-            <Link className="text-link" to="/products">
-              Explore our studio-designed charging stand ↗
-            </Link>
-          </div>
-        </div>
-      </section>
-    </>
-  );
+  const merchandising = useShopMerchandising();
+  const feature = useShopFeature();
+  const cover = catalogProduct(feature.coverProduct)!;
+  const featured = feature.featuredIds.map(id => catalogProduct(id)).filter((product): product is Product => Boolean(product));
+  const budget = evergreenProducts.filter(product => lowestProductPrice(product, priceFor) <= 2500).slice(0, 4);
+
+  return <>
+    <ShopNav showFulfillment={false} />
+    <section className="shop-hero shop-hub-hero shop-campaign-hero" aria-labelledby="shop-campaign-title"><div className="container shop-hero-grid">
+      <div className="shop-campaign-copy"><p className="eyebrow">{feature.eyebrow}</p><h1 id="shop-campaign-title">{feature.title}</h1><p className="lead">{feature.description}</p><Link className="button" to={`/shop/${feature.destination}`}>{feature.buttonLabel} ↗</Link><p className="shop-campaign-assurance"><BenefitIcon type={mode === "pickup" ? "local" : "shipping"} />{mode === "pickup" ? "Edmonton pickup by appointment" : content.shippingMessage}</p></div>
+      <Link to={`/shop/${cover.id}/`} className="shop-hero-photo" onClick={() => trackShop("select_item", [{ id: cover.id, quantity: 1, priceCents: lowestProductPrice(cover, priceFor) }], mode, "shop_campaign")}><ProductImage product={cover} index={feature.imageIndex} large /><span><strong>{nameFor(cover.id, cover.name)}</strong><small>Explore this product ↗</small></span></Link>
+    </div></section>
+    <FulfillmentSelector compact />
+    <section className="section shop-featured-section" id="featured"><div className="container"><div className="section-heading"><div><p className="eyebrow">FEATURED RIGHT NOW</p><h2>{feature.featuredTitle}</h2></div><Link className="text-link" to="/shop/all">See all products →</Link></div><ProductGrid listed={featured} listId="shop_featured" /></div></section>
+    {sale && <section className="container shop-sale-feature shop-sale-feature-compact" aria-label="Current shop sale"><div><p className="eyebrow">{sale.percentage}% OFF · LIMITED TIME</p><h2>{sale.title}</h2><Link className="button" to="/shop/sale">Explore sale products ↗</Link></div></section>}
+    <section className="section shop-collections-section" id="collections"><div className="container"><div className="section-heading"><div><p className="eyebrow">FOLLOW YOUR CURIOSITY</p><h2>Find your kind of gift.</h2></div><p>Choose a collection. See what catches your eye.</p></div><CollectionTiles ids={merchandising.departments} /><div className="shop-collection-shortcuts"><Link to="/shop/all">Browse all {evergreenProducts.length} products ↗</Link><Link to="/shop/headphone-stands">Headphone stands ↗</Link><Link to="/shop/photo-frames">Photo holders ↗</Link></div></div></section>
+    {merchandising.showBudgetGifts && budget.length > 0 && <section className="section shop-under-section"><div className="container"><div className="section-heading"><div><p className="eyebrow">LITTLE GIFTS / $25 & UNDER</p><h2>Small gifts. Easy choices.</h2></div><Link className="text-link" to="/shop/gifts-under-25">Explore gifts $25 & under →</Link></div><ProductGrid listed={budget} listId="shop_budget_gifts" /></div></section>}
+    {merchandising.showStudioProof && <StudioProof />}
+    <section className="container"><ShopBenefits /></section>
+    <section className="shop-how section"><div className="container detail-columns"><div><p className="eyebrow">FROM YOUR CART TO YOUR DOOR</p><h2>Simple from the first click.</h2><p>Choose your product and options, add to cart, then pay securely through Shopify. Your order goes directly to the studio.</p><Link className="text-link" to="/shipping-returns">Shipping, pickup & returns →</Link></div><div><h3>{mode === "pickup" ? "Pickup to suit your schedule." : "Tracked shipping is included."}</h3><p>{mode === "pickup" ? "Collect in Southeast Edmonton by appointment. We email the private address after ordering." : "Free standard tracked shipping across Canada. Your product page explains preparation and delivery estimates."}</p><p>{content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship")}.</p><Link className="text-link" to="/contact">Need a custom colour or size? Ask us →</Link></div></div></section>
+  </>;
 }
 
 export function ShopSale() {
@@ -631,14 +557,32 @@ export function ShopCollection({ id }: { id: string }) {
     products: evergreenProducts.map((product) => product.id),
     kind: "curated",
   } : collections.find((item) => item.id === id);
-  const { priceFor } = useShopifyCatalog();
-  const [sort, setSort] = useState("featured");
-  if (!collection) return <NotFound />;
-  const listed = id === "gifts-under-25" ? products.filter(p => !isVariant(p) && priceFor(p.id, p.priceCents) <= 2500) : collection.products.map((productId) => catalogProduct(productId)!).filter(Boolean);
-  const sorted = [...listed].sort((a, b) =>
-    sort === "price-low" ? priceFor(a.id, a.priceCents) - priceFor(b.id, b.priceCents) :
-    sort === "price-high" ? priceFor(b.id, b.priceCents) - priceFor(a.id, a.priceCents) : 0,
+  const { priceFor, nameFor } = useShopifyCatalog();
+  const { mode } = useFulfillment();
+  const [params, setParams] = useSearchParams();
+  const query = (params.get("q") || "").slice(0, 80);
+  const sort = ["price-low", "price-high"].includes(params.get("sort") || "") ? params.get("sort")! : "featured";
+  const department = params.get("category") || "";
+  const priceLimit = ["2500", "5000", "10000"].includes(params.get("max") || "") ? Number(params.get("max")) : Infinity;
+  const updateFilter = (key: string, value: string) => {
+    const next = new URLSearchParams(params);
+    if (value) next.set(key, value); else next.delete(key);
+    setParams(next, { replace: true, preventScrollReset: true });
+  };
+  const listed = !collection ? [] : id === "gifts-under-25" ? products.filter(p => !isVariant(p) && lowestProductPrice(p, priceFor) <= 2500) : collection.products.map((productId) => catalogProduct(productId)!).filter(Boolean);
+  const category = collections.find(item => item.id === department && item.kind === "department");
+  const filtered = listed.filter(product => matchesProductSearch(product, query, nameFor(product.id, product.name)) &&
+    (id !== "all" || !category || category.products.includes(product.id)) && lowestProductPrice(product, priceFor) <= priceLimit);
+  const sorted = [...filtered].sort((a, b) =>
+    sort === "price-low" ? lowestProductPrice(a, priceFor) - lowestProductPrice(b, priceFor) :
+    sort === "price-high" ? lowestProductPrice(b, priceFor) - lowestProductPrice(a, priceFor) : 0,
   );
+  useEffect(() => {
+    if (!query.trim()) return;
+    const timer = setTimeout(() => trackShopInteraction("search", { search_term: analyticsSearchTerm(query), result_count: sorted.length, fulfillment_method: mode }), 700);
+    return () => clearTimeout(timer);
+  }, [query, sorted.length, mode]);
+  if (!collection) return <NotFound />;
   const cover = catalogProduct(collection.coverProduct)!;
   return (
     <>
@@ -652,28 +596,26 @@ export function ShopCollection({ id }: { id: string }) {
             <p className="eyebrow">{collection.eyebrow}</p>
               <h1>{id === "headphone-stands" ? "Headphone stands. A better desk." : collection.heading}</h1>
             <p className="lead">{collection.description}</p>
-            {id === "gaming-desk" && <p><Link className="text-link" to="/shop/console-stands">Explore PS5 console stands →</Link></p>}
-            {id === "personalized-gifts" && <p><Link className="text-link" to="/shop/photo-frames">Explore 13 photo holders · photo print included →</Link></p>}
+
             <a className="button" href="#products">View {listed.length} {listed.length === 1 ? "product" : "products"} ↘</a>
           </div>
           <div className="shop-collection-hero-image"><ProductImage product={cover} large/></div>
         </div>
       </section>
+      {(subcollections[id]?.length || id === "personalized-gifts") && <section className="container shop-subcollections" aria-label="Explore this collection"><CollectionTiles ids={subcollections[id] || []} compact />{id === "personalized-gifts" && <Link className="shop-personal-lamp-link" to="/shop/lithophane-table-lamp"><ProductImage product={catalogProduct("lithophane-table-lamp")!} /><span><strong>Personalized Photo Lamps</strong><small>Your photo, softly illuminated →</small></span></Link>}</section>}
       <FulfillmentSelector />
       <ShopNotice/>
       <section className="section" id="products">
         <div className="container">
-          <div className="shop-collection-toolbar">
-            <div><p className="eyebrow">THE COLLECTION</p><h2>{collection.name}</h2></div>
-            <label>Sort products
-              <select value={sort} onChange={(event) => setSort(event.target.value)}>
-                <option value="featured">Featured</option>
-                <option value="price-low">Price: low to high</option>
-                <option value="price-high">Price: high to low</option>
-              </select>
-            </label>
+          <div className="shop-collection-toolbar"><div><p className="eyebrow">THE COLLECTION</p><h2>{collection.name}</h2></div></div>
+          <div className="shop-discovery-filters" aria-label="Filter products">
+            <label className="shop-filter-query">Search this collection<input type="search" maxLength={80} value={query} placeholder="Product name or idea" onChange={event => updateFilter("q", event.target.value)} /></label>
+            {id === "all" && <label>Category<select value={category?.id || ""} onChange={event => updateFilter("category", event.target.value)}><option value="">All categories</option>{departmentCollections.map(item => <option value={item.id} key={item.id}>{item.name}</option>)}</select></label>}
+            <label>Budget<select value={Number.isFinite(priceLimit) ? String(priceLimit) : ""} onChange={event => updateFilter("max", event.target.value)}><option value="">All prices</option><option value="2500">$25 & under</option><option value="5000">$50 & under</option><option value="10000">$100 & under</option></select></label>
+            <label>Sort products<select value={sort} onChange={event => updateFilter("sort", event.target.value === "featured" ? "" : event.target.value)}><option value="featured">Featured</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option></select></label>
           </div>
-          <div className="shop-grid">{sorted.map((product) => <ShopProductCard key={product.id} product={product}/>)}</div>
+          <div className="shop-results"><p role="status" aria-live="polite">{sorted.length} {sorted.length === 1 ? "product" : "products"}{query.trim() ? ` matching “${query.trim()}”` : ""} · {mode === "pickup" ? "Pickup" : "Delivered"} prices</p>{(query || category || Number.isFinite(priceLimit) || sort !== "featured") && <button className="text-link" type="button" onClick={() => { const next = new URLSearchParams(params); ["q", "category", "max", "sort"].forEach(key => next.delete(key)); setParams(next, { replace: true, preventScrollReset: true }); }}>Clear filters ×</button>}</div>
+          {sorted.length ? <ProductGrid listed={sorted} listId={`collection_${id}`} /> : <div className="shop-empty-results"><h3>No products match yet.</h3><p>Try a shorter search or a different budget. Have something custom in mind?</p><Link className="text-link" to="/contact">Ask the studio →</Link></div>}
         </div>
       </section>
       <section className="section shop-related-collections">
@@ -747,6 +689,7 @@ export function ShopProduct() {
       ? selectedImage.design
       : undefined;
   const chooseVariant = (variantId: string) => {
+    trackShopInteraction("select_variant", { item_id: variantId });
     setSelectedVariantId(variantId);
     setSearchParams({ variant: variantId }, { replace: true, preventScrollReset: true });
     const label = variants.find((variant) => variant.id === variantId)?.label;
@@ -768,10 +711,10 @@ export function ShopProduct() {
                 {showingVideo ? (
                   <video
                     controls
-                    autoPlay
                     muted
                     loop
                     playsInline
+                    onPlay={() => trackShopInteraction("product_media", { item_id: product.id, media_type: "video", media_index: index - product.images.length })}
                     preload="metadata"
                     poster={product.images[0].src}
                     aria-label={`${nameFor(product.id, product.name)} product video`}
@@ -780,7 +723,7 @@ export function ShopProduct() {
                     Your browser does not support product video.
                   </video>
                 ) : (
-                  <ProductImage product={product} index={index} large />
+                  <GalleryImage mediaKey={selectedImage!.src}><ProductImage product={product} index={index} large /></GalleryImage>
                 )}
               </div>
               {selectedDesign && (
@@ -794,7 +737,7 @@ export function ShopProduct() {
                     key={image.src}
                     aria-label={`View ${"design" in image ? `${image.design} ` : ""}product photo ${i + 1}`}
                     aria-pressed={index === i}
-                    onClick={() => setIndex(i)}
+                    onClick={() => { setIndex(i); trackShopInteraction("product_media", { item_id: product.id, media_type: "photo", media_index: i }); }}
                   >
                     <img
                       src={image.thumb}
@@ -855,6 +798,10 @@ export function ShopProduct() {
                 </a>
                 <a href="tel:+17802030081">Questions? Call or text 780-203-0081</a>
               </div>
+              <dl className="shop-core-details"><dt>Included</dt><dd>{selectedVariant.included}</dd>{!selectedVariant.dimensions.startsWith("Final dimensions") && <><dt>{isHalloweenMask ? "Ear-to-ear size" : "Approximate size"}</dt><dd>{selectedVariant.dimensions.replace("Source model: approximately", "Approximately").replace("Finished size: approximately", "Approximately").replace("Final printed dimensions require production review.", "Finished size may vary slightly.")}</dd></>}</dl>
+              {"personalization" in product ? <PhotoPrintOrder key={product.id} productId={product.id} /> : <AddProduct product={product} variantId={selectedVariant.id} onVariantChange={chooseVariant} formId="product-purchase-form" />}
+              <Link className="text-link" to="/shop/cart">View cart & checkout ↗</Link>
+              <p className="shop-purchase-policy">{"personalization" in product ? "Your photo print is included. Personalized orders are excluded from change-of-mind returns." : `Unused standard products can be returned within ${storePolicy.returnWindowDays} days. Custom-size orders are excluded.`} <Link to="/shipping-returns">Details →</Link></p>
               {isHalloweenMask && (
                 <div className="shop-mask-fit-guide" aria-label="Halloween mask size guide">
                   <div className="shop-mask-fit-heading">
@@ -882,15 +829,8 @@ export function ShopProduct() {
                 <p>Choose Original PS5 or PS5 Slim using the model selector. These are different fitted versions. PS5 Pro compatibility is not offered. The console in the photos is shown for scale and is not included.</p>
                 <a href={`mailto:custombuildstudio@gmail.com?subject=${encodeURIComponent(`Fit question: ${product.name}`)}`}>Not sure which PS5 you have? Send us a photo →</a>
               </div>}
-              {"personalization" in product ? <PhotoPrintOrder key={product.id} productId={product.id} /> : <AddProduct
-                product={product}
-                variantId={selectedVariant.id}
-                onVariantChange={chooseVariant}
-              />}
-              <Link className="text-link" to="/shop/cart">
-                View cart & checkout ↗
-              </Link>
-              <dl className="shop-specs">
+
+              <details className="shop-product-more"><summary>Product details, care & returns <span aria-hidden="true">+</span></summary><dl className="shop-specs">
                 <dt>What you receive</dt>
                 <dd>{selectedVariant.included} No STL or digital download.</dd>
                 {!selectedVariant.dimensions.startsWith("Final dimensions") && <>
@@ -925,12 +865,13 @@ export function ShopProduct() {
                 <dd>{product.category === "PS5 console stands" ? "PETG for the functional support. Contact us before ordering if you need a particular finish." : product.category === "Headphone stands" ? "Made from a polymer suited to the finished stand. Contact us before ordering if you need a particular material." : "Decorative pieces are generally made in PLA. We use PETG where extra toughness or moisture resistance is useful. Contact us before ordering if the exact material matters for your use."}</dd>
                 <dt>Care</dt>
                 <dd>{product.category === "PS5 console stands" ? "Install on a level surface with the correct mounting hardware. Keep ventilation clear, away from heat, and clean with a soft damp cloth. Not compatible with PS5 Pro." : product.category === "Headphone stands" ? "Keep away from high heat and wipe clean with a soft, damp cloth. If your headset has an unusual size or shape, ask us about fit before ordering." : "Handle small moving or separate parts gently. Contact us for material-specific cleaning and care advice."}</dd>
-              </dl>
+              </dl></details>
               <p className="small">
                 {["Headphone stands", "PS5 console stands"].includes(product.category) ? "Made by Custom Build Studio in Edmonton. Reference photos show the design; your finished colour may vary slightly." : "Printed by Custom Build Studio in Edmonton. Handle small moving or separate parts with care."}
               </p>
             </div>
           </div>
+          <MobilePurchaseBar name={nameFor(product.id, product.name)} priceCents={priceFor(selectedVariant.id, selectedVariant.priceCents)} targetId="product-purchase-form" chooseOptions={variants.length > 0 || "personalization" in product} />
           <aside className="shop-reference-note" aria-label="Related gifts">
             <h2>More to explore</h2>
             <div className="shop-filters">
@@ -965,6 +906,8 @@ export function ShopCart() {
       (() => { const product = products.find((p) => p.id === item.id); return product ? priceFor(product.id, product.priceCents) : 0; })() * item.quantity,
     0,
   );
+  const cartSignature = items.map(item => `${item.id}:${item.quantity}`).join(",");
+  useEffect(() => { if (items.length) trackShop("view_cart", items.map(item => ({ id: item.id, quantity: item.quantity, priceCents: priceFor(item.id, catalogProduct(item.id)!.priceCents) })), mode); }, [cartSignature, mode]);
   async function beginCheckout() {
     if (busy || !items.length) return;
     setBusy(true);
@@ -976,6 +919,7 @@ export function ShopCart() {
       trackShop("begin_checkout", items.map(item => ({ ...item, priceCents: expectedPrices[item.id] })), mode);
       window.location.assign(checkoutUrl);
     } catch (checkoutError) {
+      trackShopInteraction("checkout_error", { reason: (checkoutError as Error).message.includes("price has changed") ? "price_changed" : "checkout_unavailable", fulfillment_method: mode });
       setError((checkoutError as Error).message);
       if ((checkoutError as Error).message.includes("price has changed")) void refresh().catch(() => undefined);
       setBusy(false);
@@ -1349,7 +1293,7 @@ export function ShopAdmin() {
     [busy, setBusy] = useState(false),
     [content, setContent] = useState<SiteContent>(publicContent),
     [productContent, setProductContent] = useState<ProductContent>(publicProductContent),
-    [tab, setTab] = useState<"orders" | "website" | "products" | "lithophane" | "sales">("orders"),
+    [tab, setTab] = useState<"orders" | "website" | "products" | "lithophane" | "sales" | "display">("orders"),
     [saved, setSaved] = useState("");
   async function load() {
     try {
@@ -1455,6 +1399,7 @@ export function ShopAdmin() {
               <div className="shop-admin-tabs" role="tablist" aria-label="Administration sections">
                 <button className={tab === "orders" ? "button" : "button button-dark"} onClick={() => setTab("orders")}>Orders</button>
                 <button className={tab === "website" ? "button" : "button button-dark"} onClick={() => setTab("website")}>Website settings</button>
+                <button className={tab === "display" ? "button" : "button button-dark"} onClick={() => setTab("display")}>Shop display</button>
                 <button className={tab === "products" ? "button" : "button button-dark"} onClick={() => setTab("products")}>Product prices</button>
                 <button className={tab === "sales" ? "button" : "button button-dark"} onClick={() => setTab("sales")}>Sales</button>
                 <button className={tab === "lithophane" ? "button" : "button button-dark"} onClick={() => setTab("lithophane")}>Lithophane product</button>
@@ -1597,6 +1542,7 @@ export function ShopAdmin() {
                 />
               )}
               {tab === "sales" && <SaleAdmin adminKey={key} />}
+              {tab === "display" && <ShopDisplayAdmin adminKey={key} />}
             </>
           )}
           {error && <p role="alert">{error}</p>}

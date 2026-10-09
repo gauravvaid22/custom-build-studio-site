@@ -1,0 +1,69 @@
+:root {
+  --motion-fast: 180ms;
+  --motion-enter: 480ms;
+  --motion-distance: 14px;
+  --motion-stagger: 55ms;
+  --motion-ease: cubic-bezier(.2, .7, .2, 1);
+}
+.product-gallery-transition { display: grid; position: relative; width: 100%; }
+.gallery-frame { grid-area: 1 / 1; min-width: 0; width: 100%; }
+.gallery-frame > picture, .gallery-frame img { display: block; width: 100%; }
+.gallery-pending { opacity: 0; pointer-events: none; }
+.gallery-error { grid-column: 1; margin: 10px; font-size: .85rem; }
+.process-illustration { margin: 20px 0 32px; color: #47758a; }
+.process-illustration svg { width: 100%; height: auto; display: block; }
+.process-illustration .process-mobile { display: none; }
+.process-route, .process-icon { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.process-icon { color: #254957; }
+.process-stage { fill: #f7f8f5; stroke: #9ab7c5; stroke-width: 1.5; }
+.process-illustration text { fill: #254957; font-family: inherit; font-size: 13px; font-weight: 600; }
+.process-section .process-illustration text { fill: #d5e5eb; }
+.photo-upload-progress { position: relative; overflow: hidden; padding: 12px; border: 1px solid #9bb7c5; background: #edf3f5; color: #254957; }
+.photo-upload-progress > span { position: absolute; inset: 0 auto 0 0; background: #c6dce4; transition: width var(--motion-fast) linear; }
+.photo-upload-progress > strong { position: relative; font-size: .85rem; }
+@media (prefers-reduced-motion: no-preference) {
+  .premium-motion .motion-target:not(.motion-entered) { transform: translateY(var(--motion-distance)); }
+  .premium-motion .motion-target.motion-entered { animation: premium-enter var(--motion-enter) var(--motion-ease) backwards; animation-delay: calc(var(--motion-order, 0) * var(--motion-stagger)); }
+  .premium-motion .halloween-product-reveal { animation: none; }
+  .premium-motion .halloween-product-reveal.motion-entered { animation: premium-enter var(--motion-enter) var(--motion-ease) backwards; }
+  .premium-motion .lithophane-scroll-in { animation-timeline: auto; animation-range: normal; }
+  .gallery-arriving { animation: gallery-arrive 200ms ease-out; }
+  .shop-added-icon { animation: none; }
+  .shop-added-icon svg polyline { stroke-dasharray: 30; stroke-dashoffset: 0; animation: cart-check 300ms var(--motion-ease) backwards; }
+  .fulfillment-check { opacity: 0; transform: scale(.8); transition: opacity var(--motion-fast), transform var(--motion-fast); }
+  [aria-pressed="true"] > .fulfillment-check { opacity: 1; transform: none; }
+  .premium-motion .service-graphic-point { animation-iteration-count: 1; animation-duration: 4000ms; }
+  .shop-campaign-hero.motion-entered .shop-hero-photo { animation: campaign-settle 480ms var(--motion-ease); }
+  .process-illustration.motion-entered .process-route { stroke-dasharray: 1; stroke-dashoffset: 0; animation: process-connect 1500ms var(--motion-ease) backwards; }
+  .premium-motion:not(.decorative-motion) .halloween-fog, .premium-motion:not(.decorative-motion) .halloween-ember { animation: none; }
+  .decorative-motion .halloween-fog { animation-duration: 4500ms; animation-iteration-count: 1; animation-fill-mode: forwards; }
+  .decorative-motion .halloween-ember { animation-duration: 2000ms; animation-iteration-count: 2; animation-delay: 0ms; }
+  .motion-tab-hidden .halloween-fog, .motion-tab-hidden .halloween-ember { animation-play-state: paused; }
+  @keyframes premium-enter { from { transform: translateY(var(--motion-distance)); } to { transform: none; } }
+  @keyframes gallery-arrive { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes cart-check { from { stroke-dashoffset: 30; } to { stroke-dashoffset: 0; } }
+  @keyframes process-connect { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes campaign-settle { from { transform: scale(1.015); } to { transform: none; } }
+}
+.fulfillment-check { opacity: 0; }
+[aria-pressed="true"] > .fulfillment-check { opacity: 1; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .shop-collection-card > img, .shop-card-image img, .home-shop-tile img { transition: transform 280ms var(--motion-ease), opacity 200ms ease; }
+  .shop-hero-photo:hover img { transform: scale(1.02); transition: transform 350ms var(--motion-ease); }
+  .shop-card-image:hover img { transform: scale(1.02); }
+}
+.shop-collection-card:focus-visible, .shop-card-image:focus-visible, .shop-hero-photo:focus-visible { outline: 3px solid #43839a; outline-offset: 4px; }
+@media (hover: none), (pointer: coarse) {
+  .shop-card-image:hover img, .shop-collection-card:hover > img, .home-shop-tile:hover img { transform: none; }
+  .shop-card-image:hover .shop-card-alternate { opacity: 0; }
+}
+@media (max-width: 700px) {
+  .process-illustration .process-desktop { display: none; }
+  .process-illustration .process-mobile { display: block; max-width: 310px; margin: auto; }
+  .premium-motion .halloween-fog, .premium-motion .halloween-ember { animation: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-target, .gallery-arriving, .process-route, .halloween-product-reveal { animation: none !important; transform: none !important; }
+  .shop-card-image:hover img, .shop-collection-card:hover > img, .home-shop-tile:hover img { transform: none !important; }
+  .photo-upload-progress > span { transition: none; }
+}

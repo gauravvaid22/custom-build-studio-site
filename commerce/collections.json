@@ -75,7 +75,7 @@
   },
   {
     "id": "headphone-stands",
-    "kind": "department",
+    "kind": "collection",
     "name": "Headphone Stands",
     "shortName": "Headphone stands",
     "eyebrow": "A BETTER HOME FOR YOUR HEADPHONES",
@@ -117,8 +117,35 @@
     ]
   },
   {
-    "id": "masks-costumes",
+    "id": "seasonal",
     "kind": "department",
+    "name": "Seasonal Gifts & Decor",
+    "shortName": "Seasonal",
+    "eyebrow": "FOR YOUR NEXT CELEBRATION",
+    "heading": "Make the season your own.",
+    "description": "Explore the seasonal collection, from finished Halloween masks to glowing lamps and character decorations. Find the details that make your celebration feel like you.",
+    "seoDescription": "Shop seasonal gifts and decor made in Edmonton, including finished Halloween masks, ghost decorations and lamps. Free tracked Canadian shipping or Edmonton pickup.",
+    "coverProduct": "pumpkin-head-halloween-mask",
+    "products": [
+      "pumpkin-head-halloween-mask",
+      "carved-in-fear-halloween-mask",
+      "candlelight-pumpkins-table-lamp",
+      "ghost-on-a-swing",
+      "skull-web-trinket-dish",
+      "ghost-duo-trinket-dish",
+      "glutton-ghost-bowl",
+      "pumpkin-fidget-keychain",
+      "mood-ghost",
+      "ghost-arch-wreath",
+      "skeleton-chameleon",
+      "verdant-remains-planter",
+      "6-finger-alien-hand-controller-holder",
+      "night-owl-wall-light"
+    ]
+  },
+  {
+    "id": "masks-costumes",
+    "kind": "collection",
     "name": "Masks & Costumes",
     "shortName": "Masks & costumes",
     "eyebrow": "FINISHED AND WEARABLE",

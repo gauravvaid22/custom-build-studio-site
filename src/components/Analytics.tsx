@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import products from "../../commerce/products.json";
 
-type ShopEvent = "view_item" | "add_to_cart" | "begin_checkout";
+type ShopEvent = "view_item" | "add_to_cart" | "begin_checkout" | "view_item_list" | "select_item" | "view_cart";
 type ShopLine = { id: string; quantity: number; priceCents?: number };
 
 const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID?.trim();
@@ -121,7 +121,7 @@ function shopItems(lines: ShopLine[]) {
 }
 
 /** Tracks a GA4 ecommerce action after the corresponding shop action succeeds. */
-export function trackShop(event: ShopEvent, lines: ShopLine[], fulfillment?: string) {
+export function trackShop(event: ShopEvent, lines: ShopLine[], fulfillment?: string, listId?: string) {
   if (!loadAnalytics()) return;
   const items = shopItems(lines);
   if (!items.length) return;
@@ -130,9 +130,16 @@ export function trackShop(event: ShopEvent, lines: ShopLine[], fulfillment?: str
     currency: "CAD",
     ...(fulfillment ? { fulfillment_method: fulfillment } : {}),
     value: items.reduce((sum, item) => sum + item.price * item.quantity, 0),
-    items,
+    ...(listId ? { item_list_id: listId } : {}),
+    items: items.map((item, index) => ({ ...item, ...(listId ? { item_list_id: listId, index } : {}) })),
     page_location: campaignLocation(),
   });
+}
+
+/** Only catalog identifiers, counts and controlled reason codes belong here. */
+export function trackShopInteraction(event: "search" | "select_fulfillment" | "product_media" | "select_variant" | "checkout_error" | "personalization_upload", details: { item_id?: string; media_type?: "photo" | "video"; media_index?: number; fulfillment_method?: string; search_term?: string; result_count?: number; reason?: "price_changed" | "checkout_unavailable" }) {
+  if (!loadAnalytics()) return;
+  window.gtag?.("event", event, { send_to: measurementId, ...details, page_location: campaignLocation() });
 }
 
 export function trackQuote() {
@@ -161,7 +168,7 @@ export default function Analytics() {
     if (!loadAnalytics()) return;
     window.gtag?.("event", "page_view", {
       send_to: measurementId,
-      page_path: `${pathname}${search}`,
+      page_path: pathname,
       page_location: campaignLocation(),
       page_title: document.title,
     });

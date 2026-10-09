@@ -1,3 +1,4 @@
+import { useShopMerchandising } from "./SiteContent";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import imageData from "../data/images.json";
@@ -102,7 +103,8 @@ export function Header() {
   const [activePanel, setActivePanel] = useState<"shop" | "services" | null>(null);
   const location = useLocation();
   const toggle = useRef<HTMLButtonElement>(null);
-  const departments = collections.filter((collection) => collection.kind === "department");
+  const merchandising = useShopMerchandising();
+  const departments = merchandising.departments.map(id => collections.find(collection => collection.id === id)).filter((collection): collection is (typeof collections)[number] => Boolean(collection));
   const cartCount = items.reduce((sum, item) => sum + item.quantity, 0);
   useEffect(() => { setOpen(false); setActivePanel(null); }, [location.pathname]);
   useEffect(() => {
@@ -145,7 +147,6 @@ export function Header() {
             <div id="shop-navigation-panel" className={`nav-panel ${activePanel === "shop" ? "is-open" : ""}`}>
               <Link to="/shop/all">Shop all products</Link>
               {departments.map((collection) => <Link key={collection.id} to={`/shop/${collection.id}`}>{collection.name}</Link>)}
-              <Link to="/shop/halloween">Halloween collection</Link>
               <Link to="/shop/gifts-under-25">Gifts $25 &amp; under</Link>
             </div>
           </div>
@@ -343,6 +344,7 @@ export const steps = [
   ],
 ];
 export function Process() {
+  const icons = ["M-10 -13H6L11 -8V9H-10Z M-5 -6H4 M-5 0H6", "M-11 6L5 -10L11 -4L-5 12H-11Z M1 -6L7 0", "M-10 0L-3 7L11 -8", "M-11 -6L0 -12L11 -6V7L0 13L-11 7Z M-11 -6L0 0L11 -6 M0 0V13", "M-11 -6H11V11H-11Z M-13 -6L0 -13L13 -6 M-4 11V2H4V11"];
   return (
     <section className="section process-section" id="process">
       <div className="container">
@@ -351,6 +353,16 @@ export function Process() {
           title="From idea to finished part."
           description="You don’t need to know the manufacturing process. That’s what the conversation is for."
         />
+        <div className="process-illustration" aria-hidden="true">
+          <svg className="process-desktop" viewBox="0 0 1000 100" focusable="false">
+            <path className="process-route" pathLength="1" d="M100 45H900" />
+            {steps.map(([title], i) => <g key={title} transform={`translate(${100 + i * 200},45)`}><circle className="process-stage" r="28" /><path className="process-icon" d={icons[i]} /><text textAnchor="middle" y="50">{title}</text></g>)}
+          </svg>
+          <svg className="process-mobile" viewBox="0 0 310 250" focusable="false">
+            <path className="process-route" pathLength="1" d="M30 25V225" />
+            {steps.map(([title], i) => <g key={title} transform={`translate(30,${25 + i * 50})`}><circle className="process-stage" r="19" /><path className="process-icon" d={icons[i]} /><text x="36" y="5">{title}</text></g>)}
+          </svg>
+        </div>
         <ol className="process-grid">
           {steps.map(([title, text], i) => (
             <li key={title}>

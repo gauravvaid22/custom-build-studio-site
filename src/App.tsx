@@ -13,6 +13,7 @@ import { FulfillmentProvider } from "./components/Fulfillment";
 import { CartProvider } from "./components/Cart";
 import { ShopifyCatalogProvider } from "./components/ShopifyCatalog";
 import { SiteContentProvider } from "./components/SiteContent";
+import { PremiumMotion } from "./components/PremiumMotion";
 import { UploadedPhotoViewer } from "./components/LithophaneProduct";
 import { Shop, ShopSale, HalloweenSpecial, ShopCollection, ShopProduct, ShopCart, Checkout, OrderConfirmation, ShopAdmin } from "./pages/Shop";
 import {
@@ -54,6 +55,7 @@ export default function App() {
     <ShopifyCatalogProvider>
     <CartProvider>
       <SiteContentProvider>
+        <PremiumMotion />
 
       <Seo />
       <Analytics />

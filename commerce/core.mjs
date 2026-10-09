@@ -1,3 +1,4 @@
+import { validateMerchandising, merchandisingDefaults } from "./merchandising.mjs";
 import { createHash, timingSafeEqual } from "node:crypto";
 import catalog from "./products.json" with { type: "json" };
 import settings from "./settings.json" with { type: "json" };
@@ -181,6 +182,19 @@ export function createShop({
     const content = validateSiteContent(input);
     await store.put("config/site-content", content, {});
     return content;
+  }
+  async function getMerchandising() {
+    const found = await store.get("config/shop-merchandising");
+    if (!found?.data) return merchandisingDefaults;
+    try { return validateMerchandising(found.data); }
+    catch { return merchandisingDefaults; }
+  }
+  async function saveMerchandising(input) {
+    let clean;
+    try { clean = validateMerchandising(input); }
+    catch (error) { fail(error.message); }
+    await store.put("config/shop-merchandising", clean, {});
+    return clean;
   }
   function validateProductContent(input) {
     if (!input || typeof input !== "object" || Array.isArray(input))
@@ -460,6 +474,8 @@ export function createShop({
     notifyOwner,
     getSiteContent,
     saveSiteContent,
+    getMerchandising,
+    saveMerchandising,
     getProductContent,
     saveProductContent,
     ready,

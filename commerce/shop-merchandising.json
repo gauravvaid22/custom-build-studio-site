@@ -1,0 +1,31 @@
+{
+  "departments": ["personalized-gifts", "gaming-desk", "collectibles", "home-decor", "seasonal"],
+  "showBudgetGifts": true,
+  "showStudioProof": true,
+  "decorativeMotion": true,
+  "fallback": {
+    "eyebrow": "PERSONAL GIFTS / MADE IN EDMONTON",
+    "title": "A little more personal.",
+    "description": "Photo keepsakes, useful desk pieces and gifts with character. Find something that feels like them.",
+    "coverProduct": "lithophane-table-lamp",
+    "imageIndex": 0,
+    "destination": "personalized-gifts",
+    "buttonLabel": "Explore personalized gifts",
+    "featuredTitle": "Find your next favourite.",
+    "featuredIds": ["lithophane-table-lamp", "daisy-duo-photo-frame", "flow-stand-headphone-and-phone-holder", "dinosaur-skeleton-collection", "octopus-wine-bottle-holder", "night-owl-wall-light"]
+  },
+  "campaign": {
+    "enabled": true,
+    "startDate": "2026-10-01",
+    "endDate": "2026-10-31",
+    "eyebrow": "HALLOWEEN / MADE IN EDMONTON",
+    "title": "Give spooky some character.",
+    "description": "Finished wearable masks, glowing lamps and little ghosts. Find your Halloween favourite.",
+    "coverProduct": "pumpkin-head-halloween-mask",
+    "imageIndex": 0,
+    "destination": "halloween",
+    "buttonLabel": "Explore Halloween",
+    "featuredTitle": "Halloween picks, made here.",
+    "featuredIds": ["pumpkin-head-halloween-mask", "carved-in-fear-halloween-mask", "candlelight-pumpkins-table-lamp", "mood-ghost", "ghost-on-a-swing", "pumpkin-fidget-keychain"]
+  }
+}

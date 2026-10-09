@@ -6,7 +6,7 @@ import { sqliteStore } from "../commerce/sqlite-store.mjs";
 import { createShop } from "../commerce/core.mjs";
 import { handler } from "../commerce/http.mjs";
 const root = resolve("dist"),
-  privateRoot = resolve("../private-production/shop-preview");
+  privateRoot = resolve(process.env.SHOP_PREVIEW_ROOT || "../private-production/shop-preview");
 await mkdir(privateRoot, { recursive: true });
 const keyPath = resolve(privateRoot, "admin-key.txt");
 let key;
@@ -79,6 +79,8 @@ createServer(async (req, res) => {
         ".jpg": "image/jpeg",
         ".png": "image/png",
         ".svg": "image/svg+xml",
+        ".webm": "video/webm",
+        ".mp4": "video/mp4",
         ".xml": "application/xml",
         ".txt": "text/plain",
       }[extname(file)] || "application/octet-stream";
@@ -95,6 +97,6 @@ createServer(async (req, res) => {
   }
 }).listen(port, "127.0.0.1", () =>
   console.log(
-    `TEST SHOP: http://127.0.0.1:${port}/shop\nAdmin key is stored privately at ${keyPath}\nOrders persist in SQLite outside the repository. No payments or messages are sent.`,
+    `TEST SHOP: http://127.0.0.1:${port}/shop\nAdmin key is stored privately at ${keyPath}\nOrders persist in private SQLite storage. No payments or messages are sent.`,
   ),
 );
