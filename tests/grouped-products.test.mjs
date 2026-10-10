@@ -20,7 +20,10 @@ test('four grouped listings retain every real design, fit and production SKU', (
       assert.ok(!collections.some(c => c.products.includes(design.id)), 'Only the grouped card is listed');
     }
   }
-  assert.equal(products.filter(p => p.category === 'Can holders' && p.listingGroup).every(p => p.priceCents === 2500), true);
+  const canGroup = products.find(p => p.id === 'can-holder-designs');
+  assert.equal(canGroup.priceCents, 2999);
+  assert.deepEqual(canGroup.variants.map(v => v.priceCents), [2999, 3299, 3499, 3999, 3499, 2999]);
+  for (const option of canGroup.variants) assert.equal(option.priceCents, products.find(p => p.id === option.id).priceCents);
   assert.equal(discoveryProducts.filter(p => p.category === 'Personalized photo holders').length, 13, 'All individual designs remain discoverable in the merchant feed');
   assert.equal(discoveryProducts.filter(p => p.category === 'PS5 console stands').length, 6);
 });

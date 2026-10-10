@@ -17,7 +17,6 @@ for (const family of families) {
   for (const design of designs) {
     design.listingGroup = family.id;
     mapping.set(design.id, family.id);
-    if (family.category === 'Can holders') design.priceCents = 2500;
   }
   for (const option of options) option.priceCents = products.find(p => p.id === option.id).priceCents;
   const parent = { ...designs[0], ...family, priceCents: Math.min(...options.map(v => v.priceCents)), variants: options, variantLabel: 'Design', groupedDesigns: choices, images: designs.map(p => p.images[0]) };
@@ -30,6 +29,3 @@ await writeFile('commerce/products.json', JSON.stringify(products, null, 2) + '\
 const collections = JSON.parse(await readFile('commerce/collections.json', 'utf8'));
 for (const collection of collections) collection.products = [...new Set(collection.products.map(id => mapping.get(id) || id))];
 await writeFile('commerce/collections.json', JSON.stringify(collections, null, 2) + '\n');
-const source = JSON.parse(await readFile('commerce/candy-can-source.json', 'utf8'));
-for (const item of source.products) if (products.find(p => p.id === item.id)?.category === 'Can holders') item.priceCents = 2500;
-await writeFile('commerce/candy-can-source.json', JSON.stringify(source, null, 2) + '\n');

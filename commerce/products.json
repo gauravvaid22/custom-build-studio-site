@@ -3223,7 +3223,7 @@
   {
     "id": "suit-can-holder",
     "name": "Suit & Tie Can Holder",
-    "priceCents": 2500,
+    "priceCents": 2999,
     "category": "Can holders",
     "seasonal": false,
     "description": "Dress up your drink in a miniature suit and tie. A playful desk accessory or gift for someone whose beverage deserves to look smart.",
@@ -3264,7 +3264,7 @@
   {
     "id": "overalls-can-holder",
     "name": "Overalls Can Holder",
-    "priceCents": 2500,
+    "priceCents": 3299,
     "category": "Can holders",
     "seasonal": false,
     "description": "Blue overalls and a pink shirt give your drink a little workshop character. A colourful conversation piece for a desk, game night or casual gift.",
@@ -3305,7 +3305,7 @@
   {
     "id": "kimono-can-holder",
     "name": "Kimono Can Holder",
-    "priceCents": 2500,
+    "priceCents": 3499,
     "category": "Can holders",
     "seasonal": false,
     "description": "A white kimono-style wrap with a red belt gives your beverage a distinctive look. A small, sculptural gift for a desk or table.",
@@ -3346,7 +3346,7 @@
   {
     "id": "apron-can-holder",
     "name": "Apron Can Holder",
-    "priceCents": 2500,
+    "priceCents": 3999,
     "category": "Can holders",
     "seasonal": false,
     "description": "A miniature apron with a chef motif dresses up your drink. A fun gift for a cooking enthusiast or a playful addition to a kitchen table.",
@@ -3393,7 +3393,7 @@
   {
     "id": "knight-armor-can-holder",
     "name": "Knight Armor Can Holder",
-    "priceCents": 2500,
+    "priceCents": 3499,
     "category": "Can holders",
     "seasonal": false,
     "description": "Detailed armour, sculpted gauntlets and a red cross turn your drink into a miniature knight. A conversation piece for a gaming desk or tabletop.",
@@ -3440,7 +3440,7 @@
   {
     "id": "overcoat-can-holder",
     "name": "Overcoat Can Holder",
-    "priceCents": 2500,
+    "priceCents": 2999,
     "category": "Can holders",
     "seasonal": false,
     "description": "A grey belted overcoat gives your can a tailored look. A quirky desk accessory and an easy gift for someone who likes everyday objects with personality.",
@@ -3487,7 +3487,7 @@
   {
     "id": "can-holder-designs",
     "name": "Can Holders — Choose Your Design",
-    "priceCents": 2500,
+    "priceCents": 2999,
     "category": "Can holders",
     "seasonal": false,
     "description": "Dress up your drink. Choose your favourite can-holder design and see its photos before adding it to your cart. One holder per item; drink not included.",
@@ -3538,37 +3538,37 @@
       {
         "id": "suit-can-holder",
         "label": "Suit & Tie Can Holder",
-        "priceCents": 2500,
+        "priceCents": 2999,
         "dimensions": "Approximately 115 mm high. Height is based on the original design; width and depth are not yet measured."
       },
       {
         "id": "overalls-can-holder",
         "label": "Overalls Can Holder",
-        "priceCents": 2500,
+        "priceCents": 3299,
         "dimensions": "Approximately 115 mm high. Height is based on the original design; width and depth are not yet measured."
       },
       {
         "id": "kimono-can-holder",
         "label": "Kimono Can Holder",
-        "priceCents": 2500,
+        "priceCents": 3499,
         "dimensions": "Approximately 115 mm high. Height is based on the original design; width and depth are not yet measured."
       },
       {
         "id": "apron-can-holder",
         "label": "Apron Can Holder",
-        "priceCents": 2500,
+        "priceCents": 3999,
         "dimensions": "Approximately 115 mm high. Height is based on the original design; width and depth are not yet measured."
       },
       {
         "id": "knight-armor-can-holder",
         "label": "Knight Armor Can Holder",
-        "priceCents": 2500,
+        "priceCents": 3499,
         "dimensions": "Approximately 115 mm high. Height is based on the original design; width and depth are not yet measured."
       },
       {
         "id": "overcoat-can-holder",
         "label": "Overcoat Can Holder",
-        "priceCents": 2500,
+        "priceCents": 2999,
         "dimensions": "Approximately 115 mm high. Height is based on the original design; width and depth are not yet measured."
       }
     ],
