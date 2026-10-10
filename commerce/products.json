@@ -1500,7 +1500,8 @@
     ],
     "video": "/media/shop/flow-stand-headphone-and-phone-holder/flow-stand-headphone-and-phone-holder.webm",
     "productionReviewed": false,
-    "source": "https://platform.stlflix.com/product/flow-stand-headphone-and-phone-holder"
+    "source": "https://platform.stlflix.com/product/flow-stand-headphone-and-phone-holder",
+    "listingGroup": "headphone-stand-designs"
   },
   {
     "id": "curve-caddy-headphone-holder",
@@ -1552,7 +1553,8 @@
     ],
     "video": "/media/shop/curve-caddy-headphone-holder/curve-caddy-headphone-holder.webm",
     "productionReviewed": false,
-    "source": "https://platform.stlflix.com/product/curve-caddy-headphone-holder"
+    "source": "https://platform.stlflix.com/product/curve-caddy-headphone-holder",
+    "listingGroup": "headphone-stand-designs"
   },
   {
     "id": "ring-dock-headphone-holder",
@@ -1610,7 +1612,8 @@
     ],
     "video": "/media/shop/ring-dock-headphone-holder/ring-dock-headphone-holder.webm",
     "productionReviewed": false,
-    "source": "https://platform.stlflix.com/product/ring-dock-headphone-holder"
+    "source": "https://platform.stlflix.com/product/ring-dock-headphone-holder",
+    "listingGroup": "headphone-stand-designs"
   },
   {
     "id": "block-hub-headphone-and-phone-holder",
@@ -1662,7 +1665,8 @@
     ],
     "video": "/media/shop/block-hub-headphone-and-phone-holder/block-hub-headphone-and-phone-holder.webm",
     "productionReviewed": false,
-    "source": "https://platform.stlflix.com/product/block-hub-headphone-and-phone-holder"
+    "source": "https://platform.stlflix.com/product/block-hub-headphone-and-phone-holder",
+    "listingGroup": "headphone-stand-designs"
   },
   {
     "id": "tower-trio-headphone-and-phone-holder",
@@ -1714,7 +1718,8 @@
     ],
     "video": "/media/shop/tower-trio-headphone-and-phone-holder/tower-trio-headphone-and-phone-holder.webm",
     "productionReviewed": false,
-    "source": "https://platform.stlflix.com/product/tower-trio-headphone-and-phone-holder"
+    "source": "https://platform.stlflix.com/product/tower-trio-headphone-and-phone-holder",
+    "listingGroup": "headphone-stand-designs"
   },
   {
     "id": "arch-stand-headphone-holder",
@@ -1766,7 +1771,8 @@
     ],
     "video": "/media/shop/arch-stand-headphone-holder/arch-stand-headphone-holder.webm",
     "productionReviewed": false,
-    "source": "https://platform.stlflix.com/product/arch-stand-headphone-holder"
+    "source": "https://platform.stlflix.com/product/arch-stand-headphone-holder",
+    "listingGroup": "headphone-stand-designs"
   },
   {
     "id": "daisy-duo-photo-frame",
@@ -4138,6 +4144,139 @@
         "label": "Analog Days",
         "optionIds": [
           "analog-days-photo-frame"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "headphone-stand-designs",
+    "name": "Headphone Stands — Choose Your Design",
+    "priceCents": 3999,
+    "category": "Headphone stands",
+    "seasonal": false,
+    "description": "Give your headphones a home. Choose a stand that suits your desk, with selected designs offering space for your phone or pens. Photos, video, size and price update with your choice. One stand per item; headphones, phone and display props are not included.",
+    "included": "One assembled physical headphone stand. Headphones, phone, pens and other photo props are not included.",
+    "dimensions": "Source model: approximately 210 mm high. Finished size may vary slightly.",
+    "notes": "Made to order in a colour similar to the reference photos; exact shades and finish may vary. Ask about other colours before checkout. Check device fit with us if you have an unusually large headset or phone case.",
+    "images": [
+      {
+        "src": "/media/shop/flow-stand-headphone-and-phone-holder/1-1200.webp",
+        "thumb": "/media/shop/flow-stand-headphone-and-phone-holder/1-480.webp",
+        "alt": "Flow Headphone & Phone Stand — front view",
+        "sourceFile": "1_69da26b86e.jpg"
+      },
+      {
+        "src": "/media/shop/curve-caddy-headphone-holder/1-1200.webp",
+        "thumb": "/media/shop/curve-caddy-headphone-holder/1-480.webp",
+        "alt": "Curve Caddy Headphone Stand — front view",
+        "sourceFile": "Curve_Caddy_Headphone_Holder_1_5e230be935.png"
+      },
+      {
+        "src": "/media/shop/ring-dock-headphone-holder/1-1200.webp",
+        "thumb": "/media/shop/ring-dock-headphone-holder/1-480.webp",
+        "alt": "Ring Dock Headphone Stand — front view",
+        "sourceFile": "1_a4905cc374.jpg"
+      },
+      {
+        "src": "/media/shop/block-hub-headphone-and-phone-holder/1-1200.webp",
+        "thumb": "/media/shop/block-hub-headphone-and-phone-holder/1-480.webp",
+        "alt": "Block Hub Headphone & Phone Stand — front view",
+        "sourceFile": "Block_Hub_Headphone_and_Phone_Holder_1_7ff1c92512.png"
+      },
+      {
+        "src": "/media/shop/tower-trio-headphone-and-phone-holder/1-1200.webp",
+        "thumb": "/media/shop/tower-trio-headphone-and-phone-holder/1-480.webp",
+        "alt": "Tower Trio Headphone & Phone Stand — front view",
+        "sourceFile": "Tower_Trio_Headphone_and_Phone_Holder_1_1f68c39d00.png"
+      },
+      {
+        "src": "/media/shop/arch-stand-headphone-holder/1-1200.webp",
+        "thumb": "/media/shop/arch-stand-headphone-holder/1-480.webp",
+        "alt": "Arch Headphone Stand — front view",
+        "sourceFile": "1_33f7a78ac0.jpg"
+      }
+    ],
+    "productionReviewed": false,
+    "variants": [
+      {
+        "id": "flow-stand-headphone-and-phone-holder",
+        "label": "Flow Headphone & Phone Stand",
+        "priceCents": 3999,
+        "dimensions": "Source model: approximately 210 mm high. Finished size may vary slightly."
+      },
+      {
+        "id": "arch-stand-headphone-holder",
+        "label": "Arch Headphone Stand",
+        "priceCents": 4499,
+        "dimensions": "Source model: approximately 200 mm high. Finished size may vary slightly."
+      },
+      {
+        "id": "curve-caddy-headphone-holder",
+        "label": "Curve Caddy Headphone Stand",
+        "priceCents": 4999,
+        "dimensions": "Source model: approximately 180 mm high. Finished size may vary slightly."
+      },
+      {
+        "id": "ring-dock-headphone-holder",
+        "label": "Ring Dock Headphone Stand",
+        "priceCents": 4999,
+        "dimensions": "Source model: approximately 200 mm high. Finished size may vary slightly."
+      },
+      {
+        "id": "block-hub-headphone-and-phone-holder",
+        "label": "Block Hub Headphone & Phone Stand",
+        "priceCents": 4999,
+        "dimensions": "Source model: approximately 210 mm high. Finished size may vary slightly."
+      },
+      {
+        "id": "tower-trio-headphone-and-phone-holder",
+        "label": "Tower Trio Headphone & Phone Stand",
+        "priceCents": 5999,
+        "dimensions": "Source model: approximately 210 mm high. Finished size may vary slightly."
+      }
+    ],
+    "variantLabel": "Design",
+    "groupedDesigns": [
+      {
+        "id": "flow-stand-headphone-and-phone-holder",
+        "label": "Flow",
+        "optionIds": [
+          "flow-stand-headphone-and-phone-holder"
+        ]
+      },
+      {
+        "id": "curve-caddy-headphone-holder",
+        "label": "Curve Caddy",
+        "optionIds": [
+          "curve-caddy-headphone-holder"
+        ]
+      },
+      {
+        "id": "ring-dock-headphone-holder",
+        "label": "Ring Dock",
+        "optionIds": [
+          "ring-dock-headphone-holder"
+        ]
+      },
+      {
+        "id": "block-hub-headphone-and-phone-holder",
+        "label": "Block Hub",
+        "optionIds": [
+          "block-hub-headphone-and-phone-holder"
+        ]
+      },
+      {
+        "id": "tower-trio-headphone-and-phone-holder",
+        "label": "Tower Trio",
+        "optionIds": [
+          "tower-trio-headphone-and-phone-holder"
+        ]
+      },
+      {
+        "id": "arch-stand-headphone-holder",
+        "label": "Arch",
+        "optionIds": [
+          "arch-stand-headphone-holder"
         ]
       }
     ]

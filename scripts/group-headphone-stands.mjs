@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+const file='commerce/products.json'; const products=JSON.parse(fs.readFileSync(file,'utf8')); const id='headphone-stand-designs';
+if(products.some(p=>p.id===id))throw Error('Already grouped');
+const designs=products.filter(p=>p.category==='Headphone stands'&&!p.variantOf&&!p.groupedDesigns);
+const parent={...designs[0],id,name:'Headphone Stands — Choose Your Design',description:'Give your headphones a home. Choose a stand that suits your desk, with selected designs offering space for your phone or pens. Photos, video, size and price update with your choice. One stand per item; headphones, phone and display props are not included.',priceCents:Math.min(...designs.map(p=>p.priceCents)),images:designs.map(p=>p.images[0]),variants:designs.map(p=>({id:p.id,label:p.name,priceCents:p.priceCents,dimensions:p.dimensions})).sort((a,b)=>a.priceCents-b.priceCents),variantLabel:'Design',groupedDesigns:designs.map(p=>({id:p.id,label:p.name.replace(/ Headphone & Phone Stand| Headphone Stand/g,''),optionIds:[p.id]}))};
+for(const key of ['video','videos','listingGroup','source'])delete parent[key];
+for(const p of designs)p.listingGroup=id;
+products.push(parent);fs.writeFileSync(file,JSON.stringify(products,null,2)+'\n');
+const collectionFile='commerce/collections.json';const collections=JSON.parse(fs.readFileSync(collectionFile,'utf8')); const ids=new Set(designs.map(p=>p.id));
+for(const c of collections)c.products=[...new Set(c.products.map(p=>ids.has(p)?id:p))];
+fs.writeFileSync(collectionFile,JSON.stringify(collections,null,2)+'\n');
