@@ -8,7 +8,7 @@ type Config = { title: string; percentage: number; minimumPickupPriceCents: numb
 type Row = { productId: string; name: string; sku: string; regularDelivered: number; saleDelivered: number; regularPickup: number; salePickup: number };
 type Preview = { config: Config; rows: Row[]; fingerprint: string };
 type Status = { status: string; admin?: { status: string; config?: Config; lastError?: string; warning?: string; updatedAt?: string; count?: number } };
-const baseProducts = products.filter((product) => !("variantOf" in product));
+const baseProducts = products.filter((product) => !("variantOf" in product) && !("groupedDesigns" in product));
 const saleCollections = collections.filter((collection) => collection.kind !== "curated");
 const localInput = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}T${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
 const initialConfig = (): Config => ({ title: "Studio sale", percentage: 10, minimumPickupPriceCents: 100, scope: "all", collectionId: saleCollections[0].id, productIds: [], startAt: "", endAt: localInput(new Date(Date.now() + 7 * 86400000)) });

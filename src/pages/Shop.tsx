@@ -25,6 +25,7 @@ import { FulfillmentSelector, PICKUP_PRICE_DIFFERENCE, useFulfillment } from "..
 import { LithophaneAdmin } from "../components/LithophaneAdmin";
 import { SaleAdmin } from "../components/SaleAdmin";
 import { HeadphonePricingAdmin } from "../components/HeadphonePricingAdmin";
+import { ProductDesignPicker } from "../components/ProductDesignPicker";
 import { PhotoPrintOrder } from "../components/PhotoPrintOrder";
 import frameSource from "../../commerce/photo-frames-source.json";
 import consoleSource from "../../commerce/console-stands-source.json";
@@ -45,7 +46,11 @@ const catalogProduct = (id: string) => products.find((product) => product.id ===
 const halloweenSpecialIds =
   collections.find((collection) => collection.id === "halloween")?.products || [];
 const departmentCollections = collections.filter((collection) => collection.kind === "department");
-const evergreenProducts = products.filter((product) => !("variantOf" in product));
+const evergreenProducts = products.filter((product) => !("variantOf" in product) && !("listingGroup" in product));
+const groupListings = (items: Product[]) => [...new Map(items.map(item => {
+  const grouped = "listingGroup" in item ? catalogProduct(item.listingGroup || "") || item : item;
+  return [grouped.id, grouped] as const;
+})).values()];
 type Order = {
   id: string;
   number: string;
@@ -211,7 +216,7 @@ function AddProduct({
         confirmationTimer.current = setTimeout(() => setConfirmation(""), 4200);
       }}
     >
-      {variants.length > 0 && (
+      {variants.length > 0 && !("groupedDesigns" in product) && (
         <label className="shop-variant-select">
           {variantLabel}
           <select
@@ -406,7 +411,7 @@ export function Shop() {
   const merchandising = useShopMerchandising();
   const feature = useShopFeature();
   const cover = catalogProduct(feature.coverProduct)!;
-  const featured = feature.featuredIds.map(id => catalogProduct(id)).filter((product): product is Product => Boolean(product));
+  const featured = groupListings(feature.featuredIds.map(id => catalogProduct(id)).filter((product): product is Product => Boolean(product)));
   const budget = evergreenProducts.filter(product => lowestProductPrice(product, priceFor) <= 2500).slice(0, 4);
 
   return <>
@@ -429,7 +434,7 @@ export function Shop() {
 export function ShopSale() {
   const { sale } = useShopifyCatalog();
   if (!sale) return <><ShopNav/><section className="section"><div className="container note-panel"><h1>No sale is active right now.</h1><p>Explore the full collection and check back for new promotions.</p><Link className="button" to="/shop">Shop all products ↗</Link></div></section></>;
-  const featured = sale.productIds.map((id) => catalogProduct(id)).filter((product): product is Product => Boolean(product));
+  const featured = groupListings(sale.productIds.map((id) => catalogProduct(id)).filter((product): product is Product => Boolean(product)));
   return <>
     <ShopNav showFulfillment={false}/>
     <section className="shop-sale-hero"><div className="container"><p className="eyebrow">CUSTOM BUILD STUDIO / LIMITED PROMOTION</p><div className="shop-sale-hero-percent">{sale.percentage}% OFF</div><h1>{sale.title}</h1><p>Explore selected pieces at sale prices. Every item is a finished physical product made in Edmonton.</p>{sale.endAt && <p className="shop-sale-deadline">Ends {new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(sale.endAt))}</p>}<a className="button" href="#sale-products">Shop the sale ↘</a></div></section>
@@ -570,7 +575,7 @@ export function ShopCollection({ id }: { id: string }) {
     if (value) next.set(key, value); else next.delete(key);
     setParams(next, { replace: true, preventScrollReset: true });
   };
-  const listed = !collection ? [] : id === "gifts-under-25" ? products.filter(p => !isVariant(p) && lowestProductPrice(p, priceFor) <= 2500) : collection.products.map((productId) => catalogProduct(productId)!).filter(Boolean);
+  const listed = groupListings(!collection ? [] : id === "gifts-under-25" ? products.filter(p => !isVariant(p) && lowestProductPrice(p, priceFor) <= 2500) : collection.products.map((productId) => catalogProduct(productId)!).filter(Boolean));
   const category = collections.find(item => item.id === department && item.kind === "department");
   const filtered = listed.filter(product => matchesProductSearch(product, query, nameFor(product.id, product.name)) &&
     (id !== "all" || !category || category.products.includes(product.id)) && lowestProductPrice(product, priceFor) <= priceLimit);
@@ -665,18 +670,19 @@ export function ShopProduct() {
   }, [id, searchParams]);
   if (!product) return <NotFound />;
   if (product.id === "lithophane-table-lamp") return <><ShopNav /><ShopNotice /><LithophaneProduct /></>;
-  const videos =
-    "videos" in product && Array.isArray(product.videos)
-      ? product.videos
-      : "video" in product && product.video
-        ? [product.video]
-        : [];
-  const showingVideo =
-    index >= product.images.length &&
-    index < product.images.length + videos.length;
-  const activeVideo = showingVideo ? videos[index - product.images.length] : undefined;
   const variants = variantsFor(product);
   const selectedVariant = catalogProduct(selectedVariantId || variants[0]?.id || product.id) || product;
+  const mediaProduct = "groupedDesigns" in product ? catalogProduct(product.groupedDesigns?.find(design => design.optionIds.includes(selectedVariant.id))?.id || "") || selectedVariant : product;
+  const videos =
+    "videos" in mediaProduct && Array.isArray(mediaProduct.videos)
+      ? mediaProduct.videos
+      : "video" in mediaProduct && mediaProduct.video
+        ? [mediaProduct.video]
+        : [];
+  const showingVideo =
+    index >= mediaProduct.images.length &&
+    index < mediaProduct.images.length + videos.length;
+  const activeVideo = showingVideo ? videos[index - mediaProduct.images.length] : undefined;
   const isHalloweenMask = product.id === "pumpkin-head-halloween-mask" || product.id === "carved-in-fear-halloween-mask";
   const isPumpkinHeadMask = product.id === "pumpkin-head-halloween-mask";
   const maskSizeEmail = isHalloweenMask
@@ -684,17 +690,18 @@ export function ShopProduct() {
     : "";
   const productionMessage = content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship");
   const deliveryEstimate = shippingEstimate;
-  const selectedImage = !showingVideo ? product.images[index] : undefined;
+  const selectedImage = !showingVideo ? mediaProduct.images[index] : undefined;
   const selectedDesign =
     selectedImage && "design" in selectedImage && typeof selectedImage.design === "string"
       ? selectedImage.design
       : undefined;
   const chooseVariant = (variantId: string) => {
     trackShopInteraction("select_variant", { item_id: variantId });
+    setIndex(0);
     setSelectedVariantId(variantId);
     setSearchParams({ variant: variantId }, { replace: true, preventScrollReset: true });
     const label = variants.find((variant) => variant.id === variantId)?.label;
-    const imageIndex = product.images.findIndex(
+    const imageIndex = mediaProduct.images.findIndex(
       (image) => "design" in image && image.design === label,
     );
     if (imageIndex >= 0) setIndex(imageIndex);
@@ -715,16 +722,16 @@ export function ShopProduct() {
                     muted
                     loop
                     playsInline
-                    onPlay={() => trackShopInteraction("product_media", { item_id: product.id, media_type: "video", media_index: index - product.images.length })}
+                    onPlay={() => trackShopInteraction("product_media", { item_id: product.id, media_type: "video", media_index: index - mediaProduct.images.length })}
                     preload="metadata"
-                    poster={product.images[0].src}
+                    poster={mediaProduct.images[0].src}
                     aria-label={`${nameFor(product.id, product.name)} product video`}
                   >
                     <source src={activeVideo} type="video/webm" />
                     Your browser does not support product video.
                   </video>
                 ) : (
-                  <GalleryImage mediaKey={selectedImage!.src}><ProductImage product={product} index={index} large /></GalleryImage>
+                  <GalleryImage mediaKey={selectedImage!.src}><ProductImage product={mediaProduct} index={index} large /></GalleryImage>
                 )}
               </div>
               {selectedDesign && (
@@ -733,7 +740,7 @@ export function ShopProduct() {
                 </p>
               )}
               <div className="shop-thumbs" aria-label="Product media">
-                {product.images.map((image, i) => (
+                {mediaProduct.images.map((image, i) => (
                   <button
                     key={image.src}
                     aria-label={`View ${"design" in image ? `${image.design} ` : ""}product photo ${i + 1}`}
@@ -750,7 +757,7 @@ export function ShopProduct() {
                   </button>
                 ))}
                 {videos.map((video, videoIndex) => {
-                  const mediaIndex = product.images.length + videoIndex;
+                  const mediaIndex = mediaProduct.images.length + videoIndex;
                   return (
                     <button
                       className="shop-video-thumb"
@@ -760,7 +767,7 @@ export function ShopProduct() {
                       onClick={() => setIndex(mediaIndex)}
                     >
                       <img
-                        src={product.images[Math.min(videoIndex + 1, product.images.length - 1)].thumb}
+                        src={mediaProduct.images[Math.min(videoIndex + 1, mediaProduct.images.length - 1)].thumb}
                         alt=""
                         loading="lazy"
                         width="90"
@@ -779,7 +786,7 @@ export function ShopProduct() {
             <div className="shop-detail-info">
               <p className="eyebrow">{product.category} / Made in Edmonton</p>
               <h1>{nameFor(product.id, product.name)}</h1>
-              <p className="lead">{product.description}</p>
+              <p className="lead">{product.description}</p>{"groupedDesigns" in product && <p className="small"><strong>{nameFor(mediaProduct.id, mediaProduct.name)}</strong> — {mediaProduct.description}</p>}
               <p className="shop-price">
                 {money(priceFor(selectedVariant.id, selectedVariant.priceCents))}{" "}
                 <span>
@@ -800,7 +807,8 @@ export function ShopProduct() {
                 <a href="tel:+17802030081">Questions? Call or text 780-203-0081</a>
               </div>
               <dl className="shop-core-details"><dt>Included</dt><dd>{selectedVariant.included}</dd>{!selectedVariant.dimensions.startsWith("Final dimensions") && <><dt>{isHalloweenMask ? "Ear-to-ear size" : "Approximate size"}</dt><dd>{selectedVariant.dimensions.replace("Source model: approximately", "Approximately").replace("Finished size: approximately", "Approximately").replace("Final printed dimensions require production review.", "Finished size may vary slightly.")}</dd></>}</dl>
-              {"personalization" in product ? <PhotoPrintOrder key={product.id} productId={product.id} /> : <AddProduct product={product} variantId={selectedVariant.id} onVariantChange={chooseVariant} formId="product-purchase-form" />}
+              {"groupedDesigns" in product && <ProductDesignPicker designs={product.groupedDesigns || []} selectedId={selectedVariant.id} onChange={chooseVariant} />}
+              {"personalization" in product ? <PhotoPrintOrder key={product.id} productId={selectedVariant.id} /> : <AddProduct product={product} variantId={selectedVariant.id} onVariantChange={chooseVariant} formId="product-purchase-form" />}
               <Link className="text-link" to="/shop/cart">View cart & checkout ↗</Link>
               <p className="shop-purchase-policy">{"personalization" in product ? "Your photo print is included. Personalized orders are excluded from change-of-mind returns." : `Unused standard products can be returned within ${storePolicy.returnWindowDays} days. Custom-size orders are excluded.`} <Link to="/shipping-returns">Details →</Link></p>
               {isHalloweenMask && (
@@ -876,7 +884,7 @@ export function ShopProduct() {
           <aside className="shop-reference-note" aria-label="Related gifts">
             <h2>More to explore</h2>
             <div className="shop-filters">
-              {products.filter(p => !isVariant(p) && p.id !== product.id && p.category === product.category).slice(0, 3).map(p => (
+              {evergreenProducts.filter(p => p.id !== product.id && p.category === product.category).slice(0, 3).map(p => (
                 <Link key={p.id} className="text-link" to={`/shop/${p.id}/`}>{nameFor(p.id, p.name)} · {money(priceFor(p.id, p.priceCents))} CAD →</Link>
               ))}
               <Link to="/shop/">Browse all gifts & décor →</Link>

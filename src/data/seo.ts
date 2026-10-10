@@ -6,6 +6,7 @@ import collections from "../../commerce/collections.json";
 import headphoneSearch from "../../commerce/headphone-search.json";
 import maskSearch from "../../commerce/mask-search.json";
 const publicProducts = products.filter((product) => !("variantOf" in product));
+const browsingProducts = publicProducts.filter(product => !("listingGroup" in product));
 const halloweenSpecialIds = collections.find((collection) => collection.id === "halloween")?.products || [];
 const canonical = (path: string) => business.origin + (path === "/" ? "/" : path.replace(/\/$/, "") + "/");
 export const publicRoutes = [
@@ -186,10 +187,10 @@ export function getStructuredData(path: string, livePrices: Record<string, numbe
       variants.length ? {
         "@type": "ProductGroup", name: product.name, description: product.description,
         productGroupID: product.id, url: canonical(page),
-        variesBy: [product.id === "mood-ghost" ? "https://schema.org/pattern" : "https://schema.org/size"],
+        variesBy: [product.variantLabel === "Design" ? "https://schema.org/pattern" : "https://schema.org/size"],
         hasVariant: variants.map(variant => ({
           ...item(products.find(p => p.id === variant.id)!, canonical(page) + "?variant=" + variant.id),
-          [product.id === "mood-ghost" ? "pattern" : "size"]: variant.label,
+          [product.variantLabel === "Design" ? "pattern" : "size"]: variant.label,
         })),
       } : item(product, canonical(page)),
       { "@type": "BreadcrumbList", itemListElement: [
@@ -204,7 +205,7 @@ export function getStructuredData(path: string, livePrices: Record<string, numbe
       ? halloweenSpecialIds.map((id) => publicProducts.find((product) => product.id === id)).filter(Boolean)
       : collection
       ? collection.products.map((id) => publicProducts.find((product) => product.id === id)).filter(Boolean)
-      : publicProducts;
+      : browsingProducts;
     return {
       "@context": "https://schema.org",
       "@graph": [

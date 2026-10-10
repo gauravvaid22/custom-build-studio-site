@@ -110,7 +110,7 @@ test("a legacy active sale without a deadline stays public until an end date is 
 });
 
 test("whole-shop and Halloween scopes include every size/design once", async () => {
-  const bases = products.filter((p) => !("variantOf" in p));
+  const bases = products.filter((p) => !("variantOf" in p) && !p.groupedDesigns);
   const byHandle = new Map(bases.map((base, index) => {
     const ids = base.variants?.length ? base.variants.map((v) => v.id) : [base.id];
     const variants = ids.flatMap((id, position) => {
@@ -131,7 +131,7 @@ test("whole-shop and Halloween scopes include every size/design once", async () 
   assert.equal(all.rows.length, bases.reduce((sum, p) => sum + (p.variants?.length || 1), 0));
   const halloween = collections.find((c) => c.id === "halloween");
   const seasonal = await sale.preview({ title: "Halloween sale", percentage: 10, scope: "collection", collectionId: halloween.id, endAt });
-  assert.deepEqual(new Set(seasonal.config.productIds), new Set(halloween.products));
+  assert.deepEqual(new Set(seasonal.config.productIds), new Set(halloween.products.flatMap(id => products.find(p => p.id === id)?.groupedDesigns?.map(d => d.id) || [id])));
   assert.equal(new Set(seasonal.rows.map((row) => row.sku)).size, seasonal.rows.length);
 });
 

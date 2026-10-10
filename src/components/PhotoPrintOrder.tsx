@@ -22,6 +22,7 @@ export function PhotoPrintOrder({ productId }: { productId: string }) {
     setPreview(url);
     return () => URL.revokeObjectURL(url);
   }, [file]);
+  useEffect(() => { setAdded(false); setError(""); }, [productId]);
   const choose = (candidate?: File) => {
     setAdded(false); setError(""); setFile(null); setPreviewUnavailable(false);
     if (!candidate) return;

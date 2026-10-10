@@ -13,7 +13,7 @@ test("every drop design includes personalization and correctly mapped media and 
   const frames = collections.find(c => c.id === "photo-frames");
   for (const item of source.products) {
     const product = products.find(p => p.id === item.id);
-    assert.ok(personalized.products.includes(item.id) && frames.products.includes(item.id));
+    assert.ok(personalized.products.includes(product.listingGroup || item.id) && frames.products.includes(product.listingGroup || item.id));
     assert.equal(product.personalization.photoCount, 1);
     assert.equal(product.priceCents, item.priceCents);
     assert.ok(product.priceCents - pricing.pickupPriceDifferenceCents >= 1999);
@@ -39,6 +39,6 @@ test("photo frame search offers use verified Shopify delivered prices and exclud
   assert.match(feed, /photo print|photo printed/i);
   for (const item of catalog) {
     assert.equal(discoverySchema(item)["@graph"][0].offers.price, (item.priceCents / 100).toFixed(2));
-    assert.equal(discoverySchema(item)["@graph"][1].itemListElement[1].name, "Personalized Photo Holders");
+    assert.equal(discoverySchema(item)["@graph"][1].itemListElement[1].name, collections.find(c => c.id === "photo-frames").name);
   }
 });

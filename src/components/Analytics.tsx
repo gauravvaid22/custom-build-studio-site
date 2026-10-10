@@ -183,8 +183,7 @@ export default function Analytics() {
     const selectedVariant = products.find(
       (item) =>
         item.id === requestedVariant &&
-        "variantOf" in item &&
-        item.variantOf === product.id,
+        (("variantOf" in item && item.variantOf === product.id) || ("variants" in product && product.variants?.some(variant => variant.id === item.id))),
     );
     trackShop("view_item", [
       { id: selectedVariant?.id || product.id, quantity: 1, priceCents: priceFor(selectedVariant?.id || product.id, selectedVariant?.priceCents || product.priceCents) },

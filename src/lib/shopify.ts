@@ -49,7 +49,7 @@ export async function fetchShopifyCatalog(): Promise<ShopifyCatalog> {
   const handles = [
     ...new Set(
       products
-        .filter((product) => !("variantOf" in product))
+        .filter((product) => !("variantOf" in product) && !("groupedDesigns" in product))
         .map(shopifyHandleFor),
     ),
   ];

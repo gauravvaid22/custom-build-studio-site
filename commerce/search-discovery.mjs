@@ -2,7 +2,7 @@ import products from "./products.json" with { type: "json" };
 import collections from "./collections.json" with { type: "json" };
 import config from "./search-discovery.json" with { type: "json" };
 
-const selected = new Set(collections.filter(c => config.collectionIds.includes(c.id)).flatMap(c => c.products));
+const selected = new Set(collections.filter(c => config.collectionIds.includes(c.id)).flatMap(c => c.products).flatMap(id => products.find(p => p.id === id)?.groupedDesigns?.map(design => design.id) || [id]));
 export const discoveryProducts = products.filter(p => selected.has(p.id) && !p.variantOf);
 export const xmlEscape = value => String(value).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" })[c]);
 export const productUrl = (id, variant) => `${config.origin}/shop/${id}/?fulfillment=delivered${variant ? "&variant=" + encodeURIComponent(variant) : ""}`;
@@ -33,7 +33,7 @@ export async function fetchDiscoveryCatalog(token, fetcher = fetch) {
 }
 
 export function discoverySchema(p) {
-  const collection = collections.find(c => config.collectionIds.includes(c.id) && c.products.includes(p.id));
+  const collection = collections.find(c => config.collectionIds.includes(c.id) && c.products.includes(p.listingGroup || p.id));
   const item = variant => {
     const url = productUrl(p.id, variant.id === p.id ? undefined : variant.id);
     return { "@type": "Product", "@id": `${config.origin}/shop/${p.id}/#${variant.id}`, name: variant.name, sku: variant.id,

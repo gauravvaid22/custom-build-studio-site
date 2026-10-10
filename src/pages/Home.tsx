@@ -116,7 +116,7 @@ export default function Home() {
             </ul>
           </div>
           <div className="home-shop-gallery" aria-label="Featured gifts and décor">
-            {shopTiles.map((product, index) => <Link className={`home-shop-tile${index === 0 ? " home-shop-tile-main" : ""}`} key={product.id} to={`/shop/${product.id}/`}>
+            {shopTiles.map((product, index) => <Link className={`home-shop-tile${index === 0 ? " home-shop-tile-main" : ""}`} key={product.id} to={`/shop/${"listingGroup" in product ? product.listingGroup : product.id}/`}>
               <img src={product.images[index === 0 ? feature.imageIndex : 0].src} alt={product.images[index === 0 ? feature.imageIndex : 0].alt} loading="lazy" width="900" height="900" />
               <span><strong>{nameFor(product.id, product.name)}</strong><small>Explore this product ↗</small></span>
             </Link>)}

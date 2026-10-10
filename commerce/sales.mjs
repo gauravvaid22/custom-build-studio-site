@@ -5,7 +5,7 @@ import pricing from "./pricing.json" with { type: "json" };
 
 export const PICKUP_DIFFERENCE_CENTS = pricing.pickupPriceDifferenceCents;
 const recordKey = "config/shop-sale";
-const baseProducts = products.filter((product) => !("variantOf" in product));
+const baseProducts = products.filter((product) => !("variantOf" in product) && !product.groupedDesigns);
 const baseById = new Map(baseProducts.map((product) => [product.id, product]));
 const hash = (value) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const money = (cents) => (cents / 100).toFixed(2);
@@ -35,7 +35,7 @@ function validateConfig(input) {
     scope === "collection" ? collection.products : input.productIds;
   if (!Array.isArray(requested) || !requested.length || requested.length > baseProducts.length)
     throw new SaleError("Choose at least one valid product.");
-  const productIds = [...new Set(requested)];
+  const productIds = [...new Set(requested.flatMap(id => products.find(p => p.id === id)?.groupedDesigns?.map(design => design.id) || [id]))];
   if (productIds.some((id) => !baseById.has(id))) throw new SaleError("The sale includes an unknown product.");
   const startAt = input.startAt ? String(input.startAt) : null;
   const endAt = String(input.endAt || "");

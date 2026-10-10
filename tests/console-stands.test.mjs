@@ -12,7 +12,7 @@ test("all six console stands have fitting choices, real media and collection lin
   const gaming = collections.find(c => c.id === "gaming-desk");
   for (const item of source.products) {
     const parent = products.find(p => p.id === item.id);
-    assert.ok(collection.products.includes(item.id) && gaming.products.includes(item.id));
+    assert.ok(collection.products.includes(parent.listingGroup || item.id) && gaming.products.includes(parent.listingGroup || item.id));
     assert.equal(parent.variantLabel, "Console model");
     assert.deepEqual(parent.variants.map(v => v.label), ["Original PS5", "PS5 Slim"]);
     assert.ok(parent.images.length >= 3);

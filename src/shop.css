@@ -1531,3 +1531,15 @@
 .photo-print-size-guide svg { width: 180px; max-width: 100%; flex: 0 1 180px; color: #075985; font-family: inherit; font-size: 14px; }
 .photo-print-size-guide figcaption { display: grid; gap: .35rem; flex: 1 1 160px; }
 .photo-print-size-guide small { opacity: .75; }
+
+/* Grouped drop pages: real design photos, clear selected state, keyboard-friendly. */
+.shop-design-picker { margin: 1.5rem 0; }
+.shop-design-options { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.65rem; margin:.8rem 0; }
+.shop-design-options button { position:relative; min-width:0; padding:.55rem; text-align:left; color:inherit; background:var(--surface,#f3f6f7); border:1px solid #bdcbd0; border-radius:6px; cursor:pointer; }
+.shop-design-options button[aria-pressed="true"] { border:2px solid #1684a2; padding:calc(.55rem - 1px); background:#e7f3f7; }
+.shop-design-options img { width:100%; height:92px; object-fit:contain; border-radius:3px; background:#101718; }
+.shop-design-options button > span:not(.shop-design-check) { display:block; margin-top:.4rem; font-size:.95rem; line-height:1.25; }
+.shop-design-options small { display:block; margin-top:.25rem; font-size:.85rem; }
+.shop-design-check { position:absolute; top:.65rem; right:.65rem; background:#1684a2; color:white; border-radius:50%; width:1.4rem; height:1.4rem; text-align:center; }
+.shop-design-options button:focus-visible { outline:3px solid #1684a2; outline-offset:3px; }
+@media(max-width:480px) { .shop-design-options { grid-template-columns:repeat(2,minmax(0,1fr)); } }

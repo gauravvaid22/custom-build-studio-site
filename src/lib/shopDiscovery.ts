@@ -6,7 +6,7 @@ export type Merchandising = typeof defaults;
 export type ShopFeature = Merchandising["fallback"];
 type Product = (typeof products)[number];
 export const shopDepartments = collections.filter(collection => collection.kind === "department");
-export const parentProducts = products.filter(product => !("variantOf" in product));
+export const parentProducts = products.filter(product => !("variantOf" in product) && !("listingGroup" in product));
 export const subcollections: Record<string, string[]> = {
   "gaming-desk": ["headphone-stands", "console-stands"],
   "personalized-gifts": ["photo-frames"],
@@ -30,7 +30,7 @@ export function lowestProductPrice(product: Product, priceFor: (id: string, cent
 const normalize = (value: string) => value.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 export function matchesProductSearch(product: Product, query: string, displayName = product.name) {
   const family = collections.filter(collection => collection.products.includes(product.id)).map(collection => collection.name).join(" ");
-  const searchable = normalize(`${displayName} ${product.name} ${product.category} ${product.description} ${family}`);
+  const searchable = normalize(`${displayName} ${product.name} ${product.category} ${product.description} ${"groupedDesigns" in product ? product.groupedDesigns?.map(design => design.label).join(" ") : ""} ${family}`);
   return normalize(query).trim().split(/\s+/).filter(Boolean).every(word => searchable.includes(word));
 }
 /** Never forward arbitrary search text (emails, phone numbers, etc.) to analytics. */
