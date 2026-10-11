@@ -78,7 +78,7 @@ if previous_group.get('galleryOverviewCover'):
  group['galleryOverviewCover']=True
  group['images']=[previous_group['images'][0]]+group['images']
 record['launchReady']=all(p['launchReady'] for p in designs)
-record['pending']=['Owner-tested straw diameter','Shopify shipping verification']
+record['pending']=record.get('pending',['Owner-tested straw diameter','Shopify shipping verification'])
 catalog=[p for p in catalog if p['id']!=GROUP]+[group]
 collections_path=ROOT/'commerce/collections.json'
 collections=json.loads(collections_path.read_text(encoding='utf-8'))
@@ -92,4 +92,4 @@ for c in collections:
  if c['id']=='home-decor': c['products']=list(dict.fromkeys(c['products']+[GROUP]))
 for path,data in [(catalog_path,catalog),(collections_path,collections),(ROOT/'commerce/tumbler-accessories-source.json',record)]:
  path.write_text(json.dumps(data,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
-print(f'Imported six designs, {sum(len(p["photos"]) for p in record["products"])} photos and six videos. Launch blocked pending fit, shipping and cover review.')
+print(f'Imported six designs, {sum(len(p["photos"]) for p in record["products"])} photos and six videos. Launch ready: {record["launchReady"]}.')

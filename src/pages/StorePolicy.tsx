@@ -9,8 +9,8 @@ export default function StorePolicy() {
   return <>
     <PageIntro eyebrow="SHOP WITH CONFIDENCE" title="Shipping & returns" description="Delivery, pickup and returns for finished shop products." />
     <section className="section"><div className="container narrow prose">
-      <h2>Free tracked shipping in {policy.shippingCountry}</h2>
-      <p>Standard tracked shipping is free, with no minimum purchase. Preparation normally takes {policy.handlingMinDays}–{policy.handlingMaxDays} business days, followed by an estimated {policy.transitMinDays}–{policy.transitMaxDays} business days in transit. {shippingEstimate} Business days are Monday–Friday, excluding public holidays. Delivery dates are estimates, not guarantees.</p>
+      <h2>Tracked shipping in {policy.shippingCountry}</h2>
+      <p>Most products include standard tracked shipping with no minimum purchase. Straw topper and cup charm sets have a CAD $5 shipping fee once per shipped order, including orders containing other products. Edmonton pickup has no shipping fee. Preparation normally takes {policy.handlingMinDays}–{policy.handlingMaxDays} business days, followed by an estimated {policy.transitMinDays}–{policy.transitMaxDays} business days in transit. {shippingEstimate} Business days are Monday–Friday, excluding public holidays. Delivery dates are estimates, not guarantees.</p>
       <h2>Edmonton pickup</h2>
       <p>Select pickup before checkout to see pickup pricing. Pickup is by appointment in Southeast Edmonton. We email the private address and arrange a pickup time after ordering.</p>
       <h2>Standard product returns</h2>

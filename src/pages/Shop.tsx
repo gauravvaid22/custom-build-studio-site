@@ -145,7 +145,7 @@ function ShopNotice() {
         ? "Collection preview — prices and production details are being reviewed. "
         : ""}
       Finished physical products <span aria-hidden="true">·</span> No digital files{" "}
-      <span aria-hidden="true">·</span> {mode === "pickup" ? "Edmonton pickup by appointment" : content.shippingMessage}{" "}
+      <span aria-hidden="true">·</span> {mode === "pickup" ? "Edmonton pickup by appointment" : "Most items ship free in Canada · Tumbler accessory sets: $5 shipping per order"}{" "}
       <span aria-hidden="true">·</span> Secure Shopify checkout
     </div>
   );
@@ -432,7 +432,7 @@ export function Shop() {
     {merchandising.showBudgetGifts && budget.length > 0 && <section className="section shop-under-section"><div className="container"><div className="section-heading"><div><p className="eyebrow">LITTLE GIFTS / $25 & UNDER</p><h2>Small gifts. Easy choices.</h2></div><Link className="text-link" to="/shop/gifts-under-25">Explore gifts $25 & under →</Link></div><ProductGrid listed={budget} listId="shop_budget_gifts" /></div></section>}
     {merchandising.showStudioProof && <StudioProof />}
     <section className="container"><ShopBenefits /></section>
-    <section className="shop-how section"><div className="container detail-columns"><div><p className="eyebrow">FROM YOUR CART TO YOUR DOOR</p><h2>Simple from the first click.</h2><p>Choose your product and options, add to cart, then pay securely through Shopify. Your order goes directly to the studio.</p><Link className="text-link" to="/shipping-returns">Shipping, pickup & returns →</Link></div><div><h3>{mode === "pickup" ? "Pickup to suit your schedule." : "Tracked shipping is included."}</h3><p>{mode === "pickup" ? "Collect in Southeast Edmonton by appointment. We email the private address after ordering." : "Free standard tracked shipping across Canada. Your product page explains preparation and delivery estimates."}</p><p>{content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship")}.</p><Link className="text-link" to="/contact">Need a custom colour or size? Ask us →</Link></div></div></section>
+    <section className="shop-how section"><div className="container detail-columns"><div><p className="eyebrow">FROM YOUR CART TO YOUR DOOR</p><h2>Simple from the first click.</h2><p>Choose your product and options, add to cart, then pay securely through Shopify. Your order goes directly to the studio.</p><Link className="text-link" to="/shipping-returns">Shipping, pickup & returns →</Link></div><div><h3>{mode === "pickup" ? "Pickup to suit your schedule." : "Tracked shipping across Canada."}</h3><p>{mode === "pickup" ? "Collect in Southeast Edmonton by appointment. We email the private address after ordering." : "Most items include tracked Canadian shipping. Straw topper and cup charm sets add $5 once per shipped order; your cart shows the rate. Your product page explains delivery estimates."}</p><p>{content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship")}.</p><Link className="text-link" to="/contact">Need a custom colour or size? Ask us →</Link></div></div></section>
   </>;
 }
 
@@ -716,7 +716,7 @@ export function ShopProduct() {
   return (
     <>
       <ShopNav showFulfillment={!previewOnly} />
-      {previewOnly ? <p className="shop-notice container">Design preview · proposed CAD item prices · ordering not open</p> : <ShopNotice />}
+      {previewOnly ? <p className="shop-notice container">Design preview · proposed CAD item prices · ordering not open</p> : productShippingFee(product.id) ? <p className="shop-notice container">CAD prices · {mode === "pickup" ? "Edmonton pickup · no shipping fee" : "$5 tracked Canadian shipping once per order"}</p> : <ShopNotice />}
       <section className="section">
         <div className="container">
           <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {"personalization" in product && <><Link to="/shop/personalized-gifts">Personalized Gifts</Link> / <Link to="/shop/photo-frames">Photo Holders</Link> / </>}{product.category === "PS5 console stands" && <><Link to="/shop/console-stands">PS5 Console Stands</Link> / </>}{product.category === "Headphone stands" && <><Link to="/shop/headphone-stands">Headphone Stands</Link> / </>}{nameFor(product.id, product.name)}</nav>

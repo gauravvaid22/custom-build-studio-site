@@ -2,11 +2,10 @@
   "reviewedAt": "2026-10-11",
   "drop": "https://platform.stlflix.com/drops/drop-301",
   "privateMediaRoot": "../private-production/tumbler-accessories-2026-10-11",
-  "launchReady": false,
+  "launchReady": true,
   "hardwareConfirmed": "Owner confirmed complete assembled topper, charms, chain and rings on 2026-10-11.",
   "pending": [
-    "Owner-tested straw diameter",
-    "Shopify shipping verification"
+    "Owner-tested straw diameter"
   ],
   "pricingNote": "Provisional CAD set prices, shipping extra. Review sliced material, hardware, batch yield and assembly time before claiming margins. Long single-item AMS estimates are not a viable cost basis at these prices.",
   "benchmarks": [
