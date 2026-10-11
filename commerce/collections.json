@@ -89,7 +89,8 @@
       "ghost-duo-trinket-dish",
       "can-holder-designs",
       "halloween-candy-holder-designs",
-      "can-holder-designs-ii"
+      "can-holder-designs-ii",
+      "straw-topper-charm-designs"
     ]
   },
   {
@@ -223,6 +224,20 @@
     "products": [
       "can-holder-designs",
       "can-holder-designs-ii"
+    ]
+  },
+  {
+    "id": "tumbler-accessories",
+    "kind": "collection",
+    "name": "Tumbler accessories",
+    "shortName": "Tumbler accessories",
+    "eyebrow": "SMALL DETAILS / BIG PERSONALITY",
+    "heading": "Make your tumbler your own.",
+    "description": "Explore matching straw toppers and cup-handle charm sets in six playful designs. One finished accessory set per item; cups and straws are not included.",
+    "seoDescription": "Shop decorative straw toppers and tumbler handle charm sets made in Edmonton. Cat, panda, cow, octopus, dragon and reaper designs. Choose your design online.",
+    "coverProduct": "straw-topper-charm-designs",
+    "products": [
+      "straw-topper-charm-designs"
     ]
   }
 ]

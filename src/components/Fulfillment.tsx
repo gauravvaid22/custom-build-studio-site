@@ -47,9 +47,9 @@ export function FulfillmentSelector({ welcome = false, compact = false }: { welc
         <FulfillmentIcon pickup/><span><strong>Edmonton pickup</strong><small>Southeast Edmonton · by appointment</small></span><span className="fulfillment-check" aria-hidden="true">✓</span>
       </button>
       <button type="button" aria-pressed={mode === "delivered"} disabled={locked} onClick={() => choose("delivered")}>
-        <FulfillmentIcon pickup={false}/><span><strong>Delivered to you</strong><small>Free tracked shipping across Canada</small></span><span className="fulfillment-check" aria-hidden="true">✓</span>
+        <FulfillmentIcon pickup={false}/><span><strong>Delivered to you</strong><small>Canadian tracked shipping · rate shown in cart</small></span><span className="fulfillment-check" aria-hidden="true">✓</span>
       </button>
     </div>
-    <p className="fulfillment-help" role="status">{compact ? (mode === "pickup" ? "Pickup prices · Southeast Edmonton · address sent after ordering." : "Delivered prices · free tracked Canadian shipping.") : mode === "pickup" ? "Pickup prices shown. We’ll arrange your time and send the private address after you order. No delivery included." : "Delivered prices shown. Shipping is included."} {compact ? "" : expanded ? "You can switch anytime before checkout." : "Changing this updates every item in your cart."}</p>
+    <p className="fulfillment-help" role="status">{compact ? (mode === "pickup" ? "Pickup prices · Southeast Edmonton · address sent after ordering." : "Delivered prices · shipping shown in cart.") : mode === "pickup" ? "Pickup prices shown. We’ll arrange your time and send the private address after you order. No delivery included." : "Delivered prices shown. Most items include shipping; accessory-set shipping is shown in your cart."} {compact ? "" : expanded ? "You can switch anytime before checkout." : "Changing this updates every item in your cart."}</p>
   </section>;
 }

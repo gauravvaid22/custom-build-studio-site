@@ -1,0 +1,249 @@
+{
+  "reviewedAt": "2026-10-11",
+  "drop": "https://platform.stlflix.com/drops/drop-301",
+  "privateMediaRoot": "../private-production/tumbler-accessories-2026-10-11",
+  "launchReady": false,
+  "hardwareConfirmed": "Owner confirmed complete assembled topper, charms, chain and rings on 2026-10-11.",
+  "pending": [
+    "Owner-tested straw diameter",
+    "Shopify shipping verification"
+  ],
+  "pricingNote": "Provisional CAD set prices, shipping extra. Review sliced material, hardware, batch yield and assembly time before claiming margins. Long single-item AMS estimates are not a viable cost basis at these prices.",
+  "benchmarks": [
+    {
+      "url": "https://www.etsy.com/ie/listing/4444936271/final-drink-straw-topper-charm",
+      "price": 9.02,
+      "currency": "EUR",
+      "shipping": "extra",
+      "note": "Regular price observed; sale 8.12 EUR. Do not compare as CAD."
+    }
+  ],
+  "products": [
+    {
+      "id": "final-drink-straw-topper-and-charm",
+      "name": "Final Drink — Reaper Straw Topper & Charm Set",
+      "description": "A tiny hooded reaper sits on your straw, paired with a skull-and-bat charm cluster for your cup handle.",
+      "category": "Tumbler accessories",
+      "priceCents": 1499,
+      "source": "https://platform.stlflix.com/product/final-drink-straw-topper-and-charm",
+      "drop": "https://platform.stlflix.com/drops/drop-301",
+      "heightMm": 30,
+      "tags": [
+        "tumbler accessory",
+        "straw topper",
+        "cup charm",
+        "Edmonton made"
+      ],
+      "productionEstimates": {
+        "monoMinutes": 100,
+        "multicolorMinutes": 288
+      },
+      "photos": [
+        "Final_Drink_Straw_Topper_and_Charm1_5f70fdb90c.png",
+        "Final_Drink_Straw_Topper_and_Charm2_1819f5c8c3.png",
+        "Final_Drink_Straw_Topper_and_Charm3_9f9e74b7b1.png",
+        "Final_Drink_Straw_Topper_and_Charm4_8b4a0bc1b4.png",
+        "Final_Drink_Straw_Topper_and_Charm5_d22d3f7034.png",
+        "Final_Drink_Straw_Topper_and_Charm6_b455b58779.png",
+        "Final_Drink_Straw_Topper_and_Charm7_8e87177bb6.png",
+        "Final_Drink_Straw_Topper_and_Charm8_43aecf5b67.png"
+      ],
+      "excludedPhotos": [
+        "Final_Drink_Straw_Topper_and_Charm9_98a9b4c619.png"
+      ],
+      "excludedReason": "Monocolour/alternative finish does not represent the standard photo finish.",
+      "videoSource": "Final_Drink_WEBM_e4becd2e81.webm",
+      "sourcePackage": "final-drink-straw-topper-and-charm-media-package.zip",
+      "pickupPriceDifferenceCents": 0,
+      "shippingFeeCents": 500
+    },
+    {
+      "id": "pawsitively-hydrated-straw-topper-and-charm",
+      "name": "Pawsitively Hydrated — Cat Straw Topper & Charm Set",
+      "description": "A playful cat hugs a ball of yarn on your straw, with matching mouse, fishbone and paw charms for your cup handle.",
+      "category": "Tumbler accessories",
+      "priceCents": 1599,
+      "source": "https://platform.stlflix.com/product/pawsitively-hydrated-straw-topper-and-charm",
+      "drop": "https://platform.stlflix.com/drops/drop-301",
+      "heightMm": 40,
+      "tags": [
+        "tumbler accessory",
+        "straw topper",
+        "cup charm",
+        "Edmonton made"
+      ],
+      "productionEstimates": {
+        "monoMinutes": 57,
+        "multicolorMinutes": 584
+      },
+      "photos": [
+        "Pawsitively_Hydrated_Straw_Topper_and_Charm_1_44c0c07da6.png",
+        "Pawsitively_Hydrated_Straw_Topper_and_Charm_2_af3b122fd4.png",
+        "Pawsitively_Hydrated_Straw_Topper_and_Charm_3_14ea1e7024.png",
+        "Pawsitively_Hydrated_Straw_Topper_and_Charm_4_b40db56e60.png",
+        "Pawsitively_Hydrated_Straw_Topper_and_Charm_5_d7f67042d3.png",
+        "Pawsitively_Hydrated_Straw_Topper_and_Charm_6_44f3fde4f5.png",
+        "Pawsitively_Hydrated_Straw_Topper_and_Charm_7_3bf254d63f.png"
+      ],
+      "excludedPhotos": [
+        "Pawsitively_Hydrated_Straw_Topper_and_Charm_8_0af5ed5edf.png",
+        "Pawsitively_Hydrated_Straw_Topper_and_Charm_9_522a4fe3ed.png"
+      ],
+      "excludedReason": "Monocolour/alternative finish does not represent the standard photo finish.",
+      "videoSource": "Pawsitively_Hydrated_WEBM_ed63f265da.webm",
+      "sourcePackage": "pawsitively-hydrated-straw-topper-and-charm-media-package.zip",
+      "pickupPriceDifferenceCents": 0,
+      "shippingFeeCents": 500
+    },
+    {
+      "id": "deep-sips-straw-topper-and-charm",
+      "name": "Deep Sips — Octopus Straw Topper & Charm Set",
+      "description": "An octopus wraps its tentacles around your straw, paired with cheerful sea-creature charms for your cup handle.",
+      "category": "Tumbler accessories",
+      "priceCents": 1599,
+      "source": "https://platform.stlflix.com/product/deep-sips-straw-topper-and-charm",
+      "drop": "https://platform.stlflix.com/drops/drop-301",
+      "heightMm": 30,
+      "tags": [
+        "tumbler accessory",
+        "straw topper",
+        "cup charm",
+        "Edmonton made"
+      ],
+      "productionEstimates": {
+        "monoMinutes": 72,
+        "multicolorMinutes": 265
+      },
+      "photos": [
+        "Deep_Sips_Straw_Topper_and_Charm1_0ea643fa64.png",
+        "Deep_Sips_Straw_Topper_and_Charm2_223c393ec0.png",
+        "Deep_Sips_Straw_Topper_and_Charm3_4868ce08d8.png",
+        "Deep_Sips_Straw_Topper_and_Charm4_fecd29495f.png",
+        "Deep_Sips_Straw_Topper_and_Charm5_b0aa9f9577.png",
+        "Deep_Sips_Straw_Topper_and_Charm6_1ada56f694.png",
+        "Deep_Sips_Straw_Topper_and_Charm7_922883c7f5.png",
+        "Deep_Sips_Straw_Topper_and_Charm8_a7aba99709.png",
+        "Deep_Sips_Straw_Topper_and_Charm9_61376839ba.png"
+      ],
+      "excludedPhotos": [],
+      "excludedReason": "Monocolour/alternative finish does not represent the standard photo finish.",
+      "videoSource": "Deep_Sips_WEBM_733c778c59.webm",
+      "sourcePackage": "deep-sips-straw-topper-and-charm-media-package.zip",
+      "pickupPriceDifferenceCents": 0,
+      "shippingFeeCents": 500
+    },
+    {
+      "id": "udderly-thirsty-straw-topper-and-charm",
+      "name": "Udderly Thirsty — Cow Straw Topper & Charm Set",
+      "description": "A little cow brings farmyard fun to your straw, with matching cow-themed charms for your cup handle.",
+      "category": "Tumbler accessories",
+      "priceCents": 1699,
+      "source": "https://platform.stlflix.com/product/udderly-thirsty-straw-topper-and-charm",
+      "drop": "https://platform.stlflix.com/drops/drop-301",
+      "heightMm": 50,
+      "tags": [
+        "tumbler accessory",
+        "straw topper",
+        "cup charm",
+        "Edmonton made"
+      ],
+      "productionEstimates": {
+        "monoMinutes": 59,
+        "multicolorMinutes": 997
+      },
+      "photos": [
+        "Udderly_Thirsty_Straw_Topper_and_Charm_1_8bb143a1ed.png",
+        "Udderly_Thirsty_Straw_Topper_and_Charm_2_94dba76823.png",
+        "Udderly_Thirsty_Straw_Topper_and_Charm_3_beb5d7ad3d.png",
+        "Udderly_Thirsty_Straw_Topper_and_Charm_4_3f29948f95.png",
+        "Udderly_Thirsty_Straw_Topper_and_Charm_5_bfdb495bf4.png",
+        "Udderly_Thirsty_Straw_Topper_and_Charm_6_38dc03cefb.png",
+        "Udderly_Thirsty_Straw_Topper_and_Charm_7_e378cfea6f.png",
+        "Udderly_Thirsty_Straw_Topper_and_Charm_8_d8200f524a.png"
+      ],
+      "excludedPhotos": [],
+      "excludedReason": "Monocolour/alternative finish does not represent the standard photo finish.",
+      "videoSource": "Udderly_Thirsty_WEBM_3e792188b3.webm",
+      "sourcePackage": "udderly-thirsty-straw-topper-and-charm-media-package.zip",
+      "pickupPriceDifferenceCents": 0,
+      "shippingFeeCents": 500
+    },
+    {
+      "id": "bamboo-break-straw-topper-and-charm",
+      "name": "Bamboo Break — Panda Straw Topper & Charm Set",
+      "description": "A panda hugs a bamboo-inspired straw decoration, paired with panda-and-bamboo charms for your cup handle.",
+      "category": "Tumbler accessories",
+      "priceCents": 1499,
+      "source": "https://platform.stlflix.com/product/bamboo-break-straw-topper-and-charm",
+      "drop": "https://platform.stlflix.com/drops/drop-301",
+      "heightMm": 40,
+      "tags": [
+        "tumbler accessory",
+        "straw topper",
+        "cup charm",
+        "Edmonton made"
+      ],
+      "productionEstimates": {
+        "monoMinutes": 52,
+        "multicolorMinutes": 467
+      },
+      "photos": [
+        "Bamboo_Break_Straw_Topper_and_Charm1_573567cfe8.png",
+        "Bamboo_Break_Straw_Topper_and_Charm2_21761e8222.png",
+        "Bamboo_Break_Straw_Topper_and_Charm3_b2403b65c5.png",
+        "Bamboo_Break_Straw_Topper_and_Charm4_2edc22fff5.png",
+        "Bamboo_Break_Straw_Topper_and_Charm5_6b2299de2c.png",
+        "Bamboo_Break_Straw_Topper_and_Charm6_258aebb3af.png",
+        "Bamboo_Break_Straw_Topper_and_Charm7_bb16a0d624.png"
+      ],
+      "excludedPhotos": [
+        "Bamboo_Break_Straw_Topper_and_Charm8_91379334c6.png",
+        "Bamboo_Break_Straw_Topper_and_Charm9_4ae5ed66ff.png"
+      ],
+      "excludedReason": "Monocolour/alternative finish does not represent the standard photo finish.",
+      "videoSource": "Bamboo_Break_WEBM_729175ee0f.webm",
+      "sourcePackage": "bamboo-break-straw-topper-and-charm-media-package.zip",
+      "pickupPriceDifferenceCents": 0,
+      "shippingFeeCents": 500
+    },
+    {
+      "id": "thirst-slayer-straw-topper-and-charm",
+      "name": "Thirst Slayer — Dragon Straw Topper & Charm Set",
+      "description": "A bright little dragon guards your straw, with flame, sword and helmet charms for a fantasy-inspired cup handle.",
+      "category": "Tumbler accessories",
+      "priceCents": 1799,
+      "source": "https://platform.stlflix.com/product/thirst-slayer-straw-topper-and-charm",
+      "drop": "https://platform.stlflix.com/drops/drop-301",
+      "heightMm": 30,
+      "tags": [
+        "tumbler accessory",
+        "straw topper",
+        "cup charm",
+        "Edmonton made"
+      ],
+      "productionEstimates": {
+        "monoMinutes": 54,
+        "multicolorMinutes": 692
+      },
+      "photos": [
+        "Thirst_Slayer_Straw_Topper_and_Charm_1_20d5965f5e.png",
+        "Thirst_Slayer_Straw_Topper_and_Charm_2_762c07542f.png",
+        "Thirst_Slayer_Straw_Topper_and_Charm_3_514e158a3a.png",
+        "Thirst_Slayer_Straw_Topper_and_Charm_4_e09c7eb4fe.png",
+        "Thirst_Slayer_Straw_Topper_and_Charm_5_c0942a877b.png",
+        "Thirst_Slayer_Straw_Topper_and_Charm_6_8cf2913b3b.png",
+        "Thirst_Slayer_Straw_Topper_and_Charm_7_29786dc0c0.png",
+        "Thirst_Slayer_Straw_Topper_and_Charm_9_01347679c9.png"
+      ],
+      "excludedPhotos": [
+        "Thirst_Slayer_Straw_Topper_and_Charm_8_bc642a35cb.png"
+      ],
+      "excludedReason": "Monocolour/alternative finish does not represent the standard photo finish.",
+      "videoSource": "Thirst_Slayer_WEBM_5e44c2b74b.webm",
+      "sourcePackage": "thirst-slayer-straw-topper-and-charm-media-package.zip",
+      "pickupPriceDifferenceCents": 0,
+      "shippingFeeCents": 500
+    }
+  ],
+  "fulfillmentConfirmed": "Same item price for pickup; CAD5 shipping once per shipped order."
+}

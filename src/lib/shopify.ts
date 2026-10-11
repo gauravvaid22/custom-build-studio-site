@@ -1,5 +1,6 @@
 import type { CartItem } from "../components/Cart";
 import type { FulfillmentMode } from "../components/Fulfillment";
+import { shippingFee } from "./fulfillmentPricing";
 import products from "../../commerce/products.json";
 import { checkoutAnalyticsAttributes } from "../components/Analytics";
 
@@ -210,7 +211,7 @@ export async function createShopifyCheckout(items: CartItem[], mode: Fulfillment
       input: {
         lines,
         buyerIdentity: { countryCode: "CA" },
-        attributes: [{ key: "Storefront", value: "custombuildstudio.ca" }, { key: "Order handoff", value: mode === "pickup" ? "Edmonton pickup by appointment — no delivery" : "Delivered — free Canadian tracked shipping" }, ...analyticsAttributes],
+        attributes: [{ key: "Storefront", value: "custombuildstudio.ca" }, { key: "Order handoff", value: mode === "pickup" ? "Edmonton pickup by appointment — no delivery" : `Delivered — Canadian tracked shipping ${shippingFee(items, mode) ? "CAD " + (shippingFee(items, mode) / 100).toFixed(2) : "included"}` }, ...analyticsAttributes],
         ...(mode === "pickup" ? { note: "EDMONTON PICKUP ONLY. Arrange a time and privately send the address after ordering. Do not ship this order." } : {}),
       },
     },

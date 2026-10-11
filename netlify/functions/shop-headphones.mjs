@@ -5,11 +5,12 @@ import source from "../../commerce/headphone-stands-source.json" with { type: "j
 import frames from "../../commerce/photo-frames-source.json" with { type: "json" };
 import consoles from "../../commerce/console-stands-source.json" with { type: "json" };
 import candyCans from "../../commerce/candy-can-source.json" with { type: "json" };
+import tumblers from "../../commerce/tumbler-accessories-source.json" with { type: "json" };
 import { managedVariantInput } from "../../commerce/managed-product-input.mjs";
 import pricing from "../../commerce/pricing.json" with { type: "json" };
 import { createShopifyAdmin } from "../../commerce/shopify-admin.mjs";
 
-const managedProducts = [...source.products, ...frames.products, ...consoles.products, ...candyCans.products];
+const managedProducts = [...source.products, ...frames.products, ...consoles.products, ...candyCans.products, ...tumblers.products];
 const ids = new Set(managedProducts.flatMap((item) => [item.id, ...(item.options || []).map(option => option.id)]));
 const admin = createShopifyAdmin({
   legacyToken: process.env.SHOPIFY_ADMIN_ACCESS_TOKEN || "",
@@ -42,6 +43,7 @@ async function createMissing(item) {
   const current = await productByHandle(item.id);
   if (current) return { id: item.id, status: "already-exists" };
   if (consoles.products.some(product => product.id === item.id) && !consoles.launchReady) throw new Error("Confirm mounting hardware, console fit and stability before releasing these stands.");
+  if (tumblers.products.some(product => product.id === item.id) && !tumblers.launchReady) throw new Error("Confirm straw fit, fulfillment prices and Shopify shipping before releasing these accessories.");
   const product = products.find((entry) => entry.id === item.id);
   if (!product) throw new Error("The website product is missing.");
   const result = await admin.call(
@@ -71,8 +73,9 @@ async function createMissing(item) {
 }
 
 async function updatePrice(id, cents) {
-  if (!Number.isInteger(cents) || cents < 1500 || cents > 100000)
-    throw new Error("Enter a delivered price from CA$15 to CA$1,000.");
+  const difference = managedProducts.find(item => item.id === id)?.pickupPriceDifferenceCents ?? pricing.pickupPriceDifferenceCents;
+  if (!Number.isInteger(cents) || cents < Math.max(100, difference) || cents > 100000)
+    throw new Error("Enter a valid CAD price, at least the pickup adjustment and no more than CA$1,000.");
   await checkSale(id);
   const parentId = products.find(product => product.id === id)?.variantOf || id;
   if (parentId !== id) await checkSale(parentId);
@@ -92,7 +95,7 @@ async function updatePrice(id, cents) {
     }`,
     { productId: product.id, variants: [
       { id: delivered.id, price: money(cents) },
-      { id: pickup.id, price: money(cents - pricing.pickupPriceDifferenceCents) },
+      { id: pickup.id, price: money(cents - difference) },
     ] },
   );
   const errors = result.productVariantsBulkUpdate?.userErrors || [];
@@ -100,7 +103,7 @@ async function updatePrice(id, cents) {
   const updated = await productByHandle(parentId);
   if (updated?.variants?.nodes?.find((variant) => variant.sku === id)?.price !== money(cents))
     throw new Error("Shopify did not confirm the new price. Refresh and check this product before retrying.");
-  return { id, priceCents: cents, pickupPriceCents: cents - pricing.pickupPriceDifferenceCents };
+  return { id, priceCents: cents, pickupPriceCents: cents - difference };
 }
 
 export default async function shopHeadphones(request, context) {

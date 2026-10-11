@@ -72,7 +72,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
   const add = (id: string, quantity: number, attributes?: CartAttribute[]) => {
     if (
-      !products.some((p) => p.id === id) ||
+      !products.some((p) => p.id === id && !("launchReady" in p && p.launchReady === false)) ||
       !Number.isInteger(quantity) ||
       quantity < 1 ||
       quantity > 20

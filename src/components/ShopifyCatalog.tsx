@@ -2,6 +2,8 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { fetchShopifyCatalog, type ShopifyCatalog } from "../lib/shopify";
 import { PICKUP_PRICE_DIFFERENCE, useFulfillment } from "./Fulfillment";
 import { fulfillmentSku } from "../lib/shopify";
+import { pickupDifference } from "../lib/fulfillmentPricing";
+import products from "../../commerce/products.json";
 
 export type ActiveSale = {
   status: "active";
@@ -65,7 +67,12 @@ export function ShopifyCatalogProvider({ children }: { children: React.ReactNode
 export function useShopifyCatalog() {
   const { catalog: { prices, compareAtPrices, names }, sale, refresh, catalogLoaded, catalogError } = useContext(ShopifyCatalogContext);
   const { mode } = useFulfillment();
-  const priceFor = (id: string, fallback: number) => prices[fulfillmentSku(id, mode)] ?? Math.max(0, fallback - (mode === "pickup" ? PICKUP_PRICE_DIFFERENCE : 0));
+  const priceFor = (id: string, fallback: number) => {
+    const product = products.find(item => item.id === id);
+    // Unreleased previews show the proposed item price, never an unconfirmed pickup price.
+    if (product && "launchReady" in product && product.launchReady === false) return fallback;
+    return prices[fulfillmentSku(id, mode)] ?? Math.max(0, fallback - (mode === "pickup" ? pickupDifference(id) : 0));
+  };
   const compareAtFor = (id: string) => {
     if (!sale) return null;
     const sku = fulfillmentSku(id, mode);

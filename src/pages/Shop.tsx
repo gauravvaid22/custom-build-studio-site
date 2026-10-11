@@ -1,3 +1,4 @@
+import { shippingFee, productShippingFee } from "../lib/fulfillmentPricing";
 import { GalleryImage } from "../components/GalleryImage";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
@@ -30,6 +31,7 @@ import { PhotoPrintOrder } from "../components/PhotoPrintOrder";
 import frameSource from "../../commerce/photo-frames-source.json";
 import consoleSource from "../../commerce/console-stands-source.json";
 import candyCanSource from "../../commerce/candy-can-source.json";
+import tumblerSource from "../../commerce/tumbler-accessories-source.json";
 import { analyticsTestMode, setAnalyticsTestMode } from "../lib/analyticsPreferences";
 import { productGallery } from "../lib/productGallery";
 const consolePriceItems = consoleSource.products.flatMap(product => product.options.map(option => ({ ...option, name: `${product.name} — ${option.label}` })));
@@ -210,6 +212,7 @@ function AddProduct({
       className="shop-add"
       onSubmit={(e) => {
         e.preventDefault();
+        if ("launchReady" in product && product.launchReady === false) return;
         setAddError("");
         if (!add(orderProduct.id, quantity)) { setConfirmation(""); setAddError("Check your cart: you can add up to 20 of each item. Choose a whole-number quantity from 1 to 20."); return; }
         setConfirmation(`${quantity} × ${nameFor(orderProduct.id, orderProduct.name)}`);
@@ -247,8 +250,8 @@ function AddProduct({
           onChange={(e) => setQuantity(Number(e.target.value))}
         />
       </label>
-      <button className="button" type="submit">
-        Add to cart <span aria-hidden="true">+</span>
+      <button className="button" type="submit" disabled={"launchReady" in product && product.launchReady === false}>
+        {"launchReady" in product && product.launchReady === false ? "Preview only — ordering not open" : <>Add to cart <span aria-hidden="true">+</span></>}
       </button>
       {addError && <p className="shop-checkout-error" role="alert">{addError}</p>}
       {confirmation && (
@@ -355,7 +358,7 @@ function ShopBenefits() {
       <div><BenefitIcon type="local"/><span><strong>Made in Edmonton</strong><small>Prepared locally</small></span></div>
       <div><BenefitIcon type="made"/><span><strong>Prepared locally</strong><small>{content.productionTime.replace(/Usually /, "")}</small></span></div>
       <div><BenefitIcon type="checkout"/><span><strong>Secure checkout</strong><small>Powered by Shopify</small></span></div>
-      <div><BenefitIcon type="shipping"/><span><strong>{mode === "pickup" ? "Edmonton pickup" : "Free tracked shipping"}</strong><small>{mode === "pickup" ? "By appointment" : "Across Canada"}</small></span></div>
+      <div><BenefitIcon type="shipping"/><span><strong>{mode === "pickup" ? "Edmonton pickup" : "Tracked shipping"}</strong><small>{mode === "pickup" ? "By appointment" : "Across Canada"}</small></span></div>
     </div>
   );
 }
@@ -691,6 +694,7 @@ export function ShopProduct() {
     : "";
   const productionMessage = content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship");
   const deliveryEstimate = shippingEstimate;
+  const previewOnly = "launchReady" in product && product.launchReady === false;
   const activeImage = !showingVideo ? images[index] || images[0] : undefined;
   const selectedImage = activeImage?.image;
   const selectedDesign =
@@ -711,8 +715,8 @@ export function ShopProduct() {
   };
   return (
     <>
-      <ShopNav />
-      <ShopNotice />
+      <ShopNav showFulfillment={!previewOnly} />
+      {previewOnly ? <p className="shop-notice container">Design preview · proposed CAD item prices · ordering not open</p> : <ShopNotice />}
       <section className="section">
         <div className="container">
           <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {"personalization" in product && <><Link to="/shop/personalized-gifts">Personalized Gifts</Link> / <Link to="/shop/photo-frames">Photo Holders</Link> / </>}{product.category === "PS5 console stands" && <><Link to="/shop/console-stands">PS5 Console Stands</Link> / </>}{product.category === "Headphone stands" && <><Link to="/shop/headphone-stands">Headphone Stands</Link> / </>}{nameFor(product.id, product.name)}</nav>
@@ -794,6 +798,7 @@ export function ShopProduct() {
             <div className="shop-detail-info">
               <p className="eyebrow">{product.category} / Made in Edmonton</p>
               <h1>{nameFor(product.id, product.name)}</h1>
+              {"launchReady" in product && product.launchReady === false && <p className="note-panel" role="status">Preview only. Design prices below are proposed item prices. This collection will have $5 shipping extra; pickup pricing and straw fit are awaiting confirmation. Checkout is not open for these designs yet.</p>}
               <p className="lead">{product.description}</p>{"groupedDesigns" in product && <p className="small"><strong>{nameFor(mediaProduct.id, mediaProduct.name)}</strong> — {mediaProduct.description}</p>}
               <p className="shop-price">
                 {money(priceFor(selectedVariant.id, selectedVariant.priceCents))}{" "}
@@ -804,7 +809,7 @@ export function ShopProduct() {
               </p>
               {compareAtFor(selectedVariant.id) && <p className="shop-regular-price"><strong className="shop-sale-inline">{sale?.percentage}% OFF</strong> Regular {money(compareAtFor(selectedVariant.id)!)} CAD</p>}
               <ul className="shop-purchase-facts" aria-label="Purchase details">
-                <li>{mode === "pickup" ? "Pickup in Southeast Edmonton by appointment" : "Free tracked shipping in Canada"}</li>
+                <li>{previewOnly ? "$5 shipping extra for this collection — checkout setup pending" : mode === "pickup" ? "Pickup in Southeast Edmonton by appointment" : productShippingFee(product.id) ? "$5 tracked shipping once per order across Canada" : "Free tracked shipping in Canada"}</li>
                 <li>{mode === "pickup" ? productionMessage : deliveryEstimate}</li>
                 <li>Secure payment through Shopify</li>
               </ul>
@@ -872,7 +877,7 @@ export function ShopProduct() {
                 {"personalization" in product && <><dt>Photo & size guide</dt><dd>{product.notes} The photo print is included in the price. Upload a clear original image; we crop it for the holder and follow your notes where practical. Camera designs are decorative holders, not working cameras.</dd></>}
                 <dt>Timing & handoff</dt>
                 <dd>
-                  {`${productionMessage.replace(/\.$/, "")}. ${mode === "pickup" ? "Pickup by appointment in Southeast Edmonton. We email your private pickup details after ordering." : `${deliveryEstimate} Free standard tracked shipping across Canada through Shopify checkout.`}`}
+                  {previewOnly ? "This collection will have $5 shipping extra. Pickup pricing and checkout are not finalized yet." : `${productionMessage.replace(/\.$/, "")}. ${mode === "pickup" ? "Pickup by appointment in Southeast Edmonton. We email your private pickup details after ordering." : `${deliveryEstimate} ${productShippingFee(product.id) ? "$5 tracked shipping once per order across Canada." : "Free standard tracked shipping across Canada."}`}`}
                 </dd>
                 <dt>Ordering & payment</dt>
                 <dd>Secure payment is handled through Shopify. Contact us before checkout for special requests.</dd>
@@ -918,6 +923,7 @@ export function ShopCart() {
   const viewedCart = useRef("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const fulfillmentFee = shippingFee(items, mode);
   const subtotal = items.reduce(
     (sum, item) =>
       sum +
@@ -957,7 +963,7 @@ export function ShopCart() {
       <PageIntro
         eyebrow="YOUR COLLECTION"
         title="Your cart."
-        description={mode === "pickup" ? "Review your pickup order, then pay securely through Shopify. We’ll arrange your collection time after ordering." : "Review your items, then pay securely through Shopify. Free tracked shipping is included across Canada."}
+        description={mode === "pickup" ? "Review your pickup order, then pay securely through Shopify. We’ll arrange your collection time after ordering." : "Review your items, then pay securely through Shopify. Your shipping rate is shown below before secure checkout."}
       />
       <section className="section">
         <div className="container shop-cart-layout">
@@ -1018,11 +1024,11 @@ export function ShopCart() {
               </p>
               <p className="shop-total">
                 <span>{mode === "pickup" ? "Edmonton pickup by appointment" : "Tracked shipping across Canada"}</span>
-                <strong>Free</strong>
+                <strong>{fulfillmentFee ? `${money(fulfillmentFee)} CAD` : "Free"}</strong>
               </p>
               <p className="shop-total shop-cart-total">
                 <strong>Total</strong>
-                <strong>{money(subtotal)} CAD</strong>
+                <strong>{money(subtotal + fulfillmentFee)} CAD</strong>
               </p>
               <p className="small">
                 {settings.pricesAreProvisional
@@ -1041,7 +1047,7 @@ export function ShopCart() {
               >
                 {busy ? "Opening secure checkout…" : "Secure checkout ↗"}
               </button>
-              <p className="small">{mode === "pickup" ? "Choose Edmonton pickup at Shopify checkout. Your contact address does not request delivery. We’ll email your pickup arrangements after ordering." : "Delivered to your Canadian address. Shipping included."}</p>
+              <p className="small">{mode === "pickup" ? "Choose Edmonton pickup at Shopify checkout. Your contact address does not request delivery. We’ll email your pickup arrangements after ordering." : `Delivered to your Canadian address. ${fulfillmentFee ? "$5 tracked shipping once per order." : "Shipping included."}`}</p>
               <p className="shop-secure-note">Shop Pay · Credit card · PayPal · Google Pay</p>
             </aside>
           )}
@@ -1057,6 +1063,7 @@ export function Checkout() {
   const content = useSiteContent();
   const [busy, setBusy] = useState(false),
     [error, setError] = useState("");
+  const fulfillmentFee = shippingFee(items, mode);
   const subtotal = items.reduce(
     (sum, item) =>
       sum +
@@ -1095,9 +1102,9 @@ export function Checkout() {
         <div className="container shop-cart-layout">
           <div className="note-panel shopify-checkout-panel">
             <span className="eyebrow">POWERED BY SHOPIFY</span>
-            <h2>{mode === "pickup" ? "Secure payment. Local pickup." : "Secure payment and free tracked shipping."}</h2>
+            <h2>{mode === "pickup" ? "Secure payment. Local pickup." : "Secure payment and tracked shipping."}</h2>
             <p>
-              {mode === "pickup" ? "Pay securely through Shopify, then we’ll email to arrange your pickup time and private address. Choose Edmonton pickup at checkout. Shopify asks for your contact address; this order will not be delivered." : "Shopify collects your contact information, Canadian shipping address and payment securely. Standard tracked shipping is free."}
+              {mode === "pickup" ? "Pay securely through Shopify, then we’ll email to arrange your pickup time and private address. Choose Edmonton pickup at checkout. Shopify asks for your contact address; this order will not be delivered." : "Shopify collects your contact information, Canadian shipping address and payment securely. Your shipping rate is shown in the order summary."}
             </p>
             <ol className="shop-steps" aria-label="Checkout steps">
               {["Review", "Address", "Payment"].map((step, index) => (
@@ -1154,12 +1161,12 @@ export function Checkout() {
               <span>{money(subtotal)}</span>
             </p>
             <p className="shop-total">
-              <span>{mode === "pickup" ? "Edmonton pickup" : "Free tracked shipping"}</span>
-              <span>Free</span>
+              <span>{mode === "pickup" ? "Edmonton pickup" : "Tracked shipping"}</span>
+              <span>{fulfillmentFee ? money(fulfillmentFee) : "Free"}</span>
             </p>
             <p className="shop-total">
               <strong>Estimated total CAD</strong>
-              <strong>{money(subtotal + settings.shippingFeeCents)}</strong>
+              <strong>{money(subtotal + fulfillmentFee)}</strong>
             </p>
             <p className="small">
               Final delivery options and total are confirmed in Shopify
@@ -1562,6 +1569,7 @@ export function ShopAdmin() {
                   <HeadphonePricingAdmin adminKey={key} items={frameSource.products} heading="PERSONALIZED PHOTO HOLDERS" />
                   <HeadphonePricingAdmin adminKey={key} items={consolePriceItems} heading="PS5 CONSOLE STANDS" />
                   <HeadphonePricingAdmin adminKey={key} items={candyCanSource.products} heading="CANDY & CAN HOLDERS" />
+                  <HeadphonePricingAdmin adminKey={key} items={tumblerSource.products} heading="TUMBLER ACCESSORIES" />
                   <a className="button" href="https://admin.shopify.com/store/aqk73w-k2/products" target="_blank" rel="noreferrer">Open Shopify products ↗</a>
                   <div className="shop-admin-product-grid">
                     {products.filter((product) => !isVariant(product)).map((product) => (

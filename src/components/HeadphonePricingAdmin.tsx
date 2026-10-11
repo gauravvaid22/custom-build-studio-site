@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
+import { pickupDifference } from "../lib/fulfillmentPricing";
 import source from "../../commerce/headphone-stands-source.json";
 import { useShopifyCatalog } from "./ShopifyCatalog";
 import { money } from "./Cart";
@@ -43,12 +44,12 @@ export function HeadphonePricingAdmin({ adminKey, items = source.products, headi
   }
 
   return <section className="shop-admin-headphones" aria-label={`${heading} prices`}>
-    <div className="section-heading"><div><p className="eyebrow">{heading}</p><h3>Edit delivered prices here</h3></div><p>Pickup is always CA$10 lower. Saving changes both Shopify variants and the live website price.</p></div>
+    <div className="section-heading"><div><p className="eyebrow">{heading}</p><h3>Edit delivered prices here</h3></div><p>Pickup adjustments follow each product’s fulfillment settings. Saving updates both Shopify variants and the website.</p></div>
     <div className="shop-admin-headphone-grid">
       {items.map((item) => <form key={item.id} onSubmit={(event) => void save(event, item.id)}>
         <strong>{item.name}</strong>
         <label>Delivered price (CAD)
-          <input type="number" inputMode="decimal" min="15" max="1000" step="0.01" required value={drafts[item.id] || ""} onChange={(event) => setDrafts({ ...drafts, [item.id]: event.target.value })} />
+          <input type="number" inputMode="decimal" min={Math.max(100, pickupDifference(item.id)) / 100} max="1000" step="0.01" required value={drafts[item.id] || ""} onChange={(event) => setDrafts({ ...drafts, [item.id]: event.target.value })} />
         </label>
         <small>Current Shopify: {prices[item.id] ? money(prices[item.id]) : "not yet available"} CAD delivered · {prices[`${item.id}-pickup`] ? money(prices[`${item.id}-pickup`]) : "—"} CAD pickup</small>
         <div className="shop-admin-headphone-actions">

@@ -9,7 +9,7 @@ export function managedVariantInput(item, pickupDifferenceCents) {
     ],
     variants: choices.flatMap(choice => ["Delivery", "Edmonton Pickup"].map(fulfillment => {
       const pickup = fulfillment === "Edmonton Pickup";
-      const cents = choice.priceCents - (pickup ? pickupDifferenceCents : 0);
+      const cents = choice.priceCents - (pickup ? (item.pickupPriceDifferenceCents ?? pickupDifferenceCents) : 0);
       if (!Number.isInteger(cents) || cents < 0) throw new Error("Invalid managed variant price.");
       return { optionValues: [
         ...(choice.label ? [{ optionName: "Console model", name: choice.label }] : []),
