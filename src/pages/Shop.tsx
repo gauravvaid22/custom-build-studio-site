@@ -1,8 +1,8 @@
 import { shippingFee, productShippingFee } from "../lib/fulfillmentPricing";
 import { GalleryImage } from "../components/GalleryImage";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
-import products from "../../commerce/products.json";
+import products from "../data/catalog";
 import settings from "../../commerce/settings.json";
 import collections from "../../commerce/collections.json";
 import headphoneSearch from "../../commerce/headphone-search.json";
@@ -25,7 +25,9 @@ import { LithophaneProduct } from "../components/LithophaneProduct";
 import { FulfillmentSelector, PICKUP_PRICE_DIFFERENCE, useFulfillment } from "../components/Fulfillment";
 import { LithophaneAdmin } from "../components/LithophaneAdmin";
 import { SaleAdmin } from "../components/SaleAdmin";
-import { HeadphonePricingAdmin } from "../components/HeadphonePricingAdmin";
+const ProductManager=lazy(()=>import("../components/ProductManager").then(module=>({default:module.ProductManager})));
+import adminRows from "../../commerce/admin-rows.json";
+import {useCatalogAvailability} from "../lib/catalogAvailability";
 import { ProductDesignPicker } from "../components/ProductDesignPicker";
 import { PhotoPrintOrder } from "../components/PhotoPrintOrder";
 import frameSource from "../../commerce/photo-frames-source.json";
@@ -377,6 +379,8 @@ function ShopSearch() {
   </form>;
 }
 function ProductGrid({ listed, listId }: { listed: Product[]; listId: string }) {
+  const archived = useCatalogAvailability();
+  listed = listed.filter(p=>!archived.includes(p.id));
   const grid = useRef<HTMLDivElement>(null);
   const { mode } = useFulfillment();
   const { priceFor } = useShopifyCatalog();
@@ -430,6 +434,7 @@ export function Shop() {
     {sale && <section className="container shop-sale-feature shop-sale-feature-compact" aria-label="Current shop sale"><div><p className="eyebrow">{sale.percentage}% OFF · LIMITED TIME</p><h2>{sale.title}</h2><Link className="button" to="/shop/sale">Explore sale products ↗</Link></div></section>}
     <section className="section shop-collections-section" id="collections"><div className="container"><div className="section-heading"><div><p className="eyebrow">SHOP BY CATEGORY</p><h2>Find your kind of gift.</h2></div><p>Choose a collection. See what catches your eye.</p></div><CollectionTiles ids={merchandising.departments} /><div className="shop-collection-shortcuts"><Link to="/shop/all">Browse all {evergreenProducts.length} products ↗</Link><Link to="/shop/headphone-stands">Headphone stands ↗</Link><Link to="/shop/photo-frames">Photo holders ↗</Link></div></div></section>
     {merchandising.showBudgetGifts && budget.length > 0 && <section className="section shop-under-section"><div className="container"><div className="section-heading"><div><p className="eyebrow">LITTLE GIFTS / $25 & UNDER</p><h2>Small gifts. Easy choices.</h2></div><Link className="text-link" to="/shop/gifts-under-25">Explore gifts $25 & under →</Link></div><ProductGrid listed={budget} listId="shop_budget_gifts" /></div></section>}
+    {(adminRows as {id:string;title:string;description:string;productIds:string[];enabled:boolean;kind?:string;startAt?:string;endAt?:string}[]).filter(row=>row.enabled&&(!row.startAt||Date.now()>=Date.parse(row.startAt))&&(!row.endAt||Date.now()<Date.parse(row.endAt))).map(row=><section className="section" key={row.id}><div className="container"><div className="section-heading"><div><h2>{row.title}</h2><p>{row.description}</p></div></div>{row.kind!=="information"&&<ProductGrid listed={row.productIds.map(catalogProduct).filter((p):p is Product=>Boolean(p))} listId={`admin_row_${row.id}`}/>}</div></section>)}
     {merchandising.showStudioProof && <StudioProof />}
     <section className="container"><ShopBenefits /></section>
     <section className="shop-how section"><div className="container detail-columns"><div><p className="eyebrow">FROM YOUR CART TO YOUR DOOR</p><h2>Simple from the first click.</h2><p>Choose your product and options, add to cart, then pay securely through Shopify. Your order goes directly to the studio.</p><Link className="text-link" to="/shipping-returns">Shipping, pickup & returns →</Link></div><div><h3>{mode === "pickup" ? "Pickup to suit your schedule." : "Tracked shipping across Canada."}</h3><p>{mode === "pickup" ? "Collect in Southeast Edmonton by appointment. We email the private address after ordering." : "Most items include tracked Canadian shipping. Straw topper and cup charm sets add $5 once per shipped order; your cart shows the rate. Your product page explains delivery estimates."}</p><p>{content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship")}.</p><Link className="text-link" to="/contact">Need a custom colour or size? Ask us →</Link></div></div></section>
@@ -610,7 +615,7 @@ export function ShopCollection({ id }: { id: string }) {
 
             <a className="button" href="#products">View {listed.length} {listed.length === 1 ? "product" : "products"} ↘</a>
           </div>
-          <div className="shop-collection-hero-image"><ProductImage product={cover} large/></div>
+          <div className="shop-collection-hero-image">{cover && <ProductImage product={cover} large/>}</div>
         </div>
       </section>
       {(subcollections[id]?.length || id === "personalized-gifts") && <section className="container shop-subcollections" aria-label="Explore this collection"><CollectionTiles ids={subcollections[id] || []} compact />{id === "personalized-gifts" && <Link className="shop-personal-lamp-link" to="/shop/lithophane-table-lamp"><ProductImage product={catalogProduct("lithophane-table-lamp")!} /><span><strong>Personalized Photo Lamps</strong><small>Your photo, softly illuminated →</small></span></Link>}</section>}
@@ -654,6 +659,7 @@ export function ShopCollection({ id }: { id: string }) {
   );
 }
 export function ShopProduct() {
+  const archived = useCatalogAvailability();
   const { mode } = useFulfillment();
   const { priceFor, nameFor, compareAtFor, sale } = useShopifyCatalog();
   const content = useSiteContent();
@@ -675,7 +681,7 @@ export function ShopProduct() {
       if (photo >= 0) setIndex(photo);
     }
   }, [id, searchParams]);
-  if (!product) return <NotFound />;
+  if (!product || archived.includes(product.id)) return <><ShopNav/><section className="section container"><h1>This item is unavailable.</h1><Link className="button" to="/shop">Browse the shop</Link></section></>;
   if (product.id === "lithophane-table-lamp") return <><ShopNav /><ShopNotice /><LithophaneProduct /></>;
   const variants = variantsFor(product);
   const selectedVariant = catalogProduct(selectedVariantId || variants[0]?.id || product.id) || product;
@@ -1332,24 +1338,33 @@ export function ShopAdmin() {
     [busy, setBusy] = useState(false),
     [content, setContent] = useState<SiteContent>(publicContent),
     [productContent, setProductContent] = useState<ProductContent>(publicProductContent),
-    [tab, setTab] = useState<"orders" | "website" | "products" | "lithophane" | "sales" | "display">("orders"),
+    [tab, setTab] = useState<"orders" | "website" | "products" | "lithophane" | "sales" | "display">("products"),
     [saved, setSaved] = useState("");
   async function load() {
     try {
-      const [orderData, contentData, productData] = await Promise.all([
+      if (key) {
+        const response = await fetch("/.netlify/functions/shop-admin-session", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({key})});
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "Sign-in failed.");
+        setKey("");
+      }
+      const [orderData, contentData, productData] = await Promise.allSettled([
         api("list", {}, { Authorization: "Bearer " + key }),
         api("get-content", {}, { Authorization: "Bearer " + key }),
         api("get-product-content", {}, { Authorization: "Bearer " + key }),
       ]);
-      setOrders(orderData.orders);
-      setContent(contentData.siteContent);
-      setProductContent(productData.productContent);
+      if (orderData.status === "fulfilled") setOrders(orderData.value.orders);
+      if (contentData.status === "fulfilled") setContent(contentData.value.siteContent);
+      if (productData.status === "fulfilled") setProductContent(productData.value.productContent);
       setLogged(true);
       setError("");
     } catch (e) {
       setError((e as Error).message);
     }
   }
+  useEffect(() => {
+    void fetch("/.netlify/functions/shop-admin-session", {cache:"no-store"}).then(r=>r.json()).then(session=>{if(session.authenticated) void load();}).catch(()=>{});
+  }, []);
   async function saveWebsite(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
@@ -1409,7 +1424,7 @@ export function ShopAdmin() {
       <PageIntro
         eyebrow="PRIVATE / STUDIO ADMINISTRATION"
         title="Studio control panel."
-        description="Review legacy orders, update website details, manage sales and open Shopify product pricing from one private page."
+        description="Add and edit products, organize collections, manage sales and update website details."
       />
       <section className="section">
         <div className="container">
@@ -1431,12 +1446,12 @@ export function ShopAdmin() {
                   autoComplete="off"
                 />
               </label>
-              <button className="button">Open orders</button>
+              <button className="button">Open control panel</button>
             </form>
           ) : (
             <>
               <div className="note-panel" style={{ marginBottom: 24 }}>
-                <h2>Shopping analytics</h2>
+                <div className="button-row"><h2>Shopping analytics</h2><button className="text-link" onClick={async()=>{await fetch("/.netlify/functions/shop-admin-session?action=logout",{method:"POST"});setLogged(false);setKey("");}}>Sign out</button></div>
                 <label><input type="checkbox" checked={excludeTests} onChange={event => { setExcludeTests(event.target.checked); setAnalyticsTestMode(event.target.checked); }} /> Exclude my test visits and checkouts on this browser</label>
                 <p className="small">Enable before checking your own shop. Refresh the shop afterwards. This applies to this browser only and does not hide customer visits or prevent ordering.</p>
                 <a className="text-link" href="https://analytics.google.com/" target="_blank" rel="noopener noreferrer">Open Google Analytics ↗</a>
@@ -1562,25 +1577,7 @@ export function ShopAdmin() {
                   {saved && <p role="status">{saved}</p>}
                 </form>
               )}
-              {tab === "products" && (
-                <section className="shop-admin-products">
-                  <div className="section-heading"><div><p className="eyebrow">SHOPIFY IS THE CATALOG SOURCE</p><h2>Product names &amp; prices</h2></div><p>Change a product title or price in Shopify. The website refreshes both automatically, so checkout and product pages stay aligned.</p></div>
-                  <HeadphonePricingAdmin adminKey={key} />
-                  <HeadphonePricingAdmin adminKey={key} items={frameSource.products} heading="PERSONALIZED PHOTO HOLDERS" />
-                  <HeadphonePricingAdmin adminKey={key} items={consolePriceItems} heading="PS5 CONSOLE STANDS" />
-                  <HeadphonePricingAdmin adminKey={key} items={candyCanSource.products} heading="CANDY & CAN HOLDERS" />
-                  <HeadphonePricingAdmin adminKey={key} items={tumblerSource.products} heading="TUMBLER ACCESSORIES" />
-                  <a className="button" href="https://admin.shopify.com/store/aqk73w-k2/products" target="_blank" rel="noreferrer">Open Shopify products ↗</a>
-                  <div className="shop-admin-product-grid">
-                    {products.filter((product) => !isVariant(product)).map((product) => (
-                      <article key={product.id}>
-                        <ProductImage product={product} />
-                        <div><h3>{nameFor(product.id, product.name)}</h3><p>Delivered: {money(priceFor(product.id, product.priceCents))} CAD</p><p>Pickup: {money(prices[fulfillmentSku(product.id, "pickup")] ?? Math.max(0, priceFor(product.id, product.priceCents) - PICKUP_PRICE_DIFFERENCE))} CAD</p>{Object.keys(prices).length > 0 && prices[fulfillmentSku(product.id, "pickup")] !== priceFor(product.id, product.priceCents) - PICKUP_PRICE_DIFFERENCE && <p role="status">Check Shopify: pickup price must be {money(PICKUP_PRICE_DIFFERENCE)} below the delivered price.</p>}<a className="text-link" href={`https://admin.shopify.com/store/aqk73w-k2/products?query=${encodeURIComponent(product.id)}`} target="_blank" rel="noreferrer">Edit in Shopify →</a></div>
-                      </article>
-                    ))}
-                  </div>
-                </section>
-              )}
+              {tab === "products" && <Suspense fallback={<p>Loading product editor...</p>}><ProductManager /></Suspense>}
               {tab === "lithophane" && (
                 <LithophaneAdmin
                   adminKey={key}

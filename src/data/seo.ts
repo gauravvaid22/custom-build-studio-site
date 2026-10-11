@@ -1,7 +1,7 @@
 import { allServices as services, serviceDetails } from "./landing";
 import projects from "./projects.json";
 import { business } from "./business";
-import products from "../../commerce/products.json";
+import products from "./catalog";
 import collections from "../../commerce/collections.json";
 import headphoneSearch from "../../commerce/headphone-search.json";
 import maskSearch from "../../commerce/mask-search.json";
@@ -128,7 +128,7 @@ export function getSeo(path: string) {
     title: `${entry[0]} | Custom Build Studio`,
     description: entry[1],
     url: canonical(page),
-    image: business.origin + (product?.images[0]?.src || (collection ? products.find((item) => item.id === collection.coverProduct)?.images[0]?.src : undefined) || (page === "/shop/halloween-special" ? "/media/shop/candlelight-pumpkins-table-lamp/1-1200.webp" : "/og-image.jpg")),
+    image: new URL((product?.images[0]?.src || (collection ? products.find((item) => item.id === collection.coverProduct)?.images[0]?.src : undefined) || (page === "/shop/halloween-special" ? "/media/shop/candlelight-pumpkins-table-lamp/1-1200.webp" : "/og-image.jpg")), business.origin).href,
     imageAlt: product?.images[0]?.alt || (collection ? `${collection.name} from Custom Build Studio` : page === "/shop/halloween-special" ? "Candlelight Pumpkins Table Lamp from the Halloween Special" : "Custom Build Studio design and fabrication project"),
     noindex: !publicRoutes.includes(page) || page === "/privacy",
   };
@@ -176,7 +176,7 @@ export function getStructuredData(path: string, livePrices: Record<string, numbe
     const item = (p: typeof product, url: string) => ({
       "@type": "Product", name: p.name, sku: p.id,
       description: `${p.description} ${p.included} Made to order in Edmonton.`,
-      image: p.images.map(image => business.origin + image.src),
+      image: p.images.map(image => new URL(image.src,business.origin).href),
       url,
       ...(Number.isInteger(livePrices[p.id]) ? { offers: { "@type": "Offer", url, priceCurrency: "CAD", price: (livePrices[p.id] / 100).toFixed(2),
         // Available to order through the connected Shopify catalog.

@@ -1,0 +1,152 @@
+import { useEffect, useRef, useState } from 'react';
+import { money } from './Cart';
+import { useShopifyCatalog } from './ShopifyCatalog';
+import { draftDescription, slug } from '../../commerce/catalog-management.mjs';
+import './product-manager.css';
+type Image = {src:string;thumb:string;alt:string;mediaId?:string};
+type Option = {id:string;label:string;priceCents:number;dimensions:string};
+type Product = {id:string;name:string;category:string;description:string;included:string;dimensions:string;notes:string;priceCents:number;images:Image[];video?:string;variants?:Option[];groupedDesigns?:{id:string;label:string;optionIds:string[]}[];variantOf?:string;listingGroup?:string;launchReady?:boolean;pickupPriceDifferenceCents?:number;[key:string]:unknown};
+type Document = {id:string;template:string;products:Product[];categoryIds:string[];pickupPriceDifferenceCents:number;shippingPreset:string;fulfillmentConfirmed:boolean;updatedAt?:string};
+type Collection = {id:string;name:string;kind:string;description:string;coverProduct:string;products:string[];[key:string]:unknown};
+type Row = {kind?:string;startAt?:string;endAt?:string;id:string;title:string;description:string;productIds:string[];enabled:boolean};
+type Data = {presets?:{name:string;document:Document}[];documents:Document[];templates:{id:string;name:string}[];archived:string[];collections:Collection[];rows:Row[];revision:number;jobs:{id:string;status:string;action:string;productId:string;revision?:number;error?:string}[];history:{at:string;action:string;id:string;savedRevision?:number}[];connection:Record<string,string>;ready:{shopify:boolean;buildHook:boolean;catalogSource:boolean}};
+export async function catalogRequest(action:string,body:unknown={}) {
+  const response=await fetch(`/.netlify/functions/shop-catalog?action=${action}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:AbortSignal.timeout(30000)});
+  const data=await response.json();if(!response.ok) throw new Error(data.error || 'Unable to update the catalog.');return data;
+}
+const clone=<T,>(value:T):T=>JSON.parse(JSON.stringify(value));
+const dollarInput=(value:number)=>Number.isFinite(value)?(value/100).toFixed(2):'';
+const cents=(value:string)=>Math.round(Number(value)*100);
+function freshDocument(template='single'):Document {
+  const id=`new-product-${Date.now()}`;
+  return {id,template,categoryIds:[],pickupPriceDifferenceCents:1000,shippingPreset:'existing',fulfillmentConfirmed:false,
+    products:[{id,name:'',category:'',priceCents:2500,description:'',included:'',dimensions:'',notes:'',images:[],seasonal:false,productionReviewed:false}]};
+}
+function duplicateDocument(source:Document):Document {
+  const next=clone(source);const suffix=`-${Date.now().toString(36)}`;const mapping=new Map(next.products.map(p=>[p.id,p.id.slice(0,65)+suffix]));
+  next.id=mapping.get(next.id)!;next.fulfillmentConfirmed=false;
+  next.products=next.products.map(p=>{
+    delete p.shopifyHandle;delete p.source;delete p.inventory;delete p.stock;
+    return {...p,id:mapping.get(p.id)!,name:p.name+' — copy',...(p.variantOf?{variantOf:mapping.get(p.variantOf)}:{}),...(p.listingGroup?{listingGroup:mapping.get(p.listingGroup)}:{}),
+      ...(p.variants?{variants:p.variants.map(v=>({...v,id:mapping.get(v.id) || v.id+suffix}))}:{}),
+      ...(p.groupedDesigns?{groupedDesigns:p.groupedDesigns.map(d=>({...d,id:mapping.get(d.id)!,optionIds:d.optionIds.map(id=>mapping.get(id)||id+suffix)}))}:{})};
+  });return next;
+}
+function rebuildGroup(doc:Document):Document {
+  const next=clone(doc),parent=next.products.find(p=>p.id===next.id)!;
+  const optionParents=next.products.filter(p=>!p.variantOf&&!p.groupedDesigns&&p.variants?.length);
+  for(const p of optionParents) for(const v of p.variants!) {
+    const previous=next.products.find(x=>x.id===v.id);
+    const child={...p,...previous,id:v.id,name:`${p.name} — ${v.label}`,variantOf:p.id,priceCents:v.priceCents,dimensions:v.dimensions,pickupPriceDifferenceCents:next.pickupPriceDifferenceCents};
+    delete child.variants;delete child.groupedDesigns;delete child.listingGroup;
+    next.products=next.products.filter(x=>x.id!==v.id);next.products.push(child);
+  }
+  next.products.forEach(p=>{p.pickupPriceDifferenceCents=next.pickupPriceDifferenceCents;});
+  if (!parent.groupedDesigns) return next;
+  const children=next.products.filter(p=>p.listingGroup===next.id);
+  parent.groupedDesigns=children.map(p=>({id:p.id,label:p.name,optionIds:p.variants?.map(v=>v.id)||[p.id]}));
+  parent.variants=children.flatMap(p=>p.variants?.length?p.variants:[{id:p.id,label:p.name,priceCents:p.priceCents,dimensions:p.dimensions}]);
+  parent.priceCents=Math.min(...parent.variants.map(v=>v.priceCents));
+  parent.images=[...parent.images,...children.flatMap(p=>p.images)].filter((image,index,array)=>array.findIndex(x=>x.src===image.src)===index);
+  next.products.forEach(p=>{p.pickupPriceDifferenceCents=next.pickupPriceDifferenceCents;});return next;
+}
+export function ProductManager() {
+  const [data,setData]=useState<Data|null>(null),[error,setError]=useState(''),[message,setMessage]=useState(''),[busy,setBusy]=useState(false);
+  const [query,setQuery]=useState(''),[filter,setFilter]=useState('all'),[section,setSection]=useState<'products'|'collections'|'rows'|'connection'|'history'>('products');
+  const [draft,setDraft]=useState<Document|null>(null),[selected,setSelected]=useState(''),[dirty,setDirty]=useState(false),[preview,setPreview]=useState(false);
+  const [choices,setChoices]=useState<{publications:{nodes:{id:string;name:string}[]};deliveryProfiles:{nodes:{id:string;name:string}[]}}|null>(null);
+  const {deliveredPriceFor,refresh}=useShopifyCatalog();const dialog=useRef<HTMLDialogElement>(null);
+  const load=async()=>{try{setData(await catalogRequest('list'));setError('');}catch(e){setError((e as Error).message);}};
+  useEffect(()=>{void load();},[]);
+  useEffect(()=>{
+    if(!data?.jobs.some(j=>['queued','shopify','website'].includes(j.status))) return;
+    const timer=window.setInterval(()=>{void load();},6000);return()=>window.clearInterval(timer);
+  },[data?.jobs]);
+  useEffect(()=>{const warn=(e:BeforeUnloadEvent)=>{if(dirty){e.preventDefault();e.returnValue='';}};window.addEventListener('beforeunload',warn);return()=>window.removeEventListener('beforeunload',warn);},[dirty]);
+  useEffect(()=>{if(draft && !dialog.current?.open)dialog.current?.showModal();},[draft]);
+  const [expected,setExpected]=useState<Record<string,string>>({});
+  const open=(doc:Document)=>{setExpected({});setMessage('');setDraft(clone(doc));setSelected(doc.id);setDirty(false);setPreview(false);setError('');};
+  const edit=async(doc:Document)=>{setBusy(true);try{const live=await catalogRequest('inspect',{id:doc.id});const next=clone(doc);if(!live.hasDraft)next.products.forEach(p=>{if(live.prices[p.id]!==undefined)p.priceCents=live.prices[p.id];p.variants?.forEach(v=>{if(live.prices[v.id]!==undefined)v.priceCents=live.prices[v.id];});});open(next);setExpected(live.expected);}catch(e){setError((e as Error).message);}finally{setBusy(false);}};
+  const close=()=>{if(dirty&&!window.confirm('Discard your unsaved changes?'))return;dialog.current?.close();setDraft(null);setDirty(false);};
+  const change=(patch:Partial<Document>)=>{setDraft(current=>current?{...current,...patch}:null);setDirty(true);};
+  const product=draft?.products.find(p=>p.id===selected);
+  const updateProduct=(patch:Partial<Product>)=>{if(!draft)return;change({products:draft.products.map(p=>p.id===selected?{...p,...patch}:p)});};
+  const act=async(action:string,body:unknown,success:string)=>{setBusy(true);setError('');setMessage('');try{await catalogRequest(action,body);setMessage(success);await load();await refresh().catch(()=>{});return true;}catch(e){setError((e as Error).message);return false;}finally{setBusy(false);}};
+  const save=async()=>{
+    if(!draft||!data)return false;const next=rebuildGroup(draft);
+    const ok=await act('save-draft',{document:next,revision:data.revision},'Draft saved. It has not been published.');if(ok){setDraft(next);setDirty(false);}return ok;
+  };
+  const publish=async()=>{
+    if(!draft||!data)return;
+    if(dirty){setError('Save your draft before publishing.');return;}
+    if(!window.confirm(`Publish “${draft.products.find(p=>p.id===draft.id)?.name}” to Shopify and the website?`))return;
+    await act('publish',{id:draft.id,revision:data.revision,expected},'Update queued. The status below will show when it is live.');
+  };
+  const addDesign=()=>{
+    if(!draft)return;const id=`${draft.id}-design-${Date.now().toString(36)}`;
+    const p:Product={id,name:'New design',category:draft.products[0].category,priceCents:2500,description:'',included:'',dimensions:'',notes:'',images:[],listingGroup:draft.id,pickupPriceDifferenceCents:draft.pickupPriceDifferenceCents};
+    const parent={...draft.products.find(p=>p.id===draft.id)!,groupedDesigns:draft.products[0].groupedDesigns || [],variantLabel:'Design',galleryOverviewCover:true};
+    change({products:[...draft.products.map(p=>p.id===draft.id?parent:p),p]});setSelected(id);
+  };
+  const addOption=()=>{if(!product)return;const id=`${product.id}-option-${Date.now().toString(36)}`;updateProduct({variants:[...(product.variants||[]),{id,label:'New size',priceCents:product.priceCents,dimensions:''}]});};
+  const renameNewLink=(value:string)=>{
+    if(!draft||data?.documents.some(d=>d.id===draft.id))return;const id=slug(value),old=draft.id;
+    change({id,products:draft.products.map(p=>p.id===old?{...p,id}:p)});setSelected(id);
+  };
+  async function upload(files:FileList|null) {
+    if(!files||!product)return;setBusy(true);setError('');
+    try{
+      const added:Image[]=[];let video=product.video;let videoMediaId=product.videoMediaId;
+      for(const file of Array.from(files)) {
+        setMessage(`Uploading ${file.name}…`);
+        const type=file.type;
+        if(!['image/jpeg','image/png','image/webp','video/mp4','video/quicktime'].includes(type))throw new Error('Upload JPG, PNG, WebP, MP4 or MOV. Existing WebM videos remain supported on the website.');
+        const staged=await catalogRequest('upload-start',{name:file.name,type,size:file.size});
+        const form=new FormData();for(const parameter of staged.target.parameters)form.append(parameter.name,parameter.value);form.append('file',file);
+        const sent=await fetch(staged.target.url,{method:'POST',body:form});if(!sent.ok)throw new Error('Upload failed. Please retry.');
+        let media=await catalogRequest('upload-finish',{resourceUrl:staged.target.resourceUrl,type,alt:product.name});
+        for(let attempt=0;media.status!=='READY'&&attempt<30;attempt++){
+          if(media.status==='FAILED')throw new Error('Shopify could not process this file.');
+          await new Promise(resolve=>window.setTimeout(resolve,2000));media=await catalogRequest('upload-status',{id:media.id});
+        }
+        if(media.status!=='READY'||!media.url)throw new Error('Media is still processing. Check Media/History before uploading it again.');
+        if(type.startsWith('video/')){video=media.url;videoMediaId=media.id;}else added.push({src:media.url,thumb:media.url,alt:product.name,mediaId:media.id});
+      }
+      updateProduct({images:[...product.images,...added],...(video?{video,videoMediaId}:{})});setMessage('Media uploaded. Save the draft to attach it.');
+    }catch(e){setError((e as Error).message);}finally{setBusy(false);}
+  }
+  if(!data)return <section className="manager"><p role="status">Loading product manager…</p>{error&&<p role="alert">{error}</p>}<button className="button" onClick={()=>void load()}>Retry</button></section>;
+  const filtered=data.documents.filter(d=>{const p=d.products.find(p=>p.id===d.id)!;return `${p.name} ${p.category}`.toLowerCase().includes(query.toLowerCase())&&(filter==='all'||(filter==='archived'?data.archived.includes(d.id):!data.archived.includes(d.id)));});
+  return <section className="manager">
+    <div className="section-heading"><div><p className="eyebrow">YOUR CATALOG</p><h2>Products & collections</h2></div><button className="button" onClick={()=>open(freshDocument())}>+ Add product</button></div>
+    <div className="button-row">{data.presets?.map(p=><button className="button button-dark" key={p.name} onClick={()=>{open(duplicateDocument(p.document));setDirty(true);}}>+ {p.name}</button>)}</div><nav className="manager-nav" aria-label="Catalog sections">{(['products','collections','rows','connection','history'] as const).map(id=><button key={id} className={section===id?'button':'button button-dark'} onClick={()=>setSection(id)}>{id==='rows'?'Shop rows':id.charAt(0).toUpperCase()+id.slice(1)}</button>)}</nav>
+    {error&&<p className="shop-checkout-error" role="alert">{error}</p>}{message&&<p role="status">{message}</p>}
+    {data.jobs.slice(0,3).map(job=><div className="manager-job" key={job.id}><strong>{job.status==='website'?'Updating website':job.status==='shopify'?'Updating Shopify':job.status==='live'?'Live':job.status==='error'?'Needs attention':'Queued'}</strong><span>{job.productId} {job.error}</span>{job.status==='error'&&<button className="text-link" disabled={busy} onClick={()=>void act(job.action,{id:job.productId,revision:data.revision},'Retry queued.')}>Retry</button>}</div>)}
+    {section==='products'&&<><div className="manager-toolbar"><label>Find a product<input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Name or category" type="search"/></label><label>Status<select value={filter} onChange={e=>setFilter(e.target.value)}><option value="all">All products</option><option value="available">Available listings</option><option value="archived">Archived</option></select></label></div>
+      <div className="manager-list">{filtered.map(doc=>{const p=doc.products.find(p=>p.id===doc.id)!;const archived=data.archived.includes(doc.id);return <article key={doc.id}>
+        {p.images[0]&&<img src={p.images[0].thumb} alt="" loading="lazy" width="100" height="100"/>}<div><h3>{p.name||'Untitled draft'}</h3><p>{p.category} · {money(deliveredPriceFor(p.id,p.priceCents))} CAD</p><small>{archived?'Archived':p.launchReady===false?'Launch details pending':doc.updatedAt?'Saved editor revision':'Existing listing'} · {doc.products.filter(p=>!p.variantOf).length>1?`${doc.products.filter(p=>p.listingGroup).length} designs`:'Single listing'}</small></div>
+        <div className="manager-actions"><button className="button button-dark" disabled={busy} onClick={()=>void edit(doc)}>Edit</button><button className="text-link" onClick={()=>{open(duplicateDocument(doc));setDirty(true);}}>Duplicate</button><button className="text-link" disabled={busy} onClick={()=>{if(window.confirm(`${archived?'Restore':'Remove'} “${p.name}” ${archived?'to':'from'} the website? This ${doc.products.length>1?'includes its designs and options.':'preserves past orders.'}`))void act(archived?'restore':'archive',{id:doc.id,revision:data.revision},'Visibility update queued.');}}>{archived?'Restore':'Archive'}</button></div>
+      </article>;})}</div></>}
+    {section==='connection'&&<div className="quote-form"><h3>Shopify & website connection</h3><p>Shopify: {data.ready.shopify?'Connected':'Missing credentials'} · Automatic publishing: {data.ready.buildHook&&data.ready.catalogSource?'Configured':'Needs Netlify configuration'}</p><button className="button button-dark" disabled={busy} onClick={async()=>{try{setChoices(await catalogRequest('choices'));}catch(e){setError((e as Error).message);}}}>Load Shopify channels & shipping profiles</button>
+      {(['publicationId','deliveryProfileId','pickupProfileId'] as const).map(key=><label key={key}>{key==='publicationId'?'Website sales channel':key==='deliveryProfileId'?'Delivery shipping profile':'Edmonton pickup profile'}<select value={data.connection[key]||''} onChange={e=>setData({...data,connection:{...data.connection,[key]:e.target.value}})}><option value="">Choose…</option>{(key==='publicationId'?choices?.publications.nodes:choices?.deliveryProfiles.nodes)?.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}{!choices&&data.connection[key]&&<option value={data.connection[key]}>{data.connection[key]}</option>}</select></label>)}
+      <p className="small">These are your existing Shopify profiles. This editor does not invent or change their rates.</p><button className="button" disabled={busy} onClick={()=>void act('connection',{connection:data.connection},'Connection saved.')}>Save connection</button></div>}
+    {(section==='collections'||section==='rows')&&<div className="quote-form"><h3>{section==='collections'?'Categories':'Product rows on the shop page'}</h3><p>Save your changes, then publish the layout to update the website.</p>
+      {section==='collections'?data.collections.map((c,i)=><fieldset key={c.id}><legend>{c.name}</legend><div className="form-grid"><label>Name<input value={c.name} onChange={e=>setData({...data,collections:data.collections.map((x,n)=>n===i?{...x,name:e.target.value}:x)})}/></label><label>Link<input readOnly value={c.id} onChange={e=>setData({...data,collections:data.collections.map((x,n)=>n===i?{...x,id:slug(e.target.value)}:x)})}/></label><label>Placement<select value={c.kind} onChange={e=>setData({...data,collections:data.collections.map((x,n)=>n===i?{...x,kind:e.target.value}:x)})}><option value="collection">Collection</option><option value="department">Shop department</option></select></label></div><label>Description<textarea value={c.description} onChange={e=>setData({...data,collections:data.collections.map((x,n)=>n===i?{...x,description:e.target.value}:x)})}/></label><label>Products<select multiple size={5} value={c.products} onChange={e=>setData({...data,collections:data.collections.map((x,n)=>n===i?{...x,products:Array.from(e.target.selectedOptions).map(o=>o.value)}:x)})}>{data.documents.map(d=><option value={d.id} key={d.id}>{d.products[0].name}</option>)}</select></label><label>Cover product<select value={c.coverProduct} onChange={e=>setData({...data,collections:data.collections.map((x,n)=>n===i?{...x,coverProduct:e.target.value}:x)})}><option value="">First available product</option>{data.documents.map(d=><option key={d.id} value={d.id}>{d.products[0].name}</option>)}</select></label><button className="text-link" disabled={i===0} onClick={()=>{const categories=[...data.collections];[categories[i-1],categories[i]]=[categories[i],categories[i-1]];setData({...data,collections:categories});}}>Move up</button><button className="text-link" onClick={()=>{if(window.confirm('Remove this category? Products remain in your catalog.'))setData({...data,collections:data.collections.filter((_,n)=>n!==i)});}}>Remove category</button></fieldset>):data.rows.map((r,i)=><fieldset key={r.id}><legend>Row {i+1}</legend><label>Layout<select value={r.kind || "grid"} onChange={e=>setData({...data,rows:data.rows.map((x,n)=>n===i?{...x,kind:e.target.value}:x)})}><option value="grid">Product grid</option><option value="collection">Featured selection</option><option value="information">Information strip</option></select></label><div className="form-grid">{(["startAt","endAt"] as const).map(key=><label key={key}>{key==="startAt"?"Show from (your local time)":"Hide after (your local time)"}<input type="datetime-local" value={r[key]?new Date(new Date(r[key]!).getTime()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,16):""} onChange={e=>setData({...data,rows:data.rows.map((x,n)=>n===i?{...x,[key]:e.target.value?new Date(e.target.value).toISOString():""}:x)})}/></label>)}</div><label>Heading<input value={r.title} onChange={e=>setData({...data,rows:data.rows.map((x,n)=>n===i?{...x,title:e.target.value}:x)})}/></label><label>Introduction<input value={r.description} onChange={e=>setData({...data,rows:data.rows.map((x,n)=>n===i?{...x,description:e.target.value}:x)})}/></label><label>Products<select multiple size={5} value={r.productIds} onChange={e=>setData({...data,rows:data.rows.map((x,n)=>n===i?{...x,productIds:Array.from(e.target.selectedOptions).map(o=>o.value)}:x)})}>{data.documents.map(d=><option value={d.id} key={d.id}>{d.products[0].name}</option>)}</select></label><label><input type="checkbox" checked={r.enabled} onChange={e=>setData({...data,rows:data.rows.map((x,n)=>n===i?{...x,enabled:e.target.checked}:x)})}/> Show row</label><div className="button-row"><button className="text-link" disabled={i===0} onClick={()=>{const rows=[...data.rows];[rows[i-1],rows[i]]=[rows[i],rows[i-1]];setData({...data,rows});}}>Move up ↑</button><button className="text-link" onClick={()=>setData({...data,rows:data.rows.filter((_,n)=>n!==i)})}>Remove row</button></div></fieldset>)}
+      <div className="button-row"><button className="button button-dark" onClick={()=>section==='collections'?setData({...data,collections:[...data.collections,{id:`category-${Date.now()}`,name:'New category',kind:'collection',description:'',coverProduct:'',products:[]}]}):setData({...data,rows:[...data.rows,{id:`row-${Date.now()}`,title:'Featured products',description:'',productIds:[],enabled:true}]})}>+ Add {section==='collections'?'category':'row'}</button><button className="button" disabled={busy} onClick={()=>void act('save-layout',{collections:data.collections,rows:data.rows,revision:data.revision},'Layout draft saved.')}>Save layout</button><button className="button" disabled={busy} onClick={()=>void act('publish-layout',{revision:data.revision},'Website update queued.')}>Publish saved layout</button></div></div>}
+    {section==='history'&&<div className="manager-history">{data.history.map((h,i)=><p key={i}><time>{new Date(h.at).toLocaleString('en-CA',{timeZone:'America/Edmonton'})}</time> · {h.action} · {h.id}{h.savedRevision!==undefined&&<button className="text-link" disabled={busy} onClick={()=>{if(window.confirm("Restore the previous editor revision as a draft?"))void act("restore-revision",{id:h.id,savedRevision:h.savedRevision},"Previous revision restored as a draft.");}}>Restore previous draft</button>}</p>)}</div>}
+    <dialog ref={dialog} className="manager-dialog" onCancel={e=>{e.preventDefault();close();}}>{draft&&product&&<>
+      <header><div><small>{data.templates.find(t=>t.id===draft.template)?.name} · {dirty?'Unsaved changes':'Draft editor'}</small><h2>{draft.products.find(p=>p.id===draft.id)?.name||'New product'}</h2></div><button className="button button-dark" onClick={close} aria-label="Close editor">×</button></header>
+      {error&&<p role="alert" className="shop-checkout-error">{error}</p>}{message&&<p role="status">{message}</p>}
+      <div className="manager-editor"><aside><label>Template<select value={draft.template} onChange={e=>change({template:e.target.value,products:draft.products.map(p=>p.id===selected&&e.target.value==='personalized'?{...p,personalization:{kind:'photo-print',photoCount:1}}:p)})}>{data.templates.map(t=><option key={t.id} value={t.id}>{t.name}</option>)}</select></label><h3>Listing & designs</h3>{draft.products.filter(p=>!p.variantOf).map(p=><button key={p.id} className={p.id===selected?'button':'button button-dark'} onClick={()=>{setSelected(p.id);setPreview(false);}}>{p.id===draft.id?'Collection / listing':p.name}</button>)}{draft.template==='design'&&<button className="text-link" onClick={addDesign}>+ Add design</button>}</aside>
+      <div className="manager-fields">{preview?<div className="manager-preview"><h3>{product.name}</h3><p>{money(product.priceCents)} CAD · Pickup {money(product.priceCents-draft.pickupPriceDifferenceCents)} CAD</p>{product.images.map(image=><img key={image.src} src={image.src} alt={image.alt}/>)}{product.video&&<video src={product.video} controls preload="metadata"/>}<p style={{whiteSpace:'pre-line'}}>{draftDescription(product)}</p>{product.variants?.map(v=><p key={v.id}>{v.label} · {money(v.priceCents)} · {v.dimensions}</p>)}</div>:<>
+      <div className="form-grid"><label>Product name<input maxLength={120} value={product.name} onChange={e=>updateProduct({name:e.target.value})}/></label><label>Product link<input value={product.id} readOnly={data.documents.some(d=>d.id===draft.id)||selected!==draft.id} onChange={e=>renameNewLink(e.target.value)}/><small>Existing links remain stable when you rename products.</small></label><label>Product type<input value={product.category} onChange={e=>updateProduct({category:e.target.value})}/></label><label>Delivery price (CAD)<input type="number" step="0.01" min="0" value={dollarInput(product.priceCents)} onChange={e=>updateProduct({priceCents:cents(e.target.value)})}/></label></div>
+      <label>Description<textarea rows={3} maxLength={4000} value={product.description} onChange={e=>updateProduct({description:e.target.value})}/></label><button className="text-link" onClick={()=>updateProduct({description:`A ${product.name||'[product name]'} for your ${product.category||'[intended use]'}. Choose your preferred option and see the matching photos before ordering.`})}>Use editable description starter</button>
+      <label>What is included<textarea rows={2} value={product.included} onChange={e=>updateProduct({included:e.target.value})}/></label><label>Product dimensions / size guidance<input value={product.dimensions} onChange={e=>updateProduct({dimensions:e.target.value})}/></label><label>Care, materials, exclusions & colour notes<textarea rows={3} value={product.notes} onChange={e=>updateProduct({notes:e.target.value})}/></label>
+      <fieldset><legend>Photos & video</legend><label className="manager-upload">Upload product media<input disabled={busy} type="file" multiple accept="image/jpeg,image/png,image/webp,video/mp4,video/quicktime" onChange={e=>{void upload(e.target.files);e.target.value='';}}/></label><div className="manager-media">{product.images.map((image,index)=><div key={image.src}><img src={image.thumb} alt={image.alt}/><label>Image description<input value={image.alt} onChange={e=>updateProduct({images:product.images.map((x,i)=>i===index?{...x,alt:e.target.value}:x)})}/></label><small>{index===0?'Cover photo':`Photo ${index+1}`}</small><div className="button-row"><button className="text-link" disabled={!index} onClick={()=>{const images=[...product.images];[images[index-1],images[index]]=[images[index],images[index-1]];updateProduct({images});}}>Move up</button><button className="text-link" disabled={!index} onClick={()=>updateProduct({images:[image,...product.images.filter((_,i)=>i!==index)]})}>Make cover</button><button className="text-link" onClick={()=>updateProduct({images:product.images.filter((_,i)=>i!==index)})}>Remove</button></div></div>)}</div>{product.video&&<><video src={product.video} controls preload="metadata"/><button className="text-link" onClick={()=>updateProduct({video:undefined})}>Remove video</button></>}</fieldset>
+      {(draft.template==='size'||draft.template==='mask'||product.variants?.length)&&!product.groupedDesigns&&<fieldset><legend>Sizes / options</legend>{product.variants?.map((v,i)=><div key={v.id} className="manager-option"><label>Label<input value={v.label} onChange={e=>updateProduct({variants:product.variants!.map((x,n)=>n===i?{...x,label:e.target.value}:x)})}/></label><label>Price (CAD)<input type="number" step="0.01" value={dollarInput(v.priceCents)} onChange={e=>updateProduct({variants:product.variants!.map((x,n)=>n===i?{...x,priceCents:cents(e.target.value)}:x)})}/></label><label>Dimensions<input value={v.dimensions} onChange={e=>updateProduct({variants:product.variants!.map((x,n)=>n===i?{...x,dimensions:e.target.value}:x)})}/></label></div>)}<button className="text-link" onClick={addOption}>+ Add size / option</button></fieldset>}
+      <fieldset><legend>Categories & fulfillment</legend><div className="manager-categories">{data.collections.map(c=><label key={c.id}><input type="checkbox" checked={draft.categoryIds.includes(c.id)} onChange={e=>change({categoryIds:e.target.checked?[...draft.categoryIds,c.id]:draft.categoryIds.filter(id=>id!==c.id)})}/>{c.name}</label>)}</div><label>Pickup price reduction (CAD)<input type="number" step="0.01" min="0" value={dollarInput(draft.pickupPriceDifferenceCents)} onChange={e=>{const reduction=cents(e.target.value);change({pickupPriceDifferenceCents:reduction,products:draft.products.map(p=>({...p,pickupPriceDifferenceCents:reduction}))});}}/></label><p>Pickup price for this item: {money(product.priceCents-draft.pickupPriceDifferenceCents)} CAD.</p><label><input type="checkbox" checked={draft.fulfillmentConfirmed} onChange={e=>change({fulfillmentConfirmed:e.target.checked})}/> I have confirmed the item's fulfillment, included components and compatibility.</label>{draft.products.some(p=>p.launchReady===false)&&<p>Launch requirements are pending for this listing. Publishing stays disabled until those details are resolved.</p>}</fieldset>
+      {selected!==draft.id&&product.listingGroup&&<button className="text-link" onClick={()=>{if(window.confirm(`Remove ${product.name} from this collection draft?`)){change({products:draft.products.filter(p=>p.id!==selected)});setSelected(draft.id);}}}>Remove this design from draft</button>}
+      </>}</div></div><footer><button className="text-link" disabled={busy} onClick={()=>{const name=window.prompt("Name this reusable template");if(name)void act("save-preset",{name,document:rebuildGroup(draft)},"Reusable template saved.");}}>Save as template</button><button className="button button-dark" onClick={()=>setPreview(!preview)}>{preview?'Back to editing':'Preview'}</button><button className="button button-dark" disabled={busy} onClick={()=>void save()}>Save draft</button><button className="button" disabled={busy||dirty||draft.products.some(p=>p.launchReady===false)} onClick={()=>void publish()}>Publish saved draft</button></footer>
+    </>}</dialog>
+  </section>;
+}

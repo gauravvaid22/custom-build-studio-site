@@ -3,7 +3,7 @@ import { fetchShopifyCatalog, type ShopifyCatalog } from "../lib/shopify";
 import { PICKUP_PRICE_DIFFERENCE, useFulfillment } from "./Fulfillment";
 import { fulfillmentSku } from "../lib/shopify";
 import { pickupDifference } from "../lib/fulfillmentPricing";
-import products from "../../commerce/products.json";
+import products from "../data/catalog";
 
 export type ActiveSale = {
   status: "active";

@@ -1,4 +1,4 @@
-import products from "../../commerce/products.json";
+import products from "../data/catalog";
 import collections from "../../commerce/collections.json";
 import defaults from "../../commerce/shop-merchandising.json";
 

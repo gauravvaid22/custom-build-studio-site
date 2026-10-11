@@ -3,7 +3,7 @@ import { useFulfillment } from "./Fulfillment";
 import { useEffect, useRef } from "react";
 import { analyticsTestMode } from "../lib/analyticsPreferences";
 import { useLocation } from "react-router-dom";
-import products from "../../commerce/products.json";
+import products from "../data/catalog";
 
 type ShopEvent = "view_item" | "add_to_cart" | "begin_checkout" | "view_item_list" | "select_item" | "view_cart";
 type ShopLine = { id: string; quantity: number; priceCents?: number };

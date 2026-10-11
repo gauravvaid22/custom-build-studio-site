@@ -1,3 +1,4 @@
+import { requestAdminKey } from "../../commerce/admin-session.mjs";
 import { createHash, randomBytes, randomUUID, timingSafeEqual } from "node:crypto";
 import { getStore } from "@netlify/blobs";
 
@@ -44,7 +45,7 @@ export default async (request, context) => {
     consistency: "strong",
   });
   const adminKey = process.env.SHOP_ADMIN_KEY || "";
-  const bearer = (request.headers.get("authorization") || "").replace(/^Bearer /, "");
+  const bearer = requestAdminKey(request);
   const admin = adminKey.length >= 24 && equal(bearer, adminKey);
   const sameOrigin = request.headers.get("origin") === url.origin;
   const id = url.searchParams.get("id") || "";

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import products from "../../commerce/products.json";
+import products from "../data/catalog";
 import collections from "../../commerce/collections.json";
 import { money } from "./Cart";
 import { PICKUP_PRICE_DIFFERENCE } from "./Fulfillment";

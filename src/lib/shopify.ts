@@ -1,7 +1,8 @@
+import {assertCatalogAvailable} from "./catalogAvailability";
 import type { CartItem } from "../components/Cart";
 import type { FulfillmentMode } from "../components/Fulfillment";
 import { shippingFee } from "./fulfillmentPricing";
-import products from "../../commerce/products.json";
+import products from "../data/catalog";
 import { checkoutAnalyticsAttributes } from "../components/Analytics";
 
 const storeDomain = "aqk73w-k2.myshopify.com";
@@ -190,6 +191,7 @@ async function merchandiseFor(items: CartItem[], mode: FulfillmentMode, expected
 }
 
 export async function createShopifyCheckout(items: CartItem[], mode: FulfillmentMode, expectedPrices: Record<string, number>) {
+  await assertCatalogAvailable(items.map(item=>item.id));
   if (!items.length) throw new Error("Your cart is empty.");
   const lines = await merchandiseFor(items, mode, expectedPrices);
   const analyticsAttributes = await checkoutAnalyticsAttributes();

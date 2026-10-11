@@ -1,4 +1,4 @@
-import products from "../../commerce/products.json";
+import products from "../data/catalog";
 
 type Product = (typeof products)[number];
 const videosFor = (product: Product) => "videos" in product && Array.isArray(product.videos)

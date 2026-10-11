@@ -1,3 +1,4 @@
+import { requestAdminKey } from "./admin-session.mjs";
 import { settings, ShopError } from "./core.mjs";
 export function handler(shop) {
   return async (request) => {
@@ -54,7 +55,7 @@ export function handler(shop) {
       if (action === "lookup")
         return response({ order: await shop.lookup(body.key) });
       shop.authorize(
-        (request.headers.get("authorization") || "").replace(/^Bearer /, ""),
+        requestAdminKey(request),
       );
       if (action === "list") return response({ orders: await shop.list() });
       if (action === "get-content")

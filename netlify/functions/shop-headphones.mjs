@@ -1,3 +1,4 @@
+import { requestAdminKey } from "../../commerce/admin-session.mjs";
 import { getStore } from "@netlify/blobs";
 import { equal } from "../../commerce/core.mjs";
 import products from "../../commerce/products.json" with { type: "json" };
@@ -113,7 +114,7 @@ export default async function shopHeadphones(request, context) {
   if (request.headers.get("origin") !== url.origin) return json({ error: "Request origin not allowed" }, 403);
   if (!production || !admin) return json({ error: "Shopify administration is unavailable here." }, 503);
   const key = process.env.SHOP_ADMIN_KEY || "";
-  const bearer = (request.headers.get("authorization") || "").replace(/^Bearer /, "");
+  const bearer = requestAdminKey(request);
   if (key.length < 32 || !equal(bearer, key)) return json({ error: "Administrator authentication required" }, 401);
   if (!request.headers.get("content-type")?.startsWith("application/json")) return json({ error: "JSON required" }, 415);
   if (Number(request.headers.get("content-length")) > 2000) return json({ error: "Request too large" }, 413);

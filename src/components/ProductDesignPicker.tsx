@@ -1,4 +1,4 @@
-import products from '../../commerce/products.json';
+import products from '../data/catalog';
 import { money } from './Cart';
 import { useShopifyCatalog } from './ShopifyCatalog';
 

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import products from "../../commerce/products.json";
+import products from "../data/catalog";
 import { trackShop } from "./Analytics";
 import { useShopifyCatalog } from "./ShopifyCatalog";
 import { useFulfillment } from "./Fulfillment";

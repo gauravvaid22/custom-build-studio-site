@@ -1,4 +1,4 @@
-import products from "../../commerce/products.json";
+import products from "../data/catalog";
 import pricing from "../../commerce/pricing.json";
 export function pickupDifference(id: string) {
  const product = products.find(p => p.id === id);
