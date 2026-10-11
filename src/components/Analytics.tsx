@@ -1,6 +1,7 @@
 import { useShopifyCatalog } from "./ShopifyCatalog";
 import { useFulfillment } from "./Fulfillment";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { analyticsTestMode } from "../lib/analyticsPreferences";
 import { useLocation } from "react-router-dom";
 import products from "../../commerce/products.json";
 
@@ -77,7 +78,7 @@ function campaignLocation() {
 }
 
 function loadAnalytics() {
-  if (!production() || privateRoute() || !validMeasurementId()) return false;
+  if (!production() || privateRoute() || analyticsTestMode() || !validMeasurementId()) return false;
   if (window.cbsAnalyticsLoaded) return true;
 
   window.cbsAnalyticsLoaded = true;
@@ -102,6 +103,32 @@ function loadAnalytics() {
   script.dataset.cbsAnalytics = "true";
   document.head.appendChild(script);
   return true;
+}
+
+/** Preserve the anonymous storefront session at the hosted-checkout handoff.
+ * Never include uploaded photos, email, phone, names or addresses. Analytics
+ * failure/blocked scripts must not prevent someone from paying. */
+export async function checkoutAnalyticsAttributes(): Promise<{ key: string; value: string }[]> {
+  if (analyticsTestMode()) return [{ key: "_cbs_analytics_test", value: "1" }];
+  if (!loadAnalytics()) return [];
+  const read = (field: string) => new Promise<string | null>(resolve => {
+    const timeout = window.setTimeout(() => resolve(null), 700);
+    window.gtag?.("get", measurementId, field, (value: unknown) => {
+      window.clearTimeout(timeout);
+      resolve(typeof value === "string" || typeof value === "number" ? String(value) : null);
+    });
+  });
+  const [clientId, sessionId] = await Promise.all([read("client_id"), read("session_id")]);
+  const attributes: { key: string; value: string }[] = [];
+  if (clientId && /^[a-zA-Z0-9._-]{1,100}$/.test(clientId)) attributes.push({ key: "_cbs_ga_client_id", value: clientId });
+  if (sessionId && /^\d{1,20}$/.test(sessionId)) attributes.push({ key: "_cbs_ga_session_id", value: sessionId });
+  try {
+    const campaign = JSON.parse(sessionStorage.getItem(attributionKey) || "{}");
+    for (const key of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"])
+      if (typeof campaign[key] === "string" && /^[a-zA-Z0-9 _.,~+:/-]{1,200}$/.test(campaign[key]))
+        attributes.push({ key: `_cbs_${key}`, value: campaign[key] });
+  } catch { /* Checkout works without attribution storage. */ }
+  return attributes;
 }
 
 function shopItems(lines: ShopLine[]) {
@@ -133,6 +160,7 @@ export function trackShop(event: ShopEvent, lines: ShopLine[], fulfillment?: str
     ...(listId ? { item_list_id: listId } : {}),
     items: items.map((item, index) => ({ ...item, ...(listId ? { item_list_id: listId, index } : {}) })),
     page_location: campaignLocation(),
+    transport_type: "beacon",
   });
 }
 
@@ -155,12 +183,13 @@ export function trackQuoteStart() {
 }
 
 export default function Analytics() {
-  const { pathname, search } = useLocation();
+  const { pathname, search, key: navigationKey } = useLocation();
   const { mode } = useFulfillment();
-  const { priceFor } = useShopifyCatalog();
+  const { priceFor, catalogLoaded } = useShopifyCatalog();
+  const viewed = useRef("");
 
   useEffect(() => {
-    const disabled = privateRoute();
+    const disabled = privateRoute() || analyticsTestMode();
     (window as unknown as Record<string, boolean>)[analyticsDisabledKey()] =
       disabled;
     if (disabled || !production()) return;
@@ -175,6 +204,7 @@ export default function Analytics() {
   }, [pathname, search]);
 
   useEffect(() => {
+    if (!catalogLoaded) return;
     const productId = pathname.match(/^\/shop\/([^/]+)\/?$/)?.[1];
     const product = products.find((item) => item.id === productId);
     if (!product) return;
@@ -185,10 +215,13 @@ export default function Analytics() {
         item.id === requestedVariant &&
         (("variantOf" in item && item.variantOf === product.id) || ("variants" in product && product.variants?.some(variant => variant.id === item.id))),
     );
+    const signature = `${navigationKey}:${selectedVariant?.id || product.id}:${mode}`;
+    if (viewed.current === signature) return;
+    viewed.current = signature;
     trackShop("view_item", [
       { id: selectedVariant?.id || product.id, quantity: 1, priceCents: priceFor(selectedVariant?.id || product.id, selectedVariant?.priceCents || product.priceCents) },
     ], mode);
-  }, [pathname, search, mode]);
+  }, [pathname, search, navigationKey, mode, catalogLoaded, priceFor]);
 
   useEffect(() => {
     const click = (event: MouseEvent) => {

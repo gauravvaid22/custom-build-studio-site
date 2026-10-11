@@ -19,11 +19,15 @@ const ShopifyCatalogContext = createContext<{
   catalog: ShopifyCatalog;
   sale: ActiveSale | null;
   refresh: () => Promise<void>;
-}>({ catalog: emptyCatalog, sale: null, refresh: async () => {} });
+  catalogLoaded: boolean;
+  catalogError: boolean;
+}>({ catalog: emptyCatalog, sale: null, refresh: async () => {}, catalogLoaded: false, catalogError: false });
 
 export function ShopifyCatalogProvider({ children }: { children: React.ReactNode }) {
   const [catalog, setCatalog] = useState<ShopifyCatalog>(emptyCatalog);
   const [sale, setSale] = useState<ActiveSale | null>(null);
+  const [catalogLoaded, setCatalogLoaded] = useState(false);
+  const [catalogError, setCatalogError] = useState(false);
   const refresh = useCallback(async () => {
     const [nextCatalog, saleResult] = await Promise.all([
       fetchShopifyCatalog(),
@@ -31,6 +35,8 @@ export function ShopifyCatalogProvider({ children }: { children: React.ReactNode
         .then((response) => response.ok ? response.json() : null).catch(() => null),
     ]);
     setCatalog(nextCatalog);
+    setCatalogLoaded(true);
+    setCatalogError(false);
     const candidate: ActiveSale | null = saleResult?.sale?.status === "active" && (!saleResult.sale.endAt || Date.parse(saleResult.sale.endAt) > Date.now()) ? saleResult.sale : null;
     // Never advertise a sale until every scoped Shopify variant reflects its verified price.
     const verified = candidate && Object.entries(candidate.variants).every(([sku, variant]) =>
@@ -39,7 +45,7 @@ export function ShopifyCatalogProvider({ children }: { children: React.ReactNode
     setSale(verified ? candidate : null);
   }, []);
   useEffect(() => {
-    void refresh().catch(() => setSale(null));
+    void refresh().catch(() => { setSale(null); setCatalogError(true); });
     const interval = window.setInterval(() => { void refresh().catch(() => setSale(null)); }, 180000);
     const onVisible = () => { if (document.visibilityState === "visible") void refresh().catch(() => setSale(null)); };
     document.addEventListener("visibilitychange", onVisible);
@@ -52,12 +58,12 @@ export function ShopifyCatalogProvider({ children }: { children: React.ReactNode
     const timeout = window.setTimeout(() => setSale(null), Math.min(remaining, 2147483647));
     return () => window.clearTimeout(timeout);
   }, [sale]);
-  const value = useMemo(() => ({ catalog, sale, refresh }), [catalog, sale, refresh]);
+  const value = useMemo(() => ({ catalog, sale, refresh, catalogLoaded, catalogError }), [catalog, sale, refresh, catalogLoaded, catalogError]);
   return <ShopifyCatalogContext.Provider value={value}>{children}</ShopifyCatalogContext.Provider>;
 }
 
 export function useShopifyCatalog() {
-  const { catalog: { prices, compareAtPrices, names }, sale, refresh } = useContext(ShopifyCatalogContext);
+  const { catalog: { prices, compareAtPrices, names }, sale, refresh, catalogLoaded, catalogError } = useContext(ShopifyCatalogContext);
   const { mode } = useFulfillment();
   const priceFor = (id: string, fallback: number) => prices[fulfillmentSku(id, mode)] ?? Math.max(0, fallback - (mode === "pickup" ? PICKUP_PRICE_DIFFERENCE : 0));
   const compareAtFor = (id: string) => {
@@ -67,7 +73,7 @@ export function useShopifyCatalog() {
     return old && old > prices[sku] && sale.variants[sku] ? old : null;
   };
   return {
-    prices, compareAtPrices, names, sale, refresh,
+    prices, compareAtPrices, names, sale, refresh, catalogLoaded, catalogError,
     priceFor, compareAtFor,
     onSale: (id: string) => Boolean(sale?.productIds.includes(id)),
     deliveredPriceFor: (id: string, fallback: number) => prices[fulfillmentSku(id, "delivered")] ?? fallback,

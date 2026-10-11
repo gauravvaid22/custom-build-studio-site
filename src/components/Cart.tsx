@@ -3,6 +3,7 @@ import products from "../../commerce/products.json";
 import { trackShop } from "./Analytics";
 import { useShopifyCatalog } from "./ShopifyCatalog";
 import { useFulfillment } from "./Fulfillment";
+import { fulfillmentSku } from "../lib/shopify";
 export type CartAttribute = { key: string; value: string };
 export type CartItem = { lineId?: string; id: string; quantity: number; attributes?: CartAttribute[] };
 type CartContextType = {
@@ -20,11 +21,20 @@ const CartContext = createContext<CartContextType>({
   notice: "",
 });
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const { priceFor } = useShopifyCatalog();
+  const { priceFor, prices, catalogLoaded } = useShopifyCatalog();
+  const [pendingEvents, setPendingEvents] = useState<{ id: string; quantity: number; mode: typeof mode }[]>([]);
   const { mode } = useFulfillment();
   const [items, setItems] = useState<CartItem[]>([]),
     [loaded, setLoaded] = useState(false),
     [notice, setNotice] = useState("");
+  useEffect(() => {
+    if (!catalogLoaded || !pendingEvents.length) return;
+    for (const event of pendingEvents) {
+      const product = products.find(product => product.id === event.id)!;
+      trackShop("add_to_cart", [{ id: event.id, quantity: event.quantity, priceCents: prices[fulfillmentSku(event.id, event.mode)] ?? product.priceCents }], event.mode);
+    }
+    setPendingEvents([]);
+  }, [catalogLoaded, pendingEvents, prices]);
   useEffect(() => {
     try {
       const saved = JSON.parse(localStorage.getItem("cbs-cart-v1") || "[]");
@@ -91,7 +101,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setNotice(
       `${products.find((p) => p.id === id)!.name} added to cart. Maximum 20 of each product.`,
     );
-    trackShop("add_to_cart", [{id, quantity, priceCents: priceFor(id, products.find(p => p.id === id)!.priceCents)}], mode);
+    if (catalogLoaded) trackShop("add_to_cart", [{id, quantity, priceCents: priceFor(id, products.find(p => p.id === id)!.priceCents)}], mode);
+    else setPendingEvents(events => [...events, { id, quantity, mode }]);
     return true;
   };
   return (

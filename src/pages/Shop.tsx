@@ -30,6 +30,7 @@ import { PhotoPrintOrder } from "../components/PhotoPrintOrder";
 import frameSource from "../../commerce/photo-frames-source.json";
 import consoleSource from "../../commerce/console-stands-source.json";
 import candyCanSource from "../../commerce/candy-can-source.json";
+import { analyticsTestMode, setAnalyticsTestMode } from "../lib/analyticsPreferences";
 const consolePriceItems = consoleSource.products.flatMap(product => product.options.map(option => ({ ...option, name: `${product.name} — ${option.label}` })));
 
 type Product = (typeof products)[number];
@@ -906,7 +907,8 @@ function CartQuantity({id,name,quantity}:{id:string;name:string;quantity:number}
 export function ShopCart() {
   const { mode, lock } = useFulfillment();
   const { items, setQuantity } = useCart();
-  const { priceFor, nameFor, compareAtFor, refresh } = useShopifyCatalog();
+  const { priceFor, nameFor, compareAtFor, refresh, catalogLoaded, catalogError } = useShopifyCatalog();
+  const viewedCart = useRef("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const subtotal = items.reduce(
@@ -916,9 +918,16 @@ export function ShopCart() {
     0,
   );
   const cartSignature = items.map(item => `${item.id}:${item.quantity}`).join(",");
-  useEffect(() => { if (items.length) trackShop("view_cart", items.map(item => ({ id: item.id, quantity: item.quantity, priceCents: priceFor(item.id, catalogProduct(item.id)!.priceCents) })), mode); }, [cartSignature, mode]);
+  useEffect(() => {
+    if (!catalogLoaded || !items.length) return;
+    const lines = items.map(item => ({ id: item.id, quantity: item.quantity, priceCents: priceFor(item.id, catalogProduct(item.id)!.priceCents) }));
+    const signature = JSON.stringify([lines, mode]);
+    if (viewedCart.current === signature) return;
+    viewedCart.current = signature;
+    trackShop("view_cart", lines, mode);
+  }, [cartSignature, mode, catalogLoaded, priceFor]);
   async function beginCheckout() {
-    if (busy || !items.length) return;
+    if (busy || !items.length || !catalogLoaded) return;
     setBusy(true);
     setError("");
     lock(true);
@@ -1015,10 +1024,12 @@ export function ShopCart() {
                 Need a different colour or another change? Contact us before checkout.
               </p>
               {error && <p className="shop-checkout-error" role="alert">{error}</p>}
+              {!catalogLoaded && <p role="status">{catalogError ? "Live prices could not load. Please retry before checkout." : "Checking current prices…"}</p>}
+              {!catalogLoaded && catalogError && <button type="button" className="text-link" onClick={() => void refresh().catch(() => setError("Prices are temporarily unavailable. Please try again shortly."))}>Retry prices</button>}
               <button
                 className="button shopify-checkout-button"
                 type="button"
-                disabled={busy || !shopifyConfigured}
+                disabled={busy || !shopifyConfigured || !catalogLoaded}
                 onClick={beginCheckout}
               >
                 {busy ? "Opening secure checkout…" : "Secure checkout ↗"}
@@ -1035,7 +1046,7 @@ export function ShopCart() {
 export function Checkout() {
   const { mode, lock } = useFulfillment();
   const { items } = useCart();
-  const { priceFor, nameFor } = useShopifyCatalog();
+  const { priceFor, nameFor, refresh, catalogLoaded, catalogError } = useShopifyCatalog();
   const content = useSiteContent();
   const [busy, setBusy] = useState(false),
     [error, setError] = useState("");
@@ -1047,7 +1058,7 @@ export function Checkout() {
   );
 
   async function beginCheckout() {
-    if (busy || !items.length) return;
+    if (busy || !items.length || !catalogLoaded) return;
     setBusy(true);
     setError("");
     lock(true);
@@ -1057,6 +1068,8 @@ export function Checkout() {
       trackShop("begin_checkout", items.map(item => ({ ...item, priceCents: expectedPrices[item.id] })), mode);
       window.location.assign(checkoutUrl);
     } catch (checkoutError) {
+      trackShopInteraction("checkout_error", { reason: (checkoutError as Error).message.includes("price has changed") ? "price_changed" : "checkout_unavailable", fulfillment_method: mode });
+      if ((checkoutError as Error).message.includes("price has changed")) void refresh().catch(() => undefined);
       setError((checkoutError as Error).message);
       setBusy(false);
       lock(false);
@@ -1095,6 +1108,8 @@ export function Checkout() {
               so we can confirm availability and pricing.
             </p>
             {error && <p role="alert">{error}</p>}
+            {!catalogLoaded && <p role="status">{catalogError ? "Live prices could not load. Please retry before checkout." : "Checking current prices…"}</p>}
+            {!catalogLoaded && catalogError && <button type="button" className="text-link" onClick={() => void refresh().catch(() => setError("Prices are temporarily unavailable. Please try again shortly."))}>Retry prices</button>}
             {!shopifyConfigured && (
               <p role="status">Secure checkout is being connected.</p>
             )}
@@ -1102,7 +1117,7 @@ export function Checkout() {
               type="button"
               className="button shopify-checkout-button"
               onClick={beginCheckout}
-              disabled={busy || !items.length || !shopifyConfigured}
+              disabled={busy || !items.length || !shopifyConfigured || !catalogLoaded}
             >
               {busy
                 ? "Opening secure checkout…"
@@ -1292,6 +1307,7 @@ export function OrderConfirmation() {
   );
 }
 export function ShopAdmin() {
+  const [excludeTests, setExcludeTests] = useState(analyticsTestMode);
   const publicContent = useSiteContent();
   const publicProductContent = useProductContent();
   const { prices, deliveredPriceFor: priceFor, nameFor } = useShopifyCatalog();
@@ -1405,6 +1421,12 @@ export function ShopAdmin() {
             </form>
           ) : (
             <>
+              <div className="note-panel" style={{ marginBottom: 24 }}>
+                <h2>Shopping analytics</h2>
+                <label><input type="checkbox" checked={excludeTests} onChange={event => { setExcludeTests(event.target.checked); setAnalyticsTestMode(event.target.checked); }} /> Exclude my test visits and checkouts on this browser</label>
+                <p className="small">Enable before checking your own shop. Refresh the shop afterwards. This applies to this browser only and does not hide customer visits or prevent ordering.</p>
+                <a className="text-link" href="https://analytics.google.com/" target="_blank" rel="noopener noreferrer">Open Google Analytics ↗</a>
+              </div>
               <div className="shop-admin-tabs" role="tablist" aria-label="Administration sections">
                 <button className={tab === "orders" ? "button" : "button button-dark"} onClick={() => setTab("orders")}>Orders</button>
                 <button className={tab === "website" ? "button" : "button button-dark"} onClick={() => setTab("website")}>Website settings</button>

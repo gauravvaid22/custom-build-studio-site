@@ -1,6 +1,7 @@
 import type { CartItem } from "../components/Cart";
 import type { FulfillmentMode } from "../components/Fulfillment";
 import products from "../../commerce/products.json";
+import { checkoutAnalyticsAttributes } from "../components/Analytics";
 
 const storeDomain = "aqk73w-k2.myshopify.com";
 const apiVersion = "2026-07";
@@ -190,6 +191,7 @@ async function merchandiseFor(items: CartItem[], mode: FulfillmentMode, expected
 export async function createShopifyCheckout(items: CartItem[], mode: FulfillmentMode, expectedPrices: Record<string, number>) {
   if (!items.length) throw new Error("Your cart is empty.");
   const lines = await merchandiseFor(items, mode, expectedPrices);
+  const analyticsAttributes = await checkoutAnalyticsAttributes();
   const result = await storefront<{
     cartCreate: {
       cart: { checkoutUrl: string } | null;
@@ -208,7 +210,7 @@ export async function createShopifyCheckout(items: CartItem[], mode: Fulfillment
       input: {
         lines,
         buyerIdentity: { countryCode: "CA" },
-        attributes: [{ key: "Storefront", value: "custombuildstudio.ca" }, { key: "Order handoff", value: mode === "pickup" ? "Edmonton pickup by appointment — no delivery" : "Delivered — free Canadian tracked shipping" }],
+        attributes: [{ key: "Storefront", value: "custombuildstudio.ca" }, { key: "Order handoff", value: mode === "pickup" ? "Edmonton pickup by appointment — no delivery" : "Delivered — free Canadian tracked shipping" }, ...analyticsAttributes],
         ...(mode === "pickup" ? { note: "EDMONTON PICKUP ONLY. Arrange a time and privately send the address after ordering. Do not ship this order." } : {}),
       },
     },
