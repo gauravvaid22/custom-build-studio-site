@@ -453,6 +453,29 @@
   gap: 8px;
   margin: 14px 0;
 }
+.shop-detail > div {
+  min-width: 0;
+}
+
+.shop-gallery-scope {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  font-size: 0.9rem;
+}
+.shop-thumbs-overview {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(2, auto);
+  grid-auto-columns: 74px;
+  overflow-x: auto;
+  max-width: 100%;
+  padding-bottom: 8px;
+  overscroll-behavior-x: contain;
+}
 .shop-design-indicator {
   margin: 14px 0 -5px;
   color: #173c35;

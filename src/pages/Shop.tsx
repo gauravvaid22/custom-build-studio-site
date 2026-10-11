@@ -31,6 +31,7 @@ import frameSource from "../../commerce/photo-frames-source.json";
 import consoleSource from "../../commerce/console-stands-source.json";
 import candyCanSource from "../../commerce/candy-can-source.json";
 import { analyticsTestMode, setAnalyticsTestMode } from "../lib/analyticsPreferences";
+import { productGallery } from "../lib/productGallery";
 const consolePriceItems = consoleSource.products.flatMap(product => product.options.map(option => ({ ...option, name: `${product.name} — ${option.label}` })));
 
 type Product = (typeof products)[number];
@@ -658,11 +659,13 @@ export function ShopProduct() {
   const product = products.find((p) => p.id === id);
   const [index, setIndex] = useState(0);
   const [selectedVariantId, setSelectedVariantId] = useState("");
+  const [showAllDesigns, setShowAllDesigns] = useState(true);
   useEffect(() => {
     setIndex(0);
     const requested = searchParams.get("variant") || "";
     const valid = product && variantsFor(product).some(v => v.id === requested);
     setSelectedVariantId(valid ? requested : "");
+    setShowAllDesigns(!valid);
     if (valid && product) {
       const label = variantsFor(product).find(v => v.id === requested)?.label;
       const photo = product.images.findIndex(image => "design" in image && image.design === label);
@@ -674,16 +677,13 @@ export function ShopProduct() {
   const variants = variantsFor(product);
   const selectedVariant = catalogProduct(selectedVariantId || variants[0]?.id || product.id) || product;
   const mediaProduct = "groupedDesigns" in product ? catalogProduct(product.groupedDesigns?.find(design => design.optionIds.includes(selectedVariant.id))?.id || "") || selectedVariant : product;
-  const videos =
-    "videos" in mediaProduct && Array.isArray(mediaProduct.videos)
-      ? mediaProduct.videos
-      : "video" in mediaProduct && mediaProduct.video
-        ? [mediaProduct.video]
-        : [];
+  const gallery = productGallery(product, showAllDesigns ? "" : selectedVariantId);
+  const images = gallery.images;
+  const videos = gallery.videos;
   const showingVideo =
-    index >= mediaProduct.images.length &&
-    index < mediaProduct.images.length + videos.length;
-  const activeVideo = showingVideo ? videos[index - mediaProduct.images.length] : undefined;
+    index >= images.length &&
+    index < images.length + videos.length;
+  const activeVideo = showingVideo ? videos[index - images.length] : undefined;
   const isHalloweenMask = product.id === "pumpkin-head-halloween-mask" || product.id === "carved-in-fear-halloween-mask";
   const isPumpkinHeadMask = product.id === "pumpkin-head-halloween-mask";
   const maskSizeEmail = isHalloweenMask
@@ -691,21 +691,23 @@ export function ShopProduct() {
     : "";
   const productionMessage = content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship");
   const deliveryEstimate = shippingEstimate;
-  const selectedImage = !showingVideo ? mediaProduct.images[index] : undefined;
+  const activeImage = !showingVideo ? images[index] || images[0] : undefined;
+  const selectedImage = activeImage?.image;
   const selectedDesign =
-    selectedImage && "design" in selectedImage && typeof selectedImage.design === "string"
+    activeImage?.label || (selectedImage && "design" in selectedImage && typeof selectedImage.design === "string"
       ? selectedImage.design
-      : undefined;
+      : undefined);
   const chooseVariant = (variantId: string) => {
     trackShopInteraction("select_variant", { item_id: variantId });
     setIndex(0);
     setSelectedVariantId(variantId);
+    setShowAllDesigns(false);
     setSearchParams({ variant: variantId }, { replace: true, preventScrollReset: true });
     const label = variants.find((variant) => variant.id === variantId)?.label;
-    const imageIndex = mediaProduct.images.findIndex(
+    const imageIndex = product.images.findIndex(
       (image) => "design" in image && image.design === label,
     );
-    if (imageIndex >= 0) setIndex(imageIndex);
+    if (!("groupedDesigns" in product) && imageIndex >= 0) setIndex(imageIndex);
   };
   return (
     <>
@@ -719,32 +721,37 @@ export function ShopProduct() {
               <div className="shop-main-image">
                 {showingVideo ? (
                   <video
+                    key={activeVideo!.src}
                     controls
                     muted
                     loop
                     playsInline
-                    onPlay={() => trackShopInteraction("product_media", { item_id: product.id, media_type: "video", media_index: index - mediaProduct.images.length })}
+                    onPlay={() => trackShopInteraction("product_media", { item_id: product.id, media_type: "video", media_index: index - images.length })}
                     preload="metadata"
-                    poster={mediaProduct.images[0].src}
+                    poster={activeVideo!.owner.images[0].src}
                     aria-label={`${nameFor(product.id, product.name)} product video`}
                   >
-                    <source src={activeVideo} type="video/webm" />
+                    <source src={activeVideo!.src} type="video/webm" />
                     Your browser does not support product video.
                   </video>
                 ) : (
-                  <GalleryImage mediaKey={selectedImage!.src}><ProductImage product={mediaProduct} index={index} large /></GalleryImage>
+                  <GalleryImage mediaKey={selectedImage!.src}><ProductImage product={activeImage!.owner} index={activeImage!.imageIndex} large /></GalleryImage>
                 )}
               </div>
+              {gallery.designCount > 0 && <div className="shop-gallery-scope">
+                <span>{gallery.overview ? `Explore all ${gallery.designCount} designs` : "Selected design photos"}</span>
+                {gallery.overview ? <span className="small">Browse photos · choose below ↓</span> : <button type="button" className="text-link" onClick={() => { setIndex(0); setShowAllDesigns(true); }}>Show all designs</button>}
+              </div>}
               {selectedDesign && (
                 <p className="shop-design-indicator" role="status">
                   Viewing <strong>{selectedDesign}</strong>
                 </p>
               )}
-              <div className="shop-thumbs" aria-label="Product media">
-                {mediaProduct.images.map((image, i) => (
+              <div className={`shop-thumbs${gallery.overview ? " shop-thumbs-overview" : ""}`} aria-label="Product media">
+                {images.map(({ image, label }, i) => (
                   <button
                     key={image.src}
-                    aria-label={`View ${"design" in image ? `${image.design} ` : ""}product photo ${i + 1}`}
+                    aria-label={`View ${label ? `${label} ` : "design" in image ? `${image.design} ` : ""}product photo ${i + 1}`}
                     aria-pressed={index === i}
                     onClick={() => { setIndex(i); trackShopInteraction("product_media", { item_id: product.id, media_type: "photo", media_index: i }); }}
                   >
@@ -758,17 +765,17 @@ export function ShopProduct() {
                   </button>
                 ))}
                 {videos.map((video, videoIndex) => {
-                  const mediaIndex = mediaProduct.images.length + videoIndex;
+                  const mediaIndex = images.length + videoIndex;
                   return (
                     <button
                       className="shop-video-thumb"
-                      key={video}
-                      aria-label={`View product video ${videoIndex + 1}`}
+                      key={video.src}
+                      aria-label={`View ${video.label ? `${video.label} ` : ""}product video ${videoIndex + 1}`}
                       aria-pressed={index === mediaIndex}
                       onClick={() => setIndex(mediaIndex)}
                     >
                       <img
-                        src={mediaProduct.images[Math.min(videoIndex + 1, mediaProduct.images.length - 1)].thumb}
+                        src={video.owner.images[0].thumb}
                         alt=""
                         loading="lazy"
                         width="90"
