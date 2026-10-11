@@ -3492,7 +3492,7 @@
   },
   {
     "id": "can-holder-designs",
-    "name": "Can Holders — Choose Your Design",
+    "name": "Clothing Can Holders — Choose Your Design",
     "priceCents": 2999,
     "category": "Can holders",
     "seasonal": false,
@@ -3501,6 +3501,12 @@
     "dimensions": "Approximately 115 mm high. Height is based on the original design; width and depth are not yet measured.",
     "notes": "Decorative beverage-can holder; not an insulated cooler. The photos show a regular-shaped can. Slim, tall and wide cans may not fit: contact us before ordering if your can differs. Keep away from high heat and wipe clean with a damp cloth. Standard colours follow the main photo; shades may vary. Reference videos may show alternative finishes. Ask us before ordering for a custom colour.",
     "images": [
+      {
+        "src": "/media/shop/can-holder-designs/cover-1200.webp",
+        "thumb": "/media/shop/can-holder-designs/cover-480.webp",
+        "alt": "Clothing Can Holders — four featured designs; choose one holder, drinks not included",
+        "sourceFile": "CAN HOLDER II COVER.png"
+      },
       {
         "src": "/media/shop/suit-can-holder/1-1200.webp",
         "thumb": "/media/shop/suit-can-holder/1-480.webp",
@@ -3622,7 +3628,8 @@
           "overcoat-can-holder"
         ]
       }
-    ]
+    ],
+    "galleryOverviewCover": true
   },
   {
     "id": "halloween-candy-holder-designs",
@@ -4280,5 +4287,428 @@
         ]
       }
     ]
+  },
+  {
+    "id": "hoodie-can-holder",
+    "name": "Hoodie Can Holder",
+    "category": "Can holders",
+    "seasonal": false,
+    "priceCents": 2999,
+    "description": "A miniature pullover hoodie gives your drink a relaxed, playful look. A fun little gift for a desk, table or game night.",
+    "included": "One assembled decorative can holder in colours similar to the main photo. Beverage can, drink and display props are not included.",
+    "dimensions": "Approximately 110 mm high. Based on the original design; width and depth are not yet measured.",
+    "notes": "A rigid decorative beverage-can holder, not fabric or an insulated cooler. The photos show a regular-shaped can. Slim, tall and wide cans may not fit: contact us before ordering if your can differs. Keep away from high heat; wipe clean with a damp cloth. Colours follow the main photo; shades may vary. Reference videos may show other finishes. Ask us before ordering for a custom colour.",
+    "images": [
+      {
+        "src": "/media/shop/hoodie-can-holder/1-1200.webp",
+        "thumb": "/media/shop/hoodie-can-holder/1-480.webp",
+        "alt": "Hoodie Can Holder — product view 1; beverage can not included",
+        "sourceFile": "Hoodie1_d61558e29d.jpg"
+      },
+      {
+        "src": "/media/shop/hoodie-can-holder/2-1200.webp",
+        "thumb": "/media/shop/hoodie-can-holder/2-480.webp",
+        "alt": "Hoodie Can Holder — product view 2; beverage can not included",
+        "sourceFile": "Hoodie2_fb2b603959.jpg"
+      },
+      {
+        "src": "/media/shop/hoodie-can-holder/3-1200.webp",
+        "thumb": "/media/shop/hoodie-can-holder/3-480.webp",
+        "alt": "Hoodie Can Holder — product view 3; beverage can not included",
+        "sourceFile": "Hoodie3_40d3736cfc.jpg"
+      },
+      {
+        "src": "/media/shop/hoodie-can-holder/4-1200.webp",
+        "thumb": "/media/shop/hoodie-can-holder/4-480.webp",
+        "alt": "Hoodie Can Holder — product view 4; beverage can not included",
+        "sourceFile": "Hoodie4_015714f7a7.jpg"
+      },
+      {
+        "src": "/media/shop/hoodie-can-holder/5-1200.webp",
+        "thumb": "/media/shop/hoodie-can-holder/5-480.webp",
+        "alt": "Hoodie Can Holder — product view 5; beverage can not included",
+        "sourceFile": "Hoodie5_6f1597f288.jpg"
+      }
+    ],
+    "video": "/media/shop/hoodie-can-holder/hoodie-can-holder.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/hoodie-can-holder",
+    "listingGroup": "can-holder-designs-ii"
+  },
+  {
+    "id": "puffer-jacket-can-holder",
+    "name": "Puffer Jacket Can Holder",
+    "category": "Can holders",
+    "seasonal": false,
+    "priceCents": 2999,
+    "description": "A quilted jacket look with a contrasting zip dresses up your favourite drink. A decorative conversation piece for your desk or table.",
+    "included": "One assembled decorative can holder in colours similar to the main photo. Beverage can, drink and display props are not included.",
+    "dimensions": "Approximately 120 mm high. Based on the original design; width and depth are not yet measured.",
+    "notes": "A rigid decorative beverage-can holder, not fabric or an insulated cooler. The photos show a regular-shaped can. Slim, tall and wide cans may not fit: contact us before ordering if your can differs. Keep away from high heat; wipe clean with a damp cloth. Colours follow the main photo; shades may vary. Reference videos may show other finishes. Ask us before ordering for a custom colour.",
+    "images": [
+      {
+        "src": "/media/shop/puffer-jacket-can-holder/1-1200.webp",
+        "thumb": "/media/shop/puffer-jacket-can-holder/1-480.webp",
+        "alt": "Puffer Jacket Can Holder — product view 1; beverage can not included",
+        "sourceFile": "Puffer_Jacket1_59f6797d42.jpg"
+      },
+      {
+        "src": "/media/shop/puffer-jacket-can-holder/2-1200.webp",
+        "thumb": "/media/shop/puffer-jacket-can-holder/2-480.webp",
+        "alt": "Puffer Jacket Can Holder — product view 2; beverage can not included",
+        "sourceFile": "Puffer_Jacket2_1623621b48.jpg"
+      },
+      {
+        "src": "/media/shop/puffer-jacket-can-holder/3-1200.webp",
+        "thumb": "/media/shop/puffer-jacket-can-holder/3-480.webp",
+        "alt": "Puffer Jacket Can Holder — product view 3; beverage can not included",
+        "sourceFile": "Puffer_Jacket3_767c372ea6.jpg"
+      },
+      {
+        "src": "/media/shop/puffer-jacket-can-holder/4-1200.webp",
+        "thumb": "/media/shop/puffer-jacket-can-holder/4-480.webp",
+        "alt": "Puffer Jacket Can Holder — product view 4; beverage can not included",
+        "sourceFile": "Puffer_Jacket4_848bf9305c.jpg"
+      },
+      {
+        "src": "/media/shop/puffer-jacket-can-holder/5-1200.webp",
+        "thumb": "/media/shop/puffer-jacket-can-holder/5-480.webp",
+        "alt": "Puffer Jacket Can Holder — product view 5; beverage can not included",
+        "sourceFile": "Puffer_Jacket5_38866c21f2.jpg"
+      }
+    ],
+    "video": "/media/shop/puffer-jacket-can-holder/puffer-jacket-can-holder.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/puffer-jacket-can-holder",
+    "listingGroup": "can-holder-designs-ii"
+  },
+  {
+    "id": "leather-jacket-can-holder",
+    "name": "Leather Jacket Can Holder",
+    "category": "Can holders",
+    "seasonal": false,
+    "priceCents": 3499,
+    "description": "A leather-jacket-inspired design with collar and zip details adds a little attitude to your drink. The holder is rigid plastic, not leather.",
+    "included": "One assembled decorative can holder in colours similar to the main photo. Beverage can, drink and display props are not included.",
+    "dimensions": "Approximately 120 mm high. Based on the original design; width and depth are not yet measured.",
+    "notes": "A rigid decorative beverage-can holder, not fabric or an insulated cooler. The photos show a regular-shaped can. Slim, tall and wide cans may not fit: contact us before ordering if your can differs. Keep away from high heat; wipe clean with a damp cloth. Colours follow the main photo; shades may vary. Reference videos may show other finishes. Ask us before ordering for a custom colour.",
+    "images": [
+      {
+        "src": "/media/shop/leather-jacket-can-holder/1-1200.webp",
+        "thumb": "/media/shop/leather-jacket-can-holder/1-480.webp",
+        "alt": "Leather Jacket Can Holder — product view 1; beverage can not included",
+        "sourceFile": "Leather_Jacket1_63d5f1ffca.jpg"
+      },
+      {
+        "src": "/media/shop/leather-jacket-can-holder/2-1200.webp",
+        "thumb": "/media/shop/leather-jacket-can-holder/2-480.webp",
+        "alt": "Leather Jacket Can Holder — product view 2; beverage can not included",
+        "sourceFile": "Leather_Jacket2_bfc5e777e8.jpg"
+      },
+      {
+        "src": "/media/shop/leather-jacket-can-holder/3-1200.webp",
+        "thumb": "/media/shop/leather-jacket-can-holder/3-480.webp",
+        "alt": "Leather Jacket Can Holder — product view 3; beverage can not included",
+        "sourceFile": "Leather_Jacket3_21a4bace20.jpg"
+      },
+      {
+        "src": "/media/shop/leather-jacket-can-holder/4-1200.webp",
+        "thumb": "/media/shop/leather-jacket-can-holder/4-480.webp",
+        "alt": "Leather Jacket Can Holder — product view 4; beverage can not included",
+        "sourceFile": "Leather_Jacket4_604f72f2c1.jpg"
+      },
+      {
+        "src": "/media/shop/leather-jacket-can-holder/5-1200.webp",
+        "thumb": "/media/shop/leather-jacket-can-holder/5-480.webp",
+        "alt": "Leather Jacket Can Holder — product view 5; beverage can not included",
+        "sourceFile": "Leather_Jacket5_3141fcca60.jpg"
+      }
+    ],
+    "video": "/media/shop/leather-jacket-can-holder/leather-jacket-can-holder.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/leather-jacket-can-holder",
+    "listingGroup": "can-holder-designs-ii"
+  },
+  {
+    "id": "bathrobe-can-holder",
+    "name": "Bathrobe Can Holder",
+    "category": "Can holders",
+    "seasonal": false,
+    "priceCents": 2999,
+    "description": "Let your drink lounge in a miniature bathrobe, complete with collar, pockets and a tied belt. A lighthearted gift for slow evenings.",
+    "included": "One assembled decorative can holder in colours similar to the main photo. Beverage can, drink and display props are not included.",
+    "dimensions": "Approximately 110 mm high. Based on the original design; width and depth are not yet measured.",
+    "notes": "A rigid decorative beverage-can holder, not fabric or an insulated cooler. The photos show a regular-shaped can. Slim, tall and wide cans may not fit: contact us before ordering if your can differs. Keep away from high heat; wipe clean with a damp cloth. Colours follow the main photo; shades may vary. Reference videos may show other finishes. Ask us before ordering for a custom colour.",
+    "images": [
+      {
+        "src": "/media/shop/bathrobe-can-holder/1-1200.webp",
+        "thumb": "/media/shop/bathrobe-can-holder/1-480.webp",
+        "alt": "Bathrobe Can Holder — product view 1; beverage can not included",
+        "sourceFile": "Bathrobe1_f750ca1997.jpg"
+      },
+      {
+        "src": "/media/shop/bathrobe-can-holder/2-1200.webp",
+        "thumb": "/media/shop/bathrobe-can-holder/2-480.webp",
+        "alt": "Bathrobe Can Holder — product view 2; beverage can not included",
+        "sourceFile": "Bathrobe2_3d2ac07f47.jpg"
+      },
+      {
+        "src": "/media/shop/bathrobe-can-holder/3-1200.webp",
+        "thumb": "/media/shop/bathrobe-can-holder/3-480.webp",
+        "alt": "Bathrobe Can Holder — product view 3; beverage can not included",
+        "sourceFile": "Bathrobe3_8d17cafe84.jpg"
+      },
+      {
+        "src": "/media/shop/bathrobe-can-holder/4-1200.webp",
+        "thumb": "/media/shop/bathrobe-can-holder/4-480.webp",
+        "alt": "Bathrobe Can Holder — product view 4; beverage can not included",
+        "sourceFile": "Bathrobe4_2c6bdfc895.jpg"
+      },
+      {
+        "src": "/media/shop/bathrobe-can-holder/5-1200.webp",
+        "thumb": "/media/shop/bathrobe-can-holder/5-480.webp",
+        "alt": "Bathrobe Can Holder — product view 5; beverage can not included",
+        "sourceFile": "Bathrobe5_4570b51806.jpg"
+      }
+    ],
+    "video": "/media/shop/bathrobe-can-holder/bathrobe-can-holder.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/bathrobe-can-holder",
+    "listingGroup": "can-holder-designs-ii"
+  },
+  {
+    "id": "suede-jacket-can-holder",
+    "name": "Suede Jacket Can Holder",
+    "category": "Can holders",
+    "seasonal": false,
+    "priceCents": 2999,
+    "description": "A suede-jacket-inspired design with western-style panels brings character to your drink. The holder is rigid plastic, not suede.",
+    "included": "One assembled decorative can holder in colours similar to the main photo. Beverage can, drink and display props are not included.",
+    "dimensions": "Approximately 120 mm high. Based on the original design; width and depth are not yet measured.",
+    "notes": "A rigid decorative beverage-can holder, not fabric or an insulated cooler. The photos show a regular-shaped can. Slim, tall and wide cans may not fit: contact us before ordering if your can differs. Keep away from high heat; wipe clean with a damp cloth. Colours follow the main photo; shades may vary. Reference videos may show other finishes. Ask us before ordering for a custom colour.",
+    "images": [
+      {
+        "src": "/media/shop/suede-jacket-can-holder/1-1200.webp",
+        "thumb": "/media/shop/suede-jacket-can-holder/1-480.webp",
+        "alt": "Suede Jacket Can Holder — product view 1; beverage can not included",
+        "sourceFile": "Suede_Jacket1_f493330497.jpg"
+      },
+      {
+        "src": "/media/shop/suede-jacket-can-holder/2-1200.webp",
+        "thumb": "/media/shop/suede-jacket-can-holder/2-480.webp",
+        "alt": "Suede Jacket Can Holder — product view 2; beverage can not included",
+        "sourceFile": "Suede_Jacket2_d27fb7e4c8.jpg"
+      },
+      {
+        "src": "/media/shop/suede-jacket-can-holder/3-1200.webp",
+        "thumb": "/media/shop/suede-jacket-can-holder/3-480.webp",
+        "alt": "Suede Jacket Can Holder — product view 3; beverage can not included",
+        "sourceFile": "Suede_Jacket3_0594743387.jpg"
+      },
+      {
+        "src": "/media/shop/suede-jacket-can-holder/4-1200.webp",
+        "thumb": "/media/shop/suede-jacket-can-holder/4-480.webp",
+        "alt": "Suede Jacket Can Holder — product view 4; beverage can not included",
+        "sourceFile": "Suede_Jacket4_b0541adc80.jpg"
+      },
+      {
+        "src": "/media/shop/suede-jacket-can-holder/5-1200.webp",
+        "thumb": "/media/shop/suede-jacket-can-holder/5-480.webp",
+        "alt": "Suede Jacket Can Holder — product view 5; beverage can not included",
+        "sourceFile": "Suede_Jacket5_060a4b78bc.jpg"
+      }
+    ],
+    "video": "/media/shop/suede-jacket-can-holder/suede-jacket-can-holder.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/suede-jacket-can-holder",
+    "listingGroup": "can-holder-designs-ii"
+  },
+  {
+    "id": "varsity-jacket-can-holder",
+    "name": "Varsity Jacket Can Holder",
+    "category": "Can holders",
+    "seasonal": false,
+    "priceCents": 2999,
+    "description": "Sporty sleeves, pockets and button details give your drink a classic varsity-jacket look. A playful accessory for a desk or game night.",
+    "included": "One assembled decorative can holder in colours similar to the main photo. Beverage can, drink and display props are not included.",
+    "dimensions": "Approximately 120 mm high. Based on the original design; width and depth are not yet measured.",
+    "notes": "A rigid decorative beverage-can holder, not fabric or an insulated cooler. The photos show a regular-shaped can. Slim, tall and wide cans may not fit: contact us before ordering if your can differs. Keep away from high heat; wipe clean with a damp cloth. Colours follow the main photo; shades may vary. Reference videos may show other finishes. Ask us before ordering for a custom colour.",
+    "images": [
+      {
+        "src": "/media/shop/varsity-jacket-can-holder/1-1200.webp",
+        "thumb": "/media/shop/varsity-jacket-can-holder/1-480.webp",
+        "alt": "Varsity Jacket Can Holder — product view 1; beverage can not included",
+        "sourceFile": "Varsity_Jacket1_eda1a671eb.jpg"
+      },
+      {
+        "src": "/media/shop/varsity-jacket-can-holder/2-1200.webp",
+        "thumb": "/media/shop/varsity-jacket-can-holder/2-480.webp",
+        "alt": "Varsity Jacket Can Holder — product view 2; beverage can not included",
+        "sourceFile": "Varsity_Jacket2_dc6c394c06.jpg"
+      },
+      {
+        "src": "/media/shop/varsity-jacket-can-holder/3-1200.webp",
+        "thumb": "/media/shop/varsity-jacket-can-holder/3-480.webp",
+        "alt": "Varsity Jacket Can Holder — product view 3; beverage can not included",
+        "sourceFile": "Varsity_Jacket3_6a4efb63e7.jpg"
+      },
+      {
+        "src": "/media/shop/varsity-jacket-can-holder/4-1200.webp",
+        "thumb": "/media/shop/varsity-jacket-can-holder/4-480.webp",
+        "alt": "Varsity Jacket Can Holder — product view 4; beverage can not included",
+        "sourceFile": "Varsity_Jacket4_aba7431a58.jpg"
+      },
+      {
+        "src": "/media/shop/varsity-jacket-can-holder/5-1200.webp",
+        "thumb": "/media/shop/varsity-jacket-can-holder/5-480.webp",
+        "alt": "Varsity Jacket Can Holder — product view 5; beverage can not included",
+        "sourceFile": "Varsity_Jacket5_9439d52bae.jpg"
+      }
+    ],
+    "video": "/media/shop/varsity-jacket-can-holder/varsity-jacket-can-holder.webm",
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/product/varsity-jacket-can-holder",
+    "listingGroup": "can-holder-designs-ii"
+  },
+  {
+    "id": "can-holder-designs-ii",
+    "name": "Clothing Can Holders II — Choose Your Design",
+    "category": "Can holders",
+    "seasonal": false,
+    "priceCents": 2999,
+    "description": "Six fresh looks for your drink: hoodie, puffer jacket, leather jacket, bathrobe, suede jacket and varsity jacket. Choose one design; its photos, size and price update below. One holder per item, not a set. Beverage can not included.",
+    "included": "One assembled decorative can holder in colours similar to the main photo. Beverage can, drink and display props are not included.",
+    "dimensions": "Approximately 110 mm high. Based on the original design; width and depth are not yet measured.",
+    "notes": "A rigid decorative beverage-can holder, not fabric or an insulated cooler. The photos show a regular-shaped can. Slim, tall and wide cans may not fit: contact us before ordering if your can differs. Keep away from high heat; wipe clean with a damp cloth. Colours follow the main photo; shades may vary. Reference videos may show other finishes. Ask us before ordering for a custom colour.",
+    "images": [
+      {
+        "src": "/media/shop/can-holder-designs-ii/cover-1200.webp",
+        "thumb": "/media/shop/can-holder-designs-ii/cover-480.webp",
+        "alt": "Clothing Can Holders II — four featured designs; choose one holder, drinks not included",
+        "sourceFile": "CAN HOLDER  COVER.png"
+      },
+      {
+        "src": "/media/shop/hoodie-can-holder/1-1200.webp",
+        "thumb": "/media/shop/hoodie-can-holder/1-480.webp",
+        "alt": "Hoodie Can Holder — product view 1; beverage can not included",
+        "sourceFile": "Hoodie1_d61558e29d.jpg"
+      },
+      {
+        "src": "/media/shop/puffer-jacket-can-holder/1-1200.webp",
+        "thumb": "/media/shop/puffer-jacket-can-holder/1-480.webp",
+        "alt": "Puffer Jacket Can Holder — product view 1; beverage can not included",
+        "sourceFile": "Puffer_Jacket1_59f6797d42.jpg"
+      },
+      {
+        "src": "/media/shop/leather-jacket-can-holder/1-1200.webp",
+        "thumb": "/media/shop/leather-jacket-can-holder/1-480.webp",
+        "alt": "Leather Jacket Can Holder — product view 1; beverage can not included",
+        "sourceFile": "Leather_Jacket1_63d5f1ffca.jpg"
+      },
+      {
+        "src": "/media/shop/bathrobe-can-holder/1-1200.webp",
+        "thumb": "/media/shop/bathrobe-can-holder/1-480.webp",
+        "alt": "Bathrobe Can Holder — product view 1; beverage can not included",
+        "sourceFile": "Bathrobe1_f750ca1997.jpg"
+      },
+      {
+        "src": "/media/shop/suede-jacket-can-holder/1-1200.webp",
+        "thumb": "/media/shop/suede-jacket-can-holder/1-480.webp",
+        "alt": "Suede Jacket Can Holder — product view 1; beverage can not included",
+        "sourceFile": "Suede_Jacket1_f493330497.jpg"
+      },
+      {
+        "src": "/media/shop/varsity-jacket-can-holder/1-1200.webp",
+        "thumb": "/media/shop/varsity-jacket-can-holder/1-480.webp",
+        "alt": "Varsity Jacket Can Holder — product view 1; beverage can not included",
+        "sourceFile": "Varsity_Jacket1_eda1a671eb.jpg"
+      }
+    ],
+    "productionReviewed": false,
+    "source": "https://platform.stlflix.com/drops/drop-292",
+    "variantLabel": "Design",
+    "variants": [
+      {
+        "id": "hoodie-can-holder",
+        "label": "Hoodie Can Holder",
+        "priceCents": 2999,
+        "dimensions": "Approximately 110 mm high. Based on the original design; width and depth are not yet measured."
+      },
+      {
+        "id": "puffer-jacket-can-holder",
+        "label": "Puffer Jacket Can Holder",
+        "priceCents": 2999,
+        "dimensions": "Approximately 120 mm high. Based on the original design; width and depth are not yet measured."
+      },
+      {
+        "id": "leather-jacket-can-holder",
+        "label": "Leather Jacket Can Holder",
+        "priceCents": 3499,
+        "dimensions": "Approximately 120 mm high. Based on the original design; width and depth are not yet measured."
+      },
+      {
+        "id": "bathrobe-can-holder",
+        "label": "Bathrobe Can Holder",
+        "priceCents": 2999,
+        "dimensions": "Approximately 110 mm high. Based on the original design; width and depth are not yet measured."
+      },
+      {
+        "id": "suede-jacket-can-holder",
+        "label": "Suede Jacket Can Holder",
+        "priceCents": 2999,
+        "dimensions": "Approximately 120 mm high. Based on the original design; width and depth are not yet measured."
+      },
+      {
+        "id": "varsity-jacket-can-holder",
+        "label": "Varsity Jacket Can Holder",
+        "priceCents": 2999,
+        "dimensions": "Approximately 120 mm high. Based on the original design; width and depth are not yet measured."
+      }
+    ],
+    "groupedDesigns": [
+      {
+        "id": "hoodie-can-holder",
+        "label": "Hoodie",
+        "optionIds": [
+          "hoodie-can-holder"
+        ]
+      },
+      {
+        "id": "puffer-jacket-can-holder",
+        "label": "Puffer Jacket",
+        "optionIds": [
+          "puffer-jacket-can-holder"
+        ]
+      },
+      {
+        "id": "leather-jacket-can-holder",
+        "label": "Leather Jacket",
+        "optionIds": [
+          "leather-jacket-can-holder"
+        ]
+      },
+      {
+        "id": "bathrobe-can-holder",
+        "label": "Bathrobe",
+        "optionIds": [
+          "bathrobe-can-holder"
+        ]
+      },
+      {
+        "id": "suede-jacket-can-holder",
+        "label": "Suede Jacket",
+        "optionIds": [
+          "suede-jacket-can-holder"
+        ]
+      },
+      {
+        "id": "varsity-jacket-can-holder",
+        "label": "Varsity Jacket",
+        "optionIds": [
+          "varsity-jacket-can-holder"
+        ]
+      }
+    ],
+    "galleryOverviewCover": true
   }
 ]

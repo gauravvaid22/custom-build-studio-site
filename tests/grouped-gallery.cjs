@@ -15,7 +15,7 @@ const origin = 'http://127.0.0.1:4173';
       await page.route('**/myshopify.com/**', route => route.abort());
       for (const group of groups) {
         const owners = group.groupedDesigns.map(design => products.find(product => product.id === design.id));
-        const count = new Set(owners.flatMap(owner => owner.images.map(image => image.src))).size;
+        const count = new Set(owners.flatMap(owner => owner.images.map(image => image.src))).size + (group.galleryOverviewCover ? 1 : 0);
         await page.goto(`${origin}/shop/${group.id}?analytics_test=1`);
         await page.getByText(`Explore all ${owners.length} designs`, { exact: true }).waitFor();
         const thumbs = page.locator('.shop-thumbs button');

@@ -88,7 +88,8 @@
       "candlelight-pumpkins-table-lamp",
       "ghost-duo-trinket-dish",
       "can-holder-designs",
-      "halloween-candy-holder-designs"
+      "halloween-candy-holder-designs",
+      "can-holder-designs-ii"
     ]
   },
   {
@@ -216,11 +217,12 @@
     "shortName": "Can holders",
     "eyebrow": "A LITTLE CHARACTER / EVERYDAY DRINKS",
     "heading": "Give your drink some character.",
-    "description": "Shop six clothing-inspired beverage can holders, from a suit and tie to knight armour. Finished gifts made in Edmonton for desks, game nights and tables. Beverage cans are not included.",
-    "seoDescription": "Novelty soda and beverage can holders made in Edmonton: suit, overalls, kimono, apron, knight armour and overcoat designs. Free Canadian shipping or Edmonton pickup.",
-    "coverProduct": "knight-armor-can-holder",
+    "description": "Explore two collections of clothing-inspired can holders. Choose from 12 designs, from a suit and knight armour to hoodies and jackets. One finished holder per item; beverage cans are not included.",
+    "seoDescription": "Shop 12 clothing-inspired soda and beverage can holder designs made in Edmonton. Hoodies, jackets, robes, suits and more. Free Canadian shipping or local pickup.",
+    "coverProduct": "can-holder-designs-ii",
     "products": [
-      "can-holder-designs"
+      "can-holder-designs",
+      "can-holder-designs-ii"
     ]
   }
 ]

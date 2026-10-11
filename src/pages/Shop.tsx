@@ -284,7 +284,7 @@ function ShopProductCard({ product, listId }: { product: Product; listId?: strin
   const displayPrice = managed ? priceFor(product.id, managed.priceCents) : lowestProductPrice(product, priceFor);
   const lowestVariant = [...variantsFor(product)].sort((a, b) => priceFor(a.id, a.priceCents) - priceFor(b.id, b.priceCents))[0];
   const regularPrice = compareAtFor(managed ? product.id : lowestVariant?.id || product.id);
-  const alternate = product.images[1];
+  const alternate = "galleryOverviewCover" in product && product.galleryOverviewCover ? undefined : product.images[1];
   const variants = variantsFor(product);
   const hasPriceRange = variants.length > 1 && variants.some(
     (variant) => priceFor(variant.id, variant.priceCents) !== priceFor(variants[0].id, variants[0].priceCents),

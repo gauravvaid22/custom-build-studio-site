@@ -16,6 +16,10 @@ export function productGallery(product: Product, selectedId: string) {
     : [{ owner: product, label: "" }];
   const images = [] as { owner: Product; image: Product["images"][number]; imageIndex: number; label: string }[];
   const seen = new Set<string>();
+  if (designs.length && !selected && "galleryOverviewCover" in product && product.galleryOverviewCover && product.images[0]) {
+    images.push({ owner: product, image: product.images[0], imageIndex: 0, label: "Collection overview" });
+    seen.add(product.images[0].src);
+  }
   const max = Math.max(0, ...sources.map(source => source.owner.images.length));
   for (let imageIndex = 0; imageIndex < max; imageIndex++) {
     for (const { owner, label } of sources) {

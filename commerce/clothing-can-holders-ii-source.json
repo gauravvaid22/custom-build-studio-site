@@ -1,0 +1,219 @@
+{
+  "reviewedAt": "2026-10-11",
+  "drop": "https://platform.stlflix.com/drops/drop-292",
+  "privateMediaRoot": "../private-production/can-holders-ii-2026-10-11",
+  "pricingNote": "Provisional CAD prices include $10 shipping allowance. Pickup is $10 less. Cost review still needs sliced grams and measured labour; efficient multipart assembly assumed, not high-purge multicolour printing.",
+  "benchmarks": [
+    {
+      "url": "https://3dcentral.ca/product/hoodie-can-holder-sleeve/",
+      "priceCad": 14.99,
+      "shipping": "extra below $149"
+    },
+    {
+      "url": "https://3dproducts.ca/",
+      "priceCad": 25,
+      "product": "NFL hoodie can holder",
+      "shipping": "quoted"
+    }
+  ],
+  "products": [
+    {
+      "id": "hoodie-can-holder",
+      "name": "Hoodie Can Holder",
+      "description": "A miniature pullover hoodie gives your drink a relaxed, playful look. A fun little gift for a desk, table or game night.",
+      "category": "Can holders",
+      "priceCents": 2999,
+      "source": "https://platform.stlflix.com/product/hoodie-can-holder",
+      "drop": "https://platform.stlflix.com/drops/drop-292",
+      "heightMm": 110,
+      "tags": [
+        "can holder",
+        "novelty drink accessory",
+        "Edmonton made"
+      ],
+      "productionEstimates": {
+        "monoMinutes": 193,
+        "multipartMinutes": 224
+      },
+      "photos": [
+        "Hoodie1_d61558e29d.jpg",
+        "Hoodie2_fb2b603959.jpg",
+        "Hoodie3_40d3736cfc.jpg",
+        "Hoodie4_015714f7a7.jpg",
+        "Hoodie5_6f1597f288.jpg"
+      ],
+      "videoSource": "Hoodie_WEBM_7a92455cc9.webm",
+      "excludedPhotos": [
+        "Hoodie6_7f758a4b9d.jpg",
+        "Hoodie7_e454c4e38b.jpg"
+      ],
+      "excludedReason": "Alternative colours: the standard product follows the first photo.",
+      "sourcePackage": "hoodie-can-holder-media-package.zip"
+    },
+    {
+      "id": "puffer-jacket-can-holder",
+      "name": "Puffer Jacket Can Holder",
+      "description": "A quilted jacket look with a contrasting zip dresses up your favourite drink. A decorative conversation piece for your desk or table.",
+      "category": "Can holders",
+      "priceCents": 2999,
+      "source": "https://platform.stlflix.com/product/puffer-jacket-can-holder",
+      "drop": "https://platform.stlflix.com/drops/drop-292",
+      "heightMm": 120,
+      "tags": [
+        "can holder",
+        "novelty drink accessory",
+        "Edmonton made"
+      ],
+      "productionEstimates": {
+        "monoMinutes": 186,
+        "multipartMinutes": 201
+      },
+      "photos": [
+        "Puffer_Jacket1_59f6797d42.jpg",
+        "Puffer_Jacket2_1623621b48.jpg",
+        "Puffer_Jacket3_767c372ea6.jpg",
+        "Puffer_Jacket4_848bf9305c.jpg",
+        "Puffer_Jacket5_38866c21f2.jpg"
+      ],
+      "videoSource": "Puffer_Jacket_WEBM_7dfac04265.webm",
+      "excludedPhotos": [
+        "Puffer_Jacket6_197946a584.jpg",
+        "Puffer_Jacket7_d80aca25dc.jpg"
+      ],
+      "excludedReason": "Alternative colours: the standard product follows the first photo.",
+      "sourcePackage": "puffer-jacket-can-holder-media-package.zip"
+    },
+    {
+      "id": "leather-jacket-can-holder",
+      "name": "Leather Jacket Can Holder",
+      "description": "A leather-jacket-inspired design with collar and zip details adds a little attitude to your drink. The holder is rigid plastic, not leather.",
+      "category": "Can holders",
+      "priceCents": 3499,
+      "source": "https://platform.stlflix.com/product/leather-jacket-can-holder",
+      "drop": "https://platform.stlflix.com/drops/drop-292",
+      "heightMm": 120,
+      "tags": [
+        "can holder",
+        "novelty drink accessory",
+        "Edmonton made"
+      ],
+      "productionEstimates": {
+        "monoMinutes": 358,
+        "multipartMinutes": 404
+      },
+      "photos": [
+        "Leather_Jacket1_63d5f1ffca.jpg",
+        "Leather_Jacket2_bfc5e777e8.jpg",
+        "Leather_Jacket3_21a4bace20.jpg",
+        "Leather_Jacket4_604f72f2c1.jpg",
+        "Leather_Jacket5_3141fcca60.jpg"
+      ],
+      "videoSource": "Leather_Jacket_WEBM_2ce26a023b.webm",
+      "excludedPhotos": [
+        "Leather_Jacket6_d9c07e11fc.jpg",
+        "Leather_Jacket7_56bf31a7e7.jpg"
+      ],
+      "excludedReason": "Alternative colours: the standard product follows the first photo.",
+      "sourcePackage": "leather-jacket-can-holder-media-package.zip"
+    },
+    {
+      "id": "bathrobe-can-holder",
+      "name": "Bathrobe Can Holder",
+      "description": "Let your drink lounge in a miniature bathrobe, complete with collar, pockets and a tied belt. A lighthearted gift for slow evenings.",
+      "category": "Can holders",
+      "priceCents": 2999,
+      "source": "https://platform.stlflix.com/product/bathrobe-can-holder",
+      "drop": "https://platform.stlflix.com/drops/drop-292",
+      "heightMm": 110,
+      "tags": [
+        "can holder",
+        "novelty drink accessory",
+        "Edmonton made"
+      ],
+      "productionEstimates": {
+        "monoMinutes": 361,
+        "multipartMinutes": 361
+      },
+      "photos": [
+        "Bathrobe1_f750ca1997.jpg",
+        "Bathrobe2_3d2ac07f47.jpg",
+        "Bathrobe3_8d17cafe84.jpg",
+        "Bathrobe4_2c6bdfc895.jpg",
+        "Bathrobe5_4570b51806.jpg"
+      ],
+      "videoSource": "Bathrobe_WEBM_ed543ee95c.webm",
+      "excludedPhotos": [
+        "Bathrobe6_7569528cc6.jpg",
+        "Bathrobe7_b08e837266.jpg"
+      ],
+      "excludedReason": "Alternative colours: the standard product follows the first photo.",
+      "sourcePackage": "bathrobe-can-holder-media-package.zip"
+    },
+    {
+      "id": "suede-jacket-can-holder",
+      "name": "Suede Jacket Can Holder",
+      "description": "A suede-jacket-inspired design with western-style panels brings character to your drink. The holder is rigid plastic, not suede.",
+      "category": "Can holders",
+      "priceCents": 2999,
+      "source": "https://platform.stlflix.com/product/suede-jacket-can-holder",
+      "drop": "https://platform.stlflix.com/drops/drop-292",
+      "heightMm": 120,
+      "tags": [
+        "can holder",
+        "novelty drink accessory",
+        "Edmonton made"
+      ],
+      "productionEstimates": {
+        "monoMinutes": 187,
+        "multipartMinutes": 228
+      },
+      "photos": [
+        "Suede_Jacket1_f493330497.jpg",
+        "Suede_Jacket2_d27fb7e4c8.jpg",
+        "Suede_Jacket3_0594743387.jpg",
+        "Suede_Jacket4_b0541adc80.jpg",
+        "Suede_Jacket5_060a4b78bc.jpg"
+      ],
+      "videoSource": "Suede_Jacket_WEBM_eef1baf344.webm",
+      "excludedPhotos": [
+        "Suede_Jacket6_ae15cad9e5.jpg",
+        "Suede_Jacket7_3125effcf3.jpg"
+      ],
+      "excludedReason": "Alternative colours: the standard product follows the first photo.",
+      "sourcePackage": "suede-jacket-can-holder-media-package.zip"
+    },
+    {
+      "id": "varsity-jacket-can-holder",
+      "name": "Varsity Jacket Can Holder",
+      "description": "Sporty sleeves, pockets and button details give your drink a classic varsity-jacket look. A playful accessory for a desk or game night.",
+      "category": "Can holders",
+      "priceCents": 2999,
+      "source": "https://platform.stlflix.com/product/varsity-jacket-can-holder",
+      "drop": "https://platform.stlflix.com/drops/drop-292",
+      "heightMm": 120,
+      "tags": [
+        "can holder",
+        "novelty drink accessory",
+        "Edmonton made"
+      ],
+      "productionEstimates": {
+        "monoMinutes": 203,
+        "multipartMinutes": 262
+      },
+      "photos": [
+        "Varsity_Jacket1_eda1a671eb.jpg",
+        "Varsity_Jacket2_dc6c394c06.jpg",
+        "Varsity_Jacket3_6a4efb63e7.jpg",
+        "Varsity_Jacket4_aba7431a58.jpg",
+        "Varsity_Jacket5_9439d52bae.jpg"
+      ],
+      "videoSource": "Varsity_Jacket_WEBM_a973aba5e0.webm",
+      "excludedPhotos": [
+        "Varsity_Jacket6_53c4c5c6a3.jpg",
+        "Varsity_Jacket7_7c46f3424f.jpg"
+      ],
+      "excludedReason": "Alternative colours: the standard product follows the first photo.",
+      "sourcePackage": "varsity-jacket-can-holder-media-package.zip"
+    }
+  ]
+}
