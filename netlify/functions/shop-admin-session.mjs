@@ -12,7 +12,7 @@ export default async (request) => {
   const rateKey = `attempts/${encodeURIComponent(ip)}/${Math.floor(Date.now() / 900000)}`;
   const found = await store.getWithMetadata(rateKey, { type: 'json' });
   if ((found?.data?.count || 0) >= 10) return reply({ error: 'Too many sign-in attempts. Try again in 15 minutes.' }, 429);
-  try { await store.setJSON(rateKey, { count: (found?.data?.count || 0) + 1 }, found ? { onlyIfMatch: found.etag } : { onlyIfNew: true }); } catch { return reply({ error: 'Please try signing in again.' }, 429); }
+  try { const result = await store.setJSON(rateKey, { count: (found?.data?.count || 0) + 1 }, found ? { onlyIfMatch: found.etag } : { onlyIfNew: true }); if (result?.modified === false) return reply({ error: 'Please try signing in again.' }, 429); } catch { return reply({ error: 'Please try signing in again.' }, 429); }
   const raw = await request.text();
   if (raw.length > 512) return reply({ error: 'Invalid sign-in.' }, 400);
   let body; try { body = JSON.parse(raw); } catch { return reply({ error: 'Invalid sign-in.' }, 400); }

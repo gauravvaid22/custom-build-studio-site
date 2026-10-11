@@ -26,6 +26,7 @@ import { FulfillmentSelector, PICKUP_PRICE_DIFFERENCE, useFulfillment } from "..
 import { LithophaneAdmin } from "../components/LithophaneAdmin";
 import { SaleAdmin } from "../components/SaleAdmin";
 const ProductManager=lazy(()=>import("../components/ProductManager").then(module=>({default:module.ProductManager})));
+import originalCategoryIds from "../../commerce/catalog-original-categories.json";
 import adminRows from "../../commerce/admin-rows.json";
 import {useCatalogAvailability} from "../lib/catalogAvailability";
 import { ProductDesignPicker } from "../components/ProductDesignPicker";
@@ -161,7 +162,7 @@ function ProductImage({
   index?: number;
   large?: boolean;
 }) {
-  const image = product.images[index];
+  const image = product?.images[index] || product?.images[0];
   return image ? (
     <img
       src={large ? image.src : image.thumb}
@@ -419,7 +420,7 @@ export function Shop() {
   const content = useSiteContent();
   const merchandising = useShopMerchandising();
   const feature = useShopFeature();
-  const cover = catalogProduct(feature.coverProduct)!;
+  const cover = catalogProduct(feature.coverProduct) || evergreenProducts[0];
   const featured = groupListings(feature.featuredIds.map(id => catalogProduct(id)).filter((product): product is Product => Boolean(product)));
   const budget = evergreenProducts.filter(product => lowestProductPrice(product, priceFor) <= 2500).slice(0, 4);
 
@@ -427,12 +428,12 @@ export function Shop() {
     <ShopNav showFulfillment={false} />
     <section className="shop-hero shop-hub-hero shop-campaign-hero" aria-labelledby="shop-campaign-title"><div className="container shop-hero-grid">
       <div className="shop-campaign-copy"><p className="eyebrow">{feature.eyebrow}</p><h1 id="shop-campaign-title">{feature.title}</h1><p className="lead">{feature.description}</p><Link className="button" to={`/shop/${feature.destination}`}>{feature.buttonLabel} ↗</Link><p className="shop-campaign-assurance"><BenefitIcon type={mode === "pickup" ? "local" : "shipping"} />{mode === "pickup" ? "Edmonton pickup by appointment" : content.shippingMessage}</p></div>
-      <Link to={`/shop/${cover.id}/`} className="shop-hero-photo" onClick={() => trackShop("select_item", [{ id: cover.id, quantity: 1, priceCents: lowestProductPrice(cover, priceFor) }], mode, "shop_campaign")}><ProductImage product={cover} index={feature.imageIndex} large /><span><strong>{nameFor(cover.id, cover.name)}</strong><small>Explore this product ↗</small></span></Link>
+      {cover && <Link to={`/shop/${cover.id}/`} className="shop-hero-photo" onClick={() => trackShop("select_item", [{ id: cover.id, quantity: 1, priceCents: lowestProductPrice(cover, priceFor) }], mode, "shop_campaign")}><ProductImage product={cover} index={feature.imageIndex} large /><span><strong>{nameFor(cover.id, cover.name)}</strong><small>Explore this product ↗</small></span></Link>}
     </div></section>
     <FulfillmentSelector compact />
     <section className="section shop-featured-section" id="featured"><div className="container"><div className="section-heading"><div><p className="eyebrow">FEATURED RIGHT NOW</p><h2>{feature.featuredTitle}</h2></div><Link className="text-link" to="/shop/all">See all products →</Link></div><ProductGrid listed={featured} listId="shop_featured" /></div></section>
     {sale && <section className="container shop-sale-feature shop-sale-feature-compact" aria-label="Current shop sale"><div><p className="eyebrow">{sale.percentage}% OFF · LIMITED TIME</p><h2>{sale.title}</h2><Link className="button" to="/shop/sale">Explore sale products ↗</Link></div></section>}
-    <section className="section shop-collections-section" id="collections"><div className="container"><div className="section-heading"><div><p className="eyebrow">SHOP BY CATEGORY</p><h2>Find your kind of gift.</h2></div><p>Choose a collection. See what catches your eye.</p></div><CollectionTiles ids={merchandising.departments} /><div className="shop-collection-shortcuts"><Link to="/shop/all">Browse all {evergreenProducts.length} products ↗</Link><Link to="/shop/headphone-stands">Headphone stands ↗</Link><Link to="/shop/photo-frames">Photo holders ↗</Link></div></div></section>
+    <section className="section shop-collections-section" id="collections"><div className="container"><div className="section-heading"><div><p className="eyebrow">SHOP BY CATEGORY</p><h2>Find your kind of gift.</h2></div><p>Choose a collection. See what catches your eye.</p></div><CollectionTiles ids={collections.filter(c=>merchandising.departments.includes(c.id)||!originalCategoryIds.includes(c.id)).map(c=>c.id)} /><div className="shop-collection-shortcuts"><Link to="/shop/all">Browse all {evergreenProducts.length} products ↗</Link><Link to="/shop/headphone-stands">Headphone stands ↗</Link><Link to="/shop/photo-frames">Photo holders ↗</Link></div></div></section>
     {merchandising.showBudgetGifts && budget.length > 0 && <section className="section shop-under-section"><div className="container"><div className="section-heading"><div><p className="eyebrow">LITTLE GIFTS / $25 & UNDER</p><h2>Small gifts. Easy choices.</h2></div><Link className="text-link" to="/shop/gifts-under-25">Explore gifts $25 & under →</Link></div><ProductGrid listed={budget} listId="shop_budget_gifts" /></div></section>}
     {(adminRows as {id:string;title:string;description:string;productIds:string[];enabled:boolean;kind?:string;startAt?:string;endAt?:string}[]).filter(row=>row.enabled&&(!row.startAt||Date.now()>=Date.parse(row.startAt))&&(!row.endAt||Date.now()<Date.parse(row.endAt))).map(row=><section className="section" key={row.id}><div className="container"><div className="section-heading"><div><h2>{row.title}</h2><p>{row.description}</p></div></div>{row.kind!=="information"&&<ProductGrid listed={row.productIds.map(catalogProduct).filter((p):p is Product=>Boolean(p))} listId={`admin_row_${row.id}`}/>}</div></section>)}
     {merchandising.showStudioProof && <StudioProof />}
@@ -1460,7 +1461,7 @@ export function ShopAdmin() {
                 <button className={tab === "orders" ? "button" : "button button-dark"} onClick={() => setTab("orders")}>Orders</button>
                 <button className={tab === "website" ? "button" : "button button-dark"} onClick={() => setTab("website")}>Website settings</button>
                 <button className={tab === "display" ? "button" : "button button-dark"} onClick={() => setTab("display")}>Shop display</button>
-                <button className={tab === "products" ? "button" : "button button-dark"} onClick={() => setTab("products")}>Product prices</button>
+                <button className={tab === "products" ? "button" : "button button-dark"} onClick={() => setTab("products")}>Products & collections</button>
                 <button className={tab === "sales" ? "button" : "button button-dark"} onClick={() => setTab("sales")}>Sales</button>
                 <button className={tab === "lithophane" ? "button" : "button button-dark"} onClick={() => setTab("lithophane")}>Lithophane product</button>
                 <button

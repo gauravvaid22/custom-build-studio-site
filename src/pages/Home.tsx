@@ -20,7 +20,7 @@ export default function Home() {
   const { sale, nameFor } = useShopifyCatalog();
   const feature = useShopFeature();
   const coverProduct = products.find(product => product.id === feature.coverProduct) || products.find(product=>!('variantOf' in product) && !('listingGroup' in product))!;
-  const shopTiles = [coverProduct, ...feature.featuredIds.filter(id => id !== coverProduct.id).map(id => products.find(product => product.id === id)!).filter(Boolean)].slice(0, 3);
+  const shopTiles = [coverProduct, ...feature.featuredIds.filter(id => id !== coverProduct?.id).map(id => products.find(product => product.id === id)!).filter(Boolean)].filter((product): product is (typeof products)[number]=>Boolean(product)).slice(0, 3);
 
   return (
     <>
