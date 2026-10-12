@@ -399,10 +399,14 @@ function CollectionTiles({ ids, compact = false }: { ids: string[]; compact?: bo
       const cover = collection && catalogProduct(collection.coverProduct);
       if (!collection || !cover) return null;
       return <Link className="shop-collection-card" style={{ "--delay": `${(index % 3) * 70}ms` } as React.CSSProperties} key={id} to={`/shop/${id}`}>
-        <ProductImage product={cover} /><span className="shop-collection-overlay"><small>{collection.products.length} products</small><strong>{collection.name}</strong><span>Shop collection <span className="shop-collection-arrow" aria-hidden="true">→</span></span></span>
+        <CollectionCover collectionId={id} product={cover} /><span className="shop-collection-overlay"><small>{collection.products.length} products</small><strong>{collection.name}</strong><span>Shop collection <span className="shop-collection-arrow" aria-hidden="true">→</span></span></span>
       </Link>;
     })}
   </div>;
+}
+function CollectionCover({ collectionId, product, large = false }: { collectionId: string; product: Product; large?: boolean }) {
+  if (collectionId === "photo-frames") return <img className="photo-frame-collection-cover" src="/media/shop/personalized-photo-holder-designs/cover-photo.png" alt="Four personalized photo holder styles with sample photos" loading={large ? "eager" : "lazy"} decoding="async" width="565" height="753" />;
+  return <ProductImage product={product} large={large} />;
 }
 function StudioProof() {
   return <section className="container shop-studio-proof" aria-labelledby="shop-studio-proof-title">
@@ -612,7 +616,7 @@ export function ShopCollection({ id }: { id: string }) {
 
             <a className="button" href="#products">View {listed.length} {listed.length === 1 ? "product" : "products"} ↘</a>
           </div>
-          <div className="shop-collection-hero-image">{cover && <ProductImage product={cover} large/>}</div>
+          <div className="shop-collection-hero-image">{cover && <CollectionCover collectionId={id} product={cover} large/>}</div>
         </div>
       </section>
       {(subcollections[id]?.length || id === "personalized-gifts") && <section className="container shop-subcollections" aria-label="Explore this collection"><CollectionTiles ids={subcollections[id] || []} compact />{id === "personalized-gifts" && <Link className="shop-personal-lamp-link" to="/shop/lithophane-table-lamp"><ProductImage product={catalogProduct("lithophane-table-lamp")!} /><span><strong>Personalized Photo Lamps</strong><small>Your photo, softly illuminated →</small></span></Link>}</section>}
