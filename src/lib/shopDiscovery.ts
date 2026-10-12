@@ -11,6 +11,7 @@ export const subcollections: Record<string, string[]> = {
   "gaming-desk": ["headphone-stands", "console-stands"],
   "personalized-gifts": ["photo-frames"],
   "home-decor": ["can-holders", "tumbler-accessories"],
+  "pet-accessories": ["pet-hats-costumes"],
   seasonal: ["halloween", "masks-costumes"],
 };
 export function edmontonDate(now = new Date()) {

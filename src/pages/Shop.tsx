@@ -743,7 +743,7 @@ export function ShopProduct() {
                     poster={activeVideo!.owner.images[0].src}
                     aria-label={`${nameFor(product.id, product.name)} product video`}
                   >
-                    <source src={activeVideo!.src} type="video/webm" />
+                    <source src={activeVideo!.src} />
                     Your browser does not support product video.
                   </video>
                 ) : (
@@ -806,8 +806,9 @@ export function ShopProduct() {
             <div className="shop-detail-info">
               <p className="eyebrow">{product.category} / Made in Edmonton</p>
               <h1>{nameFor(product.id, product.name)}</h1>
-              {"launchReady" in product && product.launchReady === false && <p className="note-panel" role="status">Preview only. Design prices below are proposed item prices. This collection will have $5 shipping extra; pickup pricing and straw fit are awaiting confirmation. Checkout is not open for these designs yet.</p>}
+              {"launchReady" in product && product.launchReady === false && <p className="note-panel" role="status">Preview only. This listing is being prepared; checkout is not open until its product details and fulfillment are confirmed.</p>}
               <p className="lead">{product.description}</p>{"groupedDesigns" in product && <p className="small"><strong>{nameFor(mediaProduct.id, mediaProduct.name)}</strong> — {mediaProduct.description}</p>}
+              {product.category === "Pet hats & costumes" && <div className="note-panel"><strong>Fully assembled · Standard size</strong><p>Costume elastic, straps and the pieces listed for your chosen design are included. Fit varies by pet; <a href="mailto:custombuildstudio@gmail.com?subject=Paw%20Couture%20fit%20question">ask us about fit before ordering</a> if unsure. For short, supervised photo moments.</p></div>}
               <p className="shop-price">
                 {money(priceFor(selectedVariant.id, selectedVariant.priceCents))}{" "}
                 <span>
@@ -885,7 +886,7 @@ export function ShopProduct() {
                 {"personalization" in product && <><dt>Photo & size guide</dt><dd>{product.notes} The photo print is included in the price. Upload a clear original image; we crop it for the holder and follow your notes where practical. Camera designs are decorative holders, not working cameras.</dd></>}
                 <dt>Timing & handoff</dt>
                 <dd>
-                  {previewOnly ? "This collection will have $5 shipping extra. Pickup pricing and checkout are not finalized yet." : `${productionMessage.replace(/\.$/, "")}. ${mode === "pickup" ? "Pickup by appointment in Southeast Edmonton. We email your private pickup details after ordering." : `${deliveryEstimate} ${productShippingFee(product.id) ? "$5 tracked shipping once per order across Canada." : "Free standard tracked shipping across Canada."}`}`}
+                  {previewOnly ? "Fulfillment is being prepared; checkout is not open yet." : `${productionMessage.replace(/\.$/, "")}. ${mode === "pickup" ? "Pickup by appointment in Southeast Edmonton. We email your private pickup details after ordering." : `${deliveryEstimate} ${productShippingFee(product.id) ? "$5 tracked shipping once per order across Canada." : "Free standard tracked shipping across Canada."}`}`}
                 </dd>
                 <dt>Ordering & payment</dt>
                 <dd>Secure payment is handled through Shopify. Contact us before checkout for special requests.</dd>

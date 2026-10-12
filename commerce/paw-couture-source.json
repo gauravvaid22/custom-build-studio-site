@@ -1,0 +1,123 @@
+{
+  "drop": "https://platform.stlflix.com/drops/community-drop-23",
+  "reviewedAt": "2026-10-12",
+  "ownerConfirmation": "Fully assembled, including costume attachments; standard size. No tested head/neck measurements supplied.",
+  "group": {
+    "id": "paw-couture-pet-costume-designs",
+    "name": "Paw Couture — Pet Hats & Costumes",
+    "category": "Pet hats & costumes",
+    "categoryIds": [
+      "pet-accessories",
+      "pet-hats-costumes",
+      "halloween"
+    ],
+    "description": "Birthday hats, playful headpieces and coordinated angel or devil costumes for cats and dogs. Browse all nine designs, then choose one to see its matching photos, video and price. Fully assembled in Edmonton, with the costume attachments included.",
+    "included": "One selected standard-size costume design, with the elastic/straps and costume accessories specified for that option. This is not a set of all nine designs.",
+    "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+    "pickupPriceDifferenceCents": 1000,
+    "shippingFeeCents": 0,
+    "fulfillmentConfirmed": true,
+    "launchReady": true
+  },
+  "designs": [
+    {
+      "id": "party-hat-pet-costume",
+      "label": "Party Hat",
+      "name": "Birthday hat for cats & dogs — Party Hat",
+      "priceCents": 2499,
+      "description": "A pink-and-white party hat for pet birthdays and playful photo moments.",
+      "included": "One assembled party hat with its elastic attachment.",
+      "dimensions": "Standard size. Source reference model height approximately 10 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "source": "https://platform.stlflix.com/product/party-hat-pet-costume"
+    },
+    {
+      "id": "yay-cap-dog-costume",
+      "label": "Yay Cap",
+      "name": "Propeller cap for dogs — Yay Cap",
+      "priceCents": 2999,
+      "description": "A colourful propeller cap that adds a playful finishing touch to a dog photo shoot.",
+      "included": "One assembled multicolour propeller cap with its elastic attachment.",
+      "dimensions": "Standard size. Source reference model height approximately 7 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "source": "https://platform.stlflix.com/product/yay-cap-dog-costume"
+    },
+    {
+      "id": "officer-woof-dog-costume",
+      "label": "Officer Woof",
+      "name": "Police hat for dogs — Officer Woof",
+      "priceCents": 2999,
+      "description": "A blue police-style cap with a gold-coloured badge for a dog costume or themed photos.",
+      "included": "One assembled police-style cap with its elastic attachment.",
+      "dimensions": "Standard size. Source reference model height approximately 6 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "source": "https://platform.stlflix.com/product/officer-woof-dog-costume"
+    },
+    {
+      "id": "glam-wave-cat-costume",
+      "label": "Glam Wave",
+      "name": "Wavy hair costume for cats — Glam Wave",
+      "priceCents": 2999,
+      "description": "A sculpted brown, wavy hair accessory for cats with plenty of personality in photos.",
+      "included": "One assembled wavy hair accessory with its securing attachment.",
+      "dimensions": "Standard size. Source reference model height approximately 11 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "source": "https://platform.stlflix.com/product/glam-wave-cat-costume"
+    },
+    {
+      "id": "emo-bangs-cat-costume",
+      "label": "Emo Bangs",
+      "name": "Fringe hair costume for cats — Emo Bangs",
+      "priceCents": 2999,
+      "description": "A black side-swept fringe accessory for a dramatic cat costume and fun portraits.",
+      "included": "One assembled fringe hair accessory with its securing attachment.",
+      "dimensions": "Standard size. Source reference model height approximately 10 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "source": "https://platform.stlflix.com/product/emo-bangs-cat-costume"
+    },
+    {
+      "id": "dino-crown-cat-costume",
+      "label": "Dino Crown",
+      "name": "Dinosaur headpiece for cats — Dino Crown",
+      "priceCents": 3499,
+      "description": "A green triceratops-inspired headpiece with cream-coloured horns for a tiny dinosaur moment.",
+      "included": "One assembled dinosaur headpiece with its elastic attachment.",
+      "dimensions": "Standard size. Source reference model height approximately 11 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "source": "https://platform.stlflix.com/product/dino-crown-cat-costume"
+    },
+    {
+      "id": "pharaoh-cat-cat-costume",
+      "label": "Pharaoh Cat",
+      "name": "Egyptian headpiece for cats — Pharaoh Cat",
+      "priceCents": 3499,
+      "description": "A blue-and-gold Egyptian-inspired headpiece for a regal cat portrait or costume.",
+      "included": "One assembled Egyptian-inspired headpiece with its securing attachment.",
+      "dimensions": "Standard size. Source reference model height approximately 11 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "source": "https://platform.stlflix.com/product/pharaoh-cat-cat-costume"
+    },
+    {
+      "id": "little-saint-cat-costume",
+      "label": "Little Saint",
+      "name": "Angel halo & wings for cats — Little Saint",
+      "priceCents": 3999,
+      "description": "A coordinated angel costume with a halo headband and white wings for gentle, supervised pet photo sessions.",
+      "included": "One assembled halo headband and pair of white wings, including the elastic cord and wing straps.",
+      "dimensions": "Standard size. Source reference model height approximately 13 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "source": "https://platform.stlflix.com/product/little-saint-cat-costume"
+    },
+    {
+      "id": "little-devil-cat-costume",
+      "label": "Little Devil",
+      "name": "Devil horns & wings for cats — Little Devil",
+      "priceCents": 3999,
+      "description": "A coordinated red devil costume with horns and bat-style wings for Halloween and playful pet portraits.",
+      "included": "One assembled horn headband and pair of red wings, including the elastic cord and wing straps.",
+      "dimensions": "Standard size. Source reference model height approximately 12 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "source": "https://platform.stlflix.com/product/little-devil-cat-costume"
+    }
+  ]
+}

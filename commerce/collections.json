@@ -148,7 +148,8 @@
       "figurine-fidget-designs",
       "verdant-remains-planter",
       "6-finger-alien-hand-controller-holder",
-      "night-owl-wall-light"
+      "night-owl-wall-light",
+      "paw-couture-pet-costume-designs"
     ]
   },
   {
@@ -223,6 +224,34 @@
     "coverProduct": "straw-topper-charm-designs",
     "products": [
       "straw-topper-charm-designs"
+    ]
+  },
+  {
+    "id": "pet-accessories",
+    "kind": "department",
+    "name": "Pet accessories",
+    "shortName": "Pets",
+    "eyebrow": "LITTLE COSTUMES / BIG PERSONALITY",
+    "heading": "A little character for your companion.",
+    "description": "Fully assembled pet hats, headpieces and costume sets for birthdays, Halloween and supervised photo moments. Explore nine standard-size designs, made in Edmonton.",
+    "seoDescription": "Shop pet hats and cat and dog costumes made in Edmonton. Assembled party hats, propeller caps, angel wings and devil costumes with free tracked Canadian shipping or local pickup.",
+    "coverProduct": "paw-couture-pet-costume-designs",
+    "products": [
+      "paw-couture-pet-costume-designs"
+    ]
+  },
+  {
+    "id": "pet-hats-costumes",
+    "kind": "collection",
+    "name": "Pet hats & costumes",
+    "shortName": "Pet hats & costumes",
+    "eyebrow": "PAW COUTURE / NINE DESIGNS",
+    "heading": "Dress up the photo moment.",
+    "description": "Choose one finished pet hat or costume from Paw Couture. See every design first, then select your favourite for its matching photos, video, included pieces and price. Standard size only; ask us about fit before ordering if unsure.",
+    "seoDescription": "Browse Paw Couture pet hats and costumes for cats and dogs: birthday hats, police and propeller caps, dinosaur and Egyptian headpieces, angel and devil wing sets. Made in Edmonton.",
+    "coverProduct": "paw-couture-pet-costume-designs",
+    "products": [
+      "paw-couture-pet-costume-designs"
     ]
   }
 ]

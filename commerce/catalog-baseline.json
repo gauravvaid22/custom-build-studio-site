@@ -5441,6 +5441,644 @@
         }
       ],
       "designGroupingRevision": 1
+    },
+    {
+      "category": "Pet hats & costumes",
+      "pickupPriceDifferenceCents": 1000,
+      "shippingFeeCents": 0,
+      "seasonal": false,
+      "launchReady": false,
+      "productionReviewed": true,
+      "id": "paw-couture-pet-costume-designs",
+      "name": "Paw Couture — Pet Hats & Costumes",
+      "description": "Birthday hats, playful headpieces and coordinated angel or devil costumes for cats and dogs. Browse all nine designs, then choose one to see its matching photos, video and price. Fully assembled in Edmonton, with the costume attachments included.",
+      "included": "One selected standard-size costume design, with the elastic/straps and costume accessories specified for that option. This is not a set of all nine designs.",
+      "dimensions": "",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "priceCents": 2499,
+      "images": [
+        {
+          "src": "/media/shop/paw-couture-pet-costume-designs/cover-1200.webp",
+          "thumb": "/media/shop/paw-couture-pet-costume-designs/cover-480.webp",
+          "alt": "Four Paw Couture pet costume styles: propeller cap, party hat, devil wings and police cap",
+          "sourceFile": "COVER PHOTO.png"
+        },
+        {
+          "src": "/media/shop/party-hat-pet-costume/1-1200.webp",
+          "thumb": "/media/shop/party-hat-pet-costume/1-480.webp",
+          "alt": "Party Hat pet costume — shown on a pet, view 1",
+          "sourceFile": "1_2117fd7dbd.jpg"
+        },
+        {
+          "src": "/media/shop/yay-cap-dog-costume/1-1200.webp",
+          "thumb": "/media/shop/yay-cap-dog-costume/1-480.webp",
+          "alt": "Yay Cap pet costume — shown on a pet, view 1",
+          "sourceFile": "1_2cb89b831a.jpg"
+        },
+        {
+          "src": "/media/shop/officer-woof-dog-costume/1-1200.webp",
+          "thumb": "/media/shop/officer-woof-dog-costume/1-480.webp",
+          "alt": "Officer Woof pet costume — shown on a pet, view 1",
+          "sourceFile": "Officer_Woof_Dog_Costume_1_0aefa8a351.png"
+        },
+        {
+          "src": "/media/shop/glam-wave-cat-costume/1-1200.webp",
+          "thumb": "/media/shop/glam-wave-cat-costume/1-480.webp",
+          "alt": "Glam Wave pet costume — shown on a pet, view 1",
+          "sourceFile": "1_23f90a6483.jpg"
+        },
+        {
+          "src": "/media/shop/emo-bangs-cat-costume/1-1200.webp",
+          "thumb": "/media/shop/emo-bangs-cat-costume/1-480.webp",
+          "alt": "Emo Bangs pet costume — shown on a pet, view 1",
+          "sourceFile": "1_36df64c103.jpg"
+        },
+        {
+          "src": "/media/shop/dino-crown-cat-costume/1-1200.webp",
+          "thumb": "/media/shop/dino-crown-cat-costume/1-480.webp",
+          "alt": "Dino Crown pet costume — shown on a pet, view 1",
+          "sourceFile": "Dino_Crown_Cat_Costume_1_e2583eaf27.png"
+        },
+        {
+          "src": "/media/shop/pharaoh-cat-cat-costume/1-1200.webp",
+          "thumb": "/media/shop/pharaoh-cat-cat-costume/1-480.webp",
+          "alt": "Pharaoh Cat pet costume — shown on a pet, view 1",
+          "sourceFile": "Pharaoh_Cat_Cat_Costume_1_c7701677eb.png"
+        },
+        {
+          "src": "/media/shop/little-saint-cat-costume/1-1200.webp",
+          "thumb": "/media/shop/little-saint-cat-costume/1-480.webp",
+          "alt": "Little Saint pet costume — shown on a pet, view 1",
+          "sourceFile": "1_e62e3a0d28.jpg"
+        },
+        {
+          "src": "/media/shop/little-devil-cat-costume/1-1200.webp",
+          "thumb": "/media/shop/little-devil-cat-costume/1-480.webp",
+          "alt": "Little Devil pet costume — shown on a pet, view 1",
+          "sourceFile": "1_87581c1900.jpg"
+        }
+      ],
+      "galleryOverviewCover": true,
+      "variantLabel": "Design",
+      "groupedDesigns": [
+        {
+          "id": "party-hat-pet-costume",
+          "label": "Party Hat",
+          "optionIds": [
+            "party-hat-pet-costume"
+          ]
+        },
+        {
+          "id": "yay-cap-dog-costume",
+          "label": "Yay Cap",
+          "optionIds": [
+            "yay-cap-dog-costume"
+          ]
+        },
+        {
+          "id": "officer-woof-dog-costume",
+          "label": "Officer Woof",
+          "optionIds": [
+            "officer-woof-dog-costume"
+          ]
+        },
+        {
+          "id": "glam-wave-cat-costume",
+          "label": "Glam Wave",
+          "optionIds": [
+            "glam-wave-cat-costume"
+          ]
+        },
+        {
+          "id": "emo-bangs-cat-costume",
+          "label": "Emo Bangs",
+          "optionIds": [
+            "emo-bangs-cat-costume"
+          ]
+        },
+        {
+          "id": "dino-crown-cat-costume",
+          "label": "Dino Crown",
+          "optionIds": [
+            "dino-crown-cat-costume"
+          ]
+        },
+        {
+          "id": "pharaoh-cat-cat-costume",
+          "label": "Pharaoh Cat",
+          "optionIds": [
+            "pharaoh-cat-cat-costume"
+          ]
+        },
+        {
+          "id": "little-saint-cat-costume",
+          "label": "Little Saint",
+          "optionIds": [
+            "little-saint-cat-costume"
+          ]
+        },
+        {
+          "id": "little-devil-cat-costume",
+          "label": "Little Devil",
+          "optionIds": [
+            "little-devil-cat-costume"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "party-hat-pet-costume",
+          "label": "Party Hat",
+          "dimensions": "Standard size. Source reference model height approximately 10 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+          "priceCents": 2499
+        },
+        {
+          "id": "yay-cap-dog-costume",
+          "label": "Yay Cap",
+          "dimensions": "Standard size. Source reference model height approximately 7 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+          "priceCents": 2999
+        },
+        {
+          "id": "officer-woof-dog-costume",
+          "label": "Officer Woof",
+          "dimensions": "Standard size. Source reference model height approximately 6 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+          "priceCents": 2999
+        },
+        {
+          "id": "glam-wave-cat-costume",
+          "label": "Glam Wave",
+          "dimensions": "Standard size. Source reference model height approximately 11 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+          "priceCents": 2999
+        },
+        {
+          "id": "emo-bangs-cat-costume",
+          "label": "Emo Bangs",
+          "dimensions": "Standard size. Source reference model height approximately 10 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+          "priceCents": 2999
+        },
+        {
+          "id": "dino-crown-cat-costume",
+          "label": "Dino Crown",
+          "dimensions": "Standard size. Source reference model height approximately 11 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+          "priceCents": 3499
+        },
+        {
+          "id": "pharaoh-cat-cat-costume",
+          "label": "Pharaoh Cat",
+          "dimensions": "Standard size. Source reference model height approximately 11 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+          "priceCents": 3499
+        },
+        {
+          "id": "little-saint-cat-costume",
+          "label": "Little Saint",
+          "dimensions": "Standard size. Source reference model height approximately 13 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+          "priceCents": 3999
+        },
+        {
+          "id": "little-devil-cat-costume",
+          "label": "Little Devil",
+          "dimensions": "Standard size. Source reference model height approximately 12 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+          "priceCents": 3999
+        }
+      ]
+    },
+    {
+      "category": "Pet hats & costumes",
+      "pickupPriceDifferenceCents": 1000,
+      "shippingFeeCents": 0,
+      "seasonal": false,
+      "launchReady": false,
+      "productionReviewed": true,
+      "id": "party-hat-pet-costume",
+      "name": "Birthday hat for cats & dogs — Party Hat",
+      "description": "A pink-and-white party hat for pet birthdays and playful photo moments.",
+      "included": "One assembled party hat with its elastic attachment.",
+      "dimensions": "Standard size. Source reference model height approximately 10 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "images": [
+        {
+          "src": "/media/shop/party-hat-pet-costume/1-1200.webp",
+          "thumb": "/media/shop/party-hat-pet-costume/1-480.webp",
+          "alt": "Party Hat pet costume — shown on a pet, view 1",
+          "sourceFile": "1_2117fd7dbd.jpg"
+        },
+        {
+          "src": "/media/shop/party-hat-pet-costume/2-1200.webp",
+          "thumb": "/media/shop/party-hat-pet-costume/2-480.webp",
+          "alt": "Party Hat pet costume — shown on a pet, view 2",
+          "sourceFile": "2_b3cc1fc0a2.jpg"
+        },
+        {
+          "src": "/media/shop/party-hat-pet-costume/3-1200.webp",
+          "thumb": "/media/shop/party-hat-pet-costume/3-480.webp",
+          "alt": "Party Hat pet costume — design detail, view 3",
+          "sourceFile": "3_9621ee75e1.jpg"
+        }
+      ],
+      "listingGroup": "paw-couture-pet-costume-designs",
+      "source": "https://platform.stlflix.com/product/party-hat-pet-costume",
+      "video": "/media/shop/party-hat-pet-costume/party-hat-pet-costume.webm",
+      "priceCents": 2499
+    },
+    {
+      "category": "Pet hats & costumes",
+      "pickupPriceDifferenceCents": 1000,
+      "shippingFeeCents": 0,
+      "seasonal": false,
+      "launchReady": false,
+      "productionReviewed": true,
+      "id": "yay-cap-dog-costume",
+      "name": "Propeller cap for dogs — Yay Cap",
+      "description": "A colourful propeller cap that adds a playful finishing touch to a dog photo shoot.",
+      "included": "One assembled multicolour propeller cap with its elastic attachment.",
+      "dimensions": "Standard size. Source reference model height approximately 7 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "images": [
+        {
+          "src": "/media/shop/yay-cap-dog-costume/1-1200.webp",
+          "thumb": "/media/shop/yay-cap-dog-costume/1-480.webp",
+          "alt": "Yay Cap pet costume — shown on a pet, view 1",
+          "sourceFile": "1_2cb89b831a.jpg"
+        },
+        {
+          "src": "/media/shop/yay-cap-dog-costume/2-1200.webp",
+          "thumb": "/media/shop/yay-cap-dog-costume/2-480.webp",
+          "alt": "Yay Cap pet costume — shown on a pet, view 2",
+          "sourceFile": "2_303c5fc683.jpg"
+        }
+      ],
+      "listingGroup": "paw-couture-pet-costume-designs",
+      "source": "https://platform.stlflix.com/product/yay-cap-dog-costume",
+      "video": "/media/shop/yay-cap-dog-costume/yay-cap-dog-costume.webm",
+      "priceCents": 2999
+    },
+    {
+      "category": "Pet hats & costumes",
+      "pickupPriceDifferenceCents": 1000,
+      "shippingFeeCents": 0,
+      "seasonal": false,
+      "launchReady": false,
+      "productionReviewed": true,
+      "id": "officer-woof-dog-costume",
+      "name": "Police hat for dogs — Officer Woof",
+      "description": "A blue police-style cap with a gold-coloured badge for a dog costume or themed photos.",
+      "included": "One assembled police-style cap with its elastic attachment.",
+      "dimensions": "Standard size. Source reference model height approximately 6 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "images": [
+        {
+          "src": "/media/shop/officer-woof-dog-costume/1-1200.webp",
+          "thumb": "/media/shop/officer-woof-dog-costume/1-480.webp",
+          "alt": "Officer Woof pet costume — shown on a pet, view 1",
+          "sourceFile": "Officer_Woof_Dog_Costume_1_0aefa8a351.png"
+        },
+        {
+          "src": "/media/shop/officer-woof-dog-costume/2-1200.webp",
+          "thumb": "/media/shop/officer-woof-dog-costume/2-480.webp",
+          "alt": "Officer Woof pet costume — shown on a pet, view 2",
+          "sourceFile": "Officer_Woof_Dog_Costume_2_0ba4eb4627.png"
+        },
+        {
+          "src": "/media/shop/officer-woof-dog-costume/3-1200.webp",
+          "thumb": "/media/shop/officer-woof-dog-costume/3-480.webp",
+          "alt": "Officer Woof pet costume — design detail, view 3",
+          "sourceFile": "Officer_Woof_Dog_Costume_3_28a40aeb12.png"
+        },
+        {
+          "src": "/media/shop/officer-woof-dog-costume/4-1200.webp",
+          "thumb": "/media/shop/officer-woof-dog-costume/4-480.webp",
+          "alt": "Officer Woof pet costume — design detail, view 4",
+          "sourceFile": "Officer_Woof_Dog_Costume_4_cbfdc73ea2.png"
+        },
+        {
+          "src": "/media/shop/officer-woof-dog-costume/5-1200.webp",
+          "thumb": "/media/shop/officer-woof-dog-costume/5-480.webp",
+          "alt": "Officer Woof pet costume — design detail, view 5",
+          "sourceFile": "Officer_Woof_Dog_Costume_5_38eea6c7cc.png"
+        },
+        {
+          "src": "/media/shop/officer-woof-dog-costume/6-1200.webp",
+          "thumb": "/media/shop/officer-woof-dog-costume/6-480.webp",
+          "alt": "Officer Woof pet costume — design detail, view 6",
+          "sourceFile": "Officer_Woof_Dog_Costume_6_2cfc5b643a.png"
+        },
+        {
+          "src": "/media/shop/officer-woof-dog-costume/7-1200.webp",
+          "thumb": "/media/shop/officer-woof-dog-costume/7-480.webp",
+          "alt": "Officer Woof pet costume — design detail, view 7",
+          "sourceFile": "Officer_Woof_Dog_Costume_7_e8d37cbe28.png"
+        }
+      ],
+      "listingGroup": "paw-couture-pet-costume-designs",
+      "source": "https://platform.stlflix.com/product/officer-woof-dog-costume",
+      "video": "/media/shop/officer-woof-dog-costume/officer-woof-dog-costume.webm",
+      "priceCents": 2999
+    },
+    {
+      "category": "Pet hats & costumes",
+      "pickupPriceDifferenceCents": 1000,
+      "shippingFeeCents": 0,
+      "seasonal": false,
+      "launchReady": false,
+      "productionReviewed": true,
+      "id": "glam-wave-cat-costume",
+      "name": "Wavy hair costume for cats — Glam Wave",
+      "description": "A sculpted brown, wavy hair accessory for cats with plenty of personality in photos.",
+      "included": "One assembled wavy hair accessory with its securing attachment.",
+      "dimensions": "Standard size. Source reference model height approximately 11 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "images": [
+        {
+          "src": "/media/shop/glam-wave-cat-costume/1-1200.webp",
+          "thumb": "/media/shop/glam-wave-cat-costume/1-480.webp",
+          "alt": "Glam Wave pet costume — shown on a pet, view 1",
+          "sourceFile": "1_23f90a6483.jpg"
+        },
+        {
+          "src": "/media/shop/glam-wave-cat-costume/2-1200.webp",
+          "thumb": "/media/shop/glam-wave-cat-costume/2-480.webp",
+          "alt": "Glam Wave pet costume — shown on a pet, view 2",
+          "sourceFile": "2_3041d69b28.jpg"
+        },
+        {
+          "src": "/media/shop/glam-wave-cat-costume/3-1200.webp",
+          "thumb": "/media/shop/glam-wave-cat-costume/3-480.webp",
+          "alt": "Glam Wave pet costume — design detail, view 3",
+          "sourceFile": "3_08c46b3f9d.jpg"
+        },
+        {
+          "src": "/media/shop/glam-wave-cat-costume/4-1200.webp",
+          "thumb": "/media/shop/glam-wave-cat-costume/4-480.webp",
+          "alt": "Glam Wave pet costume — design detail, view 4",
+          "sourceFile": "4_a9662d2cab.jpg"
+        },
+        {
+          "src": "/media/shop/glam-wave-cat-costume/5-1200.webp",
+          "thumb": "/media/shop/glam-wave-cat-costume/5-480.webp",
+          "alt": "Glam Wave pet costume — design detail, view 5",
+          "sourceFile": "5_4960770510.jpg"
+        }
+      ],
+      "listingGroup": "paw-couture-pet-costume-designs",
+      "source": "https://platform.stlflix.com/product/glam-wave-cat-costume",
+      "video": "/media/shop/glam-wave-cat-costume/glam-wave-cat-costume.webm",
+      "priceCents": 2999
+    },
+    {
+      "category": "Pet hats & costumes",
+      "pickupPriceDifferenceCents": 1000,
+      "shippingFeeCents": 0,
+      "seasonal": false,
+      "launchReady": false,
+      "productionReviewed": true,
+      "id": "emo-bangs-cat-costume",
+      "name": "Fringe hair costume for cats — Emo Bangs",
+      "description": "A black side-swept fringe accessory for a dramatic cat costume and fun portraits.",
+      "included": "One assembled fringe hair accessory with its securing attachment.",
+      "dimensions": "Standard size. Source reference model height approximately 10 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "images": [
+        {
+          "src": "/media/shop/emo-bangs-cat-costume/1-1200.webp",
+          "thumb": "/media/shop/emo-bangs-cat-costume/1-480.webp",
+          "alt": "Emo Bangs pet costume — shown on a pet, view 1",
+          "sourceFile": "1_36df64c103.jpg"
+        },
+        {
+          "src": "/media/shop/emo-bangs-cat-costume/2-1200.webp",
+          "thumb": "/media/shop/emo-bangs-cat-costume/2-480.webp",
+          "alt": "Emo Bangs pet costume — shown on a pet, view 2",
+          "sourceFile": "2_dbdabd83e5.jpg"
+        },
+        {
+          "src": "/media/shop/emo-bangs-cat-costume/3-1200.webp",
+          "thumb": "/media/shop/emo-bangs-cat-costume/3-480.webp",
+          "alt": "Emo Bangs pet costume — design detail, view 3",
+          "sourceFile": "3_cd4b72d4d4.jpg"
+        },
+        {
+          "src": "/media/shop/emo-bangs-cat-costume/4-1200.webp",
+          "thumb": "/media/shop/emo-bangs-cat-costume/4-480.webp",
+          "alt": "Emo Bangs pet costume — design detail, view 4",
+          "sourceFile": "4_5e272f832f.jpg"
+        },
+        {
+          "src": "/media/shop/emo-bangs-cat-costume/5-1200.webp",
+          "thumb": "/media/shop/emo-bangs-cat-costume/5-480.webp",
+          "alt": "Emo Bangs pet costume — design detail, view 5",
+          "sourceFile": "5_d166eff871.jpg"
+        }
+      ],
+      "listingGroup": "paw-couture-pet-costume-designs",
+      "source": "https://platform.stlflix.com/product/emo-bangs-cat-costume",
+      "video": "/media/shop/emo-bangs-cat-costume/emo-bangs-cat-costume.webm",
+      "priceCents": 2999
+    },
+    {
+      "category": "Pet hats & costumes",
+      "pickupPriceDifferenceCents": 1000,
+      "shippingFeeCents": 0,
+      "seasonal": false,
+      "launchReady": false,
+      "productionReviewed": true,
+      "id": "dino-crown-cat-costume",
+      "name": "Dinosaur headpiece for cats — Dino Crown",
+      "description": "A green triceratops-inspired headpiece with cream-coloured horns for a tiny dinosaur moment.",
+      "included": "One assembled dinosaur headpiece with its elastic attachment.",
+      "dimensions": "Standard size. Source reference model height approximately 11 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "images": [
+        {
+          "src": "/media/shop/dino-crown-cat-costume/1-1200.webp",
+          "thumb": "/media/shop/dino-crown-cat-costume/1-480.webp",
+          "alt": "Dino Crown pet costume — shown on a pet, view 1",
+          "sourceFile": "Dino_Crown_Cat_Costume_1_e2583eaf27.png"
+        },
+        {
+          "src": "/media/shop/dino-crown-cat-costume/2-1200.webp",
+          "thumb": "/media/shop/dino-crown-cat-costume/2-480.webp",
+          "alt": "Dino Crown pet costume — shown on a pet, view 2",
+          "sourceFile": "Dino_Crown_Cat_Costume_2_15307da669.png"
+        },
+        {
+          "src": "/media/shop/dino-crown-cat-costume/3-1200.webp",
+          "thumb": "/media/shop/dino-crown-cat-costume/3-480.webp",
+          "alt": "Dino Crown pet costume — design detail, view 3",
+          "sourceFile": "Dino_Crown_Cat_Costume_3_859dc2253a.png"
+        },
+        {
+          "src": "/media/shop/dino-crown-cat-costume/4-1200.webp",
+          "thumb": "/media/shop/dino-crown-cat-costume/4-480.webp",
+          "alt": "Dino Crown pet costume — design detail, view 4",
+          "sourceFile": "Dino_Crown_Cat_Costume_4_bf13d65036.png"
+        },
+        {
+          "src": "/media/shop/dino-crown-cat-costume/5-1200.webp",
+          "thumb": "/media/shop/dino-crown-cat-costume/5-480.webp",
+          "alt": "Dino Crown pet costume — design detail, view 5",
+          "sourceFile": "Dino_Crown_Cat_Costume_5_1b0ff7d08b.png"
+        }
+      ],
+      "listingGroup": "paw-couture-pet-costume-designs",
+      "source": "https://platform.stlflix.com/product/dino-crown-cat-costume",
+      "video": "/media/shop/dino-crown-cat-costume/dino-crown-cat-costume.webm",
+      "priceCents": 3499
+    },
+    {
+      "category": "Pet hats & costumes",
+      "pickupPriceDifferenceCents": 1000,
+      "shippingFeeCents": 0,
+      "seasonal": false,
+      "launchReady": false,
+      "productionReviewed": true,
+      "id": "pharaoh-cat-cat-costume",
+      "name": "Egyptian headpiece for cats — Pharaoh Cat",
+      "description": "A blue-and-gold Egyptian-inspired headpiece for a regal cat portrait or costume.",
+      "included": "One assembled Egyptian-inspired headpiece with its securing attachment.",
+      "dimensions": "Standard size. Source reference model height approximately 11 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "images": [
+        {
+          "src": "/media/shop/pharaoh-cat-cat-costume/1-1200.webp",
+          "thumb": "/media/shop/pharaoh-cat-cat-costume/1-480.webp",
+          "alt": "Pharaoh Cat pet costume — shown on a pet, view 1",
+          "sourceFile": "Pharaoh_Cat_Cat_Costume_1_c7701677eb.png"
+        },
+        {
+          "src": "/media/shop/pharaoh-cat-cat-costume/2-1200.webp",
+          "thumb": "/media/shop/pharaoh-cat-cat-costume/2-480.webp",
+          "alt": "Pharaoh Cat pet costume — shown on a pet, view 2",
+          "sourceFile": "Pharaoh_Cat_Cat_Costume_2_a763224307.png"
+        },
+        {
+          "src": "/media/shop/pharaoh-cat-cat-costume/3-1200.webp",
+          "thumb": "/media/shop/pharaoh-cat-cat-costume/3-480.webp",
+          "alt": "Pharaoh Cat pet costume — design detail, view 3",
+          "sourceFile": "Pharaoh_Cat_Cat_Costume_3_95cc3b815d.png"
+        },
+        {
+          "src": "/media/shop/pharaoh-cat-cat-costume/4-1200.webp",
+          "thumb": "/media/shop/pharaoh-cat-cat-costume/4-480.webp",
+          "alt": "Pharaoh Cat pet costume — design detail, view 4",
+          "sourceFile": "Pharaoh_Cat_Cat_Costume_4_fec3db7e90.png"
+        },
+        {
+          "src": "/media/shop/pharaoh-cat-cat-costume/5-1200.webp",
+          "thumb": "/media/shop/pharaoh-cat-cat-costume/5-480.webp",
+          "alt": "Pharaoh Cat pet costume — design detail, view 5",
+          "sourceFile": "Pharaoh_Cat_Cat_Costume_5_f80baaf29f.png"
+        },
+        {
+          "src": "/media/shop/pharaoh-cat-cat-costume/6-1200.webp",
+          "thumb": "/media/shop/pharaoh-cat-cat-costume/6-480.webp",
+          "alt": "Pharaoh Cat pet costume — design detail, view 6",
+          "sourceFile": "Pharaoh_Cat_Cat_Costume_6_eab1e0c0c9.png"
+        }
+      ],
+      "listingGroup": "paw-couture-pet-costume-designs",
+      "source": "https://platform.stlflix.com/product/pharaoh-cat-cat-costume",
+      "video": "/media/shop/pharaoh-cat-cat-costume/pharaoh-cat-cat-costume.webm",
+      "priceCents": 3499
+    },
+    {
+      "category": "Pet hats & costumes",
+      "pickupPriceDifferenceCents": 1000,
+      "shippingFeeCents": 0,
+      "seasonal": false,
+      "launchReady": false,
+      "productionReviewed": true,
+      "id": "little-saint-cat-costume",
+      "name": "Angel halo & wings for cats — Little Saint",
+      "description": "A coordinated angel costume with a halo headband and white wings for gentle, supervised pet photo sessions.",
+      "included": "One assembled halo headband and pair of white wings, including the elastic cord and wing straps.",
+      "dimensions": "Standard size. Source reference model height approximately 13 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "images": [
+        {
+          "src": "/media/shop/little-saint-cat-costume/1-1200.webp",
+          "thumb": "/media/shop/little-saint-cat-costume/1-480.webp",
+          "alt": "Little Saint pet costume — shown on a pet, view 1",
+          "sourceFile": "1_e62e3a0d28.jpg"
+        },
+        {
+          "src": "/media/shop/little-saint-cat-costume/2-1200.webp",
+          "thumb": "/media/shop/little-saint-cat-costume/2-480.webp",
+          "alt": "Little Saint pet costume — shown on a pet, view 2",
+          "sourceFile": "2_dfd1accc9c.jpg"
+        },
+        {
+          "src": "/media/shop/little-saint-cat-costume/3-1200.webp",
+          "thumb": "/media/shop/little-saint-cat-costume/3-480.webp",
+          "alt": "Little Saint pet costume — design detail, view 3",
+          "sourceFile": "3_08f649cf8d.jpg"
+        },
+        {
+          "src": "/media/shop/little-saint-cat-costume/4-1200.webp",
+          "thumb": "/media/shop/little-saint-cat-costume/4-480.webp",
+          "alt": "Little Saint pet costume — design detail, view 4",
+          "sourceFile": "4_289b10c2eb.jpg"
+        }
+      ],
+      "listingGroup": "paw-couture-pet-costume-designs",
+      "source": "https://platform.stlflix.com/product/little-saint-cat-costume",
+      "video": "/media/shop/little-saint-cat-costume/little-saint-cat-costume.webm",
+      "priceCents": 3999
+    },
+    {
+      "category": "Pet hats & costumes",
+      "pickupPriceDifferenceCents": 1000,
+      "shippingFeeCents": 0,
+      "seasonal": false,
+      "launchReady": false,
+      "productionReviewed": true,
+      "id": "little-devil-cat-costume",
+      "name": "Devil horns & wings for cats — Little Devil",
+      "description": "A coordinated red devil costume with horns and bat-style wings for Halloween and playful pet portraits.",
+      "included": "One assembled horn headband and pair of red wings, including the elastic cord and wing straps.",
+      "dimensions": "Standard size. Source reference model height approximately 12 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
+      "notes": "Standard size only; fit varies by pet. Contact Custom Build Studio before ordering if you are unsure of fit. Decorative PLA costume accessories for short, supervised photo sessions; not a toy or walking harness. Keep attachments away from chewing and remove if your pet is uncomfortable. Colours will be close to the photos, with slight shade differences possible. Pets, collars, ID tags and other display props are not included.",
+      "images": [
+        {
+          "src": "/media/shop/little-devil-cat-costume/1-1200.webp",
+          "thumb": "/media/shop/little-devil-cat-costume/1-480.webp",
+          "alt": "Little Devil pet costume — shown on a pet, view 1",
+          "sourceFile": "1_87581c1900.jpg"
+        },
+        {
+          "src": "/media/shop/little-devil-cat-costume/2-1200.webp",
+          "thumb": "/media/shop/little-devil-cat-costume/2-480.webp",
+          "alt": "Little Devil pet costume — shown on a pet, view 2",
+          "sourceFile": "2_61423ac1f2.jpg"
+        },
+        {
+          "src": "/media/shop/little-devil-cat-costume/3-1200.webp",
+          "thumb": "/media/shop/little-devil-cat-costume/3-480.webp",
+          "alt": "Little Devil pet costume — design detail, view 3",
+          "sourceFile": "3_31614e48f3.jpg"
+        },
+        {
+          "src": "/media/shop/little-devil-cat-costume/4-1200.webp",
+          "thumb": "/media/shop/little-devil-cat-costume/4-480.webp",
+          "alt": "Little Devil pet costume — design detail, view 4",
+          "sourceFile": "4_46a30f5107.jpg"
+        },
+        {
+          "src": "/media/shop/little-devil-cat-costume/5-1200.webp",
+          "thumb": "/media/shop/little-devil-cat-costume/5-480.webp",
+          "alt": "Little Devil pet costume — design detail, view 5",
+          "sourceFile": "5_1853d8f2cb.jpg"
+        },
+        {
+          "src": "/media/shop/little-devil-cat-costume/6-1200.webp",
+          "thumb": "/media/shop/little-devil-cat-costume/6-480.webp",
+          "alt": "Little Devil pet costume — design detail, view 6",
+          "sourceFile": "6_e1bb9ae286.jpg"
+        }
+      ],
+      "listingGroup": "paw-couture-pet-costume-designs",
+      "source": "https://platform.stlflix.com/product/little-devil-cat-costume",
+      "video": "/media/shop/little-devil-cat-costume/little-devil-cat-costume.webm",
+      "priceCents": 3999
     }
   ],
   "collections": [
@@ -5593,7 +6231,8 @@
         "figurine-fidget-designs",
         "verdant-remains-planter",
         "6-finger-alien-hand-controller-holder",
-        "night-owl-wall-light"
+        "night-owl-wall-light",
+        "paw-couture-pet-costume-designs"
       ]
     },
     {
@@ -5668,6 +6307,34 @@
       "coverProduct": "straw-topper-charm-designs",
       "products": [
         "straw-topper-charm-designs"
+      ]
+    },
+    {
+      "id": "pet-accessories",
+      "kind": "department",
+      "name": "Pet accessories",
+      "shortName": "Pets",
+      "eyebrow": "LITTLE COSTUMES / BIG PERSONALITY",
+      "heading": "A little character for your companion.",
+      "description": "Fully assembled pet hats, headpieces and costume sets for birthdays, Halloween and supervised photo moments. Explore nine standard-size designs, made in Edmonton.",
+      "seoDescription": "Shop pet hats and cat and dog costumes made in Edmonton. Assembled party hats, propeller caps, angel wings and devil costumes with free tracked Canadian shipping or local pickup.",
+      "coverProduct": "paw-couture-pet-costume-designs",
+      "products": [
+        "paw-couture-pet-costume-designs"
+      ]
+    },
+    {
+      "id": "pet-hats-costumes",
+      "kind": "collection",
+      "name": "Pet hats & costumes",
+      "shortName": "Pet hats & costumes",
+      "eyebrow": "PAW COUTURE / NINE DESIGNS",
+      "heading": "Dress up the photo moment.",
+      "description": "Choose one finished pet hat or costume from Paw Couture. See every design first, then select your favourite for its matching photos, video, included pieces and price. Standard size only; ask us about fit before ordering if unsure.",
+      "seoDescription": "Browse Paw Couture pet hats and costumes for cats and dogs: birthday hats, police and propeller caps, dinosaur and Egyptian headpieces, angel and devil wing sets. Made in Edmonton.",
+      "coverProduct": "paw-couture-pet-costume-designs",
+      "products": [
+        "paw-couture-pet-costume-designs"
       ]
     }
   ]
