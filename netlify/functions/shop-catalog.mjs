@@ -87,7 +87,13 @@ export default async (request,context) => {
     } else if (action === 'save-draft') {
       const doc = validateDocument(body.document);
       if (body.revision !== state.revision) throw new Error('The catalog changed. Reload before saving this draft.');
-      const owner = [...seedDocuments(products,collections),...Object.values(state.documents),...Object.values(state.drafts)].find(d=>d.products.some(p=>doc.products.some(x=>x.id===p.id)) && d.id!==doc.id);
+      const owners = [...seedDocuments(products,collections),...Object.values(state.documents),...Object.values(state.drafts)].filter(d=>d.id!==doc.id);
+      const parent=doc.products.find(p=>p.id===doc.id);
+      const groupedIds=new Set([...(parent?.groupedDesigns || []).map(d=>d.id),...doc.products.filter(p=>p.listingGroup===doc.id).map(p=>p.id)]);
+      // Older single-product admin records can remain after those products are
+      // consolidated into a grouped listing. Permit that intentional ownership
+      // overlap only when the product is explicitly a child of this group.
+      const owner=owners.find(d=>d.products.some(p=>doc.products.some(x=>x.id===p.id && !(groupedIds.has(x.id) && x.listingGroup===doc.id && p.id===d.id && d.products.length===1))));
       if (owner) throw new Error(`An ID in this draft belongs to ${owner.id}. Duplicate with new IDs instead.`);
       if(state.drafts[doc.id] || state.documents[doc.id]) await store.setJSON(`revisions/${doc.id}/${state.revision}`,state.drafts[doc.id] || state.documents[doc.id]);
       state.drafts[doc.id]=doc; state.revision++;
