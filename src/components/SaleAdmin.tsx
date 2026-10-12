@@ -22,7 +22,7 @@ const dateLabel = (value: string) => new Intl.DateTimeFormat(undefined, { dateSt
 
 async function saleApi(action: string, key: string, body: object = {}) {
   const response = await fetch(`/.netlify/functions/shop-sale?action=${action}`, {
-    method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
+    method: "POST", headers: { "Content-Type": "application/json", ...(key ? { Authorization: `Bearer ${key}` } : {}) },
     body: JSON.stringify(body), signal: AbortSignal.timeout(60000),
   });
   const result = await response.json();
