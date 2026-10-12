@@ -70,11 +70,12 @@ export function compileCatalog(baseProducts, baseCollections, documents, archive
   for (const p of [...all.values()]) if (blocked.has(p.id)) all.delete(p.id);
   for (const p of [...all.values()]) if (p.groupedDesigns) {
     const valid = p.groupedDesigns.filter(d => all.has(d.id));
+    for (const design of valid) all.get(design.id).listingGroup = p.id;
     const optionIds = new Set(valid.flatMap(d => d.optionIds));
     p.groupedDesigns = valid; p.variants = p.variants.filter(v => optionIds.has(v.id));
     if (!p.variants.length) all.delete(p.id); else p.priceCents = Math.min(...p.variants.map(v => v.priceCents));
   }
-  for (const c of collections) { c.products = c.products.filter(id => all.has(id)); if (!all.has(c.coverProduct)) c.coverProduct = c.products[0] || ''; }
+  for (const c of collections) { c.products = [...new Set(c.products.filter(id => all.has(id)).map(id=>all.get(id).listingGroup || id))]; c.coverProduct=all.get(c.coverProduct)?.listingGroup || c.coverProduct; if (!all.has(c.coverProduct)) c.coverProduct = c.products[0] || ''; }
   return { products: [...all.values()], collections };
 }
 export function draftDescription(product) {
