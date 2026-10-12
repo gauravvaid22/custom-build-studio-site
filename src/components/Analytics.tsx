@@ -227,11 +227,16 @@ export default function Analytics() {
     const click = (event: MouseEvent) => {
       const link =
         event.target instanceof Element
-          ? event.target.closest('a[href^="tel:"]')
+          ? event.target.closest('a[href^="tel:"], a[href^="mailto:"]')
           : null;
       if (!link || !loadAnalytics()) return;
-      window.gtag?.("event", "phone_click", {
+      // Contact intent is diagnostic; never count an email click as a sent enquiry.
+      // Keep addresses, phone numbers, mail subjects and body text out of analytics.
+      const eventName = link.getAttribute("href")?.startsWith("mailto:") ? "email_click" : "phone_click";
+      window.gtag?.("event", eventName, {
+        send_to: measurementId,
         page_path: window.location.pathname,
+        page_location: campaignLocation(),
       });
     };
     document.addEventListener("click", click);

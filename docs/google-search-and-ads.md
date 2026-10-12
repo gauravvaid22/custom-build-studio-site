@@ -23,7 +23,7 @@ Add relevant sitelinks (work, pricing, contact, related service), a business cal
 Existing Ads destination: AW-17678917579/L2otCKraw7QbEMu_--1B. Existing GA4: G-8D08Z57Q3S.
 
 - Keep accepted quote requests as the primary lead conversion. A thank-you page view alone does not trigger it.
-- `quote_start` and `phone_click` are diagnostic GA4 events; keep them secondary if imported into Ads. A phone click is not a verified completed call.
+- `quote_start`, `phone_click` and `email_click` are diagnostic GA4 events; keep them secondary if imported into Ads. A phone click is not a verified completed call; an email click is not proof an email was sent. Contact-click payloads exclude addresses, phone numbers, email subject and body text.
 - Avoid importing GA4 generate_lead as a second primary conversion when the direct Ads conversion already counts the same form.
 - Campaign UTM tags and gclid/gbraid/wbraid are retained for the current tab session. Form text, email, phone and uploaded files are not copied to analytics events. Do not put customer personal information in campaign URL parameters.
 - Verify account-side conversion diagnostics, auto-tagging, enhanced measurement form settings (to avoid confusing automatic form events), attribution and regional consent requirements before scaling ad spend.
