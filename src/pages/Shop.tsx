@@ -30,6 +30,7 @@ import originalCategoryIds from "../../commerce/catalog-original-categories.json
 import adminRows from "../../commerce/admin-rows.json";
 import {useCatalogAvailability} from "../lib/catalogAvailability";
 import { ProductDesignPicker } from "../components/ProductDesignPicker";
+import { ShopCategoryNavigation } from "../components/ShopCategoryNavigation";
 import { PhotoPrintOrder } from "../components/PhotoPrintOrder";
 import frameSource from "../../commerce/photo-frames-source.json";
 import consoleSource from "../../commerce/console-stands-source.json";
@@ -121,17 +122,12 @@ export function ShopNav({ showFulfillment = true }: { showFulfillment?: boolean 
     <>
     <nav className="shop-nav container" aria-label="Shop categories">
       <Link className="shop-nav-home" to="/shop">Shop</Link>
-      <div className="shop-nav-collections">
-        <Link to="/shop/all">Shop all</Link>
-        {departments.map((collection) => (
-          <Link key={collection!.id} to={`/shop/${collection!.id}`}>
-            {collection!.shortName}
-          </Link>
-        ))}
-
-        {sale && <Link className="shop-sale-nav-link" to="/shop/sale">{sale.percentage}% off</Link>}
-        <Link to="/shop/gifts-under-25">$25 &amp; under</Link>
-      </div>
+      <ShopCategoryNavigation links={[
+        { id: "all", label: "Shop all" },
+        ...departments.map(collection => ({ id: collection!.id, label: collection!.shortName })),
+        ...(sale ? [{ id: "sale", label: `${sale.percentage}% off`, sale: true }] : []),
+        { id: "gifts-under-25", label: "$25 & under" },
+      ]} />
     </nav>
     {sale && <Link className="shop-sale-ribbon" to="/shop/sale"><strong>{sale.percentage}% off · {sale.title}</strong><span>{sale.endAt ? `Shop before ${new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric" }).format(new Date(sale.endAt))} ↗` : "Shop sale products ↗"}</span></Link>}
     <ShopSearch />
@@ -403,7 +399,7 @@ function CollectionTiles({ ids, compact = false }: { ids: string[]; compact?: bo
       const cover = collection && catalogProduct(collection.coverProduct);
       if (!collection || !cover) return null;
       return <Link className="shop-collection-card" style={{ "--delay": `${(index % 3) * 70}ms` } as React.CSSProperties} key={id} to={`/shop/${id}`}>
-        <ProductImage product={cover} /><span className="shop-collection-overlay"><small>{collection.products.length} products</small><strong>{collection.name}</strong><span>Shop collection →</span></span>
+        <ProductImage product={cover} /><span className="shop-collection-overlay"><small>{collection.products.length} products</small><strong>{collection.name}</strong><span>Shop collection <span className="shop-collection-arrow" aria-hidden="true">→</span></span></span>
       </Link>;
     })}
   </div>;

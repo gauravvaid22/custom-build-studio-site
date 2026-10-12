@@ -7,7 +7,8 @@ async function walk(dir) {
   const files = [];
   for (const entry of await readdir(dir, { withFileTypes: true })) {
     const path = join(dir, entry.name);
-    if (entry.isDirectory()) files.push(...(await walk(path)));
+    // OneDrive can report hydrated directories as symbolic links on Windows.
+    if (entry.isDirectory() || (entry.isSymbolicLink() && (await stat(path)).isDirectory())) files.push(...(await walk(path)));
     else files.push(path);
   }
   return files;
