@@ -166,6 +166,8 @@ export function createSaleService({ store, shopify, production = false, clock = 
   async function verify(groups, sale) {
     const catalog = await shopify.read(groups.map((g) => g.handle));
     for (const group of groups) {
+      // A deleted product has no prices to restore. Active-sale checks still reject it.
+      if (!sale && !catalog.get(group.handle)) continue;
       const byId = new Map((catalog.get(group.handle)?.variants.nodes || []).map((v) => [v.id, v]));
       for (const original of group.variants) {
         const live = byId.get(original.id);
@@ -179,6 +181,7 @@ export function createSaleService({ store, shopify, production = false, clock = 
   async function restore(groups) {
     const catalog = await shopify.read(groups.map((g) => g.handle));
     for (const group of groups) {
+      if (!catalog.get(group.handle)) continue;
       const byId = new Map((catalog.get(group.handle)?.variants.nodes || []).map((v) => [v.id, v]));
       const changes = [];
       for (const original of group.variants) {

@@ -59,6 +59,19 @@ test("product sale previews, publishes, and restores both fulfillment prices", a
   assert.equal(catalog.get("skeleton-chameleon").variants.nodes[0].compareAtPrice, null);
 });
 
+test("ending restores remaining products when an old sale product was deleted", async () => {
+  const { catalog, sale } = fixture();
+  const config = { title: "Sale", percentage: 20, scope: "products", productIds: ["skeleton-chameleon", "mood-ghost"], endAt };
+  const preview = await sale.preview(config);
+  await sale.publish(config, preview.fingerprint, true);
+  catalog.delete("skeleton-chameleon");
+  assert.match((await sale.adminStatus()).admin.warning, /no longer match/i);
+  await sale.end();
+  assert.equal((await sale.status()).admin.status, "inactive");
+  assert.equal(catalog.has("skeleton-chameleon"), false);
+  assert.deepEqual(catalog.get("mood-ghost").variants.nodes.map(v => v.price), ["30.00", "20.00", "30.00", "20.00"]);
+});
+
 test("all options are included once and stale previews are rejected", async () => {
   const { sale, catalog } = fixture();
   const config = { title: "Ghost sale", percentage: 10, scope: "products", productIds: ["mood-ghost"], endAt };
