@@ -6,7 +6,7 @@ import { activeShopFeature, parentProducts, shopDepartments, type Merchandising,
 
 async function request(action: string, adminKey: string, merchandising?: Merchandising) {
   const response = await fetch(`/.netlify/functions/shop?action=${action}`, {
-    method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${adminKey}` },
+    method: "POST", headers: { "Content-Type": "application/json", ...(adminKey ? { Authorization: `Bearer ${adminKey}` } : {}) },
     body: JSON.stringify(merchandising ? { merchandising } : {}), signal: AbortSignal.timeout(20000),
   });
   const data = await response.json();
