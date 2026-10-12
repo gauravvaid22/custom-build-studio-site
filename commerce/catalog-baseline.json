@@ -61,7 +61,8 @@
         }
       ],
       "productionReviewed": false,
-      "source": "https://platform.stlflix.com/product/skeleton-chameleon"
+      "source": "https://platform.stlflix.com/product/skeleton-chameleon",
+      "listingGroup": "figurine-fidget-designs"
     },
     {
       "id": "basilisk-dice-tower",
@@ -139,7 +140,8 @@
         }
       ],
       "productionReviewed": false,
-      "source": "https://platform.stlflix.com/product/articulated-baby-dragon"
+      "source": "https://platform.stlflix.com/product/articulated-baby-dragon",
+      "listingGroup": "figurine-fidget-designs"
     },
     {
       "id": "glutton-ghost-bowl",
@@ -172,7 +174,8 @@
         }
       ],
       "productionReviewed": false,
-      "source": "https://platform.stlflix.com/product/glutton-ghost-bowl"
+      "source": "https://platform.stlflix.com/product/glutton-ghost-bowl",
+      "listingGroup": "halloween-candy-holder-designs"
     },
     {
       "id": "grumpy-kitty-planter",
@@ -373,7 +376,8 @@
         }
       ],
       "productionReviewed": false,
-      "source": "https://platform.stlflix.com/product/articulated-hermes-the-hermit-crab"
+      "source": "https://platform.stlflix.com/product/articulated-hermes-the-hermit-crab",
+      "listingGroup": "figurine-fidget-designs"
     },
     {
       "id": "verdant-remains-planter",
@@ -493,7 +497,8 @@
         }
       ],
       "productionReviewed": false,
-      "source": "https://platform.stlflix.com/product/joyful-axolotl"
+      "source": "https://platform.stlflix.com/product/joyful-axolotl",
+      "listingGroup": "figurine-fidget-designs"
     },
     {
       "id": "pumpkin-fidget-keychain",
@@ -935,7 +940,8 @@
       ],
       "video": "/media/shop/skull-web-trinket-dish/skull-web-trinket-dish.webm",
       "productionReviewed": true,
-      "source": "local authorized media package: WEBSITE PRODUCT/SKULL WEB - TRINKET DISH"
+      "source": "local authorized media package: WEBSITE PRODUCT/SKULL WEB - TRINKET DISH",
+      "listingGroup": "halloween-candy-holder-designs"
     },
     {
       "id": "ghost-on-a-swing",
@@ -1079,7 +1085,8 @@
       ],
       "video": "/media/shop/ghost-duo-trinket-dish/ghost-duo-trinket-dish.webm",
       "productionReviewed": true,
-      "source": "local authorized media package: WEBSITE PRODUCT/GHOST DUO - TRINKET DISH"
+      "source": "local authorized media package: WEBSITE PRODUCT/GHOST DUO - TRINKET DISH",
+      "listingGroup": "halloween-candy-holder-designs"
     },
     {
       "id": "lithophane-table-lamp",
@@ -1195,7 +1202,8 @@
         "/media/shop/dinosaur-skeleton-collection/triceratops.webm"
       ],
       "productionReviewed": false,
-      "source": "https://platform.stlflix.com/drops/drop-275"
+      "source": "https://platform.stlflix.com/drops/drop-275",
+      "listingGroup": "figurine-fidget-designs"
     },
     {
       "id": "pumpkin-head-halloween-mask",
@@ -3633,83 +3641,6 @@
       "galleryOverviewCover": true
     },
     {
-      "id": "halloween-candy-holder-designs",
-      "name": "Halloween Candy Holders — Choose Your Design",
-      "priceCents": 3999,
-      "category": "Halloween candy holders",
-      "seasonal": true,
-      "description": "A spooky home for wrapped treats. Choose a ghost bowl, a walking pumpkin or a melting pumpkin dispenser. Each design has its own gallery, size and price. Candy is not included.",
-      "included": "One finished pumpkin candy container with its removable stem lid. Candy and display props are not included.",
-      "dimensions": "Approximately 160 mm high. Height is based on the original design; width and depth are not yet measured.",
-      "notes": "For individually wrapped treats or decorative storage. Not intended for direct contact with unwrapped food. Keep away from heat; wipe clean with a damp cloth. No lighting included. Standard colours follow the main photo; shades may vary. Reference videos may show alternative finishes. Ask us before ordering for a custom colour.",
-      "images": [
-        {
-          "src": "/media/shop/melting-pumpkin-candy-dispenser/1-1200.webp",
-          "thumb": "/media/shop/melting-pumpkin-candy-dispenser/1-480.webp",
-          "alt": "Melting Pumpkin Candy Dispenser — product view 1; candy not included",
-          "sourceFile": "Melting_Pumpkin_Candy_Dispenser_1_e5bc6bddcf.jpg"
-        },
-        {
-          "src": "/media/shop/spectral-candy-holder/1-1200.webp",
-          "thumb": "/media/shop/spectral-candy-holder/1-480.webp",
-          "alt": "Spectral Ghost Candy Bowl — product view 1; candy not included",
-          "sourceFile": "Spectral_Candy_Holder1_d0bde03a78.jpg"
-        },
-        {
-          "src": "/media/shop/walkin-pumpkin-candy-holder/1-1200.webp",
-          "thumb": "/media/shop/walkin-pumpkin-candy-holder/1-480.webp",
-          "alt": "Walkin’ Pumpkin Candy Holder — product view 1; candy not included",
-          "sourceFile": "Walkin_Pumpkin_Candy_Holder_1_dd630e5a5b.jpg"
-        }
-      ],
-      "productionReviewed": false,
-      "source": "https://platform.stlflix.com/product/melting-pumpkin-candy-dispenser",
-      "variants": [
-        {
-          "id": "spectral-candy-holder",
-          "label": "Spectral Ghost Candy Bowl",
-          "priceCents": 3999,
-          "dimensions": "Approximately 90 mm high. Height is based on the original design; width and depth are not yet measured."
-        },
-        {
-          "id": "walkin-pumpkin-candy-holder",
-          "label": "Walkin’ Pumpkin Candy Holder",
-          "priceCents": 4499,
-          "dimensions": "Approximately 200 mm high. Height is based on the original design; width and depth are not yet measured."
-        },
-        {
-          "id": "melting-pumpkin-candy-dispenser",
-          "label": "Melting Pumpkin Candy Dispenser",
-          "priceCents": 4999,
-          "dimensions": "Approximately 160 mm high. Height is based on the original design; width and depth are not yet measured."
-        }
-      ],
-      "variantLabel": "Design",
-      "groupedDesigns": [
-        {
-          "id": "melting-pumpkin-candy-dispenser",
-          "label": "Melting Pumpkin Candy Dispenser",
-          "optionIds": [
-            "melting-pumpkin-candy-dispenser"
-          ]
-        },
-        {
-          "id": "spectral-candy-holder",
-          "label": "Spectral Ghost Candy Bowl",
-          "optionIds": [
-            "spectral-candy-holder"
-          ]
-        },
-        {
-          "id": "walkin-pumpkin-candy-holder",
-          "label": "Walkin’ Pumpkin Candy Holder",
-          "optionIds": [
-            "walkin-pumpkin-candy-holder"
-          ]
-        }
-      ]
-    },
-    {
       "id": "ps5-console-stand-designs",
       "name": "PS5 Console Stands — Choose Your Design",
       "priceCents": 4999,
@@ -5256,6 +5187,253 @@
       "pickupPriceDifferenceCents": 0,
       "shippingFeeCents": 500,
       "galleryOverviewCover": true
+    },
+    {
+      "id": "figurine-fidget-designs",
+      "name": "Figurines & Fidgets — Choose Your Design",
+      "priceCents": 2200,
+      "category": "Creatures & collectibles",
+      "seasonal": false,
+      "description": "Choose a character for your shelf or desk. Explore each design’s photos and price before ordering. The Dinosaur Skeleton Collection option includes all six figures; other options include one figure.",
+      "included": "One selected design. The Dinosaur Skeleton Collection option includes six figures.",
+      "dimensions": "",
+      "images": [
+        {
+          "src": "/media/shop/skeleton-chameleon/1-1200.webp",
+          "thumb": "/media/shop/skeleton-chameleon/1-480.webp",
+          "alt": "Skeleton Chameleon decorative print",
+          "sourceFile": "Skeleton_Chameleon_1_76d170d8ab.jpg"
+        },
+        {
+          "src": "/media/shop/articulated-baby-dragon/1-1200.webp",
+          "thumb": "/media/shop/articulated-baby-dragon/1-480.webp",
+          "alt": "Articulated Baby Dragon decorative print",
+          "sourceFile": "02_1_ff73e6ba89_5025fbd048.png"
+        },
+        {
+          "src": "/media/shop/articulated-hermes-the-hermit-crab/1-1200.webp",
+          "thumb": "/media/shop/articulated-hermes-the-hermit-crab/1-480.webp",
+          "alt": "Articulated Hermes, the Hermit Crab decorative print",
+          "sourceFile": "DSC_01322_c8efeb30c7.jpg"
+        },
+        {
+          "src": "/media/shop/joyful-axolotl/1-1200.webp",
+          "thumb": "/media/shop/joyful-axolotl/1-480.webp",
+          "alt": "Joyful Axolotl decorative print",
+          "sourceFile": "Joyful_Axolotl_1_d6362da2ad.png"
+        },
+        {
+          "src": "/media/shop/dinosaur-skeleton-collection/1-1200.webp",
+          "thumb": "/media/shop/dinosaur-skeleton-collection/1-480.webp",
+          "alt": "Ankylosaurus skeleton figurine included in the six-piece dinosaur collection",
+          "sourceFile": "Skeleton_Ankylosaurus1_6e2bd62010.webp"
+        }
+      ],
+      "productionReviewed": false,
+      "variantLabel": "Design",
+      "designGroupingRevision": 1,
+      "groupedDesigns": [
+        {
+          "id": "skeleton-chameleon",
+          "label": "Skeleton Chameleon Figurine",
+          "optionIds": [
+            "skeleton-chameleon"
+          ]
+        },
+        {
+          "id": "articulated-baby-dragon",
+          "label": "Articulated Baby Dragon Figurine",
+          "optionIds": [
+            "articulated-baby-dragon"
+          ]
+        },
+        {
+          "id": "articulated-hermes-the-hermit-crab",
+          "label": "Hermes Articulated Hermit Crab",
+          "optionIds": [
+            "articulated-hermes-the-hermit-crab"
+          ]
+        },
+        {
+          "id": "joyful-axolotl",
+          "label": "Joyful Axolotl Figurine",
+          "optionIds": [
+            "joyful-axolotl"
+          ]
+        },
+        {
+          "id": "dinosaur-skeleton-collection",
+          "label": "Dinosaur Skeleton Collection — Set of 6",
+          "optionIds": [
+            "dinosaur-skeleton-collection"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "id": "skeleton-chameleon",
+          "label": "Skeleton Chameleon Figurine",
+          "priceCents": 2500,
+          "dimensions": "Source model: approximately 60 mm high. Final printed dimensions require production review."
+        },
+        {
+          "id": "articulated-baby-dragon",
+          "label": "Articulated Baby Dragon Figurine",
+          "priceCents": 2200,
+          "dimensions": "Final dimensions are pending production review."
+        },
+        {
+          "id": "articulated-hermes-the-hermit-crab",
+          "label": "Hermes Articulated Hermit Crab",
+          "priceCents": 3400,
+          "dimensions": "Final dimensions are pending production review."
+        },
+        {
+          "id": "joyful-axolotl",
+          "label": "Joyful Axolotl Figurine",
+          "priceCents": 2200,
+          "dimensions": "Source model: approximately 80 mm high. Final printed dimensions require production review."
+        },
+        {
+          "id": "dinosaur-skeleton-collection",
+          "label": "Dinosaur Skeleton Collection — Set of 6",
+          "priceCents": 4999,
+          "dimensions": "Six-piece set. Individual models are approximately 30–40 mm high."
+        }
+      ]
+    },
+    {
+      "id": "halloween-candy-holder-designs",
+      "name": "Halloween Bowls & Candy Holders — Choose Your Design",
+      "priceCents": 2498,
+      "category": "Halloween candy holders",
+      "seasonal": true,
+      "description": "Choose a spooky bowl, candy holder, dispenser or trinket dish. Each design has its own photos, dimensions and price. Includes one selected item; candy and display props are not included. Use bowls for wrapped treats or decorative storage.",
+      "included": "One selected bowl, holder, dispenser or dish. Candy and props are not included.",
+      "dimensions": "",
+      "images": [
+        {
+          "src": "/media/shop/melting-pumpkin-candy-dispenser/1-1200.webp",
+          "thumb": "/media/shop/melting-pumpkin-candy-dispenser/1-480.webp",
+          "alt": "Melting Pumpkin Candy Dispenser — product view 1; candy not included",
+          "sourceFile": "Melting_Pumpkin_Candy_Dispenser_1_e5bc6bddcf.jpg"
+        },
+        {
+          "src": "/media/shop/spectral-candy-holder/1-1200.webp",
+          "thumb": "/media/shop/spectral-candy-holder/1-480.webp",
+          "alt": "Spectral Ghost Candy Bowl — product view 1; candy not included",
+          "sourceFile": "Spectral_Candy_Holder1_d0bde03a78.jpg"
+        },
+        {
+          "src": "/media/shop/walkin-pumpkin-candy-holder/1-1200.webp",
+          "thumb": "/media/shop/walkin-pumpkin-candy-holder/1-480.webp",
+          "alt": "Walkin’ Pumpkin Candy Holder — product view 1; candy not included",
+          "sourceFile": "Walkin_Pumpkin_Candy_Holder_1_dd630e5a5b.jpg"
+        },
+        {
+          "src": "/media/shop/glutton-ghost-bowl/1-1200.webp",
+          "thumb": "/media/shop/glutton-ghost-bowl/1-480.webp",
+          "alt": "Glutton Ghost Bowl decorative print",
+          "sourceFile": "01_2_03277397b1_a934165a8b.png"
+        },
+        {
+          "src": "/media/shop/ghost-duo-trinket-dish/1-1200.webp",
+          "thumb": "/media/shop/ghost-duo-trinket-dish/1-480.webp",
+          "alt": "Ghost Duo Trinket Dish product view 1",
+          "sourceFile": "Ghost_Duo_Trinket_Dish1_83f545fd4c.png"
+        },
+        {
+          "src": "/media/shop/skull-web-trinket-dish/1-1200.webp",
+          "thumb": "/media/shop/skull-web-trinket-dish/1-480.webp",
+          "alt": "Skull Web Trinket Dish product view 1",
+          "sourceFile": "Skull_Web_Trinket_Dish1_49cc069613.png"
+        }
+      ],
+      "productionReviewed": false,
+      "variants": [
+        {
+          "id": "melting-pumpkin-candy-dispenser",
+          "label": "Melting Pumpkin Candy Dispenser",
+          "priceCents": 4999,
+          "dimensions": "Approximately 160 mm high. Height is based on the original design; width and depth are not yet measured."
+        },
+        {
+          "id": "spectral-candy-holder",
+          "label": "Spectral Ghost Candy Bowl",
+          "priceCents": 3999,
+          "dimensions": "Approximately 90 mm high. Height is based on the original design; width and depth are not yet measured."
+        },
+        {
+          "id": "walkin-pumpkin-candy-holder",
+          "label": "Walkin’ Pumpkin Candy Holder",
+          "priceCents": 4499,
+          "dimensions": "Approximately 200 mm high. Height is based on the original design; width and depth are not yet measured."
+        },
+        {
+          "id": "glutton-ghost-bowl",
+          "label": "Glutton Ghost Decorative Bowl",
+          "priceCents": 4000,
+          "dimensions": "Final dimensions are pending production review."
+        },
+        {
+          "id": "ghost-duo-trinket-dish",
+          "label": "Ghost Duo Trinket Dish",
+          "priceCents": 2667,
+          "dimensions": "Finished size: 176 × 175 × 20 mm."
+        },
+        {
+          "id": "skull-web-trinket-dish",
+          "label": "Skull Web Trinket Dish",
+          "priceCents": 2498,
+          "dimensions": "Finished size: 165 × 181 × 20 mm."
+        }
+      ],
+      "variantLabel": "Design",
+      "groupedDesigns": [
+        {
+          "id": "melting-pumpkin-candy-dispenser",
+          "label": "Melting Pumpkin Candy Dispenser",
+          "optionIds": [
+            "melting-pumpkin-candy-dispenser"
+          ]
+        },
+        {
+          "id": "spectral-candy-holder",
+          "label": "Spectral Ghost Candy Bowl",
+          "optionIds": [
+            "spectral-candy-holder"
+          ]
+        },
+        {
+          "id": "walkin-pumpkin-candy-holder",
+          "label": "Walkin’ Pumpkin Candy Holder",
+          "optionIds": [
+            "walkin-pumpkin-candy-holder"
+          ]
+        },
+        {
+          "id": "glutton-ghost-bowl",
+          "label": "Glutton Ghost Decorative Bowl",
+          "optionIds": [
+            "glutton-ghost-bowl"
+          ]
+        },
+        {
+          "id": "ghost-duo-trinket-dish",
+          "label": "Ghost Duo Trinket Dish",
+          "optionIds": [
+            "ghost-duo-trinket-dish"
+          ]
+        },
+        {
+          "id": "skull-web-trinket-dish",
+          "label": "Skull Web Trinket Dish",
+          "optionIds": [
+            "skull-web-trinket-dish"
+          ]
+        }
+      ],
+      "designGroupingRevision": 1
     }
   ],
   "collections": [
@@ -5283,13 +5461,9 @@
       "heading": "Little characters. Big personality.",
       "description": "Explore articulated creatures, collectible sets, character figurines and fidget gifts made in Edmonton.",
       "seoDescription": "Shop figurines, articulated creatures, collectible sets and fidget gifts made in Edmonton, Alberta.",
-      "coverProduct": "skeleton-chameleon",
+      "coverProduct": "figurine-fidget-designs",
       "products": [
-        "dinosaur-skeleton-collection",
-        "skeleton-chameleon",
-        "articulated-baby-dragon",
-        "articulated-hermes-the-hermit-crab",
-        "joyful-axolotl",
+        "figurine-fidget-designs",
         "mood-ghost",
         "pumpkin-fidget-keychain"
       ]
@@ -5341,14 +5515,11 @@
         "verdant-remains-planter",
         "night-owl-wall-light",
         "octopus-wine-bottle-holder",
-        "glutton-ghost-bowl",
+        "halloween-candy-holder-designs",
         "ghost-arch-wreath",
-        "skull-web-trinket-dish",
         "ghost-on-a-swing",
         "candlelight-pumpkins-table-lamp",
-        "ghost-duo-trinket-dish",
         "can-holder-designs",
-        "halloween-candy-holder-designs",
         "can-holder-designs-ii",
         "straw-topper-charm-designs"
       ]
@@ -5368,17 +5539,14 @@
         "carved-in-fear-halloween-mask",
         "candlelight-pumpkins-table-lamp",
         "ghost-on-a-swing",
-        "skull-web-trinket-dish",
-        "ghost-duo-trinket-dish",
-        "glutton-ghost-bowl",
+        "halloween-candy-holder-designs",
         "pumpkin-fidget-keychain",
         "mood-ghost",
         "ghost-arch-wreath",
-        "skeleton-chameleon",
+        "figurine-fidget-designs",
         "verdant-remains-planter",
         "6-finger-alien-hand-controller-holder",
-        "night-owl-wall-light",
-        "halloween-candy-holder-designs"
+        "night-owl-wall-light"
       ]
     },
     {
@@ -5411,17 +5579,14 @@
         "carved-in-fear-halloween-mask",
         "candlelight-pumpkins-table-lamp",
         "ghost-on-a-swing",
-        "skull-web-trinket-dish",
-        "ghost-duo-trinket-dish",
-        "glutton-ghost-bowl",
+        "halloween-candy-holder-designs",
         "pumpkin-fidget-keychain",
         "mood-ghost",
         "ghost-arch-wreath",
-        "skeleton-chameleon",
+        "figurine-fidget-designs",
         "verdant-remains-planter",
         "6-finger-alien-hand-controller-holder",
-        "night-owl-wall-light",
-        "halloween-candy-holder-designs"
+        "night-owl-wall-light"
       ]
     },
     {
@@ -5435,11 +5600,9 @@
       "seoDescription": "Find locally made 3D-printed gifts at $25 CAD or less in Edmonton, from articulated creatures to small seasonal and desk gifts.",
       "coverProduct": "mood-ghost",
       "products": [
-        "skeleton-chameleon",
-        "articulated-baby-dragon",
-        "joyful-axolotl",
+        "figurine-fidget-designs",
         "pumpkin-fidget-keychain",
-        "skull-web-trinket-dish",
+        "halloween-candy-holder-designs",
         "ghost-on-a-swing"
       ]
     },
