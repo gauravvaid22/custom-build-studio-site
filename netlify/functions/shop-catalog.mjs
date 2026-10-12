@@ -6,6 +6,7 @@ import { catalogStore, readState, writeState } from '../../commerce/catalog-stor
 import { requireAdmin } from '../../commerce/admin-session.mjs';
 import { createShopifyAdmin } from '../../commerce/shopify-admin.mjs';
 import { lookupProduct } from '../../commerce/catalog-shopify.mjs';
+import { applyDefaultListingCovers } from '../../commerce/listing-covers.mjs';
 const admin = createShopifyAdmin({legacyToken:process.env.SHOPIFY_ADMIN_ACCESS_TOKEN,clientId:process.env.SHOPIFY_CLIENT_ID,clientSecret:process.env.SHOPIFY_CLIENT_SECRET});
 const reply = (data,status=200) => new Response(JSON.stringify(data),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store','X-Robots-Tag':'noindex'}});
 export default async (request,context) => {
@@ -50,7 +51,7 @@ export default async (request,context) => {
         } catch { /* Keep the update pending until a deployed revision is verified. */ }
       }
       const seed = seedDocuments(products,collections);
-      const documents = [...new Map([...seed,...Object.values(state.documents),...Object.values(state.drafts)].map(d => [d.id,d])).values()];
+      const documents = [...new Map([...seed,...Object.values(state.documents),...Object.values(state.drafts)].map(d => [d.id,d])).values()].map(doc=>({...doc,products:applyDefaultListingCovers(doc.products,products)}));
       return reply({documents,templates,presets:state.presets || [],archived:state.archived,collections:state.layoutDraft?.collections || state.collections || collections,rows:state.layoutDraft?.rows || state.rows,revision:state.revision,jobs:state.jobs,history:state.history,connection:state.connection,
         ready:{shopify:Boolean(admin),buildHook:Boolean(process.env.NETLIFY_CATALOG_BUILD_HOOK),catalogSource:Boolean(process.env.SHOP_CATALOG_SOURCE_URL)}});
     }

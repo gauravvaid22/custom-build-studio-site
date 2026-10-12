@@ -1,6 +1,8 @@
 import {writeFile,mkdir,readFile} from 'node:fs/promises';
 import {validateDocument} from '../commerce/catalog-management.mjs';
 import {groupRemainingDesigns} from '../commerce/group-remaining-designs.mjs';
+import {applyDefaultListingCovers} from '../commerce/listing-covers.mjs';
+import baseline from '../commerce/catalog-baseline.json' with {type:'json'};
 const source=process.env.SHOP_CATALOG_SOURCE_URL;
 if (source || process.env.CONTEXT==='production') {
   let snapshot;
@@ -14,6 +16,7 @@ if (source || process.env.CONTEXT==='production') {
   } else snapshot={...JSON.parse(await readFile('commerce/catalog-baseline.json','utf8')),revision:0,rows:[]};
   if (!Array.isArray(snapshot.products) || !Array.isArray(snapshot.collections) || !Number.isSafeInteger(snapshot.revision)) throw new Error('Invalid catalog snapshot.');
   snapshot=groupRemainingDesigns(snapshot);
+  snapshot.products=applyDefaultListingCovers(snapshot.products,baseline.products);
   const ids=new Set(snapshot.products.map(p=>p.id));
   if (ids.size!==snapshot.products.length) throw new Error('Duplicate catalog IDs.');
   for (const p of snapshot.products) validateDocument({id:p.id,template:'single',products:[{...p,groupedDesigns:undefined}],pickupPriceDifferenceCents:p.pickupPriceDifferenceCents ?? 1000});

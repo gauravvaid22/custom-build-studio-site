@@ -3831,6 +3831,12 @@
     "notes": "Small decorative desktop keepsake, not a standard 4 × 6 inch frame. Photo is cropped to suit the holder. Similar colours to the reference photos; exact shades may vary. Desk version only; no magnets. Keep away from heat and moisture.",
     "images": [
       {
+        "src": "/media/shop/personalized-photo-holder-designs/cover-photo.png",
+        "thumb": "/media/shop/personalized-photo-holder-designs/cover-photo.png",
+        "alt": "Personalized photo holders collection — four design examples",
+        "sourceFile": "COVER PHOTO.png"
+      },
+      {
         "src": "/media/shop/daisy-duo-photo-frame/1-1200.webp",
         "thumb": "/media/shop/daisy-duo-photo-frame/1-480.webp",
         "alt": "Daisy Duo Personalized Photo Holder — photo display example",
@@ -4084,7 +4090,8 @@
           "analog-days-photo-frame"
         ]
       }
-    ]
+    ],
+    "galleryOverviewCover": true
   },
   {
     "id": "headphone-stand-designs",

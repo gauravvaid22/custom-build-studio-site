@@ -1,3 +1,4 @@
+import { applyDefaultListingCovers } from './listing-covers.mjs';
 export const templates = [
   { id: 'single', name: 'Single product' }, { id: 'design', name: 'Choose a design' },
   { id: 'size', name: 'Choose a size' }, { id: 'personalized', name: 'Personalized gift' },
@@ -76,7 +77,7 @@ export function compileCatalog(baseProducts, baseCollections, documents, archive
     if (!p.variants.length) all.delete(p.id); else p.priceCents = Math.min(...p.variants.map(v => v.priceCents));
   }
   for (const c of collections) { c.products = [...new Set(c.products.filter(id => all.has(id)).map(id=>all.get(id).listingGroup || id))]; c.coverProduct=all.get(c.coverProduct)?.listingGroup || c.coverProduct; if (!all.has(c.coverProduct)) c.coverProduct = c.products[0] || ''; }
-  return { products: [...all.values()], collections };
+  return { products: applyDefaultListingCovers([...all.values()], baseProducts), collections };
 }
 export function draftDescription(product) {
   return [product.description, product.included && `Includes: ${product.included}`, product.dimensions && `Size: ${product.dimensions}`, product.notes].filter(Boolean).join('\n\n');

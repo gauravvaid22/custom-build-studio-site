@@ -161,6 +161,7 @@ function ProductImage({
   const image = product?.images[index] || product?.images[0];
   return image ? (
     <img
+      className={product.galleryOverviewCover && index === 0 ? "shop-overview-cover" : undefined}
       src={large ? image.src : image.thumb}
       srcSet={`${image.thumb} 480w, ${image.src} 1200w`}
       sizes={large ? "(max-width: 700px) 90vw, 45vw" : "(max-width: 700px) 90vw, (max-width: 1000px) 45vw, 30vw"}
