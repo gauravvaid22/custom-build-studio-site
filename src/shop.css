@@ -405,6 +405,8 @@
 .shop-collection-hero-image { min-height: 480px; overflow: hidden; background: #111715; }
 .shop-collection-hero-image img { width: 100%; height: 100%; min-height: 480px; object-fit: cover; }
 .shop-collection-hero-image img.photo-frame-collection-cover { object-fit: contain; background: #f5f1e8; }
+.shop-collection-hero-image img.shop-overview-cover,
+.shop-collection-card > img.shop-overview-cover { object-fit: contain; }
 .shop-collection-toolbar { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 30px; }
 .shop-collection-toolbar label { display: grid; gap: 7px; font-size: .8rem; font-weight: 700; }
 .shop-collection-toolbar select { min-width: 205px; padding: 12px 36px 12px 12px; border: 1px solid #9da9a1; background: white; font: inherit; }
@@ -1221,6 +1223,7 @@
 .halloween-special-grid .shop-card .shop-price span { color: #c9d5db; }
 .halloween-special-grid .shop-card-image { background: #060a0e; }
 .halloween-special-grid .shop-card-image > img { aspect-ratio: 4 / 3; object-fit: cover; }
+.halloween-special-grid .shop-card-image > img.shop-overview-cover { object-fit: contain; }
 .halloween-special-grid .shop-badge { background: rgba(8, 15, 21, .86); color: #dcecf4; border: 1px solid rgba(143, 200, 229, .28); }
 .halloween-special-grid .shop-add label { color: #c9d5db; }
 .halloween-special-grid .shop-add input { background: #0b1116; color: white; border-color: #435461; }

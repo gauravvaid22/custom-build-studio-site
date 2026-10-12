@@ -26,8 +26,7 @@
     "coverProduct": "figurine-fidget-designs",
     "products": [
       "figurine-fidget-designs",
-      "mood-ghost",
-      "pumpkin-fidget-keychain"
+      "mood-ghost"
     ]
   },
   {
@@ -39,9 +38,8 @@
     "heading": "Make the desk more interesting.",
     "description": "Sculptural gaming accessories and conversation-starting desk pieces, printed to order in Edmonton.",
     "seoDescription": "Shop 3D-printed gaming and desk accessories made in Edmonton, including dice towers, controller holders and distinctive display pieces.",
-    "coverProduct": "basilisk-dice-tower",
+    "coverProduct": "6-finger-alien-hand-controller-holder",
     "products": [
-      "basilisk-dice-tower",
       "6-finger-alien-hand-controller-holder",
       "headphone-stand-designs",
       "ps5-console-stand-designs"
@@ -56,7 +54,7 @@
     "heading": "Clear the desk. Keep the character.",
     "description": "Six sculptural stands for headphones, including designs with a place for your phone or pens. Choose a shape that suits your setup. Finished physical products made to order in Edmonton.",
     "seoDescription": "Shop sculptural 3D-printed headphone stands and headset holders made in Edmonton, Alberta. Explore desk organizers with phone and pen storage, with free tracked shipping in Canada or local pickup.",
-    "coverProduct": "flow-stand-headphone-and-phone-holder",
+    "coverProduct": "headphone-stand-designs",
     "products": [
       "headphone-stand-designs"
     ]
@@ -73,8 +71,6 @@
     "coverProduct": "octopus-wine-bottle-holder",
     "products": [
       "lithophane-table-lamp",
-      "grumpy-kitty-planter",
-      "verdant-remains-planter",
       "night-owl-wall-light",
       "octopus-wine-bottle-holder",
       "halloween-candy-holder-designs",
@@ -102,11 +98,9 @@
       "candlelight-pumpkins-table-lamp",
       "ghost-on-a-swing",
       "halloween-candy-holder-designs",
-      "pumpkin-fidget-keychain",
       "mood-ghost",
       "ghost-arch-wreath",
       "figurine-fidget-designs",
-      "verdant-remains-planter",
       "6-finger-alien-hand-controller-holder",
       "night-owl-wall-light"
     ]
@@ -142,11 +136,9 @@
       "candlelight-pumpkins-table-lamp",
       "ghost-on-a-swing",
       "halloween-candy-holder-designs",
-      "pumpkin-fidget-keychain",
       "mood-ghost",
       "ghost-arch-wreath",
       "figurine-fidget-designs",
-      "verdant-remains-planter",
       "6-finger-alien-hand-controller-holder",
       "night-owl-wall-light",
       "paw-couture-pet-costume-designs"
@@ -164,7 +156,6 @@
     "coverProduct": "mood-ghost",
     "products": [
       "figurine-fidget-designs",
-      "pumpkin-fidget-keychain",
       "halloween-candy-holder-designs",
       "ghost-on-a-swing"
     ]
@@ -178,7 +169,7 @@
     "heading": "A little home for your favourite photo.",
     "description": "Choose a floral, dinosaur, camera or travel-inspired desk holder. Upload one photo and we print, trim and fit it for you. Small personalized gifts made in Edmonton, with Canadian shipping included.",
     "seoDescription": "Personalized mini photo frames and desk photo holders with a photo print included. Floral, dinosaur, camera and pet-inspired designs made in Edmonton. Free Canadian shipping.",
-    "coverProduct": "daisy-duo-photo-frame",
+    "coverProduct": "personalized-photo-holder-designs",
     "products": [
       "personalized-photo-holder-designs"
     ]
@@ -192,7 +183,7 @@
     "heading": "Give your PS5 a stand with character.",
     "description": "Explore six sculptural PS5 console stands, from crescent moons to retro cityscapes. Choose your design and console model. Made in Edmonton, with free tracked Canadian shipping or local pickup.",
     "seoDescription": "Shop decorative PS5 console stands for original PlayStation 5 and PS5 Slim. Moon, sci-fi, runestone and retro gaming designs made in Edmonton. Free Canadian shipping.",
-    "coverProduct": "neon-cityscape-console-stand",
+    "coverProduct": "ps5-console-stand-designs",
     "products": [
       "ps5-console-stand-designs"
     ]
