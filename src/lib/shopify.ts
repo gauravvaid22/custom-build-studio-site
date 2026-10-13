@@ -40,7 +40,7 @@ export const shopifyConfigured = Boolean(storefrontToken);
 export function fulfillmentSku(id: string, mode: FulfillmentMode) {
   const product = products.find(item => item.id === id);
   const sku = product && "variants" in product && product.variants?.length ? product.variants[0].id : id;
-  return mode === "pickup" ? `${sku}-pickup` : sku;
+  return mode === "pickup" && !deliveryPolicy.active ? `${sku}-pickup` : sku;
 }
 
 function shopifyHandleFor(product: (typeof products)[number]) {

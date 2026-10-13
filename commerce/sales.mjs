@@ -71,10 +71,10 @@ function planFromCatalog(config, catalog, difference = PICKUP_DIFFERENCE_CENTS) 
     for (const sku of variantIds(product)) {
       const delivered = bySku.get(sku);
       const pickup = bySku.get(`${sku}-pickup`);
-      if (!delivered?.id || !pickup?.id) throw new SaleError(`${product.name} is missing a delivered or pickup Shopify variant.`, 409);
+      if (!delivered?.id || (!pickup?.id && difference!==0)) throw new SaleError(`${product.name} is missing a delivered or pickup Shopify variant.`, 409);
       const regularDelivered = cents(delivered.price);
-      const regularPickup = cents(pickup.price);
-      if ([delivered, pickup].some((variant) => variant.compareAtPrice && cents(variant.compareAtPrice) > cents(variant.price)))
+      const regularPickup = pickup?cents(pickup.price):regularDelivered;
+      if ([delivered, pickup].filter(Boolean).some((variant) => variant.compareAtPrice && cents(variant.compareAtPrice) > cents(variant.price)))
         throw new SaleError(`${product.name} already has a Shopify compare-at sale price. End that sale before applying a new one.`, 409);
       if (regularDelivered - regularPickup !== difference)
         throw new SaleError(`${product.name} has a pickup price that is not CA$${money(difference)} below delivery. Fix it in Shopify before running a sale.`, 409);
@@ -82,7 +82,7 @@ function planFromCatalog(config, catalog, difference = PICKUP_DIFFERENCE_CENTS) 
       const salePickup = saleDelivered - difference;
       if (salePickup < config.minimumPickupPriceCents)
         throw new SaleError(`${product.name} would fall below your minimum pickup sale price of CA$${money(config.minimumPickupPriceCents)}. Exclude it, lower the percentage, or change the minimum.`, 409);
-      for (const [variant, regular, sale] of [[delivered, regularDelivered, saleDelivered], [pickup, regularPickup, salePickup]]) {
+      for (const [variant, regular, sale] of [[delivered, regularDelivered, saleDelivered], ...(pickup?[[pickup, regularPickup, salePickup]]:[])]) {
         variants.push({ id: variant.id, sku: variant.sku, regular, originalCompareAt: variant.compareAtPrice, sale });
       }
       rows.push({ productId, name: shopify.title || product.name, sku, regularDelivered, saleDelivered, regularPickup, salePickup });

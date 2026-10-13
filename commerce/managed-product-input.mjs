@@ -1,6 +1,11 @@
 // The catalog and Shopify use the same option SKUs; pickup is a separate
 // fulfillment variant for every console choice, never a checkout discount.
 export function managedVariantInput(item, pickupDifferenceCents) {
+  if (item.unifiedFulfillment) {
+    const choices=item.options?.length?item.options:[{id:item.id,priceCents:item.priceCents}];
+    const optionName=item.optionName || 'Size';
+    return {productOptions:[{name:item.options?.length?optionName:'Title',position:1,values:choices.map(c=>({name:c.label || 'Default Title'}))}],variants:choices.map(c=>({sku:c.id,price:(c.priceCents/100).toFixed(2),taxable:false,optionValues:[{optionName:item.options?.length?optionName:'Title',name:c.label || 'Default Title'}],inventoryItem:{tracked:false,requiresShipping:true,countryCodeOfOrigin:'CA'}}))};
+  }
   const optionName = item.optionName || 'Console model';
   const choices = item.options?.length ? item.options : [{ id: item.id, priceCents: item.priceCents }];
   return {

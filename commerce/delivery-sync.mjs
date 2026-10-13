@@ -24,10 +24,10 @@ export async function planDelivery(admin,state,input) {
     const old=[];
     for(const choice of choices) {
       const shipped=current.variants.nodes.find(v=>v.sku===choice.id),pickup=current.variants.nodes.find(v=>v.sku===choice.id+'-pickup');
-      if(!shipped || !pickup)throw new Error(`${p.name}: delivery/pickup variant is missing. Fix this connection before migration.`);
-      if([shipped,pickup].some(v=>v.compareAtPrice && Number(v.compareAtPrice)>Number(v.price)))throw new Error(`End the sale for ${p.name} before updating pricing.`);
+      if(!shipped || (!pickup && !state.deliveryPolicy?.active))throw new Error(`${p.name}: delivery/pickup variant is missing. Fix this connection before migration.`);
+      if([shipped,pickup].filter(Boolean).some(v=>v.compareAtPrice && Number(v.compareAtPrice)>Number(v.price)))throw new Error(`End the sale for ${p.name} before updating pricing.`);
       livePrices[choice.id]=Math.round(Number(shipped.price)*100);
-      old.push({...shipped,oldPrice:shipped.price},{...pickup,oldPrice:pickup.price});
+      old.push({...shipped,oldPrice:shipped.price});if(pickup)old.push({...pickup,oldPrice:pickup.price});
     }
     groups.push({id:p.id,handle:p.shopifyHandle || p.id,productId:current.id,old,choiceIds:choices.map(c=>c.id)});
   }
@@ -49,6 +49,7 @@ export async function applyDeliveryGroup(admin,group,connection) {
   const check=result=>{if(result.userErrors?.length)throw new Error(result.userErrors.map(e=>e.message).join('; '));};
   check((await admin.call(`mutation DeliveryPrices($id:ID!,$variants:[ProductVariantsBulkInput!]!){productVariantsBulkUpdate(productId:$id,variants:$variants){userErrors{message}}}`,{id:group.productId,variants:group.updates})).productVariantsBulkUpdate);
   for(const [pickup,profile] of [[false,connection.deliveryProfileId],[true,connection.pickupProfileId]]) {
+    if(!group.old.some(v=>v.sku.endsWith('-pickup')===pickup))continue;
     if(!profile)throw new Error('Select both existing fulfillment profiles in Connections.');
     check((await admin.call(`mutation DeliveryAssignment($id:ID!,$profile:DeliveryProfileInput!){deliveryProfileUpdate(id:$id,profile:$profile){userErrors{message}}}`,{id:profile,profile:{variantsToAssociate:group.old.filter(v=>v.sku.endsWith('-pickup')===pickup).map(v=>v.id)}})).deliveryProfileUpdate);
   }
