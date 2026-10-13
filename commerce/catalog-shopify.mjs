@@ -1,6 +1,7 @@
 import deliveryPolicy from './delivery-policy.json' with {type:'json'};
 import { managedVariantInput } from './managed-product-input.mjs';
 import {deliveryProfileFor,verifyFlatShippingProfile} from './order-shipping.mjs';
+import {brandedSearchTitle,searchDescription} from './product-search.mjs';
 const check = payload => { if (payload?.userErrors?.length) throw new Error(payload.userErrors.map(e => e.message).join('; ')); return payload; };
 const html = value => String(value || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export async function lookupProduct(admin, product) {
@@ -24,7 +25,7 @@ export async function syncDocument(admin, doc, config, expected = {}) {
     const input = { title: p.name, descriptionHtml: [p.description,...(p.shippingPriceMode==='per-order'?[`Mix and match: CAD${(p.priceCents/100).toFixed(2)} per item, plus CAD${(p.shippingFeeCents/100).toFixed(2)} tracked Canadian delivery once per order. Add more designs without another delivery charge. The same flat fee applies when these items are ordered with other products.`]:[]),p.included,p.dimensions,p.notes].filter(Boolean).map(x => `<p>${html(x)}</p>`).join(''),
       productType: p.category, metafields: [ {namespace:'cbs',key:'dimensions',type:'single_line_text_field',value:p.dimensions || 'Not specified'},
         {namespace:'cbs',key:'included',type:'multi_line_text_field',value:p.included}, {namespace:'cbs',key:'care',type:'multi_line_text_field',value:p.notes || 'Not specified'} ],
-      seo: { title: `${p.name} | Custom Build Studio`, description: p.description.slice(0, 300) } };
+      seo: { title: brandedSearchTitle(p), description: searchDescription(p) } };
     let product;
     const choices = p.variants?.length ? p.variants : [{id:p.id,priceCents:p.priceCents}];
     if (!current) {

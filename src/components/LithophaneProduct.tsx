@@ -7,6 +7,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { money, useCart } from "./Cart";
 import { useProductContent } from "./SiteContent";
 import { useShopifyCatalog } from "./ShopifyCatalog";
+import products from "../data/catalog";
 
 const productId = "lithophane-table-lamp";
 const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"]);
@@ -56,8 +57,9 @@ export async function uploadPhoto(file: File, onProgress: (progress: number) => 
 }
 
 export function LithophaneProduct() {
-  const product = useProductContent()[productId];
-  const { priceFor, compareAtFor, sale } = useShopifyCatalog();
+  const content = useProductContent()[productId];
+  const { priceFor, compareAtFor, sale, nameFor } = useShopifyCatalog();
+  const product={...content,name:nameFor(productId,products.find(p=>p.id===productId)?.name || content.name)};
   const { add } = useCart();
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageIndex, setImageIndex] = useState(0);

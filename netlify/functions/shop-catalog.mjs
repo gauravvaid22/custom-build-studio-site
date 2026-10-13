@@ -7,6 +7,7 @@ import { requireAdmin } from '../../commerce/admin-session.mjs';
 import { createShopifyAdmin } from '../../commerce/shopify-admin.mjs';
 import { lookupProduct } from '../../commerce/catalog-shopify.mjs';
 import { applyDefaultListingCovers } from '../../commerce/listing-covers.mjs';
+import {prepareSearchNaming} from '../../commerce/search-naming.mjs';
 const admin = createShopifyAdmin({legacyToken:process.env.SHOPIFY_ADMIN_ACCESS_TOKEN,clientId:process.env.SHOPIFY_CLIENT_ID,clientSecret:process.env.SHOPIFY_CLIENT_SECRET});
 const reply = (data,status=200) => new Response(JSON.stringify(data),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store','X-Robots-Tag':'noindex'}});
 export default async (request,context) => {
@@ -30,7 +31,12 @@ export default async (request,context) => {
     const raw = await request.text(); if (raw.length > 800000) return reply({error:'Product data is too large.'},413);
     const body = raw ? JSON.parse(raw) : {};
     const production=(context?.deploy?.context || process.env.CONTEXT)==='production';
-    if(!production && ['publish','archive','restore','publish-layout','upload-start','upload-finish'].includes(action)) throw new Error('Shopify writes and publishing are only available in the production admin.');
+    if(!production && ['publish','archive','restore','publish-layout','publish-search-names','upload-start','upload-finish'].includes(action)) throw new Error('Shopify writes and publishing are only available in the production admin.');
+    if(action==='preview-search-names') {
+      const compiled=compileCatalog(products,state.collections || collections,Object.values(state.documents),state.archived);
+      const prepared=prepareSearchNaming(compiled);
+      return reply({changes:prepared.changes,revision:state.revision,completed:state.searchNamingVersion===prepared.version});
+    }
     if(action==='inspect') {
       const doc=state.drafts[body.id] || state.documents[body.id] || seedDocuments(products,collections).find(d=>d.id===body.id);
       if(!doc || !admin) throw new Error('This listing is not connected to Shopify.');
@@ -58,6 +64,20 @@ export default async (request,context) => {
         ready:{shopify:Boolean(admin),buildHook:Boolean(process.env.NETLIFY_CATALOG_BUILD_HOOK),catalogSource:Boolean(process.env.SHOP_CATALOG_SOURCE_URL)}});
     }
     if (state.jobs.some(j => ['queued','shopify','website'].includes(j.status) && Date.now()-Date.parse(j.createdAt)<30*60000)) throw new Error('A website update is in progress. Wait for it to finish before saving another revision.');
+    if(action==='publish-search-names') {
+      if(body.revision!==state.revision)throw Error('The catalog changed. Review names again.');
+      if(!admin || !process.env.NETLIFY_CATALOG_BUILD_HOOK || !process.env.SHOP_CATALOG_SOURCE_URL)throw Error('Connect Shopify and website publishing first.');
+      const compiled=compileCatalog(products,state.collections || collections,Object.values(state.documents),state.archived);
+      const prepared=prepareSearchNaming(compiled);
+      if(state.searchNamingVersion===prepared.version)return reply({alreadyLive:true});
+      const job={id:randomUUID(),productId:'catalog-search-names',action,status:'queued',createdAt:new Date().toISOString(),documents:seedDocuments(prepared.catalog.products,prepared.catalog.collections),collections:prepared.catalog.collections,changes:prepared.changes,namingVersion:prepared.version};
+      state.jobs=[job,...state.jobs].slice(0,20);
+      await writeState(store,state,etag);
+      const token=createHmac('sha256',process.env.SHOP_ADMIN_KEY).update(job.id).digest('hex');
+      const response=await fetch(new URL('/.netlify/functions/shop-catalog-publish-background',request.url),{method:'POST',headers:{'Content-Type':'application/json','X-Catalog-Job':token},body:JSON.stringify({id:job.id}),signal:AbortSignal.timeout(10000)});
+      if(!response.ok)throw Error('The naming worker could not start.');
+      return reply({job:{id:job.id,status:'queued'}});
+    }
     if (action.startsWith('upload-')) {
       if(!admin) throw new Error('Shopify media uploads are not connected.');
       if(action==='upload-start') {
@@ -130,7 +150,7 @@ export default async (request,context) => {
       const layoutCollections=body.collections.map(c=>{
         if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(c.id) || !c.name || !['department','collection'].includes(c.kind)) throw new Error('Each category needs a valid link and name.');
         if (!Array.isArray(c.products) || c.products.some(id=>!ids.has(id))) throw new Error('Choose existing products for this category.');
-        return {id:c.id,kind:c.kind,name:String(c.name).slice(0,120),shortName:String(c.shortName || c.name).slice(0,120),eyebrow:String(c.eyebrow || '').slice(0,120),heading:String(c.heading || c.name).slice(0,120),description:String(c.description || '').slice(0,1200),seoDescription:String(c.seoDescription || c.description || '').slice(0,300),coverProduct:c.coverProduct || c.products[0] || '',products:c.products};
+        return {id:c.id,kind:c.kind,name:String(c.name).slice(0,120),shortName:String(c.shortName || c.name).slice(0,120),eyebrow:String(c.eyebrow || '').slice(0,120),heading:String(c.heading || c.name).slice(0,120),description:String(c.description || '').slice(0,1200),seoTitle:String(c.seoTitle || '').slice(0,150),seoDescription:String(c.seoDescription || c.description || '').slice(0,300),coverProduct:c.coverProduct || c.products[0] || '',products:c.products};
       });
       const layoutRows=body.rows.map(r=>{
         if (!r.title || !Array.isArray(r.productIds) || r.productIds.some(id=>!ids.has(id))) throw new Error('Rows need a title and existing products.');

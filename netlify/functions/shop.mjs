@@ -26,7 +26,7 @@ const shopifyCatalogSync = (client, store) => client ? async ({id, name, priceCe
   if (priceCents <= (deliveryPolicy.active ? 0 : pricing.pickupPriceDifferenceCents)) throw new Error("The delivered price must be more than the pickup price difference.");
   const delivered = product.variants.nodes.find(variant => variant.sku === id);
   const pickup = product.variants.nodes.find(variant => variant.sku === `${id}-pickup`);
-  if (!delivered || !pickup) throw new Error("Both delivered and pickup variants must exist in Shopify before updating prices.");
+  if (!delivered || (!deliveryPolicy.active && !pickup)) throw new Error("The required purchase variants must exist in Shopify before updating prices.");
   const update = await call(
     `mutation UpdateWebsiteProduct($product: ProductUpdateInput!) { productUpdate(product: $product) { product { id } userErrors { message } } }`,
     { product: { id: product.id, title: name } },

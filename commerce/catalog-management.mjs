@@ -25,6 +25,9 @@ export function validateDocument(input, { publish = false, policy = deliveryPoli
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(p.id || '')) throw new Error('Invalid product ID.');
     if (p.id.length > 120) throw new Error('Product link is too long.');
     for (const key of ['name','category','description','included','dimensions','notes']) p[key] = text(p[key], key === 'name' ? 120 : 4000);
+    p.seoTitle=text(p.seoTitle,150);
+    p.seoDescription=text(p.seoDescription,300);
+    if(p.titleSource && !['default','trained_algorithmic_media'].includes(p.titleSource))throw Error('Choose a valid search-title source.');
     p.priceCents = amount(p.priceCents);
     p.pickupPriceDifferenceCents = policy.active?0:amount(p.pickupPriceDifferenceCents ?? input.pickupPriceDifferenceCents ?? 1000);
     if (p.priceCents < p.pickupPriceDifferenceCents) throw new Error('Pickup reduction cannot exceed the product price.');

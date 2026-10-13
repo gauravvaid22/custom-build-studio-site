@@ -287,7 +287,7 @@ function ShopProductCard({ product, listId }: { product: Product; listId?: strin
   const { priceFor, nameFor, compareAtFor, sale } = useShopifyCatalog();
   const managedProducts = useProductContent();
   const managed = product.id === "lithophane-table-lamp" ? managedProducts["lithophane-table-lamp"] : null;
-  const displayName = managed?.name || nameFor(product.id, product.name);
+  const displayName = nameFor(product.id, product.name);
   const displayPrice = managed ? priceFor(product.id, managed.priceCents) : lowestProductPrice(product, priceFor);
   const lowestVariant = [...variantsFor(product)].sort((a, b) => priceFor(a.id, a.priceCents) - priceFor(b.id, b.priceCents))[0];
   const regularPrice = compareAtFor(managed ? product.id : lowestVariant?.id || product.id);

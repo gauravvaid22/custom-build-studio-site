@@ -3,11 +3,21 @@
   "storeDomain": "aqk73w-k2.myshopify.com",
   "apiVersion": "2026-07",
   "collectionIds": [
+    "personalized-gifts",
+    "collectibles",
+    "gaming-desk",
     "headphone-stands",
+    "home-decor",
+    "seasonal",
+    "masks-costumes",
     "halloween",
+    "gifts-under-25",
     "photo-frames",
     "console-stands",
-    "tumbler-accessories"
+    "can-holders",
+    "tumbler-accessories",
+    "pet-accessories",
+    "pet-hats-costumes"
   ],
   "shippingCountry": "CA",
   "shippingPrice": "0.00"

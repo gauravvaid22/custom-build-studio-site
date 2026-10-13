@@ -1,7 +1,8 @@
 import { getStore } from '@netlify/blobs';
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import {catalogStore,readState,writeState} from '../../commerce/catalog-store.mjs';
-import {syncDocument,withdrawDocument} from '../../commerce/catalog-shopify.mjs';
+import {syncDocument,withdrawDocument,lookupProduct} from '../../commerce/catalog-shopify.mjs';
+import {syncSearchNames,prepareSearchNaming} from '../../commerce/search-naming.mjs';
 import {createShopifyAdmin} from '../../commerce/shopify-admin.mjs';
 export default async (request,context) => {
   if((context?.deploy?.context || process.env.CONTEXT)!=='production')return new Response('',{status:403});
@@ -15,6 +16,10 @@ export default async (request,context) => {
   const admin=createShopifyAdmin({legacyToken:process.env.SHOPIFY_ADMIN_ACCESS_TOKEN,clientId:process.env.SHOPIFY_CLIENT_ID,clientSecret:process.env.SHOPIFY_CLIENT_SECRET});
   try {
     let results;
+    if(job.action==='publish-search-names') {
+      const records=[...new Map(job.documents.flatMap(d=>d.products).map(p=>[p.id,p])).values()];
+      results=await syncSearchNames(admin,records,lookupProduct);
+    }
     if (job.action==='publish') {
       const sale=await getStore({name:'shop-orders-v1',consistency:'strong'}).get('config/shop-sale',{type:'json'});
       if(sale && sale.status!=='inactive')throw new Error('End or cancel the current sale before publishing base-price changes.');
@@ -27,6 +32,20 @@ export default async (request,context) => {
       await withdrawDocument(admin,job.document,found.state.connection.publicationId,job.action==='restore');
     }
     found=await readState(store); job=found.state.jobs.find(j=>j.id===id);if(results)job.results=results;
+    if(job.action==='publish-search-names') {
+      for(const doc of job.documents) {
+        const previous=found.state.documents[doc.id];
+        if(previous)await store.setJSON(`revisions/${doc.id}/${found.state.revision}`,previous);
+        found.state.documents[doc.id]=doc;
+      }
+      // Preserve unpublished price/media edits while aligning their names.
+      for(const [key,draft] of Object.entries(found.state.drafts))found.state.drafts[key]={...draft,products:prepareSearchNaming({products:draft.products,collections:[]}).catalog.products};
+      found.state.collections=job.collections;
+      if(found.state.layoutDraft)found.state.layoutDraft.collections=prepareSearchNaming({products:[],collections:found.state.layoutDraft.collections}).catalog.collections;
+      found.state.searchNamingVersion=job.namingVersion;
+      const lamp=job.documents.flatMap(d=>d.products).find(p=>p.id==='lithophane-table-lamp');
+      if(lamp){const contentStore=getStore({name:'shop-orders-v1',consistency:'strong'});const content=await contentStore.get('config/product-content',{type:'json'});if(content?.['lithophane-table-lamp'])await contentStore.setJSON('config/product-content',{...content,'lithophane-table-lamp':{...content['lithophane-table-lamp'],name:lamp.name}});}
+    }
     if (job.action==='publish') {found.state.documents[job.productId]=job.document;delete found.state.drafts[job.productId];const currentIds=new Set(job.document.products.map(p=>p.id));found.state.unavailableIds=[...new Set([...(found.state.unavailableIds || []).filter(id=>!currentIds.has(id)),...(job.previousDocument?.products || []).filter(p=>!currentIds.has(p.id)).map(p=>p.id)])];}
     if (job.action==='publish-layout' && found.state.layoutDraft) {found.state.collections=found.state.layoutDraft.collections;found.state.rows=found.state.layoutDraft.rows;delete found.state.layoutDraft;}
     if (job.action==='archive') {found.state.unavailableIds=[...new Set([...(found.state.unavailableIds || []),...job.document.products.map(p=>p.id)])];found.state.documents[job.productId]=job.document;found.state.archived=[...new Set([...found.state.archived,job.productId])];}

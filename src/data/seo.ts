@@ -5,6 +5,7 @@ import products from "./catalog";
 import collections from "../../commerce/collections.json";
 import headphoneSearch from "../../commerce/headphone-search.json";
 import maskSearch from "../../commerce/mask-search.json";
+import {searchTitle,searchDescription} from "../../commerce/product-search.mjs";
 const publicProducts = products.filter((product) => !("variantOf" in product) && !product.purchaseOnly);
 const browsingProducts = publicProducts.filter(product => !("listingGroup" in product));
 const halloweenSpecialIds = collections.find((collection) => collection.id === "halloween")?.products || [];
@@ -38,7 +39,7 @@ export function getSeo(path: string) {
     "/shipping-returns": ["Shipping & Returns", "Canadian shipping rates shown before checkout, Edmonton pickup by appointment and 30-day unused standard-product returns. Read Custom Build Studio shop policies."],
     "/shop": [
       "Unique Gifts & Décor, Made in Edmonton",
-      "Discover locally made 3D-printed gifts, creatures, dice towers, planters and seasonal pieces with secure Shopify checkout and free tracked Canadian shipping.",
+      "Shop personalized photo gifts, collectible figurines, headphone stands, gaming accessories and seasonal décor made in Edmonton. Secure checkout and Canadian shipping.",
     ],
     "/shop/all": [
       "Shop All Gifts, Décor & Accessories Made in Edmonton",
@@ -49,7 +50,7 @@ export function getSeo(path: string) {
       "Explore current Custom Build Studio sale prices on finished gifts and décor made in Edmonton.",
     ],
     "/shop/halloween-special": [
-      "Halloween Special: 3D-Printed Décor in Edmonton",
+      "Halloween Masks, Candy Bowls & Décor Made in Edmonton",
       "Shop locally made Halloween décor and wearable masks in Edmonton, including ghosts, pumpkin lighting and seasonal gifts, with free tracked Canadian shipping.",
     ],
     "/shop/cart": ["Your Cart", "Review your physical 3D-printed products."],
@@ -113,9 +114,9 @@ export function getSeo(path: string) {
   const headphoneSeo = product && headphoneSearch.products[product.id as keyof typeof headphoneSearch.products];
   const maskSeo = product && maskSearch[product.id as keyof typeof maskSearch];
   const entry = product
-    ? [maskSeo?.title || headphoneSeo?.title || product.name, maskSeo?.description || headphoneSeo?.description || `${product.description} Made in Edmonton with free tracked Canadian shipping.`]
+    ? [product.seoTitle ? searchTitle(product) : maskSeo?.title || headphoneSeo?.title || product.name, product.seoDescription ? searchDescription(product) : product.titleSource ? searchDescription(product) : maskSeo?.description || headphoneSeo?.description || searchDescription(product)]
     : collection
-      ? [collection.name === "Gifts Under $25" ? "3D-Printed Gifts Under $25 in Edmonton" : `${collection.name} Made in Edmonton`, collection.seoDescription]
+      ? [String(('seoTitle' in collection && collection.seoTitle) || (collection.id === "gifts-under-25" ? "Gifts $25 & Under Made in Edmonton" : `${collection.name} Made in Edmonton`)), collection.seoDescription]
     : service
       ? [serviceDetails[service.id].heading, service.description]
       : project

@@ -1,0 +1,521 @@
+{
+  "version": "2026-10-13",
+  "products": {
+    "paw-couture-pet-costume-designs": {
+      "from": "Paw Couture — Pet Hats & Costumes",
+      "name": "Pet Hats & Costumes — Paw Couture"
+    },
+    "party-hat-pet-costume": {
+      "from": "Birthday hat for cats & dogs — Party Hat",
+      "name": "Birthday Hat for Cats & Dogs — Party Hat"
+    },
+    "yay-cap-dog-costume": {
+      "from": "Propeller cap for dogs — Yay Cap",
+      "name": "Dog Propeller Hat — Yay Cap"
+    },
+    "officer-woof-dog-costume": {
+      "from": "Police hat for dogs — Officer Woof",
+      "name": "Dog Police Hat — Officer Woof"
+    },
+    "glam-wave-cat-costume": {
+      "from": "Wavy hair costume for cats — Glam Wave",
+      "name": "Cat Hair Costume — Glam Wave"
+    },
+    "emo-bangs-cat-costume": {
+      "from": "Fringe hair costume for cats — Emo Bangs",
+      "name": "Cat Fringe Hair Costume — Emo Bangs"
+    },
+    "dino-crown-cat-costume": {
+      "from": "Dinosaur headpiece for cats — Dino Crown",
+      "name": "Cat Dinosaur Headpiece — Dino Crown"
+    },
+    "pharaoh-cat-cat-costume": {
+      "from": "Egyptian headpiece for cats — Pharaoh Cat",
+      "name": "Cat Egyptian Headpiece — Pharaoh Cat"
+    },
+    "little-saint-cat-costume": {
+      "from": "Angel halo & wings for cats — Little Saint",
+      "name": "Cat Angel Halo & Wings — Little Saint"
+    },
+    "little-devil-cat-costume": {
+      "from": "Devil horns & wings for cats — Little Devil",
+      "name": "Cat Devil Horns & Wings — Little Devil"
+    },
+    "mini-safari-animal-figurines": {
+      "from": "Mini Safari Animal Figurines — Choose Your Animal",
+      "name": "Mini Safari Animal Figurines"
+    },
+    "mini-safari-animal-figurines-design-mv5tpqtn": {
+      "from": "Pocket Lion",
+      "name": "Mini Lion Figurine"
+    },
+    "mini-safari-animal-figurines-design-mv5tqbjb": {
+      "from": "Pocket Caracal",
+      "name": "Mini Caracal Figurine"
+    },
+    "mini-safari-animal-figurines-design-mv5tqlf6": {
+      "from": "Pocket Gazelle",
+      "name": "Mini Gazelle Figurine"
+    },
+    "mini-safari-animal-figurines-design-mv5tqx57": {
+      "from": "Pocket Capybara",
+      "name": "Mini Capybara Figurine"
+    },
+    "mini-safari-animal-figurines-design-mv5trend": {
+      "from": "Pocket Ostrich",
+      "name": "Mini Ostrich Figurine"
+    },
+    "mini-safari-animal-figurines-design-mv5tri0m": {
+      "from": "Pocket Giraffe",
+      "name": "Mini Giraffe Figurine"
+    },
+    "mini-safari-animal-figurines-design-mv5trlc1": {
+      "from": "Pocket Jaguar",
+      "name": "Mini Jaguar Figurine"
+    },
+    "mini-safari-animal-figurines-design-mv5tropd": {
+      "from": "Pocket Gorilla",
+      "name": "Mini Gorilla Figurine"
+    },
+    "mini-safari-animal-figurines-design-mv5trs07": {
+      "from": "Pocket Rhino",
+      "name": "Mini Rhino Figurine"
+    },
+    "mini-safari-animal-figurines-design-mv5trwxm": {
+      "from": "Pocket Elephant",
+      "name": "Mini Elephant Figurine"
+    },
+    "mini-safari-animal-figurines-design-mv5ts09b": {
+      "from": "Pocket Zebra",
+      "name": "Mini Zebra Figurine"
+    },
+    "mini-safari-animal-figurines-design-mv5ts485": {
+      "from": "Pocket Hippo",
+      "name": "Mini Hippo Figurine"
+    },
+    "mini-safari-animal-figurines-mix-pack": {
+      "from": "Mini Safari Animal Figurines — Mix & Match Pack",
+      "name": "Mini Safari Animal Figurines — Mix & Match Pack"
+    },
+    "skeleton-chameleon": {
+      "from": "Skeleton Chameleon Figurine",
+      "name": "Skeleton Chameleon Figurine"
+    },
+    "articulated-baby-dragon": {
+      "from": "Articulated Baby Dragon Figurine",
+      "name": "Articulated Baby Dragon Figurine"
+    },
+    "dinosaur-skeleton-collection": {
+      "from": "Dinosaur Skeleton Collection — Set of 6",
+      "name": "Dinosaur Skeleton Collection — Set of 6"
+    },
+    "figurine-fidget-designs": {
+      "from": "Figurines & Fidgets — Choose Your Design",
+      "name": "Collectible Figurines & Fidgets"
+    },
+    "figurine-fidget-designs-design-mv5wap14": {
+      "from": "The Drowned One — Articulated Figure",
+      "name": "Articulated Fantasy Figurine — The Drowned One"
+    },
+    "figurine-fidget-designs-design-mv5wbpf0": {
+      "from": "Fell Orc — Articulated Figure",
+      "name": "Articulated Orc Figurine — Fell Orc"
+    },
+    "figurine-fidget-designs-design-mv5wbyst": {
+      "from": "Dreadwolf — Articulated Figure",
+      "name": "Articulated Wolf Figurine — Dreadwolf"
+    },
+    "6-finger-alien-hand-controller-holder": {
+      "from": "6-Finger Alien Hand Controller Holder",
+      "name": "Alien Hand Gaming Controller Stand"
+    },
+    "night-owl-wall-light": {
+      "from": "Night Owl Wall Light",
+      "name": "Owl Wall Light — Night Owl"
+    },
+    "octopus-wine-bottle-holder": {
+      "from": "Octopus Wine Bottle Holder",
+      "name": "Octopus Wine Bottle Holder"
+    },
+    "mood-ghost": {
+      "from": "Mood Ghost Figurine",
+      "name": "Cute Ghost Figurine — Mood Ghost"
+    },
+    "ghost-arch-wreath": {
+      "from": "Halloween Ghost Arch Wreath",
+      "name": "Halloween Ghost Wreath"
+    },
+    "ghost-on-a-swing": {
+      "from": "Ghost on a Swing",
+      "name": "Hanging Ghost Decoration — Ghost on a Swing"
+    },
+    "candlelight-pumpkins-table-lamp": {
+      "from": "Candlelight Pumpkins Table Lamp",
+      "name": "Halloween Pumpkin Table Lamp"
+    },
+    "lithophane-table-lamp": {
+      "from": "Custom Cylindrical Lithophane Table Lamp",
+      "name": "Personalized Photo Lamp — Wooden Base",
+      "seoTitle": "Personalized Photo Lamp with Wooden Base"
+    },
+    "pumpkin-head-halloween-mask": {
+      "from": "Pumpkin Head Halloween Mask",
+      "name": "Full-Head Pumpkin Halloween Mask",
+      "seoTitle": "Full-Head Pumpkin Halloween Mask with Magnetic Closure",
+      "seoDescription": "Finished wearable pumpkin-head Halloween mask with magnetic assembly. Compare ear-to-ear sizes, request custom fit, and choose Edmonton pickup or free Canadian shipping."
+    },
+    "carved-in-fear-halloween-mask": {
+      "from": "Carved in Fear Halloween Mask",
+      "name": "Pumpkin Face Mask — Carved in Fear",
+      "seoTitle": "Pumpkin Face Mask with Elastic Strap — Carved in Fear",
+      "seoDescription": "Finished pumpkin-face Halloween mask with an elastic band. Choose 145, 158 or 170 mm ear-to-ear sizing, with Edmonton pickup or free tracked shipping in Canada."
+    },
+    "suit-can-holder": {
+      "from": "Suit & Tie Can Holder",
+      "name": "Suit & Tie Can Holder"
+    },
+    "overalls-can-holder": {
+      "from": "Overalls Can Holder",
+      "name": "Overalls Can Holder"
+    },
+    "kimono-can-holder": {
+      "from": "Kimono Can Holder",
+      "name": "Kimono Can Holder"
+    },
+    "apron-can-holder": {
+      "from": "Apron Can Holder",
+      "name": "Apron Can Holder"
+    },
+    "knight-armor-can-holder": {
+      "from": "Knight Armor Can Holder",
+      "name": "Knight Armour Can Holder"
+    },
+    "overcoat-can-holder": {
+      "from": "Overcoat Can Holder",
+      "name": "Overcoat Can Holder"
+    },
+    "can-holder-designs": {
+      "from": "Clothing Can Holders — Choose Your Design",
+      "name": "Novelty Can Holders — Outfit Collection"
+    },
+    "neon-cityscape-console-stand": {
+      "from": "Neon Cityscape PS5 Console Stand",
+      "name": "Neon Cityscape PS5 Console Stand"
+    },
+    "organic-grid-console-stand": {
+      "from": "Organic Grid PS5 Console Stand",
+      "name": "Organic Grid PS5 Console Stand"
+    },
+    "runestone-console-stand": {
+      "from": "Runestone PS5 Console Stand",
+      "name": "Runestone PS5 Console Stand"
+    },
+    "cyber-core-console-stand": {
+      "from": "Cyber Core PS5 Console Stand",
+      "name": "Cyber Core PS5 Console Stand"
+    },
+    "crescent-moon-console-stand": {
+      "from": "Crescent Moon PS5 Console Stand",
+      "name": "Crescent Moon PS5 Console Stand"
+    },
+    "mecha-moon-console-stand": {
+      "from": "Mecha Moon PS5 Console Stand",
+      "name": "Mecha Moon PS5 Console Stand"
+    },
+    "ps5-console-stand-designs": {
+      "from": "PS5 Console Stands — Choose Your Design",
+      "name": "Decorative PS5 Console Stands"
+    },
+    "daisy-duo-photo-frame": {
+      "from": "Daisy Duo Personalized Photo Holder",
+      "name": "Daisy Personalized Photo Holder"
+    },
+    "sunflower-duo-photo-frame": {
+      "from": "Sunflower Duo Personalized Photo Holder",
+      "name": "Sunflower Personalized Photo Holder"
+    },
+    "up-in-the-clouds-photo-frame": {
+      "from": "Up in the Clouds Personalized Photo Holder",
+      "name": "Airplane & Clouds Personalized Photo Holder"
+    },
+    "stoneside-photo-frame": {
+      "from": "Stoneside Personalized Photo Holder",
+      "name": "Stone-Style Personalized Photo Holder"
+    },
+    "paw-hold-photo-frame": {
+      "from": "Paw Hold Personalized Photo Holder",
+      "name": "Paw Personalized Photo Holder"
+    },
+    "sealed-letter-photo-frame": {
+      "from": "Sealed Letter Personalized Photo Holder",
+      "name": "Sealed Envelope Personalized Photo Holder"
+    },
+    "sakura-duo-photo-frame": {
+      "from": "Sakura Duo Personalized Photo Holder",
+      "name": "Cherry Blossom Personalized Photo Holder"
+    },
+    "love-letter-photo-frame": {
+      "from": "Love Letter Personalized Photo Holder",
+      "name": "Heart Envelope Personalized Photo Holder"
+    },
+    "lavender-duo-photo-frame": {
+      "from": "Lavender Duo Personalized Photo Holder",
+      "name": "Lavender Personalized Photo Holder"
+    },
+    "retro-cam-photo-frame": {
+      "from": "Retro Cam Personalized Photo Holder",
+      "name": "Instant Camera-Style Personalized Photo Holder"
+    },
+    "dino-peek-photo-frame": {
+      "from": "Dino Peek Personalized Photo Holder",
+      "name": "Long-Neck Dinosaur Personalized Photo Holder"
+    },
+    "t-rex-peek-photo-frame": {
+      "from": "T-Rex Peek Personalized Photo Holder",
+      "name": "T-Rex Personalized Photo Holder"
+    },
+    "analog-days-photo-frame": {
+      "from": "Analog Days Personalized Photo Holder",
+      "name": "Vintage Camera-Style Personalized Photo Holder"
+    },
+    "personalized-photo-holder-designs": {
+      "from": "Personalized Photo Holders — Choose Your Design",
+      "name": "Personalized Photo Holders — Photo Included"
+    },
+    "flow-stand-headphone-and-phone-holder": {
+      "from": "Flow Headphone & Phone Stand",
+      "name": "Flow Headphone & Phone Stand",
+      "seoTitle": "Flow Headphone & Phone Stand for Your Desk",
+      "seoDescription": "A sculptural headphone stand with a phone slot. Made in Edmonton, with free tracked Canadian shipping or local pickup. See photos, video and size."
+    },
+    "curve-caddy-headphone-holder": {
+      "from": "Curve Caddy Headphone Stand",
+      "name": "Curve Caddy Headphone Stand",
+      "seoTitle": "Curve Caddy Headphone Stand & Pen Holder",
+      "seoDescription": "Keep headphones and pens together with the Curve Caddy desk stand. Made in Edmonton, with free tracked Canadian shipping or local pickup."
+    },
+    "ring-dock-headphone-holder": {
+      "from": "Ring Dock Headphone Stand",
+      "name": "Ring Dock Headphone Stand",
+      "seoTitle": "Ring Dock Circular Headphone Stand",
+      "seoDescription": "A circular headphone stand for a gaming desk or workspace. Explore the Ring Dock gallery and video. Made in Edmonton with free Canadian shipping."
+    },
+    "block-hub-headphone-and-phone-holder": {
+      "from": "Block Hub Headphone & Phone Stand",
+      "name": "Block Hub Headphone & Phone Stand",
+      "seoTitle": "Block Hub Headphone, Phone & Pen Holder",
+      "seoDescription": "Organize headphones, a phone and pens in one angular desk stand. Made in Edmonton, with free tracked Canadian shipping or local pickup."
+    },
+    "tower-trio-headphone-and-phone-holder": {
+      "from": "Tower Trio Headphone & Phone Stand",
+      "name": "Tower Trio Headphone & Phone Stand",
+      "seoTitle": "Tower Trio Headphone, Phone & Pen Stand",
+      "seoDescription": "A vertical desk organizer for headphones, a phone and pens. View the Tower Trio photos and video. Made in Edmonton with free Canadian shipping."
+    },
+    "arch-stand-headphone-holder": {
+      "from": "Arch Headphone Stand",
+      "name": "Arch Headphone Stand",
+      "seoTitle": "Arch Headphone Stand for a Gaming Desk or Workspace",
+      "seoDescription": "An architectural headphone stand with a clean arch design. Explore photos, video and approximate size. Made in Edmonton with free Canadian shipping."
+    },
+    "headphone-stand-designs": {
+      "from": "Headphone Stands — Choose Your Design",
+      "name": "Headphone Stands for Desks"
+    },
+    "hoodie-can-holder": {
+      "from": "Hoodie Can Holder",
+      "name": "Hoodie Can Holder"
+    },
+    "puffer-jacket-can-holder": {
+      "from": "Puffer Jacket Can Holder",
+      "name": "Puffer Jacket Can Holder"
+    },
+    "leather-jacket-can-holder": {
+      "from": "Leather Jacket Can Holder",
+      "name": "Leather Jacket Can Holder"
+    },
+    "bathrobe-can-holder": {
+      "from": "Bathrobe Can Holder",
+      "name": "Bathrobe Can Holder"
+    },
+    "suede-jacket-can-holder": {
+      "from": "Suede Jacket Can Holder",
+      "name": "Suede Jacket Can Holder"
+    },
+    "varsity-jacket-can-holder": {
+      "from": "Varsity Jacket Can Holder",
+      "name": "Varsity Jacket Can Holder"
+    },
+    "can-holder-designs-ii": {
+      "from": "Clothing Can Holders II — Choose Your Design",
+      "name": "Hoodie & Jacket Can Holders — Series II"
+    },
+    "final-drink-straw-topper-and-charm": {
+      "from": "Final Drink — Reaper Straw Topper & Charm Set",
+      "name": "Reaper Straw Topper & Tumbler Charm Set — Final Drink"
+    },
+    "pawsitively-hydrated-straw-topper-and-charm": {
+      "from": "Pawsitively Hydrated — Cat Straw Topper & Charm Set",
+      "name": "Cat Straw Topper & Tumbler Charm Set — Pawsitively Hydrated"
+    },
+    "deep-sips-straw-topper-and-charm": {
+      "from": "Deep Sips — Octopus Straw Topper & Charm Set",
+      "name": "Octopus Straw Topper & Tumbler Charm Set — Deep Sips"
+    },
+    "udderly-thirsty-straw-topper-and-charm": {
+      "from": "Udderly Thirsty — Cow Straw Topper & Charm Set",
+      "name": "Cow Straw Topper & Tumbler Charm Set — Udderly Thirsty"
+    },
+    "bamboo-break-straw-topper-and-charm": {
+      "from": "Bamboo Break — Panda Straw Topper & Charm Set",
+      "name": "Panda Straw Topper & Tumbler Charm Set — Bamboo Break"
+    },
+    "thirst-slayer-straw-topper-and-charm": {
+      "from": "Thirst Slayer — Dragon Straw Topper & Charm Set",
+      "name": "Dragon Straw Topper & Tumbler Charm Set — Thirst Slayer"
+    },
+    "straw-topper-charm-designs": {
+      "from": "Straw Topper & Cup Charm Sets — Choose Your Design",
+      "name": "Straw Topper & Tumbler Charm Sets"
+    },
+    "glutton-ghost-bowl": {
+      "from": "Glutton Ghost Decorative Bowl",
+      "name": "Glutton Ghost Decorative Bowl"
+    },
+    "skull-web-trinket-dish": {
+      "from": "Skull Web Trinket Dish",
+      "name": "Skull Web Trinket Dish"
+    },
+    "ghost-duo-trinket-dish": {
+      "from": "Ghost Duo Trinket Dish",
+      "name": "Ghost Duo Trinket Dish"
+    },
+    "melting-pumpkin-candy-dispenser": {
+      "from": "Melting Pumpkin Candy Dispenser",
+      "name": "Melting Pumpkin Candy Dispenser"
+    },
+    "spectral-candy-holder": {
+      "from": "Spectral Ghost Candy Bowl",
+      "name": "Spectral Ghost Candy Bowl"
+    },
+    "walkin-pumpkin-candy-holder": {
+      "from": "Walkin’ Pumpkin Candy Holder",
+      "name": "Walkin’ Pumpkin Candy Holder"
+    },
+    "halloween-candy-holder-designs": {
+      "from": "Halloween Bowls & Candy Holders — Choose Your Design",
+      "name": "Halloween Candy Bowls & Decorative Dishes"
+    },
+    "mini-safari-animal-figurines-mix-pack-5": {
+      "from": "Mini Safari Animal Figurines — Mix & Match Pack — 5 animals",
+      "name": "Mini Safari Animal Figurines — Mix & Match Pack — 5 animals"
+    },
+    "mini-safari-animal-figurines-mix-pack-10": {
+      "from": "Mini Safari Animal Figurines — Mix & Match Pack — 10 animals",
+      "name": "Mini Safari Animal Figurines — Mix & Match Pack — 10 animals"
+    },
+    "octopus-wine-bottle-holder-300": {
+      "from": "Octopus Wine Bottle Holder — up to 3.00 in bottle diameter",
+      "name": "Octopus Wine Bottle Holder — Fits bottles up to 3.00 in diameter"
+    },
+    "octopus-wine-bottle-holder-320": {
+      "from": "Octopus Wine Bottle Holder — up to 3.20 in bottle diameter",
+      "name": "Octopus Wine Bottle Holder — Fits bottles up to 3.20 in diameter"
+    },
+    "octopus-wine-bottle-holder-345": {
+      "from": "Octopus Wine Bottle Holder — up to 3.45 in bottle diameter",
+      "name": "Octopus Wine Bottle Holder — Fits bottles up to 3.45 in diameter"
+    },
+    "mood-ghost-design-a": {
+      "from": "Mood Ghost Figurine — design A",
+      "name": "Cute Ghost Figurine — Mood Ghost — Design A"
+    },
+    "mood-ghost-design-b": {
+      "from": "Mood Ghost Figurine — design B",
+      "name": "Cute Ghost Figurine — Mood Ghost — Design B"
+    },
+    "pumpkin-head-halloween-mask-small": {
+      "from": "Pumpkin Head Halloween Mask — Small",
+      "name": "Full-Head Pumpkin Halloween Mask — Small"
+    },
+    "pumpkin-head-halloween-mask-medium": {
+      "from": "Pumpkin Head Halloween Mask — Medium",
+      "name": "Full-Head Pumpkin Halloween Mask — Medium"
+    },
+    "pumpkin-head-halloween-mask-large": {
+      "from": "Pumpkin Head Halloween Mask — Large",
+      "name": "Full-Head Pumpkin Halloween Mask — Large"
+    },
+    "carved-in-fear-halloween-mask-small": {
+      "from": "Carved in Fear Halloween Mask — Small",
+      "name": "Pumpkin Face Mask — Carved in Fear — Small"
+    },
+    "carved-in-fear-halloween-mask-medium": {
+      "from": "Carved in Fear Halloween Mask — Medium",
+      "name": "Pumpkin Face Mask — Carved in Fear — Medium"
+    },
+    "carved-in-fear-halloween-mask-large": {
+      "from": "Carved in Fear Halloween Mask — Large",
+      "name": "Pumpkin Face Mask — Carved in Fear — Large"
+    },
+    "neon-cityscape-console-stand-original": {
+      "from": "Neon Cityscape PS5 Console Stand — Original PS5",
+      "name": "Neon Cityscape PS5 Console Stand — Original PS5"
+    },
+    "neon-cityscape-console-stand-slim": {
+      "from": "Neon Cityscape PS5 Console Stand — PS5 Slim",
+      "name": "Neon Cityscape PS5 Console Stand — PS5 Slim"
+    },
+    "organic-grid-console-stand-original": {
+      "from": "Organic Grid PS5 Console Stand — Original PS5",
+      "name": "Organic Grid PS5 Console Stand — Original PS5"
+    },
+    "organic-grid-console-stand-slim": {
+      "from": "Organic Grid PS5 Console Stand — PS5 Slim",
+      "name": "Organic Grid PS5 Console Stand — PS5 Slim"
+    },
+    "runestone-console-stand-original": {
+      "from": "Runestone PS5 Console Stand — Original PS5",
+      "name": "Runestone PS5 Console Stand — Original PS5"
+    },
+    "runestone-console-stand-slim": {
+      "from": "Runestone PS5 Console Stand — PS5 Slim",
+      "name": "Runestone PS5 Console Stand — PS5 Slim"
+    },
+    "cyber-core-console-stand-original": {
+      "from": "Cyber Core PS5 Console Stand — Original PS5",
+      "name": "Cyber Core PS5 Console Stand — Original PS5"
+    },
+    "cyber-core-console-stand-slim": {
+      "from": "Cyber Core PS5 Console Stand — PS5 Slim",
+      "name": "Cyber Core PS5 Console Stand — PS5 Slim"
+    },
+    "crescent-moon-console-stand-original": {
+      "from": "Crescent Moon PS5 Console Stand — Original PS5",
+      "name": "Crescent Moon PS5 Console Stand — Original PS5"
+    },
+    "crescent-moon-console-stand-slim": {
+      "from": "Crescent Moon PS5 Console Stand — PS5 Slim",
+      "name": "Crescent Moon PS5 Console Stand — PS5 Slim"
+    },
+    "mecha-moon-console-stand-original": {
+      "from": "Mecha Moon PS5 Console Stand — Original PS5",
+      "name": "Mecha Moon PS5 Console Stand — Original PS5"
+    },
+    "mecha-moon-console-stand-slim": {
+      "from": "Mecha Moon PS5 Console Stand — PS5 Slim",
+      "name": "Mecha Moon PS5 Console Stand — PS5 Slim"
+    }
+  },
+  "collections": {
+    "personalized-gifts": {
+      "heading": "Personalized Photo Gifts",
+      "seoTitle": "Personalized Photo Gifts Made in Edmonton"
+    },
+    "home-decor": {
+      "name": "Home Décor & Accessories",
+      "shortName": "Home décor",
+      "seoTitle": "Home Décor & Accessories Made in Edmonton"
+    }
+  }
+}
