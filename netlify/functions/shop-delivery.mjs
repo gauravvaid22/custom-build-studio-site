@@ -38,13 +38,13 @@ export default async(request,context)=>{
       return reply({policy:next,saved:true});
     }
     if(action==='cleanup-preview'){
-      if(state.jobs.some(j=>['queued','shopify','website','error'].includes(j.status)))throw new Error('Finish existing updates first.');
+      if(state.jobs.some(j=>['queued','shopify','website'].includes(j.status) || (['delivery-pricing','fulfillment-cleanup'].includes(j.action)&&j.status==='error')))throw new Error('Finish existing updates first.');
       const sale=await getStore({name:'shop-orders-v1',consistency:'strong'}).get('config/shop-sale',{type:'json'});if(sale&&sale.status!=='inactive')throw new Error('End the sale first.');
       const plan=await previewCleanup(admin,state),fingerprint=deliveryFingerprint(plan);await store.setJSON('cleanup-preview',{plan,fingerprint,createdAt:Date.now()});return reply({rows:plan.groups.map(g=>({name:g.name,count:g.remove.length})),count:plan.groups.reduce((n,g)=>n+g.remove.length,0),fingerprint});
     }
     if(action==='cleanup-apply'){
       if(body.confirmPermanentRemoval!==true)throw new Error('Confirm removal of the reviewed pickup variants.');
-      if(state.jobs.some(j=>['queued','shopify','website','error'].includes(j.status)))throw new Error('Finish existing updates first.');
+      if(state.jobs.some(j=>['queued','shopify','website'].includes(j.status) || (['delivery-pricing','fulfillment-cleanup'].includes(j.action)&&j.status==='error')))throw new Error('Finish existing updates first.');
       const preview=await store.get('cleanup-preview',{type:'json'});if(!preview||preview.fingerprint!==body.fingerprint||preview.plan.sourceRevision!==state.revision||Date.now()-preview.createdAt>30*60000)throw new Error('Preview again before cleanup.');
       const job={id:randomUUID(),action:'fulfillment-cleanup',status:'queued',createdAt:new Date().toISOString(),completed:0,plan:preview.plan};
       await store.setJSON('delivery-backups/'+job.id,{state,plan:job.plan});state.jobs=[job,...state.jobs].slice(0,20);await writeState(store,state,etag);

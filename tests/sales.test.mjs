@@ -186,3 +186,5 @@ test("a scheduled sale can be cancelled and rejects a stale Shopify price", asyn
   assert.equal(catalog.get("skeleton-chameleon").variants.nodes[0].price, "41.00");
   assert.equal((await sale.cancelSchedule()).status, "inactive");
 });
+
+test('unified sales still publish and restore after pickup variants are removed',async()=>{const f=fixture();f.catalog.get('skeleton-chameleon').variants.nodes.pop();const sale=createSaleService({store:f.store,shopify:f.shopify,production:true,pricingDifferenceCents:0});const config={title:'Sale',percentage:10,scope:'products',productIds:['skeleton-chameleon'],endAt};const p=await sale.preview(config);await sale.publish(config,p.fingerprint,true);assert.equal(f.catalog.get('skeleton-chameleon').variants.nodes[0].price,'36.00');await sale.end();assert.equal(f.catalog.get('skeleton-chameleon').variants.nodes[0].price,'40.00');});
