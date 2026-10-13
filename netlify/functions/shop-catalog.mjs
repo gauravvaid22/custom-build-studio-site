@@ -18,7 +18,9 @@ export default async (request,context) => {
       if (action === 'availability') {
         const current=compileCatalog(products,state.collections || collections,Object.values(state.documents),state.archived);
         const ids=new Set(current.products.map(p=>p.id));
-        return reply({pricingUpdating:state.jobs.some(j=>j.action==='delivery-pricing' && ['queued','shopify','website','error'].includes(j.status)),archived:[...new Set([...state.archived,...(state.unavailableIds || []),...products.filter(p=>!ids.has(p.id)).map(p=>p.id)])],revision:state.revision});
+        const latestPublishing=state.jobs.filter(j=>j.action==='publish').filter((j,i,all)=>all.findIndex(x=>x.productId===j.productId)===i);
+        const shippingUpdate=latestPublishing.some(j=>['queued','shopify','website','error'].includes(j.status)&&[...(j.document?.products || []),...(j.previousDocument?.products || [])].some(p=>p.shippingPriceMode==='per-order'));
+        return reply({pricingUpdating:shippingUpdate || state.jobs.some(j=>j.action==='delivery-pricing' && ['queued','shopify','website','error'].includes(j.status)),archived:[...new Set([...state.archived,...(state.unavailableIds || []),...products.filter(p=>!ids.has(p.id)).map(p=>p.id)])],revision:state.revision});
       }
       const catalog = compileCatalog(products,state.collections || collections,Object.values(state.documents),state.archived);
       // Never expose editor drafts or private connection/settings data.
