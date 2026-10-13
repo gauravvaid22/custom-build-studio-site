@@ -5,7 +5,7 @@ import products from "./catalog";
 import collections from "../../commerce/collections.json";
 import headphoneSearch from "../../commerce/headphone-search.json";
 import maskSearch from "../../commerce/mask-search.json";
-const publicProducts = products.filter((product) => !("variantOf" in product));
+const publicProducts = products.filter((product) => !("variantOf" in product) && !product.purchaseOnly);
 const browsingProducts = publicProducts.filter(product => !("listingGroup" in product));
 const halloweenSpecialIds = collections.find((collection) => collection.id === "halloween")?.products || [];
 const canonical = (path: string) => business.origin + (path === "/" ? "/" : path.replace(/\/$/, "") + "/");

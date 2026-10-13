@@ -20,7 +20,8 @@ if (source || process.env.CONTEXT==='production') {
   snapshot.products=applyDefaultListingCovers(snapshot.products,baseline.products);
   const ids=new Set(snapshot.products.map(p=>p.id));
   if (ids.size!==snapshot.products.length) throw new Error('Duplicate catalog IDs.');
-  for (const p of snapshot.products) validateDocument({id:p.id,template:'single',products:[{...p,groupedDesigns:undefined}],pickupPriceDifferenceCents:p.pickupPriceDifferenceCents ?? 1000});
+  for(const root of snapshot.products.filter(p=>p.bundleOffers?.length))validateDocument({id:root.id,template:'design',products:snapshot.products.filter(p=>p.id===root.id||p.listingGroup===root.id||snapshot.products.find(x=>x.id===p.variantOf)?.listingGroup===root.id)});
+  for (const p of snapshot.products) validateDocument({id:p.id,template:'single',products:[{...p,groupedDesigns:undefined,bundleOffers:undefined}],pickupPriceDifferenceCents:p.pickupPriceDifferenceCents ?? 1000});
   // Unfinished previews never enter production products, routes or merchant feeds.
   const blocked=new Set(snapshot.products.filter(p=>p.launchReady===false).map(p=>p.id));
   const products=snapshot.products.filter(p=>!blocked.has(p.id) && !blocked.has(p.listingGroup) && !blocked.has(p.variantOf));

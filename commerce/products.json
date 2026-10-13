@@ -902,8 +902,8 @@
     "id": "mini-safari-animal-figurines",
     "name": "Mini Safari Animal Figurines — Choose Your Animal",
     "category": "Creatures & collectibles",
-    "priceCents": 1199,
-    "description": "Choose one mini safari animal figurine for a desk, shelf or collection. Pick from 12 pocket-sized animals: lion, caracal, gazelle, ostrich, capybara, giraffe, jaguar, gorilla, rhino, elephant, zebra or hippo. Source models are approximately 2–3 cm high. Each choice is one figure.",
+    "priceCents": 799,
+    "description": "Choose one mini safari animal figurine for a desk, shelf or collection. Pick from 12 pocket-sized animals: lion, caracal, gazelle, ostrich, capybara, giraffe, jaguar, gorilla, rhino, elephant, zebra or hippo. Source models are approximately 2–3 cm high. Each choice is one figure. Choose a single animal or build a pack with your favourite designs. Free shipping in Canada.",
     "included": "One selected assembled, multicolour animal figure as pictured. Display props are not included.",
     "dimensions": "Source figures are approximately 2–3 cm high; actual printed dimensions may vary slightly.",
     "notes": "Multicolour 3D-printed figurine with moving parts, assembled and ready as shown. Colour appearance can vary slightly with lighting and print batches. Display props are not included.",
@@ -1335,8 +1335,8 @@
         "id": "mini-safari-animal-figurines-design-mv5tpqtn",
         "label": "Pocket Lion",
         "dimensions": "Source model is approximately 2 cm high.",
-        "priceCents": 1199,
-        "basePriceCents": 699,
+        "priceCents": 799,
+        "basePriceCents": 299,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
       },
@@ -1344,8 +1344,8 @@
         "id": "mini-safari-animal-figurines-design-mv5tqbjb",
         "label": "Pocket Caracal",
         "dimensions": "Source model is approximately 2 cm high.",
-        "priceCents": 1199,
-        "basePriceCents": 699,
+        "priceCents": 799,
+        "basePriceCents": 299,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
       },
@@ -1353,8 +1353,8 @@
         "id": "mini-safari-animal-figurines-design-mv5tqlf6",
         "label": "Pocket Gazelle",
         "dimensions": "Source model is approximately 3 cm high.",
-        "priceCents": 1199,
-        "basePriceCents": 699,
+        "priceCents": 799,
+        "basePriceCents": 299,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
       },
@@ -1362,8 +1362,8 @@
         "id": "mini-safari-animal-figurines-design-mv5tqx57",
         "label": "Pocket Capybara",
         "dimensions": "Source model is approximately 2 cm high.",
-        "priceCents": 1199,
-        "basePriceCents": 699,
+        "priceCents": 799,
+        "basePriceCents": 299,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
       },
@@ -1371,8 +1371,8 @@
         "id": "mini-safari-animal-figurines-design-mv5trend",
         "label": "Pocket Ostrich",
         "dimensions": "Source model is approximately 3 cm high.",
-        "priceCents": 1199,
-        "basePriceCents": 699,
+        "priceCents": 799,
+        "basePriceCents": 299,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
       },
@@ -1380,8 +1380,8 @@
         "id": "mini-safari-animal-figurines-design-mv5tri0m",
         "label": "Pocket Giraffe",
         "dimensions": "Source model is approximately 2 cm high.",
-        "priceCents": 1199,
-        "basePriceCents": 699,
+        "priceCents": 799,
+        "basePriceCents": 299,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
       },
@@ -1389,8 +1389,8 @@
         "id": "mini-safari-animal-figurines-design-mv5trlc1",
         "label": "Pocket Jaguar",
         "dimensions": "Source model is approximately 2 cm high.",
-        "priceCents": 1199,
-        "basePriceCents": 699,
+        "priceCents": 799,
+        "basePriceCents": 299,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
       },
@@ -1398,8 +1398,8 @@
         "id": "mini-safari-animal-figurines-design-mv5tropd",
         "label": "Pocket Gorilla",
         "dimensions": "Source model is approximately 2 cm high.",
-        "priceCents": 1199,
-        "basePriceCents": 699,
+        "priceCents": 799,
+        "basePriceCents": 299,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
       },
@@ -1407,8 +1407,8 @@
         "id": "mini-safari-animal-figurines-design-mv5trs07",
         "label": "Pocket Rhino",
         "dimensions": "Source model is approximately 2 cm high.",
-        "priceCents": 1199,
-        "basePriceCents": 699,
+        "priceCents": 799,
+        "basePriceCents": 299,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
       },
@@ -1416,8 +1416,8 @@
         "id": "mini-safari-animal-figurines-design-mv5trwxm",
         "label": "Pocket Elephant",
         "dimensions": "Source model is approximately 2 cm high.",
-        "priceCents": 1199,
-        "basePriceCents": 699,
+        "priceCents": 799,
+        "basePriceCents": 299,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
       },
@@ -1425,8 +1425,8 @@
         "id": "mini-safari-animal-figurines-design-mv5ts09b",
         "label": "Pocket Zebra",
         "dimensions": "Source model is approximately 2 cm high.",
-        "priceCents": 1199,
-        "basePriceCents": 699,
+        "priceCents": 799,
+        "basePriceCents": 299,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
       },
@@ -1434,22 +1434,33 @@
         "id": "mini-safari-animal-figurines-design-mv5ts485",
         "label": "Pocket Hippo",
         "dimensions": "Source model is approximately 2 cm high.",
-        "priceCents": 1199,
-        "basePriceCents": 699,
+        "priceCents": 799,
+        "basePriceCents": 299,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
       }
     ],
-    "basePriceCents": 699,
+    "basePriceCents": 299,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "shippingPriceMode": "included",
+    "bundleOffers": [
+      {
+        "quantity": 5,
+        "sku": "mini-safari-animal-figurines-mix-pack-5"
+      },
+      {
+        "quantity": 10,
+        "sku": "mini-safari-animal-figurines-mix-pack-10"
+      }
+    ]
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5tpqtn",
     "name": "Pocket Lion",
     "category": "Creatures & collectibles",
-    "priceCents": 1199,
+    "priceCents": 799,
     "description": "A palm-sized little lion with a curled mane and bright expression.",
     "included": "One assembled multicolour Pocket Lion figurine with moving parts.",
     "dimensions": "Source model is approximately 2 cm high.",
@@ -1488,16 +1499,17 @@
     ],
     "listingGroup": "mini-safari-animal-figurines",
     "pickupPriceDifferenceCents": 0,
-    "basePriceCents": 699,
+    "basePriceCents": 299,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "shippingPriceMode": "included"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5tqbjb",
     "name": "Pocket Caracal",
     "category": "Creatures & collectibles",
-    "priceCents": 1199,
+    "priceCents": 799,
     "description": "A miniature wildcat with its signature tall, tufted ears.",
     "included": "One assembled multicolour Pocket Caracal figurine with moving parts.",
     "dimensions": "Source model is approximately 2 cm high.",
@@ -1536,16 +1548,17 @@
     ],
     "listingGroup": "mini-safari-animal-figurines",
     "pickupPriceDifferenceCents": 0,
-    "basePriceCents": 699,
+    "basePriceCents": 299,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "shippingPriceMode": "included"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5tqlf6",
     "name": "Pocket Gazelle",
     "category": "Creatures & collectibles",
-    "priceCents": 1199,
+    "priceCents": 799,
     "description": "A tiny gazelle with long legs and an alert look.",
     "included": "One assembled multicolour Pocket Gazelle figurine with moving parts.",
     "dimensions": "Source model is approximately 3 cm high.",
@@ -1586,16 +1599,17 @@
     "pickupPriceDifferenceCents": 0,
     "video": "https://cdn.shopify.com/videos/c/vp/3e9a79ad217c4d31a26a1a7a25ebfee7/3e9a79ad217c4d31a26a1a7a25ebfee7.SD-480p-0.9Mbps-97251846.mp4",
     "videoMediaId": "gid://shopify/Video/46590113579307",
-    "basePriceCents": 699,
+    "basePriceCents": 299,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "shippingPriceMode": "included"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5tqx57",
     "name": "Pocket Capybara",
     "category": "Creatures & collectibles",
-    "priceCents": 1199,
+    "priceCents": 799,
     "description": "A mini capybara with an easygoing look for a desk or shelf.",
     "included": "One assembled multicolour Pocket Capybara figurine with moving parts.",
     "dimensions": "Source model is approximately 2 cm high.",
@@ -1630,16 +1644,17 @@
     "pickupPriceDifferenceCents": 0,
     "video": "https://cdn.shopify.com/videos/c/vp/8892af493db6458f8ff45fdf7756017a/8892af493db6458f8ff45fdf7756017a.SD-480p-0.9Mbps-97251865.mp4",
     "videoMediaId": "gid://shopify/Video/46590115053867",
-    "basePriceCents": 699,
+    "basePriceCents": 299,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "shippingPriceMode": "included"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5trend",
     "name": "Pocket Ostrich",
     "category": "Creatures & collectibles",
-    "priceCents": 1199,
+    "priceCents": 799,
     "description": "A compact ostrich with a rounded body and expressive eyes.",
     "included": "One assembled multicolour Pocket Ostrich figurine with moving parts.",
     "dimensions": "Source model is approximately 3 cm high.",
@@ -1680,16 +1695,17 @@
     "pickupPriceDifferenceCents": 0,
     "video": "https://cdn.shopify.com/videos/c/vp/fbc7fcf533bb468c86a14b6dc2486b26/fbc7fcf533bb468c86a14b6dc2486b26.SD-480p-0.9Mbps-97251894.mp4",
     "videoMediaId": "gid://shopify/Video/46590116135211",
-    "basePriceCents": 699,
+    "basePriceCents": 299,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "shippingPriceMode": "included"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5tri0m",
     "name": "Pocket Giraffe",
     "category": "Creatures & collectibles",
-    "priceCents": 1199,
+    "priceCents": 799,
     "description": "A little giraffe with a tall neck and spotted coat.",
     "included": "One assembled multicolour Pocket Giraffe figurine with moving parts.",
     "dimensions": "Source model is approximately 2 cm high.",
@@ -1724,16 +1740,17 @@
     "pickupPriceDifferenceCents": 0,
     "video": "https://cdn.shopify.com/videos/c/vp/02618388077b4f71b730e3383714367e/02618388077b4f71b730e3383714367e.SD-480p-0.9Mbps-97252310.mp4",
     "videoMediaId": "gid://shopify/Video/46590132224299",
-    "basePriceCents": 699,
+    "basePriceCents": 299,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "shippingPriceMode": "included"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5trlc1",
     "name": "Pocket Jaguar",
     "category": "Creatures & collectibles",
-    "priceCents": 1199,
+    "priceCents": 799,
     "description": "A miniature jaguar with a spotted coat and low, prowling pose.",
     "included": "One assembled multicolour Pocket Jaguar figurine with moving parts.",
     "dimensions": "Source model is approximately 2 cm high.",
@@ -1768,16 +1785,17 @@
     "pickupPriceDifferenceCents": 0,
     "video": "https://cdn.shopify.com/videos/c/vp/0341b13e0c5f4f75989958d939a07e6f/0341b13e0c5f4f75989958d939a07e6f.SD-480p-0.9Mbps-97251995.mp4",
     "videoMediaId": "gid://shopify/Video/46590121607467",
-    "basePriceCents": 699,
+    "basePriceCents": 299,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "shippingPriceMode": "included"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5tropd",
     "name": "Pocket Gorilla",
     "category": "Creatures & collectibles",
-    "priceCents": 1199,
+    "priceCents": 799,
     "description": "A small gorilla figure with a sturdy stance and dark details.",
     "included": "One assembled multicolour Pocket Gorilla figurine with moving parts.",
     "dimensions": "Source model is approximately 2 cm high.",
@@ -1812,16 +1830,17 @@
     "pickupPriceDifferenceCents": 0,
     "video": "https://cdn.shopify.com/videos/c/vp/b883db4c7fd5411fb41a1c5454894833/b883db4c7fd5411fb41a1c5454894833.SD-480p-0.9Mbps-97252019.mp4",
     "videoMediaId": "gid://shopify/Video/46590122852651",
-    "basePriceCents": 699,
+    "basePriceCents": 299,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "shippingPriceMode": "included"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5trs07",
     "name": "Pocket Rhino",
     "category": "Creatures & collectibles",
-    "priceCents": 1199,
+    "priceCents": 799,
     "description": "A tiny rhino with a sculpted horn and sturdy legs.",
     "included": "One assembled multicolour Pocket Rhino figurine with moving parts.",
     "dimensions": "Source model is approximately 2 cm high.",
@@ -1862,16 +1881,17 @@
     "pickupPriceDifferenceCents": 0,
     "video": "https://cdn.shopify.com/videos/c/vp/570c56fcaf2541f38bff8cb920250147/570c56fcaf2541f38bff8cb920250147.SD-480p-0.9Mbps-97252086.mp4",
     "videoMediaId": "gid://shopify/Video/46590126752043",
-    "basePriceCents": 699,
+    "basePriceCents": 299,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "shippingPriceMode": "included"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5trwxm",
     "name": "Pocket Elephant",
     "category": "Creatures & collectibles",
-    "priceCents": 1199,
+    "priceCents": 799,
     "description": "A petite elephant with wide ears and tiny tusks.",
     "included": "One assembled multicolour Pocket Elephant figurine with moving parts.",
     "dimensions": "Source model is approximately 2 cm high.",
@@ -1906,16 +1926,17 @@
     "pickupPriceDifferenceCents": 0,
     "video": "https://cdn.shopify.com/videos/c/vp/d3361ddeac1e47d9bb99d0665a7fa969/d3361ddeac1e47d9bb99d0665a7fa969.SD-480p-0.9Mbps-97252223.mp4",
     "videoMediaId": "gid://shopify/Video/46590127604011",
-    "basePriceCents": 699,
+    "basePriceCents": 299,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "shippingPriceMode": "included"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5ts09b",
     "name": "Pocket Zebra",
     "category": "Creatures & collectibles",
-    "priceCents": 1199,
+    "priceCents": 799,
     "description": "A small zebra with sculpted stripes and a compact pose.",
     "included": "One assembled multicolour Pocket Zebra figurine with moving parts.",
     "dimensions": "Source model is approximately 2 cm high.",
@@ -1956,16 +1977,17 @@
     "pickupPriceDifferenceCents": 0,
     "video": "https://cdn.shopify.com/videos/c/vp/2b412fc29548473e84514de646c0d057/2b412fc29548473e84514de646c0d057.SD-480p-0.9Mbps-97252246.mp4",
     "videoMediaId": "gid://shopify/Video/46590128881963",
-    "basePriceCents": 699,
+    "basePriceCents": 299,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "shippingPriceMode": "included"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5ts485",
     "name": "Pocket Hippo",
     "category": "Creatures & collectibles",
-    "priceCents": 1199,
+    "priceCents": 799,
     "description": "A rounded mini hippo with textured hide and a gentle expression.",
     "included": "One assembled multicolour Pocket Hippo figurine with moving parts.",
     "dimensions": "Source model is approximately 2 cm high.",
@@ -2000,10 +2022,1093 @@
     "pickupPriceDifferenceCents": 0,
     "video": "https://cdn.shopify.com/videos/c/vp/5a629c55f8cf4072b6f1c41977be73e5/5a629c55f8cf4072b6f1c41977be73e5.SD-480p-0.9Mbps-97252282.mp4",
     "videoMediaId": "gid://shopify/Video/46590130356523",
-    "basePriceCents": 699,
+    "basePriceCents": 299,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "shippingPriceMode": "included"
+  },
+  {
+    "id": "mini-safari-animal-figurines-mix-pack",
+    "name": "Mini Safari Animal Figurines — Mix & Match Pack",
+    "category": "Creatures & collectibles",
+    "priceCents": 2999,
+    "description": "Build your own animal pack. The selected animal quantities are listed on your order. Free shipping in Canada.",
+    "included": "Your selected animal pack, assembled as pictured.",
+    "dimensions": "Source figures are approximately 2–3 cm high; actual printed dimensions may vary slightly.",
+    "notes": "Multicolour 3D-printed figurine with moving parts, assembled and ready as shown. Colour appearance can vary slightly with lighting and print batches. Display props are not included.",
+    "images": [
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/cover-1200.webp?v=1791844099",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/cover-1200.webp?v=1791844099",
+        "alt": "Mini Safari Animal Figurines — Choose Your Animal",
+        "mediaId": "gid://shopify/MediaImage/46587347075371"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_2909f3ec-8533-487f-aad2-0e4f83c53404.webp?v=1791844114",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_2909f3ec-8533-487f-aad2-0e4f83c53404.webp?v=1791844114",
+        "alt": "Pocket Lion",
+        "mediaId": "gid://shopify/MediaImage/46587348451627"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_5f23da52-579b-4ec6-8b86-8c6fc4b38115.webp?v=1791844133",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_5f23da52-579b-4ec6-8b86-8c6fc4b38115.webp?v=1791844133",
+        "alt": "Pocket Caracal",
+        "mediaId": "gid://shopify/MediaImage/46587389378859"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_d801c675-aebf-4ae7-aea8-f2c6c9931476.webp?v=1791844147",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_d801c675-aebf-4ae7-aea8-f2c6c9931476.webp?v=1791844147",
+        "alt": "Pocket Gazelle",
+        "mediaId": "gid://shopify/MediaImage/46587407434027"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_d3ea2177-48e9-4426-b92a-6b56609894b0.webp?v=1791844162",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_d3ea2177-48e9-4426-b92a-6b56609894b0.webp?v=1791844162",
+        "alt": "Pocket Capybara",
+        "mediaId": "gid://shopify/MediaImage/46587408744747"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_c0e935d7-8ea3-4ea8-bff0-636c618bb3cc.webp?v=1791844184",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_c0e935d7-8ea3-4ea8-bff0-636c618bb3cc.webp?v=1791844184",
+        "alt": "Pocket Ostrich",
+        "mediaId": "gid://shopify/MediaImage/46587409695019"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_6eb01f5d-b412-49cc-9726-88637dfdd079.webp?v=1791844188",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_6eb01f5d-b412-49cc-9726-88637dfdd079.webp?v=1791844188",
+        "alt": "Pocket Giraffe",
+        "mediaId": "gid://shopify/MediaImage/46587409957163"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_b3bd58d1-46c1-4663-9ad8-cab4b0949681.webp?v=1791844193",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_b3bd58d1-46c1-4663-9ad8-cab4b0949681.webp?v=1791844193",
+        "alt": "Pocket Jaguar",
+        "mediaId": "gid://shopify/MediaImage/46587410153771"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_8be6aa4c-e521-443e-9446-f55ea800c647.webp?v=1791844197",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_8be6aa4c-e521-443e-9446-f55ea800c647.webp?v=1791844197",
+        "alt": "Pocket Gorilla",
+        "mediaId": "gid://shopify/MediaImage/46587456749867"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_7e009e58-ca59-4674-aec4-3e7249ede297.webp?v=1791844203",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_7e009e58-ca59-4674-aec4-3e7249ede297.webp?v=1791844203",
+        "alt": "Pocket Rhino",
+        "mediaId": "gid://shopify/MediaImage/46587457601835"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_dc3c9128-b0c4-4e7f-9aea-fbd19eb2732d.webp?v=1791844208",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_dc3c9128-b0c4-4e7f-9aea-fbd19eb2732d.webp?v=1791844208",
+        "alt": "Pocket Elephant",
+        "mediaId": "gid://shopify/MediaImage/46587467039019"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_6e8120d4-a519-4c8d-bc40-90fae2f50009.webp?v=1791844212",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_6e8120d4-a519-4c8d-bc40-90fae2f50009.webp?v=1791844212",
+        "alt": "Pocket Zebra",
+        "mediaId": "gid://shopify/MediaImage/46587467301163"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_8d595451-43ef-48be-86a7-f173480ebc8a.webp?v=1791844217",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_8d595451-43ef-48be-86a7-f173480ebc8a.webp?v=1791844217",
+        "alt": "Pocket Hippo",
+        "mediaId": "gid://shopify/MediaImage/46587467858219"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-2.webp?v=1791850737",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-2.webp?v=1791850737",
+        "alt": "Pocket Lion",
+        "mediaId": "gid://shopify/MediaImage/46590080549163"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-3.webp?v=1791850741",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-3.webp?v=1791850741",
+        "alt": "Pocket Lion",
+        "mediaId": "gid://shopify/MediaImage/46590080647467"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-4.webp?v=1791850745",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-4.webp?v=1791850745",
+        "alt": "Pocket Lion",
+        "mediaId": "gid://shopify/MediaImage/46590084186411"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-5.webp?v=1791850748",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-5.webp?v=1791850748",
+        "alt": "Pocket Lion",
+        "mediaId": "gid://shopify/MediaImage/46590100570411"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-2.webp?v=1791850768",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-2.webp?v=1791850768",
+        "alt": "Pocket Caracal",
+        "mediaId": "gid://shopify/MediaImage/46590112268587"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-3.webp?v=1791850772",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-3.webp?v=1791850772",
+        "alt": "Pocket Caracal",
+        "mediaId": "gid://shopify/MediaImage/46590112399659"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-4.webp?v=1791850775",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-4.webp?v=1791850775",
+        "alt": "Pocket Caracal",
+        "mediaId": "gid://shopify/MediaImage/46590112497963"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-5.webp?v=1791850779",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-5.webp?v=1791850779",
+        "alt": "Pocket Caracal",
+        "mediaId": "gid://shopify/MediaImage/46590112629035"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-2.webp?v=1791850785",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-2.webp?v=1791850785",
+        "alt": "Pocket Gazelle",
+        "mediaId": "gid://shopify/MediaImage/46590112792875"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-3.webp?v=1791850789",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-3.webp?v=1791850789",
+        "alt": "Pocket Gazelle",
+        "mediaId": "gid://shopify/MediaImage/46590112923947"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-4.webp?v=1791850793",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-4.webp?v=1791850793",
+        "alt": "Pocket Gazelle",
+        "mediaId": "gid://shopify/MediaImage/46590113349931"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-5.webp?v=1791850796",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-5.webp?v=1791850796",
+        "alt": "Pocket Gazelle",
+        "mediaId": "gid://shopify/MediaImage/46590113448235"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-2.webp?v=1791850823",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-2.webp?v=1791850823",
+        "alt": "Pocket Capybara",
+        "mediaId": "gid://shopify/MediaImage/46590114332971"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-3.webp?v=1791850827",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-3.webp?v=1791850827",
+        "alt": "Pocket Capybara",
+        "mediaId": "gid://shopify/MediaImage/46590114464043"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-4.webp?v=1791850830",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-4.webp?v=1791850830",
+        "alt": "Pocket Capybara",
+        "mediaId": "gid://shopify/MediaImage/46590114922795"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-2.webp?v=1791850857",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-2.webp?v=1791850857",
+        "alt": "Pocket Ostrich",
+        "mediaId": "gid://shopify/MediaImage/46590115643691"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-3.webp?v=1791850861",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-3.webp?v=1791850861",
+        "alt": "Pocket Ostrich",
+        "mediaId": "gid://shopify/MediaImage/46590115774763"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-4.webp?v=1791850864",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-4.webp?v=1791850864",
+        "alt": "Pocket Ostrich",
+        "mediaId": "gid://shopify/MediaImage/46590115873067"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-5.webp?v=1791850868",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-5.webp?v=1791850868",
+        "alt": "Pocket Ostrich",
+        "mediaId": "gid://shopify/MediaImage/46590115971371"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-2_284bcf8b-3893-4570-84d6-e76045b06aa0.webp?v=1791851237",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-2_284bcf8b-3893-4570-84d6-e76045b06aa0.webp?v=1791851237",
+        "alt": "Pocket Giraffe",
+        "mediaId": "gid://shopify/MediaImage/46590131863851"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-3_ae8604f8-16a1-481b-a979-d108611520d4.webp?v=1791851240",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-3_ae8604f8-16a1-481b-a979-d108611520d4.webp?v=1791851240",
+        "alt": "Pocket Giraffe",
+        "mediaId": "gid://shopify/MediaImage/46590131962155"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-4_209b6ac3-a79b-4970-aefe-efb24f0d2d8e.webp?v=1791851244",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-4_209b6ac3-a79b-4970-aefe-efb24f0d2d8e.webp?v=1791851244",
+        "alt": "Pocket Giraffe",
+        "mediaId": "gid://shopify/MediaImage/46590132060459"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-2.webp?v=1791850994",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-2.webp?v=1791850994",
+        "alt": "Pocket Jaguar",
+        "mediaId": "gid://shopify/MediaImage/46590121115947"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-3.webp?v=1791850998",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-3.webp?v=1791850998",
+        "alt": "Pocket Jaguar",
+        "mediaId": "gid://shopify/MediaImage/46590121247019"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-4.webp?v=1791851001",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-4.webp?v=1791851001",
+        "alt": "Pocket Jaguar",
+        "mediaId": "gid://shopify/MediaImage/46590121378091"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-2.webp?v=1791851028",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-2.webp?v=1791851028",
+        "alt": "Pocket Gorilla",
+        "mediaId": "gid://shopify/MediaImage/46590122361131"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-3.webp?v=1791851032",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-3.webp?v=1791851032",
+        "alt": "Pocket Gorilla",
+        "mediaId": "gid://shopify/MediaImage/46590122557739"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-4.webp?v=1791851036",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-4.webp?v=1791851036",
+        "alt": "Pocket Gorilla",
+        "mediaId": "gid://shopify/MediaImage/46590122688811"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-2.webp?v=1791851072",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-2.webp?v=1791851072",
+        "alt": "Pocket Rhino",
+        "mediaId": "gid://shopify/MediaImage/46590126260523"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-3.webp?v=1791851076",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-3.webp?v=1791851076",
+        "alt": "Pocket Rhino",
+        "mediaId": "gid://shopify/MediaImage/46590126358827"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-4.webp?v=1791851079",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-4.webp?v=1791851079",
+        "alt": "Pocket Rhino",
+        "mediaId": "gid://shopify/MediaImage/46590126457131"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-5.webp?v=1791851083",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-5.webp?v=1791851083",
+        "alt": "Pocket Rhino",
+        "mediaId": "gid://shopify/MediaImage/46590126555435"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-2.webp?v=1791851109",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-2.webp?v=1791851109",
+        "alt": "Pocket Elephant",
+        "mediaId": "gid://shopify/MediaImage/46590127276331"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-3.webp?v=1791851112",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-3.webp?v=1791851112",
+        "alt": "Pocket Elephant",
+        "mediaId": "gid://shopify/MediaImage/46590127374635"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-4.webp?v=1791851116",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-4.webp?v=1791851116",
+        "alt": "Pocket Elephant",
+        "mediaId": "gid://shopify/MediaImage/46590127472939"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-2.webp?v=1791851147",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-2.webp?v=1791851147",
+        "alt": "Pocket Zebra",
+        "mediaId": "gid://shopify/MediaImage/46590128521515"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-3.webp?v=1791851151",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-3.webp?v=1791851151",
+        "alt": "Pocket Zebra",
+        "mediaId": "gid://shopify/MediaImage/46590128652587"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-4.webp?v=1791851154",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-4.webp?v=1791851154",
+        "alt": "Pocket Zebra",
+        "mediaId": "gid://shopify/MediaImage/46590128750891"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-5.webp?v=1791851158",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-5.webp?v=1791851158",
+        "alt": "Pocket Zebra",
+        "mediaId": "gid://shopify/MediaImage/46590128816427"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-2.webp?v=1791851186",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-2.webp?v=1791851186",
+        "alt": "Pocket Hippo",
+        "mediaId": "gid://shopify/MediaImage/46590130028843"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-3.webp?v=1791851189",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-3.webp?v=1791851189",
+        "alt": "Pocket Hippo",
+        "mediaId": "gid://shopify/MediaImage/46590130159915"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-4.webp?v=1791851193",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-4.webp?v=1791851193",
+        "alt": "Pocket Hippo",
+        "mediaId": "gid://shopify/MediaImage/46590130258219"
+      }
+    ],
+    "seasonal": false,
+    "productionReviewed": false,
+    "pickupPriceDifferenceCents": 0,
+    "variantLabel": "Pack size",
+    "galleryOverviewCover": true,
+    "variants": [
+      {
+        "id": "mini-safari-animal-figurines-mix-pack-5",
+        "label": "5 animals",
+        "dimensions": "Source figures are approximately 2–3 cm high; actual printed dimensions may vary slightly.",
+        "priceCents": 2999,
+        "basePriceCents": 2499,
+        "deliveryExtraCents": 0,
+        "pricingSchemaVersion": 2
+      },
+      {
+        "id": "mini-safari-animal-figurines-mix-pack-10",
+        "label": "10 animals",
+        "dimensions": "Source figures are approximately 2–3 cm high; actual printed dimensions may vary slightly.",
+        "priceCents": 5499,
+        "basePriceCents": 4999,
+        "deliveryExtraCents": 0,
+        "pricingSchemaVersion": 2
+      }
+    ],
+    "basePriceCents": 2499,
+    "deliveryExtraCents": 0,
+    "pricingSchemaVersion": 2,
+    "shippingFeeCents": 0,
+    "shippingPriceMode": "included",
+    "purchaseOnly": true,
+    "listingGroup": "mini-safari-animal-figurines"
+  },
+  {
+    "id": "mini-safari-animal-figurines-mix-pack-5",
+    "name": "Mini Safari Animal Figurines — Mix & Match Pack — 5 animals",
+    "category": "Creatures & collectibles",
+    "priceCents": 2999,
+    "description": "Build your own animal pack. The selected animal quantities are listed on your order. Free shipping in Canada.",
+    "included": "Your selected animal pack, assembled as pictured.",
+    "dimensions": "Source figures are approximately 2–3 cm high; actual printed dimensions may vary slightly.",
+    "notes": "Multicolour 3D-printed figurine with moving parts, assembled and ready as shown. Colour appearance can vary slightly with lighting and print batches. Display props are not included.",
+    "images": [
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/cover-1200.webp?v=1791844099",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/cover-1200.webp?v=1791844099",
+        "alt": "Mini Safari Animal Figurines — Choose Your Animal",
+        "mediaId": "gid://shopify/MediaImage/46587347075371"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_2909f3ec-8533-487f-aad2-0e4f83c53404.webp?v=1791844114",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_2909f3ec-8533-487f-aad2-0e4f83c53404.webp?v=1791844114",
+        "alt": "Pocket Lion",
+        "mediaId": "gid://shopify/MediaImage/46587348451627"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_5f23da52-579b-4ec6-8b86-8c6fc4b38115.webp?v=1791844133",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_5f23da52-579b-4ec6-8b86-8c6fc4b38115.webp?v=1791844133",
+        "alt": "Pocket Caracal",
+        "mediaId": "gid://shopify/MediaImage/46587389378859"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_d801c675-aebf-4ae7-aea8-f2c6c9931476.webp?v=1791844147",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_d801c675-aebf-4ae7-aea8-f2c6c9931476.webp?v=1791844147",
+        "alt": "Pocket Gazelle",
+        "mediaId": "gid://shopify/MediaImage/46587407434027"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_d3ea2177-48e9-4426-b92a-6b56609894b0.webp?v=1791844162",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_d3ea2177-48e9-4426-b92a-6b56609894b0.webp?v=1791844162",
+        "alt": "Pocket Capybara",
+        "mediaId": "gid://shopify/MediaImage/46587408744747"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_c0e935d7-8ea3-4ea8-bff0-636c618bb3cc.webp?v=1791844184",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_c0e935d7-8ea3-4ea8-bff0-636c618bb3cc.webp?v=1791844184",
+        "alt": "Pocket Ostrich",
+        "mediaId": "gid://shopify/MediaImage/46587409695019"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_6eb01f5d-b412-49cc-9726-88637dfdd079.webp?v=1791844188",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_6eb01f5d-b412-49cc-9726-88637dfdd079.webp?v=1791844188",
+        "alt": "Pocket Giraffe",
+        "mediaId": "gid://shopify/MediaImage/46587409957163"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_b3bd58d1-46c1-4663-9ad8-cab4b0949681.webp?v=1791844193",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_b3bd58d1-46c1-4663-9ad8-cab4b0949681.webp?v=1791844193",
+        "alt": "Pocket Jaguar",
+        "mediaId": "gid://shopify/MediaImage/46587410153771"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_8be6aa4c-e521-443e-9446-f55ea800c647.webp?v=1791844197",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_8be6aa4c-e521-443e-9446-f55ea800c647.webp?v=1791844197",
+        "alt": "Pocket Gorilla",
+        "mediaId": "gid://shopify/MediaImage/46587456749867"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_7e009e58-ca59-4674-aec4-3e7249ede297.webp?v=1791844203",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_7e009e58-ca59-4674-aec4-3e7249ede297.webp?v=1791844203",
+        "alt": "Pocket Rhino",
+        "mediaId": "gid://shopify/MediaImage/46587457601835"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_dc3c9128-b0c4-4e7f-9aea-fbd19eb2732d.webp?v=1791844208",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_dc3c9128-b0c4-4e7f-9aea-fbd19eb2732d.webp?v=1791844208",
+        "alt": "Pocket Elephant",
+        "mediaId": "gid://shopify/MediaImage/46587467039019"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_6e8120d4-a519-4c8d-bc40-90fae2f50009.webp?v=1791844212",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_6e8120d4-a519-4c8d-bc40-90fae2f50009.webp?v=1791844212",
+        "alt": "Pocket Zebra",
+        "mediaId": "gid://shopify/MediaImage/46587467301163"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_8d595451-43ef-48be-86a7-f173480ebc8a.webp?v=1791844217",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_8d595451-43ef-48be-86a7-f173480ebc8a.webp?v=1791844217",
+        "alt": "Pocket Hippo",
+        "mediaId": "gid://shopify/MediaImage/46587467858219"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-2.webp?v=1791850737",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-2.webp?v=1791850737",
+        "alt": "Pocket Lion",
+        "mediaId": "gid://shopify/MediaImage/46590080549163"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-3.webp?v=1791850741",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-3.webp?v=1791850741",
+        "alt": "Pocket Lion",
+        "mediaId": "gid://shopify/MediaImage/46590080647467"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-4.webp?v=1791850745",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-4.webp?v=1791850745",
+        "alt": "Pocket Lion",
+        "mediaId": "gid://shopify/MediaImage/46590084186411"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-5.webp?v=1791850748",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-5.webp?v=1791850748",
+        "alt": "Pocket Lion",
+        "mediaId": "gid://shopify/MediaImage/46590100570411"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-2.webp?v=1791850768",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-2.webp?v=1791850768",
+        "alt": "Pocket Caracal",
+        "mediaId": "gid://shopify/MediaImage/46590112268587"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-3.webp?v=1791850772",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-3.webp?v=1791850772",
+        "alt": "Pocket Caracal",
+        "mediaId": "gid://shopify/MediaImage/46590112399659"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-4.webp?v=1791850775",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-4.webp?v=1791850775",
+        "alt": "Pocket Caracal",
+        "mediaId": "gid://shopify/MediaImage/46590112497963"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-5.webp?v=1791850779",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-5.webp?v=1791850779",
+        "alt": "Pocket Caracal",
+        "mediaId": "gid://shopify/MediaImage/46590112629035"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-2.webp?v=1791850785",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-2.webp?v=1791850785",
+        "alt": "Pocket Gazelle",
+        "mediaId": "gid://shopify/MediaImage/46590112792875"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-3.webp?v=1791850789",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-3.webp?v=1791850789",
+        "alt": "Pocket Gazelle",
+        "mediaId": "gid://shopify/MediaImage/46590112923947"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-4.webp?v=1791850793",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-4.webp?v=1791850793",
+        "alt": "Pocket Gazelle",
+        "mediaId": "gid://shopify/MediaImage/46590113349931"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-5.webp?v=1791850796",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-5.webp?v=1791850796",
+        "alt": "Pocket Gazelle",
+        "mediaId": "gid://shopify/MediaImage/46590113448235"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-2.webp?v=1791850823",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-2.webp?v=1791850823",
+        "alt": "Pocket Capybara",
+        "mediaId": "gid://shopify/MediaImage/46590114332971"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-3.webp?v=1791850827",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-3.webp?v=1791850827",
+        "alt": "Pocket Capybara",
+        "mediaId": "gid://shopify/MediaImage/46590114464043"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-4.webp?v=1791850830",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-4.webp?v=1791850830",
+        "alt": "Pocket Capybara",
+        "mediaId": "gid://shopify/MediaImage/46590114922795"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-2.webp?v=1791850857",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-2.webp?v=1791850857",
+        "alt": "Pocket Ostrich",
+        "mediaId": "gid://shopify/MediaImage/46590115643691"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-3.webp?v=1791850861",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-3.webp?v=1791850861",
+        "alt": "Pocket Ostrich",
+        "mediaId": "gid://shopify/MediaImage/46590115774763"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-4.webp?v=1791850864",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-4.webp?v=1791850864",
+        "alt": "Pocket Ostrich",
+        "mediaId": "gid://shopify/MediaImage/46590115873067"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-5.webp?v=1791850868",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-5.webp?v=1791850868",
+        "alt": "Pocket Ostrich",
+        "mediaId": "gid://shopify/MediaImage/46590115971371"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-2_284bcf8b-3893-4570-84d6-e76045b06aa0.webp?v=1791851237",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-2_284bcf8b-3893-4570-84d6-e76045b06aa0.webp?v=1791851237",
+        "alt": "Pocket Giraffe",
+        "mediaId": "gid://shopify/MediaImage/46590131863851"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-3_ae8604f8-16a1-481b-a979-d108611520d4.webp?v=1791851240",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-3_ae8604f8-16a1-481b-a979-d108611520d4.webp?v=1791851240",
+        "alt": "Pocket Giraffe",
+        "mediaId": "gid://shopify/MediaImage/46590131962155"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-4_209b6ac3-a79b-4970-aefe-efb24f0d2d8e.webp?v=1791851244",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-4_209b6ac3-a79b-4970-aefe-efb24f0d2d8e.webp?v=1791851244",
+        "alt": "Pocket Giraffe",
+        "mediaId": "gid://shopify/MediaImage/46590132060459"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-2.webp?v=1791850994",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-2.webp?v=1791850994",
+        "alt": "Pocket Jaguar",
+        "mediaId": "gid://shopify/MediaImage/46590121115947"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-3.webp?v=1791850998",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-3.webp?v=1791850998",
+        "alt": "Pocket Jaguar",
+        "mediaId": "gid://shopify/MediaImage/46590121247019"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-4.webp?v=1791851001",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-4.webp?v=1791851001",
+        "alt": "Pocket Jaguar",
+        "mediaId": "gid://shopify/MediaImage/46590121378091"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-2.webp?v=1791851028",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-2.webp?v=1791851028",
+        "alt": "Pocket Gorilla",
+        "mediaId": "gid://shopify/MediaImage/46590122361131"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-3.webp?v=1791851032",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-3.webp?v=1791851032",
+        "alt": "Pocket Gorilla",
+        "mediaId": "gid://shopify/MediaImage/46590122557739"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-4.webp?v=1791851036",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-4.webp?v=1791851036",
+        "alt": "Pocket Gorilla",
+        "mediaId": "gid://shopify/MediaImage/46590122688811"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-2.webp?v=1791851072",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-2.webp?v=1791851072",
+        "alt": "Pocket Rhino",
+        "mediaId": "gid://shopify/MediaImage/46590126260523"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-3.webp?v=1791851076",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-3.webp?v=1791851076",
+        "alt": "Pocket Rhino",
+        "mediaId": "gid://shopify/MediaImage/46590126358827"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-4.webp?v=1791851079",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-4.webp?v=1791851079",
+        "alt": "Pocket Rhino",
+        "mediaId": "gid://shopify/MediaImage/46590126457131"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-5.webp?v=1791851083",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-5.webp?v=1791851083",
+        "alt": "Pocket Rhino",
+        "mediaId": "gid://shopify/MediaImage/46590126555435"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-2.webp?v=1791851109",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-2.webp?v=1791851109",
+        "alt": "Pocket Elephant",
+        "mediaId": "gid://shopify/MediaImage/46590127276331"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-3.webp?v=1791851112",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-3.webp?v=1791851112",
+        "alt": "Pocket Elephant",
+        "mediaId": "gid://shopify/MediaImage/46590127374635"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-4.webp?v=1791851116",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-4.webp?v=1791851116",
+        "alt": "Pocket Elephant",
+        "mediaId": "gid://shopify/MediaImage/46590127472939"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-2.webp?v=1791851147",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-2.webp?v=1791851147",
+        "alt": "Pocket Zebra",
+        "mediaId": "gid://shopify/MediaImage/46590128521515"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-3.webp?v=1791851151",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-3.webp?v=1791851151",
+        "alt": "Pocket Zebra",
+        "mediaId": "gid://shopify/MediaImage/46590128652587"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-4.webp?v=1791851154",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-4.webp?v=1791851154",
+        "alt": "Pocket Zebra",
+        "mediaId": "gid://shopify/MediaImage/46590128750891"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-5.webp?v=1791851158",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-5.webp?v=1791851158",
+        "alt": "Pocket Zebra",
+        "mediaId": "gid://shopify/MediaImage/46590128816427"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-2.webp?v=1791851186",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-2.webp?v=1791851186",
+        "alt": "Pocket Hippo",
+        "mediaId": "gid://shopify/MediaImage/46590130028843"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-3.webp?v=1791851189",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-3.webp?v=1791851189",
+        "alt": "Pocket Hippo",
+        "mediaId": "gid://shopify/MediaImage/46590130159915"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-4.webp?v=1791851193",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-4.webp?v=1791851193",
+        "alt": "Pocket Hippo",
+        "mediaId": "gid://shopify/MediaImage/46590130258219"
+      }
+    ],
+    "seasonal": false,
+    "productionReviewed": false,
+    "pickupPriceDifferenceCents": 0,
+    "variantLabel": "Pack size",
+    "galleryOverviewCover": true,
+    "basePriceCents": 2499,
+    "deliveryExtraCents": 0,
+    "pricingSchemaVersion": 2,
+    "shippingFeeCents": 0,
+    "shippingPriceMode": "included",
+    "purchaseOnly": true,
+    "variantOf": "mini-safari-animal-figurines-mix-pack"
+  },
+  {
+    "id": "mini-safari-animal-figurines-mix-pack-10",
+    "name": "Mini Safari Animal Figurines — Mix & Match Pack — 10 animals",
+    "category": "Creatures & collectibles",
+    "priceCents": 5499,
+    "description": "Build your own animal pack. The selected animal quantities are listed on your order. Free shipping in Canada.",
+    "included": "Your selected animal pack, assembled as pictured.",
+    "dimensions": "Source figures are approximately 2–3 cm high; actual printed dimensions may vary slightly.",
+    "notes": "Multicolour 3D-printed figurine with moving parts, assembled and ready as shown. Colour appearance can vary slightly with lighting and print batches. Display props are not included.",
+    "images": [
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/cover-1200.webp?v=1791844099",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/cover-1200.webp?v=1791844099",
+        "alt": "Mini Safari Animal Figurines — Choose Your Animal",
+        "mediaId": "gid://shopify/MediaImage/46587347075371"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_2909f3ec-8533-487f-aad2-0e4f83c53404.webp?v=1791844114",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_2909f3ec-8533-487f-aad2-0e4f83c53404.webp?v=1791844114",
+        "alt": "Pocket Lion",
+        "mediaId": "gid://shopify/MediaImage/46587348451627"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_5f23da52-579b-4ec6-8b86-8c6fc4b38115.webp?v=1791844133",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_5f23da52-579b-4ec6-8b86-8c6fc4b38115.webp?v=1791844133",
+        "alt": "Pocket Caracal",
+        "mediaId": "gid://shopify/MediaImage/46587389378859"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_d801c675-aebf-4ae7-aea8-f2c6c9931476.webp?v=1791844147",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_d801c675-aebf-4ae7-aea8-f2c6c9931476.webp?v=1791844147",
+        "alt": "Pocket Gazelle",
+        "mediaId": "gid://shopify/MediaImage/46587407434027"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_d3ea2177-48e9-4426-b92a-6b56609894b0.webp?v=1791844162",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_d3ea2177-48e9-4426-b92a-6b56609894b0.webp?v=1791844162",
+        "alt": "Pocket Capybara",
+        "mediaId": "gid://shopify/MediaImage/46587408744747"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_c0e935d7-8ea3-4ea8-bff0-636c618bb3cc.webp?v=1791844184",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_c0e935d7-8ea3-4ea8-bff0-636c618bb3cc.webp?v=1791844184",
+        "alt": "Pocket Ostrich",
+        "mediaId": "gid://shopify/MediaImage/46587409695019"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_6eb01f5d-b412-49cc-9726-88637dfdd079.webp?v=1791844188",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_6eb01f5d-b412-49cc-9726-88637dfdd079.webp?v=1791844188",
+        "alt": "Pocket Giraffe",
+        "mediaId": "gid://shopify/MediaImage/46587409957163"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_b3bd58d1-46c1-4663-9ad8-cab4b0949681.webp?v=1791844193",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_b3bd58d1-46c1-4663-9ad8-cab4b0949681.webp?v=1791844193",
+        "alt": "Pocket Jaguar",
+        "mediaId": "gid://shopify/MediaImage/46587410153771"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_8be6aa4c-e521-443e-9446-f55ea800c647.webp?v=1791844197",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_8be6aa4c-e521-443e-9446-f55ea800c647.webp?v=1791844197",
+        "alt": "Pocket Gorilla",
+        "mediaId": "gid://shopify/MediaImage/46587456749867"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_7e009e58-ca59-4674-aec4-3e7249ede297.webp?v=1791844203",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_7e009e58-ca59-4674-aec4-3e7249ede297.webp?v=1791844203",
+        "alt": "Pocket Rhino",
+        "mediaId": "gid://shopify/MediaImage/46587457601835"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_dc3c9128-b0c4-4e7f-9aea-fbd19eb2732d.webp?v=1791844208",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_dc3c9128-b0c4-4e7f-9aea-fbd19eb2732d.webp?v=1791844208",
+        "alt": "Pocket Elephant",
+        "mediaId": "gid://shopify/MediaImage/46587467039019"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_6e8120d4-a519-4c8d-bc40-90fae2f50009.webp?v=1791844212",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_6e8120d4-a519-4c8d-bc40-90fae2f50009.webp?v=1791844212",
+        "alt": "Pocket Zebra",
+        "mediaId": "gid://shopify/MediaImage/46587467301163"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_8d595451-43ef-48be-86a7-f173480ebc8a.webp?v=1791844217",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_8d595451-43ef-48be-86a7-f173480ebc8a.webp?v=1791844217",
+        "alt": "Pocket Hippo",
+        "mediaId": "gid://shopify/MediaImage/46587467858219"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-2.webp?v=1791850737",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-2.webp?v=1791850737",
+        "alt": "Pocket Lion",
+        "mediaId": "gid://shopify/MediaImage/46590080549163"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-3.webp?v=1791850741",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-3.webp?v=1791850741",
+        "alt": "Pocket Lion",
+        "mediaId": "gid://shopify/MediaImage/46590080647467"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-4.webp?v=1791850745",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-4.webp?v=1791850745",
+        "alt": "Pocket Lion",
+        "mediaId": "gid://shopify/MediaImage/46590084186411"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-5.webp?v=1791850748",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-5.webp?v=1791850748",
+        "alt": "Pocket Lion",
+        "mediaId": "gid://shopify/MediaImage/46590100570411"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-2.webp?v=1791850768",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-2.webp?v=1791850768",
+        "alt": "Pocket Caracal",
+        "mediaId": "gid://shopify/MediaImage/46590112268587"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-3.webp?v=1791850772",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-3.webp?v=1791850772",
+        "alt": "Pocket Caracal",
+        "mediaId": "gid://shopify/MediaImage/46590112399659"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-4.webp?v=1791850775",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-4.webp?v=1791850775",
+        "alt": "Pocket Caracal",
+        "mediaId": "gid://shopify/MediaImage/46590112497963"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-5.webp?v=1791850779",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-5.webp?v=1791850779",
+        "alt": "Pocket Caracal",
+        "mediaId": "gid://shopify/MediaImage/46590112629035"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-2.webp?v=1791850785",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-2.webp?v=1791850785",
+        "alt": "Pocket Gazelle",
+        "mediaId": "gid://shopify/MediaImage/46590112792875"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-3.webp?v=1791850789",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-3.webp?v=1791850789",
+        "alt": "Pocket Gazelle",
+        "mediaId": "gid://shopify/MediaImage/46590112923947"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-4.webp?v=1791850793",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-4.webp?v=1791850793",
+        "alt": "Pocket Gazelle",
+        "mediaId": "gid://shopify/MediaImage/46590113349931"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-5.webp?v=1791850796",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-5.webp?v=1791850796",
+        "alt": "Pocket Gazelle",
+        "mediaId": "gid://shopify/MediaImage/46590113448235"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-2.webp?v=1791850823",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-2.webp?v=1791850823",
+        "alt": "Pocket Capybara",
+        "mediaId": "gid://shopify/MediaImage/46590114332971"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-3.webp?v=1791850827",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-3.webp?v=1791850827",
+        "alt": "Pocket Capybara",
+        "mediaId": "gid://shopify/MediaImage/46590114464043"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-4.webp?v=1791850830",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-4.webp?v=1791850830",
+        "alt": "Pocket Capybara",
+        "mediaId": "gid://shopify/MediaImage/46590114922795"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-2.webp?v=1791850857",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-2.webp?v=1791850857",
+        "alt": "Pocket Ostrich",
+        "mediaId": "gid://shopify/MediaImage/46590115643691"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-3.webp?v=1791850861",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-3.webp?v=1791850861",
+        "alt": "Pocket Ostrich",
+        "mediaId": "gid://shopify/MediaImage/46590115774763"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-4.webp?v=1791850864",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-4.webp?v=1791850864",
+        "alt": "Pocket Ostrich",
+        "mediaId": "gid://shopify/MediaImage/46590115873067"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-5.webp?v=1791850868",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-5.webp?v=1791850868",
+        "alt": "Pocket Ostrich",
+        "mediaId": "gid://shopify/MediaImage/46590115971371"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-2_284bcf8b-3893-4570-84d6-e76045b06aa0.webp?v=1791851237",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-2_284bcf8b-3893-4570-84d6-e76045b06aa0.webp?v=1791851237",
+        "alt": "Pocket Giraffe",
+        "mediaId": "gid://shopify/MediaImage/46590131863851"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-3_ae8604f8-16a1-481b-a979-d108611520d4.webp?v=1791851240",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-3_ae8604f8-16a1-481b-a979-d108611520d4.webp?v=1791851240",
+        "alt": "Pocket Giraffe",
+        "mediaId": "gid://shopify/MediaImage/46590131962155"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-4_209b6ac3-a79b-4970-aefe-efb24f0d2d8e.webp?v=1791851244",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-4_209b6ac3-a79b-4970-aefe-efb24f0d2d8e.webp?v=1791851244",
+        "alt": "Pocket Giraffe",
+        "mediaId": "gid://shopify/MediaImage/46590132060459"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-2.webp?v=1791850994",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-2.webp?v=1791850994",
+        "alt": "Pocket Jaguar",
+        "mediaId": "gid://shopify/MediaImage/46590121115947"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-3.webp?v=1791850998",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-3.webp?v=1791850998",
+        "alt": "Pocket Jaguar",
+        "mediaId": "gid://shopify/MediaImage/46590121247019"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-4.webp?v=1791851001",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-4.webp?v=1791851001",
+        "alt": "Pocket Jaguar",
+        "mediaId": "gid://shopify/MediaImage/46590121378091"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-2.webp?v=1791851028",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-2.webp?v=1791851028",
+        "alt": "Pocket Gorilla",
+        "mediaId": "gid://shopify/MediaImage/46590122361131"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-3.webp?v=1791851032",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-3.webp?v=1791851032",
+        "alt": "Pocket Gorilla",
+        "mediaId": "gid://shopify/MediaImage/46590122557739"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-4.webp?v=1791851036",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-4.webp?v=1791851036",
+        "alt": "Pocket Gorilla",
+        "mediaId": "gid://shopify/MediaImage/46590122688811"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-2.webp?v=1791851072",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-2.webp?v=1791851072",
+        "alt": "Pocket Rhino",
+        "mediaId": "gid://shopify/MediaImage/46590126260523"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-3.webp?v=1791851076",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-3.webp?v=1791851076",
+        "alt": "Pocket Rhino",
+        "mediaId": "gid://shopify/MediaImage/46590126358827"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-4.webp?v=1791851079",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-4.webp?v=1791851079",
+        "alt": "Pocket Rhino",
+        "mediaId": "gid://shopify/MediaImage/46590126457131"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-5.webp?v=1791851083",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-5.webp?v=1791851083",
+        "alt": "Pocket Rhino",
+        "mediaId": "gid://shopify/MediaImage/46590126555435"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-2.webp?v=1791851109",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-2.webp?v=1791851109",
+        "alt": "Pocket Elephant",
+        "mediaId": "gid://shopify/MediaImage/46590127276331"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-3.webp?v=1791851112",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-3.webp?v=1791851112",
+        "alt": "Pocket Elephant",
+        "mediaId": "gid://shopify/MediaImage/46590127374635"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-4.webp?v=1791851116",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-4.webp?v=1791851116",
+        "alt": "Pocket Elephant",
+        "mediaId": "gid://shopify/MediaImage/46590127472939"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-2.webp?v=1791851147",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-2.webp?v=1791851147",
+        "alt": "Pocket Zebra",
+        "mediaId": "gid://shopify/MediaImage/46590128521515"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-3.webp?v=1791851151",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-3.webp?v=1791851151",
+        "alt": "Pocket Zebra",
+        "mediaId": "gid://shopify/MediaImage/46590128652587"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-4.webp?v=1791851154",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-4.webp?v=1791851154",
+        "alt": "Pocket Zebra",
+        "mediaId": "gid://shopify/MediaImage/46590128750891"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-5.webp?v=1791851158",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-5.webp?v=1791851158",
+        "alt": "Pocket Zebra",
+        "mediaId": "gid://shopify/MediaImage/46590128816427"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-2.webp?v=1791851186",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-2.webp?v=1791851186",
+        "alt": "Pocket Hippo",
+        "mediaId": "gid://shopify/MediaImage/46590130028843"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-3.webp?v=1791851189",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-3.webp?v=1791851189",
+        "alt": "Pocket Hippo",
+        "mediaId": "gid://shopify/MediaImage/46590130159915"
+      },
+      {
+        "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-4.webp?v=1791851193",
+        "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-4.webp?v=1791851193",
+        "alt": "Pocket Hippo",
+        "mediaId": "gid://shopify/MediaImage/46590130258219"
+      }
+    ],
+    "seasonal": false,
+    "productionReviewed": false,
+    "pickupPriceDifferenceCents": 0,
+    "variantLabel": "Pack size",
+    "galleryOverviewCover": true,
+    "basePriceCents": 4999,
+    "deliveryExtraCents": 0,
+    "pricingSchemaVersion": 2,
+    "shippingFeeCents": 0,
+    "shippingPriceMode": "included",
+    "purchaseOnly": true,
+    "variantOf": "mini-safari-animal-figurines-mix-pack"
   },
   {
     "id": "skeleton-chameleon",
