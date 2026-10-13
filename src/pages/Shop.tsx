@@ -958,7 +958,7 @@ export function ShopCart() {
     try {
       const expectedPrices = Object.fromEntries(items.map(item => { const product = catalogProduct(item.id)!; return [item.id, priceFor(item.id, product.priceCents)]; }));
       const checkoutUrl = await createShopifyCheckout(items, policy.active && pickupRequested ? "pickup" : mode, expectedPrices);
-      trackShop("begin_checkout", items.map(item => ({ ...item, priceCents: expectedPrices[item.id] })), mode);
+      trackShop("begin_checkout", items.map(item => ({ ...item, priceCents: expectedPrices[item.id] })), policy.active && pickupRequested ? "pickup" : mode);
       window.location.assign(checkoutUrl);
     } catch (checkoutError) {
       trackShopInteraction("checkout_error", { reason: (checkoutError as Error).message.includes("price has changed") ? "price_changed" : "checkout_unavailable", fulfillment_method: mode });
@@ -1091,7 +1091,7 @@ export function Checkout() {
     try {
       const expectedPrices = Object.fromEntries(items.map(item => { const product = catalogProduct(item.id)!; return [item.id, priceFor(item.id, product.priceCents)]; }));
       const checkoutUrl = await createShopifyCheckout(items, policy.active && pickupRequested ? "pickup" : mode, expectedPrices);
-      trackShop("begin_checkout", items.map(item => ({ ...item, priceCents: expectedPrices[item.id] })), mode);
+      trackShop("begin_checkout", items.map(item => ({ ...item, priceCents: expectedPrices[item.id] })), policy.active && pickupRequested ? "pickup" : mode);
       window.location.assign(checkoutUrl);
     } catch (checkoutError) {
       trackShopInteraction("checkout_error", { reason: (checkoutError as Error).message.includes("price has changed") ? "price_changed" : "checkout_unavailable", fulfillment_method: mode });

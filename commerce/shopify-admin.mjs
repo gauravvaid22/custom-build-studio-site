@@ -22,7 +22,7 @@ export function createShopifyAdmin({ legacyToken = "", clientId = "", clientSecr
     return cached;
   }
   async function call(query, variables = {}) {
-    for (let attempt = 0; attempt < 2; attempt++) {
+    for (let attempt = 0; attempt < 6; attempt++) {
       const accessToken = await token();
       const response = await fetcher(endpoint, {
         method: "POST",
@@ -32,6 +32,12 @@ export function createShopifyAdmin({ legacyToken = "", clientId = "", clientSecr
       });
       if (response.status === 401 && !legacyToken && attempt === 0) { cached = null; continue; }
       const payload = await response.json();
+      if(payload.errors?.some(error=>error.extensions?.code==='THROTTLED') && attempt<5){
+        const cost=payload.extensions?.cost,rate=cost?.throttleStatus?.restoreRate || 50;
+        const deficit=Math.max(100,(cost?.requestedQueryCost || 100)-(cost?.throttleStatus?.currentlyAvailable || 0));
+        await new Promise(resolve=>setTimeout(resolve,Math.min(10000,Math.ceil(deficit/rate*1000)+500)));
+        continue;
+      }
       if (!response.ok || payload.errors?.length || !payload.data)
         throw new Error(payload.errors?.map((error) => error.message).join("; ") || "Shopify Admin API is unavailable.");
       return payload.data;

@@ -52,10 +52,15 @@ export default async(request,context)=>{
     }
     if(action==='reward') {
       if(!policy.active||!policy.pickupRewardEnabled)throw new Error('Pickup rewards are not enabled.');
-      const reference=String(body.orderReference||'').trim();
+      const reference=String(body.orderReference||'').trim().replace(/^#/,'').toUpperCase();
       if(!/^#?[A-Za-z0-9-]{3,40}$/.test(reference)||body.collected!==true)throw new Error('Enter the paid Shopify order reference and confirm collection.');
       const existing=(state.pickupRewards || []).find(r=>r.orderReference===reference);if(existing)return reply({reward:existing});
-      const code='CBS-PICKUP-'+randomUUID().slice(0,8).toUpperCase(),expiresAt=new Date(Date.now()+policy.rewardExpiryDays*86400000).toISOString();
+      const sale=await getStore({name:'shop-orders-v1',consistency:'strong'}).get('config/shop-sale',{type:'json'});
+      if(sale && sale.status!=='inactive')throw new Error('Issue pickup rewards after the current sale ends. Existing reward codes pause during shop sales.');
+      // Deterministic per order: retrying after a network interruption cannot create two rewards.
+      const code='CBS-PICKUP-'+createHmac('sha256',process.env.SHOP_ADMIN_KEY).update(reference).digest('hex').slice(0,12).toUpperCase(),expiresAt=new Date(Date.now()+policy.rewardExpiryDays*86400000).toISOString();
+      const prior=await admin.call(`query ExistingPickupReward($code:String!){codeDiscountNodeByCode(code:$code){id codeDiscount{... on DiscountCodeBasic{endsAt customerGets{value{... on DiscountPercentage{percentage}}}}}}}`,{code});
+      if(prior.codeDiscountNodeByCode){const node=prior.codeDiscountNodeByCode;const reward={orderReference:reference,code,percentage:Math.round(node.codeDiscount.customerGets.value.percentage*100),expiresAt:node.codeDiscount.endsAt,shopifyId:node.id};state.pickupRewards=[reward,...(state.pickupRewards || [])];await writeState(store,state,etag);return reply({reward});}
       const result=await admin.call(`mutation PickupReward($input:DiscountCodeBasicInput!){discountCodeBasicCreate(basicCodeDiscount:$input){codeDiscountNode{id}userErrors{message}}}`,{input:{title:`Pickup thank you ${reference}`,code,startsAt:new Date().toISOString(),endsAt:expiresAt,usageLimit:1,appliesOncePerCustomer:true,customerSelection:{all:true},customerGets:{value:{percentage:policy.pickupRewardPercent/100},items:{all:true}},combinesWith:{orderDiscounts:false,productDiscounts:false,shippingDiscounts:false}}});
       if(result.discountCodeBasicCreate.userErrors.length)throw new Error(result.discountCodeBasicCreate.userErrors.map(e=>e.message).join('; '));
       const reward={orderReference:reference,code,percentage:policy.pickupRewardPercent,expiresAt,shopifyId:result.discountCodeBasicCreate.codeDiscountNode.id};

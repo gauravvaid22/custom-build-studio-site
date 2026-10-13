@@ -58,7 +58,7 @@ function variantIds(product) {
   return product.variants?.length ? product.variants.map((variant) => variant.id) : [product.id];
 }
 
-function planFromCatalog(config, catalog) {
+function planFromCatalog(config, catalog, difference = PICKUP_DIFFERENCE_CENTS) {
   const rows = [];
   const groups = [];
   for (const productId of config.productIds) {
@@ -76,10 +76,10 @@ function planFromCatalog(config, catalog) {
       const regularPickup = cents(pickup.price);
       if ([delivered, pickup].some((variant) => variant.compareAtPrice && cents(variant.compareAtPrice) > cents(variant.price)))
         throw new SaleError(`${product.name} already has a Shopify compare-at sale price. End that sale before applying a new one.`, 409);
-      if (regularDelivered - regularPickup !== PICKUP_DIFFERENCE_CENTS)
-        throw new SaleError(`${product.name} has a pickup price that is not CA$${money(PICKUP_DIFFERENCE_CENTS)} below delivery. Fix it in Shopify before running a sale.`, 409);
+      if (regularDelivered - regularPickup !== difference)
+        throw new SaleError(`${product.name} has a pickup price that is not CA$${money(difference)} below delivery. Fix it in Shopify before running a sale.`, 409);
       const saleDelivered = Math.round(regularDelivered * (100 - config.percentage) / 100);
-      const salePickup = saleDelivered - PICKUP_DIFFERENCE_CENTS;
+      const salePickup = saleDelivered - difference;
       if (salePickup < config.minimumPickupPriceCents)
         throw new SaleError(`${product.name} would fall below your minimum pickup sale price of CA$${money(config.minimumPickupPriceCents)}. Exclude it, lower the percentage, or change the minimum.`, 409);
       for (const [variant, regular, sale] of [[delivered, regularDelivered, saleDelivered], [pickup, regularPickup, salePickup]]) {
@@ -104,7 +104,7 @@ function publicSale(record) {
   };
 }
 
-export function createSaleService({ store, shopify, production = false, clock = () => new Date() }) {
+export function createSaleService({ store, shopify, production = false, clock = () => new Date(), pricingDifferenceCents = PICKUP_DIFFERENCE_CENTS }) {
   async function current() { return await store.get(recordKey); }
   async function status() {
     const found = await current();
@@ -129,7 +129,7 @@ export function createSaleService({ store, shopify, production = false, clock = 
     const config = validateConfig(input);
     if (Date.parse(config.endAt) <= clock().getTime()) throw new SaleError("The sale end must be in the future.");
     const catalog = await shopify.read(config.productIds.map((id) => baseById.get(id).shopifyHandle || id));
-    const plan = planFromCatalog(config, catalog);
+    const plan = planFromCatalog(config, catalog, pricingDifferenceCents);
     return { config, rows: plan.rows, fingerprint: hash({ config, groups: plan.groups }) };
   }
   async function publish(input, fingerprint, discountsChecked = false) {
@@ -143,12 +143,13 @@ export function createSaleService({ store, shopify, production = false, clock = 
       throw new SaleError("This sale starts in the future. Schedule it instead.");
     if (Date.parse(config.endAt) <= clock().getTime()) throw new SaleError("The sale end must be in the future.");
     const catalog = await shopify.read(config.productIds.map((id) => baseById.get(id).shopifyHandle || id));
-    const plan = planFromCatalog(config, catalog);
+    const plan = planFromCatalog(config, catalog, pricingDifferenceCents);
     if (fingerprint !== hash({ config, groups: plan.groups })) throw new SaleError("Shopify prices changed since the preview. Review the sale again.", 409);
     const record = { status: "publishing", config, groups: plan.groups, updatedAt: clock().toISOString() };
     const claim = await store.put(recordKey, record, found ? { onlyIfMatch: found.etag } : { onlyIfNew: true });
     if (!claim.modified) throw new SaleError("Sale settings changed. Refresh and try again.", 409);
     try {
+      await shopify.pauseRewards?.();
       for (const group of plan.groups) await shopify.update(group.productGraphqlId, group.variants.map((v) => ({ id: v.id, price: money(v.sale), compareAtPrice: money(v.regular) })));
       await verify(plan.groups, true);
       await store.put(recordKey, { ...record, status: "active", updatedAt: clock().toISOString() }, {});
@@ -157,6 +158,7 @@ export function createSaleService({ store, shopify, production = false, clock = 
       const message = error instanceof Error ? error.message : "Shopify could not activate the sale.";
       try {
         await restore(plan.groups);
+        await shopify.resumeRewards?.();
         await store.put(recordKey, { ...record, status: "inactive", lastError: message, updatedAt: clock().toISOString() }, {});
       } catch (recoveryError) {
         await store.put(recordKey, { ...record, status: "needs-attention", lastError: `${message} Recovery: ${recoveryError.message}`, updatedAt: clock().toISOString() }, {});
@@ -208,6 +210,7 @@ export function createSaleService({ store, shopify, production = false, clock = 
     if (!claim.modified) throw new SaleError("Sale status changed. Refresh and try again.", 409);
     try {
       await restore(ending.groups);
+      await shopify.resumeRewards?.();
       await store.put(recordKey, { ...ending, status: "inactive", lastError: "", updatedAt: clock().toISOString() }, {});
       return status();
     } catch (error) {
@@ -223,7 +226,7 @@ export function createSaleService({ store, shopify, production = false, clock = 
     const found = await current();
     if (found?.data?.status && found.data.status !== "inactive") throw new SaleError("A sale is already scheduled or active.", 409);
     const catalog = await shopify.read(config.productIds.map((id) => baseById.get(id).shopifyHandle || id));
-    const plan = planFromCatalog(config, catalog);
+    const plan = planFromCatalog(config, catalog, pricingDifferenceCents);
     if (fingerprint !== hash({ config, groups: plan.groups })) throw new SaleError("Shopify prices changed since the preview. Review the sale again.", 409);
     const record = { status: "scheduled", config, fingerprint, updatedAt: clock().toISOString() };
     const claim = await store.put(recordKey, record, found ? { onlyIfMatch: found.etag } : { onlyIfNew: true });

@@ -1,8 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {validateDocument,compileCatalog,seedDocuments,safeMediaUrl} from '../commerce/catalog-management.mjs';
+import {validateDocument as validateDocumentImpl,compileCatalog,seedDocuments,safeMediaUrl} from '../commerce/catalog-management.mjs';
 import {sessionCookie,requestAdminKey,requireAdmin} from '../commerce/admin-session.mjs';
-import {syncDocument,withdrawDocument} from '../commerce/catalog-shopify.mjs';
+import {syncDocument as syncDocumentImpl,withdrawDocument} from '../commerce/catalog-shopify.mjs';
+const validateDocument=(input,options={})=>validateDocumentImpl(input,{...options,policy:{active:false}});
+const syncDocument=(admin,doc,config={},expected={})=>syncDocumentImpl(admin,doc,{...config,pricingPolicy:{active:false}},expected);
 const product=(id='test-product')=>({id,name:'Test product',priceCents:2500,category:'Decor',description:'A desk decoration.',included:'One decoration; props excluded.',dimensions:'85 mm',notes:'Keep away from heat.',images:[{src:'/media/shop/test/1.webp',thumb:'/media/shop/test/1.webp',alt:'Test decoration'}],pickupPriceDifferenceCents:1000});
 const document=()=>({id:'test-product',template:'single',products:[product()],categoryIds:['decor'],pickupPriceDifferenceCents:1000,fulfillmentConfirmed:true});
 test('drafts accept missing buyer details but publishing rejects them',()=>{

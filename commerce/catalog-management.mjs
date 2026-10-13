@@ -14,19 +14,19 @@ export function safeMediaUrl(value) {
   if (/^\/media\/shop\/[a-zA-Z0-9/_ .-]+$/.test(value)) return true;
   try { const u = new URL(value); return u.protocol === 'https:' && !u.username && !u.password && (['cdn.shopify.com', 'videos.shopifycdn.com'].includes(u.hostname) || (u.hostname==='custombuildstudio.ca' && u.pathname.startsWith('/media/shop/'))); } catch { return false; }
 }
-export function validateDocument(input, { publish = false } = {}) {
+export function validateDocument(input, { publish = false, policy = deliveryPolicy } = {}) {
   if (!input || typeof input !== 'object') throw new Error('Product details are required.');
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(input.id || '')) throw new Error('Use a unique product link with letters, numbers and hyphens.');
   if (!templates.some(t => t.id === input.template)) throw new Error('Choose a product template.');
   if (!Array.isArray(input.products) || input.products.length < 1 || input.products.length > 40) throw new Error('A listing needs 1–40 product records.');
   const products = input.products.map(original => {
     let p = structuredClone(original);
-    if(deliveryPolicy.active && !p.groupedDesigns) p=priceRecord(p,deliveryPolicy);
+    if(policy.active && !p.groupedDesigns) p=priceRecord(p,policy);
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(p.id || '')) throw new Error('Invalid product ID.');
     if (p.id.length > 120) throw new Error('Product link is too long.');
     for (const key of ['name','category','description','included','dimensions','notes']) p[key] = text(p[key], key === 'name' ? 120 : 4000);
     p.priceCents = amount(p.priceCents);
-    p.pickupPriceDifferenceCents = deliveryPolicy.active?0:amount(p.pickupPriceDifferenceCents ?? input.pickupPriceDifferenceCents ?? 1000);
+    p.pickupPriceDifferenceCents = policy.active?0:amount(p.pickupPriceDifferenceCents ?? input.pickupPriceDifferenceCents ?? 1000);
     if (p.priceCents < p.pickupPriceDifferenceCents) throw new Error('Pickup reduction cannot exceed the product price.');
     p.images = (p.images || []).map(image => {
       if (!safeMediaUrl(image.src) || !safeMediaUrl(image.thumb || image.src)) throw new Error('Use uploaded product images or existing website media.');
@@ -34,7 +34,7 @@ export function validateDocument(input, { publish = false } = {}) {
     });
     if (p.images.length > 100) throw new Error('Use no more than 100 photos per design.');
     if (p.video && !safeMediaUrl(p.video)) throw new Error('Use an uploaded product video.');
-    if (p.variants) p.variants = p.variants.map(v => ({ id: v.id, label: text(v.label, 120), dimensions: text(v.dimensions), priceCents: deliveryPolicy.active && v.basePriceCents!==undefined ? priceRecord({...v,pricingSchemaVersion:2},deliveryPolicy).priceCents : amount(v.priceCents),...(v.basePriceCents!==undefined?{basePriceCents:amount(v.basePriceCents),deliveryExtraCents:amount(v.deliveryExtraCents ?? 0),pricingSchemaVersion:2}:{}) }));
+    if (p.variants) p.variants = p.variants.map(v => ({ id: v.id, label: text(v.label, 120), dimensions: text(v.dimensions), priceCents: policy.active && v.basePriceCents!==undefined ? priceRecord({...v,pricingSchemaVersion:2},policy).priceCents : amount(v.priceCents),...(v.basePriceCents!==undefined?{basePriceCents:amount(v.basePriceCents),deliveryExtraCents:amount(v.deliveryExtraCents ?? 0),pricingSchemaVersion:2}:{}) }));
     if (publish && (!p.name || !p.description || !p.included || !p.images.length || p.priceCents <= p.pickupPriceDifferenceCents)) throw new Error('Before publishing, add a name, description, included items, photo and a positive product price.');
     if (publish && p.launchReady === false) throw new Error('This product has unresolved launch requirements. Confirm them before publishing.');
     if (publish && p.variants?.some(v => !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(v.id) || !v.label || v.priceCents <= p.pickupPriceDifferenceCents)) throw new Error('Every option needs a label and valid prices.');
@@ -45,7 +45,7 @@ export function validateDocument(input, { publish = false } = {}) {
   if (ids.size !== products.length) throw new Error('Product IDs must be unique.');
   for (const p of products) if (p.groupedDesigns?.some(d => !ids.has(d.id))) throw new Error('Every grouped design must have its own product record.');
   return { id: input.id, template: input.template, categoryIds: [...new Set((input.categoryIds || []).map(x => text(x, 90)))], products,
-    shippingPreset: text(input.shippingPreset || 'existing', 100), pickupPriceDifferenceCents: deliveryPolicy.active?0:amount(input.pickupPriceDifferenceCents ?? 1000),
+    shippingPreset: text(input.shippingPreset || 'existing', 100), pickupPriceDifferenceCents: policy.active?0:amount(input.pickupPriceDifferenceCents ?? 1000),
     fulfillmentConfirmed: input.fulfillmentConfirmed === true, updatedAt: new Date().toISOString() };
 }
 export function seedDocuments(products, collections) {

@@ -3,6 +3,7 @@ import { getStore } from "@netlify/blobs";
 import { createSaleService, SaleError } from "../../commerce/sales.mjs";
 import { equal } from "../../commerce/core.mjs";
 import { createShopifyAdmin } from "../../commerce/shopify-admin.mjs";
+import {setPickupRewardsPaused} from '../../commerce/pickup-rewards.mjs';
 
 const admin = createShopifyAdmin({
   legacyToken: process.env.SHOPIFY_ADMIN_ACCESS_TOKEN || "",
@@ -13,6 +14,8 @@ function shopifyClient(client) {
   if (!client) return null;
   const call = client.call;
   return {
+    pauseRewards:()=>setPickupRewardsPaused(client,true),
+    resumeRewards:()=>setPickupRewardsPaused(client,false),
     async read(handles) {
       const unique = [...new Set(handles)];
       const result = new Map();

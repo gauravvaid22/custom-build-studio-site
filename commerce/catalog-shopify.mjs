@@ -8,6 +8,7 @@ export async function lookupProduct(admin, product) {
   return data.productByIdentifier;
 }
 export async function syncDocument(admin, doc, config, expected = {}) {
+  const policy=config.pricingPolicy || deliveryPolicy;
   if (!admin) throw new Error('Shopify credentials are missing.');
   if (!doc.fulfillmentConfirmed) throw new Error('Confirm the fulfillment settings before publishing.');
   const records = doc.products.filter(p => !p.variantOf && !p.groupedDesigns);
@@ -24,7 +25,7 @@ export async function syncDocument(admin, doc, config, expected = {}) {
     const choices = p.variants?.length ? p.variants : [{id:p.id,priceCents:p.priceCents}];
     if (!current) {
       if (!config.publicationId || !config.pickupProfileId || !config.deliveryProfileId) throw new Error('Choose the website sales channel and delivery/pickup profiles in Connection settings first.');
-      const variantInput = managedVariantInput({id:p.id, optionName:p.variantLabel || 'Size', options: p.variants?.length ? p.variants : undefined, priceCents:p.priceCents, pickupPriceDifferenceCents:deliveryPolicy.active?0:p.pickupPriceDifferenceCents}, 1000);
+      const variantInput = managedVariantInput({id:p.id, optionName:p.variantLabel || 'Size', options: p.variants?.length ? p.variants : undefined, priceCents:p.priceCents, pickupPriceDifferenceCents:policy.active?0:p.pickupPriceDifferenceCents}, 1000);
       const created = await admin.call(`mutation CreateManaged($input: ProductSetInput!) { productSet(input: $input, synchronous: true) { product { id handle updatedAt variants(first: 100) { nodes { id sku price } } } userErrors { message } } }`,
         { input: {...input, handle:p.shopifyHandle || p.id, status:'DRAFT',vendor:'Custom Build Studio',tags:['cbs-managed'], ...variantInput,
           files: p.images.map((image,i) => image.mediaId ? {id:image.mediaId} : ({originalSource:new URL(image.src,'https://custombuildstudio.ca').href,contentType:'IMAGE',alt:image.alt,filename:`${p.id}-${i}.webp`}))} });
@@ -42,10 +43,10 @@ export async function syncDocument(admin, doc, config, expected = {}) {
     const variantUpdates = choices.flatMap(c => [false,true].map(pickup => {
       const variant = product.variants.nodes.find(v => v.sku === c.id + (pickup ? '-pickup' : ''));
       if (!variant) throw new Error('Delivery and pickup options were not created correctly.');
-      return {id:variant.id,price:((c.priceCents - (pickup && !deliveryPolicy.active ? p.pickupPriceDifferenceCents : 0))/100).toFixed(2)};
+      return {id:variant.id,price:((c.priceCents - (pickup && !policy.active ? p.pickupPriceDifferenceCents : 0))/100).toFixed(2)};
     }));
     check((await admin.call(`mutation ManagedPrices($id:ID!,$variants:[ProductVariantsBulkInput!]!) { productVariantsBulkUpdate(productId:$id,variants:$variants) { productVariants { id } userErrors { message } } }`,{id:product.id,variants:variantUpdates})).productVariantsBulkUpdate);
-    if(deliveryPolicy.active && current && current.status!=='DRAFT'){
+    if(policy.active && current && current.status!=='DRAFT'){
       for(const [pickup,profileId] of [[false,config.deliveryProfileId],[true,config.pickupProfileId]]){
         if(!profileId)throw new Error('Select the shipping profiles in Connections.');
         check((await admin.call(`mutation ManagedShippingUpdate($id:ID!,$profile:DeliveryProfileInput!){deliveryProfileUpdate(id:$id,profile:$profile){userErrors{message}}}`,{id:profileId,profile:{variantsToAssociate:product.variants.nodes.filter(v=>v.sku.endsWith('-pickup')===pickup).map(v=>v.id)}})).deliveryProfileUpdate);

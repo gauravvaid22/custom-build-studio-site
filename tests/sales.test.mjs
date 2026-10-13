@@ -40,7 +40,7 @@ function fixture({ failProduct = "", time } = {}) {
       }
     },
   };
-  return { catalog, store, shopify, sale: createSaleService({ store, shopify, production: true, clock: time ? () => new Date(time.value) : undefined }) };
+  return { catalog, store, shopify, sale: createSaleService({ store, shopify, production: true, pricingDifferenceCents:1000, clock: time ? () => new Date(time.value) : undefined }) };
 }
 
 test("product sale previews, publishes, and restores both fulfillment prices", async () => {
@@ -138,7 +138,7 @@ test("whole-shop and Halloween scopes include every size/design once", async () 
   }));
   const mock = { read: async (handles) => new Map(handles.map((handle) => [handle, byHandle.get(handle)])), update: async () => {} };
   const store = { get: async () => null, put: async () => ({ modified: true }) };
-  const sale = createSaleService({ store, shopify: mock, production: true });
+  const sale = createSaleService({ store, shopify: mock, production: true, pricingDifferenceCents:1000 });
   const all = await sale.preview({ title: "Shop sale", percentage: 10, scope: "all", endAt });
   assert.equal(all.config.productIds.length, bases.length);
   assert.equal(all.rows.length, bases.reduce((sum, p) => sum + (p.variants?.length || 1), 0));

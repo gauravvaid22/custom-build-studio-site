@@ -13,6 +13,7 @@ export default async(request,context)=>{
     for(let index=job.completed || 0;index<job.plan.groups.length;index++){
       await applyDeliveryGroup(admin,job.plan.groups[index],found.state.connection);
       found=await readState(store);job=found.state.jobs.find(j=>j.id===id);job.completed=index+1;await writeState(store,found.state,found.etag);
+      await new Promise(resolve=>setTimeout(resolve,700));
     }
     found=await readState(store);job=found.state.jobs.find(j=>j.id===id);
     if(!job.installed){installDeliveryCatalog(found.state,job.plan);job.installed=true;job.revision=found.state.revision;}

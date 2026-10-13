@@ -121,6 +121,7 @@ export default async function shopHeadphones(request, context) {
   if (!request.headers.get("content-type")?.startsWith("application/json")) return json({ error: "JSON required" }, 415);
   if (Number(request.headers.get("content-length")) > 2000) return json({ error: "Request too large" }, 413);
   try {
+    if(deliveryPolicy.active)return json({error:'Use Products & collections to add products and edit their base prices or delivery extras.'},409);
     const raw = await request.text();
     if (raw.length > 2000) return json({ error: "Request too large" }, 413);
     const body = JSON.parse(raw || "{}");
