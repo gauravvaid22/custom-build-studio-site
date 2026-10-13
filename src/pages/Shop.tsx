@@ -326,7 +326,7 @@ function ShopProductCard({ product, listId }: { product: Product; listId?: strin
           {hasPriceRange ? "From " : ""}{money(displayPrice)}{" "}
           <span>CAD</span>
         </p>
-        {regularPrice && <p className="shop-regular-price">Regular {money(regularPrice)} CAD</p>}
+        {regularPrice && <p className="shop-regular-price">Regular {money(regularPrice)} CAD</p>}{product.shippingPriceMode==='per-order'&&<p className="small"><strong>Mix & match</strong> · {money(productShippingFee(product.id))} delivery once per order</p>}
         {"personalization" in product ? (
           <><p className="small">Your photo print included</p><Link className="button" to={`/shop/${product.id}`}>Personalize yours ↗</Link></>
         ) : managed ? (
