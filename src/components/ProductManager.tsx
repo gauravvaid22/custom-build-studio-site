@@ -67,12 +67,13 @@ export function ProductManager() {
   },[data?.jobs]);
   useEffect(()=>{const warn=(e:BeforeUnloadEvent)=>{if(dirty){e.preventDefault();e.returnValue='';}};window.addEventListener('beforeunload',warn);return()=>window.removeEventListener('beforeunload',warn);},[dirty]);
   useEffect(()=>{if(draft && !dialog.current?.open)dialog.current?.showModal();},[draft]);
+  const [publishReview,setPublishReview]=useState(false);
   const [bulkBase,setBulkBase]=useState('4.99');
   const [expected,setExpected]=useState<Record<string,string>>({});
-  const open=(doc:Document)=>{setExpected({});setMessage('');setDraft(clone(doc));setSelected(doc.id);setDirty(false);setPreview(false);setError('');};
+  const open=(doc:Document)=>{setPublishReview(false);setExpected({});setMessage('');setDraft(clone(doc));setSelected(doc.id);setDirty(false);setPreview(false);setError('');};
   const edit=async(doc:Document)=>{setBusy(true);try{const live=await catalogRequest('inspect',{id:doc.id});const next=clone(doc);if(!live.hasDraft)next.products.forEach(p=>{if(live.prices[p.id]!==undefined)p.priceCents=live.prices[p.id];p.variants?.forEach(v=>{if(live.prices[v.id]!==undefined)v.priceCents=live.prices[v.id];});});open(next);setExpected(live.expected);}catch(e){setError((e as Error).message);}finally{setBusy(false);}};
   const close=()=>{if(dirty&&!window.confirm('Discard your unsaved changes?'))return;dialog.current?.close();setDraft(null);setDirty(false);};
-  const change=(patch:Partial<Document>)=>{setDraft(current=>current?{...current,...patch}:null);setDirty(true);};
+  const change=(patch:Partial<Document>)=>{setPublishReview(false);setDraft(current=>current?{...current,...patch}:null);setDirty(true);};
   const product=draft?.products.find(p=>p.id===selected);
   const updateProduct=(patch:Partial<Product>)=>{if(!draft)return;
     if(product?.groupedDesigns && (patch.shippingPriceMode!==undefined || patch.shippingFeeCents!==undefined)){
@@ -92,8 +93,8 @@ change({products:draft.products.map(p=>p.id===selected?{...p,...patch}:p)});};
   const publish=async()=>{
     if(!draft||!data)return;
     if(dirty){setError('Save your draft before publishing.');return;}
-    if(!window.confirm(`Publish “${draft.products.find(p=>p.id===draft.id)?.name}” to Shopify and the website?`))return;
-    await act('publish',{id:draft.id,revision:data.revision,expected},'Update queued. The status below will show when it is live.');
+    if(!publishReview){setPublishReview(true);return;}
+    if(await act('publish',{id:draft.id,revision:data.revision,expected},'Update queued. The status below will show when it is live.'))setPublishReview(false);
   };
   const addDesign=()=>{
     if(!draft)return;const id=`${draft.id}-design-${Date.now().toString(36)}`;
@@ -161,7 +162,7 @@ change({products:draft.products.map(p=>p.id===selected?{...p,...patch}:p)});};
       <fieldset><legend>Categories & fulfillment</legend><div className="manager-categories">{data.collections.map(c=><label key={c.id}><input type="checkbox" checked={draft.categoryIds.includes(c.id)} onChange={e=>change({categoryIds:e.target.checked?[...draft.categoryIds,c.id]:draft.categoryIds.filter(id=>id!==c.id)})}/>{c.name}</label>)}</div>{!deliveryPolicy.active&&<><label>Pickup price reduction (CAD)<input type="number" step="0.01" min="0" value={dollarInput(draft.pickupPriceDifferenceCents)} onChange={e=>{const reduction=cents(e.target.value);change({pickupPriceDifferenceCents:reduction,products:draft.products.map(p=>({...p,pickupPriceDifferenceCents:reduction}))});}}/></label><p>Pickup price for this item: {money(product.priceCents-draft.pickupPriceDifferenceCents)} CAD.</p></>}<label><input type="checkbox" checked={draft.fulfillmentConfirmed} onChange={e=>change({fulfillmentConfirmed:e.target.checked})}/> I have confirmed the item's fulfillment, included components and compatibility.</label>{draft.products.some(p=>p.launchReady===false)&&<p>Launch requirements are pending for this listing. Publishing stays disabled until those details are resolved.</p>}</fieldset>
       {typeof product.launchReady === 'boolean' && <label><input type="checkbox" checked={product.launchReady} onChange={e=>updateProduct({launchReady:e.target.checked})}/> I have reviewed the details, included pieces and fit guidance for {product.name}; this individual listing/design is ready to sell.</label>}
       {selected!==draft.id&&product.listingGroup&&<button className="text-link" onClick={()=>{if(window.confirm(`Remove ${product.name} from this collection draft?`)){change({products:draft.products.filter(p=>p.id!==selected)});setSelected(draft.id);}}}>Remove this design from draft</button>}
-      </>}</div></div><footer><button className="text-link" disabled={busy} onClick={()=>{const name=window.prompt("Name this reusable template");if(name)void act("save-preset",{name,document:rebuildGroup(draft)},"Reusable template saved.");}}>Save as template</button><button className="button button-dark" onClick={()=>setPreview(!preview)}>{preview?'Back to editing':'Preview'}</button><button className="button button-dark" disabled={busy} onClick={()=>void save()}>Save draft</button><button className="button" disabled={busy||dirty||draft.products.some(p=>p.launchReady===false)} onClick={()=>void publish()}>Publish saved draft</button></footer>
+      </>}</div></div><footer><button className="text-link" disabled={busy} onClick={()=>{const name=window.prompt("Name this reusable template");if(name)void act("save-preset",{name,document:rebuildGroup(draft)},"Reusable template saved.");}}>Save as template</button><button className="button button-dark" onClick={()=>setPreview(!preview)}>{preview?'Back to editing':'Preview'}</button><button className="button button-dark" disabled={busy} onClick={()=>void save()}>Save draft</button><button className="button" disabled={busy||dirty||draft.products.some(p=>p.launchReady===false)} onClick={()=>void publish()}>{publishReview?"Confirm & publish":"Publish saved draft"}</button>{publishReview&&<p role="status">Ready to update Shopify and the website with this saved draft. Review the prices and delivery rule, then choose Confirm & publish.</p>}</footer>
     </>}</dialog>
   </section>;
 }

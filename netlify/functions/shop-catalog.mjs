@@ -114,7 +114,7 @@ export default async (request,context) => {
       const sourceDoc = action==='publish' ? state.drafts[body.id] || original : original || state.drafts[body.id];
       const doc = action==='restore' && sourceDoc ? validateDocument(sourceDoc,{publish:true}) : sourceDoc;
       if (action!=='publish-layout' && !doc) throw new Error('Product not found.');
-      if (action==='publish') validateDocument(doc,{publish:true});
+      if (action==='publish') {validateDocument(doc,{publish:true});if(!state.drafts[body.id]&&state.documents[body.id]&&state.jobs.some(j=>j.action==='publish'&&j.productId===body.id&&j.status==='live'&&j.document?.updatedAt===doc.updatedAt))return reply({alreadyLive:true});}
       const job={id:randomUUID(),productId:body.id || '',action,status:'queued',createdAt:new Date().toISOString(),document:doc || null,previousDocument:original || null,expected:body.expected || {}};
       state.jobs=[job,...state.jobs].slice(0,20);
       await writeState(store,state,etag);
