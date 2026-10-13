@@ -1,5 +1,6 @@
 import rawProducts from '../../commerce/products.json';
 export type CatalogProduct = {
+ bundleOffers?:{quantity:number;sku:string}[];purchaseOnly?:boolean;
  id:string; name:string; priceCents:number; category:string; description:string; included:string; dimensions:string; notes:string;
  images:{src:string;thumb:string;alt:string;sourceFile?:string;mediaId?:string}[];
  seasonal?:boolean; productionReviewed?:boolean; source?:string; video?:string; videos?:string[];

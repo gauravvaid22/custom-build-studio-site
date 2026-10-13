@@ -44,6 +44,7 @@ export function validateDocument(input, { publish = false, policy = deliveryPoli
   if (!products.some(p => p.id === input.id)) throw new Error('Listing product is missing.');
   const ids = new Set(products.map(p => p.id));
   if (ids.size !== products.length) throw new Error('Product IDs must be unique.');
+  for(const p of products) if(p.bundleOffers){if(!p.groupedDesigns || !Array.isArray(p.bundleOffers) || p.bundleOffers.length>10 || new Set(p.bundleOffers.map(o=>o.quantity)).size!==p.bundleOffers.length || p.bundleOffers.some(o=>!Number.isInteger(o.quantity)||o.quantity<2||o.quantity>20||!ids.has(o.sku)))throw Error('Every mix pack needs a valid size and its own priced SKU.');}
   for (const p of products) if (p.groupedDesigns?.some(d => !ids.has(d.id))) throw new Error('Every grouped design must have its own product record.');
   return { id: input.id, template: input.template, categoryIds: [...new Set((input.categoryIds || []).map(x => text(x, 90)))], products,
     shippingPreset: text(input.shippingPreset || 'existing', 100), pickupPriceDifferenceCents: policy.active?0:amount(input.pickupPriceDifferenceCents ?? 1000),

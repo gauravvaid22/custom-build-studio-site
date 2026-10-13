@@ -1,5 +1,6 @@
 import { shippingFee, productShippingFee } from "../lib/fulfillmentPricing";
-import { GalleryImage } from "../components/GalleryImage";
+import { MediaStage } from "../components/MediaStage";
+import { MixPackOrder } from "../components/MixPackOrder";
 import { FormEvent, lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import products from "../data/catalog";
@@ -733,26 +734,7 @@ export function ShopProduct() {
           <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {"personalization" in product && <><Link to="/shop/personalized-gifts">Personalized Gifts</Link> / <Link to="/shop/photo-frames">Photo Holders</Link> / </>}{product.category === "PS5 console stands" && <><Link to="/shop/console-stands">PS5 Console Stands</Link> / </>}{product.category === "Headphone stands" && <><Link to="/shop/headphone-stands">Headphone Stands</Link> / </>}{nameFor(product.id, product.name)}</nav>
           <div className="shop-detail">
             <div>
-              <div className="shop-main-image">
-                {showingVideo ? (
-                  <video
-                    key={activeVideo!.src}
-                    controls
-                    muted
-                    loop
-                    playsInline
-                    onPlay={() => trackShopInteraction("product_media", { item_id: product.id, media_type: "video", media_index: index - images.length })}
-                    preload="metadata"
-                    poster={activeVideo!.owner.images[0].src}
-                    aria-label={`${nameFor(product.id, product.name)} product video`}
-                  >
-                    <source src={activeVideo!.src} />
-                    Your browser does not support product video.
-                  </video>
-                ) : (
-                  <GalleryImage mediaKey={selectedImage!.src}><ProductImage product={activeImage!.owner} index={activeImage!.imageIndex} large /></GalleryImage>
-                )}
-              </div>
+              <MediaStage media={[...images.map(({image})=>({src:image.src,alt:image.alt})),...videos.map(v=>({src:v.src,alt:v.label+" product video",video:true,poster:v.owner.images[0]?.src}))]} index={index} onChange={setIndex}/>
               {gallery.designCount > 0 && <div className="shop-gallery-scope">
                 <span>{gallery.overview ? `Explore all ${gallery.designCount} designs` : "Selected design photos"}</span>
                 {gallery.overview ? <span className="small">Browse photos · choose below ↓</span> : <button type="button" className="text-link" onClick={() => { setIndex(0); setShowAllDesigns(true); }}>Show all designs</button>}
@@ -818,7 +800,7 @@ export function ShopProduct() {
                 </span>
               </p>
               {compareAtFor(selectedVariant.id) && <p className="shop-regular-price"><strong className="shop-sale-inline">{sale?.percentage}% OFF</strong> Regular {money(compareAtFor(selectedVariant.id)!)} CAD</p>}
-              {product.shippingPriceMode==='per-order'&&<div className="note-panel bulk-delivery-savings"><strong>Mix & match — save on delivery</strong><p>{money(priceFor(selectedVariant.id,selectedVariant.priceCents))} CAD per item + {money(productShippingFee(product.id))} delivery once per order. Add more designs without another delivery charge.</p><div className="button-row">{[1,3,5].map(q=><span key={q}><strong>{q} {q===1?'item':'items'}</strong> · {money(q*priceFor(selectedVariant.id,selectedVariant.priceCents)+productShippingFee(product.id))} CAD</span>)}</div><small>Examples include delivery, before any applicable tax. Existing design choices stay the same.</small></div>}{"groupedDesigns" in product && <ProductDesignPicker designs={product.groupedDesigns || []} selectedId={selectedVariant.id} onChange={chooseVariant} />}
+              {product.shippingPriceMode==='per-order'&&<div className="note-panel bulk-delivery-savings"><strong>Mix & match — save on delivery</strong><p>{money(priceFor(selectedVariant.id,selectedVariant.priceCents))} CAD per item + {money(productShippingFee(product.id))} delivery once per order. Add more designs without another delivery charge.</p><div className="button-row">{[1,3,5].map(q=><span key={q}><strong>{q} {q===1?'item':'items'}</strong> · {money(q*priceFor(selectedVariant.id,selectedVariant.priceCents)+productShippingFee(product.id))} CAD</span>)}</div><small>Examples include delivery, before any applicable tax. Existing design choices stay the same.</small></div>}{!product.bundleOffers?.length && "groupedDesigns" in product && <ProductDesignPicker designs={product.groupedDesigns || []} selectedId={selectedVariant.id} onChange={chooseVariant} />}
               <p className="lead">{product.description}</p>{"groupedDesigns" in product && <p className="small"><strong>{nameFor(mediaProduct.id, mediaProduct.name)}</strong> — {mediaProduct.description}</p>}
               {product.category === "Pet hats & costumes" && <div className="note-panel"><strong>Fully assembled · Standard size</strong><p>Costume elastic, straps and the pieces listed for your chosen design are included. Fit varies by pet; <a href="mailto:custombuildstudio@gmail.com?subject=Paw%20Couture%20fit%20question">ask us about fit before ordering</a> if unsure. For short, supervised photo moments.</p></div>}
               <ul className="shop-purchase-facts" aria-label="Purchase details">
@@ -834,7 +816,7 @@ export function ShopProduct() {
               </div>
               <dl className="shop-core-details"><dt>Included</dt><dd>{selectedVariant.included}</dd>{!selectedVariant.dimensions.startsWith("Final dimensions") && <><dt>{isHalloweenMask ? "Ear-to-ear size" : "Approximate size"}</dt><dd>{selectedVariant.dimensions.replace("Source model: approximately", "Approximately").replace("Finished size: approximately", "Approximately").replace("Final printed dimensions require production review.", "Finished size may vary slightly.")}</dd></>}</dl>
 
-              {"personalization" in product ? <PhotoPrintOrder key={product.id} productId={selectedVariant.id} /> : <AddProduct product={product} variantId={selectedVariant.id} onVariantChange={chooseVariant} formId="product-purchase-form" />}
+              {product.bundleOffers?.length ? <MixPackOrder product={product} onPreview={chooseVariant}/> : "personalization" in product ? <PhotoPrintOrder key={product.id} productId={selectedVariant.id} /> : <AddProduct product={product} variantId={selectedVariant.id} onVariantChange={chooseVariant} formId="product-purchase-form" />}
               <Link className="text-link" to="/shop/cart">View cart & checkout ↗</Link>
               <p className="shop-purchase-policy">{"personalization" in product ? "Your photo print is included. Personalized orders are excluded from change-of-mind returns." : `Unused standard products can be returned within ${storePolicy.returnWindowDays} days. Custom-size orders are excluded.`} <Link to="/shipping-returns">Details →</Link></p>
               {isHalloweenMask && (
@@ -1005,7 +987,7 @@ export function ShopCart() {
                       <p>{money(priceFor(product.id, product.priceCents))} CAD each {compareAtFor(product.id) && <span className="shop-regular-price">Regular {money(compareAtFor(product.id)!)} CAD</span>}</p>
                       {item.attributes?.length ? (
                         <p className="shop-personalization-summary">
-                          ✓ Personalization photo attached
+                          {item.attributes.find(a=>a.key==='Animal choices')?.value || "✓ Personalization photo attached"}
                           {item.attributes.find((attribute) => attribute.key === "Original filename")?.value
                             ? ` · ${item.attributes.find((attribute) => attribute.key === "Original filename")?.value}`
                             : ""}
@@ -1169,7 +1151,7 @@ export function Checkout() {
                     (() => { const product = products.find((p) => p.id === item.id); return product ? priceFor(product.id, product.priceCents) : 0; })() * item.quantity,
                   )}
                 </strong>
-              </p>{item.attributes?.length ? <small>Personalization photo attached to this item.</small> : null}</div>
+              </p>{item.attributes?.length ? <small>{item.attributes.find(a=>a.key==='Animal choices')?.value || "Personalization photo attached to this item."}</small> : null}</div>
             ))}
             <p className="shop-total">
               <span>Subtotal</span>

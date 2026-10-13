@@ -78,8 +78,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       quantity > 20
     )
       return false;
-    // A different personalization photo is a different order line.
-    const photo = attributes?.find(attribute => attribute.key === "Personalization photo")?.value;
+    // Different photos or animal selections must remain separate order lines.
+    const photo = attributes?.length;
     const existingLine = items.find(item => item.id === id && JSON.stringify(item.attributes || []) === JSON.stringify(attributes || []));
     const lineId = existingLine ? (existingLine.lineId || existingLine.id) : (photo ? `${id}:${crypto.randomUUID()}` : id);
     const existing = existingLine?.quantity || 0;
