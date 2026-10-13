@@ -109,7 +109,8 @@ export default async (request,context) => {
       if (!admin && action!=='publish-layout') throw new Error('Shopify is not connected.');
       if (body.revision !== state.revision) throw new Error('The catalog changed. Reload before publishing.');
       const original = state.documents[body.id] || seedDocuments(products,collections).find(d=>d.id===body.id);
-      const doc = action==='publish' ? state.drafts[body.id] || original : original || state.drafts[body.id];
+      const sourceDoc = action==='publish' ? state.drafts[body.id] || original : original || state.drafts[body.id];
+      const doc = action==='restore' && sourceDoc ? validateDocument(sourceDoc,{publish:true}) : sourceDoc;
       if (action!=='publish-layout' && !doc) throw new Error('Product not found.');
       if (action==='publish') validateDocument(doc,{publish:true});
       const job={id:randomUUID(),productId:body.id || '',action,status:'queued',createdAt:new Date().toISOString(),document:doc || null,previousDocument:original || null,expected:body.expected || {}};

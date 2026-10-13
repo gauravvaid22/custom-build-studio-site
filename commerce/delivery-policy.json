@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "active": false,
+  "active": true,
   "defaultAllowanceCents": 500,
   "pickupRewardEnabled": true,
   "pickupRewardPercent": 10,

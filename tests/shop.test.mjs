@@ -4,22 +4,24 @@ import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { randomUUID } from "node:crypto";
-import { createShop, totals, settings } from "../commerce/core.mjs";
+import { createShop, totals, settings, catalog } from "../commerce/core.mjs";
 import { sqliteStore } from "../commerce/sqlite-store.mjs";
 import { handler } from "../commerce/http.mjs";
 import { ownerEmail, resendMailer } from "../commerce/notifications.mjs";
 const adminKey = "test-admin-key-is-not-a-real-credential";
+const expectedSubtotal = catalog.find(p=>p.id==="skeleton-chameleon").priceCents*2 + catalog.find(p=>p.id==="6-finger-alien-hand-controller-holder").priceCents;
+const calculationCatalog=[{id:"skeleton-chameleon",name:"Fixture figure",priceCents:2500},{id:"6-finger-alien-hand-controller-holder",name:"Fixture stand",priceCents:4500},{id:"octopus-wine-bottle-holder-320",name:"Fixture medium",priceCents:10899},{id:"octopus-wine-bottle-holder-345",name:"Fixture large",priceCents:11999}];
 const body = () => ({
   items: [
     { id: "skeleton-chameleon", quantity: 2 },
-    { id: "basilisk-dice-tower", quantity: 1 },
+    { id: "6-finger-alien-hand-controller-holder", quantity: 1 },
   ],
   fulfillment: "pickup",
   name: "Test Customer",
   email: "test@example.invalid",
   phone: "7805550100",
   accepted: true,
-  expectedTotalCents: 9500,
+  expectedTotalCents: expectedSubtotal,
   notes: "",
 });
 function fixture() {
@@ -32,27 +34,28 @@ function fixture() {
   return { path, store, shop };
 }
 test("integer CAD calculations, pickup, delivery and configurable tax", () => {
-  assert.equal(totals(body().items, "pickup").totalCents, 9500);
-  assert.equal(totals(body().items, "delivery").totalCents, 10000);
+  const calculate=(items,mode,config=settings)=>totals(items,mode,config,calculationCatalog);
+  assert.equal(calculate(body().items, "pickup").totalCents, 9500);
+  assert.equal(calculate(body().items, "delivery").totalCents, 10000);
   assert.equal(
-    totals(body().items, "delivery", { ...settings, taxBasisPoints: 500 })
+    calculate(body().items, "delivery", { ...settings, taxBasisPoints: 500 })
       .taxCents,
     500,
   );
   for (const quantity of [0, -1, 1.5, 21, "2", NaN])
     assert.throws(() =>
-      totals([{ id: "skeleton-chameleon", quantity }], "pickup"),
+      calculate([{ id: "skeleton-chameleon", quantity }], "pickup"),
     );
-  assert.throws(() => totals([{ id: "fake", quantity: 1 }], "pickup"));
-  assert.throws(() => totals([...body().items, body().items[0]], "pickup"));
-  assert.throws(() => totals(body().items, "shipping"));
+  assert.throws(() => calculate([{ id: "fake", quantity: 1 }], "pickup"));
+  assert.throws(() => calculate([...body().items, body().items[0]], "pickup"));
+  assert.throws(() => calculate(body().items, "shipping"));
   assert.equal(
-    totals([{ id: "octopus-wine-bottle-holder-320", quantity: 1 }], "pickup")
+    calculate([{ id: "octopus-wine-bottle-holder-320", quantity: 1 }], "pickup")
       .totalCents,
     10899,
   );
   assert.equal(
-    totals([{ id: "octopus-wine-bottle-holder-345", quantity: 2 }], "pickup")
+    calculate([{ id: "octopus-wine-bottle-holder-345", quantity: 2 }], "pickup")
       .totalCents,
     23998,
   );
@@ -67,7 +70,7 @@ test("order persistence survives reopening database; idempotent retry and immuta
   const first = await shop.create(input, key),
     second = await shop.create(input, key);
   assert.equal(first.order.number, second.order.number);
-  assert.equal(first.order.totalCents, 9500);
+  assert.equal(first.order.totalCents, expectedSubtotal);
   assert.equal(first.order.paymentStatus, "Awaiting payment");
   assert.equal(first.order.canPay, false);
   assert.equal(first.order.fulfillmentStatus, "Not started");
@@ -94,7 +97,7 @@ test("manual payment verification, address review, state transitions and concurr
       street: "Test address",
       city: "Edmonton",
       postal: "T6A1A1",
-      expectedTotalCents: 10000,
+      expectedTotalCents: expectedSubtotal + settings.deliveryFeeCents,
     },
     randomUUID(),
   );
@@ -161,7 +164,7 @@ test("validation and production gate prevent unsafe orders", async () => {
     { website: "bot" },
     { expectedTotalCents: 1 },
     { paymentStatus: "Paid", expectedTotalCents: 0 },
-    { fulfillment: "delivery", expectedTotalCents: 10000 },
+    { fulfillment: "delivery", expectedTotalCents: expectedSubtotal + settings.deliveryFeeCents },
   ])
     await assert.rejects(shop.create({ ...body(), ...change }, randomUUID()));
   const production = createShop({ store, enabled: true, adminKey });

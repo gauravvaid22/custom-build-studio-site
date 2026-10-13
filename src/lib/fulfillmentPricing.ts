@@ -1,4 +1,4 @@
-import delivery from "../../commerce/delivery-policy.json";
+import delivery from "../../commerce/delivery-policy.json" with {type:"json"};
 import products from "../data/catalog";
 import pricing from "../../commerce/pricing.json";
 export function pickupDifference(id: string) {

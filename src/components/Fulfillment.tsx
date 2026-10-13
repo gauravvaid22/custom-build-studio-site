@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { trackShopInteraction } from "./Analytics";
-import deliveryDefaults from "../../commerce/delivery-policy.json";
+import deliveryDefaults from "../../commerce/delivery-policy.json" with {type:"json"};
 import pricing from "../../commerce/pricing.json";
 
 export type FulfillmentMode = "delivered" | "pickup";
@@ -10,6 +10,8 @@ const Context = createContext({ mode: "delivered" as FulfillmentMode, chosen: fa
 export function FulfillmentProvider({ children }: { children: React.ReactNode }) {
   const [policy,setPolicy]=useState(deliveryDefaults);
   const [pickupRequested,setPickupRequested]=useState(false);
+  useEffect(()=>{try{setPickupRequested(sessionStorage.getItem('cbs-pickup-request-v2')==='yes');}catch{}},[]);
+  useEffect(()=>{if(policy.active && !policy.pickupRewardEnabled){setPickupRequested(false);try{sessionStorage.removeItem('cbs-pickup-request-v2');}catch{}}},[policy.active,policy.pickupRewardEnabled]);
   useEffect(()=>{void fetch("/.netlify/functions/shop-delivery?action=public",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(data=>{if(data?.policy){setPolicy(data.policy);if(data.policy.active){setMode("delivered");try{localStorage.removeItem("cbs-fulfillment-v1");}catch{}}}}).catch(()=>{});},[]);
   const [mode, setMode] = useState<FulfillmentMode>("delivered");
   const [chosen, setChosen] = useState(false);
@@ -29,7 +31,7 @@ export function FulfillmentProvider({ children }: { children: React.ReactNode })
   }, []);
   function choose(next: FulfillmentMode) {
     if (locked) return;
-    if(policy.active){setPickupRequested(next==="pickup");return;}
+    if(policy.active){setPickupRequested(next==="pickup");try{sessionStorage.setItem('cbs-pickup-request-v2',next==="pickup"?'yes':'no');}catch{}trackShopInteraction('select_fulfillment',{fulfillment_method:next});return;}
     if (next !== mode) trackShopInteraction("select_fulfillment", { fulfillment_method: next });
     setMode(next); setChosen(true);
     try { localStorage.setItem("cbs-fulfillment-v1", next); } catch {}

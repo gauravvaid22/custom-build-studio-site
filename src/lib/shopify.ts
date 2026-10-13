@@ -1,4 +1,4 @@
-import deliveryPolicy from "../../commerce/delivery-policy.json";
+import deliveryPolicy from "../../commerce/delivery-policy.json" with {type:"json"};
 import {assertCatalogAvailable} from "./catalogAvailability";
 import type { CartItem } from "../components/Cart";
 import type { FulfillmentMode } from "../components/Fulfillment";
@@ -196,16 +196,17 @@ export async function createShopifyCheckout(items: CartItem[], mode: Fulfillment
   if (!items.length) throw new Error("Your cart is empty.");
   const lines = await merchandiseFor(items, mode, expectedPrices);
   const analyticsAttributes = await checkoutAnalyticsAttributes();
+  const pickupNote=`LOCAL PICKUP — DO NOT SHIP. Contact the customer to arrange collection in ${deliveryPolicy.pickupRegion} and privately send the address. Include the next-order reward card after collection.`;
   const result = await storefront<{
     cartCreate: {
-      cart: { checkoutUrl: string } | null;
+      cart: { checkoutUrl: string; note:string|null; attributes:{key:string;value:string}[] } | null;
       userErrors: { message: string }[];
       warnings: { message: string }[];
     };
   }>(
     `mutation CreateCart($input: CartInput!) {
       cartCreate(input: $input) {
-        cart { checkoutUrl }
+        cart { checkoutUrl note attributes { key value } }
         userErrors { message }
         warnings { message }
       }
@@ -215,7 +216,7 @@ export async function createShopifyCheckout(items: CartItem[], mode: Fulfillment
         lines,
         buyerIdentity: { countryCode: "CA" },
         attributes: [{ key: "Storefront", value: "custombuildstudio.ca" }, { key: "Order handoff", value: mode === "pickup" ? "LOCAL PICKUP — DO NOT SHIP. Contact customer to arrange collection." : `Delivered — Canadian tracked shipping ${shippingFee(items, mode) ? "CAD " + (shippingFee(items, mode) / 100).toFixed(2) : "included"}` }, ...(mode === "pickup" && deliveryPolicy.active ? [{key:"Pickup reward",value:`${deliveryPolicy.pickupRewardPercent}% off next order; package code after collection`}] : []), ...analyticsAttributes],
-        ...(mode === "pickup" ? { note: "LOCAL PICKUP — DO NOT SHIP. Contact the customer to arrange collection in South Edmonton and privately send the address. Include the next-order reward card after collection." } : {}),
+        ...(mode === "pickup" ? { note: pickupNote } : {}),
       },
     },
   );
@@ -223,5 +224,6 @@ export async function createShopifyCheckout(items: CartItem[], mode: Fulfillment
   if (error || result.cartCreate.warnings?.length || !result.cartCreate.cart?.checkoutUrl) {
     throw new Error(error || result.cartCreate.warnings?.[0]?.message || "Shopify could not start checkout. Please try again.");
   }
+  if(mode==='pickup' && (result.cartCreate.cart.note!==pickupNote || !result.cartCreate.cart.attributes.some(a=>a.key==='Order handoff'&&a.value.includes('DO NOT SHIP'))))throw new Error('Pickup instructions could not be saved. Please try checkout again.');
   return result.cartCreate.cart.checkoutUrl;
 }

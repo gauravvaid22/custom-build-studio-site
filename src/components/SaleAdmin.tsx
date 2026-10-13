@@ -1,3 +1,4 @@
+import deliveryPolicy from "../../commerce/delivery-policy.json" with {type:"json"};
 import { useEffect, useState } from "react";
 import products from "../data/catalog";
 import collections from "../../commerce/collections.json";
@@ -99,7 +100,7 @@ export function SaleAdmin({ adminKey }: { adminKey: string }) {
         <div className="sale-admin-art"><img src="/images/brand/sale-industrial-bg.jpg" alt="Abstract dark slate and copper sale artwork"/><div><span>SALE ARTWORK</span><strong>Ready when you are.</strong><p>This image and the sale page appear only after Shopify prices have been verified.</p></div></div>
       </div>
       {preview && <div className="sale-admin-preview"><h3>Review {preview.rows.length} priced {preview.rows.length === 1 ? "option" : "options"} across {preview.config.productIds.length} {preview.config.productIds.length === 1 ? "product" : "products"}</h3><p>Check your margin before activating. Shopify discount codes may stack with these sale prices.</p>
-        <div className="sale-admin-table-wrap"><table><thead><tr><th>Product / option</th><th>Delivered</th><th>Sale</th><th>Pickup</th><th>Sale pickup</th></tr></thead><tbody>{preview.rows.map((row) => <tr key={row.sku}><th>{row.name}<small>{row.sku}</small></th><td>{money(row.regularDelivered)}</td><td>{money(row.saleDelivered)}</td><td>{money(row.regularPickup)}</td><td>{money(row.salePickup)}</td></tr>)}</tbody></table></div>
+        <div className="sale-admin-table-wrap"><table><thead><tr><th>Product / option</th><th>Regular</th><th>Sale</th>{!deliveryPolicy.active&&<><th>Pickup</th><th>Sale pickup</th></>}</tr></thead><tbody>{preview.rows.map((row) => <tr key={row.sku}><th>{row.name}<small>{row.sku}</small></th><td>{money(row.regularDelivered)}</td><td>{money(row.saleDelivered)}</td>{!deliveryPolicy.active&&<><td>{money(row.regularPickup)}</td><td>{money(row.salePickup)}</td></>}</tr>)}</tbody></table></div>
         <label className="sale-admin-radio"><input type="checkbox" checked={discountsChecked} onChange={(event) => setDiscountsChecked(event.target.checked)}/>I checked <a href="https://admin.shopify.com/store/aqk73w-k2/discounts" target="_blank" rel="noreferrer">Shopify discounts ↗</a> for offers that could stack with this sale.</label>
         <button className="button" type="button" disabled={busy || !discountsChecked} onClick={() => void run(preview.config.startAt ? "schedule" : "publish")}>{busy ? "Updating Shopify…" : preview.config.startAt ? "Schedule this sale" : "Turn on this sale"}</button>
       </div>}

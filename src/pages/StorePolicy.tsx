@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { PageIntro } from "../components/Shared";
 import { business } from "../data/business";
-import delivery from "../../commerce/delivery-policy.json";
+import delivery from "../../commerce/delivery-policy.json" with {type:"json"};
 import policy from "../../commerce/store-policy.json";
 
 export const shippingEstimate = `Estimated delivery: ${policy.handlingMinDays + policy.transitMinDays}–${policy.handlingMaxDays + policy.transitMaxDays} business days after ordering. Remote addresses may take longer.`;

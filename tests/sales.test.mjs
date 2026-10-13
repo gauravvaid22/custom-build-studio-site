@@ -6,6 +6,13 @@ import collections from "../commerce/collections.json" with { type: "json" };
 
 const endAt = new Date(Date.now() + 14 * 86400000).toISOString();
 
+test('included-delivery sales keep pickup and delivered prices equal and pause reward codes',async()=>{
+ const f=fixture(),events=[];f.catalog.get('skeleton-chameleon').variants.nodes[1].price='40.00';
+ const sale=createSaleService({store:f.store,shopify:{...f.shopify,pauseRewards:async()=>events.push('pause'),resumeRewards:async()=>events.push('resume')},production:true,pricingDifferenceCents:0});
+ const config={title:'Sale',percentage:10,scope:'products',productIds:['skeleton-chameleon'],endAt};const preview=await sale.preview(config);
+ assert.equal(preview.rows[0].saleDelivered,preview.rows[0].salePickup);await sale.publish(config,preview.fingerprint,true);assert.deepEqual(f.catalog.get('skeleton-chameleon').variants.nodes.map(v=>v.price),['36.00','36.00']);await sale.end();assert.deepEqual(events,['pause','resume']);
+});
+
 function fixture({ failProduct = "", time } = {}) {
   const catalog = new Map([
     ["skeleton-chameleon", { id: "gid://shopify/Product/1", variants: { nodes: [
@@ -128,7 +135,7 @@ test("whole-shop and Halloween scopes include every size/design once", async () 
     const ids = base.variants?.length ? base.variants.map((v) => v.id) : [base.id];
     const variants = ids.flatMap((id, position) => {
       const source = products.find((p) => p.id === id) || base;
-      const delivered = source.priceCents;
+      const delivered = Math.max(2000,source.priceCents);
       return [
         { id: `${index}-${position}-d`, sku: id, price: (delivered / 100).toFixed(2), compareAtPrice: null },
         { id: `${index}-${position}-p`, sku: `${id}-pickup`, price: ((delivered - 1000) / 100).toFixed(2), compareAtPrice: null },

@@ -25,6 +25,7 @@
     "seoDescription": "Shop figurines, articulated creatures, collectible sets and fidget gifts made in Edmonton, Alberta.",
     "coverProduct": "figurine-fidget-designs",
     "products": [
+      "mini-safari-animal-figurines",
       "figurine-fidget-designs",
       "mood-ghost"
     ]
@@ -41,8 +42,8 @@
     "coverProduct": "6-finger-alien-hand-controller-holder",
     "products": [
       "6-finger-alien-hand-controller-holder",
-      "headphone-stand-designs",
-      "ps5-console-stand-designs"
+      "ps5-console-stand-designs",
+      "headphone-stand-designs"
     ]
   },
   {
@@ -70,16 +71,16 @@
     "seoDescription": "Explore locally made home décor in Edmonton, including planters, lighting, decorative dishes, wreaths and sculptural entertaining pieces.",
     "coverProduct": "octopus-wine-bottle-holder",
     "products": [
-      "lithophane-table-lamp",
       "night-owl-wall-light",
       "octopus-wine-bottle-holder",
-      "halloween-candy-holder-designs",
       "ghost-arch-wreath",
       "ghost-on-a-swing",
       "candlelight-pumpkins-table-lamp",
+      "lithophane-table-lamp",
       "can-holder-designs",
       "can-holder-designs-ii",
-      "straw-topper-charm-designs"
+      "straw-topper-charm-designs",
+      "halloween-candy-holder-designs"
     ]
   },
   {
@@ -93,16 +94,16 @@
     "seoDescription": "Shop seasonal gifts and decor made in Edmonton, including finished Halloween masks, ghost decorations and lamps. Free tracked Canadian shipping or Edmonton pickup.",
     "coverProduct": "pumpkin-head-halloween-mask",
     "products": [
-      "pumpkin-head-halloween-mask",
-      "carved-in-fear-halloween-mask",
-      "candlelight-pumpkins-table-lamp",
-      "ghost-on-a-swing",
-      "halloween-candy-holder-designs",
-      "mood-ghost",
-      "ghost-arch-wreath",
       "figurine-fidget-designs",
       "6-finger-alien-hand-controller-holder",
-      "night-owl-wall-light"
+      "night-owl-wall-light",
+      "mood-ghost",
+      "ghost-arch-wreath",
+      "ghost-on-a-swing",
+      "candlelight-pumpkins-table-lamp",
+      "pumpkin-head-halloween-mask",
+      "carved-in-fear-halloween-mask",
+      "halloween-candy-holder-designs"
     ]
   },
   {
@@ -131,17 +132,17 @@
     "seoDescription": "Shop finished Halloween masks and locally made Halloween décor in Edmonton, including pumpkin costumes, ghost decorations, seasonal lamps and trinket dishes.",
     "coverProduct": "pumpkin-head-halloween-mask",
     "products": [
-      "pumpkin-head-halloween-mask",
-      "carved-in-fear-halloween-mask",
-      "candlelight-pumpkins-table-lamp",
-      "ghost-on-a-swing",
-      "halloween-candy-holder-designs",
-      "mood-ghost",
-      "ghost-arch-wreath",
+      "paw-couture-pet-costume-designs",
       "figurine-fidget-designs",
       "6-finger-alien-hand-controller-holder",
       "night-owl-wall-light",
-      "paw-couture-pet-costume-designs"
+      "mood-ghost",
+      "ghost-arch-wreath",
+      "ghost-on-a-swing",
+      "candlelight-pumpkins-table-lamp",
+      "pumpkin-head-halloween-mask",
+      "carved-in-fear-halloween-mask",
+      "halloween-candy-holder-designs"
     ]
   },
   {
@@ -155,9 +156,10 @@
     "seoDescription": "Find locally made 3D-printed gifts at $25 CAD or less in Edmonton, from articulated creatures to small seasonal and desk gifts.",
     "coverProduct": "mood-ghost",
     "products": [
+      "mini-safari-animal-figurines",
       "figurine-fidget-designs",
-      "halloween-candy-holder-designs",
-      "ghost-on-a-swing"
+      "ghost-on-a-swing",
+      "halloween-candy-holder-designs"
     ]
   },
   {

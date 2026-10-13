@@ -22,12 +22,12 @@ import { createShopifyCheckout, fulfillmentSku, shopifyConfigured } from "../lib
 import { useShopifyCatalog } from "../components/ShopifyCatalog";
 import { type ProductContent, type SiteContent, useProductContent, useSiteContent } from "../components/SiteContent";
 import { LithophaneProduct } from "../components/LithophaneProduct";
-import { DeliveryAdmin } from "../components/DeliveryAdmin";
-import deliveryPolicy from "../../commerce/delivery-policy.json";
+import deliveryPolicy from "../../commerce/delivery-policy.json" with {type:"json"};
 import { PickupPreference, FulfillmentSelector, PICKUP_PRICE_DIFFERENCE, useFulfillment } from "../components/Fulfillment";
 import { LithophaneAdmin } from "../components/LithophaneAdmin";
 import { SaleAdmin } from "../components/SaleAdmin";
 const ProductManager=lazy(()=>import("../components/ProductManager").then(module=>({default:module.ProductManager})));
+const DeliveryAdmin=lazy(()=>import("../components/DeliveryAdmin").then(module=>({default:module.DeliveryAdmin})));
 import originalCategoryIds from "../../commerce/catalog-original-categories.json";
 import adminRows from "../../commerce/admin-rows.json";
 import {useCatalogAvailability} from "../lib/catalogAvailability";
@@ -101,10 +101,11 @@ async function api(
   body?: unknown,
   headers: Record<string, string> = {},
 ) {
+  const authHeaders = Object.fromEntries(Object.entries(headers).filter(([name,value])=>name.toLowerCase()!=="authorization" || value.trim()!=="Bearer"));
   const result = await fetch(`/.netlify/functions/shop?action=${action}`, {
     signal: AbortSignal.timeout(20000),
     method: body ? "POST" : "GET",
-    headers: { "Content-Type": "application/json", ...headers },
+    headers: { "Content-Type": "application/json", ...authHeaders },
     ...(body ? { body: JSON.stringify(body) } : {}),
   });
   let data;
@@ -809,8 +810,6 @@ export function ShopProduct() {
               <p className="eyebrow">{product.category} / Made in Edmonton</p>
               <h1>{nameFor(product.id, product.name)}</h1>
               {"launchReady" in product && product.launchReady === false && <p className="note-panel" role="status">Preview only. This listing is being prepared; checkout is not open until its product details and fulfillment are confirmed.</p>}
-              <p className="lead">{product.description}</p>{"groupedDesigns" in product && <p className="small"><strong>{nameFor(mediaProduct.id, mediaProduct.name)}</strong> — {mediaProduct.description}</p>}
-              {product.category === "Pet hats & costumes" && <div className="note-panel"><strong>Fully assembled · Standard size</strong><p>Costume elastic, straps and the pieces listed for your chosen design are included. Fit varies by pet; <a href="mailto:custombuildstudio@gmail.com?subject=Paw%20Couture%20fit%20question">ask us about fit before ordering</a> if unsure. For short, supervised photo moments.</p></div>}
               <p className="shop-price">
                 {money(priceFor(selectedVariant.id, selectedVariant.priceCents))}{" "}
                 <span>
@@ -819,6 +818,9 @@ export function ShopProduct() {
                 </span>
               </p>
               {compareAtFor(selectedVariant.id) && <p className="shop-regular-price"><strong className="shop-sale-inline">{sale?.percentage}% OFF</strong> Regular {money(compareAtFor(selectedVariant.id)!)} CAD</p>}
+              {"groupedDesigns" in product && <ProductDesignPicker designs={product.groupedDesigns || []} selectedId={selectedVariant.id} onChange={chooseVariant} />}
+              <p className="lead">{product.description}</p>{"groupedDesigns" in product && <p className="small"><strong>{nameFor(mediaProduct.id, mediaProduct.name)}</strong> — {mediaProduct.description}</p>}
+              {product.category === "Pet hats & costumes" && <div className="note-panel"><strong>Fully assembled · Standard size</strong><p>Costume elastic, straps and the pieces listed for your chosen design are included. Fit varies by pet; <a href="mailto:custombuildstudio@gmail.com?subject=Paw%20Couture%20fit%20question">ask us about fit before ordering</a> if unsure. For short, supervised photo moments.</p></div>}
               <ul className="shop-purchase-facts" aria-label="Purchase details">
                 <li>{previewOnly ? "$5 shipping extra for this collection — checkout setup pending" : mode === "pickup" ? "Pickup in Southeast Edmonton by appointment" : productShippingFee(product.id) ? "$5 tracked shipping once per order across Canada" : "Free tracked shipping in Canada"}</li>
                 <li>{mode === "pickup" ? productionMessage : deliveryEstimate}</li>
@@ -831,7 +833,7 @@ export function ShopProduct() {
                 <a href="tel:+17802030081">Questions? Call or text 780-203-0081</a>
               </div>
               <dl className="shop-core-details"><dt>Included</dt><dd>{selectedVariant.included}</dd>{!selectedVariant.dimensions.startsWith("Final dimensions") && <><dt>{isHalloweenMask ? "Ear-to-ear size" : "Approximate size"}</dt><dd>{selectedVariant.dimensions.replace("Source model: approximately", "Approximately").replace("Finished size: approximately", "Approximately").replace("Final printed dimensions require production review.", "Finished size may vary slightly.")}</dd></>}</dl>
-              {"groupedDesigns" in product && <ProductDesignPicker designs={product.groupedDesigns || []} selectedId={selectedVariant.id} onChange={chooseVariant} />}
+
               {"personalization" in product ? <PhotoPrintOrder key={product.id} productId={selectedVariant.id} /> : <AddProduct product={product} variantId={selectedVariant.id} onVariantChange={chooseVariant} formId="product-purchase-form" />}
               <Link className="text-link" to="/shop/cart">View cart & checkout ↗</Link>
               <p className="shop-purchase-policy">{"personalization" in product ? "Your photo print is included. Personalized orders are excluded from change-of-mind returns." : `Unused standard products can be returned within ${storePolicy.returnWindowDays} days. Custom-size orders are excluded.`} <Link to="/shipping-returns">Details →</Link></p>
@@ -1034,7 +1036,7 @@ export function ShopCart() {
                 <strong>{money(subtotal)} CAD</strong>
               </p>
               <p className="shop-total">
-                <span>{mode === "pickup" ? "Edmonton pickup by appointment" : "Tracked shipping across Canada"}</span>
+                <span>{policy.active && pickupRequested ? `${policy.pickupRegion} pickup by appointment` : mode === "pickup" ? "Edmonton pickup by appointment" : "Tracked shipping across Canada"}</span>
                 <strong>{fulfillmentFee ? `${money(fulfillmentFee)} CAD` : "Free"}</strong>
               </p>
               <p className="shop-total shop-cart-total">
@@ -1174,7 +1176,7 @@ export function Checkout() {
               <span>{money(subtotal)}</span>
             </p>
             <p className="shop-total">
-              <span>{mode === "pickup" ? "Edmonton pickup" : "Tracked shipping"}</span>
+              <span>{policy.active && pickupRequested ? `${policy.pickupRegion} pickup` : mode === "pickup" ? "Edmonton pickup" : "Tracked shipping"}</span>
               <span>{fulfillmentFee ? money(fulfillmentFee) : "Free"}</span>
             </p>
             <p className="shop-total">
@@ -1463,17 +1465,18 @@ export function ShopAdmin() {
                 <p className="small">Enable before checking your own shop. Refresh the shop afterwards. This applies to this browser only and does not hide customer visits or prevent ordering.</p>
                 <a className="text-link" href="https://analytics.google.com/" target="_blank" rel="noopener noreferrer">Open Google Analytics ↗</a>
               </div>
-              <div className="studio-admin-workspace"><div className="shop-admin-tabs studio-admin-sidebar" role="tablist" aria-label="Administration sections">
-                <button className={tab === "delivery" ? "button" : "button button-dark"} onClick={() => setTab("delivery")}>Pricing & delivery</button>
-                <button className={tab === "orders" ? "button" : "button button-dark"} onClick={() => setTab("orders")}>Orders</button>
-                <button className={tab === "website" ? "button" : "button button-dark"} onClick={() => setTab("website")}>Website settings</button>
-                <button className={tab === "display" ? "button" : "button button-dark"} onClick={() => setTab("display")}>Shop display</button>
-                <button className={tab === "products" ? "button" : "button button-dark"} onClick={() => setTab("products")}>Products & collections</button>
-                <button className={tab === "sales" ? "button" : "button button-dark"} onClick={() => setTab("sales")}>Sales</button>
-                <button className={tab === "lithophane" ? "button" : "button button-dark"} onClick={() => setTab("lithophane")}>Lithophane product</button>
+              <div className="studio-admin-workspace"><div className="shop-admin-tabs studio-admin-sidebar" role="navigation" aria-label="Administration sections">
+                <button aria-pressed={tab === "delivery"} className={tab === "delivery" ? "button" : "button button-dark"} onClick={() => setTab("delivery")}>Pricing & delivery</button>
+                <button aria-pressed={tab === "orders"} className={tab === "orders" ? "button" : "button button-dark"} onClick={() => setTab("orders")}>Orders</button>
+                <button aria-pressed={tab === "website"} className={tab === "website" ? "button" : "button button-dark"} onClick={() => setTab("website")}>Website settings</button>
+                <button aria-pressed={tab === "display"} className={tab === "display" ? "button" : "button button-dark"} onClick={() => setTab("display")}>Shop display</button>
+                <button aria-pressed={tab === "products"} className={tab === "products" ? "button" : "button button-dark"} onClick={() => setTab("products")}>Products & collections</button>
+                <button aria-pressed={tab === "sales"} className={tab === "sales" ? "button" : "button button-dark"} onClick={() => setTab("sales")}>Sales</button>
+                <button aria-pressed={tab === "lithophane"} className={tab === "lithophane" ? "button" : "button button-dark"} onClick={() => setTab("lithophane")}>Lithophane product</button>
                 <button
                   className="button button-dark"
-                  onClick={() => {
+                  onClick={async () => {
+                    await fetch("/.netlify/functions/shop-admin-session?action=logout",{method:"POST"});
                     setKey("");
                     setOrders([]);
                     setLogged(false);
@@ -1593,7 +1596,7 @@ export function ShopAdmin() {
                   onSaved={(value) => setProductContent({ ...productContent, "lithophane-table-lamp": value })}
                 />
               )}
-              {tab === "delivery" && <DeliveryAdmin />}
+              {tab === "delivery" && <Suspense fallback={<p>Loading pricing controls…</p>}><DeliveryAdmin /></Suspense>}
               {tab === "sales" && <SaleAdmin adminKey={key} />}
               {tab === "display" && <ShopDisplayAdmin adminKey={key} />}</div></div>
             </>

@@ -1,5 +1,5 @@
 import { DragEvent, FormEvent, useRef, useState } from "react";
-import deliveryPolicy from '../../commerce/delivery-policy.json';
+import deliveryPolicy from '../../commerce/delivery-policy.json' with {type:"json"};
 import type { ProductContent } from "./SiteContent";
 
 type LampContent = ProductContent["lithophane-table-lamp"];
@@ -91,7 +91,7 @@ export function LithophaneAdmin({ adminKey, initial, onSaved }: { adminKey: stri
     try {
       const response = await fetch("/.netlify/functions/shop?action=save-product-content", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: "Bearer " + adminKey },
+        headers: { "Content-Type": "application/json", ...(adminKey?{Authorization: "Bearer " + adminKey}:{}) },
         body: JSON.stringify({ product }),
       });
       const result = await response.json();

@@ -35,6 +35,7 @@ export function validateDocument(input, { publish = false, policy = deliveryPoli
     if (p.images.length > 100) throw new Error('Use no more than 100 photos per design.');
     if (p.video && !safeMediaUrl(p.video)) throw new Error('Use an uploaded product video.');
     if (p.variants) p.variants = p.variants.map(v => ({ id: v.id, label: text(v.label, 120), dimensions: text(v.dimensions), priceCents: policy.active && v.basePriceCents!==undefined ? priceRecord({...v,pricingSchemaVersion:2},policy).priceCents : amount(v.priceCents),...(v.basePriceCents!==undefined?{basePriceCents:amount(v.basePriceCents),deliveryExtraCents:amount(v.deliveryExtraCents ?? 0),pricingSchemaVersion:2}:{}) }));
+    if(p.variants?.length)p.priceCents=Math.min(...p.variants.map(v=>v.priceCents));
     if (publish && (!p.name || !p.description || !p.included || !p.images.length || p.priceCents <= p.pickupPriceDifferenceCents)) throw new Error('Before publishing, add a name, description, included items, photo and a positive product price.');
     if (publish && p.launchReady === false) throw new Error('This product has unresolved launch requirements. Confirm them before publishing.');
     if (publish && p.variants?.some(v => !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(v.id) || !v.label || v.priceCents <= p.pickupPriceDifferenceCents)) throw new Error('Every option needs a label and valid prices.');

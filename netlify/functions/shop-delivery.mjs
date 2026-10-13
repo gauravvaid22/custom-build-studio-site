@@ -15,17 +15,29 @@ export default async(request,context)=>{
     requireAdmin(request);
     const raw=await request.text();if(raw.length>10000)throw new Error('Request too large.');const body=raw?JSON.parse(raw):{};
     if(action==='status') {
-      if(state.jobs.some(j=>j.action==='delivery-pricing'&&j.status==='website')){
+      if(state.jobs.some(j=>['delivery-pricing','pickup-settings'].includes(j.action)&&j.status==='website')){
         const response=await fetch(new URL('/catalog-revision.json',request.url),{cache:'no-store',signal:AbortSignal.timeout(5000)}),live=response.ok?await response.json():null;
-        let changed=false;for(const j of state.jobs)if(j.action==='delivery-pricing'&&j.status==='website'&&live?.revision>=j.revision){j.status='live';changed=true;}
+        let changed=false;for(const j of state.jobs)if(['delivery-pricing','pickup-settings'].includes(j.action)&&j.status==='website'&&live?.revision>=j.revision){j.status='live';changed=true;}
         if(changed)await writeState(store,state,etag);
       }
       const scopes=admin?await admin.call(`query DeliveryScopes{currentAppInstallation{accessScopes{handle}}}`):null;
       const list=scopes?.currentAppInstallation.accessScopes.map(s=>s.handle) || [];
-      return reply({policy,revision:state.revision,jobs:state.jobs.filter(j=>j.action==='delivery-pricing').map(j=>({id:j.id,status:j.status,error:j.error,completed:j.completed,total:j.plan?.groups.length,revision:j.revision})),discountsConnected:list.includes('write_discounts'),rewards:state.pickupRewards || []});
+      return reply({policy,revision:state.revision,jobs:state.jobs.filter(j=>['delivery-pricing','pickup-settings'].includes(j.action)).map(j=>({id:j.id,status:j.status,error:j.error,completed:j.completed,total:j.plan?.groups.length || 0,revision:j.revision})),discountsConnected:list.includes('write_discounts'),rewards:state.pickupRewards || []});
     }
     if((context?.deploy?.context || process.env.CONTEXT)!=='production')throw new Error('Publishing is available only in production.');
+    if(action==='save-reward-settings'){
+      if(!policy.active)throw new Error('Apply the initial pricing migration first.');
+      if(state.jobs.some(j=>['queued','shopify','website'].includes(j.status)))throw new Error('Wait for the current website update to finish.');
+      if(!process.env.NETLIFY_CATALOG_BUILD_HOOK)throw new Error('Website publishing is not connected.');
+      const next=validateDeliveryPolicy({...body.policy,active:true,defaultAllowanceCents:policy.defaultAllowanceCents});
+      const jobId=randomUUID();state.deliveryPolicy=next;state.revision++;state.jobs=[{id:jobId,action:'pickup-settings',status:'website',createdAt:new Date().toISOString(),revision:state.revision},...state.jobs].slice(0,20);
+      await writeState(store,state,etag);
+      const response=await fetch(process.env.NETLIFY_CATALOG_BUILD_HOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({revision:state.revision}),signal:AbortSignal.timeout(15000)});
+      if(!response.ok){const fresh=await readState(store);const j=fresh.state.jobs.find(j=>j.id===jobId);j.status='error';j.error='Pickup settings saved, but website build failed. Resume the update.';await writeState(store,fresh.state,fresh.etag);throw new Error(j.error);}
+      return reply({policy:next,saved:true});
+    }
     if(action==='preview') {
+      if(state.jobs.some(j=>j.action==='delivery-pricing'&&j.status==='error'))throw new Error('Resume the failed pricing update before making a new preview. This prevents applying the legacy adjustment twice.');
       if(state.jobs.some(j=>['queued','shopify','website'].includes(j.status)))throw new Error('Wait for the current website update to finish.');
       const sale=await getStore({name:'shop-orders-v1',consistency:'strong'}).get('config/shop-sale',{type:'json'});
       if(sale && sale.status!=='inactive')throw new Error('End or cancel the sale first.');
@@ -35,8 +47,9 @@ export default async(request,context)=>{
     }
     if(action==='apply'||action==='retry') {
       if(state.jobs.some(j=>['queued','shopify','website'].includes(j.status)))throw new Error('Another update is in progress.');
+      if(action==='apply' && state.jobs.some(j=>j.action==='delivery-pricing'&&j.status==='error'))throw new Error('Resume the failed pricing update first.');
       let job;
-      if(action==='retry'){job=state.jobs.find(j=>j.id===body.id&&j.action==='delivery-pricing'&&j.status==='error');if(!job)throw new Error('Failed update not found.');job.status='queued';delete job.error;}
+      if(action==='retry'){job=state.jobs.find(j=>j.id===body.id&&['delivery-pricing','pickup-settings'].includes(j.action)&&j.status==='error');if(!job)throw new Error('Failed update not found.');job.status='queued';delete job.error;}
       else {
         const preview=await store.get('delivery-preview',{type:'json'});
         if(!preview || preview.fingerprint!==body.fingerprint || preview.plan.sourceRevision!==state.revision || Date.now()-preview.createdAt>30*60000)throw new Error('Preview expired or catalog changed. Preview again.');

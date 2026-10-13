@@ -265,7 +265,7 @@ export function createSaleService({ store, shopify, production = false, clock = 
       const catalog = await shopify.read(record.config.productIds.map((id) => baseById.get(id).shopifyHandle || id));
       let plan;
       try {
-        plan = planFromCatalog(record.config, catalog);
+        plan = planFromCatalog(record.config, catalog, pricingDifferenceCents);
         if (record.fingerprint !== hash({ config: record.config, groups: plan.groups })) throw new SaleError("Shopify prices changed after scheduling. Preview and schedule the sale again.", 409);
       } catch (error) {
         await store.put(recordKey, { ...record, status: "schedule-error", lastError: error.message, updatedAt: clock().toISOString() }, { onlyIfMatch: found.etag });
@@ -277,6 +277,7 @@ export function createSaleService({ store, shopify, production = false, clock = 
     }
     if (record.status === "publishing") {
       try {
+        await shopify.pauseRewards?.();
         const catalog = await shopify.read(record.groups.map((g) => g.handle));
         for (const group of record.groups) {
           const byId = new Map((catalog.get(group.handle)?.variants.nodes || []).map((v) => [v.id, v]));
