@@ -815,7 +815,7 @@ export function ShopProduct() {
                 </a>
                 <a href="tel:+17802030081">Questions? Call or text 780-203-0081</a>
               </div>
-              <dl className="shop-core-details"><dt>Included</dt><dd>{selectedVariant.included}</dd>{!selectedVariant.dimensions.startsWith("Final dimensions") && <><dt>{isHalloweenMask ? "Ear-to-ear size" : "Approximate size"}</dt><dd>{selectedVariant.dimensions.replace("Source model: approximately", "Approximately").replace("Finished size: approximately", "Approximately").replace("Final printed dimensions require production review.", "Finished size may vary slightly.")}</dd></>}</dl>
+              <dl className="shop-core-details"><dt>Included</dt><dd>{product.bundleOffers?.length ? "Your chosen single animal, five-animal pack or ten-animal pack. Select the animals below." : selectedVariant.included}</dd>{!selectedVariant.dimensions.startsWith("Final dimensions") && <><dt>{isHalloweenMask ? "Ear-to-ear size" : "Approximate size"}</dt><dd>{selectedVariant.dimensions.replace("Source model: approximately", "Approximately").replace("Finished size: approximately", "Approximately").replace("Final printed dimensions require production review.", "Finished size may vary slightly.")}</dd></>}</dl>
 
               {product.bundleOffers?.length ? <MixPackOrder product={product} onPreview={chooseVariant}/> : "personalization" in product ? <PhotoPrintOrder key={product.id} productId={selectedVariant.id} /> : <AddProduct product={product} variantId={selectedVariant.id} onVariantChange={chooseVariant} formId="product-purchase-form" />}
               <Link className="text-link" to="/shop/cart">View cart & checkout ↗</Link>
