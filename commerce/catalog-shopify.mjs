@@ -21,7 +21,7 @@ export async function syncDocument(admin, doc, config, expected = {}) {
     const current = await lookupProduct(admin, p);
     if (expected[p.id] && current?.updatedAt !== expected[p.id]) throw new Error(`${p.name} changed in Shopify. Reload the editor before publishing.`);
     if (current?.variants.nodes.some(v => v.compareAtPrice && Number(v.compareAtPrice) > Number(v.price))) throw new Error(`End the sale for ${p.name} before changing its base price.`);
-    const input = { title: p.name, descriptionHtml: [p.description,p.included,p.dimensions,p.notes].filter(Boolean).map(x => `<p>${html(x)}</p>`).join(''),
+    const input = { title: p.name, descriptionHtml: [p.description,...(p.shippingPriceMode==='per-order'?[`Mix and match: CAD${(p.priceCents/100).toFixed(2)} per item, plus CAD${(p.shippingFeeCents/100).toFixed(2)} tracked Canadian delivery once per order. Add more designs without another delivery charge. The same flat fee applies when these items are ordered with other products.`]:[]),p.included,p.dimensions,p.notes].filter(Boolean).map(x => `<p>${html(x)}</p>`).join(''),
       productType: p.category, metafields: [ {namespace:'cbs',key:'dimensions',type:'single_line_text_field',value:p.dimensions || 'Not specified'},
         {namespace:'cbs',key:'included',type:'multi_line_text_field',value:p.included}, {namespace:'cbs',key:'care',type:'multi_line_text_field',value:p.notes || 'Not specified'} ],
       seo: { title: `${p.name} | Custom Build Studio`, description: p.description.slice(0, 300) } };
