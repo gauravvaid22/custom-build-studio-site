@@ -1,16 +1,21 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { trackShopInteraction } from "./Analytics";
+import deliveryDefaults from "../../commerce/delivery-policy.json";
 import pricing from "../../commerce/pricing.json";
 
 export type FulfillmentMode = "delivered" | "pickup";
 export const PICKUP_PRICE_DIFFERENCE = pricing.pickupPriceDifferenceCents;
-const Context = createContext({ mode: "delivered" as FulfillmentMode, chosen: false, locked: false, choose: (_mode: FulfillmentMode) => {}, lock: (_value: boolean) => {} });
+const Context = createContext({ mode: "delivered" as FulfillmentMode, chosen: false, locked: false, policy: deliveryDefaults, pickupRequested: false, choose: (_mode: FulfillmentMode) => {}, lock: (_value: boolean) => {} });
 
 export function FulfillmentProvider({ children }: { children: React.ReactNode }) {
+  const [policy,setPolicy]=useState(deliveryDefaults);
+  const [pickupRequested,setPickupRequested]=useState(false);
+  useEffect(()=>{void fetch("/.netlify/functions/shop-delivery?action=public",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(data=>{if(data?.policy){setPolicy(data.policy);if(data.policy.active){setMode("delivered");try{localStorage.removeItem("cbs-fulfillment-v1");}catch{}}}}).catch(()=>{});},[]);
   const [mode, setMode] = useState<FulfillmentMode>("delivered");
   const [chosen, setChosen] = useState(false);
   const [locked, lock] = useState(false);
   useEffect(() => {
+    if(deliveryDefaults.active)return;
     try {
       const requested = new URLSearchParams(window.location.search).get("fulfillment");
       if (requested === "delivered" || requested === "pickup") {
@@ -24,11 +29,12 @@ export function FulfillmentProvider({ children }: { children: React.ReactNode })
   }, []);
   function choose(next: FulfillmentMode) {
     if (locked) return;
+    if(policy.active){setPickupRequested(next==="pickup");return;}
     if (next !== mode) trackShopInteraction("select_fulfillment", { fulfillment_method: next });
     setMode(next); setChosen(true);
     try { localStorage.setItem("cbs-fulfillment-v1", next); } catch {}
   }
-  return <Context.Provider value={{ mode, chosen, locked, choose, lock }}>{children}</Context.Provider>;
+  return <Context.Provider value={{ mode:policy.active?"delivered":mode, chosen, locked, policy, pickupRequested, choose, lock }}>{children}</Context.Provider>;
 }
 
 export const useFulfillment = () => useContext(Context);
@@ -38,7 +44,8 @@ export function FulfillmentIcon({ pickup }: { pickup: boolean }) {
   </svg>;
 }
 export function FulfillmentSelector({ welcome = false, compact = false }: { welcome?: boolean; compact?: boolean }) {
-  const { mode, chosen, choose, locked } = useFulfillment();
+  const { mode, chosen, choose, locked, policy } = useFulfillment();
+  if(policy.active)return <div className="container delivery-assurance"><FulfillmentIcon pickup={false}/><span><strong>Free tracked shipping in Canada</strong>{policy.pickupRewardEnabled&&<small>Collect locally in {policy.pickupRegion} and get {policy.pickupRewardPercent}% off your next order. Select pickup in your cart.</small>}</span></div>;
   const expanded = welcome && !chosen;
   return <section className={`container fulfillment-selector ${expanded ? "fulfillment-welcome" : ""} ${compact ? "fulfillment-compact" : ""}`} aria-label="Choose pickup or delivery">
     {expanded && <div><span className="eyebrow">YOUR GIFTS. YOUR WAY.</span><h2>How will you get yours?</h2></div>}
@@ -52,4 +59,10 @@ export function FulfillmentSelector({ welcome = false, compact = false }: { welc
     </div>
     <p className="fulfillment-help" role="status">{compact ? (mode === "pickup" ? "Pickup prices · Southeast Edmonton · address sent after ordering." : "Delivered prices · shipping shown in cart.") : mode === "pickup" ? "Pickup prices shown. We’ll arrange your time and send the private address after you order. No delivery included." : "Delivered prices shown. Most items include shipping; accessory-set shipping is shown in your cart."} {compact ? "" : expanded ? "You can switch anytime before checkout." : "Changing this updates every item in your cart."}</p>
   </section>;
+}
+
+export function PickupPreference(){
+ const {policy,pickupRequested,choose,locked}=useFulfillment();
+ if(!policy.active || !policy.pickupRewardEnabled)return null;
+ return <div className="pickup-preference"><label><input type="checkbox" checked={pickupRequested} disabled={locked} onChange={e=>choose(e.target.checked?"pickup":"delivered")}/><span><strong>I’ll collect in {policy.pickupRegion}</strong><small>Get {policy.pickupRewardPercent}% off your next order. Your promo code comes in the package after collection.</small></span></label><p>{pickupRequested?"We’ll contact you to arrange a time and send the private pickup address. This order is marked for collection, not shipping.":"Prefer local pickup? Check the box and we’ll arrange it after ordering."} Today’s price stays the same.</p></div>;
 }

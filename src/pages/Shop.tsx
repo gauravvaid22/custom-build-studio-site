@@ -22,7 +22,9 @@ import { createShopifyCheckout, fulfillmentSku, shopifyConfigured } from "../lib
 import { useShopifyCatalog } from "../components/ShopifyCatalog";
 import { type ProductContent, type SiteContent, useProductContent, useSiteContent } from "../components/SiteContent";
 import { LithophaneProduct } from "../components/LithophaneProduct";
-import { FulfillmentSelector, PICKUP_PRICE_DIFFERENCE, useFulfillment } from "../components/Fulfillment";
+import { DeliveryAdmin } from "../components/DeliveryAdmin";
+import deliveryPolicy from "../../commerce/delivery-policy.json";
+import { PickupPreference, FulfillmentSelector, PICKUP_PRICE_DIFFERENCE, useFulfillment } from "../components/Fulfillment";
 import { LithophaneAdmin } from "../components/LithophaneAdmin";
 import { SaleAdmin } from "../components/SaleAdmin";
 const ProductManager=lazy(()=>import("../components/ProductManager").then(module=>({default:module.ProductManager})));
@@ -144,7 +146,7 @@ function ShopNotice() {
         ? "Collection preview — prices and production details are being reviewed. "
         : ""}
       Finished physical products <span aria-hidden="true">·</span> No digital files{" "}
-      <span aria-hidden="true">·</span> {mode === "pickup" ? "Edmonton pickup by appointment" : "Most items ship free in Canada · Tumbler accessory sets: $5 shipping per order"}{" "}
+      <span aria-hidden="true">·</span> {mode === "pickup" ? "Edmonton pickup by appointment" : "Free tracked shipping in Canada"}{" "}
       <span aria-hidden="true">·</span> Secure Shopify checkout
     </div>
   );
@@ -439,7 +441,7 @@ export function Shop() {
     {(adminRows as {id:string;title:string;description:string;productIds:string[];enabled:boolean;kind?:string;startAt?:string;endAt?:string}[]).filter(row=>row.enabled&&(!row.startAt||Date.now()>=Date.parse(row.startAt))&&(!row.endAt||Date.now()<Date.parse(row.endAt))).map(row=><section className="section" key={row.id}><div className="container"><div className="section-heading"><div><h2>{row.title}</h2><p>{row.description}</p></div></div>{row.kind!=="information"&&<ProductGrid listed={row.productIds.map(catalogProduct).filter((p):p is Product=>Boolean(p))} listId={`admin_row_${row.id}`}/>}</div></section>)}
     {merchandising.showStudioProof && <StudioProof />}
     <section className="container"><ShopBenefits /></section>
-    <section className="shop-how section"><div className="container detail-columns"><div><p className="eyebrow">FROM YOUR CART TO YOUR DOOR</p><h2>Simple from the first click.</h2><p>Choose your product and options, add to cart, then pay securely through Shopify. Your order goes directly to the studio.</p><Link className="text-link" to="/shipping-returns">Shipping, pickup & returns →</Link></div><div><h3>{mode === "pickup" ? "Pickup to suit your schedule." : "Tracked shipping across Canada."}</h3><p>{mode === "pickup" ? "Collect in Southeast Edmonton by appointment. We email the private address after ordering." : "Most items include tracked Canadian shipping. Straw topper and cup charm sets add $5 once per shipped order; your cart shows the rate. Your product page explains delivery estimates."}</p><p>{content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship")}.</p><Link className="text-link" to="/contact">Need a custom colour or size? Ask us →</Link></div></div></section>
+    <section className="shop-how section"><div className="container detail-columns"><div><p className="eyebrow">FROM YOUR CART TO YOUR DOOR</p><h2>Simple from the first click.</h2><p>Choose your product and options, add to cart, then pay securely through Shopify. Your order goes directly to the studio.</p><Link className="text-link" to="/shipping-returns">Shipping & returns →</Link></div><div><h3>{mode === "pickup" ? "Pickup to suit your schedule." : "Tracked shipping across Canada."}</h3><p>{mode === "pickup" ? "Collect in Southeast Edmonton by appointment. We email the private address after ordering." : "Tracked Canadian shipping is included in the displayed price. Your product page explains delivery estimates. You can request South Edmonton pickup in your cart."}</p><p>{content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship")}.</p><Link className="text-link" to="/contact">Need a custom colour or size? Ask us →</Link></div></div></section>
   </>;
 }
 
@@ -451,7 +453,7 @@ export function ShopSale() {
     <ShopNav showFulfillment={false}/>
     <section className="shop-sale-hero"><div className="container"><p className="eyebrow">CUSTOM BUILD STUDIO / LIMITED PROMOTION</p><div className="shop-sale-hero-percent">{sale.percentage}% OFF</div><h1>{sale.title}</h1><p>Explore selected pieces at sale prices. Every item is a finished physical product made in Edmonton.</p>{sale.endAt && <p className="shop-sale-deadline">Ends {new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(sale.endAt))}</p>}<a className="button" href="#sale-products">Shop the sale ↘</a></div></section>
     <FulfillmentSelector/><ShopNotice/>
-    <section className="section" id="sale-products"><div className="container"><div className="section-heading"><div><p className="eyebrow">ON SALE NOW</p><h2>{featured.length} {featured.length === 1 ? "product" : "products"} to explore.</h2></div><p>The price shown reflects your pickup or delivery choice. Sale prices carry through to secure Shopify checkout.</p></div><div className="shop-grid">{featured.map((product) => <ShopProductCard key={product.id} product={product}/>)}</div></div></section>
+    <section className="section" id="sale-products"><div className="container"><div className="section-heading"><div><p className="eyebrow">ON SALE NOW</p><h2>{featured.length} {featured.length === 1 ? "product" : "products"} to explore.</h2></div><p>The price shown includes shipping. Sale prices carry through to secure Shopify checkout.</p></div><div className="shop-grid">{featured.map((product) => <ShopProductCard key={product.id} product={product}/>)}</div></div></section>
     <section className="container"><ShopBenefits/></section>
   </>;
 }
@@ -926,7 +928,7 @@ function CartQuantity({id,name,quantity}:{id:string;name:string;quantity:number}
     onBlur={()=>setDraft(String(quantity))}/>;
 }
 export function ShopCart() {
-  const { mode, lock } = useFulfillment();
+  const { mode, lock, pickupRequested, policy } = useFulfillment();
   const { items, setQuantity } = useCart();
   const { priceFor, nameFor, compareAtFor, refresh, catalogLoaded, catalogError } = useShopifyCatalog();
   const viewedCart = useRef("");
@@ -955,7 +957,7 @@ export function ShopCart() {
     lock(true);
     try {
       const expectedPrices = Object.fromEntries(items.map(item => { const product = catalogProduct(item.id)!; return [item.id, priceFor(item.id, product.priceCents)]; }));
-      const checkoutUrl = await createShopifyCheckout(items, mode, expectedPrices);
+      const checkoutUrl = await createShopifyCheckout(items, policy.active && pickupRequested ? "pickup" : mode, expectedPrices);
       trackShop("begin_checkout", items.map(item => ({ ...item, priceCents: expectedPrices[item.id] })), mode);
       window.location.assign(checkoutUrl);
     } catch (checkoutError) {
@@ -972,7 +974,7 @@ export function ShopCart() {
       <PageIntro
         eyebrow="YOUR COLLECTION"
         title="Your cart."
-        description={mode === "pickup" ? "Review your pickup order, then pay securely through Shopify. We’ll arrange your collection time after ordering." : "Review your items, then pay securely through Shopify. Your shipping rate is shown below before secure checkout."}
+        description={mode === "pickup" ? "Review your pickup order, then pay securely through Shopify. We’ll arrange your collection time after ordering." : "Review your items, then pay securely through Shopify. Shipping is included in the displayed price."}
       />
       <section className="section">
         <div className="container shop-cart-layout">
@@ -1045,6 +1047,7 @@ export function ShopCart() {
                   : ""}
                 Need a different colour or another change? Contact us before checkout.
               </p>
+              <PickupPreference />
               {error && <p className="shop-checkout-error" role="alert">{error}</p>}
               {!catalogLoaded && <p role="status">{catalogError ? "Live prices could not load. Please retry before checkout." : "Checking current prices…"}</p>}
               {!catalogLoaded && catalogError && <button type="button" className="text-link" onClick={() => void refresh().catch(() => setError("Prices are temporarily unavailable. Please try again shortly."))}>Retry prices</button>}
@@ -1056,7 +1059,7 @@ export function ShopCart() {
               >
                 {busy ? "Opening secure checkout…" : "Secure checkout ↗"}
               </button>
-              <p className="small">{mode === "pickup" ? "Choose Edmonton pickup at Shopify checkout. Your contact address does not request delivery. We’ll email your pickup arrangements after ordering." : `Delivered to your Canadian address. ${fulfillmentFee ? "$5 tracked shipping once per order." : "Shipping included."}`}</p>
+              <p className="small">{mode === "pickup" ? "Choose Edmonton pickup at Shopify checkout. Your contact address does not request delivery. We’ll email your pickup arrangements after ordering." : `${policy.active && pickupRequested ? "Pickup requested. We’ll contact you after ordering." : "Delivered to your Canadian address. Shipping included."}`}</p>
               <p className="shop-secure-note">Shop Pay · Credit card · PayPal · Google Pay</p>
             </aside>
           )}
@@ -1066,7 +1069,7 @@ export function ShopCart() {
   );
 }
 export function Checkout() {
-  const { mode, lock } = useFulfillment();
+  const { mode, lock, pickupRequested, policy } = useFulfillment();
   const { items } = useCart();
   const { priceFor, nameFor, refresh, catalogLoaded, catalogError } = useShopifyCatalog();
   const content = useSiteContent();
@@ -1087,7 +1090,7 @@ export function Checkout() {
     lock(true);
     try {
       const expectedPrices = Object.fromEntries(items.map(item => { const product = catalogProduct(item.id)!; return [item.id, priceFor(item.id, product.priceCents)]; }));
-      const checkoutUrl = await createShopifyCheckout(items, mode, expectedPrices);
+      const checkoutUrl = await createShopifyCheckout(items, policy.active && pickupRequested ? "pickup" : mode, expectedPrices);
       trackShop("begin_checkout", items.map(item => ({ ...item, priceCents: expectedPrices[item.id] })), mode);
       window.location.assign(checkoutUrl);
     } catch (checkoutError) {
@@ -1110,6 +1113,7 @@ export function Checkout() {
       <section className="section">
         <div className="container shop-cart-layout">
           <div className="note-panel shopify-checkout-panel">
+            <PickupPreference />
             <span className="eyebrow">POWERED BY SHOPIFY</span>
             <h2>{mode === "pickup" ? "Secure payment. Local pickup." : "Secure payment and tracked shipping."}</h2>
             <p>
@@ -1341,7 +1345,7 @@ export function ShopAdmin() {
     [busy, setBusy] = useState(false),
     [content, setContent] = useState<SiteContent>(publicContent),
     [productContent, setProductContent] = useState<ProductContent>(publicProductContent),
-    [tab, setTab] = useState<"orders" | "website" | "products" | "lithophane" | "sales" | "display">("products"),
+    [tab, setTab] = useState<"orders" | "website" | "products" | "lithophane" | "sales" | "display" | "delivery">("products"),
     [saved, setSaved] = useState("");
   async function load() {
     try {
@@ -1459,7 +1463,8 @@ export function ShopAdmin() {
                 <p className="small">Enable before checking your own shop. Refresh the shop afterwards. This applies to this browser only and does not hide customer visits or prevent ordering.</p>
                 <a className="text-link" href="https://analytics.google.com/" target="_blank" rel="noopener noreferrer">Open Google Analytics ↗</a>
               </div>
-              <div className="shop-admin-tabs" role="tablist" aria-label="Administration sections">
+              <div className="studio-admin-workspace"><div className="shop-admin-tabs studio-admin-sidebar" role="tablist" aria-label="Administration sections">
+                <button className={tab === "delivery" ? "button" : "button button-dark"} onClick={() => setTab("delivery")}>Pricing & delivery</button>
                 <button className={tab === "orders" ? "button" : "button button-dark"} onClick={() => setTab("orders")}>Orders</button>
                 <button className={tab === "website" ? "button" : "button button-dark"} onClick={() => setTab("website")}>Website settings</button>
                 <button className={tab === "display" ? "button" : "button button-dark"} onClick={() => setTab("display")}>Shop display</button>
@@ -1477,7 +1482,7 @@ export function ShopAdmin() {
                   Sign out
                 </button>
               </div>
-              {tab === "orders" && <>
+              <div className="studio-admin-main">{tab === "orders" && <>
               <button className="text-link" onClick={load}>Refresh orders</button>
               {!orders.length && <p>No legacy orders yet. New Shopify orders appear in Shopify Admin.</p>}
               {orders.map((order) => (
@@ -1588,8 +1593,9 @@ export function ShopAdmin() {
                   onSaved={(value) => setProductContent({ ...productContent, "lithophane-table-lamp": value })}
                 />
               )}
+              {tab === "delivery" && <DeliveryAdmin />}
               {tab === "sales" && <SaleAdmin adminKey={key} />}
-              {tab === "display" && <ShopDisplayAdmin adminKey={key} />}
+              {tab === "display" && <ShopDisplayAdmin adminKey={key} />}</div></div>
             </>
           )}
           {error && <p role="alert">{error}</p>}

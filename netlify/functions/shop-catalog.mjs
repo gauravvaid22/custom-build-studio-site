@@ -18,11 +18,11 @@ export default async (request,context) => {
       if (action === 'availability') {
         const current=compileCatalog(products,state.collections || collections,Object.values(state.documents),state.archived);
         const ids=new Set(current.products.map(p=>p.id));
-        return reply({archived:[...new Set([...state.archived,...(state.unavailableIds || []),...products.filter(p=>!ids.has(p.id)).map(p=>p.id)])],revision:state.revision});
+        return reply({pricingUpdating:state.jobs.some(j=>j.action==='delivery-pricing' && ['queued','shopify','website','error'].includes(j.status)),archived:[...new Set([...state.archived,...(state.unavailableIds || []),...products.filter(p=>!ids.has(p.id)).map(p=>p.id)])],revision:state.revision});
       }
       const catalog = compileCatalog(products,state.collections || collections,Object.values(state.documents),state.archived);
       // Never expose editor drafts or private connection/settings data.
-      return reply({...catalog,revision:state.revision,rows:state.rows});
+      return reply({...catalog,revision:state.revision,rows:state.rows,deliveryPolicy:state.deliveryPolicy});
     }
     requireAdmin(request);
     const raw = await request.text(); if (raw.length > 800000) return reply({error:'Product data is too large.'},413);

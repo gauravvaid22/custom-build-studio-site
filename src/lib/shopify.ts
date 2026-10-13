@@ -1,3 +1,4 @@
+import deliveryPolicy from "../../commerce/delivery-policy.json";
 import {assertCatalogAvailable} from "./catalogAvailability";
 import type { CartItem } from "../components/Cart";
 import type { FulfillmentMode } from "../components/Fulfillment";
@@ -213,8 +214,8 @@ export async function createShopifyCheckout(items: CartItem[], mode: Fulfillment
       input: {
         lines,
         buyerIdentity: { countryCode: "CA" },
-        attributes: [{ key: "Storefront", value: "custombuildstudio.ca" }, { key: "Order handoff", value: mode === "pickup" ? "Edmonton pickup by appointment — no delivery" : `Delivered — Canadian tracked shipping ${shippingFee(items, mode) ? "CAD " + (shippingFee(items, mode) / 100).toFixed(2) : "included"}` }, ...analyticsAttributes],
-        ...(mode === "pickup" ? { note: "EDMONTON PICKUP ONLY. Arrange a time and privately send the address after ordering. Do not ship this order." } : {}),
+        attributes: [{ key: "Storefront", value: "custombuildstudio.ca" }, { key: "Order handoff", value: mode === "pickup" ? "LOCAL PICKUP — DO NOT SHIP. Contact customer to arrange collection." : `Delivered — Canadian tracked shipping ${shippingFee(items, mode) ? "CAD " + (shippingFee(items, mode) / 100).toFixed(2) : "included"}` }, ...(mode === "pickup" && deliveryPolicy.active ? [{key:"Pickup reward",value:`${deliveryPolicy.pickupRewardPercent}% off next order; package code after collection`}] : []), ...analyticsAttributes],
+        ...(mode === "pickup" ? { note: "LOCAL PICKUP — DO NOT SHIP. Contact the customer to arrange collection in South Edmonton and privately send the address. Include the next-order reward card after collection." } : {}),
       },
     },
   );

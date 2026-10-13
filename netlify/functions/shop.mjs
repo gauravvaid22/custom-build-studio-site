@@ -1,3 +1,4 @@
+import deliveryPolicy from "../../commerce/delivery-policy.json" with {type:"json"};
 import { getStore } from "@netlify/blobs";
 import { createShop } from "../../commerce/core.mjs";
 import { handler } from "../../commerce/http.mjs";
@@ -22,7 +23,7 @@ const shopifyCatalogSync = (client, store) => client ? async ({id, name, priceCe
   const product = lookup.productByIdentifier;
   if (!product?.id || !product.variants?.nodes?.[0]?.id)
     throw new Error("Create the Lithophane Table Lamp product in Shopify before changing its website name or price.");
-  if (priceCents <= pricing.pickupPriceDifferenceCents) throw new Error("The delivered price must be more than the pickup price difference.");
+  if (priceCents <= (deliveryPolicy.active ? 0 : pricing.pickupPriceDifferenceCents)) throw new Error("The delivered price must be more than the pickup price difference.");
   const delivered = product.variants.nodes.find(variant => variant.sku === id);
   const pickup = product.variants.nodes.find(variant => variant.sku === `${id}-pickup`);
   if (!delivered || !pickup) throw new Error("Both delivered and pickup variants must exist in Shopify before updating prices.");
@@ -32,6 +33,8 @@ const shopifyCatalogSync = (client, store) => client ? async ({id, name, priceCe
   );
   const titleError = update.productUpdate.userErrors?.[0]?.message;
   if (titleError) throw new Error(titleError);
+  // The unified product editor owns prices after migration. This older CMS still manages lamp copy/gallery.
+  if (deliveryPolicy.active) return;
   const variants = await call(
     `mutation UpdateWebsitePrice($productId: ID!, $variants: [ProductVariantsBulkInput!]!) { productVariantsBulkUpdate(productId: $productId, variants: $variants) { productVariants { id } userErrors { message } } }`,
     { productId: product.id, variants: [{ id: delivered.id, price: (priceCents / 100).toFixed(2) }, { id: pickup.id, price: ((priceCents - pricing.pickupPriceDifferenceCents) / 100).toFixed(2) }] },

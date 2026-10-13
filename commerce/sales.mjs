@@ -1,9 +1,10 @@
 import { createHash } from "node:crypto";
 import products from "./products.json" with { type: "json" };
 import collections from "./collections.json" with { type: "json" };
+import deliveryPolicy from "./delivery-policy.json" with {type:"json"};
 import pricing from "./pricing.json" with { type: "json" };
 
-export const PICKUP_DIFFERENCE_CENTS = pricing.pickupPriceDifferenceCents;
+export const PICKUP_DIFFERENCE_CENTS = deliveryPolicy.active ? 0 : pricing.pickupPriceDifferenceCents;
 const recordKey = "config/shop-sale";
 const baseProducts = products.filter((product) => !("variantOf" in product) && !product.groupedDesigns);
 const baseById = new Map(baseProducts.map((product) => [product.id, product]));
@@ -28,7 +29,7 @@ function validateConfig(input) {
   if (!title || title.length > 70) throw new SaleError("Use a sale title under 70 characters.");
   const minimumPickupPriceCents = Number(input.minimumPickupPriceCents ?? 100);
   if (!Number.isInteger(minimumPickupPriceCents) || minimumPickupPriceCents < 100 || minimumPickupPriceCents > 1000000)
-    throw new SaleError("Choose a minimum pickup sale price between CA$1 and CA$10,000.");
+    throw new SaleError("Choose a minimum sale price between CA$1 and CA$10,000.");
   const collection = scope === "collection" ? collections.find((item) => item.id === input.collectionId && item.kind !== "curated") : null;
   if (scope === "collection" && !collection) throw new SaleError("Choose an existing shop category.");
   const requested = scope === "all" ? baseProducts.map((p) => p.id) :

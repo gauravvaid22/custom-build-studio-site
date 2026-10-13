@@ -1572,3 +1572,30 @@
 .shop-design-check { position:absolute; top:.65rem; right:.65rem; background:#1684a2; color:white; border-radius:50%; width:1.4rem; height:1.4rem; text-align:center; }
 .shop-design-options button:focus-visible { outline:3px solid #1684a2; outline-offset:3px; }
 @media(max-width:480px) { .shop-design-options { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+/* Included delivery and clear pickup choice, without competing price modes. */
+.delivery-assurance {display:flex;align-items:center;gap:12px;margin-block:16px;padding:16px 20px;border:1px solid #8db5c933;border-radius:12px;background:#eef6f9;color:#183b4c;}
+.delivery-assurance svg {width:26px;flex:none;}
+.delivery-assurance strong,.delivery-assurance small {display:block;}
+.delivery-assurance small {margin-top:4px;line-height:1.5;}
+.pickup-preference {margin:20px 0;padding:16px;border:1px solid #69b5d8;border-radius:12px;background:#eef7fc;color:#153b4c;}
+.pickup-preference label {display:flex;gap:12px;align-items:flex-start;cursor:pointer;}
+.pickup-preference input {width:22px;height:22px;flex:none;accent-color:#087dac;}
+.pickup-preference strong,.pickup-preference small {display:block;}
+.pickup-preference small,.pickup-preference p {font-size:14px;line-height:1.55;}
+.pickup-preference p {margin-bottom:0;}
+.delivery-admin fieldset {padding:24px;margin:24px 0;border:1px solid #adc1ca;border-radius:12px;}
+.delivery-admin label {display:block;margin:12px 0;}
+.delivery-admin input:not([type=checkbox]) {display:block;width:100%;padding:12px;border:1px solid #7896a4;border-radius:6px;background:#fff;color:#172a35;}
+.delivery-admin .button {margin-top:12px;}
+.delivery-table {overflow:auto;max-height:480px;margin:20px 0;border:1px solid #becdd3;border-radius:8px;}
+.delivery-table table {width:100%;border-collapse:collapse;font-size:14px;}
+.delivery-table th,.delivery-table td {padding:12px;text-align:left;border-bottom:1px solid #d4e0e6;}
+.delivery-table th small {display:block;font-weight:400;font-size:11px;}
+.delivery-table thead {position:sticky;top:0;background:#e8f2f6;}
+.pickup-reward-card {padding:24px;margin:20px 0;border:2px dashed #1c81a8;text-align:center;background:white;color:#153b4c;}
+.studio-admin-workspace {display:grid;grid-template-columns:220px minmax(0,1fr);gap:28px;align-items:start;}
+.studio-admin-workspace .studio-admin-sidebar {display:flex;flex-direction:column;position:sticky;top:110px;margin:0;gap:8px;}
+.studio-admin-sidebar .button {text-align:left;justify-content:flex-start;font-size:14px;}
+.studio-admin-main {min-width:0;}
+@media(max-width:850px){.studio-admin-workspace{display:block;}.studio-admin-workspace .studio-admin-sidebar{position:static;flex-direction:row;overflow-x:auto;margin-bottom:24px;}.studio-admin-sidebar .button{white-space:nowrap;}.delivery-admin fieldset{padding:16px;}}
+@media print {body:has(.pickup-reward-card) *{visibility:hidden;}body:has(.pickup-reward-card) .pickup-reward-card,body:has(.pickup-reward-card) .pickup-reward-card *{visibility:visible;}.pickup-reward-card{position:absolute;left:0;top:0;width:100%;}.pickup-reward-card button{display:none;}}

@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "active": false,
+  "defaultAllowanceCents": 500,
+  "pickupRewardEnabled": true,
+  "pickupRewardPercent": 10,
+  "pickupRegion": "South Edmonton",
+  "rewardExpiryDays": 90
+}

@@ -1,3 +1,4 @@
+import deliveryPolicy from "../../commerce/delivery-policy.json" with {type:"json"};
 import { requestAdminKey } from "../../commerce/admin-session.mjs";
 import { getStore } from "@netlify/blobs";
 import { equal } from "../../commerce/core.mjs";
@@ -63,7 +64,7 @@ async function createMissing(item) {
       tags: item.tags || (product.personalization ? ["personalized gifts", "photo holder", "photo print included", "Edmonton made"] : ["headphone stand", "desk accessory", "Edmonton made", "headset holder"]),
       status: "ACTIVE",
       seo: { title: `${item.name} | Custom Build Studio`, description: `${item.description} Made in Edmonton. Free tracked shipping in Canada or local pickup.` },
-      ...managedVariantInput(item, pricing.pickupPriceDifferenceCents),
+      ...managedVariantInput(item, (deliveryPolicy.active ? 0 : pricing.pickupPriceDifferenceCents)),
       files: product.images.map((image, index) => ({ originalSource: `https://custombuildstudio.ca${image.src}`, filename: `${item.id}-${index + 1}.webp`, alt: image.alt, contentType: "IMAGE" })),
     } },
   );
@@ -74,6 +75,7 @@ async function createMissing(item) {
 }
 
 async function updatePrice(id, cents) {
+  if(deliveryPolicy.active)throw new Error('Edit base prices and delivery extras in Products & collections, then publish the saved draft.');
   const difference = managedProducts.find(item => item.id === id)?.pickupPriceDifferenceCents ?? pricing.pickupPriceDifferenceCents;
   if (!Number.isInteger(cents) || cents < Math.max(100, difference) || cents > 100000)
     throw new Error("Enter a valid CAD price, at least the pickup adjustment and no more than CA$1,000.");

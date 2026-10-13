@@ -6,6 +6,7 @@ export type CatalogProduct = {
  variants?:{id:string;label:string;priceCents:number;dimensions:string}[]; variantOf?:string; variantLabel?:string; shopifyHandle?:string;
  personalized?:boolean; personalization?:{kind:string;photoCount:number}; listingGroup?:string;
  groupedDesigns?:{id:string;label:string;optionIds:string[]}[]; galleryOverviewCover?:boolean; launchReady?:boolean;
+ basePriceCents?:number;deliveryExtraCents?:number;pricingSchemaVersion?:number;
  pickupPriceDifferenceCents?:number; shippingFeeCents?:number;
 };
 const products = rawProducts as CatalogProduct[];

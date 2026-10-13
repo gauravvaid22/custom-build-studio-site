@@ -15,6 +15,7 @@ if (source || process.env.CONTEXT==='production') {
   snapshot=await response.json();
   } else snapshot={...JSON.parse(await readFile('commerce/catalog-baseline.json','utf8')),revision:0,rows:[]};
   if (!Array.isArray(snapshot.products) || !Array.isArray(snapshot.collections) || !Number.isSafeInteger(snapshot.revision)) throw new Error('Invalid catalog snapshot.');
+  if(snapshot.deliveryPolicy)await writeFile('commerce/delivery-policy.json',JSON.stringify(snapshot.deliveryPolicy,null,2)+'\n');
   snapshot=groupRemainingDesigns(snapshot);
   snapshot.products=applyDefaultListingCovers(snapshot.products,baseline.products);
   const ids=new Set(snapshot.products.map(p=>p.id));

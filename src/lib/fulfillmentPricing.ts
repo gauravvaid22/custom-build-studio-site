@@ -1,3 +1,4 @@
+import delivery from "../../commerce/delivery-policy.json";
 import products from "../data/catalog";
 import pricing from "../../commerce/pricing.json";
 export function pickupDifference(id: string) {
@@ -5,7 +6,7 @@ export function pickupDifference(id: string) {
  return product && "pickupPriceDifferenceCents" in product ? product.pickupPriceDifferenceCents ?? pricing.pickupPriceDifferenceCents : pricing.pickupPriceDifferenceCents;
 }
 export function shippingFee(items: {id: string; quantity: number}[], mode: string) {
- if (mode === "pickup") return 0;
+ if (delivery.active || mode === "pickup") return 0;
  // This collection's single flat fee applies once, including mixed carts.
  return items.reduce((fee, item) => {
   const product = products.find(p => p.id === item.id);
