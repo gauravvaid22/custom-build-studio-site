@@ -7,7 +7,7 @@
     "launchReady": true,
     "productionReviewed": true,
     "id": "paw-couture-pet-costume-designs",
-    "name": "Paw Couture — Pet Hats & Costumes",
+    "name": "Pet Hats & Costumes — Paw Couture",
     "description": "Birthday hats, playful headpieces and coordinated angel or devil costumes for cats and dogs. Browse all nine designs, then choose one to see its matching photos, video and price. Fully assembled in Edmonton, with the costume attachments included.",
     "included": "One selected standard-size costume design, with the elastic/straps and costume accessories specified for that option. This is not a set of all nine designs.",
     "dimensions": "",
@@ -284,63 +284,63 @@
     "groupedDesigns": [
       {
         "id": "party-hat-pet-costume",
-        "label": "Birthday hat for cats & dogs — Party Hat",
+        "label": "Birthday Hat for Cats & Dogs — Party Hat",
         "optionIds": [
           "party-hat-pet-costume"
         ]
       },
       {
         "id": "yay-cap-dog-costume",
-        "label": "Propeller cap for dogs — Yay Cap",
+        "label": "Dog Propeller Hat — Yay Cap",
         "optionIds": [
           "yay-cap-dog-costume"
         ]
       },
       {
         "id": "officer-woof-dog-costume",
-        "label": "Police hat for dogs — Officer Woof",
+        "label": "Dog Police Hat — Officer Woof",
         "optionIds": [
           "officer-woof-dog-costume"
         ]
       },
       {
         "id": "glam-wave-cat-costume",
-        "label": "Wavy hair costume for cats — Glam Wave",
+        "label": "Cat Hair Costume — Glam Wave",
         "optionIds": [
           "glam-wave-cat-costume"
         ]
       },
       {
         "id": "emo-bangs-cat-costume",
-        "label": "Fringe hair costume for cats — Emo Bangs",
+        "label": "Cat Fringe Hair Costume — Emo Bangs",
         "optionIds": [
           "emo-bangs-cat-costume"
         ]
       },
       {
         "id": "dino-crown-cat-costume",
-        "label": "Dinosaur headpiece for cats — Dino Crown",
+        "label": "Cat Dinosaur Headpiece — Dino Crown",
         "optionIds": [
           "dino-crown-cat-costume"
         ]
       },
       {
         "id": "pharaoh-cat-cat-costume",
-        "label": "Egyptian headpiece for cats — Pharaoh Cat",
+        "label": "Cat Egyptian Headpiece — Pharaoh Cat",
         "optionIds": [
           "pharaoh-cat-cat-costume"
         ]
       },
       {
         "id": "little-saint-cat-costume",
-        "label": "Angel halo & wings for cats — Little Saint",
+        "label": "Cat Angel Halo & Wings — Little Saint",
         "optionIds": [
           "little-saint-cat-costume"
         ]
       },
       {
         "id": "little-devil-cat-costume",
-        "label": "Devil horns & wings for cats — Little Devil",
+        "label": "Cat Devil Horns & Wings — Little Devil",
         "optionIds": [
           "little-devil-cat-costume"
         ]
@@ -349,7 +349,7 @@
     "variants": [
       {
         "id": "party-hat-pet-costume",
-        "label": "Birthday hat for cats & dogs — Party Hat",
+        "label": "Birthday Hat for Cats & Dogs — Party Hat",
         "dimensions": "Standard size. Source reference model height approximately 10 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
         "priceCents": 1999,
         "basePriceCents": 1499,
@@ -358,7 +358,7 @@
       },
       {
         "id": "yay-cap-dog-costume",
-        "label": "Propeller cap for dogs — Yay Cap",
+        "label": "Dog Propeller Hat — Yay Cap",
         "dimensions": "Standard size. Source reference model height approximately 7 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
         "priceCents": 2499,
         "basePriceCents": 1999,
@@ -367,7 +367,7 @@
       },
       {
         "id": "officer-woof-dog-costume",
-        "label": "Police hat for dogs — Officer Woof",
+        "label": "Dog Police Hat — Officer Woof",
         "dimensions": "Standard size. Source reference model height approximately 6 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
         "priceCents": 2499,
         "basePriceCents": 1999,
@@ -376,7 +376,7 @@
       },
       {
         "id": "glam-wave-cat-costume",
-        "label": "Wavy hair costume for cats — Glam Wave",
+        "label": "Cat Hair Costume — Glam Wave",
         "dimensions": "Standard size. Source reference model height approximately 11 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
         "priceCents": 2499,
         "basePriceCents": 1999,
@@ -385,7 +385,7 @@
       },
       {
         "id": "emo-bangs-cat-costume",
-        "label": "Fringe hair costume for cats — Emo Bangs",
+        "label": "Cat Fringe Hair Costume — Emo Bangs",
         "dimensions": "Standard size. Source reference model height approximately 10 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
         "priceCents": 2499,
         "basePriceCents": 1999,
@@ -394,7 +394,7 @@
       },
       {
         "id": "dino-crown-cat-costume",
-        "label": "Dinosaur headpiece for cats — Dino Crown",
+        "label": "Cat Dinosaur Headpiece — Dino Crown",
         "dimensions": "Standard size. Source reference model height approximately 11 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
         "priceCents": 2999,
         "basePriceCents": 2499,
@@ -403,7 +403,7 @@
       },
       {
         "id": "pharaoh-cat-cat-costume",
-        "label": "Egyptian headpiece for cats — Pharaoh Cat",
+        "label": "Cat Egyptian Headpiece — Pharaoh Cat",
         "dimensions": "Standard size. Source reference model height approximately 11 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
         "priceCents": 2999,
         "basePriceCents": 2499,
@@ -412,7 +412,7 @@
       },
       {
         "id": "little-saint-cat-costume",
-        "label": "Angel halo & wings for cats — Little Saint",
+        "label": "Cat Angel Halo & Wings — Little Saint",
         "dimensions": "Standard size. Source reference model height approximately 13 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
         "priceCents": 3499,
         "basePriceCents": 2999,
@@ -421,7 +421,7 @@
       },
       {
         "id": "little-devil-cat-costume",
-        "label": "Devil horns & wings for cats — Little Devil",
+        "label": "Cat Devil Horns & Wings — Little Devil",
         "dimensions": "Standard size. Source reference model height approximately 12 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
         "priceCents": 3499,
         "basePriceCents": 2999,
@@ -431,7 +431,9 @@
     ],
     "basePriceCents": 1499,
     "deliveryExtraCents": 0,
-    "pricingSchemaVersion": 2
+    "pricingSchemaVersion": 2,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "category": "Pet hats & costumes",
@@ -441,7 +443,7 @@
     "launchReady": true,
     "productionReviewed": true,
     "id": "party-hat-pet-costume",
-    "name": "Birthday hat for cats & dogs — Party Hat",
+    "name": "Birthday Hat for Cats & Dogs — Party Hat",
     "description": "A pink-and-white party hat for pet birthdays and playful photo moments.",
     "included": "One assembled party hat with its elastic attachment.",
     "dimensions": "Standard size. Source reference model height approximately 10 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
@@ -472,7 +474,9 @@
     "priceCents": 1999,
     "basePriceCents": 1499,
     "deliveryExtraCents": 0,
-    "pricingSchemaVersion": 2
+    "pricingSchemaVersion": 2,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "category": "Pet hats & costumes",
@@ -482,7 +486,7 @@
     "launchReady": true,
     "productionReviewed": true,
     "id": "yay-cap-dog-costume",
-    "name": "Propeller cap for dogs — Yay Cap",
+    "name": "Dog Propeller Hat — Yay Cap",
     "description": "A colourful propeller cap that adds a playful finishing touch to a dog photo shoot.",
     "included": "One assembled multicolour propeller cap with its elastic attachment.",
     "dimensions": "Standard size. Source reference model height approximately 7 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
@@ -507,7 +511,9 @@
     "priceCents": 2499,
     "basePriceCents": 1999,
     "deliveryExtraCents": 0,
-    "pricingSchemaVersion": 2
+    "pricingSchemaVersion": 2,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "category": "Pet hats & costumes",
@@ -517,7 +523,7 @@
     "launchReady": true,
     "productionReviewed": true,
     "id": "officer-woof-dog-costume",
-    "name": "Police hat for dogs — Officer Woof",
+    "name": "Dog Police Hat — Officer Woof",
     "description": "A blue police-style cap with a gold-coloured badge for a dog costume or themed photos.",
     "included": "One assembled police-style cap with its elastic attachment.",
     "dimensions": "Standard size. Source reference model height approximately 6 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
@@ -572,7 +578,9 @@
     "priceCents": 2499,
     "basePriceCents": 1999,
     "deliveryExtraCents": 0,
-    "pricingSchemaVersion": 2
+    "pricingSchemaVersion": 2,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "category": "Pet hats & costumes",
@@ -582,7 +590,7 @@
     "launchReady": true,
     "productionReviewed": true,
     "id": "glam-wave-cat-costume",
-    "name": "Wavy hair costume for cats — Glam Wave",
+    "name": "Cat Hair Costume — Glam Wave",
     "description": "A sculpted brown, wavy hair accessory for cats with plenty of personality in photos.",
     "included": "One assembled wavy hair accessory with its securing attachment.",
     "dimensions": "Standard size. Source reference model height approximately 11 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
@@ -625,7 +633,9 @@
     "priceCents": 2499,
     "basePriceCents": 1999,
     "deliveryExtraCents": 0,
-    "pricingSchemaVersion": 2
+    "pricingSchemaVersion": 2,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "category": "Pet hats & costumes",
@@ -635,7 +645,7 @@
     "launchReady": true,
     "productionReviewed": true,
     "id": "emo-bangs-cat-costume",
-    "name": "Fringe hair costume for cats — Emo Bangs",
+    "name": "Cat Fringe Hair Costume — Emo Bangs",
     "description": "A black side-swept fringe accessory for a dramatic cat costume and fun portraits.",
     "included": "One assembled fringe hair accessory with its securing attachment.",
     "dimensions": "Standard size. Source reference model height approximately 10 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
@@ -678,7 +688,9 @@
     "priceCents": 2499,
     "basePriceCents": 1999,
     "deliveryExtraCents": 0,
-    "pricingSchemaVersion": 2
+    "pricingSchemaVersion": 2,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "category": "Pet hats & costumes",
@@ -688,7 +700,7 @@
     "launchReady": true,
     "productionReviewed": true,
     "id": "dino-crown-cat-costume",
-    "name": "Dinosaur headpiece for cats — Dino Crown",
+    "name": "Cat Dinosaur Headpiece — Dino Crown",
     "description": "A green triceratops-inspired headpiece with cream-coloured horns for a tiny dinosaur moment.",
     "included": "One assembled dinosaur headpiece with its elastic attachment.",
     "dimensions": "Standard size. Source reference model height approximately 11 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
@@ -731,7 +743,9 @@
     "priceCents": 2999,
     "basePriceCents": 2499,
     "deliveryExtraCents": 0,
-    "pricingSchemaVersion": 2
+    "pricingSchemaVersion": 2,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "category": "Pet hats & costumes",
@@ -741,7 +755,7 @@
     "launchReady": true,
     "productionReviewed": true,
     "id": "pharaoh-cat-cat-costume",
-    "name": "Egyptian headpiece for cats — Pharaoh Cat",
+    "name": "Cat Egyptian Headpiece — Pharaoh Cat",
     "description": "A blue-and-gold Egyptian-inspired headpiece for a regal cat portrait or costume.",
     "included": "One assembled Egyptian-inspired headpiece with its securing attachment.",
     "dimensions": "Standard size. Source reference model height approximately 11 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
@@ -790,7 +804,9 @@
     "priceCents": 2999,
     "basePriceCents": 2499,
     "deliveryExtraCents": 0,
-    "pricingSchemaVersion": 2
+    "pricingSchemaVersion": 2,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "category": "Pet hats & costumes",
@@ -800,7 +816,7 @@
     "launchReady": true,
     "productionReviewed": true,
     "id": "little-saint-cat-costume",
-    "name": "Angel halo & wings for cats — Little Saint",
+    "name": "Cat Angel Halo & Wings — Little Saint",
     "description": "A coordinated angel costume with a halo headband and white wings for gentle, supervised pet photo sessions.",
     "included": "One assembled halo headband and pair of white wings, including the elastic cord and wing straps.",
     "dimensions": "Standard size. Source reference model height approximately 13 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
@@ -837,7 +853,9 @@
     "priceCents": 3499,
     "basePriceCents": 2999,
     "deliveryExtraCents": 0,
-    "pricingSchemaVersion": 2
+    "pricingSchemaVersion": 2,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "category": "Pet hats & costumes",
@@ -847,7 +865,7 @@
     "launchReady": true,
     "productionReviewed": true,
     "id": "little-devil-cat-costume",
-    "name": "Devil horns & wings for cats — Little Devil",
+    "name": "Cat Devil Horns & Wings — Little Devil",
     "description": "A coordinated red devil costume with horns and bat-style wings for Halloween and playful pet portraits.",
     "included": "One assembled horn headband and pair of red wings, including the elastic cord and wing straps.",
     "dimensions": "Standard size. Source reference model height approximately 12 cm; this is the accessory height, not a head or neck measurement. Contact us for fit guidance.",
@@ -896,11 +914,13 @@
     "priceCents": 3499,
     "basePriceCents": 2999,
     "deliveryExtraCents": 0,
-    "pricingSchemaVersion": 2
+    "pricingSchemaVersion": 2,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mini-safari-animal-figurines",
-    "name": "Mini Safari Animal Figurines — Choose Your Animal",
+    "name": "Mini Safari Animal Figurines",
     "category": "Creatures & collectibles",
     "priceCents": 799,
     "description": "Choose one mini safari animal figurine for a desk, shelf or collection. Pick from 12 pocket-sized animals: lion, caracal, gazelle, ostrich, capybara, giraffe, jaguar, gorilla, rhino, elephant, zebra or hippo. Source models are approximately 2–3 cm high. Each choice is one figure. Choose a single animal or build a pack with your favourite designs. Free shipping in Canada.",
@@ -911,7 +931,7 @@
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/cover-1200.webp?v=1791844099",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/cover-1200.webp?v=1791844099",
-        "alt": "Mini Safari Animal Figurines — Choose Your Animal",
+        "alt": "Mini Safari Animal Figurines",
         "mediaId": "gid://shopify/MediaImage/46587347075371"
       },
       {
@@ -1245,84 +1265,84 @@
     "groupedDesigns": [
       {
         "id": "mini-safari-animal-figurines-design-mv5tpqtn",
-        "label": "Pocket Lion",
+        "label": "Mini Lion Figurine",
         "optionIds": [
           "mini-safari-animal-figurines-design-mv5tpqtn"
         ]
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5tqbjb",
-        "label": "Pocket Caracal",
+        "label": "Mini Caracal Figurine",
         "optionIds": [
           "mini-safari-animal-figurines-design-mv5tqbjb"
         ]
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5tqlf6",
-        "label": "Pocket Gazelle",
+        "label": "Mini Gazelle Figurine",
         "optionIds": [
           "mini-safari-animal-figurines-design-mv5tqlf6"
         ]
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5tqx57",
-        "label": "Pocket Capybara",
+        "label": "Mini Capybara Figurine",
         "optionIds": [
           "mini-safari-animal-figurines-design-mv5tqx57"
         ]
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5trend",
-        "label": "Pocket Ostrich",
+        "label": "Mini Ostrich Figurine",
         "optionIds": [
           "mini-safari-animal-figurines-design-mv5trend"
         ]
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5tri0m",
-        "label": "Pocket Giraffe",
+        "label": "Mini Giraffe Figurine",
         "optionIds": [
           "mini-safari-animal-figurines-design-mv5tri0m"
         ]
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5trlc1",
-        "label": "Pocket Jaguar",
+        "label": "Mini Jaguar Figurine",
         "optionIds": [
           "mini-safari-animal-figurines-design-mv5trlc1"
         ]
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5tropd",
-        "label": "Pocket Gorilla",
+        "label": "Mini Gorilla Figurine",
         "optionIds": [
           "mini-safari-animal-figurines-design-mv5tropd"
         ]
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5trs07",
-        "label": "Pocket Rhino",
+        "label": "Mini Rhino Figurine",
         "optionIds": [
           "mini-safari-animal-figurines-design-mv5trs07"
         ]
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5trwxm",
-        "label": "Pocket Elephant",
+        "label": "Mini Elephant Figurine",
         "optionIds": [
           "mini-safari-animal-figurines-design-mv5trwxm"
         ]
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5ts09b",
-        "label": "Pocket Zebra",
+        "label": "Mini Zebra Figurine",
         "optionIds": [
           "mini-safari-animal-figurines-design-mv5ts09b"
         ]
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5ts485",
-        "label": "Pocket Hippo",
+        "label": "Mini Hippo Figurine",
         "optionIds": [
           "mini-safari-animal-figurines-design-mv5ts485"
         ]
@@ -1333,7 +1353,7 @@
     "variants": [
       {
         "id": "mini-safari-animal-figurines-design-mv5tpqtn",
-        "label": "Pocket Lion",
+        "label": "Mini Lion Figurine",
         "dimensions": "Source model is approximately 2 cm high.",
         "priceCents": 799,
         "basePriceCents": 299,
@@ -1342,7 +1362,7 @@
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5tqbjb",
-        "label": "Pocket Caracal",
+        "label": "Mini Caracal Figurine",
         "dimensions": "Source model is approximately 2 cm high.",
         "priceCents": 799,
         "basePriceCents": 299,
@@ -1351,7 +1371,7 @@
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5tqlf6",
-        "label": "Pocket Gazelle",
+        "label": "Mini Gazelle Figurine",
         "dimensions": "Source model is approximately 3 cm high.",
         "priceCents": 799,
         "basePriceCents": 299,
@@ -1360,7 +1380,7 @@
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5tqx57",
-        "label": "Pocket Capybara",
+        "label": "Mini Capybara Figurine",
         "dimensions": "Source model is approximately 2 cm high.",
         "priceCents": 799,
         "basePriceCents": 299,
@@ -1369,7 +1389,7 @@
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5trend",
-        "label": "Pocket Ostrich",
+        "label": "Mini Ostrich Figurine",
         "dimensions": "Source model is approximately 3 cm high.",
         "priceCents": 799,
         "basePriceCents": 299,
@@ -1378,7 +1398,7 @@
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5tri0m",
-        "label": "Pocket Giraffe",
+        "label": "Mini Giraffe Figurine",
         "dimensions": "Source model is approximately 2 cm high.",
         "priceCents": 799,
         "basePriceCents": 299,
@@ -1387,7 +1407,7 @@
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5trlc1",
-        "label": "Pocket Jaguar",
+        "label": "Mini Jaguar Figurine",
         "dimensions": "Source model is approximately 2 cm high.",
         "priceCents": 799,
         "basePriceCents": 299,
@@ -1396,7 +1416,7 @@
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5tropd",
-        "label": "Pocket Gorilla",
+        "label": "Mini Gorilla Figurine",
         "dimensions": "Source model is approximately 2 cm high.",
         "priceCents": 799,
         "basePriceCents": 299,
@@ -1405,7 +1425,7 @@
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5trs07",
-        "label": "Pocket Rhino",
+        "label": "Mini Rhino Figurine",
         "dimensions": "Source model is approximately 2 cm high.",
         "priceCents": 799,
         "basePriceCents": 299,
@@ -1414,7 +1434,7 @@
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5trwxm",
-        "label": "Pocket Elephant",
+        "label": "Mini Elephant Figurine",
         "dimensions": "Source model is approximately 2 cm high.",
         "priceCents": 799,
         "basePriceCents": 299,
@@ -1423,7 +1443,7 @@
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5ts09b",
-        "label": "Pocket Zebra",
+        "label": "Mini Zebra Figurine",
         "dimensions": "Source model is approximately 2 cm high.",
         "priceCents": 799,
         "basePriceCents": 299,
@@ -1432,7 +1452,7 @@
       },
       {
         "id": "mini-safari-animal-figurines-design-mv5ts485",
-        "label": "Pocket Hippo",
+        "label": "Mini Hippo Figurine",
         "dimensions": "Source model is approximately 2 cm high.",
         "priceCents": 799,
         "basePriceCents": 299,
@@ -1454,11 +1474,13 @@
         "quantity": 10,
         "sku": "mini-safari-animal-figurines-mix-pack-10"
       }
-    ]
+    ],
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5tpqtn",
-    "name": "Pocket Lion",
+    "name": "Mini Lion Figurine",
     "category": "Creatures & collectibles",
     "priceCents": 799,
     "description": "A palm-sized little lion with a curled mane and bright expression.",
@@ -1469,31 +1491,31 @@
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_2909f3ec-8533-487f-aad2-0e4f83c53404.webp?v=1791844114",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_2909f3ec-8533-487f-aad2-0e4f83c53404.webp?v=1791844114",
-        "alt": "Pocket Lion",
+        "alt": "Mini Lion Figurine",
         "mediaId": "gid://shopify/MediaImage/46587348451627"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-2.webp?v=1791850737",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-2.webp?v=1791850737",
-        "alt": "Pocket Lion",
+        "alt": "Mini Lion Figurine",
         "mediaId": "gid://shopify/MediaImage/46590080549163"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-3.webp?v=1791850741",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-3.webp?v=1791850741",
-        "alt": "Pocket Lion",
+        "alt": "Mini Lion Figurine",
         "mediaId": "gid://shopify/MediaImage/46590080647467"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-4.webp?v=1791850745",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-4.webp?v=1791850745",
-        "alt": "Pocket Lion",
+        "alt": "Mini Lion Figurine",
         "mediaId": "gid://shopify/MediaImage/46590084186411"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-5.webp?v=1791850748",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-lion-view-5.webp?v=1791850748",
-        "alt": "Pocket Lion",
+        "alt": "Mini Lion Figurine",
         "mediaId": "gid://shopify/MediaImage/46590100570411"
       }
     ],
@@ -1503,11 +1525,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "shippingFeeCents": 0,
-    "shippingPriceMode": "included"
+    "shippingPriceMode": "included",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5tqbjb",
-    "name": "Pocket Caracal",
+    "name": "Mini Caracal Figurine",
     "category": "Creatures & collectibles",
     "priceCents": 799,
     "description": "A miniature wildcat with its signature tall, tufted ears.",
@@ -1518,31 +1542,31 @@
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_5f23da52-579b-4ec6-8b86-8c6fc4b38115.webp?v=1791844133",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_5f23da52-579b-4ec6-8b86-8c6fc4b38115.webp?v=1791844133",
-        "alt": "Pocket Caracal",
+        "alt": "Mini Caracal Figurine",
         "mediaId": "gid://shopify/MediaImage/46587389378859"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-2.webp?v=1791850768",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-2.webp?v=1791850768",
-        "alt": "Pocket Caracal",
+        "alt": "Mini Caracal Figurine",
         "mediaId": "gid://shopify/MediaImage/46590112268587"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-3.webp?v=1791850772",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-3.webp?v=1791850772",
-        "alt": "Pocket Caracal",
+        "alt": "Mini Caracal Figurine",
         "mediaId": "gid://shopify/MediaImage/46590112399659"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-4.webp?v=1791850775",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-4.webp?v=1791850775",
-        "alt": "Pocket Caracal",
+        "alt": "Mini Caracal Figurine",
         "mediaId": "gid://shopify/MediaImage/46590112497963"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-5.webp?v=1791850779",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-caracal-view-5.webp?v=1791850779",
-        "alt": "Pocket Caracal",
+        "alt": "Mini Caracal Figurine",
         "mediaId": "gid://shopify/MediaImage/46590112629035"
       }
     ],
@@ -1552,11 +1576,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "shippingFeeCents": 0,
-    "shippingPriceMode": "included"
+    "shippingPriceMode": "included",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5tqlf6",
-    "name": "Pocket Gazelle",
+    "name": "Mini Gazelle Figurine",
     "category": "Creatures & collectibles",
     "priceCents": 799,
     "description": "A tiny gazelle with long legs and an alert look.",
@@ -1567,31 +1593,31 @@
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_d801c675-aebf-4ae7-aea8-f2c6c9931476.webp?v=1791844147",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_d801c675-aebf-4ae7-aea8-f2c6c9931476.webp?v=1791844147",
-        "alt": "Pocket Gazelle",
+        "alt": "Mini Gazelle Figurine",
         "mediaId": "gid://shopify/MediaImage/46587407434027"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-2.webp?v=1791850785",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-2.webp?v=1791850785",
-        "alt": "Pocket Gazelle",
+        "alt": "Mini Gazelle Figurine",
         "mediaId": "gid://shopify/MediaImage/46590112792875"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-3.webp?v=1791850789",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-3.webp?v=1791850789",
-        "alt": "Pocket Gazelle",
+        "alt": "Mini Gazelle Figurine",
         "mediaId": "gid://shopify/MediaImage/46590112923947"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-4.webp?v=1791850793",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-4.webp?v=1791850793",
-        "alt": "Pocket Gazelle",
+        "alt": "Mini Gazelle Figurine",
         "mediaId": "gid://shopify/MediaImage/46590113349931"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-5.webp?v=1791850796",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gazelle-view-5.webp?v=1791850796",
-        "alt": "Pocket Gazelle",
+        "alt": "Mini Gazelle Figurine",
         "mediaId": "gid://shopify/MediaImage/46590113448235"
       }
     ],
@@ -1603,11 +1629,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "shippingFeeCents": 0,
-    "shippingPriceMode": "included"
+    "shippingPriceMode": "included",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5tqx57",
-    "name": "Pocket Capybara",
+    "name": "Mini Capybara Figurine",
     "category": "Creatures & collectibles",
     "priceCents": 799,
     "description": "A mini capybara with an easygoing look for a desk or shelf.",
@@ -1618,25 +1646,25 @@
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_d3ea2177-48e9-4426-b92a-6b56609894b0.webp?v=1791844162",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_d3ea2177-48e9-4426-b92a-6b56609894b0.webp?v=1791844162",
-        "alt": "Pocket Capybara",
+        "alt": "Mini Capybara Figurine",
         "mediaId": "gid://shopify/MediaImage/46587408744747"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-2.webp?v=1791850823",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-2.webp?v=1791850823",
-        "alt": "Pocket Capybara",
+        "alt": "Mini Capybara Figurine",
         "mediaId": "gid://shopify/MediaImage/46590114332971"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-3.webp?v=1791850827",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-3.webp?v=1791850827",
-        "alt": "Pocket Capybara",
+        "alt": "Mini Capybara Figurine",
         "mediaId": "gid://shopify/MediaImage/46590114464043"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-4.webp?v=1791850830",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-capybara-view-4.webp?v=1791850830",
-        "alt": "Pocket Capybara",
+        "alt": "Mini Capybara Figurine",
         "mediaId": "gid://shopify/MediaImage/46590114922795"
       }
     ],
@@ -1648,11 +1676,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "shippingFeeCents": 0,
-    "shippingPriceMode": "included"
+    "shippingPriceMode": "included",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5trend",
-    "name": "Pocket Ostrich",
+    "name": "Mini Ostrich Figurine",
     "category": "Creatures & collectibles",
     "priceCents": 799,
     "description": "A compact ostrich with a rounded body and expressive eyes.",
@@ -1663,31 +1693,31 @@
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_c0e935d7-8ea3-4ea8-bff0-636c618bb3cc.webp?v=1791844184",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_c0e935d7-8ea3-4ea8-bff0-636c618bb3cc.webp?v=1791844184",
-        "alt": "Pocket Ostrich",
+        "alt": "Mini Ostrich Figurine",
         "mediaId": "gid://shopify/MediaImage/46587409695019"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-2.webp?v=1791850857",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-2.webp?v=1791850857",
-        "alt": "Pocket Ostrich",
+        "alt": "Mini Ostrich Figurine",
         "mediaId": "gid://shopify/MediaImage/46590115643691"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-3.webp?v=1791850861",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-3.webp?v=1791850861",
-        "alt": "Pocket Ostrich",
+        "alt": "Mini Ostrich Figurine",
         "mediaId": "gid://shopify/MediaImage/46590115774763"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-4.webp?v=1791850864",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-4.webp?v=1791850864",
-        "alt": "Pocket Ostrich",
+        "alt": "Mini Ostrich Figurine",
         "mediaId": "gid://shopify/MediaImage/46590115873067"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-5.webp?v=1791850868",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-ostrich-view-5.webp?v=1791850868",
-        "alt": "Pocket Ostrich",
+        "alt": "Mini Ostrich Figurine",
         "mediaId": "gid://shopify/MediaImage/46590115971371"
       }
     ],
@@ -1699,11 +1729,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "shippingFeeCents": 0,
-    "shippingPriceMode": "included"
+    "shippingPriceMode": "included",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5tri0m",
-    "name": "Pocket Giraffe",
+    "name": "Mini Giraffe Figurine",
     "category": "Creatures & collectibles",
     "priceCents": 799,
     "description": "A little giraffe with a tall neck and spotted coat.",
@@ -1714,25 +1746,25 @@
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_6eb01f5d-b412-49cc-9726-88637dfdd079.webp?v=1791844188",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_6eb01f5d-b412-49cc-9726-88637dfdd079.webp?v=1791844188",
-        "alt": "Pocket Giraffe",
+        "alt": "Mini Giraffe Figurine",
         "mediaId": "gid://shopify/MediaImage/46587409957163"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-2_284bcf8b-3893-4570-84d6-e76045b06aa0.webp?v=1791851237",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-2_284bcf8b-3893-4570-84d6-e76045b06aa0.webp?v=1791851237",
-        "alt": "Pocket Giraffe",
+        "alt": "Mini Giraffe Figurine",
         "mediaId": "gid://shopify/MediaImage/46590131863851"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-3_ae8604f8-16a1-481b-a979-d108611520d4.webp?v=1791851240",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-3_ae8604f8-16a1-481b-a979-d108611520d4.webp?v=1791851240",
-        "alt": "Pocket Giraffe",
+        "alt": "Mini Giraffe Figurine",
         "mediaId": "gid://shopify/MediaImage/46590131962155"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-4_209b6ac3-a79b-4970-aefe-efb24f0d2d8e.webp?v=1791851244",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-giraffe-view-4_209b6ac3-a79b-4970-aefe-efb24f0d2d8e.webp?v=1791851244",
-        "alt": "Pocket Giraffe",
+        "alt": "Mini Giraffe Figurine",
         "mediaId": "gid://shopify/MediaImage/46590132060459"
       }
     ],
@@ -1744,11 +1776,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "shippingFeeCents": 0,
-    "shippingPriceMode": "included"
+    "shippingPriceMode": "included",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5trlc1",
-    "name": "Pocket Jaguar",
+    "name": "Mini Jaguar Figurine",
     "category": "Creatures & collectibles",
     "priceCents": 799,
     "description": "A miniature jaguar with a spotted coat and low, prowling pose.",
@@ -1759,25 +1793,25 @@
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_b3bd58d1-46c1-4663-9ad8-cab4b0949681.webp?v=1791844193",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_b3bd58d1-46c1-4663-9ad8-cab4b0949681.webp?v=1791844193",
-        "alt": "Pocket Jaguar",
+        "alt": "Mini Jaguar Figurine",
         "mediaId": "gid://shopify/MediaImage/46587410153771"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-2.webp?v=1791850994",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-2.webp?v=1791850994",
-        "alt": "Pocket Jaguar",
+        "alt": "Mini Jaguar Figurine",
         "mediaId": "gid://shopify/MediaImage/46590121115947"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-3.webp?v=1791850998",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-3.webp?v=1791850998",
-        "alt": "Pocket Jaguar",
+        "alt": "Mini Jaguar Figurine",
         "mediaId": "gid://shopify/MediaImage/46590121247019"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-4.webp?v=1791851001",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-jaguar-view-4.webp?v=1791851001",
-        "alt": "Pocket Jaguar",
+        "alt": "Mini Jaguar Figurine",
         "mediaId": "gid://shopify/MediaImage/46590121378091"
       }
     ],
@@ -1789,11 +1823,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "shippingFeeCents": 0,
-    "shippingPriceMode": "included"
+    "shippingPriceMode": "included",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5tropd",
-    "name": "Pocket Gorilla",
+    "name": "Mini Gorilla Figurine",
     "category": "Creatures & collectibles",
     "priceCents": 799,
     "description": "A small gorilla figure with a sturdy stance and dark details.",
@@ -1804,25 +1840,25 @@
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_8be6aa4c-e521-443e-9446-f55ea800c647.webp?v=1791844197",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_8be6aa4c-e521-443e-9446-f55ea800c647.webp?v=1791844197",
-        "alt": "Pocket Gorilla",
+        "alt": "Mini Gorilla Figurine",
         "mediaId": "gid://shopify/MediaImage/46587456749867"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-2.webp?v=1791851028",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-2.webp?v=1791851028",
-        "alt": "Pocket Gorilla",
+        "alt": "Mini Gorilla Figurine",
         "mediaId": "gid://shopify/MediaImage/46590122361131"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-3.webp?v=1791851032",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-3.webp?v=1791851032",
-        "alt": "Pocket Gorilla",
+        "alt": "Mini Gorilla Figurine",
         "mediaId": "gid://shopify/MediaImage/46590122557739"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-4.webp?v=1791851036",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-gorilla-view-4.webp?v=1791851036",
-        "alt": "Pocket Gorilla",
+        "alt": "Mini Gorilla Figurine",
         "mediaId": "gid://shopify/MediaImage/46590122688811"
       }
     ],
@@ -1834,11 +1870,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "shippingFeeCents": 0,
-    "shippingPriceMode": "included"
+    "shippingPriceMode": "included",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5trs07",
-    "name": "Pocket Rhino",
+    "name": "Mini Rhino Figurine",
     "category": "Creatures & collectibles",
     "priceCents": 799,
     "description": "A tiny rhino with a sculpted horn and sturdy legs.",
@@ -1849,31 +1887,31 @@
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_7e009e58-ca59-4674-aec4-3e7249ede297.webp?v=1791844203",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_7e009e58-ca59-4674-aec4-3e7249ede297.webp?v=1791844203",
-        "alt": "Pocket Rhino",
+        "alt": "Mini Rhino Figurine",
         "mediaId": "gid://shopify/MediaImage/46587457601835"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-2.webp?v=1791851072",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-2.webp?v=1791851072",
-        "alt": "Pocket Rhino",
+        "alt": "Mini Rhino Figurine",
         "mediaId": "gid://shopify/MediaImage/46590126260523"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-3.webp?v=1791851076",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-3.webp?v=1791851076",
-        "alt": "Pocket Rhino",
+        "alt": "Mini Rhino Figurine",
         "mediaId": "gid://shopify/MediaImage/46590126358827"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-4.webp?v=1791851079",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-4.webp?v=1791851079",
-        "alt": "Pocket Rhino",
+        "alt": "Mini Rhino Figurine",
         "mediaId": "gid://shopify/MediaImage/46590126457131"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-5.webp?v=1791851083",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-rhino-view-5.webp?v=1791851083",
-        "alt": "Pocket Rhino",
+        "alt": "Mini Rhino Figurine",
         "mediaId": "gid://shopify/MediaImage/46590126555435"
       }
     ],
@@ -1885,11 +1923,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "shippingFeeCents": 0,
-    "shippingPriceMode": "included"
+    "shippingPriceMode": "included",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5trwxm",
-    "name": "Pocket Elephant",
+    "name": "Mini Elephant Figurine",
     "category": "Creatures & collectibles",
     "priceCents": 799,
     "description": "A petite elephant with wide ears and tiny tusks.",
@@ -1900,25 +1940,25 @@
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_dc3c9128-b0c4-4e7f-9aea-fbd19eb2732d.webp?v=1791844208",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_dc3c9128-b0c4-4e7f-9aea-fbd19eb2732d.webp?v=1791844208",
-        "alt": "Pocket Elephant",
+        "alt": "Mini Elephant Figurine",
         "mediaId": "gid://shopify/MediaImage/46587467039019"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-2.webp?v=1791851109",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-2.webp?v=1791851109",
-        "alt": "Pocket Elephant",
+        "alt": "Mini Elephant Figurine",
         "mediaId": "gid://shopify/MediaImage/46590127276331"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-3.webp?v=1791851112",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-3.webp?v=1791851112",
-        "alt": "Pocket Elephant",
+        "alt": "Mini Elephant Figurine",
         "mediaId": "gid://shopify/MediaImage/46590127374635"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-4.webp?v=1791851116",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-elephant-view-4.webp?v=1791851116",
-        "alt": "Pocket Elephant",
+        "alt": "Mini Elephant Figurine",
         "mediaId": "gid://shopify/MediaImage/46590127472939"
       }
     ],
@@ -1930,11 +1970,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "shippingFeeCents": 0,
-    "shippingPriceMode": "included"
+    "shippingPriceMode": "included",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5ts09b",
-    "name": "Pocket Zebra",
+    "name": "Mini Zebra Figurine",
     "category": "Creatures & collectibles",
     "priceCents": 799,
     "description": "A small zebra with sculpted stripes and a compact pose.",
@@ -1945,31 +1987,31 @@
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_6e8120d4-a519-4c8d-bc40-90fae2f50009.webp?v=1791844212",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_6e8120d4-a519-4c8d-bc40-90fae2f50009.webp?v=1791844212",
-        "alt": "Pocket Zebra",
+        "alt": "Mini Zebra Figurine",
         "mediaId": "gid://shopify/MediaImage/46587467301163"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-2.webp?v=1791851147",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-2.webp?v=1791851147",
-        "alt": "Pocket Zebra",
+        "alt": "Mini Zebra Figurine",
         "mediaId": "gid://shopify/MediaImage/46590128521515"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-3.webp?v=1791851151",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-3.webp?v=1791851151",
-        "alt": "Pocket Zebra",
+        "alt": "Mini Zebra Figurine",
         "mediaId": "gid://shopify/MediaImage/46590128652587"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-4.webp?v=1791851154",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-4.webp?v=1791851154",
-        "alt": "Pocket Zebra",
+        "alt": "Mini Zebra Figurine",
         "mediaId": "gid://shopify/MediaImage/46590128750891"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-5.webp?v=1791851158",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-zebra-view-5.webp?v=1791851158",
-        "alt": "Pocket Zebra",
+        "alt": "Mini Zebra Figurine",
         "mediaId": "gid://shopify/MediaImage/46590128816427"
       }
     ],
@@ -1981,11 +2023,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "shippingFeeCents": 0,
-    "shippingPriceMode": "included"
+    "shippingPriceMode": "included",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mini-safari-animal-figurines-design-mv5ts485",
-    "name": "Pocket Hippo",
+    "name": "Mini Hippo Figurine",
     "category": "Creatures & collectibles",
     "priceCents": 799,
     "description": "A rounded mini hippo with textured hide and a gentle expression.",
@@ -1996,25 +2040,25 @@
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_8d595451-43ef-48be-86a7-f173480ebc8a.webp?v=1791844217",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_8d595451-43ef-48be-86a7-f173480ebc8a.webp?v=1791844217",
-        "alt": "Pocket Hippo",
+        "alt": "Mini Hippo Figurine",
         "mediaId": "gid://shopify/MediaImage/46587467858219"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-2.webp?v=1791851186",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-2.webp?v=1791851186",
-        "alt": "Pocket Hippo",
+        "alt": "Mini Hippo Figurine",
         "mediaId": "gid://shopify/MediaImage/46590130028843"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-3.webp?v=1791851189",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-3.webp?v=1791851189",
-        "alt": "Pocket Hippo",
+        "alt": "Mini Hippo Figurine",
         "mediaId": "gid://shopify/MediaImage/46590130159915"
       },
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-4.webp?v=1791851193",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/pocket-hippo-view-4.webp?v=1791851193",
-        "alt": "Pocket Hippo",
+        "alt": "Mini Hippo Figurine",
         "mediaId": "gid://shopify/MediaImage/46590130258219"
       }
     ],
@@ -2026,7 +2070,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "shippingFeeCents": 0,
-    "shippingPriceMode": "included"
+    "shippingPriceMode": "included",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mini-safari-animal-figurines-mix-pack",
@@ -2400,7 +2446,9 @@
     "shippingFeeCents": 0,
     "shippingPriceMode": "included",
     "purchaseOnly": true,
-    "listingGroup": "mini-safari-animal-figurines"
+    "listingGroup": "mini-safari-animal-figurines",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mini-safari-animal-figurines-mix-pack-5",
@@ -2754,7 +2802,9 @@
     "shippingFeeCents": 0,
     "shippingPriceMode": "included",
     "purchaseOnly": true,
-    "variantOf": "mini-safari-animal-figurines-mix-pack"
+    "variantOf": "mini-safari-animal-figurines-mix-pack",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mini-safari-animal-figurines-mix-pack-10",
@@ -3108,7 +3158,9 @@
     "shippingFeeCents": 0,
     "shippingPriceMode": "included",
     "purchaseOnly": true,
-    "variantOf": "mini-safari-animal-figurines-mix-pack"
+    "variantOf": "mini-safari-animal-figurines-mix-pack",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "skeleton-chameleon",
@@ -3177,7 +3229,9 @@
     "basePriceCents": 1500,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "articulated-baby-dragon",
@@ -3216,7 +3270,9 @@
     "basePriceCents": 1200,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "dinosaur-skeleton-collection",
@@ -3277,11 +3333,13 @@
     "basePriceCents": 3999,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "figurine-fidget-designs",
-    "name": "Figurines & Fidgets — Choose Your Design",
+    "name": "Collectible Figurines & Fidgets",
     "priceCents": 1700,
     "category": "Creatures & collectibles",
     "seasonal": false,
@@ -3551,21 +3609,21 @@
       },
       {
         "id": "figurine-fidget-designs-design-mv5wap14",
-        "label": "The Drowned One — Articulated Figure",
+        "label": "Articulated Fantasy Figurine — The Drowned One",
         "optionIds": [
           "figurine-fidget-designs-design-mv5wap14"
         ]
       },
       {
         "id": "figurine-fidget-designs-design-mv5wbpf0",
-        "label": "Fell Orc — Articulated Figure",
+        "label": "Articulated Orc Figurine — Fell Orc",
         "optionIds": [
           "figurine-fidget-designs-design-mv5wbpf0"
         ]
       },
       {
         "id": "figurine-fidget-designs-design-mv5wbyst",
-        "label": "Dreadwolf — Articulated Figure",
+        "label": "Articulated Wolf Figurine — Dreadwolf",
         "optionIds": [
           "figurine-fidget-designs-design-mv5wbyst"
         ]
@@ -3601,7 +3659,7 @@
       },
       {
         "id": "figurine-fidget-designs-design-mv5wap14",
-        "label": "The Drowned One — Articulated Figure",
+        "label": "Articulated Fantasy Figurine — The Drowned One",
         "dimensions": "Approximately 15 cm high assembled, based on the source model.",
         "priceCents": 2999,
         "basePriceCents": 2499,
@@ -3610,7 +3668,7 @@
       },
       {
         "id": "figurine-fidget-designs-design-mv5wbpf0",
-        "label": "Fell Orc — Articulated Figure",
+        "label": "Articulated Orc Figurine — Fell Orc",
         "dimensions": "Approximately 15 cm high assembled, based on the source model.",
         "priceCents": 2499,
         "basePriceCents": 1999,
@@ -3619,7 +3677,7 @@
       },
       {
         "id": "figurine-fidget-designs-design-mv5wbyst",
-        "label": "Dreadwolf — Articulated Figure",
+        "label": "Articulated Wolf Figurine — Dreadwolf",
         "dimensions": "Approximately 15 cm high assembled, based on the source model.",
         "priceCents": 2499,
         "basePriceCents": 1999,
@@ -3633,11 +3691,13 @@
     "basePriceCents": 1200,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "figurine-fidget-designs-design-mv5wap14",
-    "name": "The Drowned One — Articulated Figure",
+    "name": "Articulated Fantasy Figurine — The Drowned One",
     "category": "Creatures & collectibles",
     "priceCents": 2999,
     "description": "A skeletal fantasy creature with a tall crested skull, horn-like ears and oversized clawed feet. Its articulated joints let you pose it for display on a desk or shelf.",
@@ -3648,7 +3708,7 @@
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_7933e277-c30e-437b-b903-94f6ba5724e3.webp?v=1791848473",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_7933e277-c30e-437b-b903-94f6ba5724e3.webp?v=1791848473",
-        "alt": "The Drowned One — Articulated Figure",
+        "alt": "Articulated Fantasy Figurine — The Drowned One",
         "mediaId": "gid://shopify/MediaImage/46589604233515"
       }
     ],
@@ -3657,11 +3717,13 @@
     "basePriceCents": 2499,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "figurine-fidget-designs-design-mv5wbpf0",
-    "name": "Fell Orc — Articulated Figure",
+    "name": "Articulated Orc Figurine — Fell Orc",
     "category": "Creatures & collectibles",
     "priceCents": 2499,
     "description": "A skeletal fantasy beast with a spiked head, long hanging tentacle details and clawed feet. Its articulated joints let you pose it for display on a desk or shelf.",
@@ -3672,7 +3734,7 @@
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_eef153e0-1802-4c9a-8ac5-0de190256572.webp?v=1791848493",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_eef153e0-1802-4c9a-8ac5-0de190256572.webp?v=1791848493",
-        "alt": "Fell Orc — Articulated Figure",
+        "alt": "Articulated Orc Figurine — Fell Orc",
         "mediaId": "gid://shopify/MediaImage/46589605183787"
       }
     ],
@@ -3681,11 +3743,13 @@
     "basePriceCents": 1999,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "figurine-fidget-designs-design-mv5wbyst",
-    "name": "Dreadwolf — Articulated Figure",
+    "name": "Articulated Wolf Figurine — Dreadwolf",
     "category": "Creatures & collectibles",
     "priceCents": 2499,
     "description": "A skeletal wolf-inspired fantasy creature with a pointed skull, spiked crest and clawed hands and feet. Its articulated joints let you pose it for display on a desk or shelf.",
@@ -3696,7 +3760,7 @@
       {
         "src": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_ecdf9294-8ea0-4183-94f2-41ab08a03774.webp?v=1791848503",
         "thumb": "https://cdn.shopify.com/s/files/1/1022/9163/6523/files/1-1200_ecdf9294-8ea0-4183-94f2-41ab08a03774.webp?v=1791848503",
-        "alt": "Dreadwolf — Articulated Figure",
+        "alt": "Articulated Wolf Figurine — Dreadwolf",
         "mediaId": "gid://shopify/MediaImage/46589605970219"
       }
     ],
@@ -3705,11 +3769,13 @@
     "basePriceCents": 1999,
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "6-finger-alien-hand-controller-holder",
-    "name": "6-Finger Alien Hand Controller Holder",
+    "name": "Alien Hand Gaming Controller Stand",
     "priceCents": 3500,
     "category": "Gaming & desk",
     "seasonal": false,
@@ -3761,11 +3827,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "night-owl-wall-light",
-    "name": "Night Owl Wall Light",
+    "name": "Owl Wall Light — Night Owl",
     "priceCents": 5499,
     "category": "Home & lighting",
     "seasonal": false,
@@ -3794,7 +3862,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "octopus-wine-bottle-holder",
@@ -3873,11 +3943,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "octopus-wine-bottle-holder-300",
-    "name": "Octopus Wine Bottle Holder — up to 3.00 in bottle diameter",
+    "name": "Octopus Wine Bottle Holder — Fits bottles up to 3.00 in diameter",
     "priceCents": 9199,
     "category": "Home & entertaining",
     "seasonal": false,
@@ -3900,11 +3972,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "octopus-wine-bottle-holder-320",
-    "name": "Octopus Wine Bottle Holder — up to 3.20 in bottle diameter",
+    "name": "Octopus Wine Bottle Holder — Fits bottles up to 3.20 in diameter",
     "priceCents": 10399,
     "category": "Home & entertaining",
     "seasonal": false,
@@ -3927,11 +4001,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "octopus-wine-bottle-holder-345",
-    "name": "Octopus Wine Bottle Holder — up to 3.45 in bottle diameter",
+    "name": "Octopus Wine Bottle Holder — Fits bottles up to 3.45 in diameter",
     "priceCents": 11499,
     "category": "Home & entertaining",
     "seasonal": false,
@@ -3954,11 +4030,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mood-ghost",
-    "name": "Mood Ghost Figurine",
+    "name": "Cute Ghost Figurine — Mood Ghost",
     "priceCents": 2100,
     "category": "Halloween",
     "seasonal": true,
@@ -4066,11 +4144,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mood-ghost-design-a",
-    "name": "Mood Ghost Figurine — design A",
+    "name": "Cute Ghost Figurine — Mood Ghost — Design A",
     "priceCents": 2100,
     "category": "Halloween",
     "seasonal": true,
@@ -4093,11 +4173,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mood-ghost-design-b",
-    "name": "Mood Ghost Figurine — design B",
+    "name": "Cute Ghost Figurine — Mood Ghost — Design B",
     "priceCents": 2100,
     "category": "Halloween",
     "seasonal": true,
@@ -4121,11 +4203,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "ghost-arch-wreath",
-    "name": "Halloween Ghost Arch Wreath",
+    "name": "Halloween Ghost Wreath",
     "priceCents": 3399,
     "category": "Halloween",
     "seasonal": true,
@@ -4178,11 +4262,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "ghost-on-a-swing",
-    "name": "Ghost on a Swing",
+    "name": "Hanging Ghost Decoration — Ghost on a Swing",
     "priceCents": 1998,
     "category": "Halloween",
     "seasonal": true,
@@ -4235,11 +4321,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "candlelight-pumpkins-table-lamp",
-    "name": "Candlelight Pumpkins Table Lamp",
+    "name": "Halloween Pumpkin Table Lamp",
     "priceCents": 2225,
     "category": "Halloween",
     "seasonal": true,
@@ -4292,12 +4380,14 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "lithophane-table-lamp",
     "shopifyHandle": "custom-cylindrical-lithophane-table-lamp",
-    "name": "Custom Cylindrical Lithophane Table Lamp",
+    "name": "Personalized Photo Lamp — Wooden Base",
     "priceCents": 7499,
     "category": "Home décor",
     "seasonal": false,
@@ -4358,11 +4448,14 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "seoTitle": "Personalized Photo Lamp with Wooden Base",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "pumpkin-head-halloween-mask",
-    "name": "Pumpkin Head Halloween Mask",
+    "name": "Full-Head Pumpkin Halloween Mask",
     "priceCents": 9499,
     "category": "Halloween costumes",
     "seasonal": true,
@@ -4433,11 +4526,15 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "seoTitle": "Full-Head Pumpkin Halloween Mask with Magnetic Closure",
+    "seoDescription": "Finished wearable pumpkin-head Halloween mask with magnetic assembly. Compare ear-to-ear sizes, request custom fit, and choose Edmonton pickup or free Canadian shipping.",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "pumpkin-head-halloween-mask-small",
-    "name": "Pumpkin Head Halloween Mask — Small",
+    "name": "Full-Head Pumpkin Halloween Mask — Small",
     "priceCents": 9499,
     "category": "Halloween costumes",
     "seasonal": true,
@@ -4460,11 +4557,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "pumpkin-head-halloween-mask-medium",
-    "name": "Pumpkin Head Halloween Mask — Medium",
+    "name": "Full-Head Pumpkin Halloween Mask — Medium",
     "priceCents": 10499,
     "category": "Halloween costumes",
     "seasonal": true,
@@ -4487,11 +4586,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "pumpkin-head-halloween-mask-large",
-    "name": "Pumpkin Head Halloween Mask — Large",
+    "name": "Full-Head Pumpkin Halloween Mask — Large",
     "priceCents": 11499,
     "category": "Halloween costumes",
     "seasonal": true,
@@ -4514,11 +4615,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "carved-in-fear-halloween-mask",
-    "name": "Carved in Fear Halloween Mask",
+    "name": "Pumpkin Face Mask — Carved in Fear",
     "priceCents": 5499,
     "category": "Halloween costumes",
     "seasonal": true,
@@ -4589,11 +4692,15 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "seoTitle": "Pumpkin Face Mask with Elastic Strap — Carved in Fear",
+    "seoDescription": "Finished pumpkin-face Halloween mask with an elastic band. Choose 145, 158 or 170 mm ear-to-ear sizing, with Edmonton pickup or free tracked shipping in Canada.",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "carved-in-fear-halloween-mask-small",
-    "name": "Carved in Fear Halloween Mask — Small",
+    "name": "Pumpkin Face Mask — Carved in Fear — Small",
     "priceCents": 5499,
     "category": "Halloween costumes",
     "seasonal": true,
@@ -4616,11 +4723,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "carved-in-fear-halloween-mask-medium",
-    "name": "Carved in Fear Halloween Mask — Medium",
+    "name": "Pumpkin Face Mask — Carved in Fear — Medium",
     "priceCents": 6499,
     "category": "Halloween costumes",
     "seasonal": true,
@@ -4643,11 +4752,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "carved-in-fear-halloween-mask-large",
-    "name": "Carved in Fear Halloween Mask — Large",
+    "name": "Pumpkin Face Mask — Carved in Fear — Large",
     "priceCents": 7499,
     "category": "Halloween costumes",
     "seasonal": true,
@@ -4670,7 +4781,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "suit-can-holder",
@@ -4716,7 +4829,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "overalls-can-holder",
@@ -4762,7 +4877,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "kimono-can-holder",
@@ -4808,7 +4925,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "apron-can-holder",
@@ -4860,11 +4979,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "knight-armor-can-holder",
-    "name": "Knight Armor Can Holder",
+    "name": "Knight Armour Can Holder",
     "priceCents": 2999,
     "category": "Can holders",
     "seasonal": false,
@@ -4912,7 +5033,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "overcoat-can-holder",
@@ -4964,11 +5087,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "can-holder-designs",
-    "name": "Clothing Can Holders — Choose Your Design",
+    "name": "Novelty Can Holders — Outfit Collection",
     "priceCents": 2499,
     "category": "Can holders",
     "seasonal": false,
@@ -5061,7 +5186,7 @@
       },
       {
         "id": "knight-armor-can-holder",
-        "label": "Knight Armor Can Holder",
+        "label": "Knight Armour Can Holder",
         "priceCents": 2999,
         "dimensions": "Approximately 115 mm high. Height is based on the original design; width and depth are not yet measured.",
         "basePriceCents": 2499,
@@ -5082,42 +5207,42 @@
     "groupedDesigns": [
       {
         "id": "suit-can-holder",
-        "label": "Suit & Tie",
+        "label": "Suit & Tie Can Holder",
         "optionIds": [
           "suit-can-holder"
         ]
       },
       {
         "id": "overalls-can-holder",
-        "label": "Overalls",
+        "label": "Overalls Can Holder",
         "optionIds": [
           "overalls-can-holder"
         ]
       },
       {
         "id": "kimono-can-holder",
-        "label": "Kimono",
+        "label": "Kimono Can Holder",
         "optionIds": [
           "kimono-can-holder"
         ]
       },
       {
         "id": "apron-can-holder",
-        "label": "Apron",
+        "label": "Apron Can Holder",
         "optionIds": [
           "apron-can-holder"
         ]
       },
       {
         "id": "knight-armor-can-holder",
-        "label": "Knight Armor",
+        "label": "Knight Armour Can Holder",
         "optionIds": [
           "knight-armor-can-holder"
         ]
       },
       {
         "id": "overcoat-can-holder",
-        "label": "Overcoat",
+        "label": "Overcoat Can Holder",
         "optionIds": [
           "overcoat-can-holder"
         ]
@@ -5128,7 +5253,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "neon-cityscape-console-stand",
@@ -5219,7 +5346,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "neon-cityscape-console-stand-original",
@@ -5246,7 +5375,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "neon-cityscape-console-stand-slim",
@@ -5273,7 +5404,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "organic-grid-console-stand",
@@ -5358,7 +5491,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "organic-grid-console-stand-original",
@@ -5385,7 +5520,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "organic-grid-console-stand-slim",
@@ -5412,7 +5549,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "runestone-console-stand",
@@ -5491,7 +5630,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "runestone-console-stand-original",
@@ -5518,7 +5659,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "runestone-console-stand-slim",
@@ -5545,7 +5688,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "cyber-core-console-stand",
@@ -5630,7 +5775,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "cyber-core-console-stand-original",
@@ -5657,7 +5804,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "cyber-core-console-stand-slim",
@@ -5684,7 +5833,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "crescent-moon-console-stand",
@@ -5763,7 +5914,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "crescent-moon-console-stand-original",
@@ -5790,7 +5943,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "crescent-moon-console-stand-slim",
@@ -5817,7 +5972,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mecha-moon-console-stand",
@@ -5902,7 +6059,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mecha-moon-console-stand-original",
@@ -5929,7 +6088,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "mecha-moon-console-stand-slim",
@@ -5956,11 +6117,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "ps5-console-stand-designs",
-    "name": "PS5 Console Stands — Choose Your Design",
+    "name": "Decorative PS5 Console Stands",
     "priceCents": 4499,
     "category": "PS5 console stands",
     "seasonal": false,
@@ -5972,7 +6135,7 @@
     "variants": [
       {
         "id": "cyber-core-console-stand-original",
-        "label": "Cyber Core — Original PS5",
+        "label": "Cyber Core PS5 Console Stand — Original PS5",
         "priceCents": 4499,
         "dimensions": "Original PS5 version. Approximately 80 mm high (stand only). Width and depth are pending production measurement; console not included in these dimensions.",
         "basePriceCents": 3999,
@@ -5981,7 +6144,7 @@
       },
       {
         "id": "cyber-core-console-stand-slim",
-        "label": "Cyber Core — PS5 Slim",
+        "label": "Cyber Core PS5 Console Stand — PS5 Slim",
         "priceCents": 4499,
         "dimensions": "PS5 Slim version. Approximately 80 mm high (stand only). Width and depth are pending production measurement; console not included in these dimensions.",
         "basePriceCents": 3999,
@@ -5990,7 +6153,7 @@
       },
       {
         "id": "crescent-moon-console-stand-original",
-        "label": "Crescent Moon — Original PS5",
+        "label": "Crescent Moon PS5 Console Stand — Original PS5",
         "priceCents": 4499,
         "dimensions": "Original PS5 version. Approximately 190 mm high (stand only). Width and depth are pending production measurement; console not included in these dimensions.",
         "basePriceCents": 3999,
@@ -5999,7 +6162,7 @@
       },
       {
         "id": "crescent-moon-console-stand-slim",
-        "label": "Crescent Moon — PS5 Slim",
+        "label": "Crescent Moon PS5 Console Stand — PS5 Slim",
         "priceCents": 4499,
         "dimensions": "PS5 Slim version. Approximately 190 mm high (stand only). Width and depth are pending production measurement; console not included in these dimensions.",
         "basePriceCents": 3999,
@@ -6008,7 +6171,7 @@
       },
       {
         "id": "organic-grid-console-stand-original",
-        "label": "Organic Grid — Original PS5",
+        "label": "Organic Grid PS5 Console Stand — Original PS5",
         "priceCents": 4999,
         "dimensions": "Original PS5 version. Approximately 140 mm high (stand only). Width and depth are pending production measurement; console not included in these dimensions.",
         "basePriceCents": 4499,
@@ -6017,7 +6180,7 @@
       },
       {
         "id": "organic-grid-console-stand-slim",
-        "label": "Organic Grid — PS5 Slim",
+        "label": "Organic Grid PS5 Console Stand — PS5 Slim",
         "priceCents": 4999,
         "dimensions": "PS5 Slim version. Approximately 140 mm high (stand only). Width and depth are pending production measurement; console not included in these dimensions.",
         "basePriceCents": 4499,
@@ -6026,7 +6189,7 @@
       },
       {
         "id": "mecha-moon-console-stand-original",
-        "label": "Mecha Moon — Original PS5",
+        "label": "Mecha Moon PS5 Console Stand — Original PS5",
         "priceCents": 4999,
         "dimensions": "Original PS5 version. Approximately 190 mm high (stand only). Width and depth are pending production measurement; console not included in these dimensions.",
         "basePriceCents": 4499,
@@ -6035,7 +6198,7 @@
       },
       {
         "id": "mecha-moon-console-stand-slim",
-        "label": "Mecha Moon — PS5 Slim",
+        "label": "Mecha Moon PS5 Console Stand — PS5 Slim",
         "priceCents": 4999,
         "dimensions": "PS5 Slim version. Approximately 190 mm high (stand only). Width and depth are pending production measurement; console not included in these dimensions.",
         "basePriceCents": 4499,
@@ -6044,7 +6207,7 @@
       },
       {
         "id": "runestone-console-stand-original",
-        "label": "Runestone — Original PS5",
+        "label": "Runestone PS5 Console Stand — Original PS5",
         "priceCents": 5499,
         "dimensions": "Original PS5 version. Approximately 150 mm high (stand only). Width and depth are pending production measurement; console not included in these dimensions.",
         "basePriceCents": 4999,
@@ -6053,7 +6216,7 @@
       },
       {
         "id": "runestone-console-stand-slim",
-        "label": "Runestone — PS5 Slim",
+        "label": "Runestone PS5 Console Stand — PS5 Slim",
         "priceCents": 5499,
         "dimensions": "PS5 Slim version. Approximately 150 mm high (stand only). Width and depth are pending production measurement; console not included in these dimensions.",
         "basePriceCents": 4999,
@@ -6062,7 +6225,7 @@
       },
       {
         "id": "neon-cityscape-console-stand-original",
-        "label": "Neon Cityscape — Original PS5",
+        "label": "Neon Cityscape PS5 Console Stand — Original PS5",
         "priceCents": 5999,
         "dimensions": "Original PS5 version. Approximately 120 mm high (stand only). Width and depth are pending production measurement; console not included in these dimensions.",
         "basePriceCents": 5499,
@@ -6071,7 +6234,7 @@
       },
       {
         "id": "neon-cityscape-console-stand-slim",
-        "label": "Neon Cityscape — PS5 Slim",
+        "label": "Neon Cityscape PS5 Console Stand — PS5 Slim",
         "priceCents": 5999,
         "dimensions": "PS5 Slim version. Approximately 120 mm high (stand only). Width and depth are pending production measurement; console not included in these dimensions.",
         "basePriceCents": 5499,
@@ -6122,7 +6285,7 @@
     "groupedDesigns": [
       {
         "id": "neon-cityscape-console-stand",
-        "label": "Neon Cityscape",
+        "label": "Neon Cityscape PS5 Console Stand",
         "optionIds": [
           "neon-cityscape-console-stand-original",
           "neon-cityscape-console-stand-slim"
@@ -6130,7 +6293,7 @@
       },
       {
         "id": "organic-grid-console-stand",
-        "label": "Organic Grid",
+        "label": "Organic Grid PS5 Console Stand",
         "optionIds": [
           "organic-grid-console-stand-original",
           "organic-grid-console-stand-slim"
@@ -6138,7 +6301,7 @@
       },
       {
         "id": "runestone-console-stand",
-        "label": "Runestone",
+        "label": "Runestone PS5 Console Stand",
         "optionIds": [
           "runestone-console-stand-original",
           "runestone-console-stand-slim"
@@ -6146,7 +6309,7 @@
       },
       {
         "id": "cyber-core-console-stand",
-        "label": "Cyber Core",
+        "label": "Cyber Core PS5 Console Stand",
         "optionIds": [
           "cyber-core-console-stand-original",
           "cyber-core-console-stand-slim"
@@ -6154,7 +6317,7 @@
       },
       {
         "id": "crescent-moon-console-stand",
-        "label": "Crescent Moon",
+        "label": "Crescent Moon PS5 Console Stand",
         "optionIds": [
           "crescent-moon-console-stand-original",
           "crescent-moon-console-stand-slim"
@@ -6162,7 +6325,7 @@
       },
       {
         "id": "mecha-moon-console-stand",
-        "label": "Mecha Moon",
+        "label": "Mecha Moon PS5 Console Stand",
         "optionIds": [
           "mecha-moon-console-stand-original",
           "mecha-moon-console-stand-slim"
@@ -6173,11 +6336,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "daisy-duo-photo-frame",
-    "name": "Daisy Duo Personalized Photo Holder",
+    "name": "Daisy Personalized Photo Holder",
     "priceCents": 2499,
     "category": "Personalized photo holders",
     "seasonal": false,
@@ -6223,11 +6388,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "sunflower-duo-photo-frame",
-    "name": "Sunflower Duo Personalized Photo Holder",
+    "name": "Sunflower Personalized Photo Holder",
     "priceCents": 2499,
     "category": "Personalized photo holders",
     "seasonal": false,
@@ -6273,11 +6440,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "up-in-the-clouds-photo-frame",
-    "name": "Up in the Clouds Personalized Photo Holder",
+    "name": "Airplane & Clouds Personalized Photo Holder",
     "priceCents": 2999,
     "category": "Personalized photo holders",
     "seasonal": false,
@@ -6323,11 +6492,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "stoneside-photo-frame",
-    "name": "Stoneside Personalized Photo Holder",
+    "name": "Stone-Style Personalized Photo Holder",
     "priceCents": 2499,
     "category": "Personalized photo holders",
     "seasonal": false,
@@ -6373,11 +6544,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "paw-hold-photo-frame",
-    "name": "Paw Hold Personalized Photo Holder",
+    "name": "Paw Personalized Photo Holder",
     "priceCents": 2499,
     "category": "Personalized photo holders",
     "seasonal": false,
@@ -6423,11 +6596,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "sealed-letter-photo-frame",
-    "name": "Sealed Letter Personalized Photo Holder",
+    "name": "Sealed Envelope Personalized Photo Holder",
     "priceCents": 2999,
     "category": "Personalized photo holders",
     "seasonal": false,
@@ -6473,11 +6648,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "sakura-duo-photo-frame",
-    "name": "Sakura Duo Personalized Photo Holder",
+    "name": "Cherry Blossom Personalized Photo Holder",
     "priceCents": 2499,
     "category": "Personalized photo holders",
     "seasonal": false,
@@ -6523,11 +6700,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "love-letter-photo-frame",
-    "name": "Love Letter Personalized Photo Holder",
+    "name": "Heart Envelope Personalized Photo Holder",
     "priceCents": 2999,
     "category": "Personalized photo holders",
     "seasonal": false,
@@ -6573,11 +6752,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "lavender-duo-photo-frame",
-    "name": "Lavender Duo Personalized Photo Holder",
+    "name": "Lavender Personalized Photo Holder",
     "priceCents": 2499,
     "category": "Personalized photo holders",
     "seasonal": false,
@@ -6623,11 +6804,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "retro-cam-photo-frame",
-    "name": "Retro Cam Personalized Photo Holder",
+    "name": "Instant Camera-Style Personalized Photo Holder",
     "priceCents": 3499,
     "category": "Personalized photo holders",
     "seasonal": false,
@@ -6673,11 +6856,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "dino-peek-photo-frame",
-    "name": "Dino Peek Personalized Photo Holder",
+    "name": "Long-Neck Dinosaur Personalized Photo Holder",
     "priceCents": 2999,
     "category": "Personalized photo holders",
     "seasonal": false,
@@ -6723,11 +6908,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "t-rex-peek-photo-frame",
-    "name": "T-Rex Peek Personalized Photo Holder",
+    "name": "T-Rex Personalized Photo Holder",
     "priceCents": 2999,
     "category": "Personalized photo holders",
     "seasonal": false,
@@ -6773,11 +6960,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "analog-days-photo-frame",
-    "name": "Analog Days Personalized Photo Holder",
+    "name": "Vintage Camera-Style Personalized Photo Holder",
     "priceCents": 3499,
     "category": "Personalized photo holders",
     "seasonal": false,
@@ -6823,11 +7012,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "personalized-photo-holder-designs",
-    "name": "Personalized Photo Holders — Choose Your Design",
+    "name": "Personalized Photo Holders — Photo Included",
     "priceCents": 2499,
     "category": "Personalized photo holders",
     "seasonal": false,
@@ -6930,7 +7121,7 @@
     "variants": [
       {
         "id": "daisy-duo-photo-frame",
-        "label": "Daisy Duo Personalized Photo Holder",
+        "label": "Daisy Personalized Photo Holder",
         "priceCents": 2499,
         "dimensions": "Holder body: approximately 30 × 50 × 20 mm. The photo extends above the holder; these are not photo-print dimensions.",
         "basePriceCents": 1999,
@@ -6939,7 +7130,7 @@
       },
       {
         "id": "sunflower-duo-photo-frame",
-        "label": "Sunflower Duo Personalized Photo Holder",
+        "label": "Sunflower Personalized Photo Holder",
         "priceCents": 2499,
         "dimensions": "Holder body: approximately 40 × 60 × 20 mm. The photo extends above the holder; these are not photo-print dimensions.",
         "basePriceCents": 1999,
@@ -6948,7 +7139,7 @@
       },
       {
         "id": "stoneside-photo-frame",
-        "label": "Stoneside Personalized Photo Holder",
+        "label": "Stone-Style Personalized Photo Holder",
         "priceCents": 2499,
         "dimensions": "Holder body: approximately 90 × 50 × 30 mm. The photo extends above the holder; these are not photo-print dimensions.",
         "basePriceCents": 1999,
@@ -6957,7 +7148,7 @@
       },
       {
         "id": "paw-hold-photo-frame",
-        "label": "Paw Hold Personalized Photo Holder",
+        "label": "Paw Personalized Photo Holder",
         "priceCents": 2499,
         "dimensions": "Holder body: approximately 40 × 30 × 60 mm. The photo extends above the holder; these are not photo-print dimensions.",
         "basePriceCents": 1999,
@@ -6966,7 +7157,7 @@
       },
       {
         "id": "sakura-duo-photo-frame",
-        "label": "Sakura Duo Personalized Photo Holder",
+        "label": "Cherry Blossom Personalized Photo Holder",
         "priceCents": 2499,
         "dimensions": "Holder body: approximately 80 × 30 × 20 mm. The photo extends above the holder; these are not photo-print dimensions.",
         "basePriceCents": 1999,
@@ -6975,7 +7166,7 @@
       },
       {
         "id": "lavender-duo-photo-frame",
-        "label": "Lavender Duo Personalized Photo Holder",
+        "label": "Lavender Personalized Photo Holder",
         "priceCents": 2499,
         "dimensions": "Holder body: approximately 80 × 30 × 20 mm. The photo extends above the holder; these are not photo-print dimensions.",
         "basePriceCents": 1999,
@@ -6984,7 +7175,7 @@
       },
       {
         "id": "up-in-the-clouds-photo-frame",
-        "label": "Up in the Clouds Personalized Photo Holder",
+        "label": "Airplane & Clouds Personalized Photo Holder",
         "priceCents": 2999,
         "dimensions": "Holder body: approximately 90 × 70 × 70 mm. The photo extends above the holder; these are not photo-print dimensions.",
         "basePriceCents": 2499,
@@ -6993,7 +7184,7 @@
       },
       {
         "id": "sealed-letter-photo-frame",
-        "label": "Sealed Letter Personalized Photo Holder",
+        "label": "Sealed Envelope Personalized Photo Holder",
         "priceCents": 2999,
         "dimensions": "Holder body: approximately 100 × 20 × 70 mm. The photo extends above the holder; these are not photo-print dimensions.",
         "basePriceCents": 2499,
@@ -7002,7 +7193,7 @@
       },
       {
         "id": "love-letter-photo-frame",
-        "label": "Love Letter Personalized Photo Holder",
+        "label": "Heart Envelope Personalized Photo Holder",
         "priceCents": 2999,
         "dimensions": "Holder body: approximately 100 × 20 × 70 mm. The photo extends above the holder; these are not photo-print dimensions.",
         "basePriceCents": 2499,
@@ -7011,7 +7202,7 @@
       },
       {
         "id": "dino-peek-photo-frame",
-        "label": "Dino Peek Personalized Photo Holder",
+        "label": "Long-Neck Dinosaur Personalized Photo Holder",
         "priceCents": 2999,
         "dimensions": "Holder body: approximately 120 × 50 × 120 mm. The photo extends above the holder; these are not photo-print dimensions.",
         "basePriceCents": 2499,
@@ -7020,7 +7211,7 @@
       },
       {
         "id": "t-rex-peek-photo-frame",
-        "label": "T-Rex Peek Personalized Photo Holder",
+        "label": "T-Rex Personalized Photo Holder",
         "priceCents": 2999,
         "dimensions": "Holder body: approximately 70 × 50 × 50 mm. The photo extends above the holder; these are not photo-print dimensions.",
         "basePriceCents": 2499,
@@ -7029,7 +7220,7 @@
       },
       {
         "id": "retro-cam-photo-frame",
-        "label": "Retro Cam Personalized Photo Holder",
+        "label": "Instant Camera-Style Personalized Photo Holder",
         "priceCents": 3499,
         "dimensions": "Holder body: approximately 110 × 30 × 80 mm. The photo extends above the holder; these are not photo-print dimensions.",
         "basePriceCents": 2999,
@@ -7038,7 +7229,7 @@
       },
       {
         "id": "analog-days-photo-frame",
-        "label": "Analog Days Personalized Photo Holder",
+        "label": "Vintage Camera-Style Personalized Photo Holder",
         "priceCents": 3499,
         "dimensions": "Holder body: approximately 120 × 40 × 80 mm. The photo extends above the holder; these are not photo-print dimensions.",
         "basePriceCents": 2999,
@@ -7050,91 +7241,91 @@
     "groupedDesigns": [
       {
         "id": "daisy-duo-photo-frame",
-        "label": "Daisy Duo",
+        "label": "Daisy Personalized Photo Holder",
         "optionIds": [
           "daisy-duo-photo-frame"
         ]
       },
       {
         "id": "sunflower-duo-photo-frame",
-        "label": "Sunflower Duo",
+        "label": "Sunflower Personalized Photo Holder",
         "optionIds": [
           "sunflower-duo-photo-frame"
         ]
       },
       {
         "id": "up-in-the-clouds-photo-frame",
-        "label": "Up in the Clouds",
+        "label": "Airplane & Clouds Personalized Photo Holder",
         "optionIds": [
           "up-in-the-clouds-photo-frame"
         ]
       },
       {
         "id": "stoneside-photo-frame",
-        "label": "Stoneside",
+        "label": "Stone-Style Personalized Photo Holder",
         "optionIds": [
           "stoneside-photo-frame"
         ]
       },
       {
         "id": "paw-hold-photo-frame",
-        "label": "Paw Hold",
+        "label": "Paw Personalized Photo Holder",
         "optionIds": [
           "paw-hold-photo-frame"
         ]
       },
       {
         "id": "sealed-letter-photo-frame",
-        "label": "Sealed Letter",
+        "label": "Sealed Envelope Personalized Photo Holder",
         "optionIds": [
           "sealed-letter-photo-frame"
         ]
       },
       {
         "id": "sakura-duo-photo-frame",
-        "label": "Sakura Duo",
+        "label": "Cherry Blossom Personalized Photo Holder",
         "optionIds": [
           "sakura-duo-photo-frame"
         ]
       },
       {
         "id": "love-letter-photo-frame",
-        "label": "Love Letter",
+        "label": "Heart Envelope Personalized Photo Holder",
         "optionIds": [
           "love-letter-photo-frame"
         ]
       },
       {
         "id": "lavender-duo-photo-frame",
-        "label": "Lavender Duo",
+        "label": "Lavender Personalized Photo Holder",
         "optionIds": [
           "lavender-duo-photo-frame"
         ]
       },
       {
         "id": "retro-cam-photo-frame",
-        "label": "Retro Cam",
+        "label": "Instant Camera-Style Personalized Photo Holder",
         "optionIds": [
           "retro-cam-photo-frame"
         ]
       },
       {
         "id": "dino-peek-photo-frame",
-        "label": "Dino Peek",
+        "label": "Long-Neck Dinosaur Personalized Photo Holder",
         "optionIds": [
           "dino-peek-photo-frame"
         ]
       },
       {
         "id": "t-rex-peek-photo-frame",
-        "label": "T-Rex Peek",
+        "label": "T-Rex Personalized Photo Holder",
         "optionIds": [
           "t-rex-peek-photo-frame"
         ]
       },
       {
         "id": "analog-days-photo-frame",
-        "label": "Analog Days",
+        "label": "Vintage Camera-Style Personalized Photo Holder",
         "optionIds": [
           "analog-days-photo-frame"
         ]
@@ -7145,7 +7336,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "flow-stand-headphone-and-phone-holder",
@@ -7203,7 +7396,11 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "seoTitle": "Flow Headphone & Phone Stand for Your Desk",
+    "seoDescription": "A sculptural headphone stand with a phone slot. Made in Edmonton, with free tracked Canadian shipping or local pickup. See photos, video and size.",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "curve-caddy-headphone-holder",
@@ -7261,7 +7458,11 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "seoTitle": "Curve Caddy Headphone Stand & Pen Holder",
+    "seoDescription": "Keep headphones and pens together with the Curve Caddy desk stand. Made in Edmonton, with free tracked Canadian shipping or local pickup.",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "ring-dock-headphone-holder",
@@ -7325,7 +7526,11 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "seoTitle": "Ring Dock Circular Headphone Stand",
+    "seoDescription": "A circular headphone stand for a gaming desk or workspace. Explore the Ring Dock gallery and video. Made in Edmonton with free Canadian shipping.",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "block-hub-headphone-and-phone-holder",
@@ -7383,7 +7588,11 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "seoTitle": "Block Hub Headphone, Phone & Pen Holder",
+    "seoDescription": "Organize headphones, a phone and pens in one angular desk stand. Made in Edmonton, with free tracked Canadian shipping or local pickup.",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "tower-trio-headphone-and-phone-holder",
@@ -7441,7 +7650,11 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "seoTitle": "Tower Trio Headphone, Phone & Pen Stand",
+    "seoDescription": "A vertical desk organizer for headphones, a phone and pens. View the Tower Trio photos and video. Made in Edmonton with free Canadian shipping.",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "arch-stand-headphone-holder",
@@ -7499,11 +7712,15 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "seoTitle": "Arch Headphone Stand for a Gaming Desk or Workspace",
+    "seoDescription": "An architectural headphone stand with a clean arch design. Explore photos, video and approximate size. Made in Edmonton with free Canadian shipping.",
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "headphone-stand-designs",
-    "name": "Headphone Stands — Choose Your Design",
+    "name": "Headphone Stands for Desks",
     "priceCents": 3499,
     "category": "Headphone stands",
     "seasonal": false,
@@ -7610,42 +7827,42 @@
     "groupedDesigns": [
       {
         "id": "flow-stand-headphone-and-phone-holder",
-        "label": "Flow",
+        "label": "Flow Headphone & Phone Stand",
         "optionIds": [
           "flow-stand-headphone-and-phone-holder"
         ]
       },
       {
         "id": "curve-caddy-headphone-holder",
-        "label": "Curve Caddy",
+        "label": "Curve Caddy Headphone Stand",
         "optionIds": [
           "curve-caddy-headphone-holder"
         ]
       },
       {
         "id": "ring-dock-headphone-holder",
-        "label": "Ring Dock",
+        "label": "Ring Dock Headphone Stand",
         "optionIds": [
           "ring-dock-headphone-holder"
         ]
       },
       {
         "id": "block-hub-headphone-and-phone-holder",
-        "label": "Block Hub",
+        "label": "Block Hub Headphone & Phone Stand",
         "optionIds": [
           "block-hub-headphone-and-phone-holder"
         ]
       },
       {
         "id": "tower-trio-headphone-and-phone-holder",
-        "label": "Tower Trio",
+        "label": "Tower Trio Headphone & Phone Stand",
         "optionIds": [
           "tower-trio-headphone-and-phone-holder"
         ]
       },
       {
         "id": "arch-stand-headphone-holder",
-        "label": "Arch",
+        "label": "Arch Headphone Stand",
         "optionIds": [
           "arch-stand-headphone-holder"
         ]
@@ -7655,7 +7872,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "hoodie-can-holder",
@@ -7707,7 +7926,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "puffer-jacket-can-holder",
@@ -7759,7 +7980,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "leather-jacket-can-holder",
@@ -7811,7 +8034,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "bathrobe-can-holder",
@@ -7863,7 +8088,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "suede-jacket-can-holder",
@@ -7915,7 +8142,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "varsity-jacket-can-holder",
@@ -7967,11 +8196,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "can-holder-designs-ii",
-    "name": "Clothing Can Holders II — Choose Your Design",
+    "name": "Hoodie & Jacket Can Holders — Series II",
     "category": "Can holders",
     "seasonal": false,
     "priceCents": 2499,
@@ -8085,42 +8316,42 @@
     "groupedDesigns": [
       {
         "id": "hoodie-can-holder",
-        "label": "Hoodie",
+        "label": "Hoodie Can Holder",
         "optionIds": [
           "hoodie-can-holder"
         ]
       },
       {
         "id": "puffer-jacket-can-holder",
-        "label": "Puffer Jacket",
+        "label": "Puffer Jacket Can Holder",
         "optionIds": [
           "puffer-jacket-can-holder"
         ]
       },
       {
         "id": "leather-jacket-can-holder",
-        "label": "Leather Jacket",
+        "label": "Leather Jacket Can Holder",
         "optionIds": [
           "leather-jacket-can-holder"
         ]
       },
       {
         "id": "bathrobe-can-holder",
-        "label": "Bathrobe",
+        "label": "Bathrobe Can Holder",
         "optionIds": [
           "bathrobe-can-holder"
         ]
       },
       {
         "id": "suede-jacket-can-holder",
-        "label": "Suede Jacket",
+        "label": "Suede Jacket Can Holder",
         "optionIds": [
           "suede-jacket-can-holder"
         ]
       },
       {
         "id": "varsity-jacket-can-holder",
-        "label": "Varsity Jacket",
+        "label": "Varsity Jacket Can Holder",
         "optionIds": [
           "varsity-jacket-can-holder"
         ]
@@ -8131,11 +8362,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "final-drink-straw-topper-and-charm",
-    "name": "Final Drink — Reaper Straw Topper & Charm Set",
+    "name": "Reaper Straw Topper & Tumbler Charm Set — Final Drink",
     "category": "Tumbler accessories",
     "seasonal": false,
     "priceCents": 1999,
@@ -8202,11 +8435,13 @@
     "shippingFeeCents": 0,
     "basePriceCents": 1499,
     "deliveryExtraCents": 0,
-    "pricingSchemaVersion": 2
+    "pricingSchemaVersion": 2,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "pawsitively-hydrated-straw-topper-and-charm",
-    "name": "Pawsitively Hydrated — Cat Straw Topper & Charm Set",
+    "name": "Cat Straw Topper & Tumbler Charm Set — Pawsitively Hydrated",
     "category": "Tumbler accessories",
     "seasonal": false,
     "priceCents": 2099,
@@ -8267,11 +8502,13 @@
     "shippingFeeCents": 0,
     "basePriceCents": 1599,
     "deliveryExtraCents": 0,
-    "pricingSchemaVersion": 2
+    "pricingSchemaVersion": 2,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "deep-sips-straw-topper-and-charm",
-    "name": "Deep Sips — Octopus Straw Topper & Charm Set",
+    "name": "Octopus Straw Topper & Tumbler Charm Set — Deep Sips",
     "category": "Tumbler accessories",
     "seasonal": false,
     "priceCents": 2099,
@@ -8344,11 +8581,13 @@
     "shippingFeeCents": 0,
     "basePriceCents": 1599,
     "deliveryExtraCents": 0,
-    "pricingSchemaVersion": 2
+    "pricingSchemaVersion": 2,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "udderly-thirsty-straw-topper-and-charm",
-    "name": "Udderly Thirsty — Cow Straw Topper & Charm Set",
+    "name": "Cow Straw Topper & Tumbler Charm Set — Udderly Thirsty",
     "category": "Tumbler accessories",
     "seasonal": false,
     "priceCents": 2199,
@@ -8415,11 +8654,13 @@
     "shippingFeeCents": 0,
     "basePriceCents": 1699,
     "deliveryExtraCents": 0,
-    "pricingSchemaVersion": 2
+    "pricingSchemaVersion": 2,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "bamboo-break-straw-topper-and-charm",
-    "name": "Bamboo Break — Panda Straw Topper & Charm Set",
+    "name": "Panda Straw Topper & Tumbler Charm Set — Bamboo Break",
     "category": "Tumbler accessories",
     "seasonal": false,
     "priceCents": 1999,
@@ -8480,11 +8721,13 @@
     "shippingFeeCents": 0,
     "basePriceCents": 1499,
     "deliveryExtraCents": 0,
-    "pricingSchemaVersion": 2
+    "pricingSchemaVersion": 2,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "thirst-slayer-straw-topper-and-charm",
-    "name": "Thirst Slayer — Dragon Straw Topper & Charm Set",
+    "name": "Dragon Straw Topper & Tumbler Charm Set — Thirst Slayer",
     "category": "Tumbler accessories",
     "seasonal": false,
     "priceCents": 2299,
@@ -8551,11 +8794,13 @@
     "shippingFeeCents": 0,
     "basePriceCents": 1799,
     "deliveryExtraCents": 0,
-    "pricingSchemaVersion": 2
+    "pricingSchemaVersion": 2,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "straw-topper-charm-designs",
-    "name": "Straw Topper & Cup Charm Sets — Choose Your Design",
+    "name": "Straw Topper & Tumbler Charm Sets",
     "category": "Tumbler accessories",
     "seasonal": false,
     "priceCents": 1999,
@@ -8613,7 +8858,7 @@
     "variants": [
       {
         "id": "final-drink-straw-topper-and-charm",
-        "label": "Final Drink — Reaper",
+        "label": "Reaper Straw Topper & Tumbler Charm Set — Final Drink",
         "priceCents": 1999,
         "dimensions": "Original design reference: approximately 30 mm high. This is the accessory height, not the straw diameter.",
         "basePriceCents": 1499,
@@ -8622,7 +8867,7 @@
       },
       {
         "id": "pawsitively-hydrated-straw-topper-and-charm",
-        "label": "Pawsitively Hydrated — Cat",
+        "label": "Cat Straw Topper & Tumbler Charm Set — Pawsitively Hydrated",
         "priceCents": 2099,
         "dimensions": "Original design reference: approximately 40 mm high. This is the accessory height, not the straw diameter.",
         "basePriceCents": 1599,
@@ -8631,7 +8876,7 @@
       },
       {
         "id": "deep-sips-straw-topper-and-charm",
-        "label": "Deep Sips — Octopus",
+        "label": "Octopus Straw Topper & Tumbler Charm Set — Deep Sips",
         "priceCents": 2099,
         "dimensions": "Original design reference: approximately 30 mm high. This is the accessory height, not the straw diameter.",
         "basePriceCents": 1599,
@@ -8640,7 +8885,7 @@
       },
       {
         "id": "udderly-thirsty-straw-topper-and-charm",
-        "label": "Udderly Thirsty — Cow",
+        "label": "Cow Straw Topper & Tumbler Charm Set — Udderly Thirsty",
         "priceCents": 2199,
         "dimensions": "Original design reference: approximately 50 mm high. This is the accessory height, not the straw diameter.",
         "basePriceCents": 1699,
@@ -8649,7 +8894,7 @@
       },
       {
         "id": "bamboo-break-straw-topper-and-charm",
-        "label": "Bamboo Break — Panda",
+        "label": "Panda Straw Topper & Tumbler Charm Set — Bamboo Break",
         "priceCents": 1999,
         "dimensions": "Original design reference: approximately 40 mm high. This is the accessory height, not the straw diameter.",
         "basePriceCents": 1499,
@@ -8658,7 +8903,7 @@
       },
       {
         "id": "thirst-slayer-straw-topper-and-charm",
-        "label": "Thirst Slayer — Dragon",
+        "label": "Dragon Straw Topper & Tumbler Charm Set — Thirst Slayer",
         "priceCents": 2299,
         "dimensions": "Original design reference: approximately 30 mm high. This is the accessory height, not the straw diameter.",
         "basePriceCents": 1799,
@@ -8669,42 +8914,42 @@
     "groupedDesigns": [
       {
         "id": "final-drink-straw-topper-and-charm",
-        "label": "Final Drink — Reaper",
+        "label": "Reaper Straw Topper & Tumbler Charm Set — Final Drink",
         "optionIds": [
           "final-drink-straw-topper-and-charm"
         ]
       },
       {
         "id": "pawsitively-hydrated-straw-topper-and-charm",
-        "label": "Pawsitively Hydrated — Cat",
+        "label": "Cat Straw Topper & Tumbler Charm Set — Pawsitively Hydrated",
         "optionIds": [
           "pawsitively-hydrated-straw-topper-and-charm"
         ]
       },
       {
         "id": "deep-sips-straw-topper-and-charm",
-        "label": "Deep Sips — Octopus",
+        "label": "Octopus Straw Topper & Tumbler Charm Set — Deep Sips",
         "optionIds": [
           "deep-sips-straw-topper-and-charm"
         ]
       },
       {
         "id": "udderly-thirsty-straw-topper-and-charm",
-        "label": "Udderly Thirsty — Cow",
+        "label": "Cow Straw Topper & Tumbler Charm Set — Udderly Thirsty",
         "optionIds": [
           "udderly-thirsty-straw-topper-and-charm"
         ]
       },
       {
         "id": "bamboo-break-straw-topper-and-charm",
-        "label": "Bamboo Break — Panda",
+        "label": "Panda Straw Topper & Tumbler Charm Set — Bamboo Break",
         "optionIds": [
           "bamboo-break-straw-topper-and-charm"
         ]
       },
       {
         "id": "thirst-slayer-straw-topper-and-charm",
-        "label": "Thirst Slayer — Dragon",
+        "label": "Dragon Straw Topper & Tumbler Charm Set — Thirst Slayer",
         "optionIds": [
           "thirst-slayer-straw-topper-and-charm"
         ]
@@ -8715,7 +8960,9 @@
     "galleryOverviewCover": true,
     "basePriceCents": 1499,
     "deliveryExtraCents": 0,
-    "pricingSchemaVersion": 2
+    "pricingSchemaVersion": 2,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "glutton-ghost-bowl",
@@ -8754,7 +9001,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "skull-web-trinket-dish",
@@ -8800,7 +9049,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "ghost-duo-trinket-dish",
@@ -8846,7 +9097,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "melting-pumpkin-candy-dispenser",
@@ -8898,7 +9151,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "spectral-candy-holder",
@@ -8962,7 +9217,9 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "walkin-pumpkin-candy-holder",
@@ -9026,11 +9283,13 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   },
   {
     "id": "halloween-candy-holder-designs",
-    "name": "Halloween Bowls & Candy Holders — Choose Your Design",
+    "name": "Halloween Candy Bowls & Decorative Dishes",
     "priceCents": 1998,
     "category": "Halloween candy holders",
     "seasonal": true,
@@ -9182,6 +9441,8 @@
     "deliveryExtraCents": 0,
     "pricingSchemaVersion": 2,
     "pickupPriceDifferenceCents": 0,
-    "shippingFeeCents": 0
+    "shippingFeeCents": 0,
+    "titleSource": "trained_algorithmic_media",
+    "searchNamingVersion": "2026-10-13"
   }
 ]

@@ -5,14 +5,15 @@
     "name": "Personalized gifts",
     "shortName": "Personalized gifts",
     "eyebrow": "YOUR PHOTOS / PERSONAL KEEPSAKES",
-    "heading": "Your memories. Made personal.",
+    "heading": "Personalized Photo Gifts",
     "description": "Personal photo lamps and small photo holders, made in Edmonton. Upload your favourite image and we turn it into a keepsake, ready to gift.",
     "seoDescription": "Shop personalized photo gifts made in Edmonton: custom photo lamps and decorative photo holders with your photo print included. Free tracked Canadian shipping or Edmonton pickup.",
     "coverProduct": "lithophane-table-lamp",
     "products": [
       "lithophane-table-lamp",
       "personalized-photo-holder-designs"
-    ]
+    ],
+    "seoTitle": "Personalized Photo Gifts Made in Edmonton"
   },
   {
     "id": "collectibles",
@@ -63,8 +64,8 @@
   {
     "id": "home-decor",
     "kind": "department",
-    "name": "Home & living",
-    "shortName": "Home & living",
+    "name": "Home Décor & Accessories",
+    "shortName": "Home décor",
     "eyebrow": "SCULPTURAL DETAILS FOR HOME",
     "heading": "Useful objects with more character.",
     "description": "Discover lighting, planters, sculptural accessories and decorative pieces for your home.",
@@ -81,7 +82,8 @@
       "can-holder-designs-ii",
       "straw-topper-charm-designs",
       "halloween-candy-holder-designs"
-    ]
+    ],
+    "seoTitle": "Home Décor & Accessories Made in Edmonton"
   },
   {
     "id": "seasonal",
