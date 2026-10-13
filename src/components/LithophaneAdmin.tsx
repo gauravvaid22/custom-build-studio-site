@@ -103,9 +103,9 @@ export function LithophaneAdmin({ adminKey, initial, onSaved }: { adminKey: stri
   };
 
   return <form className="quote-form shop-admin-settings lithophane-admin" onSubmit={save}>
-    <div className="section-heading"><div><p className="eyebrow">PERSONALIZED PRODUCT CMS</p><h2>Lithophane Table Lamp</h2></div><p>Manage the public product copy, availability and showcase gallery. Name and price changes also sync to Shopify when the Admin API token is configured.</p></div>
+    <div className="section-heading"><div><p className="eyebrow">PERSONALIZED PRODUCT CMS</p><h2>Personalized Photo Lamp</h2></div><p>Manage the public product copy, availability and showcase gallery. Use Products & collections to change the name, search text and price together.</p></div>
     <div className="shop-admin-field-grid">
-      <label>Product name<input value={product.name} maxLength={120} required onChange={(event) => setProduct({ ...product, name: event.target.value })}/></label>
+      <label>Product name<input value={product.name} maxLength={120} readOnly={deliveryPolicy.active} required onChange={(event) => setProduct({ ...product, name: event.target.value })}/><small>Edit this name in Products & collections.</small></label>
       {!deliveryPolicy.active&&<label>Base price (CAD)<input type="number" min="1" step="0.01" required value={product.priceCents / 100} onChange={(event) => setProduct({ ...product, priceCents: Math.round(Number(event.target.value) * 100) })}/></label>}
       {deliveryPolicy.active&&<p>Change lamp prices and delivery extras in Products & collections. This screen manages the personalized lamp's copy and showcase photos.</p>}
       <label>Lead time<input value={product.leadTime} maxLength={180} required onChange={(event) => setProduct({ ...product, leadTime: event.target.value })}/></label>

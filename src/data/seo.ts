@@ -114,7 +114,7 @@ export function getSeo(path: string) {
   const headphoneSeo = product && headphoneSearch.products[product.id as keyof typeof headphoneSearch.products];
   const maskSeo = product && maskSearch[product.id as keyof typeof maskSearch];
   const entry = product
-    ? [product.seoTitle ? searchTitle(product) : maskSeo?.title || headphoneSeo?.title || product.name, product.seoDescription ? searchDescription(product) : product.titleSource ? searchDescription(product) : maskSeo?.description || headphoneSeo?.description || searchDescription(product)]
+    ? [product.seoTitle || product.titleSource ? searchTitle(product) : maskSeo?.title || headphoneSeo?.title || product.name, product.seoDescription || product.titleSource ? searchDescription(product) : maskSeo?.description || headphoneSeo?.description || searchDescription(product)]
     : collection
       ? [String(('seoTitle' in collection && collection.seoTitle) || (collection.id === "gifts-under-25" ? "Gifts $25 & Under Made in Edmonton" : `${collection.name} Made in Edmonton`)), collection.seoDescription]
     : service

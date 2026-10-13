@@ -43,9 +43,9 @@ export default async (request,context) => {
       found.state.collections=job.collections;
       if(found.state.layoutDraft)found.state.layoutDraft.collections=prepareSearchNaming({products:[],collections:found.state.layoutDraft.collections}).catalog.collections;
       found.state.searchNamingVersion=job.namingVersion;
-      const lamp=job.documents.flatMap(d=>d.products).find(p=>p.id==='lithophane-table-lamp');
-      if(lamp){const contentStore=getStore({name:'shop-orders-v1',consistency:'strong'});const content=await contentStore.get('config/product-content',{type:'json'});if(content?.['lithophane-table-lamp'])await contentStore.setJSON('config/product-content',{...content,'lithophane-table-lamp':{...content['lithophane-table-lamp'],name:lamp.name}});}
     }
+    const lamp=(job.documents || (job.document?[job.document]:[])).flatMap(d=>d.products).find(p=>p.id==='lithophane-table-lamp');
+    if(lamp && ['publish','publish-search-names'].includes(job.action)){const contentStore=getStore({name:'shop-orders-v1',consistency:'strong'});const content=await contentStore.get('config/product-content',{type:'json'});if(content?.['lithophane-table-lamp'])await contentStore.setJSON('config/product-content',{...content,'lithophane-table-lamp':{...content['lithophane-table-lamp'],name:lamp.name}});}
     if (job.action==='publish') {found.state.documents[job.productId]=job.document;delete found.state.drafts[job.productId];const currentIds=new Set(job.document.products.map(p=>p.id));found.state.unavailableIds=[...new Set([...(found.state.unavailableIds || []).filter(id=>!currentIds.has(id)),...(job.previousDocument?.products || []).filter(p=>!currentIds.has(p.id)).map(p=>p.id)])];}
     if (job.action==='publish-layout' && found.state.layoutDraft) {found.state.collections=found.state.layoutDraft.collections;found.state.rows=found.state.layoutDraft.rows;delete found.state.layoutDraft;}
     if (job.action==='archive') {found.state.unavailableIds=[...new Set([...(found.state.unavailableIds || []),...job.document.products.map(p=>p.id)])];found.state.documents[job.productId]=job.document;found.state.archived=[...new Set([...found.state.archived,job.productId])];}

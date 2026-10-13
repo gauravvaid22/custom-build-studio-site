@@ -69,13 +69,13 @@ export default async (request,context) => {
       if(!admin || !process.env.NETLIFY_CATALOG_BUILD_HOOK || !process.env.SHOP_CATALOG_SOURCE_URL)throw Error('Connect Shopify and website publishing first.');
       const compiled=compileCatalog(products,state.collections || collections,Object.values(state.documents),state.archived);
       const prepared=prepareSearchNaming(compiled);
-      if(state.searchNamingVersion===prepared.version)return reply({alreadyLive:true});
+      if(state.searchNamingVersion===prepared.version && !state.jobs.some(j=>j.action===action&&j.status==='error'))return reply({alreadyLive:true});
       const job={id:randomUUID(),productId:'catalog-search-names',action,status:'queued',createdAt:new Date().toISOString(),documents:seedDocuments(prepared.catalog.products,prepared.catalog.collections),collections:prepared.catalog.collections,changes:prepared.changes,namingVersion:prepared.version};
       state.jobs=[job,...state.jobs].slice(0,20);
       await writeState(store,state,etag);
       const token=createHmac('sha256',process.env.SHOP_ADMIN_KEY).update(job.id).digest('hex');
       const response=await fetch(new URL('/.netlify/functions/shop-catalog-publish-background',request.url),{method:'POST',headers:{'Content-Type':'application/json','X-Catalog-Job':token},body:JSON.stringify({id:job.id}),signal:AbortSignal.timeout(10000)});
-      if(!response.ok)throw Error('The naming worker could not start.');
+      if(!response.ok){const fresh=await readState(store);const failed=fresh.state.jobs.find(j=>j.id===job.id);if(failed){failed.status='error';failed.error='The naming worker could not start.';await writeState(store,fresh.state,fresh.etag);}throw Error('The naming worker could not start.');}
       return reply({job:{id:job.id,status:'queued'}});
     }
     if (action.startsWith('upload-')) {
