@@ -1,5 +1,6 @@
 import deliveryPolicy from './delivery-policy.json' with {type:'json'};
 import { managedVariantInput } from './managed-product-input.mjs';
+import {deliveryProfileFor,verifyFlatShippingProfile} from './order-shipping.mjs';
 const check = payload => { if (payload?.userErrors?.length) throw new Error(payload.userErrors.map(e => e.message).join('; ')); return payload; };
 const html = value => String(value || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export async function lookupProduct(admin, product) {
@@ -13,7 +14,10 @@ export async function syncDocument(admin, doc, config, expected = {}) {
   if (!doc.fulfillmentConfirmed) throw new Error('Confirm the fulfillment settings before publishing.');
   const records = doc.products.filter(p => !p.variantOf && !p.groupedDesigns);
   const results = [];
+  const flatChecks=new Set();
   for (const p of records) {
+    const deliveryProfileId=p.shippingPriceMode==='per-order'?deliveryProfileFor(p,config):config.deliveryProfileId;
+    if(p.shippingPriceMode==='per-order' && !flatChecks.has(deliveryProfileId+':'+p.shippingFeeCents)){await verifyFlatShippingProfile(admin,deliveryProfileId,p.shippingFeeCents);flatChecks.add(deliveryProfileId+':'+p.shippingFeeCents);}
     const current = await lookupProduct(admin, p);
     if (expected[p.id] && current?.updatedAt !== expected[p.id]) throw new Error(`${p.name} changed in Shopify. Reload the editor before publishing.`);
     if (current?.variants.nodes.some(v => v.compareAtPrice && Number(v.compareAtPrice) > Number(v.price))) throw new Error(`End the sale for ${p.name} before changing its base price.`);
@@ -47,14 +51,14 @@ export async function syncDocument(admin, doc, config, expected = {}) {
     }));
     check((await admin.call(`mutation ManagedPrices($id:ID!,$variants:[ProductVariantsBulkInput!]!) { productVariantsBulkUpdate(productId:$id,variants:$variants) { productVariants { id } userErrors { message } } }`,{id:product.id,variants:variantUpdates})).productVariantsBulkUpdate);
     if(policy.active && current && current.status!=='DRAFT'){
-      for(const [pickup,profileId] of [[false,config.deliveryProfileId],[true,config.pickupProfileId]]){
+      for(const [pickup,profileId] of [[false,deliveryProfileId],[true,config.pickupProfileId]]){
         if(!product.variants.nodes.some(v=>v.sku.endsWith('-pickup')===pickup))continue;
         if(!profileId)throw new Error('Select the shipping profiles in Connections.');
         check((await admin.call(`mutation ManagedShippingUpdate($id:ID!,$profile:DeliveryProfileInput!){deliveryProfileUpdate(id:$id,profile:$profile){userErrors{message}}}`,{id:profileId,profile:{variantsToAssociate:product.variants.nodes.filter(v=>v.sku.endsWith('-pickup')===pickup).map(v=>v.id)}})).deliveryProfileUpdate);
       }
     }
     if (!current || current.status === 'DRAFT') {
-      for (const [pickup, profileId] of [[false,config.deliveryProfileId],[true,config.pickupProfileId]]) {
+      for (const [pickup, profileId] of [[false,deliveryProfileId],[true,config.pickupProfileId]]) {
         const ids = product.variants.nodes.filter(v => v.sku.endsWith('-pickup') === pickup).map(v => v.id);
         if(!ids.length)continue;
         check((await admin.call(`mutation ManagedShipping($id:ID!,$profile:DeliveryProfileInput!) { deliveryProfileUpdate(id:$id,profile:$profile) { profile { id } userErrors { message } } }`,{id:profileId,profile:{variantsToAssociate:ids}})).deliveryProfileUpdate);

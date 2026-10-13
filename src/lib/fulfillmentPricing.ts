@@ -1,3 +1,4 @@
+import {orderShippingFee} from "../../commerce/order-shipping.mjs";
 import delivery from "../../commerce/delivery-policy.json" with {type:"json"};
 import products from "../data/catalog";
 import pricing from "../../commerce/pricing.json";
@@ -6,11 +7,6 @@ export function pickupDifference(id: string) {
  return product && "pickupPriceDifferenceCents" in product ? product.pickupPriceDifferenceCents ?? pricing.pickupPriceDifferenceCents : pricing.pickupPriceDifferenceCents;
 }
 export function shippingFee(items: {id: string; quantity: number}[], mode: string) {
- if (delivery.active || mode === "pickup") return 0;
- // This collection's single flat fee applies once, including mixed carts.
- return items.reduce((fee, item) => {
-  const product = products.find(p => p.id === item.id);
-  return Math.max(fee, product && "shippingFeeCents" in product ? product.shippingFeeCents ?? 0 : 0);
- }, 0);
+ return orderShippingFee(items,products,{active:delivery.active,mode});
 }
 export function productShippingFee(id: string) { return shippingFee([{id, quantity:1}], "delivered"); }

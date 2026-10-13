@@ -1,0 +1,1 @@
+export function priceRecord<T extends {priceCents:number}>(record:T,policy:{defaultAllowanceCents:number;active?:boolean},livePrice?:number):T & {basePriceCents:number;deliveryExtraCents:number;priceCents:number;shippingFeeCents:number;pricingSchemaVersion:number};

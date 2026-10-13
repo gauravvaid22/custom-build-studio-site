@@ -23,8 +23,10 @@ export function priceRecord(record, policy, livePrice = record.priceCents) {
   // Legacy accessory sets explicitly use zero; never subtract the normal $10 from them.
   p.basePriceCents = p.pricingSchemaVersion===2 ? p.basePriceCents : livePrice-(p.pickupPriceDifferenceCents ?? 1000);
   p.deliveryExtraCents = p.deliveryExtraCents ?? 0;
-  p.priceCents=retailPrice(p.basePriceCents,p.deliveryExtraCents,policy);
-  p.pricingSchemaVersion=2;p.pickupPriceDifferenceCents=0;p.shippingFeeCents=0;
+  if(p.shippingPriceMode && !['included','per-order'].includes(p.shippingPriceMode))throw new Error('Choose a valid shipping price mode.');
+  if(p.shippingPriceMode==='per-order' && (!Number.isSafeInteger(p.shippingFeeCents)||p.shippingFeeCents<0||p.shippingFeeCents>10000))throw new Error('Use a flat delivery fee between CAD0 and CAD100.');
+  p.priceCents=retailPrice(p.basePriceCents,p.deliveryExtraCents,p.shippingPriceMode==='per-order'?{...policy,defaultAllowanceCents:0}:policy);
+  p.pricingSchemaVersion=2;p.pickupPriceDifferenceCents=0;p.shippingFeeCents=p.shippingPriceMode==='per-order'?p.shippingFeeCents:0;
   return p;
 }
 export function priceCatalog(products, policy, livePrices={}) {
@@ -34,7 +36,7 @@ export function priceCatalog(products, policy, livePrices={}) {
     p.variants=p.variants.map(v=>{
       const child=byId.get(v.id);
       if(child) return {...v,basePriceCents:child.basePriceCents,deliveryExtraCents:child.deliveryExtraCents,pricingSchemaVersion:2,priceCents:child.priceCents};
-      return priceRecord({...v,pickupPriceDifferenceCents:products.find(x=>x.id===p.id)?.pickupPriceDifferenceCents},policy,livePrices[v.id] ?? v.priceCents);
+      return priceRecord({...v,shippingPriceMode:p.shippingPriceMode,shippingFeeCents:p.shippingFeeCents,pickupPriceDifferenceCents:products.find(x=>x.id===p.id)?.pickupPriceDifferenceCents},policy,livePrices[v.id] ?? v.priceCents);
     });
     p.priceCents=Math.min(...p.variants.map(v=>v.priceCents));
   }

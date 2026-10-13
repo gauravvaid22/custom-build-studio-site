@@ -112,7 +112,7 @@ export default function Home() {
             <ul className="home-shop-points" aria-label="Shopping benefits">
               <li>Made in Edmonton</li>
               <li>Secure Shopify checkout</li>
-              <li>Free tracked shipping across Canada</li>
+              <li>Tracked Canadian shipping · most products ship free</li>
             </ul>
           </div>
           <div className="home-shop-gallery" aria-label="Featured gifts and décor">

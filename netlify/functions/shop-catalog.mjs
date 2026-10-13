@@ -98,7 +98,7 @@ export default async (request,context) => {
       if(state.drafts[doc.id] || state.documents[doc.id]) await store.setJSON(`revisions/${doc.id}/${state.revision}`,state.drafts[doc.id] || state.documents[doc.id]);
       state.drafts[doc.id]=doc; state.revision++;
     } else if (action === 'connection') {
-      const fields = ['publicationId','deliveryProfileId','pickupProfileId'];
+      const fields = ['publicationId','deliveryProfileId','pickupProfileId','perOrderDeliveryProfileId'];
       if (fields.some(key=>body.connection[key] && !/^gid:\/\/shopify\/(Publication|DeliveryProfile)\/\d+$/.test(body.connection[key]))) throw new Error('Choose valid Shopify connection IDs.');
       state.connection=Object.fromEntries(fields.map(key=>[key,body.connection[key] || '']));
     } else if (action === 'choices') {

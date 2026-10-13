@@ -47,7 +47,7 @@ export function FulfillmentIcon({ pickup }: { pickup: boolean }) {
 }
 export function FulfillmentSelector({ welcome = false, compact = false }: { welcome?: boolean; compact?: boolean }) {
   const { mode, chosen, choose, locked, policy } = useFulfillment();
-  if(policy.active)return <div className="container delivery-assurance"><FulfillmentIcon pickup={false}/><span><strong>Free tracked shipping in Canada</strong>{policy.pickupRewardEnabled&&<small>Collect locally in {policy.pickupRegion} and get {policy.pickupRewardPercent}% off your next order. Select pickup in your cart.</small>}</span></div>;
+  if(policy.active)return <div className="container delivery-assurance"><FulfillmentIcon pickup={false}/><span><strong>Tracked shipping across Canada</strong>{policy.pickupRewardEnabled&&<small>Most products include shipping; flat-rate collections show delivery in the cart. Collect locally in {policy.pickupRegion} and get {policy.pickupRewardPercent}% off your next order. Select pickup in your cart.</small>}</span></div>;
   const expanded = welcome && !chosen;
   return <section className={`container fulfillment-selector ${expanded ? "fulfillment-welcome" : ""} ${compact ? "fulfillment-compact" : ""}`} aria-label="Choose pickup or delivery">
     {expanded && <div><span className="eyebrow">YOUR GIFTS. YOUR WAY.</span><h2>How will you get yours?</h2></div>}

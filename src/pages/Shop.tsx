@@ -147,7 +147,7 @@ function ShopNotice() {
         ? "Collection preview — prices and production details are being reviewed. "
         : ""}
       Finished physical products <span aria-hidden="true">·</span> No digital files{" "}
-      <span aria-hidden="true">·</span> {mode === "pickup" ? "Edmonton pickup by appointment" : "Free tracked shipping in Canada"}{" "}
+      <span aria-hidden="true">·</span> {mode === "pickup" ? "Edmonton pickup by appointment" : "Tracked shipping across Canada · delivery shown in cart"}{" "}
       <span aria-hidden="true">·</span> Secure Shopify checkout
     </div>
   );
@@ -727,7 +727,7 @@ export function ShopProduct() {
   return (
     <>
       <ShopNav showFulfillment={!previewOnly} />
-      {previewOnly ? <p className="shop-notice container">Design preview · proposed CAD item prices · ordering not open</p> : productShippingFee(product.id) ? <p className="shop-notice container">CAD prices · {mode === "pickup" ? "Edmonton pickup · no shipping fee" : "$5 tracked Canadian shipping once per order"}</p> : <ShopNotice />}
+      {previewOnly ? <p className="shop-notice container">Design preview · proposed CAD item prices · ordering not open</p> : productShippingFee(product.id) ? <p className="shop-notice container">CAD prices · {mode === "pickup" ? "Edmonton pickup · no shipping fee" : `${money(productShippingFee(product.id))} tracked Canadian shipping once per order`}</p> : <ShopNotice />}
       <section className="section">
         <div className="container">
           <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {"personalization" in product && <><Link to="/shop/personalized-gifts">Personalized Gifts</Link> / <Link to="/shop/photo-frames">Photo Holders</Link> / </>}{product.category === "PS5 console stands" && <><Link to="/shop/console-stands">PS5 Console Stands</Link> / </>}{product.category === "Headphone stands" && <><Link to="/shop/headphone-stands">Headphone Stands</Link> / </>}{nameFor(product.id, product.name)}</nav>
@@ -818,11 +818,11 @@ export function ShopProduct() {
                 </span>
               </p>
               {compareAtFor(selectedVariant.id) && <p className="shop-regular-price"><strong className="shop-sale-inline">{sale?.percentage}% OFF</strong> Regular {money(compareAtFor(selectedVariant.id)!)} CAD</p>}
-              {"groupedDesigns" in product && <ProductDesignPicker designs={product.groupedDesigns || []} selectedId={selectedVariant.id} onChange={chooseVariant} />}
+              {product.shippingPriceMode==='per-order'&&<div className="note-panel bulk-delivery-savings"><strong>Mix & match — save on delivery</strong><p>{money(priceFor(selectedVariant.id,selectedVariant.priceCents))} CAD per item + {money(productShippingFee(product.id))} delivery once per order. Add more designs without another delivery charge.</p><div className="button-row">{[1,3,5].map(q=><span key={q}><strong>{q} {q===1?'item':'items'}</strong> · {money(q*priceFor(selectedVariant.id,selectedVariant.priceCents)+productShippingFee(product.id))} CAD</span>)}</div><small>Examples include delivery, before any applicable tax. Existing design choices stay the same.</small></div>}{"groupedDesigns" in product && <ProductDesignPicker designs={product.groupedDesigns || []} selectedId={selectedVariant.id} onChange={chooseVariant} />}
               <p className="lead">{product.description}</p>{"groupedDesigns" in product && <p className="small"><strong>{nameFor(mediaProduct.id, mediaProduct.name)}</strong> — {mediaProduct.description}</p>}
               {product.category === "Pet hats & costumes" && <div className="note-panel"><strong>Fully assembled · Standard size</strong><p>Costume elastic, straps and the pieces listed for your chosen design are included. Fit varies by pet; <a href="mailto:custombuildstudio@gmail.com?subject=Paw%20Couture%20fit%20question">ask us about fit before ordering</a> if unsure. For short, supervised photo moments.</p></div>}
               <ul className="shop-purchase-facts" aria-label="Purchase details">
-                <li>{previewOnly ? "$5 shipping extra for this collection — checkout setup pending" : mode === "pickup" ? "Pickup in Southeast Edmonton by appointment" : productShippingFee(product.id) ? "$5 tracked shipping once per order across Canada" : "Free tracked shipping in Canada"}</li>
+                <li>{previewOnly ? "$5 shipping extra for this collection — checkout setup pending" : mode === "pickup" ? "Pickup in Southeast Edmonton by appointment" : productShippingFee(product.id) ? `${money(productShippingFee(product.id))} tracked shipping once per order across Canada` : "Free tracked shipping in Canada"}</li>
                 <li>{mode === "pickup" ? productionMessage : deliveryEstimate}</li>
                 <li>Secure payment through Shopify</li>
               </ul>
@@ -890,7 +890,7 @@ export function ShopProduct() {
                 {"personalization" in product && <><dt>Photo & size guide</dt><dd>{product.notes} The photo print is included in the price. Upload a clear original image; we crop it for the holder and follow your notes where practical. Camera designs are decorative holders, not working cameras.</dd></>}
                 <dt>Timing & handoff</dt>
                 <dd>
-                  {previewOnly ? "Fulfillment is being prepared; checkout is not open yet." : `${productionMessage.replace(/\.$/, "")}. ${mode === "pickup" ? "Pickup by appointment in Southeast Edmonton. We email your private pickup details after ordering." : `${deliveryEstimate} ${productShippingFee(product.id) ? "$5 tracked shipping once per order across Canada." : "Free standard tracked shipping across Canada."}`}`}
+                  {previewOnly ? "Fulfillment is being prepared; checkout is not open yet." : `${productionMessage.replace(/\.$/, "")}. ${mode === "pickup" ? "Pickup by appointment in Southeast Edmonton. We email your private pickup details after ordering." : `${deliveryEstimate} ${productShippingFee(product.id) ? "${money(productShippingFee(product.id))} tracked shipping once per order across Canada." : "Free standard tracked shipping across Canada."}`}`}
                 </dd>
                 <dt>Ordering & payment</dt>
                 <dd>Secure payment is handled through Shopify. Contact us before checkout for special requests.</dd>
@@ -976,7 +976,7 @@ export function ShopCart() {
       <PageIntro
         eyebrow="YOUR COLLECTION"
         title="Your cart."
-        description={mode === "pickup" ? "Review your pickup order, then pay securely through Shopify. We’ll arrange your collection time after ordering." : "Review your items, then pay securely through Shopify. Shipping is included in the displayed price."}
+        description={mode === "pickup" ? "Review your pickup order, then pay securely through Shopify. We’ll arrange your collection time after ordering." : "Review your items, then pay securely through Shopify. Most products include shipping. Any once-per-order delivery charge is shown below."}
       />
       <section className="section">
         <div className="container shop-cart-layout">
@@ -1061,7 +1061,7 @@ export function ShopCart() {
               >
                 {busy ? "Opening secure checkout…" : "Secure checkout ↗"}
               </button>
-              <p className="small">{mode === "pickup" ? "Choose Edmonton pickup at Shopify checkout. Your contact address does not request delivery. We’ll email your pickup arrangements after ordering." : `${policy.active && pickupRequested ? "Pickup requested. We’ll contact you after ordering." : "Delivered to your Canadian address. Shipping included."}`}</p>
+              <p className="small">{mode === "pickup" ? "Choose Edmonton pickup at Shopify checkout. Your contact address does not request delivery. We’ll email your pickup arrangements after ordering." : `${policy.active && pickupRequested ? "Pickup requested. We’ll contact you after ordering." : fulfillmentFee ? "Delivered to your Canadian address. One flat delivery charge is shown above." : "Delivered to your Canadian address. Shipping included."}`}</p>
               <p className="shop-secure-note">Shop Pay · Credit card · PayPal · Google Pay</p>
             </aside>
           )}

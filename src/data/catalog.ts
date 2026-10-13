@@ -7,7 +7,7 @@ export type CatalogProduct = {
  personalized?:boolean; personalization?:{kind:string;photoCount:number}; listingGroup?:string;
  groupedDesigns?:{id:string;label:string;optionIds:string[]}[]; galleryOverviewCover?:boolean; launchReady?:boolean;
  basePriceCents?:number;deliveryExtraCents?:number;pricingSchemaVersion?:number;
- pickupPriceDifferenceCents?:number; shippingFeeCents?:number;
+ shippingPriceMode?:"included"|"per-order";pickupPriceDifferenceCents?:number; shippingFeeCents?:number;
 };
 const products = rawProducts as CatalogProduct[];
 export default products;

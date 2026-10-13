@@ -35,7 +35,7 @@ export function getSeo(path: string) {
   const product = products.find((p) => page === `/shop/${p.id}`);
   const collection = collections.find((item) => page === `/shop/${item.id}`);
   const pages: Record<string, [string, string]> = {
-    "/shipping-returns": ["Shipping & Returns", "Free tracked Canadian shipping, Edmonton pickup by appointment and 30-day unused standard-product returns. Read Custom Build Studio shop policies."],
+    "/shipping-returns": ["Shipping & Returns", "Canadian shipping rates shown before checkout, Edmonton pickup by appointment and 30-day unused standard-product returns. Read Custom Build Studio shop policies."],
     "/shop": [
       "Unique Gifts & Décor, Made in Edmonton",
       "Discover locally made 3D-printed gifts, creatures, dice towers, planters and seasonal pieces with secure Shopify checkout and free tracked Canadian shipping.",

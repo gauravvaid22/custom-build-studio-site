@@ -4,6 +4,7 @@ import {compileCatalog,seedDocuments} from './catalog-management.mjs';
 import {lookupProduct} from './catalog-shopify.mjs';
 import {groupRemainingDesigns} from './group-remaining-designs.mjs';
 import {priceCatalog,validateDeliveryPolicy} from './delivery-pricing.mjs';
+import {deliveryProfileFor,verifyFlatShippingProfile} from './order-shipping.mjs';
 export const deliveryFingerprint = plan => createHash('sha256').update(JSON.stringify(plan)).digest('hex');
 export async function planDelivery(admin,state,input) {
   if(!admin)throw new Error('Shopify is not connected.');
@@ -29,7 +30,7 @@ export async function planDelivery(admin,state,input) {
       livePrices[choice.id]=Math.round(Number(shipped.price)*100);
       old.push({...shipped,oldPrice:shipped.price});if(pickup)old.push({...pickup,oldPrice:pickup.price});
     }
-    groups.push({id:p.id,handle:p.shopifyHandle || p.id,productId:current.id,old,choiceIds:choices.map(c=>c.id)});
+    groups.push({id:p.id,handle:p.shopifyHandle || p.id,productId:current.id,old,shippingPriceMode:p.shippingPriceMode,shippingFeeCents:p.shippingFeeCents,deliveryProfileId:p.shippingPriceMode==='per-order'?deliveryProfileFor(p,state.connection):undefined,choiceIds:choices.map(c=>c.id)});
   }
   const next=priceCatalog(catalog.products,policy,livePrices),byId=new Map(next.map(p=>[p.id,p]));
   for(const group of groups) {
@@ -46,9 +47,10 @@ export async function applyDeliveryGroup(admin,group,connection) {
     const live=current.variants.nodes.find(v=>v.id===old.id),next=group.updates.find(v=>v.id===old.id);
     if(!live || ![old.oldPrice,next.price].includes(live.price) || live.compareAtPrice && Number(live.compareAtPrice)>Number(live.price))throw new Error(`${group.id} was edited in Shopify. Review it before retrying.`);
   }
+  if(group.shippingPriceMode==='per-order')await verifyFlatShippingProfile(admin,group.deliveryProfileId,group.shippingFeeCents);
   const check=result=>{if(result.userErrors?.length)throw new Error(result.userErrors.map(e=>e.message).join('; '));};
   check((await admin.call(`mutation DeliveryPrices($id:ID!,$variants:[ProductVariantsBulkInput!]!){productVariantsBulkUpdate(productId:$id,variants:$variants){userErrors{message}}}`,{id:group.productId,variants:group.updates})).productVariantsBulkUpdate);
-  for(const [pickup,profile] of [[false,connection.deliveryProfileId],[true,connection.pickupProfileId]]) {
+  for(const [pickup,profile] of [[false,group.deliveryProfileId || connection.deliveryProfileId],[true,connection.pickupProfileId]]) {
     if(!group.old.some(v=>v.sku.endsWith('-pickup')===pickup))continue;
     if(!profile)throw new Error('Select both existing fulfillment profiles in Connections.');
     check((await admin.call(`mutation DeliveryAssignment($id:ID!,$profile:DeliveryProfileInput!){deliveryProfileUpdate(id:$id,profile:$profile){userErrors{message}}}`,{id:profile,profile:{variantsToAssociate:group.old.filter(v=>v.sku.endsWith('-pickup')===pickup).map(v=>v.id)}})).deliveryProfileUpdate);
