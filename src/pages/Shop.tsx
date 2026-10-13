@@ -688,6 +688,7 @@ export function ShopProduct() {
     }
   }, [id, searchParams]);
   if (!product || archived.includes(product.id)) return <><ShopNav/><section className="section container"><h1>This item is unavailable.</h1><Link className="button" to="/shop">Browse the shop</Link></section></>;
+  if(product.purchaseOnly){const root=product.listingGroup || catalogProduct(product.variantOf || "")?.listingGroup;return <><ShopNav/><section className="section container"><h1>Choose the animals for your pack</h1><Link className="button" to={`/shop/${root || ""}`}>Build your pack →</Link></section></>;}
   if (product.id === "lithophane-table-lamp") return <><ShopNav /><ShopNotice /><LithophaneProduct /></>;
   const variants = variantsFor(product);
   const selectedVariant = catalogProduct(selectedVariantId || variants[0]?.id || product.id) || product;
@@ -974,7 +975,7 @@ export function ShopCart() {
             ) : (
               items.map((item) => {
                 const product = products.find((p) => p.id === item.id)!;
-                const productRoute = "variantOf" in product ? product.variantOf : product.id;
+                const productRoute = product.listingGroup || catalogProduct(product.variantOf || "")?.listingGroup || product.variantOf || product.id;
                 return (
                   <article className="shop-cart-line" key={item.lineId || item.id}>
                     <Link to={`/shop/${productRoute}`}>
