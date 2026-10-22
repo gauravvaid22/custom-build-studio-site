@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import shopCollections from "../commerce/collections.json";
-import { Routes, Route, useLocation, useParams } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useParams } from "react-router-dom";
 import { Header, Footer } from "./components/Shared";
 import Analytics from "./components/Analytics";
 import Seo from "./components/Seo";
@@ -29,6 +29,7 @@ import projects from "./data/projects.json";
 import { allServices as services } from "./data/landing";
 function ValidService() {
   const { id } = useParams();
+  if (id === "cnc-woodworking") return <Navigate to="/services" replace />;
   return services.some((s) => s.id === id) ? <ServiceDetail /> : <NotFound />;
 }
 function ValidProject() {

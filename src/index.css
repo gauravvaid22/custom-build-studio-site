@@ -473,7 +473,7 @@ main:focus {
 }
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid var(--line);
   border-left: 1px solid var(--line);
 }
@@ -1175,7 +1175,7 @@ summary {
 }
 .pricing-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   margin-bottom: 48px;
 }
@@ -2456,7 +2456,7 @@ h3 {
 .hero-note a { color: #addbef; border-bottom: 1px solid #6aa3bc; }
 .service-start-section { background: #edf1ef; padding-block: 48px 54px; }
 .service-start-section h2 { margin: 10px 0 25px; font-size: clamp(2rem, 3vw, 3rem); letter-spacing: -.015em; }
-.service-start-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.service-start-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .service-start-grid a { display: grid; grid-template-rows: 42px auto auto 1fr; gap: 7px; padding: 22px; min-height: 165px; background: #fff; border: 1px solid #d5dfdb; transition: border-color .2s, transform .2s; }
 .service-start-grid a:hover { border-color: #6793a5; transform: translateY(-2px); }
 .service-start-grid a > span:first-child { color: #bb501e; font-size: 1.75rem; }

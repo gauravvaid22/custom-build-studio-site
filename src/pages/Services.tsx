@@ -60,7 +60,6 @@ export function Services() {
             <Link to="/services/3d-printing"><ServiceStartIcon type="file"/><strong>A file to make</strong><small>STL, STEP or an existing design</small><Arrow /></Link>
             <Link to="/services/3d-scanning"><ServiceStartIcon type="part"/><strong>A part to recreate</strong><small>Broken, discontinued or custom-fit</small><Arrow /></Link>
             <Link to="/services/cad-design"><ServiceStartIcon type="idea"/><strong>An idea or sketch</strong><small>Get it designed for production</small><Arrow /></Link>
-            <Link to="/services/cnc-woodworking"><ServiceStartIcon type="wood"/><strong>A wood project</strong><small>Signs, panels, carving and more</small><Arrow /></Link>
           </div>
           <p>Not sure which service fits? <Link to="/contact">Send us what you have ↗</Link></p>
         </div>

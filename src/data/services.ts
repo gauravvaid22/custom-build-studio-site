@@ -1,4 +1,4 @@
-export const services = [
+const serviceCatalog = [
   {
     id: "3d-printing",
     number: "01",
@@ -97,7 +97,9 @@ export const services = [
       "An agreed design and routing plan for your sign, panel, component or custom wooden piece.",
   },
 ];
-export type Service = (typeof services)[number];
+// Temporarily hidden at the owner’s request. Keep the service details for restoration.
+export const services = serviceCatalog.filter(service => service.id !== "cnc-woodworking");
+export type Service = (typeof serviceCatalog)[number];
 export const quoteServices = services.flatMap((service) =>
   service.id === "3d-printing"
     ? [

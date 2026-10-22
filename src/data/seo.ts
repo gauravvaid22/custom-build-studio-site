@@ -71,12 +71,12 @@ export function getSeo(path: string) {
       "Private customer-supplied production reference.",
     ],
     "/": [
-      "3D Printing, CAD & CNC Woodworking Edmonton",
-      "FDM and resin 3D printing, CAD design, 3D scanning and CNC woodworking in Edmonton. One-off projects, prototypes and small runs. Request a quote.",
+      "3D Printing, CAD & 3D Scanning Edmonton",
+      "FDM and resin 3D printing, CAD design, 3D scanning in Edmonton. One-off projects, prototypes and small runs. Request a quote.",
     ],
     "/services": [
       "Design & Fabrication Services in Edmonton",
-      "Explore custom FDM and resin 3D printing, CAD modeling, 3D scanning, reverse engineering and CNC router services in Edmonton, Alberta.",
+      "Explore custom FDM and resin 3D printing, CAD modeling, 3D scanning and reverse engineering services in Edmonton, Alberta.",
     ],
     "/work": [
       "Custom Fabrication Project Portfolio",
@@ -84,11 +84,11 @@ export function getSeo(path: string) {
     ],
     "/about": [
       "An Edmonton Design & Fabrication Studio",
-      "Meet Custom Build Studio: an owner-operated Edmonton studio connecting CAD design, 3D printing, scanning and CNC woodworking.",
+      "Meet Custom Build Studio: an owner-operated Edmonton studio connecting CAD design, 3D printing and scanning.",
     ],
     "/pricing": [
-      "Custom 3D Printing & CNC Project Pricing",
-      "FDM printing from $20 CAD and resin printing from $30 CAD. Explore CAD, scanning and CNC woodworking rates in Edmonton. Final pricing confirmed per project.",
+      "Custom 3D Printing, CAD & Scanning Pricing",
+      "FDM printing from $20 CAD and resin printing from $30 CAD. Explore CAD and scanning rates in Edmonton. Final pricing confirmed per project.",
     ],
     "/products": [
       "Studio-Designed Products",
@@ -100,7 +100,7 @@ export function getSeo(path: string) {
     ],
     "/contact": [
       "Request a Quote for Your Custom Project",
-      "Send a sketch, photo, CAD file or idea for custom 3D printing, modeling, scanning or CNC woodworking in Edmonton. One-off projects welcome.",
+      "Send a sketch, photo, CAD file or idea for custom 3D printing, modeling or scanning in Edmonton. One-off projects welcome.",
     ],
     "/privacy": [
       "Privacy Information",
@@ -141,7 +141,7 @@ export const localBusiness = {
   name: business.name,
   url: business.origin,
   description:
-    "Custom FDM and resin 3D printing, CAD design, 3D scanning, reverse engineering and CNC woodworking in Edmonton, Alberta.",
+    "Custom FDM and resin 3D printing, CAD design, 3D scanning and reverse engineering in Edmonton, Alberta.",
   telephone: business.telephone,
   email: business.email,
   image: business.origin + "/og-image.jpg",

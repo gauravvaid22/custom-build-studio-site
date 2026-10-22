@@ -157,7 +157,6 @@ export function Header() {
               <Link to="/services/3d-printing">3D Printing · FDM &amp; Resin</Link>
               <Link to="/services/cad-design">CAD Design</Link>
               <Link to="/services/3d-scanning">3D Scanning</Link>
-              <Link to="/services/cnc-woodworking">CNC Woodworking</Link>
               <Link to="/pricing">Service Pricing</Link>
               <Link to="/contact">Request a quote</Link>
             </div>
@@ -337,7 +336,7 @@ export const steps = [
     "Approve the plan",
     "Review the design and quote before manufacturing starts.",
   ],
-  ["Make it", "Your agreed design becomes a printed part or CNC-routed piece."],
+  ["Make it", "Your agreed design becomes a finished 3D-printed part."],
   [
     "Receive your project",
     "We arrange pickup directly with you during your project, or discuss shipping for your finished work.",

@@ -64,17 +64,16 @@ export function Work() {
             </div>
           ) : (
             <div className="empty-state">
-              <h2>Have a CNC project in mind?</h2>
+              <h2>Have a project in mind?</h2>
               <p>
-                There are no CNC woodworking photos in this gallery yet. Explore
-                the service and tell us about the sign, panel or custom piece
-                you’d like to make.
+                Explore our services and tell us about the custom part or
+                prototype you’d like to make.
               </p>
               <Link
                 className="button button-dark"
-                to="/services/cnc-woodworking"
+                to="/services"
               >
-                Explore CNC Woodworking ↗
+                Explore Our Services ↗
               </Link>
             </div>
           )}

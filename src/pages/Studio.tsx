@@ -43,12 +43,12 @@ export function About() {
             </p>
             <p>
               Our services bring together FDM and resin 3D printing, CAD
-              modeling, 3D scanning and CNC woodworking. That means help with
+              modeling and 3D scanning. That means help with
               both the digital design and the physical piece, without expecting
               you to arrive with every technical decision already made.
             </p>
             <p>
-              From a replacement component to a personalized sign, we welcome
+              From a replacement component to a custom prototype, we welcome
               one-off projects and small production runs.
             </p>
             <QuoteLink />
@@ -131,7 +131,7 @@ export function Pricing() {
             extra design or finishing work are confirmed in your quote.
           </p>
           <div className="pricing-grid">
-            {rates.map((r) => (
+            {rates.filter(r => r.service !== "cnc-woodworking").map((r) => (
               <article className="price-card" key={r.title}>
                 <h2>{r.title}</h2>
                 <p className="price">{r.price}</p>

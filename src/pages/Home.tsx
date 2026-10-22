@@ -38,7 +38,7 @@ export default function Home() {
             </h1>
             <p className="hero-description">
               Shop finished gifts and décor, or bring us an idea for custom 3D printing,
-              CAD design, scanning or CNC woodworking in Edmonton.
+              CAD design or 3D scanning in Edmonton.
             </p>
             <div className="hero-paths" aria-label="Choose what you need">
               <Link className="hero-path" to="/shop">

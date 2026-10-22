@@ -1,3 +1,5 @@
+/services/cnc-woodworking /services 302
+/services/cnc-woodworking/ /services 302
 /thank-you.html /thank-you 301
 /google-headphones.xml /.netlify/functions/shop-discovery?format=xml 200
 /google-products.xml /.netlify/functions/shop-discovery?format=xml 200
