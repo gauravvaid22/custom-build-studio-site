@@ -1,4 +1,5 @@
 import products from "../data/catalog";
+import { ModelDiscoveryTeaser } from "../components/ModelDiscovery";
 import { useShopFeature } from "../components/SiteContent";
 import { Link } from "react-router-dom";
 import {
@@ -169,6 +170,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <ModelDiscoveryTeaser placement="home" />
       <section className="section work-section">
         <div className="container">
           <SectionHeading

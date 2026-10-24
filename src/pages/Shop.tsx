@@ -9,6 +9,7 @@ import collections from "../../commerce/collections.json";
 import headphoneSearch from "../../commerce/headphone-search.json";
 import { business } from "../data/business";
 import { ShopDisplayAdmin } from "../components/ShopDisplayAdmin";
+import { ModelDiscoveryAdmin } from "../components/ModelDiscoveryAdmin";
 import { MobilePurchaseBar } from "../components/MobilePurchaseBar";
 import { analyticsSearchTerm, lowestProductPrice, matchesProductSearch, subcollections } from "../lib/shopDiscovery";
 import { useShopFeature, useShopMerchandising } from "../components/SiteContent";
@@ -1330,7 +1331,7 @@ export function ShopAdmin() {
     [busy, setBusy] = useState(false),
     [content, setContent] = useState<SiteContent>(publicContent),
     [productContent, setProductContent] = useState<ProductContent>(publicProductContent),
-    [tab, setTab] = useState<"orders" | "website" | "products" | "lithophane" | "sales" | "display" | "delivery">("products"),
+    [tab, setTab] = useState<"orders" | "website" | "products" | "lithophane" | "sales" | "display" | "delivery" | "models">("products"),
     [saved, setSaved] = useState("");
   async function load() {
     try {
@@ -1362,6 +1363,7 @@ export function ShopAdmin() {
     const form = new FormData(event.currentTarget);
     const dollars = (name: string) => Math.round(Number(form.get(name)) * 100);
     const next: SiteContent = {
+      ...content,
       fdmStartingPriceCents: dollars("fdmStartingPrice"),
       resinStartingPriceCents: dollars("resinStartingPrice"),
       cadHourlyRateCents: dollars("cadHourlyRate"),
@@ -1452,6 +1454,7 @@ export function ShopAdmin() {
                 <button aria-pressed={tab === "delivery"} className={tab === "delivery" ? "button" : "button button-dark"} onClick={() => setTab("delivery")}>Pricing & delivery</button>
                 <button aria-pressed={tab === "orders"} className={tab === "orders" ? "button" : "button button-dark"} onClick={() => setTab("orders")}>Orders</button>
                 <button aria-pressed={tab === "website"} className={tab === "website" ? "button" : "button button-dark"} onClick={() => setTab("website")}>Website settings</button>
+                <button aria-pressed={tab === "models"} className={tab === "models" ? "button" : "button button-dark"} onClick={() => setTab("models")}>Model discovery</button>
                 <button aria-pressed={tab === "display"} className={tab === "display" ? "button" : "button button-dark"} onClick={() => setTab("display")}>Shop display</button>
                 <button aria-pressed={tab === "products"} className={tab === "products" ? "button" : "button button-dark"} onClick={() => setTab("products")}>Products & collections</button>
                 <button aria-pressed={tab === "sales"} className={tab === "sales" ? "button" : "button button-dark"} onClick={() => setTab("sales")}>Sales</button>
@@ -1571,6 +1574,7 @@ export function ShopAdmin() {
                   {saved && <p role="status">{saved}</p>}
                 </form>
               )}
+              {tab === "models" && <ModelDiscoveryAdmin />}
               {tab === "products" && <Suspense fallback={<p>Loading product editor...</p>}><ProductManager /></Suspense>}
               {tab === "lithophane" && (
                 <LithophaneAdmin

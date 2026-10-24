@@ -13,6 +13,7 @@ const canonical = (path: string) => business.origin + (path === "/" ? "/" : path
 export const publicRoutes = [
   "/",
   "/services",
+  "/find-a-3d-model",
   ...services.map((s) => `/services/${s.id}`),
   "/work",
   ...projects.map((p) => `/work/${p.id}`),
@@ -36,6 +37,7 @@ export function getSeo(path: string) {
   const product = products.find((p) => page === `/shop/${p.id}`);
   const collection = collections.find((item) => page === `/shop/${item.id}`);
   const pages: Record<string, [string, string]> = {
+    "/find-a-3d-model": ["Find a 3D Model to Print | Edmonton Printing Quotes", "Explore MakerWorld, Printables, Thingiverse and Cults3D, then send a model link to Custom Build Studio for a custom 3D printing quote in Edmonton."],
     "/shipping-returns": ["Shipping & Returns", "Canadian shipping rates shown before checkout, Edmonton pickup by appointment and 30-day unused standard-product returns. Read Custom Build Studio shop policies."],
     "/shop": [
       "Unique Gifts & Décor, Made in Edmonton",

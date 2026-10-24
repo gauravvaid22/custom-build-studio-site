@@ -9,6 +9,7 @@ import StorePolicy from "./pages/StorePolicy";
 import { Services, ServiceDetail } from "./pages/Services";
 import { Work, ProjectDetail } from "./pages/Work";
 import Contact from "./pages/Contact";
+import FindModel from "./pages/FindModel";
 import { FulfillmentProvider } from "./components/Fulfillment";
 import { CartProvider } from "./components/Cart";
 import { ShopifyCatalogProvider } from "./components/ShopifyCatalog";
@@ -68,6 +69,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/find-a-3d-model" element={<FindModel />} />
           <Route path="/services/:id" element={<ValidService />} />
           <Route path="/work" element={<Work />} />
           <Route path="/work/:id" element={<ValidProject />} />

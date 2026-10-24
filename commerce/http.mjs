@@ -62,6 +62,8 @@ export function handler(shop) {
         return response({ siteContent: await shop.getSiteContent() });
       if (action === "save-content")
         return response({ siteContent: await shop.saveSiteContent(body.siteContent) });
+      if (action === "save-model-discovery")
+        return response({ siteContent: await shop.saveModelDiscovery(body.modelDiscovery) });
       if (action === "get-merchandising")
         return response({ merchandising: await shop.getMerchandising() });
       if (action === "save-merchandising")

@@ -3,7 +3,8 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { business } from "../data/business";
 import { quoteServices } from "../data/services";
 import { PageIntro } from "../components/Shared";
-import { trackQuote, trackQuoteStart } from "../components/Analytics";
+import { trackQuote, trackQuoteStart, trackModelDiscovery } from "../components/Analytics";
+import { ModelLibraries, useModelDiscovery } from "../components/ModelDiscovery";
 
 const ALLOWED_EXTENSIONS =
   ".stl,.step,.stp,.iges,.igs,.obj,.3mf,.dxf,.svg,.jpg,.jpeg,.png,.webp,.pdf,.zip";
@@ -11,10 +12,12 @@ export const MAX_FILE_BYTES = 7_000_000; // Leave room below Netlify's 8 MB requ
 const UPLOAD_SLOTS = [1, 2, 3, 4, 5];
 export default function Contact() {
   const [params] = useSearchParams();
+  const modelDiscovery = useModelDiscovery();
+  const [startingPoint, setStartingPoint] = useState<"link" | "file" | "idea">(params.get("start") === "link" ? "link" : params.get("start") === "file" ? "file" : "idea");
   const requested = params.get("service") || "";
   const initialService = quoteServices.some((s) => s.id === requested)
     ? requested
-    : "";
+    : params.get("start") === "link" ? "3d-printing" : "";
   const [selectedService, setSelectedService] = useState("");
   const [files, setFiles] = useState([1]);
   useEffect(() => setSelectedService(initialService), [initialService]);
@@ -52,15 +55,24 @@ export default function Contact() {
     for (const [name, value] of Array.from(data.entries())) {
       if (value instanceof File && !value.name) data.delete(name);
     }
-    if (
-      !String(data.get("name")).trim() ||
-      !String(data.get("message")).trim()
-    ) {
+    if (!String(data.get("name")).trim() || (startingPoint !== "link" && !String(data.get("message")).trim())) {
       reportError(
         "Please include your name and a short description of your project.",
       );
       return;
     }
+    if (startingPoint === "link") {
+      try {
+        const url = new URL(String(data.get("file-link") || "").trim());
+        if (!["http:", "https:"].includes(url.protocol) || url.username || url.password) throw new Error();
+        data.set("file-link", url.href);
+      } catch {
+        reportError("Paste the full model page link, starting with https:// or http://, without sign-in details.");
+        return;
+      }
+      if (!String(data.get("message") || "").trim()) data.set("message", "Please quote printing the model at the supplied link. See the size, colour and quantity fields for my preferences.");
+    }
+    data.set("starting-point", startingPoint);
     if (countBytes() > MAX_FILE_BYTES) {
       reportError(
         "Your attachments are over 7 MB in total. Remove a file or add a shared download link below, then send again.",
@@ -103,6 +115,7 @@ export default function Contact() {
       });
       if (!response.ok) throw new Error("submission-failed");
       trackQuote();
+      if (startingPoint === "link") trackModelDiscovery("model_quote_sent", { starting_point: "link" });
       navigate("/thank-you", { state: { submitted: true } });
     } catch {
       reportError(
@@ -193,6 +206,30 @@ export default function Contact() {
               <h2>Request a quote</h2>
               <p>Fields marked * are required.</p>
             </div>
+            <fieldset className="quote-start" id="quote-start" disabled={status === "sending"}>
+              <legend>What are you starting with?</legend>
+              <div className="quote-start-options">
+                {([
+                  ["link", "I found a model", "Send a webpage link"],
+                  ["file", "I have a file", "Upload your design"],
+                  ["idea", "I need some help", "Describe your idea"],
+                ] as const).map(([value, title, description]) => <label className="quote-start-choice" key={value}>
+                  <input type="radio" name="starting-point" value={value} checked={startingPoint === value} onChange={() => {
+                    setStartingPoint(value);
+                    if (value === "link" && !selectedService) setSelectedService("3d-printing");
+                    if (!started.current) { started.current = true; trackQuoteStart(); }
+                    trackModelDiscovery("model_quote_start", { starting_point: value });
+                  }}/><strong>{title}</strong><span>{description}</span>
+                </label>)}
+              </div>
+            </fieldset>
+            <div className="quote-model-panel" hidden={startingPoint !== "link"}>
+              <label htmlFor="file-link">Model page or shared file link {startingPoint === "link" && "*"}
+                <input id="file-link" name="file-link" type="url" maxLength={2000} required={startingPoint === "link"} disabled={status === "sending"} placeholder="https://www.printables.com/model/…" aria-describedby="link-help" />
+              </label>
+              <span className="field-help" id="link-help">Paste the model’s webpage, or a viewable Google Drive or Dropbox link. No download needed to start.</span>
+              {modelDiscovery.enabled && modelDiscovery.placements.quote && <details><summary>Still looking? Browse model libraries</summary><ModelLibraries compact /><p className="small">{modelDiscovery.helperText}</p><Link className="text-link" to="/find-a-3d-model" target="_blank" rel="noopener noreferrer">See how it works ↗</Link></details>}
+            </div>
             <fieldset disabled={status === "sending"}>
               <legend className="sr-only">
                 Your contact and project details
@@ -253,16 +290,20 @@ export default function Contact() {
                 </div>
               </div>
               <label htmlFor="message">
-                Tell us about your project *
+                Tell us about your project {startingPoint === "link" ? "(optional)" : "*"}
                 <textarea
                   id="message"
                   name="message"
-                  required
+                  required={startingPoint !== "link"}
                   rows={5}
                   maxLength={6000}
                   placeholder="What would you like to make? Include approximate size, how it will be used and anything it needs to fit."
                 />
               </label>
+              <div className="form-grid quote-model-details" hidden={startingPoint !== "link"}>
+                <label htmlFor="size-preference">Preferred size <span>(optional)</span><input id="size-preference" name="size-preference" maxLength={160} placeholder="Original size, about 15 cm, or not sure" /></label>
+                <label htmlFor="colour-preference">Preferred colour <span>(optional)</span><input id="colour-preference" name="colour-preference" maxLength={100} placeholder="e.g. black, or help me choose" /></label>
+              </div>
               <div className="form-grid">
                 <label htmlFor="quantity">
                   Quantity <span>(optional)</span>
@@ -300,14 +341,14 @@ export default function Contact() {
                   />
                 </label>
               </div>
-              <fieldset className="upload-box">
+              <fieldset className="upload-box" hidden={startingPoint === "link"}>
                 <legend>
                   Photos & files <span>(optional)</span>
                 </legend>
                 <p id="file-help">
                   Attach up to 5 files, one per attachment (7 MB total). On a
                   phone, choose “Browse” or “Files” to find STEP and STL files.
-                  For larger files, use the link field below.
+                  For larger files, choose “I found a model” above and paste a shared file link.
                 </p>
                 {/* Netlify supports one file per named field. Keep all five
                     fields in static HTML for detection. Do not use multiple or
@@ -376,21 +417,6 @@ export default function Contact() {
                   </span>
                 </div>
               </fieldset>
-              <label htmlFor="file-link">
-                Shared file link <span>(optional)</span>
-                <input
-                  id="file-link"
-                  name="file-link"
-                  type="url"
-                  maxLength={2000}
-                  placeholder="https://…"
-                  aria-describedby="link-help"
-                />
-                <span className="field-help" id="link-help">
-                  A Google Drive, Dropbox or other download link. Make sure we
-                  have permission to view it.
-                </span>
-              </label>
               <details className="additional-notes">
                 <summary>Add additional notes</summary>
                 <label htmlFor="notes">
@@ -414,6 +440,7 @@ export default function Contact() {
               enquiry. Avoid including sensitive personal documents.{" "}
               <Link to="/privacy">Privacy information</Link>.
             </p>
+            {startingPoint === "link" && <p className="small">{modelDiscovery.permissionText}{modelDiscovery.responseTime && ` ${modelDiscovery.responseTime}`}</p>}
             <button
               type="submit"
               className="button submit-button"
@@ -421,7 +448,7 @@ export default function Contact() {
             >
               {status === "sending"
                 ? "Sending your request…"
-                : "Send Quote Request"}
+                : startingPoint === "link" ? modelDiscovery.quoteButtonLabel : "Send Quote Request"}
               <span aria-hidden="true">↗</span>
             </button>
             <p className="small form-status" role="status">

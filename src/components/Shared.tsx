@@ -1,4 +1,5 @@
 import { useShopMerchandising } from "./SiteContent";
+import { useModelDiscovery } from "./ModelDiscovery";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import imageData from "../data/images.json";
@@ -104,6 +105,7 @@ export function Header() {
   const location = useLocation();
   const toggle = useRef<HTMLButtonElement>(null);
   const merchandising = useShopMerchandising();
+  const modelDiscovery = useModelDiscovery();
   const departments = merchandising.departments.map(id => collections.find(collection => collection.id === id)).filter((collection): collection is (typeof collections)[number] => Boolean(collection));
   const cartCount = items.reduce((sum, item) => sum + item.quantity, 0);
   useEffect(() => { setOpen(false); setActivePanel(null); }, [location.pathname]);
@@ -157,6 +159,7 @@ export function Header() {
               <Link to="/services/3d-printing">3D Printing · FDM &amp; Resin</Link>
               <Link to="/services/cad-design">CAD Design</Link>
               <Link to="/services/3d-scanning">3D Scanning</Link>
+              {modelDiscovery.enabled && modelDiscovery.placements.navigation && <Link to="/find-a-3d-model">Find a 3D model</Link>}
               <Link to="/pricing">Service Pricing</Link>
               <Link to="/contact">Request a quote</Link>
             </div>
@@ -171,6 +174,7 @@ export function Header() {
   );
 }
 export function Footer() {
+  const modelDiscovery = useModelDiscovery();
   return (
     <footer className="site-footer">
       <div className="container footer-grid">
@@ -188,6 +192,7 @@ export function Footer() {
         <div>
           <h2>Explore</h2>
           <Link to="/services">Services</Link>
+          {modelDiscovery.enabled && modelDiscovery.placements.navigation && <Link to="/find-a-3d-model">Find a 3D model</Link>}
           <Link to="/work">Our work</Link>
           <Link to="/shop">Shop all products</Link>
           <Link to="/shop/personalized-gifts">Personalized gifts</Link>

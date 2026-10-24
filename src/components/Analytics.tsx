@@ -182,6 +182,12 @@ export function trackQuoteStart() {
   window.gtag?.("event", "quote_start", { form_name: "contact" });
 }
 
+/** Only controlled library IDs and starting-point labels; never customer/model links. */
+export function trackModelDiscovery(event: "model_library_click" | "model_quote_start" | "model_quote_sent", details: { library_id?: string; starting_point?: "link" | "file" | "idea" } = {}) {
+  if (!loadAnalytics()) return;
+  window.gtag?.("event", event, { send_to: measurementId, ...details, page_location: campaignLocation() });
+}
+
 export default function Analytics() {
   const { pathname, search, key: navigationKey } = useLocation();
   const { mode } = useFulfillment();

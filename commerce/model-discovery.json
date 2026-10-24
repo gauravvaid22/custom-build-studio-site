@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "headline": "Find a model. We’ll print it.",
+  "introduction": "Discover a design you love, send us its link, and get a custom 3D printing quote. No printer or design experience needed.",
+  "buttonLabel": "Explore 3D models",
+  "quoteButtonLabel": "Get my printing quote",
+  "helperText": "Copy the model page link, then return here to request your quote. You don’t need to download the file first.",
+  "permissionText": "We’ll check the model’s printing requirements and creator permissions before confirming your quote.",
+  "responseTime": "",
+  "placements": { "home": true, "services": true, "printing": true, "quote": true, "navigation": true },
+  "libraries": [
+    { "id": "makerworld", "name": "MakerWorld", "url": "https://makerworld.com/en", "description": "Creative designs, home accessories and printing projects.", "enabled": true },
+    { "id": "printables", "name": "Printables", "url": "https://www.printables.com/", "description": "Practical parts, organizers and decorative models.", "enabled": true },
+    { "id": "thingiverse", "name": "Thingiverse", "url": "https://www.thingiverse.com/", "description": "Community-created designs for everyday ideas.", "enabled": true },
+    { "id": "cults3d", "name": "Cults3D", "url": "https://cults3d.com/en", "description": "Independent designers, collectibles and free or paid models.", "enabled": true }
+  ]
+}

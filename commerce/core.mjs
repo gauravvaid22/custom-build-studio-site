@@ -3,6 +3,7 @@ import { createHash, timingSafeEqual } from "node:crypto";
 import catalog from "./products.json" with { type: "json" };
 import settings from "./settings.json" with { type: "json" };
 import defaultSiteContent from "./site-content.json" with { type: "json" };
+import { modelDiscoveryFor, validateModelDiscovery } from "./model-discovery.mjs";
 import defaultProductContent from "./product-content.json" with { type: "json" };
 import { ownerEmail } from "./notifications.mjs";
 
@@ -172,6 +173,7 @@ export function createShop({
   async function getSiteContent() {
     const found = await store.get("config/site-content");
     const content = { ...defaultSiteContent, ...(found?.data || {}) };
+    content.modelDiscovery = modelDiscoveryFor(content);
     // Remove the wording left by the retired manual e-Transfer workflow.
     // Keep all other administrator edits intact.
     if (content.productionTime === "2–3 business days after payment is verified")
@@ -179,7 +181,15 @@ export function createShop({
     return content;
   }
   async function saveSiteContent(input) {
-    const content = validateSiteContent(input);
+    const content = { ...await getSiteContent(), ...validateSiteContent(input) };
+    await store.put("config/site-content", content, {});
+    return content;
+  }
+  async function saveModelDiscovery(input) {
+    let clean;
+    try { clean = validateModelDiscovery(input); }
+    catch (error) { fail(error.message); }
+    const content = { ...await getSiteContent(), modelDiscovery: clean };
     await store.put("config/site-content", content, {});
     return content;
   }
@@ -474,6 +484,7 @@ export function createShop({
     notifyOwner,
     getSiteContent,
     saveSiteContent,
+    saveModelDiscovery,
     getMerchandising,
     saveMerchandising,
     getProductContent,

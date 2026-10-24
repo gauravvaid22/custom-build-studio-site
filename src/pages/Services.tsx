@@ -14,6 +14,7 @@ import {
   serviceDetails,
 } from "../data/landing";
 import { useSiteContent, wholeDollars } from "../components/SiteContent";
+import { ModelDiscoveryTeaser } from "../components/ModelDiscovery";
 
 function ServiceStartIcon({ type }: { type: "file" | "part" | "idea" | "wood" }) {
   const paths = {
@@ -65,6 +66,7 @@ export function Services() {
         </div>
       </section>
       <PrintingLinks />
+      <ModelDiscoveryTeaser placement="services" />
       <section className="section">
         <div className="container service-list">
           {services.map((s) => (
@@ -185,6 +187,7 @@ export function ServiceDetail() {
         </div>
       </section>
       {s.id === "3d-printing" && <PrintingLinks />}
+      {["3d-printing", "fdm-3d-printing", "resin-3d-printing"].includes(s.id) && <ModelDiscoveryTeaser placement="printing" />}
       {(s.id === "3d-printing" || s.id === "fdm-3d-printing") && <FdmCapabilities />}
       <section className="section">
         <div className="container note-panel">

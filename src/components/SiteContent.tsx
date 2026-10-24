@@ -1,9 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import merchandisingDefaults from "../../commerce/shop-merchandising.json";
 import { activeShopFeature, type Merchandising } from "../lib/shopDiscovery";
-import defaults from "../../commerce/site-content.json";
+import siteDefaults from "../../commerce/site-content.json";
+import modelDiscoveryDefaults from "../../commerce/model-discovery.json";
 import defaultProductContent from "../../commerce/product-content.json";
 
+const defaults = { ...siteDefaults, modelDiscovery: modelDiscoveryDefaults };
 export type SiteContent = typeof defaults;
 const SiteContentContext = createContext<SiteContent>(defaults);
 export type ProductContent = typeof defaultProductContent;
@@ -27,7 +29,7 @@ export function SiteContentProvider({ children }: { children: React.ReactNode })
       .then((data) => {
         if (active && data?.merchandising) setMerchandising({ ...merchandisingDefaults, ...data.merchandising });
         if (active && data?.siteContent)
-          setContent({ ...defaults, ...data.siteContent });
+          setContent({ ...defaults, ...data.siteContent, modelDiscovery: { ...modelDiscoveryDefaults, ...data.siteContent.modelDiscovery, placements: { ...modelDiscoveryDefaults.placements, ...data.siteContent.modelDiscovery?.placements } } });
         if (active && data?.productContent)
           setProductContent({ ...defaultProductContent, ...data.productContent });
       })
