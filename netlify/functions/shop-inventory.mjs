@@ -71,7 +71,7 @@ export default async(request,context)=>{
     } else {
      if(!row.tracked||!row.levelId)throw Error('Initialize stock before editing the quantity.');
      await enforceStockPolicy(admin,row);
-     if(action==='adjust')await addAvailable(admin,row,locationId,claimed.quantity,key);
+     if(action==='adjust')await addAvailable(admin,row,locationId,claimed.quantity,key,claimed.expected);
      if(action==='correct')await setAvailable(admin,row,locationId,claimed.quantity,claimed.expected,key);
     }
     [row]=await readInventory(admin,[unit],locationId);

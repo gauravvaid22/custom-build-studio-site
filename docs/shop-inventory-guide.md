@@ -10,6 +10,8 @@ Open `/shop/admin/`, unlock the control panel, and choose **Inventory**.
 4. Use **Set available** only to correct the total available quantity. Refresh first. If another order changes stock while you edit, Shopify rejects a stale correction; refresh and review it.
 5. Use **Sold out**, **Low stock**, or **Needs attention** to find items requiring action.
 
+If an order changes stock while either adjustment is being saved, refresh and review the quantity before retrying. Both actions use Shopify's quantity checks and stable request IDs to avoid duplicate changes.
+
 Inventory updates save directly to Shopify. A website rebuild is unnecessary. Browsing pages refresh on focus and periodically; checkout always revalidates stock. Shopify remains the final authority during simultaneous purchases.
 
 ## Defaults and exceptions

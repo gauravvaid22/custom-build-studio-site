@@ -28,7 +28,8 @@ test('absolute corrections use API 2026-07 compare-and-swap and idempotency',asy
  const stale={call:async()=>({inventorySetQuantities:{userErrors:[{code:'CHANGE_FROM_QUANTITY_STALE',message:'Quantity changed'}]}})};await assert.rejects(()=>setAvailable(stale,row,'loc',5,3,'key'),/Quantity changed/);
 });
 test('replenishment adds a delta rather than overwriting concurrent sales',async()=>{
- let sent;const admin={call:async(q,v)=>{sent={q,v};return {inventoryAdjustQuantities:{userErrors:[]}};}};await addAvailable(admin,row,'loc',3,'stable-key');assert.match(sent.q,/@idempotent/);assert.equal(sent.v.input.changes[0].delta,3);assert.equal(sent.v.input.name,'available');await assert.rejects(()=>addAvailable(admin,row,'loc',0,'key'),/addition/);
+ let sent;const admin={call:async(q,v)=>{assert.ok(Object.hasOwn(v.input.changes[0],'changeFromQuantity'),'API 2026-07 requires an explicit quantity check');sent={q,v};return {inventoryAdjustQuantities:{userErrors:[]}};}};await addAvailable(admin,row,'loc',3,'stable-key');assert.match(sent.q,/@idempotent/);assert.equal(sent.v.input.changes[0].delta,3);assert.equal(sent.v.input.changes[0].changeFromQuantity,3);assert.equal(sent.v.input.name,'available');await assert.rejects(()=>addAvailable(admin,row,'loc',0,'key'),/addition/);
+ await addAvailable(admin,{...row,available:2},'loc',1,'retry',3);assert.equal(sent.v.input.changes[0].changeFromQuantity,3,'A retry must preserve its original expected quantity');
 });
 test('policy enforcement does not reset any quantity',async()=>{
  const calls=[];const admin={call:async(q,v)=>{calls.push({q,v});return q.includes('TrackStudioStock')?{inventoryItemUpdate:{userErrors:[]}}:{productVariantsBulkUpdate:{userErrors:[]}};}};

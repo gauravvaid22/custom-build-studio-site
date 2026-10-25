@@ -55,9 +55,11 @@ export async function setAvailable(admin,row,locationId,quantity,expected,key) {
   if(!Number.isInteger(quantity)||quantity<0||quantity>10000||!Number.isInteger(expected))throw Error('Refresh stock and enter a whole-number quantity from 0 to 10000.');
   return checked((await admin.call(`mutation SetStudioStock($input:InventorySetQuantitiesInput!,$key:String!){inventorySetQuantities(input:$input) @idempotent(key:$key){inventoryAdjustmentGroup{createdAt} userErrors{message code}}}`,{key,input:{name:'available',reason:'correction',referenceDocumentUri:`gid://custom-build-studio/InventoryChange/${key}`,quantities:[{inventoryItemId:row.inventoryItemId,locationId,quantity,changeFromQuantity:expected}]}})).inventorySetQuantities);
 }
-export async function addAvailable(admin,row,locationId,delta,key) {
+export async function addAvailable(admin,row,locationId,delta,key,expected=row.available) {
   if(!Number.isInteger(delta)||delta<1||delta>10000)throw Error('Enter a stock addition from 1 to 10000.');
-  return checked((await admin.call(`mutation AddStudioStock($input:InventoryAdjustQuantitiesInput!,$key:String!){inventoryAdjustQuantities(input:$input) @idempotent(key:$key){inventoryAdjustmentGroup{createdAt} userErrors{message code}}}`,{key,input:{name:'available',reason:'received',referenceDocumentUri:`gid://custom-build-studio/InventoryChange/${key}`,changes:[{inventoryItemId:row.inventoryItemId,locationId,delta}]}})).inventoryAdjustQuantities);
+  if(!Number.isInteger(expected))throw Error('Refresh stock before replenishing this item.');
+  // Version the key: the previous request shape was rejected before applying a delta.
+  return checked((await admin.call(`mutation AddStudioStock($input:InventoryAdjustQuantitiesInput!,$key:String!){inventoryAdjustQuantities(input:$input) @idempotent(key:$key){inventoryAdjustmentGroup{createdAt} userErrors{message code}}}`,{key:`add-v2-${key}`,input:{name:'available',reason:'received',referenceDocumentUri:`gid://custom-build-studio/InventoryChange/${key}`,changes:[{inventoryItemId:row.inventoryItemId,locationId,delta,changeFromQuantity:expected}]}})).inventoryAdjustQuantities);
 }
 export async function enforceStockPolicy(admin,row) {
   if(!row.tracked)checked((await admin.call(`mutation TrackStudioStock($id:ID!){inventoryItemUpdate(id:$id,input:{tracked:true}){inventoryItem{id tracked} userErrors{message}}}`,{id:row.inventoryItemId})).inventoryItemUpdate);
