@@ -15,6 +15,7 @@ export function InventoryAdmin(){
  async function run(work:()=>Promise<void>){setBusy(true);setError('');setMessage('');try{await work();}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
  async function saveSettings(){if(!settings)return;await inventoryRequest('settings',{settings});await load();setMessage('Inventory settings saved.');}
  async function change(row:Row,action:'adjust'|'correct'){
+  if((amounts[row.sku] ?? '3').trim()==='')throw Error('Enter the stock quantity before saving.');
   const quantity=Number(amounts[row.sku] ?? '3');if(!Number.isInteger(quantity)||quantity<0||(action==='adjust'&&quantity===0))throw Error('Enter a valid whole-number quantity.');
   const signature=`${action}:${row.sku}:${quantity}:${row.available}`;
   const storageKey=`cbs-stock-operation:${signature}`;

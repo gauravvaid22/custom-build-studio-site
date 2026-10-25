@@ -51,6 +51,7 @@ export async function syncDocument(admin, doc, config, expected = {}) {
       return {id:variant.id,price:((c.priceCents - (pickup && !policy.active ? p.pickupPriceDifferenceCents : 0))/100).toFixed(2)};
     }));
     check((await admin.call(`mutation ManagedPrices($id:ID!,$variants:[ProductVariantsBulkInput!]!) { productVariantsBulkUpdate(productId:$id,variants:$variants) { productVariants { id } userErrors { message } } }`,{id:product.id,variants:variantUpdates})).productVariantsBulkUpdate);
+    if(config.initializeInventory)await config.initializeInventory(admin,p);
     if(policy.active && current && current.status!=='DRAFT'){
       for(const [pickup,profileId] of [[false,deliveryProfileId],[true,config.pickupProfileId]]){
         if(!product.variants.nodes.some(v=>v.sku.endsWith('-pickup')===pickup))continue;
@@ -59,7 +60,6 @@ export async function syncDocument(admin, doc, config, expected = {}) {
       }
     }
     if (!current || current.status === 'DRAFT') {
-      if(config.initializeInventory)await config.initializeInventory(admin,p);
       for (const [pickup, profileId] of [[false,deliveryProfileId],[true,config.pickupProfileId]]) {
         const ids = product.variants.nodes.filter(v => v.sku.endsWith('-pickup') === pickup).map(v => v.id);
         if(!ids.length)continue;

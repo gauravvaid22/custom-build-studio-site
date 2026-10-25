@@ -53,7 +53,7 @@ test('new managed products are tracked and cannot oversell even before stock ini
  const input=managedVariantInput({id:'lamp',priceCents:7999,unifiedFulfillment:true},0);assert.equal(input.variants[0].inventoryItem.tracked,true);assert.equal(input.variants[0].inventoryPolicy,'DENY');
 });
 test('publication initializes once and never replenishes stock after a sale or retry',async()=>{
- const records=new Map([['settings',{enabled:true,locationId:'gid://shopify/Location/1',defaultQuantity:3,overrides:{}}]]);
+ const records=new Map([['settings',{enabled:false,locationId:'gid://shopify/Location/1',defaultQuantity:3,overrides:{}}]]);
  const store={get:async k=>structuredClone(records.get(k)),getWithMetadata:async k=>records.has(k)?{data:structuredClone(records.get(k)),etag:'current'}:null,setJSON:async(k,value,options)=>{if(options?.onlyIfNew&&records.has(k))return {modified:false};records.set(k,structuredClone(value));return {modified:true};}};
  let available=0,tracked=true,policy='DENY',sets=0;const applied=new Set();
  const admin={call:async(q,v)=>{

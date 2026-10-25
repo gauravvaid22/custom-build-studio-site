@@ -1,7 +1,8 @@
 import {getStore} from '@netlify/blobs';
 import {createHash} from 'node:crypto';
 import {inventoryDefaults,inventoryUnits,readInventory,enforceStockPolicy,activateStock,setAvailable,initialQuantity} from './inventory.mjs';
-// Called only for a new product or a restore, before it becomes available publicly.
+// Called during publication/restoration. The durable receipt makes this initialize-once;
+// subsequent price/media edits only verify tracking and preserve the current quantity.
 export async function initializePublishedInventory(admin,product,dependencies={}){
  const store=dependencies.store || getStore({name:'shop-inventory-v1',consistency:'strong'});
  const settings={...inventoryDefaults(),...await store.get('settings',{type:'json'})};
