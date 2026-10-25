@@ -1,3 +1,4 @@
+import {assertStockQuantities} from "../../commerce/stock-limits.mjs";
 import deliveryPolicy from "../../commerce/delivery-policy.json" with {type:"json"};
 import {assertCatalogAvailable} from "./catalogAvailability";
 import type { CartItem } from "../components/Cart";
@@ -194,6 +195,10 @@ async function merchandiseFor(items: CartItem[], mode: FulfillmentMode, expected
 export async function createShopifyCheckout(items: CartItem[], mode: FulfillmentMode, expectedPrices: Record<string, number>) {
   await assertCatalogAvailable(items.map(item=>item.id));
   if (!items.length) throw new Error("Your cart is empty.");
+  const stockResponse=await fetch("/.netlify/functions/shop-inventory?action=status&fresh=1",{cache:"no-store",signal:AbortSignal.timeout(45000)});
+  if(!stockResponse.ok)throw Error("Stock could not be confirmed. Please try checkout again shortly.");
+  const inventory=await stockResponse.json();if(typeof inventory.enabled!=="boolean"||!inventory.stock)throw Error("Stock could not be confirmed.");
+  assertStockQuantities(items,inventory.stock,inventory.enabled,id=>fulfillmentSku(id,mode));
   const lines = await merchandiseFor(items, mode, expectedPrices);
   const analyticsAttributes = await checkoutAnalyticsAttributes();
   const pickupNote=`LOCAL PICKUP — DO NOT SHIP. Contact the customer to arrange collection in ${deliveryPolicy.pickupRegion} and privately send the address. Include the next-order reward card after collection.`;

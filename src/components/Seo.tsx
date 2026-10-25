@@ -7,7 +7,7 @@ import collections from "../../commerce/collections.json";
 const discoveryIds = new Set(collections.filter(c => discovery.collectionIds.includes(c.id)).flatMap(c => c.products));
 export default function Seo() {
   const { pathname } = useLocation();
-  const { prices } = useShopifyCatalog();
+  const { prices,stock,inventoryEnabled } = useShopifyCatalog();
   useEffect(() => {
     const seo = getSeo(pathname);
     document.title = seo.title;
@@ -18,7 +18,7 @@ export default function Seo() {
       structured.setAttribute("type", "application/ld+json");
       document.head.appendChild(structured);
     }
-    structured.textContent = JSON.stringify(getStructuredData(pathname, prices));
+    structured.textContent = JSON.stringify(getStructuredData(pathname, prices,stock,inventoryEnabled));
     const meta = (attr: string, key: string, value: string) => {
       let tag = document.head.querySelector<HTMLMetaElement>(
         `meta[${attr}="${key}"]`,
@@ -67,7 +67,7 @@ export default function Seo() {
       document.head.appendChild(link);
     }
     link.href = seo.url;
-  }, [pathname, prices]);
+  }, [pathname, prices,stock,inventoryEnabled]);
   useEffect(() => {
     const id = pathname.split("/").filter(Boolean).pop() || "";
     if (!discoveryIds.has(id)) return;
@@ -82,6 +82,6 @@ export default function Seo() {
         if (structured) structured.textContent = JSON.stringify(data.schema);
       }).catch(() => {});
     return () => controller.abort();
-  }, [pathname, prices]);
+  }, [pathname, prices,stock,inventoryEnabled]);
   return null;
 }

@@ -1,3 +1,4 @@
+import {StockStatus} from "../components/StockStatus";
 import { shippingFee, productShippingFee } from "../lib/fulfillmentPricing";
 import { MediaStage } from "../components/MediaStage";
 import { MixPackOrder } from "../components/MixPackOrder";
@@ -28,6 +29,7 @@ import deliveryPolicy from "../../commerce/delivery-policy.json" with {type:"jso
 import { PickupPreference, FulfillmentSelector, PICKUP_PRICE_DIFFERENCE, useFulfillment } from "../components/Fulfillment";
 import { LithophaneAdmin } from "../components/LithophaneAdmin";
 import { SaleAdmin } from "../components/SaleAdmin";
+const InventoryAdmin=lazy(()=>import("../components/InventoryAdmin").then(m=>({default:m.InventoryAdmin})));
 const ProductManager=lazy(()=>import("../components/ProductManager").then(module=>({default:module.ProductManager})));
 const DeliveryAdmin=lazy(()=>import("../components/DeliveryAdmin").then(module=>({default:module.DeliveryAdmin})));
 import originalCategoryIds from "../../commerce/catalog-original-categories.json";
@@ -191,7 +193,7 @@ function AddProduct({
   onVariantChange?: (id: string) => void;
   formId?: string;
 }) {
-  const { add } = useCart();
+  const { add,remainingFor } = useCart();
   const { priceFor, nameFor } = useShopifyCatalog();
   const [quantity, setQuantity] = useState(1);
   const [addError, setAddError] = useState("");
@@ -211,6 +213,7 @@ function AddProduct({
       : "Bottle diameter";
   const selectedId = variantId || variants[0]?.id;
   const orderProduct = selectedId ? catalogProduct(selectedId) || product : product;
+  const available=remainingFor(orderProduct.id);
   return (
     <form
       id={formId}
@@ -219,7 +222,7 @@ function AddProduct({
         e.preventDefault();
         if ("launchReady" in product && product.launchReady === false) return;
         setAddError("");
-        if (!add(orderProduct.id, quantity)) { setConfirmation(""); setAddError("Check your cart: you can add up to 20 of each item. Choose a whole-number quantity from 1 to 20."); return; }
+        if (!add(orderProduct.id, quantity)) { setConfirmation(""); setAddError("This quantity is not available. Review your cart or refresh to check stock."); return; }
         setConfirmation(`${quantity} × ${nameFor(orderProduct.id, orderProduct.name)}`);
         setConfirmationKey((current) => current + 1);
         if (confirmationTimer.current) clearTimeout(confirmationTimer.current);
@@ -242,20 +245,21 @@ function AddProduct({
           </select>
         </label>
       )}
+      <StockStatus ids={[orderProduct.id]}/>
       <label>
         Quantity
         <input
           aria-label={`Quantity for ${nameFor(product.id, product.name)}`}
           type="number"
           min="1"
-          max="20"
+          max={Math.max(1,Math.min(20,available))}
           step="1"
           required
           value={quantity}
           onChange={(e) => setQuantity(Number(e.target.value))}
         />
       </label>
-      <button className="button" type="submit" disabled={"launchReady" in product && product.launchReady === false}>
+      <button className="button" type="submit" disabled={available<1 || ("launchReady" in product && product.launchReady === false)}>
         {"launchReady" in product && product.launchReady === false ? "Preview only — ordering not open" : <>Add to cart <span aria-hidden="true">+</span></>}
       </button>
       {addError && <p className="shop-checkout-error" role="alert">{addError}</p>}
@@ -322,6 +326,7 @@ function ShopProductCard({ product, listId }: { product: Product; listId?: strin
         {regularPrice && <span className="shop-sale-badge">{sale?.percentage}% OFF</span>}
       </Link>
       <div className="shop-card-body">
+        <StockStatus ids={variants.length?variants.map(v=>v.id):[product.id]}/>
         <p className="eyebrow">Made in Edmonton</p>
         <h3><Link to={`/shop/${product.id}`}>{displayName}</Link></h3>
         <p className="shop-price">
@@ -906,11 +911,14 @@ export function ShopProduct() {
   );
 }
 function CartQuantity({id,name,quantity}:{id:string;name:string;quantity:number}) {
-  const {setQuantity}=useCart();
+  const {setQuantity,items,remainingFor}=useCart();
+  const line=items.find(item=>(item.lineId || item.id)===id);
+  const {stockLimitFor}=useShopifyCatalog();
+  const limit=Math.min(settings.maxQuantityPerProduct,line?Math.max(0,stockLimitFor(line.id)-items.filter(item=>(item.lineId || item.id)!==id&&item.id===line.id).reduce((n,item)=>n+item.quantity,0)):settings.maxQuantityPerProduct);
   const [draft,setDraft]=useState(String(quantity));
   useEffect(()=>setDraft(String(quantity)),[quantity]);
-  return <input aria-label={`Quantity for ${name}`} type="number" min="1" max={settings.maxQuantityPerProduct} step="1" value={draft}
-    onChange={event=>{const value=event.target.value;setDraft(value);const number=Number(value);if(Number.isInteger(number)&&number>=1&&number<=settings.maxQuantityPerProduct)setQuantity(id,number);}}
+  return <input aria-label={`Quantity for ${name}`} type="number" min="1" max={Math.max(1,limit)} step="1" value={draft}
+    onChange={event=>{const value=event.target.value;setDraft(value);const number=Number(value);if(Number.isInteger(number)&&number>=1&&number<=limit)setQuantity(id,number);}}
     onBlur={()=>setDraft(String(quantity))}/>;
 }
 export function ShopCart() {
@@ -1331,7 +1339,7 @@ export function ShopAdmin() {
     [busy, setBusy] = useState(false),
     [content, setContent] = useState<SiteContent>(publicContent),
     [productContent, setProductContent] = useState<ProductContent>(publicProductContent),
-    [tab, setTab] = useState<"orders" | "website" | "products" | "lithophane" | "sales" | "display" | "delivery" | "models">("products"),
+    [tab, setTab] = useState<"orders" | "website" | "products" | "lithophane" | "sales" | "display" | "delivery" | "models" | "inventory">("products"),
     [saved, setSaved] = useState("");
   async function load() {
     try {
@@ -1451,6 +1459,7 @@ export function ShopAdmin() {
                 <a className="text-link" href="https://analytics.google.com/" target="_blank" rel="noopener noreferrer">Open Google Analytics ↗</a>
               </div>
               <div className="studio-admin-workspace"><div className="shop-admin-tabs studio-admin-sidebar" role="navigation" aria-label="Administration sections">
+                <button className={tab === "inventory" ? "button" : "button button-dark"} aria-pressed={tab === "inventory"} onClick={()=>setTab("inventory")}>Inventory</button>
                 <button aria-pressed={tab === "delivery"} className={tab === "delivery" ? "button" : "button button-dark"} onClick={() => setTab("delivery")}>Pricing & delivery</button>
                 <button aria-pressed={tab === "orders"} className={tab === "orders" ? "button" : "button button-dark"} onClick={() => setTab("orders")}>Orders</button>
                 <button aria-pressed={tab === "website"} className={tab === "website" ? "button" : "button button-dark"} onClick={() => setTab("website")}>Website settings</button>
@@ -1574,6 +1583,7 @@ export function ShopAdmin() {
                   {saved && <p role="status">{saved}</p>}
                 </form>
               )}
+              {tab === "inventory" && <Suspense fallback={<p>Loading inventory…</p>}><InventoryAdmin/></Suspense>}
               {tab === "models" && <ModelDiscoveryAdmin />}
               {tab === "products" && <Suspense fallback={<p>Loading product editor...</p>}><ProductManager /></Suspense>}
               {tab === "lithophane" && (

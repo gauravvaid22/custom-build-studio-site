@@ -4,6 +4,7 @@ import {catalogStore,readState,writeState} from '../../commerce/catalog-store.mj
 import {syncDocument,withdrawDocument,lookupProduct} from '../../commerce/catalog-shopify.mjs';
 import {syncSearchNames,prepareSearchNaming} from '../../commerce/search-naming.mjs';
 import {createShopifyAdmin} from '../../commerce/shopify-admin.mjs';
+import {initializePublishedInventory} from '../../commerce/inventory-publish.mjs';
 export default async (request,context) => {
   if((context?.deploy?.context || process.env.CONTEXT)!=='production')return new Response('',{status:403});
   const {id}=await request.json();
@@ -23,12 +24,12 @@ export default async (request,context) => {
     if (job.action==='publish') {
       const sale=await getStore({name:'shop-orders-v1',consistency:'strong'}).get('config/shop-sale',{type:'json'});
       if(sale && sale.status!=='inactive')throw new Error('End or cancel the current sale before publishing base-price changes.');
-      results=await syncDocument(admin,job.document,found.state.connection,job.expected);
+      results=await syncDocument(admin,job.document,{...found.state.connection,initializeInventory:initializePublishedInventory},job.expected);
       const removed=job.previousDocument?.products.filter(p=>!job.document.products.some(x=>x.id===p.id)) || [];
       if(removed.length)await withdrawDocument(admin,{products:removed},found.state.connection.publicationId);
     }
     else if (['archive','restore'].includes(job.action)) {
-      if(job.action==='restore')results=await syncDocument(admin,job.document,found.state.connection);
+      if(job.action==='restore')results=await syncDocument(admin,job.document,{...found.state.connection,initializeInventory:initializePublishedInventory});
       await withdrawDocument(admin,job.document,found.state.connection.publicationId,job.action==='restore');
     }
     found=await readState(store); job=found.state.jobs.find(j=>j.id===id);if(results)job.results=results;

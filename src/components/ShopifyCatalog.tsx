@@ -1,9 +1,10 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { fetchShopifyCatalog, type ShopifyCatalog } from "../lib/shopify";
 import { PICKUP_PRICE_DIFFERENCE, useFulfillment } from "./Fulfillment";
 import { fulfillmentSku } from "../lib/shopify";
 import { pickupDifference } from "../lib/fulfillmentPricing";
 import products from "../data/catalog";
+import {stockLimit, type StockRecord} from "../../commerce/stock-limits.mjs";
 
 export type ActiveSale = {
   status: "active";
@@ -23,14 +24,22 @@ const ShopifyCatalogContext = createContext<{
   refresh: () => Promise<void>;
   catalogLoaded: boolean;
   catalogError: boolean;
-}>({ catalog: emptyCatalog, sale: null, refresh: async () => {}, catalogLoaded: false, catalogError: false });
+  inventory: {enabled:boolean;stock:StockRecord;checkedAt?:string};
+  inventoryLoaded: boolean;
+}>({ catalog: emptyCatalog, sale: null, refresh: async () => {}, catalogLoaded: false, catalogError: false, inventory:{enabled:false,stock:{}},inventoryLoaded:false });
 
 export function ShopifyCatalogProvider({ children }: { children: React.ReactNode }) {
   const [catalog, setCatalog] = useState<ShopifyCatalog>(emptyCatalog);
   const [sale, setSale] = useState<ActiveSale | null>(null);
   const [catalogLoaded, setCatalogLoaded] = useState(false);
   const [catalogError, setCatalogError] = useState(false);
+  const [inventory,setInventory]=useState<{enabled:boolean;stock:StockRecord;checkedAt?:string}>({enabled:false,stock:{}});
+  const [inventoryLoaded,setInventoryLoaded]=useState(false);
+  const inventoryPending=useRef<Promise<void>|null>(null);
+  const refreshInventory=useCallback(()=>{if(inventoryPending.current)return inventoryPending.current;const pending=(async()=>{try{const r=await fetch("/.netlify/functions/shop-inventory?action=status",{cache:"no-store",signal:AbortSignal.timeout(45000)});if(!r.ok)throw Error();const data=await r.json();if(typeof data.enabled!=="boolean"||!data.stock)throw Error();setInventory(data);}catch{setInventory({enabled:true,stock:{}});}finally{setInventoryLoaded(true);inventoryPending.current=null;}})();inventoryPending.current=pending;return pending;},[]);
+  useEffect(()=>{void refreshInventory();const timer=window.setInterval(()=>{if(document.visibilityState==="visible")void refreshInventory();},30000);const onFocus=()=>void refreshInventory();window.addEventListener("focus",onFocus);return()=>{window.clearInterval(timer);window.removeEventListener("focus",onFocus);};},[refreshInventory]);
   const refresh = useCallback(async () => {
+    void refreshInventory();
     const [nextCatalog, saleResult] = await Promise.all([
       fetchShopifyCatalog(),
       fetch("/.netlify/functions/shop-sale?action=status", { cache: "no-store", signal: AbortSignal.timeout(12000) })
@@ -45,7 +54,7 @@ export function ShopifyCatalogProvider({ children }: { children: React.ReactNode
       nextCatalog.prices[sku] === variant.priceCents && nextCatalog.compareAtPrices[sku] === variant.compareAtCents,
     );
     setSale(verified ? candidate : null);
-  }, []);
+  }, [refreshInventory]);
   useEffect(() => {
     void refresh().catch(() => { setSale(null); setCatalogError(true); });
     const interval = window.setInterval(() => { void refresh().catch(() => setSale(null)); }, 180000);
@@ -60,12 +69,12 @@ export function ShopifyCatalogProvider({ children }: { children: React.ReactNode
     const timeout = window.setTimeout(() => setSale(null), Math.min(remaining, 2147483647));
     return () => window.clearTimeout(timeout);
   }, [sale]);
-  const value = useMemo(() => ({ catalog, sale, refresh, catalogLoaded, catalogError }), [catalog, sale, refresh, catalogLoaded, catalogError]);
+  const value = useMemo(() => ({ catalog, sale, refresh, catalogLoaded, catalogError, inventory,inventoryLoaded }), [catalog, sale, refresh, catalogLoaded, catalogError,inventory,inventoryLoaded]);
   return <ShopifyCatalogContext.Provider value={value}>{children}</ShopifyCatalogContext.Provider>;
 }
 
 export function useShopifyCatalog() {
-  const { catalog: { prices, compareAtPrices, names }, sale, refresh, catalogLoaded, catalogError } = useContext(ShopifyCatalogContext);
+  const { catalog: { prices, compareAtPrices, names }, sale, refresh, catalogLoaded, catalogError,inventory,inventoryLoaded } = useContext(ShopifyCatalogContext);
   const { mode } = useFulfillment();
   const priceFor = (id: string, fallback: number) => {
     const product = products.find(item => item.id === id);
@@ -81,6 +90,9 @@ export function useShopifyCatalog() {
   };
   return {
     prices, compareAtPrices, names, sale, refresh, catalogLoaded, catalogError,
+    inventoryEnabled:inventory.enabled,inventoryLoaded,stock:inventory.stock,
+    stockFor:(id:string)=>inventory.stock[fulfillmentSku(id,mode)],
+    stockLimitFor:(id:string)=>inventoryLoaded?stockLimit(inventory.stock,inventory.enabled,fulfillmentSku(id,mode)):0,
     priceFor, compareAtFor,
     onSale: (id: string) => Boolean(sale?.productIds.includes(id)),
     deliveredPriceFor: (id: string, fallback: number) => prices[fulfillmentSku(id, "delivered")] ?? fallback,

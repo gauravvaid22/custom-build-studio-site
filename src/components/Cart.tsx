@@ -12,6 +12,7 @@ type CartContextType = {
   add: (id: string, quantity: number, attributes?: CartAttribute[]) => boolean;
   clear: () => void;
   notice: string;
+  remainingFor:(id:string)=>number;
 };
 const CartContext = createContext<CartContextType>({
   items: [],
@@ -19,9 +20,10 @@ const CartContext = createContext<CartContextType>({
   add: () => false,
   clear: () => {},
   notice: "",
+  remainingFor:()=>0,
 });
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const { priceFor, prices, catalogLoaded } = useShopifyCatalog();
+  const { priceFor, prices, catalogLoaded,stockLimitFor } = useShopifyCatalog();
   const [pendingEvents, setPendingEvents] = useState<{ id: string; quantity: number; mode: typeof mode }[]>([]);
   const { mode } = useFulfillment();
   const [items, setItems] = useState<CartItem[]>([]),
@@ -62,8 +64,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem("cbs-cart-v1", JSON.stringify(items));
       } catch {}
   }, [items, loaded]);
+  const remainingFor=(id:string)=>Math.max(0,stockLimitFor(id)-items.filter(item=>fulfillmentSku(item.id,mode)===fulfillmentSku(id,mode)).reduce((n,item)=>n+item.quantity,0));
   const setQuantity = (id: string, quantity: number) => {
     if (!Number.isInteger(quantity) || quantity < 0 || quantity > 20) return;
+    const line=items.find(item=>(item.lineId || item.id)===id);
+    if(quantity>0 && line && quantity>Math.max(0,stockLimitFor(line.id)-items.filter(item=>(item.lineId || item.id)!==id && fulfillmentSku(item.id,mode)===fulfillmentSku(line.id,mode)).reduce((n,item)=>n+item.quantity,0))){setNotice("That quantity is no longer available. Refresh your cart to check stock.");return;}
     setItems((current) =>
       quantity === 0
         ? current.filter((item) => (item.lineId || item.id) !== id)
@@ -78,6 +83,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       quantity > 20
     )
       return false;
+    if(quantity>remainingFor(id)){setNotice("That quantity is not available. Check the remaining stock or refresh your cart.");return false;}
     // Different photos or animal selections must remain separate order lines.
     const photo = attributes?.length;
     const existingLine = items.find(item => item.id === id && JSON.stringify(item.attributes || []) === JSON.stringify(attributes || []));
@@ -99,7 +105,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         : [...current, { id, ...(photo ? { lineId } : {}), quantity, ...(attributes?.length ? { attributes } : {}) }];
     });
     setNotice(
-      `${products.find((p) => p.id === id)!.name} added to cart. Maximum 20 of each product.`,
+      `${products.find((p) => p.id === id)!.name} added to cart.`,
     );
     if (catalogLoaded) trackShop("add_to_cart", [{id, quantity, priceCents: priceFor(id, products.find(p => p.id === id)!.priceCents)}], mode);
     else setPendingEvents(events => [...events, { id, quantity, mode }]);
@@ -107,7 +113,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
   return (
     <CartContext.Provider
-      value={{ items, setQuantity, add, clear: () => setItems([]), notice }}
+      value={{ items, setQuantity, add, clear: () => setItems([]), notice,remainingFor }}
     >
       {children}
     </CartContext.Provider>

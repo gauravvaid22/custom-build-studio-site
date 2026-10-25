@@ -59,6 +59,7 @@ export async function syncDocument(admin, doc, config, expected = {}) {
       }
     }
     if (!current || current.status === 'DRAFT') {
+      if(config.initializeInventory)await config.initializeInventory(admin,p);
       for (const [pickup, profileId] of [[false,deliveryProfileId],[true,config.pickupProfileId]]) {
         const ids = product.variants.nodes.filter(v => v.sku.endsWith('-pickup') === pickup).map(v => v.id);
         if(!ids.length)continue;

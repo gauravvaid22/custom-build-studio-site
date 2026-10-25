@@ -4,7 +4,7 @@ export function managedVariantInput(item, pickupDifferenceCents) {
   if (item.unifiedFulfillment) {
     const choices=item.options?.length?item.options:[{id:item.id,priceCents:item.priceCents}];
     const optionName=item.optionName || 'Size';
-    return {productOptions:[{name:item.options?.length?optionName:'Title',position:1,values:choices.map(c=>({name:c.label || 'Default Title'}))}],variants:choices.map(c=>({sku:c.id,price:(c.priceCents/100).toFixed(2),taxable:false,optionValues:[{optionName:item.options?.length?optionName:'Title',name:c.label || 'Default Title'}],inventoryItem:{tracked:false,requiresShipping:true,countryCodeOfOrigin:'CA'}}))};
+    return {productOptions:[{name:item.options?.length?optionName:'Title',position:1,values:choices.map(c=>({name:c.label || 'Default Title'}))}],variants:choices.map(c=>({sku:c.id,price:(c.priceCents/100).toFixed(2),taxable:false,optionValues:[{optionName:item.options?.length?optionName:'Title',name:c.label || 'Default Title'}],inventoryPolicy:'DENY',inventoryItem:{tracked:true,requiresShipping:true,countryCodeOfOrigin:'CA'}}))};
   }
   const optionName = item.optionName || 'Console model';
   const choices = item.options?.length ? item.options : [{ id: item.id, priceCents: item.priceCents }];
@@ -21,7 +21,7 @@ export function managedVariantInput(item, pickupDifferenceCents) {
         ...(choice.label ? [{ optionName, name: choice.label }] : []),
         { optionName: "Fulfillment", name: fulfillment },
       ], sku: choice.id + (pickup ? "-pickup" : ""), price: (cents / 100).toFixed(2), taxable: false,
-      inventoryItem: { tracked: false, requiresShipping: true, countryCodeOfOrigin: "CA" } };
+      inventoryPolicy: "DENY", inventoryItem: { tracked: true, requiresShipping: true, countryCodeOfOrigin: "CA" } };
     })),
   };
 }

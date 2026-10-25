@@ -1,3 +1,4 @@
+import type {StockRecord} from "../../commerce/stock-limits.mjs";
 import { allServices as services, serviceDetails } from "./landing";
 import projects from "./projects.json";
 import { business } from "./business";
@@ -169,7 +170,7 @@ export const localBusiness = {
   },
 };
 
-export function getStructuredData(path: string, livePrices: Record<string, number> = {}) {
+export function getStructuredData(path: string, livePrices: Record<string, number> = {}, stock:StockRecord = {}, inventoryEnabled=false) {
   const page = path.replace(/\/$/, "") || "/";
   const product = products.find((item) => page === `/shop/${item.id}`);
   const collection = collections.find((item) => page === `/shop/${item.id}`);
@@ -183,7 +184,7 @@ export function getStructuredData(path: string, livePrices: Record<string, numbe
       url,
       ...(Number.isInteger(livePrices[p.id]) ? { offers: { "@type": "Offer", url, priceCurrency: "CAD", price: (livePrices[p.id] / 100).toFixed(2),
         // Available to order through the connected Shopify catalog.
-        availability: "https://schema.org/InStock", itemCondition: "https://schema.org/NewCondition",
+        ...(inventoryEnabled?(stock[p.id]&&!stock[p.id].unknown?{availability:stock[p.id].sellable?"https://schema.org/InStock":"https://schema.org/OutOfStock"}:{}):{availability:"https://schema.org/InStock"}), itemCondition: "https://schema.org/NewCondition",
         seller: { "@type": "Organization", name: business.name } } } : {}),
     });
     return { "@context": "https://schema.org", "@graph": [

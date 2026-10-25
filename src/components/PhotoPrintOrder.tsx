@@ -1,3 +1,4 @@
+import {StockStatus} from "./StockStatus";
 import { trackShopInteraction } from "./Analytics";
 import { FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -6,7 +7,8 @@ import { uploadPhoto } from "./LithophaneProduct";
 import frames from "../../commerce/photo-frames-source.json";
 
 export function PhotoPrintOrder({ productId }: { productId: string }) {
-  const { add } = useCart();
+  const { add,remainingFor } = useCart();
+  const available=remainingFor(productId);
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
   const [previewUnavailable, setPreviewUnavailable] = useState(false);
@@ -36,7 +38,7 @@ export function PhotoPrintOrder({ productId }: { productId: string }) {
   };
   async function submit(event: FormEvent) {
     event.preventDefault();
-    if (!file || busy || !Number.isInteger(quantity) || quantity < 1 || quantity > 20) return;
+    if (!file || busy || !Number.isInteger(quantity) || quantity < 1 || quantity > Math.min(20,available)) return;
     setBusy(true); setProgress(0); setError(""); setAdded(false);
     try {
       const uploaded = await uploadPhoto(file, setProgress);
@@ -47,7 +49,7 @@ export function PhotoPrintOrder({ productId }: { productId: string }) {
         { key: "Included photo print", value: `One ${frames.photoPrint.widthInches} × ${frames.photoPrint.heightInches} inch photo printed, trimmed and fitted per holder` },
         ...(note.trim() ? [{ key: "Photo instructions", value: note.trim().slice(0, 500) }] : []),
       ];
-      if (!add(productId, quantity, attributes)) throw new Error("Unable to add this quantity. Check your cart; the limit is 20 per item.");
+      if (!add(productId, quantity, attributes)) throw new Error("Unable to add this quantity. Check your cart; the requested quantity is no longer available.");
       setAdded(true);
     } catch (failure) { setError((failure as Error).message); }
     finally { setBusy(false); }
@@ -74,11 +76,11 @@ export function PhotoPrintOrder({ productId }: { productId: string }) {
     {preview && !previewUnavailable && <figure className="photo-print-preview"><img src={preview} onError={() => setPreviewUnavailable(true)} alt="Your selected photo; final crop may differ" /><figcaption>Selected photo · final crop may differ</figcaption></figure>}
     {previewUnavailable && <p className="small">Photo selected. This browser cannot display its preview, but you can still upload it.</p>}
     <label>Photo instructions (optional)<textarea rows={2} maxLength={500} disabled={busy} value={note} onChange={event => setNote(event.target.value)} placeholder="Keep both faces in the crop, for example." /></label>
-    <label>Quantity<input type="number" min="1" max="20" step="1" required disabled={busy} value={quantity} onChange={event => { setQuantity(Number(event.target.value)); setAdded(false); }} /></label>
+    <StockStatus ids={[productId]}/><label>Quantity<input type="number" min="1" max={Math.max(1,Math.min(20,available))} step="1" required disabled={busy} value={quantity} onChange={event => { setQuantity(Number(event.target.value)); setAdded(false); }} /></label>
     <p className="small">Multiple copies use the same photo. To use a different photo, add another personalized item separately.</p>
     {busy && <div className="photo-upload-progress" role="progressbar" aria-label="Attaching your photo" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}><span style={{ width: `${progress}%` }} /><strong>Attaching your photo… {progress}%</strong></div>}
     {error && <p className="shop-checkout-error" role="alert">{error}</p>}
-    <button className="button" disabled={!file || busy} type="submit">{busy ? "Uploading photo…" : "Personalize & add to cart"}</button>
+    <button className="button" disabled={!file || busy || available<1} type="submit">{busy ? "Uploading photo…" : "Personalize & add to cart"}</button>
     {added && <div className="shop-added-confirmation" role="status"><strong>Photo attached · added to cart</strong><Link to="/shop/cart">View cart →</Link></div>}
     <p className="small">Your photo is attached to your order through a private, unlisted production reference. Personalized orders are excluded from change-of-mind returns.</p>
   </form>;

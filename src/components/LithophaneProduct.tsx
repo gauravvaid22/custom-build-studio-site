@@ -1,3 +1,4 @@
+import {StockStatus} from "./StockStatus";
 import { GalleryImage } from "./GalleryImage";
 import { MobilePurchaseBar } from "./MobilePurchaseBar";
 import { trackShopInteraction } from "./Analytics";
@@ -60,7 +61,7 @@ export function LithophaneProduct() {
   const content = useProductContent()[productId];
   const { priceFor, compareAtFor, sale, nameFor } = useShopifyCatalog();
   const product={...content,name:nameFor(productId,products.find(p=>p.id===productId)?.name || content.name)};
-  const { add } = useCart();
+  const { add,remainingFor } = useCart();
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageIndex, setImageIndex] = useState(0);
   const [file, setFile] = useState<File | null>(null);
@@ -192,7 +193,7 @@ export function LithophaneProduct() {
               </label>
               {busy && <div className="lithophane-progress" role="status"><span style={{ width: `${progress}%` }} /><strong>Securely attaching your photo… {progress}%</strong></div>}
               {error && <p className="shop-checkout-error" role="alert">{error}</p>}
-              <button className="button" type="submit" disabled={!file || busy || !product.available}>{busy ? "Uploading photo…" : "Upload photo & add to cart"}</button>
+              <StockStatus ids={[productId]}/><button className="button" type="submit" disabled={!file || busy || !product.available || remainingFor(productId)<1}>{busy ? "Uploading photo…" : "Upload photo & add to cart"}</button>
               {added && <div className="shop-added-confirmation" role="status"><strong>Photo attached and lamp added.</strong><Link to="/shop/cart">View cart →</Link></div>}
               <p className="small">Your photo is stored under a private, unlisted reference for production and attached to the Shopify order.</p>
             </form>
