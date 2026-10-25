@@ -5,8 +5,7 @@ import {inventoryDefaults,inventoryUnits,readInventory,enforceStockPolicy,activa
 export async function initializePublishedInventory(admin,product,dependencies={}){
  const store=dependencies.store || getStore({name:'shop-inventory-v1',consistency:'strong'});
  const settings={...inventoryDefaults(),...await store.get('settings',{type:'json'})};
- if(!settings.enabled)return;
- if(!settings.locationId)throw Error('Choose the inventory fulfillment location before publishing new products.');
+ if(!settings.locationId){if(!settings.enabled)return;throw Error('Choose the inventory fulfillment location before publishing new products.');}
  for(const unit of inventoryUnits([product])){
   const key=createHash('sha256').update(`initialize-v1:initialize:${unit.sku}:${settings.locationId}`).digest('hex'),path=`operations/${key}`;
   const previous=await store.get(path,{type:'json'});
