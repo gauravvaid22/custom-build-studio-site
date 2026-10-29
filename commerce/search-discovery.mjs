@@ -60,8 +60,44 @@ export function discoverySchema(p) {
   ] };
 }
 
+const CHRISTMAS_TREE_HERO_IDS = new Set([
+  "endless-swirling-tree",
+  "luminous-tree",
+  "luminous-tree-stars",
+  "luminous-tree-lace",
+  "luminous-tree-spiral",
+  "meowy-christmas-tree-topper",
+  "guiding-star-tree-topper",
+  "christmas-character-ornaments",
+  "santa-claus-christmas-ornament",
+  "sleeping-bear-christmas-ornament",
+  "sleeping-dog-christmas-ornament",
+  "reindeer-head-christmas-ornament",
+  "snowman-christmas-ornament",
+  "sleeping-cat-christmas-ornament",
+  "lying-reindeer-christmas-ornament",
+  "nutcracker-christmas-ornament",
+  "christmas-tree-tray",
+]);
+
+export function getCustomLabel0(parent, p) {
+  const ids = [parent?.id, p?.id, parent?.listingGroup, p?.listingGroup].filter(Boolean);
+  if (ids.some(id => CHRISTMAS_TREE_HERO_IDS.has(id))) return "christmas_tree_hero";
+  const category = String(parent?.category || p?.category || "");
+  const inChristmasCollection = collections.find(c => c.id === "christmas")?.products?.some(id => ids.includes(id));
+  if (inChristmasCollection || /^Christmas\b/i.test(category)) return "christmas_decor_general";
+  return "core_catalog";
+}
+
+export function getCustomLabel1(p) {
+  const price = Number(p?.livePrice);
+  if (price < 30) return "under_30_cad";
+  if (price <= 50) return "30_to_50_cad";
+  return "over_50_cad";
+}
+
 export function merchantFeed(catalog) {
   const productTitle = p => p.titleSource==='trained_algorithmic_media' ? '<g:structured_title><g:digital_source_type>trained_algorithmic_media</g:digital_source_type><g:content>'+xmlEscape(p.name.slice(0,150))+'</g:content></g:structured_title>' : '<g:title>'+xmlEscape(p.name.slice(0,150))+'</g:title>';
   const field = (name, value) => `<g:${name}>${xmlEscape(value)}</g:${name}>`;
-  return `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:g="http://base.google.com/ns/1.0"><channel><title>Custom Build Studio Products</title><link>${config.origin}/shop/</link><description>Finished gifts, accessories and Halloween products made in Edmonton</description>${catalog.flatMap(parent => (parent.liveVariants || [parent]).map(p => `<item>${field("id", p.id)}${productTitle(p)}${field("description", `${parent.description} ${p.included} ${p.dimensions || ""}`)}${field("link", productUrl(parent.id, p.id === parent.id ? undefined : p.id))}${field("image_link", new URL(p.images[0].src,config.origin).href)}${p.images.slice(1, 11).map(i => field("additional_image_link", new URL(i.src,config.origin).href)).join("")}${p.optionLabel ? field("item_group_id", parent.id) + field(p.variantKind, p.optionLabel) : ""}${field("availability", p.available ? "in_stock" : "out_of_stock")}${field("price", `${p.livePrice} CAD`)}${field("condition", "new")}${field("identifier_exists", "no")}${field("product_type", `Shop > ${parent.category}`)}<g:shipping>${field("country", config.shippingCountry)}${field("price", `${((p.shippingFeeCents ?? 0) / 100).toFixed(2)} CAD`)}</g:shipping></item>`)).join("")}</channel></rss>`;
+  return `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:g="http://base.google.com/ns/1.0"><channel><title>Custom Build Studio Products</title><link>${config.origin}/shop/</link><description>Finished gifts, accessories and Halloween products made in Edmonton</description>${catalog.flatMap(parent => (parent.liveVariants || [parent]).map(p => `<item>${field("id", p.id)}${productTitle(p)}${field("description", `${parent.description} ${p.included} ${p.dimensions || ""}`)}${field("link", productUrl(parent.id, p.id === parent.id ? undefined : p.id))}${field("image_link", new URL(p.images[0].src,config.origin).href)}${p.images.slice(1, 11).map(i => field("additional_image_link", new URL(i.src,config.origin).href)).join("")}${p.optionLabel ? field("item_group_id", parent.id) + field(p.variantKind, p.optionLabel) : ""}${field("availability", p.available ? "in_stock" : "out_of_stock")}${field("price", `${p.livePrice} CAD`)}${field("condition", "new")}${field("identifier_exists", "no")}${field("product_type", `Shop > ${parent.category}`)}${field("custom_label_0", getCustomLabel0(parent, p))}${field("custom_label_1", getCustomLabel1(p))}<g:shipping>${field("country", config.shippingCountry)}${field("price", `${((p.shippingFeeCents ?? 0) / 100).toFixed(2)} CAD`)}</g:shipping></item>`)).join("")}</channel></rss>`;
 }

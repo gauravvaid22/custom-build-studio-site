@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { discoveryProducts, fetchDiscoveryCatalog, merchantFeed, discoverySchema } from "../commerce/search-discovery.mjs";
+import { discoveryProducts, fetchDiscoveryCatalog, merchantFeed, discoverySchema, getCustomLabel0, getCustomLabel1 } from "../commerce/search-discovery.mjs";
 
 test("only configured products with verified CAD delivery variants enter the feed", async () => {
   const simple = discoveryProducts.filter(p => p.category === "Headphone stands");
@@ -54,4 +54,30 @@ test("mask sizes and ghost designs keep their own Shopify prices, links and phot
 test("missing connection or Shopify errors never invent purchasable offers", async () => {
   await assert.rejects(fetchDiscoveryCatalog(""));
   await assert.rejects(fetchDiscoveryCatalog("test", async () => Response.json({ errors: [{ message: "Failed" }] })));
+});
+
+test("google shopping custom labels correctly segment christmas hero items, general decor, and price tiers", () => {
+  assert.equal(getCustomLabel0({ id: "endless-swirling-tree" }, { id: "endless-swirling-tree" }), "christmas_tree_hero");
+  assert.equal(getCustomLabel0({ id: "meowy-christmas-tree-topper" }, { id: "meowy-christmas-tree-topper" }), "christmas_tree_hero");
+  assert.equal(getCustomLabel0({ id: "christmas-character-ornaments" }, { id: "santa-claus-christmas-ornament" }), "christmas_tree_hero");
+  assert.equal(getCustomLabel0({ id: "christmas-trinket-trays" }, { id: "christmas-tree-tray" }), "christmas_tree_hero");
+  assert.equal(getCustomLabel0({ id: "bright-nativity-table-lamp", category: "Christmas décor" }, { id: "bright-nativity-table-lamp" }), "christmas_decor_general");
+  assert.equal(getCustomLabel0({ id: "headphone-stand-classic", category: "Headphone stands" }, { id: "headphone-stand-classic" }), "core_catalog");
+
+  assert.equal(getCustomLabel1({ livePrice: "24.99" }), "under_30_cad");
+  assert.equal(getCustomLabel1({ livePrice: "39.99" }), "30_to_50_cad");
+  assert.equal(getCustomLabel1({ livePrice: "65.00" }), "over_50_cad");
+
+  const sample = [{
+    id: "party-hat-pet-costume",
+    name: "Birthday Hat for Cats & Dogs — Party Hat",
+    category: "Pet hats & costumes",
+    description: "Sample",
+    livePrice: "18.00",
+    available: true,
+    images: [{ src: "/sample.webp" }],
+  }];
+  const xml = merchantFeed(sample);
+  assert.match(xml, /<g:custom_label_0>core_catalog<\/g:custom_label_0>/);
+  assert.match(xml, /<g:custom_label_1>under_30_cad<\/g:custom_label_1>/);
 });
