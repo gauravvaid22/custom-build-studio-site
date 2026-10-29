@@ -2,6 +2,7 @@ import {writeFile,mkdir,readFile} from 'node:fs/promises';
 import {validateDocument} from '../commerce/catalog-management.mjs';
 import {groupRemainingDesigns} from '../commerce/group-remaining-designs.mjs';
 import {applyDefaultListingCovers} from '../commerce/listing-covers.mjs';
+import {prepareSearchNaming} from '../commerce/search-naming.mjs';
 import baseline from '../commerce/catalog-baseline.json' with {type:'json'};
 const source=process.env.SHOP_CATALOG_SOURCE_URL;
 if (source || process.env.CONTEXT==='production') {
@@ -17,7 +18,26 @@ if (source || process.env.CONTEXT==='production') {
   if (!Array.isArray(snapshot.products) || !Array.isArray(snapshot.collections) || !Number.isSafeInteger(snapshot.revision)) throw new Error('Invalid catalog snapshot.');
   if(snapshot.deliveryPolicy)await writeFile('commerce/delivery-policy.json',JSON.stringify(snapshot.deliveryPolicy,null,2)+'\n');
   snapshot=groupRemainingDesigns(snapshot);
+  snapshot=prepareSearchNaming(snapshot).catalog;
   snapshot.products=applyDefaultListingCovers(snapshot.products,baseline.products);
+  const baselineMap = new Map(baseline.products.map(p => [p.id, p]));
+  for (const p of snapshot.products) {
+    const base = baselineMap.get(p.id);
+    if (base) {
+      if (base.name && !p.name) p.name = base.name;
+      if (base.seoTitle && !p.seoTitle) p.seoTitle = base.seoTitle;
+      if (base.seoDescription && !p.seoDescription) p.seoDescription = base.seoDescription;
+      if (Array.isArray(base.searchKeywords)) p.searchKeywords = base.searchKeywords;
+    }
+  }
+  const baselineColls = new Map((baseline.collections || []).map(c => [c.id, c]));
+  for (const c of snapshot.collections) {
+    const base = baselineColls.get(c.id);
+    if (base) {
+      if (base.seoTitle) c.seoTitle = base.seoTitle;
+      if (base.seoDescription) c.seoDescription = base.seoDescription;
+    }
+  }
   const ids=new Set(snapshot.products.map(p=>p.id));
   if (ids.size!==snapshot.products.length) throw new Error('Duplicate catalog IDs.');
   for(const root of snapshot.products.filter(p=>p.bundleOffers?.length))validateDocument({id:root.id,template:'design',products:snapshot.products.filter(p=>p.id===root.id||p.listingGroup===root.id||snapshot.products.find(x=>x.id===p.variantOf)?.listingGroup===root.id)});

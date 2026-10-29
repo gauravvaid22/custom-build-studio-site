@@ -1474,7 +1474,7 @@
     {
       "id": "lithophane-table-lamp",
       "shopifyHandle": "custom-cylindrical-lithophane-table-lamp",
-      "name": "Custom Cylindrical Lithophane Table Lamp",
+      "name": "Personalized Photo Lamp — Wooden Base",
       "priceCents": 7999,
       "category": "Home décor",
       "seasonal": false,
@@ -1550,11 +1550,11 @@
         "decorative gift",
         "gifts and decor",
         "home décor",
-        "custom",
-        "cylindrical",
-        "lithophane",
-        "table",
-        "lamp"
+        "personalized",
+        "photo",
+        "lamp",
+        "wooden",
+        "base"
       ]
     },
     {
