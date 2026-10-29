@@ -7,13 +7,13 @@
     "eyebrow": "YOUR PHOTOS / PERSONAL KEEPSAKES",
     "heading": "Personalized Photo Gifts",
     "description": "Personal photo lamps and small photo holders, made in Edmonton. Upload your favourite image and we turn it into a keepsake, ready to gift.",
-    "seoDescription": "Shop personalized photo gifts made in Edmonton: custom photo lamps and decorative photo holders with your photo print included. Free tracked Canadian shipping or Edmonton pickup.",
+    "seoDescription": "Shop custom photo lamps and personalized picture frames with your printed photo included. Made in Edmonton with free tracked shipping across Canada.",
     "coverProduct": "lithophane-table-lamp",
     "products": [
       "lithophane-table-lamp",
       "personalized-photo-holder-designs"
     ],
-    "seoTitle": "Personalized Photo Gifts Made in Edmonton"
+    "seoTitle": "Personalized Photo Lamps & Custom Picture Frame Gifts — Made in Edmonton"
   },
   {
     "id": "collectibles",
@@ -39,13 +39,14 @@
     "eyebrow": "FOR GAME NIGHT AND YOUR SETUP",
     "heading": "Make the desk more interesting.",
     "description": "Sculptural gaming accessories and conversation-starting desk pieces, printed to order in Edmonton.",
-    "seoDescription": "Shop 3D-printed gaming and desk accessories made in Edmonton, including dice towers, controller holders and distinctive display pieces.",
+    "seoDescription": "Level up your gaming setup with headphone stands, controller holders and fitted PS5 console stands. Made in Edmonton with free Canadian shipping.",
     "coverProduct": "6-finger-alien-hand-controller-holder",
     "products": [
       "6-finger-alien-hand-controller-holder",
       "ps5-console-stand-designs",
       "headphone-stand-designs"
-    ]
+    ],
+    "seoTitle": "Gaming Controller Holders, Headphone Stands & PS5 Console Stands"
   },
   {
     "id": "headphone-stands",
@@ -55,11 +56,12 @@
     "eyebrow": "A BETTER HOME FOR YOUR HEADPHONES",
     "heading": "Clear the desk. Keep the character.",
     "description": "Six sculptural stands for headphones, including designs with a place for your phone or pens. Choose a shape that suits your setup. Finished physical products made to order in Edmonton.",
-    "seoDescription": "Shop sculptural 3D-printed headphone stands and headset holders made in Edmonton, Alberta. Explore desk organizers with phone and pen storage, with free tracked shipping in Canada or local pickup.",
+    "seoDescription": "Tabletop headphone stands and gaming headset holders with phone slots and pen organizer trays. Made in Edmonton with free tracked Canadian shipping.",
     "coverProduct": "headphone-stand-designs",
     "products": [
       "headphone-stand-designs"
-    ]
+    ],
+    "seoTitle": "Desk Headphone Stands & Gaming Headset Holders — Phone & Pen Docks"
   },
   {
     "id": "home-decor",
@@ -155,14 +157,15 @@
     "eyebrow": "SMALL GIFTS, BIG PERSONALITY",
     "heading": "Easy gifts at $25 CAD or less.",
     "description": "A quick collection of locally printed characters and small gifts for birthdays, desks and just-because moments.",
-    "seoDescription": "Find locally made 3D-printed gifts at $25 CAD or less in Edmonton, from articulated creatures to small seasonal and desk gifts.",
+    "seoDescription": "Affordable gifts and stocking stuffers under $25 CAD including cute mini animals, articulated keychains and tumbler straw toppers.",
     "coverProduct": "mood-ghost",
     "products": [
       "mini-safari-animal-figurines",
       "figurine-fidget-designs",
       "ghost-on-a-swing",
       "halloween-candy-holder-designs"
-    ]
+    ],
+    "seoTitle": "Cute Gifts & Stocking Stuffers Under $25 CAD — Animals, Keychains & Toppers"
   },
   {
     "id": "photo-frames",
@@ -172,11 +175,12 @@
     "eyebrow": "SMALL FRAMES / REAL MEMORIES",
     "heading": "A little home for your favourite photo.",
     "description": "Choose a floral, dinosaur, camera or travel-inspired desk holder. Upload one photo and we print, trim and fit it for you. Small personalized gifts made in Edmonton, with Canadian shipping included.",
-    "seoDescription": "Personalized mini photo frames and desk photo holders with a photo print included. Floral, dinosaur, camera and pet-inspired designs made in Edmonton. Free Canadian shipping.",
+    "seoDescription": "Personalized desk and tabletop photo holders for couples, babies, pets and memorials—your printed photograph is included and fitted before shipping.",
     "coverProduct": "personalized-photo-holder-designs",
     "products": [
       "personalized-photo-holder-designs"
-    ]
+    ],
+    "seoTitle": "Cute Personalized Desk Photo Frames & Picture Holders — Print Included"
   },
   {
     "id": "console-stands",
@@ -186,11 +190,12 @@
     "eyebrow": "YOUR CONSOLE / YOUR STYLE",
     "heading": "Give your PS5 a stand with character.",
     "description": "Explore six sculptural PS5 console stands, from crescent moons to retro cityscapes. Choose your design and console model. Made in Edmonton, with free tracked Canadian shipping or local pickup.",
-    "seoDescription": "Shop decorative PS5 console stands for original PlayStation 5 and PS5 Slim. Moon, sci-fi, runestone and retro gaming designs made in Edmonton. Free Canadian shipping.",
+    "seoDescription": "Themed horizontal and vertical display stands fitted for Original PS5 and PS5 Slim consoles. Made in Edmonton with free tracked Canadian shipping.",
     "coverProduct": "ps5-console-stand-designs",
     "products": [
       "ps5-console-stand-designs"
-    ]
+    ],
+    "seoTitle": "Themed PS5 Console Stands — Fitted for Original PS5 & PS5 Slim"
   },
   {
     "id": "can-holders",
@@ -200,12 +205,13 @@
     "eyebrow": "A LITTLE CHARACTER / EVERYDAY DRINKS",
     "heading": "Give your drink some character.",
     "description": "Explore two collections of clothing-inspired can holders. Choose from 12 designs, from a suit and knight armour to hoodies and jackets. One finished holder per item; beverage cans are not included.",
-    "seoDescription": "Shop 12 clothing-inspired soda and beverage can holder designs made in Edmonton. Hoodies, jackets, robes, suits and more. Free Canadian shipping or local pickup.",
+    "seoDescription": "Character beer and soda can holders and mug-style drink coolers sized for standard 12 oz cans. Great party, BBQ and gamer gifts.",
     "coverProduct": "can-holder-designs-ii",
     "products": [
       "can-holder-designs",
       "can-holder-designs-ii"
-    ]
+    ],
+    "seoTitle": "Funny Beer & Soda Can Holders — Character Drink Coolers with Handles"
   },
   {
     "id": "tumbler-accessories",

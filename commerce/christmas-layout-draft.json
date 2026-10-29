@@ -1,0 +1,32 @@
+{
+  "status": "LOCAL DRAFT — do not publish without owner approval",
+  "intendedPage": "/shop/christmas-special",
+  "collection": {
+    "id": "christmas",
+    "name": "Christmas Gifts & Décor",
+    "shortName": "Christmas",
+    "kind": "seasonal",
+    "description": "Explore Christmas character ornaments, festive figurines, tabletop trees and glowing winter scenes.",
+    "seoDescription": "Christmas gifts and décor made in Edmonton, with Canadian delivery included.",
+    "products": [
+      "endless-swirling-tree",
+      "christmas-angel",
+      "meowy-christmas-tree-topper",
+      "christmas-character-figurines",
+      "christmas-gnome-set",
+      "bright-nativity-table-lamp",
+      "village-on-the-moon-table-lamp",
+      "santa-s-bonfire-table-lamp",
+      "santa-s-snack-hat-bowl",
+      "christmas-character-ornaments",
+      "holy-family-embrace",
+      "heavenly-trio",
+      "guiding-star-tree-topper",
+      "evergreen-wreath",
+      "luminous-tree",
+      "village-lights",
+      "christmas-trinket-trays"
+    ],
+    "coverProduct": "christmas-character-ornaments"
+  }
+}

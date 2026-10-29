@@ -27,6 +27,7 @@ export function validateDocument(input, { publish = false, policy = deliveryPoli
     for (const key of ['name','category','description','included','dimensions','notes']) p[key] = text(p[key], key === 'name' ? 120 : 4000);
     p.seoTitle=text(p.seoTitle,150);
     p.seoDescription=text(p.seoDescription,300);
+    if (Array.isArray(p.searchKeywords)) p.searchKeywords = p.searchKeywords.map(k => text(k, 80)).filter(Boolean);
     if(p.titleSource && !['default','trained_algorithmic_media'].includes(p.titleSource))throw Error('Choose a valid search-title source.');
     p.priceCents = amount(p.priceCents);
     p.pickupPriceDifferenceCents = policy.active?0:amount(p.pickupPriceDifferenceCents ?? input.pickupPriceDifferenceCents ?? 1000);

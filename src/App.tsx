@@ -1,9 +1,11 @@
-import { useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef } from "react";
+const ChristmasPreview = lazy(() => import("./pages/ChristmasPreview"));
 import shopCollections from "../commerce/collections.json";
 import { Routes, Route, Navigate, useLocation, useParams } from "react-router-dom";
 import { Header, Footer } from "./components/Shared";
 import Analytics from "./components/Analytics";
 import Seo from "./components/Seo";
+import { CHRISTMAS_PUBLIC_ENABLED } from "./data/seo";
 import Home from "./pages/Home";
 import StorePolicy from "./pages/StorePolicy";
 import { Services, ServiceDetail } from "./pages/Services";
@@ -67,6 +69,7 @@ export default function App() {
       <Header />
       <main id="main" tabIndex={-1}>
         <Routes>
+          {(import.meta.env.DEV || import.meta.env.VITE_CHRISTMAS_PREVIEW === "true") && <Route path="/preview/christmas/:id?" element={<Suspense fallback={<p className="container section">Preparing a little Christmas magic…</p>}><ChristmasPreview /></Suspense>} />}
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<Services />} />
           <Route path="/find-a-3d-model" element={<FindModel />} />
@@ -81,6 +84,16 @@ export default function App() {
           <Route path="/shop/all" element={<ShopCollection id="all" />} />
           <Route path="/shop/sale" element={<ShopSale />} />
           <Route path="/shop/halloween-special" element={<HalloweenSpecial />} />
+          {CHRISTMAS_PUBLIC_ENABLED && (
+            <Route
+              path="/shop/christmas-special/:id?"
+              element={
+                <Suspense fallback={<p className="container section">Preparing a little Christmas magic…</p>}>
+                  <ChristmasPreview publicMode />
+                </Suspense>
+              }
+            />
+          )}
           <Route path="/shop/cart" element={<ShopCart />} />
           <Route path="/shop/checkout" element={<Checkout />} />
           <Route path="/shop/order" element={<OrderConfirmation />} />

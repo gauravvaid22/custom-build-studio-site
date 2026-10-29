@@ -1,17 +1,68 @@
 {
   "products": {
-    "flow-stand-headphone-and-phone-holder": { "title": "Flow Headphone & Phone Stand for Your Desk", "description": "A sculptural headphone stand with a phone slot. Made in Edmonton, with free tracked Canadian shipping or local pickup. See photos, video and size." },
-    "curve-caddy-headphone-holder": { "title": "Curve Caddy Headphone Stand & Pen Holder", "description": "Keep headphones and pens together with the Curve Caddy desk stand. Made in Edmonton, with free tracked Canadian shipping or local pickup." },
-    "ring-dock-headphone-holder": { "title": "Ring Dock Circular Headphone Stand", "description": "A circular headphone stand for a gaming desk or workspace. Explore the Ring Dock gallery and video. Made in Edmonton with free Canadian shipping." },
-    "block-hub-headphone-and-phone-holder": { "title": "Block Hub Headphone, Phone & Pen Holder", "description": "Organize headphones, a phone and pens in one angular desk stand. Made in Edmonton, with free tracked Canadian shipping or local pickup." },
-    "tower-trio-headphone-and-phone-holder": { "title": "Tower Trio Headphone, Phone & Pen Stand", "description": "A vertical desk organizer for headphones, a phone and pens. View the Tower Trio photos and video. Made in Edmonton with free Canadian shipping." },
-    "arch-stand-headphone-holder": { "title": "Arch Headphone Stand for a Gaming Desk or Workspace", "description": "An architectural headphone stand with a clean arch design. Explore photos, video and approximate size. Made in Edmonton with free Canadian shipping." }
+    "flow-stand-headphone-and-phone-holder": {
+      "title": "Flow Headphone & Phone Stand for Your Desk",
+      "description": "A sculptural headphone stand with a phone slot. Made in Edmonton, with free tracked Canadian shipping or local pickup. See photos, video and size.",
+      "name": "Desk Headphone & Phone Stand — Curved Holder",
+      "seoTitle": "Desk Headphone & Phone Stand — Curved Gaming Headset & Smartphone Holder",
+      "seoDescription": "Curved tabletop headphone and phone stand that holds over-ear gaming headsets and keeps your smartphone upright at your desk. Free Canadian shipping."
+    },
+    "curve-caddy-headphone-holder": {
+      "title": "Curve Caddy Headphone Stand & Pen Holder",
+      "description": "Keep headphones and pens together with the Curve Caddy desk stand. Made in Edmonton, with free tracked Canadian shipping or local pickup.",
+      "name": "Headphone Stand with Pen & Desk Organizer Tray",
+      "seoTitle": "Headphone Stand with Pen Holder & Desk Tray — Office & Gaming Headset Stand",
+      "seoDescription": "Sweeping desk headphone stand with a built-in pen cup and small-item organizer tray for everyday office and gaming setups. Free Canadian shipping."
+    },
+    "ring-dock-headphone-holder": {
+      "title": "Ring Dock Circular Headphone Stand",
+      "description": "A circular headphone stand for a gaming desk or workspace. Explore the Ring Dock gallery and video. Made in Edmonton with free Canadian shipping.",
+      "name": "Round Gaming Headphone Stand — Circular Headset Holder",
+      "seoTitle": "Round Gaming Headphone Stand — Modern Circular Desk Headset Holder",
+      "seoDescription": "Sculptural circular headphone stand with a wide base tray and upright headset rest for clean gaming and home office desks. Free Canadian shipping."
+    },
+    "block-hub-headphone-and-phone-holder": {
+      "title": "Block Hub Headphone, Phone & Pen Holder",
+      "description": "Organize headphones, a phone and pens in one angular desk stand. Made in Edmonton, with free tracked Canadian shipping or local pickup.",
+      "name": "Headphone, Phone & Pen Desk Organizer Stand",
+      "seoTitle": "Headphone, Phone & Pen Desk Organizer Stand — Compact All-in-One Holder",
+      "seoDescription": "Compact all-in-one headphone stand with a front smartphone slot and pen holder compartment for tidy work and gaming desks. Free Canadian shipping."
+    },
+    "tower-trio-headphone-and-phone-holder": {
+      "title": "Tower Trio Headphone, Phone & Pen Stand",
+      "description": "A vertical desk organizer for headphones, a phone and pens. View the Tower Trio photos and video. Made in Edmonton with free Canadian shipping.",
+      "name": "3-in-1 Headphone, Phone & Pen Tower Stand",
+      "seoTitle": "3-in-1 Headphone, Phone & Pen Tower Stand — Vertical Desk Organizer",
+      "seoDescription": "Vertical 3-in-1 desk tower that holds over-ear headphones, a smartphone and pens in one space-saving footprint. Free Canadian shipping."
+    },
+    "arch-stand-headphone-holder": {
+      "title": "Arch Headphone Stand for a Gaming Desk or Workspace",
+      "description": "An architectural headphone stand with a clean arch design. Explore photos, video and approximate size. Made in Edmonton with free Canadian shipping.",
+      "name": "Minimalist Arch Gaming Headphone Stand",
+      "seoTitle": "Minimalist Arch Gaming Headphone Stand — Clean Desk Headset Rest",
+      "seoDescription": "Clean architectural arch headphone stand for a dedicated, low-profile over-ear headset rest on gaming and studio desks. Free Canadian shipping."
+    }
   },
   "faqs": [
-    ["Which headphone stand should I choose?", "Choose Arch or Ring Dock for a stand focused on headphones. Flow also holds a phone. Curve Caddy adds a place for pens, while Block Hub and Tower Trio organize headphones, a phone and pens together."],
-    ["Will my headphones fit?", "Check the approximate height on the product page and compare the photos with your headset. Headband shapes and earcup sizes vary. If your headphones are unusually large or you are unsure, contact us before ordering so we can check the fit."],
-    ["Are the headphones and phone included?", "Each order includes the physical stand described on its product page. Headphones, phones, pens and other photo props are not included."],
-    ["Can I collect my stand in Edmonton?", "Yes. Check the local pickup box in your cart before checkout. The current price stays the same, and your package includes a discount code for your next order after collection. The current reward is shown in your cart. We contact you to arrange a time and send the private pickup address."],
-    ["Can I request another colour?", "The standard finish is similar to the main product photo, with slight shade variations. Contact Custom Build Studio before checkout to discuss another colour."]
+    [
+      "Which headphone stand should I choose?",
+      "Choose Arch or Ring Dock for a stand focused on headphones. Flow also holds a phone. Curve Caddy adds a place for pens, while Block Hub and Tower Trio organize headphones, a phone and pens together."
+    ],
+    [
+      "Will my headphones fit?",
+      "Check the approximate height on the product page and compare the photos with your headset. Headband shapes and earcup sizes vary. If your headphones are unusually large or you are unsure, contact us before ordering so we can check the fit."
+    ],
+    [
+      "Are the headphones and phone included?",
+      "Each order includes the physical stand described on its product page. Headphones, phones, pens and other photo props are not included."
+    ],
+    [
+      "Can I collect my stand in Edmonton?",
+      "Yes. Check the local pickup box in your cart before checkout. The current price stays the same, and your package includes a discount code for your next order after collection. The current reward is shown in your cart. We contact you to arrange a time and send the private pickup address."
+    ],
+    [
+      "Can I request another colour?",
+      "The standard finish is similar to the main product photo, with slight shade variations. Contact Custom Build Studio before checkout to discuss another colour."
+    ]
   ]
 }

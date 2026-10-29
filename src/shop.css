@@ -1563,6 +1563,7 @@
 
 /* Grouped drop pages: real design photos, clear selected state, keyboard-friendly. */
 .shop-design-picker { margin: 1.5rem 0; }
+.shop-design-expand, .shop-mobile-design-select { display: none; }
 .shop-design-options { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.65rem; margin:.8rem 0; }
 .shop-design-options button { position:relative; min-width:0; padding:.55rem; text-align:left; color:inherit; background:var(--surface,#f3f6f7); border:1px solid #bdcbd0; border-radius:6px; cursor:pointer; }
 .shop-design-options button[aria-pressed="true"] { border:2px solid #1684a2; padding:calc(.55rem - 1px); background:#e7f3f7; }
@@ -1601,3 +1602,34 @@
 @media print {body:has(.pickup-reward-card) *{visibility:hidden;}body:has(.pickup-reward-card) .pickup-reward-card,body:has(.pickup-reward-card) .pickup-reward-card *{visibility:visible;}.pickup-reward-card{position:absolute;left:0;top:0;width:100%;}.pickup-reward-card button{display:none;}}
 
 .media-stage{position:relative;touch-action:pan-y}.media-expand{position:absolute;right:12px;bottom:12px;background:#fff;color:#172025;border:1px solid #bac6c8;border-radius:8px;padding:10px 14px}.media-controls{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:12px 0}.media-controls button,.media-close{min-width:44px;min-height:44px;padding:10px 16px;border:1px solid #bac6c8;border-radius:8px;background:#fff;color:#172025}.media-lightbox{width:min(1100px,94vw);max-height:94dvh;border:0;padding:20px;border-radius:12px}.media-lightbox::backdrop{background:rgb(0 0 0 / .8)}.media-lightbox img,.media-lightbox video{display:block;width:100%;height:72dvh;object-fit:contain}.media-close{display:block;margin:0 0 12px auto}.mix-pack-order fieldset{border:1px solid #cad3d5;border-radius:12px;padding:16px;margin:18px 0}.mix-pack-order .button[aria-pressed=true]{background:#172025;color:#fff;border-color:#172025}.mix-pack-designs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.mix-pack-designs label{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;font-size:14px}.mix-pack-photo{border:0;padding:0;background:none;width:100%;border-radius:8px;overflow:hidden}.mix-pack-photo img{width:100%;aspect-ratio:1;object-fit:cover}.mix-pack-designs input[type=number]{width:72px;min-height:44px;text-align:center}.mix-pack-designs input[type=radio]{width:24px;height:24px}.shop-thumbs{overflow-x:auto;scroll-snap-type:x proximity}.shop-thumbs button{scroll-snap-align:start}
+
+/* Mobile review: keep product choice close to the lead image. */
+@media (max-width: 760px) {
+  .shop-grid > .shop-card:only-child { grid-column: 1 / -1; max-width: 520px; }
+  .shop-detail { display: flex; flex-direction: column; gap: 16px; }
+  .shop-detail > div:first-child { order: 3; width: 100%; }
+  .shop-detail-info { display: contents; }
+  .shop-detail-info > * { order: 4; width: 100%; margin-block: 0; }
+  .shop-detail-info > .eyebrow { display: none; }
+  .shop-detail-info > h1 { order: 0; margin: 0; font-size: 1.85rem; line-height: 1.15; }
+  .shop-detail-info > .shop-price { order: 1; margin: 0; }
+  .shop-detail-info > .shop-regular-price { order: 1; }
+  .shop-detail-info > .shop-design-picker { order: 2; }
+  .shop-detail-info > .shop-design-picker label { margin-top: 10px; }
+  .shop-mobile-design-select { display: block; }
+  .shop-design-expand { display: block; min-height: 44px; margin-top: 10px; padding: 8px 12px; border: 1px solid #bdcbd0; border-radius: 8px; background: #f3f6f7; color: #173c35; font: inherit; text-align: left; cursor: pointer; }
+  .shop-design-picker:not(.is-expanded) .shop-design-options { display: none; }
+  .shop-design-picker select { width: 100%; min-height: 48px; font-size: 16px; }
+  .shop-thumbs, .shop-thumbs-overview { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 8px; max-width: 100%; padding-bottom: 8px; }
+  .shop-thumbs button { flex: 0 0 68px; }
+  .shop-detail .shop-gallery-scope { margin-top: 10px; gap: 6px; font-size: .8rem; }
+  .shop-detail .small { font-size: .78rem; }
+  .section:has(.shop-detail) { padding-block: 20px; }
+  .section:has(.shop-detail) .breadcrumb { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-height: 0; margin: 0 0 18px; text-decoration: none; }
+  body:has(.shop-detail) .shop-notice { margin-block: 8px; padding-block: 10px; }
+  body:has(.shop-detail) .shop-notice p { margin: 0; }
+}
+
+@media (max-width:760px) {
+  body:has(.shop-detail) .delivery-assurance, body:has(.shop-detail) .shop-notice { display: none; }
+}

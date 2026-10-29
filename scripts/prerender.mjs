@@ -48,7 +48,7 @@ await writeFile(
   "dist/sitemap.xml",
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">${routes.map((route) => {
     const product = catalog.find(p => route === `/shop/${p.id}`);
-    const images = (product?.images || []).map(image => `<image:image><image:loc>${escape(new URL(image.src, getSeo(route).url).href)}</image:loc></image:image>`).join("");
+    const images = (product?.images || []).map(image => `<image:image><image:loc>${escape(new URL(image.src, getSeo(route).url).href)}</image:loc><image:title>${escape(image.alt || product?.name || "")}</image:title><image:caption>${escape(image.alt || product?.name || "")}</image:caption></image:image>`).join("");
     return `<url><loc>${escape(getSeo(route).url)}</loc>${images}</url>`;
   }).join("")}</urlset>\n`,
 );

@@ -7,6 +7,10 @@ import collections from "../../commerce/collections.json";
 import headphoneSearch from "../../commerce/headphone-search.json";
 import maskSearch from "../../commerce/mask-search.json";
 import {searchTitle,searchDescription} from "../../commerce/product-search.mjs";
+
+/** Flip to true only after owner approves Christmas prices, inventory, and Shopify checkout links. */
+export const CHRISTMAS_PUBLIC_ENABLED = false;
+
 const publicProducts = products.filter((product) => !("variantOf" in product) && !product.purchaseOnly);
 const browsingProducts = publicProducts.filter(product => !("listingGroup" in product));
 const halloweenSpecialIds = collections.find((collection) => collection.id === "halloween")?.products || [];
@@ -24,6 +28,7 @@ export const publicRoutes = [
   "/shop",
   "/shop/all",
   "/shop/halloween-special",
+  ...(CHRISTMAS_PUBLIC_ENABLED ? ["/shop/christmas-special"] : []),
   ...collections.map((collection) => `/shop/${collection.id}`),
   ...publicProducts.map((product) => `/shop/${product.id}`),
   "/reviews",
@@ -55,6 +60,10 @@ export function getSeo(path: string) {
     "/shop/halloween-special": [
       "Halloween Masks, Candy Bowls & Décor Made in Edmonton",
       "Shop locally made Halloween décor and wearable masks in Edmonton, including ghosts, pumpkin lighting and seasonal gifts, with free tracked Canadian shipping.",
+    ],
+    "/shop/christmas-special": [
+      "The Christmas Collection — Holiday Table Lamps, Nativity Scenes & Decor",
+      "Warm holiday table lamps, illuminated nativity sculptures, spiral Christmas trees, festive trinket trays and cute tree ornaments made in Edmonton with free tracked Canadian shipping.",
     ],
     "/shop/cart": ["Your Cart", "Review your physical 3D-printed products."],
     "/shop/checkout": [
@@ -124,7 +133,7 @@ export function getSeo(path: string) {
       ? [serviceDetails[service.id].heading, service.description]
       : project
         ? [`${project.title} | Project Portfolio`, project.description]
-        : pages[page] || [
+        : (page.startsWith("/preview/christmas") ? ["The Christmas Edit · Owner Preview", "Review the unpublished Christmas collection from Custom Build Studio. Proposed prices; ordering is closed."] : pages[page]) || [
             "Page Not Found",
             "Find design and fabrication services at Custom Build Studio.",
           ];
@@ -177,16 +186,60 @@ export function getStructuredData(path: string, livePrices: Record<string, numbe
   const halloweenSpecial = page === "/shop/halloween-special";
   if (product) {
     const variants = "variants" in product ? product.variants || [] : [];
-    const item = (p: typeof product, url: string) => ({
-      "@type": "Product", name: p.name, sku: p.id,
-      description: `${p.description} ${p.included} Made to order in Edmonton.`,
-      image: p.images.map(image => new URL(image.src,business.origin).href),
-      url,
-      ...(Number.isInteger(livePrices[p.id]) ? { offers: { "@type": "Offer", url, priceCurrency: "CAD", price: (livePrices[p.id] / 100).toFixed(2),
-        // Available to order through the connected Shopify catalog.
-        ...(inventoryEnabled?(stock[p.id]&&!stock[p.id].unknown?{availability:stock[p.id].sellable?"https://schema.org/InStock":"https://schema.org/OutOfStock"}:{}):{availability:"https://schema.org/InStock"}), itemCondition: "https://schema.org/NewCondition",
-        seller: { "@type": "Organization", name: business.name } } } : {}),
-    });
+    const item = (p: typeof product, url: string) => {
+      const priceCents = Number.isInteger(livePrices[p.id])
+        ? livePrices[p.id]
+        : p.launchReady !== false && Number.isInteger(p.priceCents)
+          ? p.priceCents
+          : undefined;
+      const availability = inventoryEnabled
+        ? (stock[p.id] && !stock[p.id].unknown ? (stock[p.id].sellable ? "https://schema.org/InStock" : "https://schema.org/OutOfStock") : "https://schema.org/InStock")
+        : "https://schema.org/InStock";
+      const offers = Number.isInteger(priceCents)
+        ? {
+            "@type": "Offer",
+            url,
+            priceCurrency: "CAD",
+            price: (((priceCents as number)) / 100).toFixed(2),
+            availability,
+            itemCondition: "https://schema.org/NewCondition",
+            seller: { "@type": "Organization", name: business.name },
+            shippingDetails: {
+              "@type": "OfferShippingDetails",
+              shippingDestination: {
+                "@type": "DefinedRegion",
+                addressCountry: "CA",
+              },
+              shippingRate: {
+                "@type": "MonetaryAmount",
+                value: p.shippingPriceMode === "per-order" ? "5.00" : "0.00",
+                currency: "CAD",
+              },
+            },
+            hasMerchantReturnPolicy: {
+              "@type": "MerchantReturnPolicy",
+              applicableCountry: "CA",
+              returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+              merchantReturnDays: 30,
+              returnMethod: "https://schema.org/ReturnByMail",
+            },
+          }
+        : undefined;
+      return {
+        "@type": "Product",
+        name: p.name,
+        sku: p.id,
+        description: `${p.description} ${p.included} Made to order in Edmonton.`,
+        brand: {
+          "@type": "Brand",
+          name: business.name,
+        },
+        image: p.images.map(image => new URL(image.src, business.origin).href),
+        url,
+        ...(p.searchKeywords?.length ? { keywords: p.searchKeywords.join(", ") } : {}),
+        ...(offers ? { offers } : {}),
+      };
+    };
     return { "@context": "https://schema.org", "@graph": [
       variants.length ? {
         "@type": "ProductGroup", name: product.name, description: product.description,
@@ -241,7 +294,28 @@ export function getStructuredData(path: string, livePrices: Record<string, numbe
     };
   }
   const service = services.find((s) => page === `/services/${s.id}`);
-  if (!service) return localBusiness;
+  if (!service) {
+    if (page === "/") {
+      return {
+        "@context": "https://schema.org",
+        "@graph": [
+          localBusiness,
+          {
+            "@type": "WebSite",
+            "@id": business.origin + "/#website",
+            url: business.origin,
+            name: business.name,
+            potentialAction: {
+              "@type": "SearchAction",
+              target: `${business.origin}/shop/all?q={search_term_string}`,
+              "query-input": "required name=search_term_string",
+            },
+          },
+        ],
+      };
+    }
+    return localBusiness;
+  }
   return {
     "@context": "https://schema.org",
     "@graph": [

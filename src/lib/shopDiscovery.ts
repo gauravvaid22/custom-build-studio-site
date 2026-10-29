@@ -29,10 +29,113 @@ export function lowestProductPrice(product: Product, priceFor: (id: string, cent
   return variants?.length ? Math.min(...variants.map(variant => priceFor(variant.id, variant.priceCents))) : priceFor(product.id, product.priceCents);
 }
 const normalize = (value: string) => value.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+export interface SearchAutocompleteItem {
+  id: string;
+  name: string;
+  category: string;
+  isDesignOption: boolean;
+  parentName?: string;
+  priceCents: number;
+  hasPriceRange: boolean;
+  thumb: string;
+  alt: string;
+  url: string;
+}
+
+const searchablePublicCatalog = products.filter(
+  product => !("variantOf" in product) && !product.purchaseOnly && product.launchReady !== false,
+);
+
 export function matchesProductSearch(product: Product, query: string, displayName = product.name) {
+  const q = normalize(query).trim();
+  if (!q) return true;
   const family = collections.filter(collection => collection.products.includes(product.id)).map(collection => collection.name).join(" ");
-  const searchable = normalize(`${displayName} ${product.name} ${product.category} ${product.description} ${"groupedDesigns" in product ? product.groupedDesigns?.map(design => design.label).join(" ") : ""} ${family}`);
-  return normalize(query).trim().split(/\s+/).filter(Boolean).every(word => searchable.includes(word));
+  const variantText = "variants" in product && product.variants ? product.variants.map(v => v.label).join(" ") : "";
+  const groupedText = "groupedDesigns" in product && product.groupedDesigns ? product.groupedDesigns.map(d => d.label).join(" ") : "";
+  const keywordsText = "searchKeywords" in product && Array.isArray(product.searchKeywords) ? product.searchKeywords.join(" ") : "";
+  const searchable = normalize(
+    [
+      displayName,
+      product.name,
+      product.seoTitle || "",
+      product.seoDescription || "",
+      keywordsText,
+      product.category,
+      product.description,
+      product.notes || "",
+      product.included || "",
+      product.dimensions || "",
+      variantText,
+      groupedText,
+      family,
+    ].join(" "),
+  );
+  return q.split(/\s+/).filter(Boolean).every(word => searchable.includes(word));
+}
+
+export function searchCatalogAutocomplete(
+  query: string,
+  priceFor?: (id: string, cents: number) => number,
+  nameFor?: (id: string, fallback: string) => string,
+  limit = 7,
+): SearchAutocompleteItem[] {
+  const q = normalize(query).trim();
+  if (!q) return [];
+  const tokens = q.split(/\s+/).filter(Boolean);
+
+  const scored: { item: SearchAutocompleteItem; score: number }[] = [];
+
+  for (const product of searchablePublicCatalog) {
+    const displayName = nameFor ? nameFor(product.id, product.name) : product.name;
+    if (!matchesProductSearch(product, q, displayName)) continue;
+
+    const normName = normalize(displayName);
+    const normSeo = normalize(product.seoTitle || "");
+    const isDesignOption = Boolean("listingGroup" in product && product.listingGroup);
+    const parentProduct = isDesignOption
+      ? products.find(p => p.id === product.listingGroup)
+      : undefined;
+
+    let score = 0;
+    if (normName === q) score += 120;
+    else if (normName.startsWith(q)) score += 85;
+    else if (normName.includes(q)) score += 60;
+    else if (normSeo.includes(q)) score += 45;
+    else if (tokens.every(t => normName.includes(t))) score += 50;
+    else score += 20;
+
+    if (!isDesignOption) score += 10;
+
+    const basePrice = priceFor ? lowestProductPrice(product, priceFor) : product.priceCents;
+    const hasPriceRange = Boolean(
+      ("variants" in product && product.variants && product.variants.length > 1) ||
+        ("groupedDesigns" in product && product.groupedDesigns && product.groupedDesigns.length > 1),
+    );
+
+    scored.push({
+      score,
+      item: {
+        id: product.id,
+        name: displayName,
+        category: product.category,
+        isDesignOption,
+        parentName: parentProduct
+          ? (nameFor ? nameFor(parentProduct.id, parentProduct.name) : parentProduct.name)
+          : undefined,
+        priceCents: basePrice,
+        hasPriceRange,
+        thumb: product.images[0]?.thumb || product.images[0]?.src || "",
+        alt: product.images[0]?.alt || displayName,
+        url: `/shop/${product.id}`,
+      },
+    });
+  }
+
+  return scored
+    .sort((a, b) => b.score - a.score || a.item.name.localeCompare(b.item.name))
+    .slice(0, limit)
+    .map(entry => entry.item);
 }
 /** Never forward arbitrary search text (emails, phone numbers, etc.) to analytics. */
 export function analyticsSearchTerm(query: string) {

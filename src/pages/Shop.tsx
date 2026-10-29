@@ -597,10 +597,16 @@ export function ShopCollection({ id }: { id: string }) {
     if (value) next.set(key, value); else next.delete(key);
     setParams(next, { replace: true, preventScrollReset: true });
   };
-  const listed = groupListings(!collection ? [] : id === "gifts-under-25" ? products.filter(p => !isVariant(p) && lowestProductPrice(p, priceFor) <= 2500) : collection.products.map((productId) => catalogProduct(productId)!).filter(Boolean));
+  const listed = !collection
+    ? []
+    : id === "gifts-under-25"
+      ? products.filter(p => !isVariant(p) && lowestProductPrice(p, priceFor) <= 2500)
+      : id === "all" && query.trim()
+        ? products.filter(p => !isVariant(p) && !p.purchaseOnly && p.launchReady !== false)
+        : groupListings(collection.products.map(productId => catalogProduct(productId)!).filter(Boolean));
   const category = collections.find(item => item.id === department && item.kind === "department");
   const filtered = listed.filter(product => matchesProductSearch(product, query, nameFor(product.id, product.name)) &&
-    (id !== "all" || !category || category.products.includes(product.id)) && lowestProductPrice(product, priceFor) <= priceLimit);
+    (id !== "all" || !category || category.products.includes(product.id) || ("listingGroup" in product && product.listingGroup && category.products.includes(product.listingGroup))) && lowestProductPrice(product, priceFor) <= priceLimit);
   const sorted = [...filtered].sort((a, b) =>
     sort === "price-low" ? lowestProductPrice(a, priceFor) - lowestProductPrice(b, priceFor) :
     sort === "price-high" ? lowestProductPrice(b, priceFor) - lowestProductPrice(a, priceFor) : 0,
@@ -670,14 +676,17 @@ export function ShopCollection({ id }: { id: string }) {
     </>
   );
 }
-export function ShopProduct() {
+export function ShopProduct({ previewCatalog, previewId }: { previewCatalog?: Product[]; previewId?: string } = {}) {
+  const activeCatalog = previewCatalog || products;
+  const catalogProduct = (id: string) => activeCatalog.find(product => product.id === id);
   const archived = useCatalogAvailability();
   const { mode } = useFulfillment();
   const { priceFor, nameFor, compareAtFor, sale } = useShopifyCatalog();
   const content = useSiteContent();
-  const { id } = useParams();
+  const { id: routeId } = useParams();
+  const id = previewId || routeId;
   const [searchParams, setSearchParams] = useSearchParams();
-  const product = products.find((p) => p.id === id);
+  const product = activeCatalog.find((p) => p.id === id);
   const [index, setIndex] = useState(0);
   const [selectedVariantId, setSelectedVariantId] = useState("");
   const [showAllDesigns, setShowAllDesigns] = useState(true);
@@ -699,7 +708,7 @@ export function ShopProduct() {
   const variants = variantsFor(product);
   const selectedVariant = catalogProduct(selectedVariantId || variants[0]?.id || product.id) || product;
   const mediaProduct = "groupedDesigns" in product ? catalogProduct(product.groupedDesigns?.find(design => design.optionIds.includes(selectedVariant.id))?.id || "") || selectedVariant : product;
-  const gallery = productGallery(product, showAllDesigns ? "" : selectedVariantId);
+  const gallery = productGallery(product, showAllDesigns ? "" : selectedVariantId, activeCatalog);
   const images = gallery.images;
   const videos = gallery.videos;
   const showingVideo =
@@ -725,7 +734,7 @@ export function ShopProduct() {
     setIndex(0);
     setSelectedVariantId(variantId);
     setShowAllDesigns(false);
-    setSearchParams({ variant: variantId }, { replace: true, preventScrollReset: true });
+    setSearchParams({ variant: variantId, ...(previewCatalog ? { analytics_test: "1" } : {}) }, { replace: true, preventScrollReset: true });
     const label = variants.find((variant) => variant.id === variantId)?.label;
     const imageIndex = product.images.findIndex(
       (image) => "design" in image && image.design === label,
@@ -734,6 +743,7 @@ export function ShopProduct() {
   };
   return (
     <>
+      {previewCatalog && <div className="container" style={{paddingTop: 20}}><Link className="text-link" to="/preview/christmas?analytics_test=1">← Back to Christmas Special preview</Link></div>}
       <ShopNav showFulfillment={!previewOnly} />
       {previewOnly ? <p className="shop-notice container">Design preview · proposed CAD item prices · ordering not open</p> : productShippingFee(product.id) ? <p className="shop-notice container">CAD prices · {mode === "pickup" ? "Edmonton pickup · no shipping fee" : `${money(productShippingFee(product.id))} tracked Canadian shipping once per order`}</p> : <ShopNotice />}
       <section className="section">
@@ -807,13 +817,43 @@ export function ShopProduct() {
                 </span>
               </p>
               {compareAtFor(selectedVariant.id) && <p className="shop-regular-price"><strong className="shop-sale-inline">{sale?.percentage}% OFF</strong> Regular {money(compareAtFor(selectedVariant.id)!)} CAD</p>}
-              {product.shippingPriceMode==='per-order'&&<div className="note-panel bulk-delivery-savings"><strong>Mix & match — save on delivery</strong><p>{money(priceFor(selectedVariant.id,selectedVariant.priceCents))} CAD per item + {money(productShippingFee(product.id))} delivery once per order. Add more designs without another delivery charge.</p><div className="button-row">{[1,3,5].map(q=><span key={q}><strong>{q} {q===1?'item':'items'}</strong> · {money(q*priceFor(selectedVariant.id,selectedVariant.priceCents)+productShippingFee(product.id))} CAD</span>)}</div><small>Examples include delivery, before any applicable tax. Existing design choices stay the same.</small></div>}{!product.bundleOffers?.length && "groupedDesigns" in product && <ProductDesignPicker designs={product.groupedDesigns || []} selectedId={selectedVariant.id} onChange={chooseVariant} />}
+              {product.shippingPriceMode==='per-order'&&<div className="note-panel bulk-delivery-savings"><strong>Mix & match — save on delivery</strong><p>{money(priceFor(selectedVariant.id,selectedVariant.priceCents))} CAD per item + {money(productShippingFee(product.id))} delivery once per order. Add more designs without another delivery charge.</p><div className="button-row">{[1,3,5].map(q=><span key={q}><strong>{q} {q===1?'item':'items'}</strong> · {money(q*priceFor(selectedVariant.id,selectedVariant.priceCents)+productShippingFee(product.id))} CAD</span>)}</div><small>Examples include delivery, before any applicable tax. Existing design choices stay the same.</small></div>}{!product.bundleOffers?.length && "groupedDesigns" in product && <ProductDesignPicker designs={product.groupedDesigns || []} selectedId={selectedVariant.id} onChange={chooseVariant} catalog={activeCatalog} showDropdown={Boolean(previewCatalog)} />}
+              {!previewCatalog && "groupedDesigns" in product && product.groupedDesigns && (
+                <nav className="design-direct-links" aria-label={`${product.name} individual design pages`}>
+                  <span className="design-direct-links-title">Direct design pages:</span>
+                  <div className="design-direct-links-grid">
+                    {product.groupedDesigns.map(design => {
+                      const targetProd = catalogProduct(design.id);
+                      const label = targetProd ? nameFor(targetProd.id, targetProd.name) : design.label;
+                      return (
+                        <Link
+                          key={design.id}
+                          to={`/shop/${design.id}/`}
+                          className={`design-direct-link-chip ${selectedVariant.id === design.id || selectedVariant.id.startsWith(design.id) ? "active" : ""}`}
+                        >
+                          {label}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </nav>
+              )}
+              {!previewCatalog && "listingGroup" in product && product.listingGroup && (
+                <nav className="design-direct-links" aria-label="Full collection listing">
+                  <span className="design-direct-links-title">Part of multi-design listing:</span>
+                  <div className="design-direct-links-grid">
+                    <Link to={`/shop/${product.listingGroup}/?design=${product.id}`} className="design-direct-link-chip">
+                      View all options in this set →
+                    </Link>
+                  </div>
+                </nav>
+              )}
               <p className="lead">{product.description}</p>{"groupedDesigns" in product && <p className="small"><strong>{nameFor(mediaProduct.id, mediaProduct.name)}</strong> — {mediaProduct.description}</p>}
               {product.category === "Pet hats & costumes" && <div className="note-panel"><strong>Fully assembled · Standard size</strong><p>Costume elastic, straps and the pieces listed for your chosen design are included. Fit varies by pet; <a href="mailto:custombuildstudio@gmail.com?subject=Paw%20Couture%20fit%20question">ask us about fit before ordering</a> if unsure. For short, supervised photo moments.</p></div>}
               <ul className="shop-purchase-facts" aria-label="Purchase details">
-                <li>{previewOnly ? "$5 shipping extra for this collection — checkout setup pending" : mode === "pickup" ? "Pickup in Southeast Edmonton by appointment" : productShippingFee(product.id) ? `${money(productShippingFee(product.id))} tracked shipping once per order across Canada` : "Free tracked shipping in Canada"}</li>
-                <li>{mode === "pickup" ? productionMessage : deliveryEstimate}</li>
-                <li>Secure payment through Shopify</li>
+                <li>{previewOnly ? previewCatalog ? "Proposed price includes Canadian delivery" : "$5 shipping extra for this collection — checkout setup pending" : mode === "pickup" ? "Pickup in Southeast Edmonton by appointment" : productShippingFee(product.id) ? `${money(productShippingFee(product.id))} tracked shipping once per order across Canada` : "Free tracked shipping in Canada"}</li>
+                <li>{previewCatalog ? "Preparation and delivery timing to confirm before launch" : mode === "pickup" ? productionMessage : deliveryEstimate}</li>
+                <li>{previewCatalog ? "Checkout stays closed during review" : "Secure payment through Shopify"}</li>
               </ul>
               <div className="shop-trust-links">
                 <a href="https://share.google/r0qV4iw8FxD8SLkLL" target="_blank" rel="noreferrer">
@@ -855,6 +895,7 @@ export function ShopProduct() {
               </div>}
 
               <details className="shop-product-more"><summary>Product details, care & returns <span aria-hidden="true">+</span></summary><dl className="shop-specs">
+                {previewCatalog && <><dt>Design notes</dt><dd>{mediaProduct.notes}</dd></>}
                 <dt>What you receive</dt>
                 <dd>{selectedVariant.included} No STL or digital download.</dd>
                 {!selectedVariant.dimensions.startsWith("Final dimensions") && <>
@@ -904,6 +945,18 @@ export function ShopProduct() {
               ))}
               <Link to="/shop/">Browse all gifts & décor →</Link>
             </div>
+            {product.searchKeywords && product.searchKeywords.length > 0 && (
+              <div className="product-search-tags" style={{ marginTop: "1.25rem" }}>
+                <p className="small" style={{ marginBottom: "0.5rem" }}><strong>Popular search &amp; gift tags:</strong></p>
+                <div className="design-direct-links-grid">
+                  {product.searchKeywords.slice(0, 8).map((tag) => (
+                    <Link key={tag} to={`/shop/all?q=${encodeURIComponent(tag)}#products`} className="design-direct-link-chip">
+                      #{tag}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </aside>
         </div>
       </section>

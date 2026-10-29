@@ -1,11 +1,13 @@
 import { useShopMerchandising } from "./SiteContent";
 import { useModelDiscovery } from "./ModelDiscovery";
-import { useEffect, useRef, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { useEffect, useMemo, useRef, useState, FormEvent } from "react";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import imageData from "../data/images.json";
 import { business } from "../data/business";
 import projects from "../data/projects.json";
-import { useCart } from "./Cart";
+import { money, useCart } from "./Cart";
+import { useShopifyCatalog } from "./ShopifyCatalog";
+import { searchCatalogAutocomplete } from "../lib/shopDiscovery";
 import collections from "../../commerce/collections.json";
 
 const images: Record<string, { base: string; width: number; height: number }> =
@@ -98,6 +100,130 @@ export function Brand() {
     </Link>
   );
 }
+
+function HeaderSearch() {
+  const [query, setQuery] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { priceFor, nameFor } = useShopifyCatalog();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname, location.search]);
+
+  useEffect(() => {
+    function handleOutsideClick(event: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
+
+  const results = useMemo(
+    () => searchCatalogAutocomplete(query, priceFor, nameFor, 7),
+    [query, priceFor, nameFor],
+  );
+
+  function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    const trimmed = query.trim();
+    setIsOpen(false);
+    if (!trimmed) {
+      navigate("/shop/all#products");
+      return;
+    }
+    navigate(`/shop/all?q=${encodeURIComponent(trimmed)}#products`);
+  }
+
+  return (
+    <div className="header-search" ref={containerRef}>
+      <form className="header-search-form" role="search" onSubmit={handleSubmit}>
+        <input
+          type="search"
+          className="header-search-input"
+          aria-label="Search products and designs"
+          placeholder="Search gifts, designs…"
+          value={query}
+          onFocus={() => setIsOpen(true)}
+          onChange={e => {
+            setQuery(e.target.value);
+            setIsOpen(true);
+          }}
+          onKeyDown={e => {
+            if (e.key === "Escape") setIsOpen(false);
+          }}
+        />
+        {query && (
+          <button
+            type="button"
+            className="header-search-clear"
+            aria-label="Clear search query"
+            onClick={() => {
+              setQuery("");
+              setIsOpen(false);
+            }}
+          >
+            ×
+          </button>
+        )}
+        <button type="submit" className="header-search-submit" aria-label="Submit product search">
+          Go
+        </button>
+      </form>
+      {isOpen && query.trim().length > 0 && (
+        <div className="header-search-dropdown" role="region" aria-label="Product search results">
+          {results.length > 0 ? (
+            <>
+              <div className="header-search-list">
+                {results.map(item => (
+                  <Link
+                    key={item.id}
+                    to={item.url}
+                    className="header-search-item"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <img src={item.thumb} alt={item.alt} width={44} height={44} loading="lazy" />
+                    <span className="header-search-meta">
+                      <strong>{item.name}</strong>
+                      <small>
+                        {item.isDesignOption && item.parentName
+                          ? `Design in ${item.parentName}`
+                          : item.category}
+                      </small>
+                    </span>
+                    <span className="header-search-price">
+                      {item.hasPriceRange ? "From " : ""}
+                      {money(item.priceCents)}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+              <Link
+                to={`/shop/all?q=${encodeURIComponent(query.trim())}#products`}
+                className="header-search-view-all"
+                onClick={() => setIsOpen(false)}
+              >
+                View all results for “{query.trim()}” →
+              </Link>
+            </>
+          ) : (
+            <div className="header-search-empty">
+              <span>No matching products for “{query.trim()}”.</span>
+              <Link to="/shop/all#products" onClick={() => setIsOpen(false)}>
+                Browse full catalog →
+              </Link>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function Header() {
   const { items } = useCart();
   const [open, setOpen] = useState(false);
@@ -124,6 +250,7 @@ export function Header() {
     <header className="site-header">
       <div className="container header-inner">
         <Brand />
+        <HeaderSearch />
         <div className="mobile-quick-paths" aria-label="Choose how to work with us">
           <NavLink to="/shop" className={({ isActive }) => isActive || location.pathname.startsWith("/shop/") ? "is-current" : ""}>Shop products</NavLink>
           <NavLink to="/services" className={({ isActive }) => isActive || location.pathname.startsWith("/services/") ? "is-current" : ""}>Custom services</NavLink>
@@ -223,6 +350,7 @@ export function Footer() {
         <span>Edmonton, AB · Serving projects near and far</span>
         <Link to="/privacy">Privacy</Link>
         <Link to="/shipping-returns">Shipping & returns</Link>
+        <Link to="/shop/admin">Studio Admin</Link>
       </div>
     </footer>
   );

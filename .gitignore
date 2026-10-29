@@ -15,3 +15,6 @@ private-production/
 *.STL
 *.3mf
 *.3MF
+local-product-sources/
+.tmp/
+reports/

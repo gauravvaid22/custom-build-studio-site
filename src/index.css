@@ -2579,3 +2579,208 @@ h3 {
 @media (prefers-reduced-motion: reduce) {
   .home-reveal-target { transform: none !important; }
 }
+
+/* Compact Global Header Search & Design Crawl Links */
+.header-search {
+  position: relative;
+  flex: 0 1 240px;
+}
+.header-search-form {
+  display: flex;
+  align-items: center;
+  background: #202427;
+  border: 1px solid #434d52;
+  border-radius: 999px;
+  padding: 2px 4px 2px 12px;
+  gap: 4px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.header-search-form:focus-within {
+  border-color: #8fc9e3;
+  box-shadow: 0 0 0 2px rgba(143, 201, 227, 0.25);
+}
+.header-search-input {
+  background: transparent;
+  border: 0;
+  color: #fff;
+  font: inherit;
+  font-size: 0.82rem;
+  width: 100%;
+  outline: none;
+  padding: 5px 0;
+}
+.header-search-input::placeholder {
+  color: #9aa5ab;
+}
+.header-search-clear {
+  background: transparent;
+  border: 0;
+  color: #9aa5ab;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 2px 6px;
+}
+.header-search-clear:hover {
+  color: #fff;
+}
+.header-search-submit {
+  background: #2e3539;
+  border: 1px solid #434d52;
+  border-radius: 999px;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  flex-shrink: 0;
+}
+.header-search-submit:hover {
+  border-color: #8fc9e3;
+  color: #8fc9e3;
+}
+.header-search-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: min(390px, 92vw);
+  background: #191c1e;
+  border: 1px solid #434d52;
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  overflow: hidden;
+}
+.header-search-list {
+  max-height: 360px;
+  overflow-y: auto;
+  display: grid;
+}
+.header-search-item {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+.header-search-item:hover {
+  background: rgba(143, 201, 227, 0.08);
+}
+.header-search-item img {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #111315;
+  border: 1px solid #434d52;
+}
+.header-search-meta {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.header-search-meta strong {
+  font-size: 0.84rem;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #fff;
+}
+.header-search-meta small {
+  color: #9aa5ab;
+  font-size: 0.73rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.header-search-price {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #8fc9e3;
+  white-space: nowrap;
+}
+.header-search-view-all {
+  display: block;
+  text-align: center;
+  padding: 10px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #8fc9e3;
+  background: rgba(143, 201, 227, 0.08);
+  text-decoration: none;
+}
+.header-search-view-all:hover {
+  background: rgba(143, 201, 227, 0.16);
+}
+.header-search-empty {
+  padding: 14px;
+  display: grid;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: #9aa5ab;
+}
+.header-search-empty a {
+  color: #8fc9e3;
+  font-weight: 700;
+}
+
+.design-direct-links {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #344047;
+}
+.design-direct-links-title {
+  display: block;
+  font-size: 0.76rem;
+  color: #9aa5ab;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.design-direct-links-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.design-direct-link-chip {
+  font-size: 0.76rem;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid #434d52;
+  background: #202427;
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+}
+.design-direct-link-chip:hover,
+.design-direct-link-chip.active {
+  border-color: #8fc9e3;
+  color: #fff;
+  background: #283136;
+}
+
+@media (max-width: 900px) {
+  .header-search {
+    order: 2;
+    flex: 1 1 200px;
+    margin: 0 4px;
+  }
+}
+@media (max-width: 600px) {
+  .header-search {
+    order: 4;
+    width: 100%;
+    flex: 1 1 100%;
+    margin-top: 8px;
+  }
+  .header-search-dropdown {
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
+}

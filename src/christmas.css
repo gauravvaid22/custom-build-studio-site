@@ -1,0 +1,1798 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+.xmas-page,
+.xmas-detail-wrapper {
+  --bg-ivory: #fcf7ee;
+  --bg-warm: #f7efe0;
+  --bg-card: #ffffff;
+  --bg-card-tint: #fdf9f1;
+  --pine-deep: #0f2921;
+  --pine-mid: #1a3f33;
+  --ink: #17231e;
+  --ink-muted: #526058;
+  --cranberry: #a1212d;
+  --cranberry-bright: #be2938;
+  --gold: #cf9b3c;
+  --gold-soft: #f3dfaf;
+  --gold-glow: rgba(235, 182, 78, 0.34);
+  --line: rgba(23, 35, 30, 0.11);
+  --line-gold: rgba(207, 155, 60, 0.36);
+  --shadow-soft: 0 18px 44px rgba(20, 34, 28, 0.08);
+  --shadow-warm: 0 24px 60px rgba(154, 108, 30, 0.14);
+
+  background:
+    radial-gradient(circle at 18% 8%, rgba(247, 206, 118, 0.28), transparent 36%),
+    radial-gradient(circle at 84% 12%, rgba(190, 41, 56, 0.1), transparent 34%),
+    linear-gradient(180deg, #fdf9f2 0%, #f8efe0 52%, #fcf7ee 100%);
+  color: var(--ink);
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: clip;
+}
+
+.xmas-page h1,
+.xmas-page h2,
+.xmas-page h3,
+.xmas-detail-wrapper h2,
+.xmas-detail-wrapper h3 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  letter-spacing: -0.015em;
+  line-height: 1.04;
+  color: var(--pine-deep);
+}
+
+.xmas-page h1 em,
+.xmas-page h2 em,
+.xmas-detail-wrapper h2 em {
+  color: var(--cranberry);
+  font-style: italic;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   TOP PREVIEW STRIP
+   ========================================================================== */
+.xmas-review-strip {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.25rem;
+  padding: 0.65rem clamp(1rem, 4vw, 3rem);
+  background: linear-gradient(90deg, #102b23 0%, #193e32 50%, #102b23 100%);
+  border-bottom: 1px solid rgba(243, 223, 175, 0.28);
+  color: #f9f1e1;
+  font-size: 0.8rem;
+}
+
+.xmas-review-strip strong {
+  color: #f6d483;
+  letter-spacing: 0.08em;
+}
+
+.xmas-strip-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.xmas-strip-controls button {
+  border: 1px solid rgba(246, 212, 131, 0.45);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff8ea;
+  padding: 0.32rem 0.85rem;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.xmas-strip-controls button:hover {
+  background: rgba(246, 212, 131, 0.22);
+  border-color: #f6d483;
+}
+.xmas-admin-link {
+  border: 1px solid rgba(246, 212, 131, 0.45);
+  border-radius: 999px;
+  background: rgba(246, 212, 131, 0.15);
+  color: #f6d483;
+  padding: 0.32rem 0.85rem;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.xmas-admin-link:hover {
+  background: rgba(246, 212, 131, 0.3);
+  border-color: #f6d483;
+  color: #fff8ea;
+}
+
+.xmas-admin-subnav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid #adc1ca;
+  background: #ffffff;
+  color: #193e32;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.xmas-admin-subnav-link:hover {
+  background: #193e32;
+  color: #ffffff;
+  border-color: #193e32;
+}
+
+/* ==========================================================================
+   EYEBROWS, BREADCRUMBS & BUTTONS
+   ========================================================================== */
+.xmas-breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.85rem;
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+}
+
+.xmas-breadcrumb a {
+  color: var(--pine-mid);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.xmas-breadcrumb a:hover {
+  color: var(--cranberry);
+}
+
+.xmas-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.7rem;
+  color: var(--cranberry);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.xmas-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 48px;
+  padding: 0.82rem 1.4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(161, 33, 45, 0.9);
+  background: linear-gradient(135deg, #b52432 0%, #8f1a25 100%);
+  color: #fffdf8;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 12px 28px rgba(161, 33, 45, 0.24);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.xmas-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px rgba(161, 33, 45, 0.32);
+  filter: brightness(1.05);
+}
+
+.xmas-button-secondary {
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--pine-deep);
+  border: 1px solid var(--line-gold);
+  box-shadow: 0 10px 24px rgba(23, 35, 30, 0.06);
+}
+
+.xmas-button-secondary:hover {
+  background: #ffffff;
+  box-shadow: 0 14px 28px rgba(207, 155, 60, 0.22);
+}
+
+/* ==========================================================================
+   HERO SECTION (WARM DAYLIGHT + FAIRY-LIGHT BOKEH + REAL 3D STAGE)
+   ========================================================================== */
+.xmas-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(2rem, 4.5vw, 4rem) 0 clamp(3rem, 5.5vw, 4.8rem);
+  background:
+    radial-gradient(circle at 75% 28%, rgba(244, 194, 95, 0.36), transparent 38%),
+    radial-gradient(circle at 20% 20%, rgba(255, 232, 178, 0.65), transparent 42%),
+    radial-gradient(circle at 60% 82%, rgba(161, 33, 45, 0.09), transparent 36%),
+    linear-gradient(180deg, #fffdf8 0%, #f9f0de 65%, #fcf7ee 100%);
+  border-bottom: 1px solid var(--line-gold);
+}
+
+.xmas-warm-bokeh {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.xmas-bokeh-orb {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 224, 146, 0.52) 0%, rgba(245, 190, 88, 0.16) 55%, transparent 75%);
+  filter: blur(2px);
+  animation: xmas-bokeh-pulse var(--d) ease-in-out var(--delay) infinite alternate;
+}
+
+@keyframes xmas-bokeh-pulse {
+  0% {
+    opacity: 0.35;
+    transform: translate3d(0, 0, 0) scale(0.92);
+  }
+  100% {
+    opacity: 0.85;
+    transform: translate3d(8px, -12px, 0) scale(1.12);
+  }
+}
+
+.xmas-snow-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.xmas-snowflake {
+  position: absolute;
+  top: -16px;
+  left: var(--x);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0%, rgba(246, 212, 131, 0.7) 100%);
+  box-shadow: 0 0 8px rgba(246, 212, 131, 0.65);
+  opacity: 0.75;
+  animation: xmas-snow-fall var(--d) linear var(--delay) infinite;
+}
+
+@keyframes xmas-snow-fall {
+  0% {
+    transform: translate3d(0, -2vh, 0);
+  }
+  100% {
+    transform: translate3d(18px, 104vh, 0);
+  }
+}
+
+.xmas-hero-layout {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 1.08fr);
+  gap: clamp(1.75rem, 3.5vw, 3.25rem);
+  align-items: center;
+}
+
+.xmas-hero-copy h1 {
+  margin: 0 0 1rem;
+  font-size: clamp(2.85rem, 5.4vw, 4.75rem);
+}
+
+.xmas-intro {
+  margin: 0 0 1.4rem;
+  max-width: 58ch;
+  color: var(--ink-muted);
+  font-size: clamp(0.98rem, 1.15vw, 1.08rem);
+  line-height: 1.65;
+}
+
+.xmas-hero-selector {
+  margin: 0 0 1.4rem;
+  padding: 1rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--line-gold);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(10px);
+}
+
+.xmas-selector-heading {
+  margin: 0 0 0.65rem;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pine-mid);
+}
+
+.xmas-selector-pills {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+  gap: 0.5rem;
+}
+
+.xmas-hero-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 12px;
+  border: 1px solid rgba(23, 35, 30, 0.1);
+  background: #ffffff;
+  color: var(--ink);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.xmas-hero-pill:hover {
+  transform: translateY(-1px);
+  border-color: var(--gold);
+}
+
+.xmas-hero-pill.is-active {
+  background: linear-gradient(135deg, #123127 0%, #1d493b 100%);
+  border-color: var(--gold);
+  color: #fff9ec;
+  box-shadow: 0 10px 22px rgba(16, 43, 35, 0.18);
+}
+
+.xmas-hero-pill img {
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid rgba(207, 155, 60, 0.35);
+}
+
+.xmas-hero-pill strong {
+  display: block;
+  font-size: 0.8rem;
+  line-height: 1.2;
+}
+
+.xmas-hero-pill small {
+  display: block;
+  margin-top: 0.12rem;
+  font-size: 0.7rem;
+  opacity: 0.82;
+}
+
+.xmas-actions {
+  margin-bottom: 1.15rem;
+}
+
+.xmas-action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.xmas-hero-trust-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.xmas-hero-trust-pills span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.38rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(207, 155, 60, 0.35);
+  color: var(--pine-deep);
+  font-size: 0.76rem;
+}
+
+.xmas-hero-trust-pills strong {
+  color: var(--cranberry);
+}
+
+/* ==========================================================================
+   FLOATING & 3D MOUSE-TILT CARD EFFECT
+   ========================================================================== */
+@keyframes xmasCardLevitate {
+  0%, 100% {
+    transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(0px);
+  }
+  50% {
+    transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-7px);
+  }
+}
+
+.xmas-floating-tilt-card {
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(0px);
+  transition: transform 0.22s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.22s ease;
+  animation: xmasCardLevitate 5.5s ease-in-out infinite;
+}
+.xmas-touch-tilt-hint { display: none; }
+.xmas-real3d-touch-guide { display: none; }
+
+.xmas-floating-tilt-card.is-tilting {
+  animation: none;
+  transition: transform 0.06s ease-out;
+  box-shadow:
+    0 32px 72px rgba(22, 38, 31, 0.18),
+    0 12px 30px rgba(207, 155, 60, 0.25);
+}
+
+.xmas-floating-tilt-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 35%), rgba(255, 255, 255, 0.18) 0%, transparent 65%);
+  opacity: 0;
+  transition: opacity 0.22s ease;
+  z-index: 2;
+}
+
+.xmas-floating-tilt-card.is-tilting::after {
+  opacity: 1;
+}
+
+.xmas-glow-stage-col {
+  border-radius: 26px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(16, 42, 34, 0.55) 100%);
+  border: 1px solid rgba(246, 212, 131, 0.45);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  padding: clamp(1rem, 2vw, 1.35rem);
+}
+
+/* ==========================================================================
+   HERO STAGE CARD (RIGHT COLUMN)
+   ========================================================================== */
+.xmas-hero-stage-card {
+  border-radius: 26px;
+  background: linear-gradient(180deg, #ffffff 0%, #fdf8ee 100%);
+  border: 1px solid rgba(207, 155, 60, 0.45);
+  box-shadow:
+    0 28px 68px rgba(22, 38, 31, 0.13),
+    0 0 0 6px rgba(255, 255, 255, 0.65);
+  padding: clamp(1rem, 2vw, 1.35rem);
+}
+
+.xmas-stage-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.xmas-stage-kicker {
+  display: block;
+  color: var(--cranberry);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.xmas-stage-card-header h3 {
+  margin: 0.15rem 0 0;
+  font-size: clamp(1.55rem, 2.2vw, 2rem);
+}
+
+.xmas-stage-mode-switcher {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0.28rem;
+  border-radius: 999px;
+  background: #f3ead8;
+  border: 1px solid rgba(207, 155, 60, 0.32);
+}
+
+.xmas-stage-mode-switcher button {
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--pine-deep);
+  padding: 0.42rem 0.8rem;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.xmas-stage-mode-switcher button.is-active {
+  background: var(--pine-deep);
+  color: #fff9ec;
+  box-shadow: 0 4px 12px rgba(15, 41, 33, 0.2);
+}
+
+.xmas-stage-media-box {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  aspect-ratio: 5 / 4;
+  background: #14261f;
+  border: 1px solid rgba(207, 155, 60, 0.35);
+}
+
+.xmas-stage-media-box img,
+.xmas-stage-media-box video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.xmas-stage-card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  margin-top: 0.9rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+}
+
+.xmas-stage-blurb {
+  margin: 0;
+  max-width: 44ch;
+  color: var(--ink-muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.xmas-stage-price-cta {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.xmas-stage-price {
+  text-align: right;
+}
+
+.xmas-stage-price strong {
+  display: block;
+  color: var(--pine-deep);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.65rem;
+  line-height: 1;
+}
+
+.xmas-stage-price strong small {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.xmas-stage-price span {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--cranberry);
+  font-weight: 700;
+}
+
+.xmas-mini-cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.65rem 1.05rem;
+  border-radius: 999px;
+  background: var(--pine-deep);
+  color: #fff9ec;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.xmas-mini-cta:hover {
+  background: var(--cranberry);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   REAL 3D WEBGL VIEWER WIDGET (Christmas3DViewer.tsx)
+   ========================================================================== */
+.xmas-real3d-widget {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.xmas-real3d-canvas-wrap {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  aspect-ratio: 5 / 4;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(255, 224, 152, 0.35) 0%, rgba(31, 63, 50, 0.92) 62%, #0d211a 100%);
+  border: 1px solid rgba(207, 155, 60, 0.45);
+  box-shadow: inset 0 0 48px rgba(246, 200, 104, 0.16);
+}
+
+.xmas-real3d-widget.is-compact .xmas-real3d-canvas-wrap {
+  aspect-ratio: 16 / 12;
+}
+
+.xmas-real3d-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+  touch-action: none;
+}
+
+.xmas-real3d-canvas:active {
+  cursor: grabbing;
+}
+
+.xmas-real3d-top-pills {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.7rem;
+  right: 0.7rem;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem;
+  pointer-events: none;
+}
+
+.xmas-real3d-live-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.32rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(15, 41, 33, 0.84);
+  border: 1px solid rgba(246, 212, 131, 0.5);
+  color: #fff8ea;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  backdrop-filter: blur(8px);
+}
+
+.xmas-real3d-live-tag i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #47e393;
+  box-shadow: 0 0 8px #47e393;
+}
+
+.xmas-real3d-poly-tag {
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(255, 251, 242, 0.88);
+  border: 1px solid rgba(207, 155, 60, 0.4);
+  color: var(--pine-deep);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.xmas-real3d-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: rgba(15, 41, 33, 0.72);
+  color: #fff9ec;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+
+.xmas-real3d-overlay.is-error {
+  background: rgba(120, 22, 31, 0.86);
+}
+
+.xmas-real3d-toolbar {
+  position: absolute;
+  bottom: 0.65rem;
+  left: 0.65rem;
+  right: 0.65rem;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.38rem;
+}
+
+.xmas-real3d-toolbar button {
+  border: 1px solid rgba(246, 212, 131, 0.4);
+  border-radius: 999px;
+  background: rgba(15, 41, 33, 0.82);
+  color: #fff8ea;
+  padding: 0.34rem 0.72rem;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.xmas-real3d-toolbar button:hover,
+.xmas-real3d-toolbar button.is-active {
+  background: rgba(207, 155, 60, 0.95);
+  border-color: #fff3d1;
+  color: #10261e;
+}
+
+.xmas-real3d-interactive-bar {
+  padding: 0.7rem 0.9rem;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #fffdf7 0%, #f8eed9 100%);
+  border: 1px solid rgba(207, 155, 60, 0.45);
+}
+
+.xmas-real3d-slider-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--pine-deep);
+}
+
+.xmas-mini-pill-btn {
+  border: 1px solid rgba(207, 155, 60, 0.5);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--pine-deep);
+  padding: 0.22rem 0.65rem;
+  font: inherit;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.xmas-mini-pill-btn.is-active {
+  background: var(--pine-deep);
+  color: #f8e5b4;
+  border-color: var(--pine-deep);
+}
+
+.xmas-real3d-range {
+  display: flex;
+  flex-direction: column;
+  gap: 0.32rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+.xmas-real3d-range input[type="range"] {
+  width: 100%;
+  accent-color: var(--cranberry);
+  cursor: pointer;
+}
+
+.xmas-real3d-parts-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.xmas-parts-legend-label {
+  width: 100%;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--pine-deep);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.15rem;
+}
+
+.xmas-real3d-part-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  padding: 0.28rem 0.68rem;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid rgba(207, 155, 60, 0.4);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--pine-deep);
+  user-select: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.xmas-real3d-part-chip i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.22);
+  display: inline-block;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.25);
+}
+
+/* ==========================================================================
+   MARQUEE RIBBON
+   ========================================================================== */
+.xmas-ribbon {
+  overflow: hidden;
+  background: linear-gradient(90deg, #981d29 0%, #b52432 50%, #981d29 100%);
+  border-top: 1px solid rgba(246, 212, 131, 0.4);
+  border-bottom: 1px solid rgba(246, 212, 131, 0.4);
+  color: #fff9ec;
+  padding: 0.72rem 0;
+}
+
+.xmas-ribbon > div {
+  display: flex;
+  width: max-content;
+  gap: 2.2rem;
+  white-space: nowrap;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  animation: xmas-marquee 38s linear infinite;
+}
+
+.xmas-ribbon b {
+  color: #f6d483;
+  margin: 0 0.55rem;
+}
+
+@keyframes xmas-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ==========================================================================
+   SYMMETRICAL PRODUCT COLLECTION GRID
+   ========================================================================== */
+.xmas-products-section {
+  padding: clamp(3.5rem, 6vw, 5.5rem) 0;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(245, 204, 118, 0.22), transparent 45%),
+    linear-gradient(180deg, #fcf7ee 0%, #f6ecda 100%);
+}
+
+.xmas-section-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.25rem 2rem;
+  margin-bottom: 1.75rem;
+}
+
+.xmas-section-top h2 {
+  margin: 0;
+  font-size: clamp(2.35rem, 4.4vw, 3.7rem);
+}
+
+.xmas-section-aside {
+  margin: 0;
+  max-width: 48ch;
+  color: var(--ink-muted);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.xmas-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.xmas-filter-row button {
+  border: 1px solid rgba(23, 35, 30, 0.14);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--pine-deep);
+  padding: 0.52rem 1rem;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.xmas-filter-row button:hover {
+  border-color: var(--gold);
+}
+
+.xmas-filter-row button[aria-pressed="true"] {
+  background: var(--pine-deep);
+  border-color: var(--pine-deep);
+  color: #fff9ec;
+  box-shadow: 0 8px 18px rgba(15, 41, 33, 0.18);
+}
+
+.xmas-filter-row span {
+  margin-left: auto;
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Symmetrical grid: three columns on desktop, two on tablet and phones. */
+.xmas-grid-shipping { margin: 0 0 18px; color: var(--pine-deep); font-size: .85rem; font-weight: 700; }
+.xmas-video-mobile-label, .xmas-card-mobile-action { display: none; }
+.xmas-product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+.xmas-product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 22px;
+  background: #ffffff;
+  border: 1px solid rgba(207, 155, 60, 0.34);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+}
+
+.xmas-product-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold);
+  box-shadow: var(--shadow-warm);
+}
+
+.xmas-product-image {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f3ead8;
+  flex-shrink: 0;
+}
+.xmas-card-media { position: relative; }
+.xmas-card-media button.xmas-video-pill { border: 1px solid rgba(255,255,255,.35); cursor: pointer; min-height: 44px; font-family: inherit; }
+.xmas-card-media button.xmas-video-pill:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+.xmas-product-image img,
+.xmas-product-image .xmas-card-hover-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s ease, opacity 0.3s ease;
+}
+
+.xmas-product-card:hover .xmas-product-image > img:first-child {
+  transform: scale(1.04);
+}
+
+.xmas-product-alternate,
+.xmas-card-hover-video {
+  position: absolute;
+  inset: 0;
+}
+
+.xmas-product-alternate {
+  opacity: 0;
+}
+
+.xmas-product-card:hover .xmas-product-alternate {
+  opacity: 1;
+}
+
+.xmas-card-top-badges {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.4rem;
+  pointer-events: none;
+}
+
+.xmas-card-badge {
+  padding: 0.3rem 0.68rem;
+  border-radius: 999px;
+  background: rgba(255, 253, 248, 0.92);
+  border: 1px solid rgba(207, 155, 60, 0.45);
+  color: var(--pine-deep);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(6px);
+}
+
+.xmas-card-3d-badge {
+  padding: 0.3rem 0.68rem;
+  border-radius: 999px;
+  background: rgba(15, 41, 33, 0.88);
+  border: 1px solid rgba(246, 212, 131, 0.55);
+  color: #f8e5b4;
+  font-size: 0.68rem;
+  font-weight: 800;
+  backdrop-filter: blur(6px);
+}
+
+.xmas-video-pill {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0.75rem;
+  z-index: 2;
+  padding: 0.28rem 0.68rem;
+  border-radius: 999px;
+  background: rgba(23, 35, 30, 0.78);
+  color: #fff9ec;
+  font-size: 0.68rem;
+  font-weight: 700;
+  backdrop-filter: blur(6px);
+}
+
+.xmas-product-card.is-playing-video .xmas-video-pill {
+  background: var(--cranberry);
+}
+
+.xmas-product-copy {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1.15rem 1.25rem 1.25rem;
+}
+
+.xmas-card-kicker {
+  margin: 0 0 0.3rem;
+  color: var(--cranberry);
+  font-size: 0.71rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.xmas-product-copy h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.55rem;
+  line-height: 1.12;
+  min-height: 2.24em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.xmas-product-copy h3 a {
+  color: var(--pine-deep);
+  text-decoration: none;
+}
+
+.xmas-product-copy h3 a:hover {
+  color: var(--cranberry);
+}
+
+.xmas-card-mini-desc {
+  margin: 0 0 1.1rem;
+  color: var(--ink-muted);
+  font-size: 0.86rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 3em;
+}
+
+.xmas-card-bottom {
+  margin-top: auto;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.xmas-card-price-block strong {
+  display: block;
+  color: var(--pine-deep);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.65rem;
+  line-height: 1;
+}
+
+.xmas-card-price-block strong span {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.xmas-card-price-block small {
+  display: block;
+  margin-top: 0.18rem;
+  color: #1f6b4a;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.xmas-card-launch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.58rem 0.95rem;
+  border-radius: 999px;
+  background: #f5ecda;
+  border: 1px solid rgba(207, 155, 60, 0.45);
+  color: var(--pine-deep);
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.18s ease;
+}
+
+.xmas-product-card:hover .xmas-card-launch {
+  background: var(--pine-deep);
+  border-color: var(--pine-deep);
+  color: #fff9ec;
+}
+
+/* ==========================================================================
+   WARM ILLUMINATED LAMPS FEATURE BANNER
+   ========================================================================== */
+.xmas-glow-story {
+  padding: clamp(3.5rem, 6vw, 5.5rem) 0;
+  background:
+    radial-gradient(circle at 26% 50%, rgba(246, 194, 91, 0.25), transparent 42%),
+    linear-gradient(135deg, #102a22 0%, #183b30 55%, #112921 100%);
+  color: #fbf4e6;
+  border-top: 1px solid rgba(246, 212, 131, 0.35);
+  border-bottom: 1px solid rgba(246, 212, 131, 0.35);
+}
+
+.xmas-glow-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(1.75rem, 4vw, 3.25rem);
+  align-items: center;
+}
+
+.xmas-glow-copy .xmas-eyebrow {
+  color: #f6d483;
+}
+
+.xmas-glow-copy h2 {
+  margin: 0 0 0.85rem;
+  color: #fffaf0;
+  font-size: clamp(2.35rem, 4.3vw, 3.6rem);
+}
+
+.xmas-glow-copy h2 em {
+  color: #f6d483;
+}
+
+.xmas-glow-copy > p {
+  margin: 0 0 1.4rem;
+  color: rgba(251, 244, 230, 0.86);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.xmas-glow-lamp-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.xmas-glow-mini-card {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(246, 212, 131, 0.28);
+  color: #fff9ec;
+  text-decoration: none;
+  transition: background 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+}
+
+.xmas-glow-mini-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #f6d483;
+  transform: translateY(-2px);
+}
+
+.xmas-glow-mini-card img {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.xmas-glow-mini-card strong {
+  display: block;
+  font-size: 0.84rem;
+  line-height: 1.25;
+}
+
+.xmas-glow-mini-card span {
+  display: block;
+  margin-top: 0.15rem;
+  color: #f6d483;
+  font-size: 0.73rem;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   DROP 175 CHARACTER ORNAMENTS SECTION
+   ========================================================================== */
+.xmas-ornament-section {
+  padding: clamp(3.5rem, 6vw, 5.5rem) 0;
+  background: linear-gradient(180deg, #fcf7ee 0%, #f7efe0 100%);
+}
+
+.xmas-price-line {
+  margin: 0.5rem 0 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--cranberry);
+}
+
+.xmas-price-line span {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+.xmas-ornament-spotlight {
+  display: grid;
+  grid-template-columns: minmax(260px, 380px) minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 2.25rem);
+  align-items: center;
+  margin-bottom: 2.25rem;
+  padding: clamp(1rem, 2.2vw, 1.5rem);
+  border-radius: 24px;
+  background: #ffffff;
+  border: 1px solid rgba(207, 155, 60, 0.42);
+  box-shadow: var(--shadow-soft);
+}
+
+.xmas-ornament-spotlight-media {
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: #14261f;
+}
+
+.xmas-ornament-spotlight-media video,
+.xmas-ornament-spotlight-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.xmas-ornament-spotlight-info h3 {
+  margin: 0 0 0.55rem;
+  font-size: clamp(1.85rem, 3vw, 2.5rem);
+}
+
+.xmas-ornament-spotlight-info > p {
+  margin: 0 0 1rem;
+  color: var(--ink-muted);
+  line-height: 1.6;
+}
+
+.xmas-spotlight-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.xmas-spotlight-meta span {
+  padding: 0.36rem 0.75rem;
+  border-radius: 999px;
+  background: #f8efe0;
+  border: 1px solid rgba(207, 155, 60, 0.35);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--pine-deep);
+}
+
+.xmas-ornament-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.15rem;
+  align-items: stretch;
+}
+
+.xmas-ornament {
+  display: flex;
+  flex-direction: column;
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid rgba(207, 155, 60, 0.32);
+  padding: 0.65rem;
+  box-shadow: 0 10px 24px rgba(20, 34, 28, 0.05);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.xmas-ornament:hover,
+.xmas-ornament.is-selected {
+  transform: translateY(-3px);
+  border-color: var(--cranberry);
+  box-shadow: 0 16px 32px rgba(161, 33, 45, 0.14);
+}
+
+.xmas-ornament-card-btn {
+  position: relative;
+  border: 0;
+  padding: 0;
+  border-radius: 13px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: #f3ead8;
+  cursor: pointer;
+}
+
+.xmas-ornament-card-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.xmas-ornament-live-badge {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  right: 0.5rem;
+  padding: 0.28rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(15, 41, 33, 0.84);
+  color: #fff9ec;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.xmas-ornament.is-selected .xmas-ornament-live-badge {
+  background: var(--cranberry);
+}
+
+.xmas-ornament-title-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.65rem 0.35rem 0.25rem;
+  color: var(--pine-deep);
+  text-decoration: none;
+}
+
+.xmas-ornament-title-link strong {
+  font-size: 0.9rem;
+}
+
+.xmas-ornament-title-link small {
+  color: var(--cranberry);
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.xmas-ornament-note {
+  margin: 1.25rem 0 0;
+  text-align: center;
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   CLOSING BANNER & OWNER TABLE
+   ========================================================================== */
+.xmas-closing {
+  padding: clamp(3.5rem, 6vw, 5rem) 0;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(246, 206, 118, 0.32), transparent 48%),
+    linear-gradient(180deg, #f7efe0 0%, #fcf7ee 100%);
+  border-top: 1px solid var(--line-gold);
+}
+
+.xmas-closing h2 {
+  margin: 0.25rem 0 0.75rem;
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+}
+
+.xmas-closing p {
+  margin: 0 auto 1.4rem;
+  max-width: 54ch;
+  color: var(--ink-muted);
+  line-height: 1.6;
+}
+
+.xmas-owner-review {
+  margin: 2rem auto 3rem;
+  padding: 1rem 1.25rem;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  font-size: 0.85rem;
+}
+
+.xmas-owner-review summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--pine-deep);
+}
+
+.xmas-price-table {
+  overflow-x: auto;
+  margin-top: 0.75rem;
+}
+
+.xmas-price-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.xmas-price-table th,
+.xmas-price-table td {
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+/* ==========================================================================
+   INDIVIDUAL CHRISTMAS PRODUCT DETAIL PAGE (/preview/christmas/:id)
+   ========================================================================== */
+.xmas-detail-subnav {
+  background: #f6ecda;
+  border-bottom: 1px solid rgba(207, 155, 60, 0.35);
+  padding: 0.65rem 0;
+}
+
+.xmas-detail-subnav-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.xmas-subnav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.42rem 0.9rem;
+  border-radius: 999px;
+  background: var(--pine-deep);
+  color: #fff9ec;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.xmas-subnav-back:hover {
+  background: var(--cranberry);
+}
+
+.xmas-subnav-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--pine-deep);
+}
+
+.xmas-subnav-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.32rem;
+}
+
+.xmas-subnav-thumbs a {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  opacity: 0.72;
+  transition: opacity 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+}
+
+.xmas-subnav-thumbs a:hover,
+.xmas-subnav-thumbs a.is-active {
+  opacity: 1;
+  transform: translateY(-1px);
+  border-color: var(--cranberry);
+}
+
+.xmas-subnav-thumbs img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.xmas-detail-3d-section {
+  padding: clamp(1.75rem, 3.5vw, 2.75rem) 0 1rem;
+}
+
+.xmas-detail-3d-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: center;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border-radius: 26px;
+  background: linear-gradient(180deg, #ffffff 0%, #fdf8ee 100%);
+  border: 1px solid rgba(207, 155, 60, 0.45);
+  box-shadow: var(--shadow-soft);
+}
+
+.xmas-detail-3d-info h2 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2rem, 3.4vw, 2.85rem);
+}
+
+.xmas-detail-3d-lead {
+  margin: 0 0 1rem;
+  color: var(--ink-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.xmas-figurine-3d-picker {
+  margin: 0 0 1rem;
+  padding: 0.75rem;
+  border-radius: 14px;
+  background: #f8efe0;
+  border: 1px solid rgba(207, 155, 60, 0.35);
+}
+
+.xmas-picker-title {
+  margin: 0 0 0.45rem;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--pine-deep);
+}
+
+.xmas-figurine-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.xmas-figurine-buttons button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 10px;
+  border: 1px solid rgba(23, 35, 30, 0.14);
+  background: #ffffff;
+  color: var(--pine-deep);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.xmas-figurine-buttons button.is-active {
+  background: var(--pine-deep);
+  border-color: var(--pine-deep);
+  color: #fff9ec;
+}
+
+.xmas-figurine-buttons img {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.xmas-detail-3d-tips {
+  margin: 0 0 1.15rem;
+  padding-left: 1.1rem;
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+.xmas-detail-3d-tips li + li {
+  margin-top: 0.3rem;
+}
+
+.xmas-detail-3d-tips strong {
+  color: var(--pine-deep);
+}
+
+.xmas-scroll-to-photos {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--cranberry);
+  font-size: 0.84rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.xmas-scroll-to-photos:hover {
+  text-decoration: underline;
+}
+
+.xmas-detail-preview > .container:first-child,
+.xmas-detail-preview .shop-subnav,
+.xmas-detail-preview .shop-notice {
+  display: none !important;
+}
+
+.xmas-detail-preview > .section {
+  padding-top: 1.5rem;
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 1060px) {
+  .xmas-hero-layout,
+  .xmas-glow-layout,
+  .xmas-detail-3d-card {
+    grid-template-columns: 1fr;
+  }
+
+  .xmas-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .xmas-ornament-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .xmas-glow-lamp-links,
+  .xmas-ornament-spotlight {
+    grid-template-columns: 1fr;
+  }
+
+  .xmas-product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .xmas-ornament-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .xmas-ornament { padding: 7px; }
+  .xmas-ornament-title-link strong { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.2rem; line-height: 1.15; }
+  .xmas-ornament-title-link small { font-size: .7rem; line-height: 1.5; }
+  .xmas-ornament-live-badge { font-size: .62rem; padding: 5px; left: 4px; right: 4px; }
+  .xmas-product-card { border-radius: 15px; }
+  .xmas-product-card:hover { transform: none; }
+  .xmas-product-card:hover .xmas-product-alternate { opacity: 0; }
+  .xmas-product-card:hover .xmas-product-image > img:first-child { transform: none; }
+  .xmas-product-copy { padding: 12px 10px 10px; }
+  .xmas-product-copy h3 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.3rem; line-height: 1.12; font-weight: 700; min-height: 0; display: block; overflow: visible; }
+  .xmas-card-kicker, .xmas-card-mini-desc, .xmas-card-top-badges { display: none; }
+  .xmas-card-bottom { flex-direction: column; align-items: stretch; gap: 10px; padding-top: 10px; margin-top: auto; }
+  .xmas-card-price-block strong { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.5rem; line-height: 1.1; font-weight: 700; }
+  .xmas-card-price-block strong span { font-size: .65rem; }
+  .xmas-card-price-block small { display: none; }
+  .xmas-card-launch { min-height: 44px; padding: 8px 5px; font-size: .75rem; }
+  .xmas-video-desktop-label, .xmas-card-desktop-action { display: none; }
+  .xmas-video-mobile-label, .xmas-card-mobile-action { display: inline; }
+  .xmas-video-pill { bottom: 7px; left: 7px; padding: 4px 7px; font-size: .65rem; }
+  .xmas-grid-shipping { font-size: .8rem; margin-bottom: 14px; }
+
+  .xmas-filter-row span {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+/* Review version: touch-friendly browsing and optional 3D on phones. */
+.xmas-page *, .xmas-detail-wrapper * { min-width: 0; }
+.xmas-viewer-shell { min-width: 0; }
+.xmas-viewer-poster { position: relative; display: grid; place-items: center; aspect-ratio: 5 / 4; overflow: hidden; border-radius: 18px; background: #183c30; }
+.xmas-viewer-poster img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.xmas-viewer-poster > button { position: relative; align-self: end; margin: 20px; box-shadow: 0 3px 18px #0005; }
+.xmas-viewer-photo-toggle { display: block; margin: 12px auto 0; min-height: 44px; padding: 8px 16px; color: #173c30; background: #fff9ee; border: 1px solid #c6b892; border-radius: 24px; cursor: pointer; font: inherit; font-size: .85rem; }
+.xmas-real3d-canvas { touch-action: pan-y; }
+.xmas-real3d-canvas:focus-visible { outline: 3px solid #f6d483; outline-offset: -4px; }
+.xmas-real3d-toolbar button, .xmas-stage-mode-switcher button, .xmas-strip-controls button, .xmas-filter-row button, .xmas-mini-pill-btn { min-height: 44px; }
+.xmas-still .xmas-snow-layer, .xmas-still .xmas-warm-bokeh { display: none; }
+.xmas-still .xmas-floating-tilt-card, .xmas-still .xmas-ribbon > div { animation-play-state: paused; }
+@media (max-width: 760px) {
+  .xmas-hero { padding-block: 24px; }
+  .xmas-hero-layout { display: flex; flex-direction: column; gap: 16px; align-items: stretch; }
+  .xmas-hero-copy { display: contents; }
+  .xmas-hero-copy > * { margin-block: 0; }
+  .xmas-hero-copy .xmas-breadcrumb { order: 0; }
+  .xmas-hero-copy > .xmas-eyebrow { order: 1; font-size: .67rem; letter-spacing: .1em; }
+  .xmas-hero-copy h1 { order: 2; font-size: clamp(2.4rem, 11vw, 3.25rem); line-height: 1.04; }
+  .xmas-hero-copy .xmas-intro { order: 6; max-width: 100%; font-size: .95rem; line-height: 1.55; overflow-wrap: anywhere; }
+  .xmas-hero-copy .xmas-actions { order: 4; }
+  .xmas-hero-copy .xmas-hero-selector { order: 5; padding: 10px; margin: 0; }
+  .xmas-hero-stage { order: 3; }
+  .xmas-hero-copy .xmas-hero-trust-pills { order: 7; }
+  .xmas-action-row { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  .xmas-action-row .xmas-button:first-child { display: none; }
+  .xmas-selector-heading { text-transform: none; letter-spacing: 0; font-size: .8rem; margin-bottom: 7px; }
+  .xmas-selector-pills { display: flex; overflow-x: auto; scroll-snap-type: x proximity; padding-bottom: 6px; }
+  .xmas-hero-pill { flex: 0 0 225px; min-height: 64px; scroll-snap-align: start; }
+  .xmas-stage-card-header { gap: 10px; }
+  .xmas-stage-mode-switcher { width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-radius: 14px; }
+  .xmas-stage-mode-switcher button { padding: 6px; font-size: .72rem; border-radius: 10px; line-height: 1.3; }
+  .xmas-stage-card-footer { gap: 10px; }
+  .xmas-stage-blurb { display: none; }
+  .xmas-stage-price-cta { width: 100%; }
+  .xmas-hero-trust-pills { font-size: .75rem; }
+  .xmas-hero-trust-pills > span:last-child { display: none; }
+  .xmas-real3d-top-pills { left: 8px; top: 8px; right: 8px; }
+  .xmas-real3d-poly-tag { display: none; }
+  .xmas-real3d-live-tag { font-size: .56rem; letter-spacing: .02em; padding: 6px 8px; }
+  .xmas-real3d-toolbar { position: static; padding: 8px; background: #183c30; gap: 6px; }
+  .xmas-real3d-toolbar button { flex: 1 1 40%; font-size: .78rem; }
+  .xmas-real3d-canvas-wrap, .xmas-real3d-widget.is-compact .xmas-real3d-canvas-wrap { aspect-ratio: auto; }
+  .xmas-real3d-canvas { height: 300px; }
+  .xmas-real3d-interactive-bar { padding: 10px; }
+  .xmas-review-strip { font-size: .73rem; gap: 8px; }
+  .xmas-floating-tilt-card { animation: none; touch-action: pan-y; }
+  .xmas-touch-tilt-hint { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 12px; font-family: "Plus Jakarta Sans", sans-serif; font-size: .72rem; font-weight: 600; color: var(--pine-deep); background: #f5ecd9; border: 1px solid #cf9b3c55; border-radius: 14px; margin-bottom: 12px; }
+  .xmas-touch-tilt-hint span { font-size: 1.2rem; }
+  .xmas-real3d-touch-guide { display: block; margin: 0; padding: 10px 12px; background: #183c30; color: #fff9ec; font-size: .73rem; line-height: 1.5; text-align: center; }
+  .xmas-detail-3d-info .xmas-detail-3d-tips { display: none; }
+  .xmas-detail-3d-lead { font-size: .9rem; }
+  .xmas-subnav-thumbs { overflow-x: auto; flex-wrap: nowrap; }
+  .xmas-subnav-thumbs a { flex: 0 0 44px; width: 44px; height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .xmas-page *, .xmas-detail-wrapper * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .xmas-floating-tilt-card { transform: none !important; }
+  .xmas-touch-tilt-hint { display: none; }
+  .xmas-snow-layer, .xmas-warm-bokeh { display: none; }
+}

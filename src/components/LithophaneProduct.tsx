@@ -60,8 +60,9 @@ export async function uploadPhoto(file: File, onProgress: (progress: number) => 
 export function LithophaneProduct() {
   const content = useProductContent()[productId];
   const { priceFor, compareAtFor, sale, nameFor } = useShopifyCatalog();
-  const product={...content,name:nameFor(productId,products.find(p=>p.id===productId)?.name || content.name)};
-  const { add,remainingFor } = useCart();
+  const catalogEntry = products.find(p => p.id === productId);
+  const product={...content,name:nameFor(productId,catalogEntry?.name || content.name)};
+  const { add, remainingFor } = useCart();
   const inputRef = useRef<HTMLInputElement>(null);
   const [imageIndex, setImageIndex] = useState(0);
   const [file, setFile] = useState<File | null>(null);
@@ -154,9 +155,9 @@ export function LithophaneProduct() {
             </div>
           </div>
           <div className="lithophane-summary">
-            <p className="eyebrow">PERSONALIZED LIGHTING / MADE IN EDMONTON</p>
+            <p className="eyebrow">CUSTOM PHOTO LAMP &amp; NIGHT LIGHT / MADE IN EDMONTON</p>
             <h1>{product.name}</h1>
-            <p className="lithophane-value">Turn your memories into three-dimensional light.</p>
+            <p className="lithophane-value">Custom Photo Lamp &amp; Personalized Night Light — Turn your memories into three-dimensional light.</p>
             <p className="lead">{product.description}</p>
             <p className="shop-price">{money(displayedPrice)} <span>CAD</span></p>
             {compareAtFor(productId) && <p className="shop-regular-price"><strong className="shop-sale-inline">{sale?.percentage}% OFF</strong> Regular {money(compareAtFor(productId)!)} CAD</p>}
@@ -196,6 +197,18 @@ export function LithophaneProduct() {
               <StockStatus ids={[productId]}/><button className="button" type="submit" disabled={!file || busy || !product.available || remainingFor(productId)<1}>{busy ? "Uploading photo…" : "Upload photo & add to cart"}</button>
               {added && <div className="shop-added-confirmation" role="status"><strong>Photo attached and lamp added.</strong><Link to="/shop/cart">View cart →</Link></div>}
               <p className="small">Your photo is stored under a private, unlisted reference for production and attached to the Shopify order.</p>
+              {catalogEntry?.searchKeywords && catalogEntry.searchKeywords.length > 0 && (
+                <div className="product-search-tags" style={{ marginTop: "1.25rem" }}>
+                  <p className="small" style={{ marginBottom: "0.5rem" }}><strong>Popular search &amp; gift tags:</strong></p>
+                  <div className="design-direct-links-grid">
+                    {catalogEntry.searchKeywords.slice(0, 8).map((tag) => (
+                      <Link key={tag} to={`/shop/all?q=${encodeURIComponent(tag)}#products`} className="design-direct-link-chip">
+                        #{tag}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
             </form>
           </div>
         </div>
