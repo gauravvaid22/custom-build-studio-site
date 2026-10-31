@@ -1,3 +1,4 @@
+import {CUSTOMER_3D_ENABLED} from '../lib/storefrontFeatures';
 import { CSSProperties, useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate, useParams, useSearchParams } from "react-router-dom";
 import draftProducts from "../../commerce/christmas-preview-products.json";
@@ -38,6 +39,7 @@ const REAL_3D_MODELS = new Set([
 ]);
 
 function resolve3DModelId(productId: string, variantId?: string | null): string | null {
+  if (!CUSTOMER_3D_ENABLED) return null;
   if (productId === "christmas-character-figurines") {
     const target = variantId && REAL_3D_MODELS.has(variantId) ? variantId : "hooked-santa";
     return target;
@@ -312,7 +314,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
   const [searchParams] = useSearchParams();
   const [filter, setFilter] = useState("Everything");
   const [activeHeroId, setActiveHeroId] = useState("endless-swirling-tree");
-  const [heroViewTab, setHeroViewTab] = useState<"3d" | "video" | "photo">("3d");
+  const [heroViewTab, setHeroViewTab] = useState<"3d" | "video" | "photo">(CUSTOMER_3D_ENABLED ? "3d" : "photo");
   const [activeOrnamentId, setActiveOrnamentId] = useState("santa-claus-christmas-ornament");
   const [hoveredVideoId, setHoveredVideoId] = useState<string | null>(null);
   const [tappedVideoId, setTappedVideoId] = useState<string | null>(null);
@@ -470,8 +472,8 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
               Illuminated table lamps, kinetic spiral trees, intricate nativity scenes, festive character figurines and trinket trays. Crafted in small batches at our Edmonton studio with precision detail and free tracked Canadian shipping.
             </p>
 
-            <div className="xmas-hero-selector" aria-label="Interactive 3D preview selector">
-              <p className="xmas-selector-heading">Select a piece to load into the live 3D stage:</p>
+            <div className="xmas-hero-selector" aria-label="Product preview selector">
+              <p className="xmas-selector-heading">Choose a piece to explore its photos and video:</p>
               <div className="xmas-selector-pills">
                 {heroShowcases.map(item => {
                   const p = get(item.id);
@@ -521,7 +523,8 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                   <span className="xmas-stage-kicker">{activeHeroMeta.tag}</span>
                   <h3>{nameFor(activeHeroProduct.id, activeHeroProduct.name)}</h3>
                 </div>
-                <div className="xmas-stage-mode-switcher" role="tablist" aria-label="Switch between Real 3D Model, Product Video, and Studio Photo">
+                <div className="xmas-stage-mode-switcher" role="tablist" aria-label="Product photos and video">
+                  {CUSTOMER_3D_ENABLED && (
                   <button
                     type="button"
                     role="tab"
@@ -531,6 +534,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                   >
                     🧊 Interactive 3D
                   </button>
+                  )}
                   {activeHeroProduct.video && (
                     <button
                       type="button"
@@ -631,7 +635,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
               </h2>
             </div>
             <p className="xmas-section-aside">
-              Every price below includes Canadian shipping. Open a collection to explore its options, photos and available videos or interactive 3D previews.
+              Every price below includes Canadian shipping. Open a collection to explore its options, photos and available videos.
             </p>
           </div>
 
@@ -774,7 +778,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
               Our illuminated Christmas lamps are designed around standard battery LED tealights, casting soft architectural silhouettes through frosted windows, manger cutouts and sculpted pine trees.
             </p>
             <p>
-              Try interacting with the <strong>Moonlit Christmas Village</strong> 3D model right here on the left to see how ambient light cradles the miniature cottages and crescent moon.
+              Explore the <strong>Moonlit Christmas Village</strong> photos to see the miniature cottages and crescent moon in detail.
             </p>
             <div className="xmas-glow-lamp-links">
               {[
@@ -789,7 +793,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                     <img src={lamp.images[0].thumb} alt="" width="48" height="48" />
                     <div>
                       <strong>{nameFor(lamp.id, lamp.name)}</strong>
-                      <span>{price(lamp)} CAD · Inspect in 3D ↗</span>
+                      <span>{price(lamp)} CAD · Photos & details ↗</span>
                     </div>
                   </Link>
                 );
