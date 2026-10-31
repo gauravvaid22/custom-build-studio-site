@@ -13,7 +13,20 @@ import { PURE_HALLOWEEN_PRODUCT_IDS, PURE_CHRISTMAS_PRODUCT_IDS } from "../../co
 export const CHRISTMAS_PUBLIC_ENABLED = merchandising.activeSeason === "christmas" || merchandising.hideOffSeasonProducts !== true;
 export const HALLOWEEN_PUBLIC_ENABLED = merchandising.activeSeason === "halloween" || merchandising.hideOffSeasonProducts !== true;
 
-const publicProducts = products.filter((product) => !("variantOf" in product) && !product.purchaseOnly);
+function isSeasonallyPublicProduct(product: (typeof products)[number]) {
+  if (!merchandising.hideOffSeasonProducts) return true;
+  const groupId = "listingGroup" in product ? product.listingGroup : undefined;
+  const checkIds = [product.id, groupId].filter(Boolean) as string[];
+  if (merchandising.activeSeason === "christmas") {
+    return !checkIds.some((id) => PURE_HALLOWEEN_PRODUCT_IDS.includes(id));
+  }
+  if (merchandising.activeSeason === "halloween") {
+    return !checkIds.some((id) => PURE_CHRISTMAS_PRODUCT_IDS.includes(id));
+  }
+  return !checkIds.some((id) => PURE_HALLOWEEN_PRODUCT_IDS.includes(id) || PURE_CHRISTMAS_PRODUCT_IDS.includes(id));
+}
+
+const publicProducts = products.filter((product) => !("variantOf" in product) && !product.purchaseOnly && isSeasonallyPublicProduct(product));
 const browsingProducts = publicProducts.filter(product => !("listingGroup" in product));
 const halloweenSpecialIds = collections.find((collection) => collection.id === "halloween")?.products || [];
 const canonical = (path: string) => business.origin + (path === "/" ? "/" : path.replace(/\/$/, "") + "/");
@@ -32,11 +45,9 @@ export const publicRoutes = [
   ...(HALLOWEEN_PUBLIC_ENABLED ? ["/shop/halloween-special"] : []),
   ...(CHRISTMAS_PUBLIC_ENABLED ? ["/shop/christmas-special"] : []),
   ...collections
-    .filter(c => merchandising.hideOffSeasonProducts !== true || (CHRISTMAS_PUBLIC_ENABLED ? !["halloween", "masks-costumes"].includes(c.id) : true))
+    .filter(c => merchandising.hideOffSeasonProducts !== true || (CHRISTMAS_PUBLIC_ENABLED ? !["halloween", "masks-costumes"].includes(c.id) : HALLOWEEN_PUBLIC_ENABLED ? c.id !== "christmas" : !["halloween", "masks-costumes", "christmas"].includes(c.id)))
     .map((collection) => `/shop/${collection.id}`),
-  ...publicProducts
-    .filter(p => !merchandising.hideOffSeasonProducts || (CHRISTMAS_PUBLIC_ENABLED ? (!PURE_HALLOWEEN_PRODUCT_IDS.includes(p.id) && !(p.listingGroup && PURE_HALLOWEEN_PRODUCT_IDS.includes(p.listingGroup))) : true))
-    .map((product) => `/shop/${product.id}`),
+  ...publicProducts.map((product) => `/shop/${product.id}`),
   "/reviews",
   "/contact",
   "/privacy",
@@ -57,7 +68,11 @@ export function getSeo(path: string) {
     ],
     "/shop/all": [
       "Shop All Gifts, Décor & Accessories Made in Edmonton",
-      "Browse every finished product from Custom Build Studio, including personalized gifts, figurines, gaming accessories, home décor and wearable masks. Made in Edmonton.",
+      CHRISTMAS_PUBLIC_ENABLED
+        ? "Browse every finished product from Custom Build Studio, including personalized photo gifts, holiday table lamps, Christmas décor, figurines and gaming accessories. Made in Edmonton."
+        : HALLOWEEN_PUBLIC_ENABLED
+          ? "Browse every finished product from Custom Build Studio, including personalized gifts, figurines, gaming accessories, home décor and wearable masks. Made in Edmonton."
+          : "Browse every finished product from Custom Build Studio, including personalized photo gifts, figurines, gaming accessories and home décor. Made in Edmonton.",
     ],
     "/shop/sale": [
       "Current Shop Sale",
@@ -143,11 +158,16 @@ export function getSeo(path: string) {
             "Page Not Found",
             "Find design and fabrication services at Custom Build Studio.",
           ];
+  const collectionCoverProduct = collection
+    ? publicProducts.find((item) => item.id === collection.coverProduct) ||
+      collection.products.map((id) => publicProducts.find((item) => item.id === id)).find(Boolean) ||
+      products.find((item) => item.id === collection.coverProduct)
+    : undefined;
   return {
     title: `${entry[0]} | Custom Build Studio`,
     description: entry[1],
     url: canonical(page),
-    image: new URL((product?.images[0]?.src || (collection ? products.find((item) => item.id === collection.coverProduct)?.images[0]?.src : undefined) || (page === "/shop/christmas-special" ? "/media/shop/endless-swirling-tree/owner-green-v3-0-1200.webp" : page === "/shop/halloween-special" ? "/media/shop/candlelight-pumpkins-table-lamp/1-1200.webp" : "/og-image.jpg")), business.origin).href,
+    image: new URL((product?.images[0]?.src || collectionCoverProduct?.images[0]?.src || (page === "/shop/christmas-special" ? "/media/shop/endless-swirling-tree/owner-green-v3-0-1200.webp" : page === "/shop/halloween-special" ? "/media/shop/candlelight-pumpkins-table-lamp/1-1200.webp" : "/og-image.jpg")), business.origin).href,
     imageAlt: product?.images[0]?.alt || (collection ? `${collection.name} from Custom Build Studio` : page === "/shop/christmas-special" ? "Spiral Tabletop Christmas Tree from the Christmas Collection" : page === "/shop/halloween-special" ? "Candlelight Pumpkins Table Lamp from the Halloween Special" : "Custom Build Studio design and fabrication project"),
     noindex: !publicRoutes.includes(page) || page === "/privacy",
   };

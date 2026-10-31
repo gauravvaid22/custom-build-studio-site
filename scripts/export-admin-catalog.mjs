@@ -53,8 +53,8 @@ if (source || process.env.CONTEXT==='production') {
     const base = baselineMap.get(p.id);
     if (base) {
       if (base.name && !p.name) p.name = base.name;
-      if (base.seoTitle && !p.seoTitle) p.seoTitle = base.seoTitle;
-      if (base.seoDescription && !p.seoDescription) p.seoDescription = base.seoDescription;
+      if (base.seoTitle && (!p.seoTitle || p.seoTitle === p.name)) p.seoTitle = base.seoTitle;
+      if (base.seoDescription && (!p.seoDescription || p.seoDescription.startsWith('A character bauble with festive colour and sculpted detail.'))) p.seoDescription = base.seoDescription;
       if (Array.isArray(base.searchKeywords) && (!Array.isArray(p.searchKeywords) || !p.searchKeywords.length)) p.searchKeywords = base.searchKeywords;
     }
   }

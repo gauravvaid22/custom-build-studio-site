@@ -5,6 +5,7 @@ import source from "../commerce/photo-frames-source.json" with { type: "json" };
 import products from "../commerce/products.json" with { type: "json" };
 import collections from "../commerce/collections.json" with { type: "json" };
 import pricing from "../commerce/pricing.json" with { type: "json" };
+import deliveryPolicy from "../commerce/delivery-policy.json" with { type: "json" };
 import { discoveryProducts, fetchDiscoveryCatalog, merchantFeed, discoverySchema } from "../commerce/search-discovery.mjs";
 
 test("every drop design includes personalization and correctly mapped media and source dimensions", () => {
@@ -15,8 +16,11 @@ test("every drop design includes personalization and correctly mapped media and 
     const product = products.find(p => p.id === item.id);
     assert.ok(personalized.products.includes(product.listingGroup || item.id) && frames.products.includes(product.listingGroup || item.id));
     assert.equal(product.personalization.photoCount, 1);
-    assert.equal(product.priceCents, item.priceCents);
-    assert.ok(product.priceCents - pricing.pickupPriceDifferenceCents >= 1999);
+    const expectedPriceCents = deliveryPolicy.active
+      ? (product.basePriceCents ?? item.priceCents - pricing.pickupPriceDifferenceCents) + deliveryPolicy.defaultAllowanceCents
+      : item.priceCents;
+    assert.equal(product.priceCents, expectedPriceCents);
+    assert.ok((product.basePriceCents ?? product.priceCents - pricing.pickupPriceDifferenceCents) >= 1999);
     assert.ok(product.dimensions.includes(item.bodyMm.join(" × ")));
     assert.match(product.included, /photo printed, trimmed and fitted/);
     assert.equal(product.images.length, 4);

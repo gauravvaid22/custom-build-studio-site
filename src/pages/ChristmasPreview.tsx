@@ -57,89 +57,89 @@ function resolve3DModelId(productId: string, variantId?: string | null): string 
 
 const PRODUCT_META: Record<string, { heightLabel: string; tag: string; summary: string }> = {
   "endless-swirling-tree": {
-    heightLabel: "19 cm tall",
+    heightLabel: "Approx. 19 cm tall",
     tag: "KINETIC SPIRAL",
-    summary: "Two nested helical trees that glide smoothly together. Twist or slide to animate.",
+    summary: "Two nested helical trees with a gold star that glide smoothly through each other.",
   },
   "christmas-angel": {
-    heightLabel: "21 cm tall",
+    heightLabel: "Approx. 21 cm tall",
     tag: "ILLUMINATED NATIVITY",
-    summary: "Graceful angel wings framing a multi-layered nativity scene with warm ambient lighting.",
+    summary: "Graceful angel wings framing a multi-layered nativity silhouette, with warm LED lighting included.",
   },
   "meowy-christmas-tree-topper": {
-    heightLabel: "Fits standard trees",
+    heightLabel: "Approx. 27 cm tall",
     tag: "PLAYFUL ACCENT",
-    summary: "A warm, characterful cat silhouette with a star halo to crown your Christmas tree.",
+    summary: "A playful cat reaching for a golden star to crown your Christmas tree with personality.",
   },
   "christmas-character-figurines": {
-    heightLabel: "6–9 cm tall",
+    heightLabel: "Approx. 8–10 cm",
     tag: "CHARACTER TRIO",
-    summary: "Hooked Santa with hanging lantern, hooded Snow in Jumper, and baby Axolotl with Santa hat.",
+    summary: "Choose Knit-Look Santa, Cosy Jumper Snowman, or Christmas Baby Axolotl—each crafted individually.",
   },
   "christmas-gnome-set": {
-    heightLabel: "5 distinct gnomes",
+    heightLabel: "Set of 5 · up to 15 cm",
     tag: "COLLECTIBLE SET",
-    summary: "Five handcrafted holiday gnomes with braided beards, textured hats and winter accessories.",
+    summary: "Five whimsical holiday gnomes with tall textured hats and braided beards to arrange together.",
   },
   "bright-nativity-table-lamp": {
-    heightLabel: "18 cm wide",
+    heightLabel: "Approx. 19 cm tall",
     tag: "WARM ILLUMINATION",
-    summary: "Architectural lantern with layered nativity silhouettes glowing under ambient light.",
+    summary: "A golden Bethlehem star shining above a sheltered nativity scene, with warm LED lighting included.",
   },
   "village-on-the-moon-table-lamp": {
-    heightLabel: "20 cm tall",
+    heightLabel: "Approx. 14 cm tall",
     tag: "CRESCENT MOON LAMP",
-    summary: "A quiet winter village with snow-draped rooftops cradled inside a sculpted lunar crescent.",
+    summary: "A miniature winter village nestled inside a sculpted crescent moon, with warm LED lighting included.",
   },
   "santa-s-bonfire-table-lamp": {
-    heightLabel: "16 cm wide",
-    tag: "LOG FIREPLACE LAMP",
-    summary: "Santa resting by a warm, crackling campsite fire with stacked logs and warm glow.",
+    heightLabel: "Approx. 11 cm tall",
+    tag: "CAMPFIRE NIGHT LIGHT",
+    summary: "Santa and his reindeer resting beside a glowing campfire, with warm LED lighting included.",
   },
   "santa-s-snack-hat-bowl": {
-    heightLabel: "17 cm diameter",
+    heightLabel: "Approx. 8.7 cm tall",
     tag: "FESTIVE SERVING",
-    summary: "An upturned Santa hat with fluffy white trim and pom-pom bowl for candies and holiday treats.",
+    summary: "An upturned Santa hat catch-all dish for individually wrapped holiday sweets or small treasures.",
   },
   "christmas-character-ornaments": {
-    heightLabel: "8 character designs",
+    heightLabel: "8 character designs · ~5 cm",
     tag: "HANDCRAFTED ORNAMENTS",
-    summary: "Sculpted holiday ornaments including Santa, sleeping pets, reindeer, snowman and nutcracker.",
+    summary: "Sculpted holiday baubles including Santa, sleepy pets, reindeer, snowman and nutcracker—sold individually.",
   },
   "holy-family-embrace": {
-    heightLabel: "18 cm tall",
+    heightLabel: "Approx. 15 cm tall",
     tag: "CHRISTMAS GRACE",
-    summary: "Smooth, flowing sculptural lines depicting Mary, Joseph and baby Jesus in serene devotion.",
+    summary: "Smooth, flowing white-and-gold sculpture depicting Mary, Joseph and baby Jesus for mantel or shelf.",
   },
   "heavenly-trio": {
-    heightLabel: "3-piece set",
+    heightLabel: "Set of 3 · ~20 cm",
     tag: "CHRISTMAS GRACE",
-    summary: "Three stylized angel figurines in tiered heights with golden halo accents and folded hands.",
+    summary: "Three graceful angel figurines—Halo, Heart and Star—finished in a soft white-and-gold palette.",
   },
   "guiding-star-tree-topper": {
-    heightLabel: "22 cm star",
+    heightLabel: "Approx. 12 cm star",
     tag: "CHRISTMAS GRACE",
-    summary: "An elegant, faceted eight-point Bethlehem star with built-in spiral tree-top mount.",
+    summary: "An open geometric Bethlehem star with a sculptural spiral tree-top base in white and gold.",
   },
   "evergreen-wreath": {
-    heightLabel: "24 cm diameter",
+    heightLabel: "Approx. 19.5 × 22.3 cm",
     tag: "CHRISTMAS GRACE",
-    summary: "A textured evergreen door or wall wreath with pinecone accents and ribbon hanger.",
+    summary: "Sculpted winter woodland wreath in white and gold with a festive bow for indoor walls or sheltered doors.",
   },
   "luminous-tree": {
-    heightLabel: "3 lace patterns",
+    heightLabel: "3 designs · ~12 cm",
     tag: "CHRISTMAS GRACE",
-    summary: "Intricate perforated tabletop Christmas trees that scatter star and lace light patterns.",
+    summary: "Choose Starry Tiers, Lace Tiers or Spiral Stars—each white-and-gold tree includes battery LED lighting.",
   },
   "village-lights": {
-    heightLabel: "Modular village",
+    heightLabel: "Set of 2 · ~9 & 14 cm",
     tag: "CHRISTMAS GRACE",
-    summary: "Four modular Scandinavian-style row houses with window cutouts for tealight illumination.",
+    summary: "Two snowy miniature cottages with warm LED lighting included for a cozy holiday village glow.",
   },
   "christmas-trinket-trays": {
     heightLabel: "Tree, snowflake, stocking",
     tag: "HOLIDAY DISHES",
-    summary: "Three festive tabletop trays shaped as a Christmas tree, snowflake and stocking for jewelry or keys.",
+    summary: "Festive white-and-gold catch-all trays shaped as an Evergreen Tree, Winter Snowflake, or Holiday Stocking.",
   },
 };
 
@@ -181,21 +181,22 @@ function ProductDetailWith3D({ product, publicMode = false }: { product: Catalog
   const variantParam = params.get("variant");
   const model3dId = resolve3DModelId(product.id, variantParam);
   const { priceFor, nameFor } = useShopifyCatalog();
+  const sourceCatalog = publicMode ? allProducts : draftCatalog;
 
   const activeFigurine = useMemo(() => {
     if (product.id !== "christmas-character-figurines") return null;
-    const figurines = draftCatalog.filter(p => p.listingGroup === "christmas-character-figurines");
+    const figurines = sourceCatalog.filter(p => p.listingGroup === "christmas-character-figurines");
     return figurines.find(f => f.id === variantParam) || figurines[0];
-  }, [product.id, variantParam]);
+  }, [product.id, variantParam, sourceCatalog]);
 
   const activeTray = useMemo(() => {
     if (product.id !== "christmas-trinket-trays") return null;
-    const trays = draftCatalog.filter(p => p.listingGroup === "christmas-trinket-trays");
+    const trays = sourceCatalog.filter(p => p.listingGroup === "christmas-trinket-trays");
     return trays.find(t => t.id === variantParam) || trays[0];
-  }, [product.id, variantParam]);
+  }, [product.id, variantParam, sourceCatalog]);
 
   const currentItem = activeFigurine || activeTray || product;
-  const listings = draftCatalog.filter(p => !p.listingGroup);
+  const listings = sourceCatalog.filter(p => !p.listingGroup && (p.category === "Christmas décor" || CHRISTMAS_GRACE_IDS.has(p.id) || p.id === "endless-swirling-tree"));
   const itemHref = (id: string) => publicMode ? `/shop/${id}` : `/preview/christmas/${id}?analytics_test=1`;
 
   return (
@@ -303,7 +304,7 @@ function ProductDetailWith3D({ product, publicMode = false }: { product: Catalog
       )}
 
       <div className="xmas-detail-lower">
-        <ShopProduct previewCatalog={draftCatalog} previewId={product.id} />
+        <ShopProduct previewCatalog={publicMode ? undefined : draftCatalog} previewId={product.id} />
       </div>
     </div>
   );
@@ -340,8 +341,9 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
   }, [catalog]);
 
   const ornaments = useMemo(() => {
-    return draftCatalog.filter(p => p.listingGroup === "christmas-character-ornaments");
-  }, []);
+    const liveOrnaments = catalog.filter(p => p.listingGroup === "christmas-character-ornaments");
+    return liveOrnaments.length ? liveOrnaments : draftCatalog.filter(p => p.listingGroup === "christmas-character-ornaments");
+  }, [catalog]);
 
   const get = (targetId: string): CatalogProduct => {
     return catalog.find(p => p.id === targetId) || draftCatalog.find(p => p.id === targetId) || draftCatalog[0];
@@ -377,7 +379,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
     if (targetProduct) return <ProductDetailWith3D product={targetProduct} publicMode={publicMode} />;
     return (
       <div className="xmas-detail-preview">
-        <ShopProduct previewCatalog={draftCatalog} previewId={id} />
+        <ShopProduct previewCatalog={publicMode ? undefined : draftCatalog} previewId={id} />
       </div>
     );
   }
@@ -386,32 +388,32 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
     {
       id: "endless-swirling-tree",
       tag: "KINETIC TWO-PART SPIRAL",
-      headline: "Slide & twist the real 3D spiral tree.",
+      headline: "Slide & twist the nested spiral tree.",
       blurb: "Two nested helical trees crafted in emerald green and metallic gold that glide smoothly through each other.",
     },
     {
       id: "christmas-angel",
       tag: "ILLUMINATED NATIVITY",
       headline: "A warm golden halo over the manger.",
-      blurb: "Porcelain-look angel wings framing a multi-layered nativity silhouette with warm interior lighting.",
+      blurb: "Porcelain-look angel wings framing a multi-layered nativity silhouette, with warm LED lighting included.",
     },
     {
       id: "village-on-the-moon-table-lamp",
       tag: "CRESCENT MOON LAMP",
       headline: "A winter village cradled in the moon.",
-      blurb: "Tiny cottages and alpine trees nestled inside a sculpted lunar crescent.",
+      blurb: "Tiny cottages and alpine trees nestled inside a sculpted lunar crescent, with warm LED lighting included.",
     },
     {
       id: "santa-s-bonfire-table-lamp",
-      tag: "LOG FIREPLACE LAMP",
+      tag: "CAMPFIRE NIGHT LIGHT",
       headline: "Santa taking a warm rest by the fire.",
-      blurb: "Hand-finished Santa resting by a warm campsite fire with stacked logs and warm glow.",
+      blurb: "Santa and his reindeer resting beside a glowing campfire, with warm LED lighting included.",
     },
     {
       id: "bright-nativity-table-lamp",
       tag: "LAYERED NATIVITY",
       headline: "Bethlehem stars in warm amber silhouette.",
-      blurb: "Architectural lantern with layered nativity silhouettes glowing under ambient light.",
+      blurb: "Architectural lantern with layered nativity silhouettes and warm LED lighting included.",
     },
   ];
 
@@ -436,7 +438,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
   });
 
   return (
-    <div className="xmas-root xmas-page">
+    <div className="xmas-root xmas-page" id="top">
       {/* SNOWFLAKE AMBIENT CANVAS */}
       <div className="xmas-snow-ambient" aria-hidden="true">
         {Array.from({ length: 24 }, (_, i) => (
@@ -778,7 +780,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
               LED lighting is included in the listed price of every illuminated Christmas product. Enjoy the warm glow shown for your selected lamp or lantern, with no extra charge for its lights.
             </p>
             <p>
-              Explore the <strong>Moonlit Christmas Village</strong> photos to see the miniature cottages and crescent moon in detail.
+              Explore the <strong>{nameFor("village-on-the-moon-table-lamp", get("village-on-the-moon-table-lamp").name)}</strong> photos to see the miniature cottages and crescent moon in detail.
             </p>
             <div className="xmas-glow-lamp-links">
               {[
@@ -793,7 +795,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                     <img src={lamp.images[0].thumb} alt="" width="48" height="48" />
                     <div>
                       <strong>{nameFor(lamp.id, lamp.name)}</strong>
-                      <span>{price(lamp)} CAD · Photos & details ↗</span>
+                      <span>{price(lamp)} CAD · Photos &amp; details ↗</span>
                     </div>
                   </Link>
                 );
@@ -906,6 +908,11 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
             <Link className="button" to="/shop">
               Shop All Studio Products ↗
             </Link>
+            {publicMode && (
+              <Link className="button button-outline" to="/shop/christmas">
+                Browse Standard Grid View ↗
+              </Link>
+            )}
             <Link className="button button-outline" to="/contact">
               Ask a Studio Question ↗
             </Link>

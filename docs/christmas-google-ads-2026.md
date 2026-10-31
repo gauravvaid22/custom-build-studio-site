@@ -63,15 +63,15 @@ You do **not** need to create new campaigns as order volume grows. Simply edit t
 
 ---
 
-## 6. Launch Checklist (When Owner Approves Christmas Products)
+## 6. Live Readiness & 1-Click Activation Status (Updated October 31, 2026)
 
-When you are ready to start selling Christmas items publicly:
+Christmas storefront routes (`/shop/christmas-special/`, `/shop/christmas/`, and all 33 Christmas product pages) and `/google-products.xml` (`30` active Christmas SKUs: `15` `christmas_tree_hero` + `15` `christmas_decor_general`) are **LIVE** in production, with off-season Halloween items filtered out so `0` 404 landing pages enter Google Merchant Center.
 
-1. **Step 1: Enable Public Christmas Route & Feed**:
-   - In `src/data/seo.ts`: change `export const CHRISTMAS_PUBLIC_ENABLED = false;` to `true`.
-   - In `commerce/search-discovery.json`: add `"christmas"` to `collectionIds`.
-   - Commit and push to GitHub. Netlify will deploy and update `/shop/christmas-special/` and `/google-products.xml` automatically.
-2. **Step 2: Refresh Google Merchant Center Feed**:
-   - Open Merchant Center `5871050982` → `Data sources` → click **Update** on `Website — Shop Products` (`10762737798`).
-3. **Step 3: Unpause Ads**:
-   - In Google Ads, flip `CBS - Christmas 2026 - Shopping` from `Paused` to `Enabled`.
+While `CBS - Christmas 2026 - Shopping` (`24412330538`) remains **`PAUSED`** (`$0.00` spend):
+- **Free Organic Google Shopping Listings** automatically display your approved Christmas products on Google Search and the Shopping tab at `$0` ad cost.
+- **Background Ad Review** stays warm because the campaign start date (`Oct 29, 2026`) is active and Merchant Center `5871050982` (`Website — Shop Products` `10762737798`) continuously syncs live Shopify CAD prices and stock.
+
+### Whenever You Are Ready to Start Paid Ads (`CA$5.00/day`):
+1. Open **Google Ads** → Campaigns → `CBS - Christmas 2026 - Shopping` (`24412330538`).
+2. Change campaign status from **`Paused`** → **`Enabled`**.
+3. Paid Shopping ads begin serving immediately across Edmonton (`+20%`), Alberta (`+10%`), and Canada (`0%`) using your live `/shop/admin/` CAD prices.

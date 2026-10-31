@@ -96,3 +96,21 @@ test('baseline collections add Christmas while preserving archive and explicit m
  assert.deepEqual(merged.find(c=>c.id==='christmas').products,['new-tree']);
  assert.deepEqual(state[0].products,['existing']);
 });
+
+test('Christmas season refreshes stale Halloween coverProduct and copy on seasonal collection',async()=>{
+ const {mergeCollectionsWithBaseline}=await import('../commerce/catalog-management.mjs');
+ const state=[
+   {id:'seasonal',coverProduct:'pumpkin-head-halloween-mask',description:'Explore finished Halloween masks and spooky ghosts.',seoDescription:'Shop Halloween masks.',products:['pumpkin-head-halloween-mask','figurine-fidget-designs']},
+   {id:'gifts-under-25',coverProduct:'mood-ghost',products:['mini-safari-animal-figurines','mood-ghost']},
+ ];
+ const base=[
+   {id:'seasonal',coverProduct:'endless-swirling-tree',description:'Holiday warmth crafted in Edmonton.',seoDescription:'Shop Canadian-made Christmas gifts.',products:['endless-swirling-tree','christmas-angel','figurine-fidget-designs','pumpkin-head-halloween-mask']},
+   {id:'gifts-under-25',coverProduct:'mini-safari-animal-figurines',products:['mini-safari-animal-figurines','mood-ghost']},
+ ];
+ const merged=mergeCollectionsWithBaseline(state,base,[],[],{activeSeason:'christmas',hideOffSeasonProducts:true});
+ assert.equal(merged[0].coverProduct,'endless-swirling-tree');
+ assert.equal(merged[0].description,'Holiday warmth crafted in Edmonton.');
+ assert.equal(merged[0].seoDescription,'Shop Canadian-made Christmas gifts.');
+ assert.deepEqual(merged[0].products,['endless-swirling-tree','christmas-angel','figurine-fidget-designs','pumpkin-head-halloween-mask']);
+ assert.equal(merged[1].coverProduct,'mini-safari-animal-figurines');
+});

@@ -1,6 +1,7 @@
 import deliveryPolicy from './delivery-policy.json' with {type:'json'};
 import {priceRecord} from './delivery-pricing.mjs';
 import { applyDefaultListingCovers } from './listing-covers.mjs';
+import { merchandisingDefaults, PURE_HALLOWEEN_PRODUCT_IDS, PURE_CHRISTMAS_PRODUCT_IDS } from './merchandising.mjs';
 export const templates = [
   { id: 'single', name: 'Single product' }, { id: 'design', name: 'Choose a design' },
   { id: 'size', name: 'Choose a size' }, { id: 'personalized', name: 'Personalized gift' },
@@ -62,7 +63,7 @@ export function seedDocuments(products, collections) {
     pickupPriceDifferenceCents: p.pickupPriceDifferenceCents ?? 1000, shippingPreset: 'existing', fulfillmentConfirmed: p.launchReady !== false,
   }));
 }
-export function mergeCollectionsWithBaseline(stateCollections, baselineCollections = [], documents = [], archived = []) {
+export function mergeCollectionsWithBaseline(stateCollections, baselineCollections = [], documents = [], archived = [], seasonConfig = merchandisingDefaults) {
   if (!Array.isArray(stateCollections) || !stateCollections.length) {
     return structuredClone(baselineCollections);
   }
@@ -89,6 +90,26 @@ export function mergeCollectionsWithBaseline(stateCollections, baselineCollectio
       if (!existing.has(prodId) && !blocked.has(prodId) && !docIds.has(prodId)) {
         target.products.push(prodId);
         existing.add(prodId);
+      }
+    }
+    if (seasonConfig?.hideOffSeasonProducts && seasonConfig?.activeSeason === 'christmas') {
+      if (target.id === 'seasonal') {
+        if (baseColl.coverProduct && (!target.coverProduct || PURE_HALLOWEEN_PRODUCT_IDS.includes(target.coverProduct))) {
+          target.coverProduct = baseColl.coverProduct;
+        }
+        for (const key of ['eyebrow', 'heading', 'description', 'seoDescription']) {
+          if (baseColl[key] && (!target[key] || /halloween|spooky|haunt|ghost/i.test(target[key]))) {
+            target[key] = baseColl[key];
+          }
+        }
+        if (target.products.some(id => PURE_HALLOWEEN_PRODUCT_IDS.includes(id))) {
+          const xmas = target.products.filter(id => PURE_CHRISTMAS_PRODUCT_IDS.includes(id));
+          const rest = target.products.filter(id => !PURE_CHRISTMAS_PRODUCT_IDS.includes(id) && !PURE_HALLOWEEN_PRODUCT_IDS.includes(id));
+          const halloween = target.products.filter(id => PURE_HALLOWEEN_PRODUCT_IDS.includes(id));
+          target.products = [...xmas, ...rest, ...halloween];
+        }
+      } else if (target.coverProduct && PURE_HALLOWEEN_PRODUCT_IDS.includes(target.coverProduct)) {
+        target.coverProduct = target.products.find(id => !PURE_HALLOWEEN_PRODUCT_IDS.includes(id)) || baseColl.coverProduct || target.coverProduct;
       }
     }
   }
