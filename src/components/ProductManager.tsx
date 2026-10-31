@@ -661,6 +661,7 @@ export function ProductManager() {
             </button>
           </div>
 
+          <button type="button" className="button" disabled={busy} onClick={()=>void act('publish-lighting-inclusions',{},'Lighting inclusion update queued. Prices and stock are unchanged.')}>Sync included-lighting details</button>
           <div className="quick-price-wrap">
             <table className="quick-price-table">
               <thead>

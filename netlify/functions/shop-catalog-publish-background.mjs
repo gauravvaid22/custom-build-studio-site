@@ -1,3 +1,4 @@
+import {lightingIds,lightingIncludedCopy,updateLightingDocument} from '../../commerce/lighting-inclusions.mjs';
 import baseline from '../../commerce/catalog-baseline.json' with {type:'json'};
 import {mergeCollectionsWithBaseline} from '../../commerce/catalog-management.mjs';
 import { getStore } from '@netlify/blobs';
@@ -22,6 +23,25 @@ export default async (request,context) => {
     if(job.action==='publish-search-names') {
       const records=[...new Map(job.documents.flatMap(d=>d.products).map(p=>[p.id,p])).values()];
       results=await syncSearchNames(admin,records,lookupProduct);
+    }
+    if(job.action==='publish-lighting-inclusions') {
+      results=[];
+      for(const doc of job.documents){
+        for(const p of doc.products.filter(p=>lightingIds.has(p.id)&&!p.groupedDesigns&&!p.variantOf)){
+          const current=await lookupProduct(admin,p);if(!current)throw Error(`Shopify product missing: ${p.id}`);
+          const existing=await admin.call(`query LightingDescription($id:ID!){product(id:$id){descriptionHtml}}`,{id:current.id});
+          const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+          const description=(existing.product.descriptionHtml||'').replace(/<p>[^<]*(?:LED tealight not included|ready for a standard battery LED tealight)[^<]*<\/p>/gi,'');
+          const html=description.includes(lightingIncludedCopy)?description:description+`<p>${escape(lightingIncludedCopy)}</p>`;
+          const updated=await admin.call(`mutation LightingDescriptionOnly($product:ProductUpdateInput!){productUpdate(product:$product){product{id}userErrors{message}}}`,{product:{id:current.id,descriptionHtml:html}});
+          if(updated.productUpdate.userErrors?.length)throw Error(updated.productUpdate.userErrors.map(e=>e.message).join('; '));
+          results.push({id:p.id,shopifyId:current.id});
+        }
+        const checkpoint=await readState(store);
+        checkpoint.state.documents[doc.id]=updateLightingDocument(checkpoint.state.documents[doc.id]||doc);
+        if(checkpoint.state.drafts[doc.id])checkpoint.state.drafts[doc.id]=updateLightingDocument(checkpoint.state.drafts[doc.id]);
+        await writeState(store,checkpoint.state,checkpoint.etag);
+      }
     }
     if (job.action==='batch-publish') {
       const sale=await getStore({name:'shop-orders-v1',consistency:'strong'}).get('config/shop-sale',{type:'json'});

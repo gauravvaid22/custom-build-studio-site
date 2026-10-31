@@ -775,7 +775,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
             <span className="xmas-stage-kicker">AMBIENT HOLIDAY LIGHTING</span>
             <h2>Warm light for winter evenings.</h2>
             <p className="lead">
-              Our illuminated Christmas lamps are designed around standard battery LED tealights, casting soft architectural silhouettes through frosted windows, manger cutouts and sculpted pine trees.
+              LED lighting is included in the listed price of every illuminated Christmas product. Enjoy the warm glow shown for your selected lamp or lantern, with no extra charge for its lights.
             </p>
             <p>
               Explore the <strong>Moonlit Christmas Village</strong> photos to see the miniature cottages and crescent moon in detail.

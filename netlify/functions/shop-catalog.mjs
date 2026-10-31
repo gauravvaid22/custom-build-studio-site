@@ -1,3 +1,4 @@
+import {lightingIds,updateLightingDocument} from '../../commerce/lighting-inclusions.mjs';
 import { randomUUID, createHmac } from 'node:crypto';
 import baseline from '../../commerce/catalog-baseline.json' with {type:'json'};
 const {products,collections}=baseline;
@@ -32,7 +33,7 @@ export default async (request,context) => {
     const raw = await request.text(); if (raw.length > 800000) return reply({error:'Product data is too large.'},413);
     const body = raw ? JSON.parse(raw) : {};
     const production=(context?.deploy?.context || process.env.CONTEXT)==='production';
-    if(!production && ['publish','archive','restore','publish-layout','publish-search-names','upload-start','upload-finish'].includes(action)) throw new Error('Shopify writes and publishing are only available in the production admin.');
+    if(!production && ['publish','batch-publish','publish-lighting-inclusions','archive','restore','publish-layout','publish-search-names','upload-start','upload-finish'].includes(action)) throw new Error('Shopify writes and publishing are only available in the production admin.');
     if(action==='preview-search-names') {
       const compiled=compileCatalog(products,effectiveCollections,Object.values(state.documents),state.archived);
       const prepared=prepareSearchNaming(compiled);
@@ -133,15 +134,15 @@ export default async (request,context) => {
       }
       await writeState(store, state, etag);
       return reply({ saved: documents.length, revision: state.revision });
-    } else if (action === 'batch-publish') {
+    } else if (action === 'batch-publish' || action === 'publish-lighting-inclusions') {
       if (!process.env.NETLIFY_CATALOG_BUILD_HOOK || !process.env.SHOP_CATALOG_SOURCE_URL) throw new Error('Automatic website publishing is not connected.');
       if (!admin) throw new Error('Shopify is not connected.');
-      const ids = Array.isArray(body.ids) ? body.ids : [];
+      const ids = action==='publish-lighting-inclusions' ? seedDocuments(products,collections).filter(d=>d.products.some(p=>lightingIds.has(p.id))).map(d=>d.id) : Array.isArray(body.ids) ? body.ids : [];
       if (!ids.length) throw new Error('Choose at least one product to publish.');
       const docsToPublish = [];
       for (const id of ids) {
         const original = state.documents[id] || seedDocuments(products, collections).find(d => d.id === id);
-        const sourceDoc = state.drafts[id] || original;
+        const sourceDoc = action==='publish-lighting-inclusions' ? updateLightingDocument(original) : state.drafts[id] || original;
         if (!sourceDoc) continue;
         validateDocument(sourceDoc, { publish: true });
         docsToPublish.push(sourceDoc);
@@ -150,7 +151,7 @@ export default async (request,context) => {
       const job = {
         id: randomUUID(),
         productId: 'batch-publish',
-        action: 'batch-publish',
+        action,
         status: 'queued',
         createdAt: new Date().toISOString(),
         documents: docsToPublish,
@@ -218,3 +219,4 @@ export default async (request,context) => {
     await writeState(store,state,etag); return reply({saved:true,revision:state.revision});
   } catch(error) { return reply({error:error.message},error.status || (/condition|etag/i.test(error.message)?409:400)); }
 };
+

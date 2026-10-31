@@ -55,7 +55,7 @@ const normalizedChristmas = previewRaw.map(item => {
   if (item.id === 'guiding-star-tree-topper') {
     included = 'One finished gold and white star tree topper. Finished physical piece crafted in Edmonton — not a digital file.';
   } else if (isLamp) {
-    included = 'One assembled display piece, ready for a standard battery LED tealight (LED tealight not included). Finished physical piece crafted in Edmonton — not a digital file.';
+    included = 'Finished physical product or listed set, with LED lighting included in the price. Decorative props are not included.';
   } else if (!included.includes('not a digital file') && !included.includes('No STL')) {
     included = `${included.trim()} Finished physical piece crafted in Edmonton — not a digital file.`;
   }
