@@ -7,9 +7,11 @@ import collections from "../../commerce/collections.json";
 import headphoneSearch from "../../commerce/headphone-search.json";
 import maskSearch from "../../commerce/mask-search.json";
 import {searchTitle,searchDescription} from "../../commerce/product-search.mjs";
+import merchandising from "../../commerce/shop-merchandising.json";
+import { PURE_HALLOWEEN_PRODUCT_IDS, PURE_CHRISTMAS_PRODUCT_IDS } from "../../commerce/merchandising.mjs";
 
-/** Flip to true only after owner approves Christmas prices, inventory, and Shopify checkout links. */
-export const CHRISTMAS_PUBLIC_ENABLED = false;
+export const CHRISTMAS_PUBLIC_ENABLED = merchandising.activeSeason === "christmas" || merchandising.hideOffSeasonProducts !== true;
+export const HALLOWEEN_PUBLIC_ENABLED = merchandising.activeSeason === "halloween" || merchandising.hideOffSeasonProducts !== true;
 
 const publicProducts = products.filter((product) => !("variantOf" in product) && !product.purchaseOnly);
 const browsingProducts = publicProducts.filter(product => !("listingGroup" in product));
@@ -27,10 +29,14 @@ export const publicRoutes = [
   "/products",
   "/shop",
   "/shop/all",
-  "/shop/halloween-special",
+  ...(HALLOWEEN_PUBLIC_ENABLED ? ["/shop/halloween-special"] : []),
   ...(CHRISTMAS_PUBLIC_ENABLED ? ["/shop/christmas-special"] : []),
-  ...collections.map((collection) => `/shop/${collection.id}`),
-  ...publicProducts.map((product) => `/shop/${product.id}`),
+  ...collections
+    .filter(c => merchandising.hideOffSeasonProducts !== true || (CHRISTMAS_PUBLIC_ENABLED ? !["halloween", "masks-costumes"].includes(c.id) : true))
+    .map((collection) => `/shop/${collection.id}`),
+  ...publicProducts
+    .filter(p => !merchandising.hideOffSeasonProducts || (CHRISTMAS_PUBLIC_ENABLED ? (!PURE_HALLOWEEN_PRODUCT_IDS.includes(p.id) && !(p.listingGroup && PURE_HALLOWEEN_PRODUCT_IDS.includes(p.listingGroup))) : true))
+    .map((product) => `/shop/${product.id}`),
   "/reviews",
   "/contact",
   "/privacy",
@@ -141,8 +147,8 @@ export function getSeo(path: string) {
     title: `${entry[0]} | Custom Build Studio`,
     description: entry[1],
     url: canonical(page),
-    image: new URL((product?.images[0]?.src || (collection ? products.find((item) => item.id === collection.coverProduct)?.images[0]?.src : undefined) || (page === "/shop/halloween-special" ? "/media/shop/candlelight-pumpkins-table-lamp/1-1200.webp" : "/og-image.jpg")), business.origin).href,
-    imageAlt: product?.images[0]?.alt || (collection ? `${collection.name} from Custom Build Studio` : page === "/shop/halloween-special" ? "Candlelight Pumpkins Table Lamp from the Halloween Special" : "Custom Build Studio design and fabrication project"),
+    image: new URL((product?.images[0]?.src || (collection ? products.find((item) => item.id === collection.coverProduct)?.images[0]?.src : undefined) || (page === "/shop/christmas-special" ? "/media/shop/endless-swirling-tree/owner-green-v3-0-1200.webp" : page === "/shop/halloween-special" ? "/media/shop/candlelight-pumpkins-table-lamp/1-1200.webp" : "/og-image.jpg")), business.origin).href,
+    imageAlt: product?.images[0]?.alt || (collection ? `${collection.name} from Custom Build Studio` : page === "/shop/christmas-special" ? "Spiral Tabletop Christmas Tree from the Christmas Collection" : page === "/shop/halloween-special" ? "Candlelight Pumpkins Table Lamp from the Halloween Special" : "Custom Build Studio design and fabrication project"),
     noindex: !publicRoutes.includes(page) || page === "/privacy",
   };
 }
@@ -257,8 +263,11 @@ export function getStructuredData(path: string, livePrices: Record<string, numbe
       ] },
     ] };
   }
-  if (page === "/shop" || page === "/shop/all" || collection || halloweenSpecial) {
-    const listedProducts = halloweenSpecial
+  const christmasSpecial = page === "/shop/christmas-special";
+  if (page === "/shop" || page === "/shop/all" || collection || halloweenSpecial || christmasSpecial) {
+    const listedProducts = christmasSpecial
+      ? (collections.find(c => c.id === "christmas")?.products.map((id) => publicProducts.find((product) => product.id === id)).filter(Boolean) || [])
+      : halloweenSpecial
       ? halloweenSpecialIds.map((id) => publicProducts.find((product) => product.id === id)).filter(Boolean)
       : collection
       ? collection.products.map((id) => publicProducts.find((product) => product.id === id)).filter(Boolean)
@@ -268,8 +277,8 @@ export function getStructuredData(path: string, livePrices: Record<string, numbe
       "@graph": [
         {
           "@type": "CollectionPage",
-          name: halloweenSpecial ? "Halloween Special" : collection?.name || (page === "/shop/all" ? "Shop All Products" : "Unique Gifts & Décor, Made in Edmonton"),
-          description: halloweenSpecial ? getSeo(page).description : collection?.seoDescription || getSeo("/shop").description,
+          name: christmasSpecial ? "Christmas Gifts & Holiday Décor" : halloweenSpecial ? "Halloween Special" : collection?.name || (page === "/shop/all" ? "Shop All Products" : "Unique Gifts & Décor, Made in Edmonton"),
+          description: (christmasSpecial || halloweenSpecial) ? getSeo(page).description : collection?.seoDescription || getSeo("/shop").description,
           url: canonical(page),
           mainEntity: {
             "@type": "ItemList",
@@ -287,7 +296,7 @@ export function getStructuredData(path: string, livePrices: Record<string, numbe
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "Home", item: canonical("/") },
             { "@type": "ListItem", position: 2, name: "Shop", item: canonical("/shop") },
-            ...(collection || halloweenSpecial || page === "/shop/all" ? [{ "@type": "ListItem", position: 3, name: halloweenSpecial ? "Halloween Special" : collection?.name || "Shop All Products", item: canonical(page) }] : []),
+            ...(collection || halloweenSpecial || christmasSpecial || page === "/shop/all" ? [{ "@type": "ListItem", position: 3, name: christmasSpecial ? "Christmas Special" : halloweenSpecial ? "Halloween Special" : collection?.name || "Shop All Products", item: canonical(page) }] : []),
           ],
         },
       ],

@@ -28,7 +28,9 @@
     "products": [
       "mini-safari-animal-figurines",
       "figurine-fidget-designs",
-      "mood-ghost"
+      "mood-ghost",
+      "christmas-character-figurines",
+      "christmas-gnome-set"
     ]
   },
   {
@@ -83,7 +85,16 @@
       "can-holder-designs",
       "can-holder-designs-ii",
       "straw-topper-charm-designs",
-      "halloween-candy-holder-designs"
+      "halloween-candy-holder-designs",
+      "christmas-angel",
+      "bright-nativity-table-lamp",
+      "village-on-the-moon-table-lamp",
+      "santa-s-bonfire-table-lamp",
+      "luminous-tree",
+      "village-lights",
+      "endless-swirling-tree",
+      "christmas-trinket-trays",
+      "evergreen-wreath"
     ],
     "seoTitle": "Home Décor & Accessories Made in Edmonton"
   },
@@ -92,12 +103,29 @@
     "kind": "department",
     "name": "Seasonal gifts & décor",
     "shortName": "Seasonal",
-    "eyebrow": "FOR YOUR NEXT CELEBRATION",
-    "heading": "Make the season your own.",
-    "description": "Explore the seasonal collection, from finished Halloween masks to glowing lamps and character decorations. Find the details that make your celebration feel like you.",
+    "eyebrow": "HOLIDAY SEASON / CRAFTED IN EDMONTON",
+    "heading": "Holiday warmth, crafted locally.",
+    "description": "Explore illuminated table lamps, kinetic trees, nativity pieces, character figurines and festive home accents made in Edmonton.",
     "seoDescription": "Shop seasonal gifts and decor made in Edmonton, including finished Halloween masks, ghost decorations and lamps. Free tracked Canadian shipping or Edmonton pickup.",
-    "coverProduct": "pumpkin-head-halloween-mask",
+    "coverProduct": "endless-swirling-tree",
     "products": [
+      "endless-swirling-tree",
+      "christmas-angel",
+      "meowy-christmas-tree-topper",
+      "christmas-character-figurines",
+      "christmas-gnome-set",
+      "bright-nativity-table-lamp",
+      "village-on-the-moon-table-lamp",
+      "santa-s-bonfire-table-lamp",
+      "santa-s-snack-hat-bowl",
+      "christmas-character-ornaments",
+      "holy-family-embrace",
+      "heavenly-trio",
+      "guiding-star-tree-topper",
+      "evergreen-wreath",
+      "luminous-tree",
+      "village-lights",
+      "christmas-trinket-trays",
       "figurine-fidget-designs",
       "6-finger-alien-hand-controller-holder",
       "night-owl-wall-light",
@@ -254,5 +282,36 @@
     "products": [
       "paw-couture-pet-costume-designs"
     ]
+  },
+  {
+    "id": "christmas",
+    "kind": "seasonal",
+    "name": "Christmas Gifts & Holiday Décor",
+    "shortName": "Christmas",
+    "eyebrow": "CHRISTMAS COLLECTION · EDMONTON STUDIO",
+    "heading": "Holiday warmth, crafted in small batches.",
+    "description": "Illuminated table lamps, sculptural nativity pieces, kinetic trees, ornaments and festive table accents crafted in Edmonton.",
+    "seoDescription": "Shop Canadian-made Christmas gifts, illuminated holiday table lamps, nativity sculptures, ornaments and festive home décor crafted in Edmonton with free tracked shipping.",
+    "coverProduct": "endless-swirling-tree",
+    "products": [
+      "endless-swirling-tree",
+      "christmas-angel",
+      "meowy-christmas-tree-topper",
+      "christmas-character-figurines",
+      "christmas-gnome-set",
+      "bright-nativity-table-lamp",
+      "village-on-the-moon-table-lamp",
+      "santa-s-bonfire-table-lamp",
+      "santa-s-snack-hat-bowl",
+      "christmas-character-ornaments",
+      "holy-family-embrace",
+      "heavenly-trio",
+      "guiding-star-tree-topper",
+      "evergreen-wreath",
+      "luminous-tree",
+      "village-lights",
+      "christmas-trinket-trays"
+    ],
+    "seoTitle": "Christmas Gifts, Holiday Décor & Illuminated Table Lamps — Made in Edmonton"
   }
 ]

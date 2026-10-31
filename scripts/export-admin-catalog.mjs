@@ -1,5 +1,5 @@
 import {writeFile,mkdir,readFile} from 'node:fs/promises';
-import {validateDocument} from '../commerce/catalog-management.mjs';
+import {validateDocument, mergeCollectionsWithBaseline} from '../commerce/catalog-management.mjs';
 import {groupRemainingDesigns} from '../commerce/group-remaining-designs.mjs';
 import {applyDefaultListingCovers} from '../commerce/listing-covers.mjs';
 import {prepareSearchNaming} from '../commerce/search-naming.mjs';
@@ -7,16 +7,44 @@ import baseline from '../commerce/catalog-baseline.json' with {type:'json'};
 const source=process.env.SHOP_CATALOG_SOURCE_URL;
 if (source || process.env.CONTEXT==='production') {
   let snapshot;
+  let archivedIds = new Set();
   if(source) {
-  const url=new URL(source);
-  if (url.protocol!=='https:' || url.hostname!=='custombuildstudio.ca' || url.pathname!=='/.netlify/functions/shop-catalog') throw new Error('Invalid catalog source URL.');
-  url.searchParams.set('action','snapshot');
-  const response=await fetch(url,{signal:AbortSignal.timeout(30000),headers:{'Cache-Control':'no-cache'}});
-  if (!response.ok) throw new Error('Catalog export failed. Keeping the previous live deploy.');
-  snapshot=await response.json();
+    const url=new URL(source);
+    if (url.protocol!=='https:' || url.hostname!=='custombuildstudio.ca' || url.pathname!=='/.netlify/functions/shop-catalog') throw new Error('Invalid catalog source URL.');
+    url.searchParams.set('action','snapshot');
+    const availUrl=new URL(source);
+    availUrl.searchParams.set('action','availability');
+    const [response, availResponse] = await Promise.all([
+      fetch(url,{signal:AbortSignal.timeout(30000),headers:{'Cache-Control':'no-cache'}}),
+      fetch(availUrl,{signal:AbortSignal.timeout(30000),headers:{'Cache-Control':'no-cache'}}),
+    ]);
+    if (!response.ok) throw new Error('Catalog export failed. Keeping the previous live deploy.');
+    snapshot=await response.json();
+    if (!availResponse.ok) throw new Error('Availability export failed; refusing to restore potentially archived products.');
+    if (availResponse.ok) {
+      const avail = await availResponse.json();
+      if (!Array.isArray(avail?.archived)) throw new Error('Invalid availability snapshot.');
+      archivedIds = new Set(avail.archived);
+    }
   } else snapshot={...JSON.parse(await readFile('commerce/catalog-baseline.json','utf8')),revision:0,rows:[]};
   if (!Array.isArray(snapshot.products) || !Array.isArray(snapshot.collections) || !Number.isSafeInteger(snapshot.revision)) throw new Error('Invalid catalog snapshot.');
   if(snapshot.deliveryPolicy)await writeFile('commerce/delivery-policy.json',JSON.stringify(snapshot.deliveryPolicy,null,2)+'\n');
+
+  // Merge newly added baseline products (e.g., Christmas catalog on Deploy #1) without resurrecting archived items
+  const existingIds = new Set(snapshot.products.map(p => p.id));
+  for (const baseProd of baseline.products) {
+    if (
+      !existingIds.has(baseProd.id) &&
+      !archivedIds.has(baseProd.id) &&
+      !(baseProd.listingGroup && archivedIds.has(baseProd.listingGroup)) &&
+      !(baseProd.variantOf && archivedIds.has(baseProd.variantOf))
+    ) {
+      snapshot.products.push(structuredClone(baseProd));
+      existingIds.add(baseProd.id);
+    }
+  }
+  snapshot.collections = mergeCollectionsWithBaseline(snapshot.collections, baseline.collections, [], [...archivedIds]);
+
   snapshot=groupRemainingDesigns(snapshot);
   snapshot=prepareSearchNaming(snapshot).catalog;
   snapshot.products=applyDefaultListingCovers(snapshot.products,baseline.products);
@@ -27,7 +55,7 @@ if (source || process.env.CONTEXT==='production') {
       if (base.name && !p.name) p.name = base.name;
       if (base.seoTitle && !p.seoTitle) p.seoTitle = base.seoTitle;
       if (base.seoDescription && !p.seoDescription) p.seoDescription = base.seoDescription;
-      if (Array.isArray(base.searchKeywords)) p.searchKeywords = base.searchKeywords;
+      if (Array.isArray(base.searchKeywords) && (!Array.isArray(p.searchKeywords) || !p.searchKeywords.length)) p.searchKeywords = base.searchKeywords;
     }
   }
   const baselineColls = new Map((baseline.collections || []).map(c => [c.id, c]));

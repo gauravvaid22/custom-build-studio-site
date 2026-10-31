@@ -733,7 +733,6 @@ function Christmas3DStage({
     const wrap = wrapRef.current;
     if (!wrap) return;
     const onNativeWheel = (e: WheelEvent) => {
-      if (!e.ctrlKey && !e.metaKey) return;
       e.preventDefault();
       e.stopPropagation();
       const factor = e.deltaY < 0 ? 1.09 : 0.91;

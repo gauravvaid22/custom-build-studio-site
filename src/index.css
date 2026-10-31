@@ -280,6 +280,8 @@ main:focus {
   padding: 11px 18px;
   gap: 24px;
 }
+.mobile-header-actions,
+.mobile-header-cart,
 .menu-toggle {
   display: none;
 }
@@ -2211,9 +2213,17 @@ blockquote footer {
     width: 35px;
     height: 35px;
   }
+  .mobile-header-cart {
+    padding: 5px 9px;
+    min-height: 35px;
+    font-size: 0.75rem;
+    gap: 6px;
+  }
   .menu-toggle {
     font-size: 0.75rem;
     gap: 8px;
+    padding: 5px 10px;
+    min-height: 35px;
   }
   .hero-caption {
     padding: 13px;
@@ -2302,6 +2312,7 @@ h3 {
   .brand > span:not(.brand-mark) {
     min-width: 0;
   }
+  .mobile-header-actions,
   .menu-toggle {
     flex-shrink: 0;
     margin-left: auto;
@@ -2468,7 +2479,11 @@ h3 {
 .service-start-section .container > p:last-child a { color: #1c627f; text-decoration: underline; text-underline-offset: 3px; }
 
 @media (max-width: 1050px) {
-  .menu-toggle { display: flex; align-items: center; gap: 12px; background: transparent; border: 1px solid #5c6367; padding: 7px 13px; min-height: 42px; color: #fff; }
+  .mobile-header-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-shrink: 0; }
+  .mobile-header-cart { display: inline-flex; align-items: center; gap: 6px; background: transparent; border: 1px solid #5c6367; padding: 7px 11px; min-height: 42px; color: #fff; text-decoration: none; font-size: 0.85rem; font-weight: 500; white-space: nowrap; border-radius: 4px; box-sizing: border-box; }
+  .mobile-header-cart:hover, .mobile-header-cart:focus-visible { background: #344550; border-color: #8dc5de; color: #fff; }
+  .mobile-header-cart .shop-cart-count { min-width: 20px; height: 20px; display: inline-grid; place-items: center; border-radius: 50%; background: #41647a; color: #fff; font-size: 0.72rem; font-weight: 600; padding: 0 4px; }
+  .menu-toggle { display: flex; align-items: center; gap: 8px; background: transparent; border: 1px solid #5c6367; padding: 7px 13px; min-height: 42px; color: #fff; border-radius: 4px; box-sizing: border-box; }
   .menu-toggle span { font-size: 1.2rem; }
   .main-nav { display: none; }
   .main-nav.is-open { display: flex; position: absolute; top: 100%; left: 0; right: 0; z-index: 30; padding: 15px 20px 24px; background: #191c1e; flex-direction: column; align-items: stretch; gap: 0; border-bottom: 1px solid #555; max-height: calc(100dvh - 76px); overflow: auto; font-size: 1rem; }

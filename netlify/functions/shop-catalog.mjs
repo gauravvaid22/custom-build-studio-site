@@ -1,7 +1,7 @@
 import { randomUUID, createHmac } from 'node:crypto';
 import baseline from '../../commerce/catalog-baseline.json' with {type:'json'};
 const {products,collections}=baseline;
-import { templates, seedDocuments, validateDocument, compileCatalog } from '../../commerce/catalog-management.mjs';
+import { templates, seedDocuments, validateDocument, compileCatalog, mergeCollectionsWithBaseline } from '../../commerce/catalog-management.mjs';
 import { catalogStore, readState, writeState } from '../../commerce/catalog-store.mjs';
 import { requireAdmin } from '../../commerce/admin-session.mjs';
 import { createShopifyAdmin } from '../../commerce/shopify-admin.mjs';
@@ -15,15 +15,16 @@ export default async (request,context) => {
     const action = new URL(request.url).searchParams.get('action') || 'list';
     const store = catalogStore(context);
     const {state,etag} = await readState(store);
+    const effectiveCollections = mergeCollectionsWithBaseline(state.collections, collections, Object.values(state.documents), state.archived);
     if (request.method === 'GET' && ['snapshot','availability'].includes(action)) {
       if (action === 'availability') {
-        const current=compileCatalog(products,state.collections || collections,Object.values(state.documents),state.archived);
+        const current=compileCatalog(products,effectiveCollections,Object.values(state.documents),state.archived);
         const ids=new Set(current.products.map(p=>p.id));
         const latestPublishing=state.jobs.filter(j=>j.action==='publish').filter((j,i,all)=>all.findIndex(x=>x.productId===j.productId)===i);
         const shippingUpdate=latestPublishing.some(j=>['queued','shopify','website','error'].includes(j.status)&&[...(j.document?.products || []),...(j.previousDocument?.products || [])].some(p=>p.shippingPriceMode==='per-order'));
         return reply({pricingUpdating:shippingUpdate || state.jobs.some(j=>j.action==='delivery-pricing' && ['queued','shopify','website','error'].includes(j.status)),archived:[...new Set([...state.archived,...(state.unavailableIds || []),...products.filter(p=>!ids.has(p.id)).map(p=>p.id)])],revision:state.revision});
       }
-      const catalog = compileCatalog(products,state.collections || collections,Object.values(state.documents),state.archived);
+      const catalog = compileCatalog(products,effectiveCollections,Object.values(state.documents),state.archived);
       // Never expose editor drafts or private connection/settings data.
       return reply({...catalog,revision:state.revision,rows:state.rows,deliveryPolicy:state.deliveryPolicy});
     }
@@ -33,7 +34,7 @@ export default async (request,context) => {
     const production=(context?.deploy?.context || process.env.CONTEXT)==='production';
     if(!production && ['publish','archive','restore','publish-layout','publish-search-names','upload-start','upload-finish'].includes(action)) throw new Error('Shopify writes and publishing are only available in the production admin.');
     if(action==='preview-search-names') {
-      const compiled=compileCatalog(products,state.collections || collections,Object.values(state.documents),state.archived);
+      const compiled=compileCatalog(products,effectiveCollections,Object.values(state.documents),state.archived);
       const prepared=prepareSearchNaming(compiled);
       return reply({changes:prepared.changes,revision:state.revision,completed:state.searchNamingVersion===prepared.version});
     }
@@ -60,14 +61,14 @@ export default async (request,context) => {
       }
       const seed = seedDocuments(products,collections);
       const documents = [...new Map([...seed,...Object.values(state.documents),...Object.values(state.drafts)].map(d => [d.id,d])).values()].map(doc=>({...doc,products:applyDefaultListingCovers(doc.products,products)}));
-      return reply({documents,templates,presets:state.presets || [],archived:state.archived,collections:state.layoutDraft?.collections || state.collections || collections,rows:state.layoutDraft?.rows || state.rows,revision:state.revision,jobs:state.jobs,history:state.history,connection:state.connection,
+      return reply({documents,templates,presets:state.presets || [],archived:state.archived,collections:state.layoutDraft?.collections || effectiveCollections,rows:state.layoutDraft?.rows || state.rows,revision:state.revision,jobs:state.jobs,history:state.history,connection:state.connection,
         ready:{shopify:Boolean(admin),buildHook:Boolean(process.env.NETLIFY_CATALOG_BUILD_HOOK),catalogSource:Boolean(process.env.SHOP_CATALOG_SOURCE_URL)}});
     }
     if (state.jobs.some(j => ['queued','shopify','website'].includes(j.status) && Date.now()-Date.parse(j.createdAt)<30*60000)) throw new Error('A website update is in progress. Wait for it to finish before saving another revision.');
     if(action==='publish-search-names') {
       if(body.revision!==state.revision)throw Error('The catalog changed. Review names again.');
       if(!admin || !process.env.NETLIFY_CATALOG_BUILD_HOOK || !process.env.SHOP_CATALOG_SOURCE_URL)throw Error('Connect Shopify and website publishing first.');
-      const compiled=compileCatalog(products,state.collections || collections,Object.values(state.documents),state.archived);
+      const compiled=compileCatalog(products,effectiveCollections,Object.values(state.documents),state.archived);
       const prepared=prepareSearchNaming(compiled);
       if(state.searchNamingVersion===prepared.version && !state.jobs.some(j=>j.action===action&&j.status==='error'))return reply({alreadyLive:true});
       const job={id:randomUUID(),productId:'catalog-search-names',action,status:'queued',createdAt:new Date().toISOString(),documents:seedDocuments(prepared.catalog.products,prepared.catalog.collections),collections:prepared.catalog.collections,changes:prepared.changes,namingVersion:prepared.version};
@@ -119,6 +120,61 @@ export default async (request,context) => {
       if (owner) throw new Error(`An ID in this draft belongs to ${owner.id}. Duplicate with new IDs instead.`);
       if(state.drafts[doc.id] || state.documents[doc.id]) await store.setJSON(`revisions/${doc.id}/${state.revision}`,state.drafts[doc.id] || state.documents[doc.id]);
       state.drafts[doc.id]=doc; state.revision++;
+    } else if (action === 'batch-save-drafts') {
+      const documents = body.documents;
+      if (!Array.isArray(documents) || !documents.length) throw new Error('No documents provided.');
+      for (const docInput of documents) {
+        const doc = validateDocument(docInput);
+        if (state.drafts[doc.id] || state.documents[doc.id]) {
+          await store.setJSON(`revisions/${doc.id}/${state.revision}`, state.drafts[doc.id] || state.documents[doc.id]);
+        }
+        state.drafts[doc.id] = doc;
+        state.revision++;
+      }
+      await writeState(store, state, etag);
+      return reply({ saved: documents.length, revision: state.revision });
+    } else if (action === 'batch-publish') {
+      if (!process.env.NETLIFY_CATALOG_BUILD_HOOK || !process.env.SHOP_CATALOG_SOURCE_URL) throw new Error('Automatic website publishing is not connected.');
+      if (!admin) throw new Error('Shopify is not connected.');
+      const ids = Array.isArray(body.ids) ? body.ids : [];
+      if (!ids.length) throw new Error('Choose at least one product to publish.');
+      const docsToPublish = [];
+      for (const id of ids) {
+        const original = state.documents[id] || seedDocuments(products, collections).find(d => d.id === id);
+        const sourceDoc = state.drafts[id] || original;
+        if (!sourceDoc) continue;
+        validateDocument(sourceDoc, { publish: true });
+        docsToPublish.push(sourceDoc);
+      }
+      if (!docsToPublish.length) throw new Error('No valid documents found to publish.');
+      const job = {
+        id: randomUUID(),
+        productId: 'batch-publish',
+        action: 'batch-publish',
+        status: 'queued',
+        createdAt: new Date().toISOString(),
+        documents: docsToPublish,
+      };
+      state.jobs = [job, ...state.jobs].slice(0, 20);
+      await writeState(store, state, etag);
+      const token = createHmac('sha256', process.env.SHOP_ADMIN_KEY).update(job.id).digest('hex');
+      const response = await fetch(new URL('/.netlify/functions/shop-catalog-publish-background', request.url), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Catalog-Job': token },
+        body: JSON.stringify({ id: job.id }),
+        signal: AbortSignal.timeout(10000),
+      });
+      if (!response.ok) {
+        const fresh = await readState(store);
+        const failed = fresh.state.jobs.find(j => j.id === job.id);
+        if (failed) {
+          failed.status = 'error';
+          failed.error = 'Publishing worker could not start.';
+          await writeState(store, fresh.state, fresh.etag);
+        }
+        throw new Error('The publishing worker could not start.');
+      }
+      return reply({ job: { id: job.id, status: 'queued', count: docsToPublish.length } });
     } else if (action === 'connection') {
       const fields = ['publicationId','deliveryProfileId','pickupProfileId','perOrderDeliveryProfileId'];
       if (fields.some(key=>body.connection[key] && !/^gid:\/\/shopify\/(Publication|DeliveryProfile)\/\d+$/.test(body.connection[key]))) throw new Error('Choose valid Shopify connection IDs.');
@@ -148,7 +204,7 @@ export default async (request,context) => {
       const compiled=compileCatalog(products,collections,Object.values(state.documents));
       const ids=new Set(compiled.products.map(p=>p.id));
       const layoutCollections=body.collections.map(c=>{
-        if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(c.id) || !c.name || !['department','collection'].includes(c.kind)) throw new Error('Each category needs a valid link and name.');
+        if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(c.id) || !c.name || !['department','collection','seasonal','curated'].includes(c.kind)) throw new Error('Each category needs a valid link and name.');
         if (!Array.isArray(c.products) || c.products.some(id=>!ids.has(id))) throw new Error('Choose existing products for this category.');
         return {id:c.id,kind:c.kind,name:String(c.name).slice(0,120),shortName:String(c.shortName || c.name).slice(0,120),eyebrow:String(c.eyebrow || '').slice(0,120),heading:String(c.heading || c.name).slice(0,120),description:String(c.description || '').slice(0,1200),seoTitle:String(c.seoTitle || '').slice(0,150),seoDescription:String(c.seoDescription || c.description || '').slice(0,300),coverProduct:c.coverProduct || c.products[0] || '',products:c.products};
       });

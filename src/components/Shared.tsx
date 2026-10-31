@@ -255,16 +255,21 @@ export function Header() {
           <NavLink to="/shop" className={({ isActive }) => isActive || location.pathname.startsWith("/shop/") ? "is-current" : ""}>Shop products</NavLink>
           <NavLink to="/services" className={({ isActive }) => isActive || location.pathname.startsWith("/services/") ? "is-current" : ""}>Custom services</NavLink>
         </div>
-        <button
-          ref={toggle}
-          className="menu-toggle"
-          aria-expanded={open}
-          aria-controls="main-navigation"
-          onClick={() => setOpen(!open)}
-        >
-          {open ? "Close" : "Menu"}
-          <span aria-hidden="true">{open ? "×" : "☰"}</span>
-        </button>
+        <div className="mobile-header-actions">
+          <Link to="/shop/cart" className="mobile-header-cart" aria-label={`Cart, ${cartCount} ${cartCount === 1 ? "item" : "items"}`}>
+            Cart <span className="shop-cart-count">{cartCount}</span>
+          </Link>
+          <button
+            ref={toggle}
+            className="menu-toggle"
+            aria-expanded={open}
+            aria-controls="main-navigation"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? "Close" : "Menu"}
+            <span aria-hidden="true">{open ? "×" : "☰"}</span>
+          </button>
+        </div>
         <nav
           id="main-navigation"
           className={open ? "main-nav is-open" : "main-nav"}
@@ -274,8 +279,13 @@ export function Header() {
             <NavLink to="/shop" className={location.pathname.startsWith("/shop") ? "active" : ""}>Shop</NavLink>
             <button type="button" className="nav-group-toggle" aria-label="Show shop categories" aria-expanded={activePanel === "shop"} aria-controls="shop-navigation-panel" onClick={() => setActivePanel(activePanel === "shop" ? null : "shop")}>⌄</button>
             <div id="shop-navigation-panel" className={`nav-panel ${activePanel === "shop" ? "is-open" : ""}`}>
+              {merchandising.activeSeason === "christmas" ? (
+                <Link to="/shop/christmas-special" style={{ color: "#d4af37", fontWeight: 700 }}>🎄 Christmas Special</Link>
+              ) : merchandising.activeSeason === "halloween" ? (
+                <Link to="/shop/halloween-special" style={{ color: "#f97316", fontWeight: 700 }}>🎃 Halloween Special</Link>
+              ) : null}
               <Link to="/shop/all">Shop all products</Link>
-              {departments.map((collection) => <Link key={collection.id} to={`/shop/${collection.id}`}>{collection.name}</Link>)}
+              {departments.filter(c => merchandising.hideOffSeasonProducts !== true || (merchandising.activeSeason === "christmas" ? !["halloween", "masks-costumes"].includes(c.id) : true)).map((collection) => <Link key={collection.id} to={`/shop/${collection.id}`}>{collection.name}</Link>)}
               <Link to="/shop/gifts-under-25">Gifts $25 &amp; under</Link>
             </div>
           </div>
@@ -302,6 +312,7 @@ export function Header() {
 }
 export function Footer() {
   const modelDiscovery = useModelDiscovery();
+  const merchandising = useShopMerchandising();
   return (
     <footer className="site-footer">
       <div className="container footer-grid">
@@ -322,6 +333,8 @@ export function Footer() {
           {modelDiscovery.enabled && modelDiscovery.placements.navigation && <Link to="/find-a-3d-model">Find a 3D model</Link>}
           <Link to="/work">Our work</Link>
           <Link to="/shop">Shop all products</Link>
+          {merchandising.activeSeason === "christmas" && <Link to="/shop/christmas-special" style={{ color: "#d4af37", fontWeight: 600 }}>Christmas collection</Link>}
+          {merchandising.activeSeason === "halloween" && <Link to="/shop/halloween-special" style={{ color: "#f97316", fontWeight: 600 }}>Halloween collection</Link>}
           <Link to="/shop/personalized-gifts">Personalized gifts</Link>
           <Link to="/about">The studio</Link>
           <Link to="/pricing">Pricing</Link>
@@ -350,7 +363,6 @@ export function Footer() {
         <span>Edmonton, AB · Serving projects near and far</span>
         <Link to="/privacy">Privacy</Link>
         <Link to="/shipping-returns">Shipping & returns</Link>
-        <Link to="/shop/admin">Studio Admin</Link>
       </div>
     </footer>
   );

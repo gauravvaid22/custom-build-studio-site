@@ -1,7 +1,9 @@
 import products from "../data/catalog";
 import collections from "../../commerce/collections.json";
 import defaults from "../../commerce/shop-merchandising.json";
+import { PURE_HALLOWEEN_PRODUCT_IDS, PURE_CHRISTMAS_PRODUCT_IDS } from "../../commerce/merchandising.mjs";
 
+export { PURE_HALLOWEEN_PRODUCT_IDS, PURE_CHRISTMAS_PRODUCT_IDS };
 export type Merchandising = typeof defaults;
 export type ShopFeature = Merchandising["fallback"];
 type Product = (typeof products)[number];
@@ -12,8 +14,24 @@ export const subcollections: Record<string, string[]> = {
   "personalized-gifts": ["photo-frames"],
   "home-decor": ["can-holders", "tumbler-accessories"],
   "pet-accessories": ["pet-hats-costumes"],
-  seasonal: ["halloween", "masks-costumes"],
+  seasonal: defaults.activeSeason === "halloween" ? ["halloween", "masks-costumes"] : ["christmas"],
 };
+
+export function isProductVisibleInSeason(productId: string, merchandising?: Merchandising): boolean {
+  const activeSeason = merchandising?.activeSeason || defaults.activeSeason || "christmas";
+  const hideOffSeason = merchandising?.hideOffSeasonProducts ?? defaults.hideOffSeasonProducts ?? true;
+  if (!hideOffSeason) return true;
+  if (activeSeason === "christmas") {
+    return !PURE_HALLOWEEN_PRODUCT_IDS.includes(productId);
+  }
+  if (activeSeason === "halloween") {
+    return !PURE_CHRISTMAS_PRODUCT_IDS.includes(productId);
+  }
+  if (activeSeason === "everyday") {
+    return !PURE_HALLOWEEN_PRODUCT_IDS.includes(productId) && !PURE_CHRISTMAS_PRODUCT_IDS.includes(productId);
+  }
+  return true;
+}
 export function edmontonDate(now = new Date()) {
   const parts = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Edmonton", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(now);
   const part = (type: string) => parts.find(item => item.type === type)?.value;
@@ -87,6 +105,7 @@ export function searchCatalogAutocomplete(
   const scored: { item: SearchAutocompleteItem; score: number }[] = [];
 
   for (const product of searchablePublicCatalog) {
+    if (!isProductVisibleInSeason(product.id)) continue;
     const displayName = nameFor ? nameFor(product.id, product.name) : product.name;
     if (!matchesProductSearch(product, q, displayName)) continue;
 

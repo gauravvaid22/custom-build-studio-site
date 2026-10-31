@@ -85,3 +85,14 @@ test('uploaded images and video are associated with the existing Shopify product
   await syncDocument(admin,d,{});assert.equal(attached.length,2);assert.equal(attached[1].id,'gid://shopify/Video/11');assert.deepEqual(attached[1].referencesToAdd,['gid://shopify/Product/1']);
 });
 test('absolute private photo URLs are excluded from public product media',()=>{assert.equal(safeMediaUrl('https://custombuildstudio.ca/.netlify/functions/shop-media?id=private'),false);});
+
+test('baseline collections add Christmas while preserving archive and explicit membership edits',async()=>{
+ const {mergeCollectionsWithBaseline}=await import('../commerce/catalog-management.mjs');
+ const state=[{id:'seasonal',name:'Owner title',products:['existing']},...Array.from({length:14},(_,i)=>({id:`old-${i}`,products:[]}))];
+ const base=[{id:'seasonal',products:['existing','new-tree','grumpy-kitty-planter','owner-moved']},{id:'christmas',products:['new-tree','grumpy-kitty-planter']}];
+ const merged=mergeCollectionsWithBaseline(state,base,[{id:'owner-moved'}],['grumpy-kitty-planter']);
+ assert.equal(merged.length,16);assert.equal(merged[0].name,'Owner title');
+ assert.deepEqual(merged[0].products,['existing','new-tree']);
+ assert.deepEqual(merged.find(c=>c.id==='christmas').products,['new-tree']);
+ assert.deepEqual(state[0].products,['existing']);
+});

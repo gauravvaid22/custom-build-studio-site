@@ -5,7 +5,17 @@ import collections from '../commerce/collections.json' with { type: 'json' };
 import { discoveryProducts } from '../commerce/search-discovery.mjs';
 
 test('grouped listings retain every real design, fit and production SKU', () => {
-  const expected = { 'headphone-stand-designs': [6, 6], 'can-holder-designs': [6, 6], 'halloween-candy-holder-designs': [3, 3], 'ps5-console-stand-designs': [6, 12], 'personalized-photo-holder-designs': [13, 13] };
+  const expected = {
+    'headphone-stand-designs': [6, 6],
+    'can-holder-designs': [6, 6],
+    'halloween-candy-holder-designs': [6, 6],
+    'ps5-console-stand-designs': [6, 12],
+    'personalized-photo-holder-designs': [13, 13],
+    'christmas-character-figurines': [3, 3],
+    'christmas-character-ornaments': [8, 8],
+    'luminous-tree': [3, 3],
+    'christmas-trinket-trays': [3, 3],
+  };
   for (const [id, counts] of Object.entries(expected)) {
     const group = products.find(p => p.id === id);
     assert.equal(group.groupedDesigns.length, counts[0]);
@@ -21,13 +31,13 @@ test('grouped listings retain every real design, fit and production SKU', () => 
     }
   }
   const headphones = products.find(p => p.id === 'headphone-stand-designs');
-  assert.equal(headphones.priceCents, 3999);
-  assert.deepEqual(headphones.variants.map(v => v.priceCents), [3999, 4499, 4999, 4999, 4999, 5999]);
+  assert.equal(headphones.priceCents, 3499);
+  assert.deepEqual(headphones.variants.map(v => v.priceCents), [3499, 3999, 4499, 4499, 4499, 5499]);
   for (const option of headphones.variants) assert.equal(option.priceCents, products.find(p => p.id === option.id).priceCents);
   assert.equal(discoveryProducts.filter(p => p.category === 'Headphone stands').length, 6);
   const canGroup = products.find(p => p.id === 'can-holder-designs');
-  assert.equal(canGroup.priceCents, 2999);
-  assert.deepEqual(canGroup.variants.map(v => v.priceCents), [2999, 3299, 3499, 3999, 3499, 2999]);
+  assert.equal(canGroup.priceCents, 2499);
+  assert.deepEqual(canGroup.variants.map(v => v.priceCents), [2499, 2799, 2999, 3499, 2999, 2499]);
   for (const option of canGroup.variants) assert.equal(option.priceCents, products.find(p => p.id === option.id).priceCents);
   assert.equal(discoveryProducts.filter(p => p.category === 'Personalized photo holders').length, 13, 'All individual designs remain discoverable in the merchant feed');
   assert.equal(discoveryProducts.filter(p => p.category === 'PS5 console stands').length, 6);

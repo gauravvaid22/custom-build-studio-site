@@ -1,6 +1,7 @@
 import products from "./products.json" with { type: "json" };
 import collections from "./collections.json" with { type: "json" };
 import config from "./search-discovery.json" with { type: "json" };
+import merchandising from "./shop-merchandising.json" with { type: "json" };
 
 const selected = new Set(collections.filter(c => config.collectionIds.includes(c.id)).flatMap(c => c.products).flatMap(id => products.find(p => p.id === id)?.groupedDesigns?.map(design => design.id) || [id]));
 export const discoveryProducts = products.filter(p => selected.has(p.id) && !p.variantOf && !p.purchaseOnly && p.launchReady!==false);
@@ -33,7 +34,7 @@ export async function fetchDiscoveryCatalog(token, fetcher = fetch) {
 }
 
 export function discoverySchema(p) {
-  const collection = collections.find(c => config.collectionIds.includes(c.id) && c.products.includes(p.listingGroup || p.id));
+  const collection = collections.find(c => config.collectionIds.includes(c.id) && c.products.includes(p.listingGroup || p.id)) || { id: "seasonal", name: "Seasonal gifts & décor" };
   const item = variant => {
     const url = productUrl(p.id, variant.id === p.id ? undefined : variant.id);
     return { "@type": "Product", "@id": `${config.origin}/shop/${p.id}/#${variant.id}`, name: variant.name, sku: variant.id,
@@ -97,7 +98,12 @@ export function getCustomLabel1(p) {
 }
 
 export function merchantFeed(catalog) {
+  const feedDescription = merchandising.activeSeason === "christmas"
+    ? "Canadian-made gifts, Christmas décor, illuminated lamps and custom studio pieces crafted in Edmonton, Alberta"
+    : merchandising.activeSeason === "halloween"
+    ? "Finished gifts, accessories and Halloween products made in Edmonton"
+    : "Canadian-made gifts, home décor, desk accessories and custom studio pieces crafted in Edmonton, Alberta";
   const productTitle = p => p.titleSource==='trained_algorithmic_media' ? '<g:structured_title><g:digital_source_type>trained_algorithmic_media</g:digital_source_type><g:content>'+xmlEscape(p.name.slice(0,150))+'</g:content></g:structured_title>' : '<g:title>'+xmlEscape(p.name.slice(0,150))+'</g:title>';
   const field = (name, value) => `<g:${name}>${xmlEscape(value)}</g:${name}>`;
-  return `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:g="http://base.google.com/ns/1.0"><channel><title>Custom Build Studio Products</title><link>${config.origin}/shop/</link><description>Finished gifts, accessories and Halloween products made in Edmonton</description>${catalog.flatMap(parent => (parent.liveVariants || [parent]).map(p => `<item>${field("id", p.id)}${productTitle(p)}${field("description", `${parent.description} ${p.included} ${p.dimensions || ""}`)}${field("link", productUrl(parent.id, p.id === parent.id ? undefined : p.id))}${field("image_link", new URL(p.images[0].src,config.origin).href)}${p.images.slice(1, 11).map(i => field("additional_image_link", new URL(i.src,config.origin).href)).join("")}${p.optionLabel ? field("item_group_id", parent.id) + field(p.variantKind, p.optionLabel) : ""}${field("availability", p.available ? "in_stock" : "out_of_stock")}${field("price", `${p.livePrice} CAD`)}${field("condition", "new")}${field("identifier_exists", "no")}${field("product_type", `Shop > ${parent.category}`)}${field("custom_label_0", getCustomLabel0(parent, p))}${field("custom_label_1", getCustomLabel1(p))}<g:shipping>${field("country", config.shippingCountry)}${field("price", `${((p.shippingFeeCents ?? 0) / 100).toFixed(2)} CAD`)}</g:shipping></item>`)).join("")}</channel></rss>`;
+  return `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:g="http://base.google.com/ns/1.0"><channel><title>Custom Build Studio Products</title><link>${config.origin}/shop/</link><description>${xmlEscape(feedDescription)}</description>${catalog.flatMap(parent => (parent.liveVariants || [parent]).map(p => `<item>${field("id", p.id)}${productTitle(p)}${field("description", `${parent.description} ${p.included} ${p.dimensions || ""}`)}${field("link", productUrl(parent.id, p.id === parent.id ? undefined : p.id))}${field("image_link", new URL(p.images[0].src,config.origin).href)}${p.images.slice(1, 11).map(i => field("additional_image_link", new URL(i.src,config.origin).href)).join("")}${p.optionLabel ? field("item_group_id", parent.id) + field(p.variantKind, p.optionLabel) : ""}${field("availability", p.available ? "in_stock" : "out_of_stock")}${field("price", `${p.livePrice} CAD`)}${field("condition", "new")}${field("identifier_exists", "no")}${field("product_type", `Shop > ${parent.category}`)}${field("custom_label_0", getCustomLabel0(parent, p))}${field("custom_label_1", getCustomLabel1(p))}<g:shipping>${field("country", config.shippingCountry)}${field("price", `${((p.shippingFeeCents ?? 0) / 100).toFixed(2)} CAD`)}</g:shipping></item>`)).join("")}</channel></rss>`;
 }

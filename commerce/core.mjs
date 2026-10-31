@@ -195,7 +195,7 @@ export function createShop({
   }
   async function getMerchandising() {
     const found = await store.get("config/shop-merchandising");
-    if (!found?.data) return merchandisingDefaults;
+    if (!found?.data || (found.data.schemaVersion || 1) < 2) return merchandisingDefaults;
     try { return validateMerchandising(found.data); }
     catch { return merchandisingDefaults; }
   }
@@ -203,7 +203,19 @@ export function createShop({
     let clean;
     try { clean = validateMerchandising(input); }
     catch (error) { fail(error.message); }
+    const current = await getMerchandising();
     await store.put("config/shop-merchandising", clean, {});
+    const hookUrl = process.env.NETLIFY_CATALOG_BUILD_HOOK || process.env.NETLIFY_BUILD_HOOK_URL;
+    if (hookUrl && (current.activeSeason !== clean.activeSeason || current.hideOffSeasonProducts !== clean.hideOffSeasonProducts)) {
+      try {
+        await fetch(hookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ reason: `Seasonal mode changed to ${clean.activeSeason}` }),
+          signal: AbortSignal.timeout(10000),
+        });
+      } catch { /* Background hook failure does not fail the save */ }
+    }
     return clean;
   }
   function validateProductContent(input) {

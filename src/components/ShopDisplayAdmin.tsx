@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import defaults from "../../commerce/shop-merchandising.json";
 import collections from "../../commerce/collections.json";
+import { SEASONAL_PRESETS } from "../../commerce/merchandising.mjs";
 import { activeShopFeature, parentProducts, shopDepartments, type Merchandising, type ShopFeature } from "../lib/shopDiscovery";
 
 async function request(action: string, adminKey: string, merchandising?: Merchandising) {
@@ -13,27 +14,57 @@ async function request(action: string, adminKey: string, merchandising?: Merchan
   if (!response.ok) throw new Error(data.error || "Unable to update the shop display.");
   return data.merchandising as Merchandising;
 }
+
 function FeatureFields({ value, onChange, label }: { value: ShopFeature; onChange: (value: ShopFeature) => void; label: string }) {
-  const cover = parentProducts.find(product => product.id === value.coverProduct)!;
+  const cover = parentProducts.find(product => product.id === value.coverProduct) || parentProducts[0];
   const change = (field: keyof ShopFeature, next: string | number | string[]) => onChange({ ...value, [field]: next });
   return <fieldset className="shop-display-fields"><legend>{label}</legend>
     <div className="form-grid">
       <label>Small campaign label<input maxLength={80} required value={value.eyebrow} onChange={event => change("eyebrow", event.target.value)} /></label>
       <label>Headline<input maxLength={80} required value={value.title} onChange={event => change("title", event.target.value)} /></label>
       <label>Button text<input maxLength={45} required value={value.buttonLabel} onChange={event => change("buttonLabel", event.target.value)} /></label>
-      <label>Button destination<select value={value.destination} onChange={event => change("destination", event.target.value)}><option value="all">All products</option>{collections.map(collection => <option key={collection.id} value={collection.id}>{collection.name}</option>)}</select></label>
-      <label>Cover product<select value={value.coverProduct} onChange={event => onChange({ ...value, coverProduct: event.target.value, imageIndex: 0 })}>{parentProducts.map(product => <option key={product.id} value={product.id}>{product.name}</option>)}</select></label>
-      <label>Cover photo<select value={value.imageIndex} onChange={event => change("imageIndex", Number(event.target.value))}>{cover.images.map((image, index) => <option key={image.src} value={index}>Photo {index + 1} · {image.alt}</option>)}</select></label>
+      <label>Button destination
+        <select value={value.destination} onChange={event => change("destination", event.target.value)}>
+          <option value="christmas-special">🎄 Christmas Special Showcase (/shop/christmas-special)</option>
+          <option value="halloween-special">🎃 Halloween Special Showcase (/shop/halloween-special)</option>
+          <option value="all">All products (/shop/all)</option>
+          {collections.map(collection => <option key={collection.id} value={collection.id}>{collection.name}</option>)}
+        </select>
+      </label>
+      <label>Cover product
+        <select value={value.coverProduct} onChange={event => onChange({ ...value, coverProduct: event.target.value, imageIndex: 0 })}>
+          {parentProducts.map(product => <option key={product.id} value={product.id}>{product.name}</option>)}
+        </select>
+      </label>
+      <label>Cover photo
+        <select value={value.imageIndex} onChange={event => change("imageIndex", Number(event.target.value))}>
+          {cover.images.map((image, index) => <option key={image.src} value={index}>Photo {index + 1} · {image.alt}</option>)}
+        </select>
+      </label>
     </div>
     <label>Short introduction<textarea maxLength={240} rows={2} required value={value.description} onChange={event => change("description", event.target.value)} /></label>
     <label>Featured-products heading<input maxLength={100} required value={value.featuredTitle} onChange={event => change("featuredTitle", event.target.value)} /></label>
-    <div className="form-grid">{Array.from({ length: 6 }, (_, index) => <label key={index}>Featured product {index + 1}<select value={value.featuredIds[index] || ""} onChange={event => {
-      const selected = Array.from({ length: 6 }, (_, position) => position === index ? event.target.value : value.featuredIds[position] || "").filter(Boolean);
-      change("featuredIds", selected);
-    }}><option value="">None</option>{parentProducts.map(product => <option key={product.id} value={product.id} disabled={value.featuredIds.includes(product.id) && value.featuredIds[index] !== product.id}>{product.name}</option>)}</select></label>)}</div>
-    <img className="shop-display-cover-preview" src={cover.images[value.imageIndex]?.thumb || cover.images[0].thumb} alt={`Selected cover: ${cover.name}`} width="480" height="480" />
+    <div className="form-grid">
+      {Array.from({ length: 6 }, (_, index) => (
+        <label key={index}>Featured product {index + 1}
+          <select value={value.featuredIds[index] || ""} onChange={event => {
+            const selected = Array.from({ length: 6 }, (_, position) => position === index ? event.target.value : value.featuredIds[position] || "").filter(Boolean);
+            change("featuredIds", selected);
+          }}>
+            <option value="">None</option>
+            {parentProducts.map(product => (
+              <option key={product.id} value={product.id} disabled={value.featuredIds.includes(product.id) && value.featuredIds[index] !== product.id}>
+                {product.name}
+              </option>
+            ))}
+          </select>
+        </label>
+      ))}
+    </div>
+    <img className="shop-display-cover-preview" src={cover.images[value.imageIndex]?.thumb || cover.images[0]?.thumb || ""} alt={`Selected cover: ${cover.name}`} width="480" height="480" />
   </fieldset>;
 }
+
 export function ShopDisplayAdmin({ adminKey }: { adminKey: string }) {
   const [value, setValue] = useState<Merchandising>(defaults);
   const [loading, setLoading] = useState(true);
@@ -42,6 +73,7 @@ export function ShopDisplayAdmin({ adminKey }: { adminKey: string }) {
   const [error, setError] = useState("");
   const [saved, setSaved] = useState("");
   const [loadAttempt, setLoadAttempt] = useState(0);
+
   useEffect(() => {
     let active = true;
     setLoading(true); setLoadFailed(false); setError("");
@@ -49,38 +81,160 @@ export function ShopDisplayAdmin({ adminKey }: { adminKey: string }) {
       .catch(failure => { if (active) { setError(failure.message); setLoadFailed(true); } }).finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
   }, [adminKey, loadAttempt]);
+
   const feature = activeShopFeature(value);
+
+  function applyPreset(season: "christmas" | "halloween" | "everyday") {
+    const preset = SEASONAL_PRESETS[season];
+    if (!preset) return;
+    setValue(prev => ({
+      ...prev,
+      activeSeason: preset.activeSeason,
+      hideOffSeasonProducts: preset.hideOffSeasonProducts,
+      campaign: {
+        ...prev.campaign,
+        ...preset.campaign,
+      }
+    }));
+  }
+
   async function save(event: FormEvent) {
     event.preventDefault(); setBusy(true); setError(""); setSaved("");
     try {
       const result = await request("save-merchandising", adminKey, value);
       setValue(result);
       window.dispatchEvent(new CustomEvent("cbs-merchandising-updated", { detail: result }));
-      setSaved("Shop display saved. The shop and homepage now use these settings.");
+      setSaved("Shop display saved. The storefront, navigation and Google feeds now use these settings.");
     } catch (failure) { setError((failure as Error).message); }
     finally { setBusy(false); }
   }
+
   if (loading) return <p role="status">Loading shop display…</p>;
+
   return <section className="shop-display-admin">
-    <div className="section-heading"><div><p className="eyebrow">YOUR SHOP WINDOW</p><h2>Campaigns & featured products</h2></div><p>Control the shop cover, product order and category visibility. Prices continue to come from Shopify.</p></div>
-    <div className="shop-display-status"><strong>Showing today: {feature.title}</strong><span>Dates use Edmonton time. The last day is included; the everyday display returns automatically afterward.</span><Link to="/shop" target="_blank">View shop ↗</Link></div>
+    <div className="section-heading">
+      <div>
+        <p className="eyebrow">YOUR SHOP WINDOW</p>
+        <h2>Seasonal Mode & Merchandising</h2>
+      </div>
+      <p>Switch between Christmas, Halloween, and Everyday studio modes with one click. Configure hero banners and featured products.</p>
+    </div>
+
+    <div className="shop-display-status">
+      <strong>Active Season: {value.activeSeason === "christmas" ? "🎄 Christmas Special" : value.activeSeason === "halloween" ? "🎃 Halloween Special" : "🏠 Everyday Studio"}</strong>
+      <span>Campaign: “{feature.title}” · Destination: {feature.destination}</span>
+      <Link to="/shop" target="_blank">View shop ↗</Link>
+    </div>
+
     {error && <p role="alert" className="shop-checkout-error">{error}</p>}
     {loadFailed && <button type="button" className="button secondary" onClick={() => setLoadAttempt(attempt => attempt + 1)}>Retry loading settings</button>}
+
     <form className="quote-form" onSubmit={save}>
       <fieldset disabled={busy || loadFailed} className="shop-display-form-body">
-        <fieldset className="shop-display-fields"><legend>Shop sections</legend>
+
+        {/* Seasonal Mode Switcher Card */}
+        <fieldset className="shop-display-fields">
+          <legend>Seasonal Storefront Mode</legend>
+          <p className="small">Select the current active season for the website. You can toggle back to Halloween next October in one click.</p>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12, margin: "12px 0" }}>
+            <button
+              type="button"
+              className={`button ${value.activeSeason === "christmas" ? "" : "secondary"}`}
+              style={{ textAlign: "left", padding: "12px 16px", borderColor: value.activeSeason === "christmas" ? "#d4af37" : undefined }}
+              onClick={() => applyPreset("christmas")}
+            >
+              <strong>🎄 Christmas Special</strong>
+              <div className="small" style={{ opacity: 0.85, marginTop: 4 }}>Live holiday showcase, Christmas navigation & feeds</div>
+            </button>
+
+            <button
+              type="button"
+              className={`button ${value.activeSeason === "halloween" ? "" : "secondary"}`}
+              style={{ textAlign: "left", padding: "12px 16px" }}
+              onClick={() => applyPreset("halloween")}
+            >
+              <strong>🎃 Halloween Special</strong>
+              <div className="small" style={{ opacity: 0.85, marginTop: 4 }}>October masks, glowing lamps & spooky decor</div>
+            </button>
+
+            <button
+              type="button"
+              className={`button ${value.activeSeason === "everyday" ? "" : "secondary"}`}
+              style={{ textAlign: "left", padding: "12px 16px" }}
+              onClick={() => applyPreset("everyday")}
+            >
+              <strong>🏠 Everyday Studio</strong>
+              <div className="small" style={{ opacity: 0.85, marginTop: 4 }}>Year-round personalized gifts, desk & home decor</div>
+            </button>
+          </div>
+
+          <label className="shop-display-check" style={{ marginTop: 12, fontWeight: 600 }}>
+            <input
+              type="checkbox"
+              checked={value.hideOffSeasonProducts ?? true}
+              onChange={event => setValue({ ...value, hideOffSeasonProducts: event.target.checked })}
+            />
+            Hide off-season holiday pages & seasonal-only items from public shop & Google feeds
+          </label>
+          <p className="small" style={{ margin: "4px 0 16px 28px", color: "var(--cbs-muted, #71717a)" }}>
+            When checked, off-season holiday products and pages (e.g. Halloween masks during Christmas) are hidden from public browse, search autocomplete, and Google Shopping. They remain safely preserved in the database to toggle back on next year.
+          </p>
+        </fieldset>
+
+        {/* Shop Sections & Departments */}
+        <fieldset className="shop-display-fields">
+          <legend>Shop departments</legend>
           <p className="small">Choose which departments appear in navigation and on the shop page. At least one must remain visible.</p>
-          {shopDepartments.map(department => <label className="shop-display-check" key={department.id}><input type="checkbox" checked={value.departments.includes(department.id)} onChange={event => setValue({ ...value, departments: event.target.checked ? [...value.departments, department.id] : value.departments.filter(id => id !== department.id) })} />{department.name}</label>)}
-          <label className="shop-display-check"><input type="checkbox" checked={value.showBudgetGifts} onChange={event => setValue({ ...value, showBudgetGifts: event.target.checked })} />Show gifts $25 & under</label>
-          <label className="shop-display-check"><input type="checkbox" checked={value.showStudioProof} onChange={event => setValue({ ...value, showStudioProof: event.target.checked })} />Show studio work and review links</label>
-          <label className="shop-display-check"><input type="checkbox" checked={value.decorativeMotion} onChange={event => setValue({ ...value, decorativeMotion: event.target.checked })} />Enable subtle seasonal atmosphere on desktop</label>
+          {shopDepartments.map(department => (
+            <label className="shop-display-check" key={department.id}>
+              <input
+                type="checkbox"
+                checked={value.departments.includes(department.id)}
+                onChange={event => setValue({
+                  ...value,
+                  departments: event.target.checked
+                    ? [...value.departments, department.id]
+                    : value.departments.filter(id => id !== department.id)
+                })}
+              />
+              {department.name}
+            </label>
+          ))}
+          <label className="shop-display-check">
+            <input type="checkbox" checked={value.showBudgetGifts} onChange={event => setValue({ ...value, showBudgetGifts: event.target.checked })} />
+            Show gifts $25 & under
+          </label>
+          <label className="shop-display-check">
+            <input type="checkbox" checked={value.showStudioProof} onChange={event => setValue({ ...value, showStudioProof: event.target.checked })} />
+            Show studio work and review links
+          </label>
+          <label className="shop-display-check">
+            <input type="checkbox" checked={value.decorativeMotion} onChange={event => setValue({ ...value, decorativeMotion: event.target.checked })} />
+            Enable subtle seasonal atmosphere on desktop
+          </label>
         </fieldset>
-        <fieldset className="shop-display-fields"><legend>Scheduled campaign</legend>
-          <label className="shop-display-check"><input type="checkbox" checked={value.campaign.enabled} onChange={event => setValue({ ...value, campaign: { ...value.campaign, enabled: event.target.checked } })} />Enable this campaign within its dates</label>
-          <div className="form-grid"><label>First day (Edmonton)<input type="date" required value={value.campaign.startDate} onChange={event => setValue({ ...value, campaign: { ...value.campaign, startDate: event.target.value } })} /></label><label>Last day (inclusive)<input type="date" required min={value.campaign.startDate} value={value.campaign.endDate} onChange={event => setValue({ ...value, campaign: { ...value.campaign, endDate: event.target.value } })} /></label></div>
+
+        {/* Scheduled Campaign Dates */}
+        <fieldset className="shop-display-fields">
+          <legend>Scheduled campaign</legend>
+          <label className="shop-display-check">
+            <input type="checkbox" checked={value.campaign.enabled} onChange={event => setValue({ ...value, campaign: { ...value.campaign, enabled: event.target.checked } })} />
+            Enable this campaign within its dates
+          </label>
+          <div className="form-grid">
+            <label>First day (Edmonton)
+              <input type="date" required value={value.campaign.startDate} onChange={event => setValue({ ...value, campaign: { ...value.campaign, startDate: event.target.value } })} />
+            </label>
+            <label>Last day (inclusive)
+              <input type="date" required min={value.campaign.startDate} value={value.campaign.endDate} onChange={event => setValue({ ...value, campaign: { ...value.campaign, endDate: event.target.value } })} />
+            </label>
+          </div>
         </fieldset>
+
         <FeatureFields label="Campaign display" value={value.campaign} onChange={next => setValue({ ...value, campaign: { ...value.campaign, ...next } })} />
         <FeatureFields label="Everyday display (when no campaign is active)" value={value.fallback} onChange={next => setValue({ ...value, fallback: next })} />
+
         <button className="button" disabled={busy}>{busy ? "Saving…" : "Save shop display"}</button>
       </fieldset>
       {saved && <p role="status">{saved}</p>}

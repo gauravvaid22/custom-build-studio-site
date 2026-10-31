@@ -1,3 +1,5 @@
+import baseline from '../../commerce/catalog-baseline.json' with {type:'json'};
+import {mergeCollectionsWithBaseline} from '../../commerce/catalog-management.mjs';
 import { getStore } from '@netlify/blobs';
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import {catalogStore,readState,writeState} from '../../commerce/catalog-store.mjs';
@@ -20,6 +22,38 @@ export default async (request,context) => {
     if(job.action==='publish-search-names') {
       const records=[...new Map(job.documents.flatMap(d=>d.products).map(p=>[p.id,p])).values()];
       results=await syncSearchNames(admin,records,lookupProduct);
+    }
+    if (job.action==='batch-publish') {
+      const sale=await getStore({name:'shop-orders-v1',consistency:'strong'}).get('config/shop-sale',{type:'json'});
+      if(sale && sale.status!=='inactive')throw new Error('End or cancel the current sale before publishing base-price changes.');
+      results = [];
+      for (const doc of job.documents) {
+        const latestBefore = await readState(store);
+        const original = latestBefore.state.documents[doc.id];
+        const res = await syncDocument(admin, doc, {...latestBefore.state.connection, initializeInventory: initializePublishedInventory});
+        results.push({ id: doc.id, res });
+        const removed = original?.products.filter(p => !doc.products.some(x => x.id === p.id)) || [];
+        if (removed.length) await withdrawDocument(admin, { products: removed }, latestBefore.state.connection.publicationId);
+
+        // Immediately persist each synced document to Netlify Blobs so line 51 readState keeps it
+        const checkpoint = await readState(store);
+        checkpoint.state.documents[doc.id] = doc;
+        delete checkpoint.state.drafts[doc.id];
+        const currentIds = new Set(doc.products.map(p => p.id));
+        checkpoint.state.unavailableIds = [
+          ...new Set([
+            ...(checkpoint.state.unavailableIds || []).filter(item => !currentIds.has(item)),
+            ...(original?.products || []).filter(p => !currentIds.has(p.id)).map(p => p.id),
+          ]),
+        ];
+        checkpoint.state.collections = mergeCollectionsWithBaseline(
+          checkpoint.state.collections,
+          baseline.collections,
+          Object.values(checkpoint.state.documents),
+          checkpoint.state.archived
+        );
+        await writeState(store, checkpoint.state, checkpoint.etag);
+      }
     }
     if (job.action==='publish') {
       const sale=await getStore({name:'shop-orders-v1',consistency:'strong'}).get('config/shop-sale',{type:'json'});

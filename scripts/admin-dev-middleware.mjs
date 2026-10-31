@@ -219,6 +219,11 @@ export function createAdminDevMiddleware() {
       });
     }
 
+    // 6. Shop Inventory
+    if (fnName === 'shop-inventory') {
+      return sendJson(res, { enabled: false, stock: {} });
+    }
+
     return next();
   };
 }

@@ -1,4 +1,7 @@
 {
+  "schemaVersion": 2,
+  "activeSeason": "christmas",
+  "hideOffSeasonProducts": true,
   "departments": [
     "personalized-gifts",
     "gaming-desk",
@@ -30,23 +33,22 @@
   },
   "campaign": {
     "enabled": true,
-    "startDate": "2026-10-01",
-    "endDate": "2026-10-31",
-    "eyebrow": "HALLOWEEN / MADE IN EDMONTON",
-    "title": "Give spooky some character.",
-    "description": "Finished wearable masks, glowing lamps and little ghosts. Find your Halloween favourite.",
-    "coverProduct": "pumpkin-head-halloween-mask",
+    "startDate": "2026-10-31",
+    "endDate": "2026-12-31",
+    "eyebrow": "CHRISTMAS COLLECTION · CRAFTED IN EDMONTON",
+    "title": "Heirloom holiday warmth, made here in Canada.",
+    "description": "Illuminated table lamps, sculptural nativity pieces, kinetic trees and giftable ornaments—crafted in small batches at our Edmonton studio with free tracked Canadian shipping.",
+    "coverProduct": "endless-swirling-tree",
     "imageIndex": 0,
-    "destination": "halloween",
-    "buttonLabel": "Explore Halloween",
-    "featuredTitle": "Halloween picks, made here.",
+    "destination": "christmas-special",
+    "buttonLabel": "Explore Christmas Collection",
+    "featuredTitle": "Signature Christmas pieces, made in Edmonton.",
     "featuredIds": [
-      "pumpkin-head-halloween-mask",
-      "carved-in-fear-halloween-mask",
-      "candlelight-pumpkins-table-lamp",
-      "mood-ghost",
-      "ghost-on-a-swing",
-      "pumpkin-fidget-keychain"
+      "endless-swirling-tree",
+      "christmas-angel",
+      "village-on-the-moon-table-lamp",
+      "christmas-gnome-set",
+      "santa-s-bonfire-table-lamp"
     ]
   }
 }

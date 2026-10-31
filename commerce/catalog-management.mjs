@@ -62,6 +62,39 @@ export function seedDocuments(products, collections) {
     pickupPriceDifferenceCents: p.pickupPriceDifferenceCents ?? 1000, shippingPreset: 'existing', fulfillmentConfirmed: p.launchReady !== false,
   }));
 }
+export function mergeCollectionsWithBaseline(stateCollections, baselineCollections = [], documents = [], archived = []) {
+  if (!Array.isArray(stateCollections) || !stateCollections.length) {
+    return structuredClone(baselineCollections);
+  }
+  const result = structuredClone(stateCollections);
+  const byId = new Map(result.map(c => [c.id, c]));
+  const docIds = new Set((documents || []).map(d => d.id));
+  const blocked = new Set(archived || []);
+
+  for (const baseColl of baselineCollections || []) {
+    if (!byId.has(baseColl.id)) {
+      const cloned = structuredClone(baseColl);
+      cloned.products = (cloned.products || []).filter(id => !blocked.has(id));
+      result.push(cloned);
+      byId.set(cloned.id, cloned);
+      continue;
+    }
+    const target = byId.get(baseColl.id);
+    if (baseColl.seoTitle && !target.seoTitle) target.seoTitle = baseColl.seoTitle;
+    if (baseColl.seoDescription && !target.seoDescription) target.seoDescription = baseColl.seoDescription;
+    // Append newly introduced baseline products that are neither archived nor overridden by an explicit state document
+    target.products ||= [];
+    const existing = new Set(target.products);
+    for (const prodId of baseColl.products || []) {
+      if (!existing.has(prodId) && !blocked.has(prodId) && !docIds.has(prodId)) {
+        target.products.push(prodId);
+        existing.add(prodId);
+      }
+    }
+  }
+  return result;
+}
+
 export function compileCatalog(baseProducts, baseCollections, documents, archived = []) {
   const all = new Map(structuredClone(baseProducts).map(p => [p.id, p]));
   const blocked = new Set(archived);

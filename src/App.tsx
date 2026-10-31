@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef } from "react";
-const ChristmasPreview = lazy(() => import("./pages/ChristmasPreview"));
+import ChristmasPreview from "./pages/ChristmasPreview";
 import shopCollections from "../commerce/collections.json";
 import { Routes, Route, Navigate, useLocation, useParams } from "react-router-dom";
 import { Header, Footer } from "./components/Shared";
@@ -87,11 +87,7 @@ export default function App() {
           {CHRISTMAS_PUBLIC_ENABLED && (
             <Route
               path="/shop/christmas-special/:id?"
-              element={
-                <Suspense fallback={<p className="container section">Preparing a little Christmas magic…</p>}>
-                  <ChristmasPreview publicMode />
-                </Suspense>
-              }
+              element={<ChristmasPreview publicMode />}
             />
           )}
           <Route path="/shop/cart" element={<ShopCart />} />

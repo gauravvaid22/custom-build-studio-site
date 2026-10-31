@@ -1,19 +1,15 @@
 import { CSSProperties, useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate, useParams, useSearchParams } from "react-router-dom";
 import draftProducts from "../../commerce/christmas-preview-products.json";
-import { CatalogProduct } from "../data/catalog";
+import allProducts, { CatalogProduct } from "../data/catalog";
 import { money } from "../components/Cart";
 import { ShopProduct } from "./Shop";
-import Christmas3DViewer from "../components/Christmas3DViewer";
+import Christmas3DViewer from "../components/Managed3DViewer";
+import { useShopifyCatalog } from "../components/ShopifyCatalog";
+import { useCatalogAvailability } from "../lib/catalogAvailability";
 import "../christmas.css";
 
-const catalog = draftProducts as CatalogProduct[];
-const listings = catalog.filter(product => !product.listingGroup);
-const ornaments = catalog.filter(product => product.listingGroup === "christmas-character-ornaments");
-const figurines = catalog.filter(product => product.listingGroup === "christmas-character-figurines");
-const trays = catalog.filter(product => product.listingGroup === "christmas-trinket-trays");
-const href = (id: string) => `/preview/christmas/${id}?analytics_test=1`;
-const get = (id: string) => catalog.find(product => product.id === id)!;
+const draftCatalog = draftProducts as CatalogProduct[];
 const CHRISTMAS_GRACE_IDS = new Set(["holy-family-embrace", "heavenly-trio", "guiding-star-tree-topper", "evergreen-wreath", "luminous-tree", "village-lights", "christmas-trinket-trays", "stocking-tray", "snowflake-tray", "christmas-tree-tray"]);
 
 // Products that have a real, multi-colored 3D WebGL mesh generated from the studio's .3mf/.stl files
@@ -60,184 +56,151 @@ function resolve3DModelId(productId: string, variantId?: string | null): string 
 const PRODUCT_META: Record<string, { heightLabel: string; tag: string; summary: string }> = {
   "endless-swirling-tree": {
     heightLabel: "19 cm tall",
-    tag: "Kinetic Two-Part Spiral",
-    summary: "Two interlocking spiral trees that slide and twist through each other, topped with a golden star.",
+    tag: "KINETIC SPIRAL",
+    summary: "Two nested helical trees that glide smoothly together. Twist or slide to animate.",
   },
   "christmas-angel": {
     heightLabel: "21 cm tall",
-    tag: "Illuminated Nativity",
-    summary: "Sculpted porcelain-look angel wings framing a layered Bethlehem nativity silhouette.",
+    tag: "ILLUMINATED NATIVITY",
+    summary: "Graceful angel wings framing a multi-layered nativity scene with warm ambient lighting.",
   },
   "meowy-christmas-tree-topper": {
-    heightLabel: "27 cm tall",
-    tag: "Cat & Star Tree Topper",
-    summary: "A playful grey cat stretching high to catch the golden Christmas star atop your tree.",
+    heightLabel: "Fits standard trees",
+    tag: "PLAYFUL ACCENT",
+    summary: "A warm, characterful cat silhouette with a star halo to crown your Christmas tree.",
   },
   "christmas-character-figurines": {
-    heightLabel: "8.3–10 cm",
-    tag: "3 Individual Designs",
-    summary: "Choose Knit-Look Santa, Cosy Jumper Snowman, or the articulated Christmas Baby Axolotl.",
+    heightLabel: "6–9 cm tall",
+    tag: "CHARACTER TRIO",
+    summary: "Hooked Santa with hanging lantern, hooded Snow in Jumper, and baby Axolotl with Santa hat.",
   },
   "christmas-gnome-set": {
-    heightLabel: "Up to 14.9 cm",
-    tag: "Complete Set of 5",
-    summary: "All five festive woodland gnomes included to arrange across your mantel, table, or windowsill.",
+    heightLabel: "5 distinct gnomes",
+    tag: "COLLECTIBLE SET",
+    summary: "Five handcrafted holiday gnomes with braided beards, textured hats and winter accessories.",
   },
   "bright-nativity-table-lamp": {
-    heightLabel: "19 cm tall",
-    tag: "Tealight Lantern Scene",
-    summary: "A golden star and arched shelter over the Holy Family, designed for a warm battery LED tealight.",
+    heightLabel: "18 cm wide",
+    tag: "WARM ILLUMINATION",
+    summary: "Architectural lantern with layered nativity silhouettes glowing under ambient light.",
   },
   "village-on-the-moon-table-lamp": {
-    heightLabel: "14 cm tall",
-    tag: "Crescent Moon Lamp",
-    summary: "Miniature alpine cottages and pine trees nestled inside a textured lunar crescent.",
+    heightLabel: "20 cm tall",
+    tag: "CRESCENT MOON LAMP",
+    summary: "A quiet winter village with snow-draped rooftops cradled inside a sculpted lunar crescent.",
   },
   "santa-s-bonfire-table-lamp": {
-    heightLabel: "11 cm tall",
-    tag: "Fireside Tealight Scene",
-    summary: "Santa and his reindeer taking a cosy Christmas Eve break beside a glowing campfire.",
+    heightLabel: "16 cm wide",
+    tag: "LOG FIREPLACE LAMP",
+    summary: "Santa resting by a warm, crackling campsite fire with stacked logs and warm glow.",
   },
   "santa-s-snack-hat-bowl": {
-    heightLabel: "8.7 cm tall",
-    tag: "Festive Treat Bowl",
-    summary: "An upturned Santa hat with textured white trim—made for wrapped chocolates, candy canes, or keys.",
+    heightLabel: "17 cm diameter",
+    tag: "FESTIVE SERVING",
+    summary: "An upturned Santa hat with fluffy white trim and pom-pom bowl for candies and holiday treats.",
   },
   "christmas-character-ornaments": {
-    heightLabel: "Approx. 5 cm",
-    tag: "8 Character Baubles",
-    summary: "Pick your favourite holiday character or sleepy pet bauble, each printed with a built-in hanging loop.",
-  },
-  "christmas-trinket-trays": {
-    heightLabel: "3 Holiday Shapes",
-    tag: "Trinket Catch-All Trays",
-    summary: "Choose between the festive Evergreen Tree, Winter Snowflake, or Holiday Stocking trinket catch-all.",
-  },
-  "christmas-tree-tray": {
-    heightLabel: "Trinket Catch-All",
-    tag: "Dual-Tone Holiday Tray",
-    summary: "A festive tiered evergreen dish with silk metallic gold fluted accents for jewellery, desk treasures or sweets.",
-  },
-  "evergreen-wreath": {
-    heightLabel: "Wall & Door Art",
-    tag: "Sculptural Winter Wreath",
-    summary: "Multi-layered spruce boughs adorned with silk champagne gold stars, baubles, and a satin crimson bow.",
-  },
-  "guiding-star-tree-topper": {
-    heightLabel: "Star Tree Topper",
-    tag: "Architectural Tree Topper",
-    summary: "An open geometric star with a spiral branch mount in warm pearl white and radiant gold lattice.",
-  },
-  "heavenly-trio": {
-    heightLabel: "Set of 3 Angels",
-    tag: "Graceful Angel Figurines",
-    summary: "Three porcelain-look angels with feathered wings holding a golden halo, sacred heart, and guiding star.",
+    heightLabel: "8 character designs",
+    tag: "HANDCRAFTED ORNAMENTS",
+    summary: "Sculpted holiday ornaments including Santa, sleeping pets, reindeer, snowman and nutcracker.",
   },
   "holy-family-embrace": {
-    heightLabel: "Nativity Centerpiece",
-    tag: "Contemporary Nativity Sculpture",
-    summary: "A flowing alabaster embrace of Mary, Joseph, and baby Jesus with warm cedar cradle and polished gold halos.",
+    heightLabel: "18 cm tall",
+    tag: "CHRISTMAS GRACE",
+    summary: "Smooth, flowing sculptural lines depicting Mary, Joseph and baby Jesus in serene devotion.",
+  },
+  "heavenly-trio": {
+    heightLabel: "3-piece set",
+    tag: "CHRISTMAS GRACE",
+    summary: "Three stylized angel figurines in tiered heights with golden halo accents and folded hands.",
+  },
+  "guiding-star-tree-topper": {
+    heightLabel: "22 cm star",
+    tag: "CHRISTMAS GRACE",
+    summary: "An elegant, faceted eight-point Bethlehem star with built-in spiral tree-top mount.",
+  },
+  "evergreen-wreath": {
+    heightLabel: "24 cm diameter",
+    tag: "CHRISTMAS GRACE",
+    summary: "A textured evergreen door or wall wreath with pinecone accents and ribbon hanger.",
   },
   "luminous-tree": {
-    heightLabel: "Glowing Lantern",
-    tag: "Internal LED Tea Light Tree",
-    summary: "A hollow translucent pine tree lantern with pierced star cutouts designed to glow warmly from within.",
-  },
-  "snowflake-tray": {
-    heightLabel: "Trinket Catch-All",
-    tag: "Crystalline Catch-All",
-    summary: "A six-pointed crystalline snowflake dish with silver-white geometric facets and festive alpine basin.",
-  },
-  "stocking-tray": {
-    heightLabel: "Trinket Catch-All",
-    tag: "Holiday Stocking Catch-All",
-    summary: "A festive crimson stocking-shaped tray with fluffy snow-white cuff, heel, and toe accents.",
+    heightLabel: "3 lace patterns",
+    tag: "CHRISTMAS GRACE",
+    summary: "Intricate perforated tabletop Christmas trees that scatter star and lace light patterns.",
   },
   "village-lights": {
-    heightLabel: "Set of 2 Chalets",
-    tag: "Illuminated Village Houses",
-    summary: "Two snowy alpine chalets with window openings designed to glow warmly with internal LED tealights.",
+    heightLabel: "Modular village",
+    tag: "CHRISTMAS GRACE",
+    summary: "Four modular Scandinavian-style row houses with window cutouts for tealight illumination.",
+  },
+  "christmas-trinket-trays": {
+    heightLabel: "Tree, snowflake, stocking",
+    tag: "HOLIDAY DISHES",
+    summary: "Three festive tabletop trays shaped as a Christmas tree, snowflake and stocking for jewelry or keys.",
   },
 };
 
-function FloatingTiltCard({
-  className,
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) {
-  const [tilt, setTilt] = useState({ rx: 0, ry: 0, gx: 50, gy: 35, active: false });
-  const touchTilt = useRef<{ pointerId: number; rect: DOMRect } | null>(null);
-  const resetTilt = () => {
-    touchTilt.current = null;
-    setTilt({ rx: 0, ry: 0, gx: 50, gy: 35, active: false });
-  };
-  const updateTilt = (x: number, y: number, rect: DOMRect, touch: boolean) => {
-    const nx = Math.max(-.5, Math.min(.5, (x - rect.left) / Math.max(1, rect.width) - .5));
-    const ny = Math.max(-.5, Math.min(.5, (y - rect.top) / Math.max(1, rect.height) - .5));
-    setTilt({ rx: -ny * (touch ? 7 : 9.5), ry: nx * (touch ? 14 : 11.5), gx: (nx + .5) * 100, gy: (ny + .5) * 100, active: true });
-  };
+function FloatingTiltCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  function handlePointerMove(e: React.PointerEvent<HTMLDivElement>) {
+    if (e.pointerType !== "mouse") return;
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setTilt({ x: x * 6, y: -y * 6 });
+  }
+
+  function handlePointerLeave() {
+    setTilt({ x: 0, y: 0 });
+  }
 
   return (
     <div
-      className={`${className || ""} xmas-floating-tilt-card ${tilt.active ? "is-tilting" : ""}`}
-      style={
-        {
-          "--rx": `${tilt.rx.toFixed(2)}deg`,
-          "--ry": `${tilt.ry.toFixed(2)}deg`,
-          "--gx": `${tilt.gx.toFixed(1)}%`,
-          "--gy": `${tilt.gy.toFixed(1)}%`,
-        } as CSSProperties
-      }
-      onPointerDown={e => {
-        if (e.pointerType === "mouse" || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        if ((e.target as Element).closest('button, a, input, select, textarea, canvas, video')) return;
-        const rect = e.currentTarget.getBoundingClientRect();
-        touchTilt.current = { pointerId: e.pointerId, rect };
-        updateTilt(e.clientX, e.clientY, rect, true);
+      ref={cardRef}
+      className={`xmas-tilt-card ${className}`}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+      style={{
+        transform: `perspective(900px) rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)`,
       }}
-      onPointerMove={e => {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        if (e.pointerType === "mouse") {
-          if ((e.target as Element).closest('canvas, input, select, video')) return;
-          updateTilt(e.clientX, e.clientY, e.currentTarget.getBoundingClientRect(), false);
-        } else if (touchTilt.current?.pointerId === e.pointerId) {
-          updateTilt(e.clientX, e.clientY, touchTilt.current.rect, true);
-        }
-      }}
-      onPointerUp={resetTilt}
-      onPointerCancel={resetTilt}
-      onPointerLeave={resetTilt}
     >
-      <div className="xmas-touch-tilt-hint" aria-hidden="true"><span>↔</span> Slide here to tilt the card</div>
       {children}
     </div>
   );
 }
 
-function ProductDetailWith3D({ product }: { product: CatalogProduct }) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const variantParam = searchParams.get("variant");
+function ProductDetailWith3D({ product, publicMode = false }: { product: CatalogProduct; publicMode?: boolean }) {
+  const [params] = useSearchParams();
+  const variantParam = params.get("variant");
   const model3dId = resolve3DModelId(product.id, variantParam);
+  const { priceFor, nameFor } = useShopifyCatalog();
 
   const activeFigurine = useMemo(() => {
     if (product.id !== "christmas-character-figurines") return null;
+    const figurines = draftCatalog.filter(p => p.listingGroup === "christmas-character-figurines");
     return figurines.find(f => f.id === variantParam) || figurines[0];
   }, [product.id, variantParam]);
 
   const activeTray = useMemo(() => {
     if (product.id !== "christmas-trinket-trays") return null;
+    const trays = draftCatalog.filter(p => p.listingGroup === "christmas-trinket-trays");
     return trays.find(t => t.id === variantParam) || trays[0];
   }, [product.id, variantParam]);
 
   const currentItem = activeFigurine || activeTray || product;
+  const listings = draftCatalog.filter(p => !p.listingGroup);
+  const itemHref = (id: string) => publicMode ? `/shop/${id}` : `/preview/christmas/${id}?analytics_test=1`;
 
   return (
     <div className="xmas-detail-wrapper">
       <div className="xmas-detail-subnav">
         <div className="container xmas-detail-subnav-inner">
-          <Link className="xmas-subnav-back" to="/preview/christmas?analytics_test=1">
+          <Link className="xmas-subnav-back" to={publicMode ? "/shop/christmas-special" : "/preview/christmas?analytics_test=1"}>
             ← Back to Christmas Collection
           </Link>
           <div className="xmas-subnav-switcher" aria-label="Browse other Christmas products">
@@ -246,17 +209,19 @@ function ProductDetailWith3D({ product }: { product: CatalogProduct }) {
               {listings.map(item => (
                 <Link
                   key={item.id}
-                  to={href(item.id)}
+                  to={itemHref(item.id)}
                   className={item.id === product.id ? "is-active" : ""}
-                  title={`${item.name} — ${money(item.priceCents)} CAD`}
+                  title={`${nameFor(item.id, item.name)} — ${money(priceFor(item.id, item.priceCents))} CAD`}
                 >
                   <img src={item.images[0].thumb} alt={item.name} width="34" height="34" />
                 </Link>
               ))}
             </div>
-            <Link to="/shop/admin" className="xmas-admin-subnav-link" title="Open Studio Admin to edit prices and options">
-              ⚙ Admin ↗
-            </Link>
+            {!publicMode && (
+              <Link to="/shop/admin" className="xmas-admin-subnav-link" title="Open Studio Admin to edit prices and options">
+                ⚙ Admin ↗
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -264,155 +229,153 @@ function ProductDetailWith3D({ product }: { product: CatalogProduct }) {
       {model3dId && (
         <section className="xmas-detail-3d-section" aria-label="Interactive 3D Model Inspector">
           <div className="container">
-            <FloatingTiltCard className="xmas-detail-3d-card">
-              <div className="xmas-detail-3d-info">
-                <p className="xmas-eyebrow">INTERACTIVE 3D MODEL · ACTUAL PRODUCTION GEOMETRY</p>
-                <h2>
-                  Inspect <em>{currentItem.name}</em> in real 3D.
-                </h2>
-                <p className="xmas-detail-3d-lead">
-                  This is the actual multi-part 3D model we print in our Edmonton studio—colored to match our reference finish. Drag in any direction to rotate 360°, use the zoom buttons to see details, and switch back to the photo whenever you like.
-                </p>
-
-                {product.id === "christmas-character-figurines" && (
-                  <div className="xmas-figurine-3d-picker">
-                    <p className="xmas-picker-title">Switch 3D Figurine Model:</p>
-                    <div className="xmas-figurine-buttons">
-                      {figurines.map(fig => {
-                        const active = (activeFigurine?.id || "hooked-santa") === fig.id;
-                        return (
-                          <button
-                            type="button"
-                            key={fig.id}
-                            className={active ? "is-active" : ""}
-                            onClick={() => setSearchParams({ variant: fig.id, analytics_test: "1" }, { replace: true, preventScrollReset: true })}
-                          >
-                            <img src={fig.images[0].thumb} alt="" width="36" height="36" />
-                            <span>{fig.name}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-
-                {product.id === "luminous-tree" && (
-                  <div className="xmas-figurine-3d-picker">
-                    <p className="xmas-picker-title">Switch Tree Pattern in 3D:</p>
-                    <div className="xmas-figurine-buttons">
-                      {[
-                        { id: "luminous-tree", label: "Classic Star Pierced" },
-                        { id: "luminous-tree-stars", label: "Snowflake Baubles" },
-                        { id: "luminous-tree-spiral", label: "Spiral Ribbons" },
-                      ].map(pat => {
-                        const active = (variantParam || "luminous-tree") === pat.id;
-                        return (
-                          <button
-                            type="button"
-                            key={pat.id}
-                            className={active ? "is-active" : ""}
-                            onClick={() => setSearchParams({ variant: pat.id, analytics_test: "1" }, { replace: true, preventScrollReset: true })}
-                          >
-                            <span>{pat.label}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-
-                {product.id === "christmas-trinket-trays" && (
-                  <div className="xmas-figurine-3d-picker">
-                    <p className="xmas-picker-title">Switch 3D Tray Shape:</p>
-                    <div className="xmas-figurine-buttons">
-                      {trays.map(tray => {
-                        const active = (variantParam || "christmas-tree-tray") === tray.id;
-                        return (
-                          <button
-                            type="button"
-                            key={tray.id}
-                            className={active ? "is-active" : ""}
-                            onClick={() => setSearchParams({ variant: tray.id, analytics_test: "1" }, { replace: true, preventScrollReset: true })}
-                          >
-                            <img src={tray.images[0].thumb} alt="" width="36" height="36" />
-                            <span>{tray.name.replace(" Christmas Trinket Tray", "").replace(" Trinket Tray", "")}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-
-                <ul className="xmas-detail-3d-tips">
-                  <li><strong>Drag left / right / up / down:</strong> Rotate the real 3D model 360° in any direction.</li>
-                  <li><strong>＋ / －:</strong> Zoom in or out. Use the arrow keys to rotate when the viewer is focused.</li>
-                  
-                  {model3dId === "endless-swirling-tree" && (
-                    <li><strong>Kinetic Spiral Slider:</strong> Slide and twist the gold cone along the sage green spiral grooves in real 3D space.</li>
-                  )}
-                  {(model3dId.includes("lamp") || model3dId === "christmas-angel" || model3dId.includes("luminous-tree") || model3dId === "village-lights") && (
-                    <li><strong>Tealight Controls:</strong> Toggle between Daylight (Off) and Cosy Tealight (On), or slide the brightness slider to see how light radiates from within the internal chamber.</li>
-                  )}
-                </ul>
-
-                <a className="xmas-scroll-to-photos" href="#real-photos-and-specs">
-                  ↓ View Actual Studio Photos, Video & Full Specifications
-                </a>
+            <div className="xmas-detail-3d-card">
+              <div className="xmas-detail-3d-header">
+                <div>
+                  <span className="xmas-stage-kicker">Interactive 3D Studio Stage</span>
+                  <h2>{nameFor(currentItem.id, currentItem.name)}</h2>
+                  <p className="xmas-detail-3d-hint">
+                    Touch or drag to rotate · Scroll to zoom · Studio lighting enabled
+                  </p>
+                </div>
+                <div className="xmas-detail-3d-badges">
+                  <span className="xmas-stage-badge">Crafted in Edmonton</span>
+                  <span className="xmas-stage-badge">Real 3D Mesh</span>
+                </div>
               </div>
 
-              <div className="xmas-detail-3d-stage">
+              <div className="xmas-detail-3d-canvas-wrap">
                 <Christmas3DViewer
                   modelId={model3dId}
-                  poster={currentItem.images[0].src}
+                  poster={currentItem.images[0]?.src}
                   productName={currentItem.name}
                   warmLighting={true}
+                  compact={false}
                 />
               </div>
-            </FloatingTiltCard>
+
+              {product.id === "christmas-character-figurines" && (
+                <div className="xmas-detail-model-picker" role="tablist" aria-label="Switch figurine 3D model">
+                  <span className="xmas-picker-label">Inspect another character in 3D:</span>
+                  <div className="xmas-picker-buttons">
+                    {[
+                      { id: "hooked-santa", label: "Hooked Santa" },
+                      { id: "snow-in-jumper", label: "Snow in Jumper" },
+                      { id: "zou-christmas-baby-axolotl", label: "Baby Axolotl" },
+                    ].map(btn => (
+                      <Link
+                        key={btn.id}
+                        to={`${itemHref("christmas-character-figurines")}${publicMode ? "?" : "&"}variant=${btn.id}`}
+                        className={`xmas-picker-chip ${currentItem.id === btn.id ? "is-active" : ""}`}
+                      >
+                        {btn.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {product.id === "christmas-trinket-trays" && (
+                <div className="xmas-detail-model-picker" role="tablist" aria-label="Switch trinket tray 3D model">
+                  <span className="xmas-picker-label">Inspect another tray shape in 3D:</span>
+                  <div className="xmas-picker-buttons">
+                    {[
+                      { id: "christmas-tree-tray", label: "Tree Tray" },
+                      { id: "snowflake-tray", label: "Snowflake Tray" },
+                      { id: "stocking-tray", label: "Stocking Tray" },
+                    ].map(btn => (
+                      <Link
+                        key={btn.id}
+                        to={`${itemHref("christmas-trinket-trays")}${publicMode ? "?" : "&"}variant=${btn.id}`}
+                        className={`xmas-picker-chip ${currentItem.id === btn.id ? "is-active" : ""}`}
+                      >
+                        {btn.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </section>
       )}
 
-      <div id="real-photos-and-specs" className="xmas-detail-preview">
-        <ShopProduct previewCatalog={catalog} previewId={product.id} />
+      <div className="xmas-detail-lower">
+        <ShopProduct previewCatalog={draftCatalog} previewId={product.id} />
       </div>
     </div>
   );
 }
 
-export default function ChristmasPreview({ publicMode = false }: { publicMode?: boolean } = {}) {
+export default function ChristmasPreview({ publicMode = false }: { publicMode?: boolean }) {
   const { id } = useParams();
-  const [collectionParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [filter, setFilter] = useState("Everything");
-  const [motion, setMotion] = useState(true);
   const [activeHeroId, setActiveHeroId] = useState("endless-swirling-tree");
   const [heroViewTab, setHeroViewTab] = useState<"3d" | "video" | "photo">("3d");
-  const [activeOrnamentId, setActiveOrnamentId] = useState(ornaments[0]?.id || "santa-claus-christmas-ornament");
+  const [activeOrnamentId, setActiveOrnamentId] = useState("santa-claus-christmas-ornament");
   const [hoveredVideoId, setHoveredVideoId] = useState<string | null>(null);
   const [tappedVideoId, setTappedVideoId] = useState<string | null>(null);
-  const baseRoute = publicMode ? "/shop/christmas-special" : "/preview/christmas";
-  const pageHref = (targetId: string) =>
-    publicMode ? `${baseRoute}/${targetId}` : `/preview/christmas/${targetId}?analytics_test=1`;
-  useEffect(() => {
-    if (collectionParams.get("collection") === "christmas-grace") setFilter("Christmas Grace");
-  }, [collectionParams]);
+
+  const { priceFor, nameFor } = useShopifyCatalog();
+  const archived = useCatalogAvailability();
+
+  // If a product ID is requested in public mode, redirect cleanly to canonical /shop/:id
+  if (id && publicMode) {
+    return <Navigate replace to={`/shop/${id}`} />;
+  }
+
+  // Filter listings based on active catalog
+  const catalog = useMemo(() => {
+    if (!publicMode) return draftCatalog;
+    return allProducts.filter(p => !archived.includes(p.id));
+  }, [publicMode, archived]);
+
+  const listings = useMemo(() => {
+    const rootItems = catalog.filter(p => !p.listingGroup && (p.category === "Christmas décor" || CHRISTMAS_GRACE_IDS.has(p.id) || p.id === "endless-swirling-tree"));
+    if (rootItems.length) return rootItems;
+    return draftCatalog.filter(p => !p.listingGroup);
+  }, [catalog]);
+
+  const ornaments = useMemo(() => {
+    return draftCatalog.filter(p => p.listingGroup === "christmas-character-ornaments");
+  }, []);
+
+  const get = (targetId: string): CatalogProduct => {
+    return catalog.find(p => p.id === targetId) || draftCatalog.find(p => p.id === targetId) || draftCatalog[0];
+  };
+
+  const itemHref = (targetId: string, variant?: string) => {
+    if (publicMode) {
+      return `/shop/${targetId}${variant ? `?variant=${variant}` : ""}`;
+    }
+    return `/preview/christmas/${targetId}?analytics_test=1${variant ? `&variant=${variant}` : ""}`;
+  };
+
+  const baseRoute = publicMode ? "/shop/christmas-special" : "/preview/christmas?analytics_test=1";
 
   useEffect(() => {
     document.title = id
-      ? `${get(id)?.name || "Christmas"} | Custom Build Studio`
-      : "The Christmas Collection · Warm Holiday Showcase | Custom Build Studio";
-  }, [id]);
+      ? `${nameFor(id, get(id)?.name || "Christmas")} | Custom Build Studio`
+      : "The Christmas Collection · Crafted in Edmonton | Custom Build Studio";
+  }, [id, nameFor]);
 
-  const price = (p: CatalogProduct) => `${p.variants?.some(v => v.priceCents !== p.priceCents) ? "From " : ""}${money(p.priceCents)}`;
+  const price = (p: CatalogProduct) => {
+    const rawPrice = priceFor(p.id, p.priceCents);
+    const hasRange = p.variants?.some(v => priceFor(v.id, v.priceCents) !== rawPrice);
+    return `${hasRange ? "From " : ""}${money(rawPrice)}`;
+  };
 
   if (id) {
     if (id === "christmas-grace-decorations") return <Navigate replace to={`${baseRoute}?collection=christmas-grace#christmas-pieces`} />;
-    if (id === "christmas-tree-tray" || id === "snowflake-tray" || id === "stocking-tray") return <Navigate replace to={`${pageHref("christmas-trinket-trays")}${publicMode ? "?" : "&"}variant=${id}`} />;
+    if (id === "christmas-tree-tray" || id === "snowflake-tray" || id === "stocking-tray") {
+      return <Navigate replace to={`${itemHref("christmas-trinket-trays", id)}`} />;
+    }
     const targetProduct = get(id);
-    if (targetProduct) return <ProductDetailWith3D product={targetProduct} />;
+    if (targetProduct) return <ProductDetailWith3D product={targetProduct} publicMode={publicMode} />;
     return (
       <div className="xmas-detail-preview">
-        <ShopProduct previewCatalog={catalog} previewId={id} />
+        <ShopProduct previewCatalog={draftCatalog} previewId={id} />
       </div>
     );
   }
@@ -422,7 +385,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
       id: "endless-swirling-tree",
       tag: "KINETIC TWO-PART SPIRAL",
       headline: "Slide & twist the real 3D spiral tree.",
-      blurb: "Two nested helical trees printed in emerald green and metallic gold that glide smoothly through each other.",
+      blurb: "Two nested helical trees crafted in emerald green and metallic gold that glide smoothly through each other.",
     },
     {
       id: "christmas-angel",
@@ -438,145 +401,76 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
     },
     {
       id: "santa-s-bonfire-table-lamp",
-      tag: "FIRESIDE TEALIGHT SCENE",
-      headline: "Santa & Rudolph warming by the fire.",
-      blurb: "A full-color Christmas Eve campfire scene designed for a flickering LED tealight.",
+      tag: "LOG FIREPLACE LAMP",
+      headline: "Santa taking a warm rest by the fire.",
+      blurb: "Hand-finished Santa resting by a warm campsite fire with stacked logs and warm glow.",
     },
     {
-      id: "hooked-santa",
-      listingId: "christmas-character-figurines",
-      tag: "KNIT-LOOK 3D FIGURINE",
-      headline: "Carved knit-stitch texture you can feel.",
-      blurb: "Every cable-knit stitch is sculpted directly into the 3D model and printed in vibrant multi-color PLA.",
-    },
-    {
-      id: "holy-family-embrace",
-      tag: "NATIVITY SCULPTURE",
-      headline: "Contemporary flowing Holy Family.",
-      blurb: "Alabaster white flowing embrace of Mary and Joseph with warm cedar cradle and polished gold halos.",
-    },
-    {
-      id: "luminous-tree",
-      tag: "GLOWING LED TREE LANTERN",
-      headline: "Warm amber glow from within.",
-      blurb: "A translucent pine tree with pierced star lattice designed for an internal LED tealight candle.",
-    },
-    {
-      id: "village-lights",
-      tag: "SNOWY VILLAGE CHALETS",
-      headline: "Alpine chalets with glowing windows.",
-      blurb: "Two snow-frosted cottages with door garlands and internal tea light illumination.",
-    },
-    {
-      id: "guiding-star-tree-topper",
-      tag: "GEOMETRIC TREE TOPPER",
-      headline: "Architectural star with spiral base.",
-      blurb: "Dual-tone ivory white and radiant gold lattice star designed to crown your Christmas tree.",
-    },
-    {
-      id: "evergreen-wreath",
-      tag: "SCULPTURAL PINE WREATH",
-      headline: "Spruce boughs, stars & crimson ribbon.",
-      blurb: "Rich multi-layered holiday wreath with baubles and a silk crimson bow.",
-    },
-    {
-      id: "christmas-trinket-trays",
-      tag: "FESTIVE TRINKET TRAYS",
-      headline: "Tree, snowflake & stocking catch-alls.",
-      blurb: "Festive catch-all dishes in three holiday shapes with silk metallic gold and snow-white accents.",
+      id: "bright-nativity-table-lamp",
+      tag: "LAYERED NATIVITY",
+      headline: "Bethlehem stars in warm amber silhouette.",
+      blurb: "Architectural lantern with layered nativity silhouettes glowing under ambient light.",
     },
   ];
 
   const activeHeroMeta = heroShowcases.find(h => h.id === activeHeroId) || heroShowcases[0];
-  const activeHeroProduct = get(activeHeroId) || get("endless-swirling-tree");
-  const activeHeroLink = href(activeHeroMeta.listingId || activeHeroProduct.id);
+  const activeHeroProduct = get(activeHeroMeta.id);
+  const activeHeroLink = itemHref(activeHeroMeta.id);
   const activeOrnament = ornaments.find(o => o.id === activeOrnamentId) || ornaments[0];
 
-  const visible = listings.filter(
-    product =>
-      filter === "Everything" ||
-      (filter === "Christmas Grace" && CHRISTMAS_GRACE_IDS.has(product.id)) ||
-      (filter === "Under $30" && product.priceCents <= 3000) ||
-      (filter === "Festive lights" &&
-        ["christmas-angel", "bright-nativity-table-lamp", "village-on-the-moon-table-lamp", "santa-s-bonfire-table-lamp", "luminous-tree", "village-lights"].includes(product.id)) ||
-      (filter === "Tree & table" &&
-        (["endless-swirling-tree", "meowy-christmas-tree-topper", "christmas-gnome-set", "santa-s-snack-hat-bowl", "christmas-character-figurines", "christmas-character-ornaments"].includes(product.id) || (CHRISTMAS_GRACE_IDS.has(product.id) && !["luminous-tree", "village-lights"].includes(product.id))))
-  );
+  const filteredListings = listings.filter(p => {
+    if (filter === "Everything") return true;
+    if (filter === "Christmas Grace") return CHRISTMAS_GRACE_IDS.has(p.id);
+    if (filter === "Festive lights") {
+      return ["christmas-angel", "bright-nativity-table-lamp", "village-on-the-moon-table-lamp", "santa-s-bonfire-table-lamp", "luminous-tree", "village-lights"].includes(p.id);
+    }
+    if (filter === "Tree & table") {
+      return ["endless-swirling-tree", "meowy-christmas-tree-topper", "guiding-star-tree-topper", "evergreen-wreath", "christmas-character-ornaments", "christmas-trinket-trays", "santa-s-snack-hat-bowl"].includes(p.id);
+    }
+    if (filter === "Under $30") {
+      return priceFor(p.id, p.priceCents) <= 3000;
+    }
+    return true;
+  });
 
   return (
-    <div className={`xmas-page ${motion ? "xmas-motion" : "xmas-still"}`}>
-      <div className="xmas-review-strip">
-        <span>
-          <strong>{publicMode ? "THE CHRISTMAS COLLECTION" : "UNPUBLISHED CHRISTMAS PREVIEW"}</strong> · All prices include Free Tracked Canadian Shipping · South Edmonton pickup gives 10% off your next order
-        </span>
-        <div className="xmas-strip-controls">
-          {!publicMode && (
-            <Link to="/shop/admin" className="xmas-admin-link" title="Open Studio Admin Control Panel">
-              ⚙ Studio Admin ↗
-            </Link>
-          )}
-          <button type="button" onClick={() => setMotion(!motion)} aria-pressed={motion}>
-            {motion ? "Pause background snow Ⅱ" : "Play background snow ▷"}
-          </button>
-        </div>
+    <div className="xmas-root xmas-page">
+      {/* SNOWFLAKE AMBIENT CANVAS */}
+      <div className="xmas-snow-ambient" aria-hidden="true">
+        {Array.from({ length: 24 }, (_, i) => (
+          <span
+            key={i}
+            className="xmas-snowflake"
+            style={{
+              "--flake-x": `${(i * 4.16).toFixed(2)}%`,
+              "--flake-delay": `${(i * 0.45).toFixed(2)}s`,
+              "--flake-duration": `${8 + (i % 6) * 1.5}s`,
+              "--flake-size": `${4 + (i % 4) * 2}px`,
+              "--flake-drift": `${(i % 2 === 0 ? 1 : -1) * (15 + (i % 5) * 6)}px`,
+            } as CSSProperties}
+          />
+        ))}
       </div>
 
-      {/* WARM FESTIVE HERO WITH REAL 3D MODEL VIEWER */}
+      {/* HERO SECTION */}
       <section className="xmas-hero">
-        <div className="xmas-warm-bokeh" aria-hidden="true">
-          {Array.from({ length: 22 }, (_, i) => (
-            <span
-              key={i}
-              className="xmas-bokeh-orb"
-              style={{
-                "--x": `${(i * 37 + 7) % 96}%`,
-                "--y": `${(i * 29 + 11) % 88}%`,
-                "--size": `${28 + (i % 5) * 26}px`,
-                "--d": `${6 + (i % 5) * 2}s`,
-                "--delay": `${-(i * 0.9)}s`,
-              } as CSSProperties}
-            />
-          ))}
-        </div>
-
-        {motion && (
-          <div className="xmas-snow-layer" aria-hidden="true">
-            {Array.from({ length: 28 }, (_, i) => (
-              <span
-                key={i}
-                className="xmas-snowflake"
-                style={{
-                  "--x": `${(i * 31 + 5) % 100}%`,
-                  "--d": `${9 + (i % 6) * 2}s`,
-                  "--delay": `${-(i * 0.7)}s`,
-                  "--size": `${4 + (i % 4) * 2}px`,
-                } as CSSProperties}
-              />
-            ))}
-          </div>
-        )}
-
-        <div className="container xmas-hero-layout">
+        <div className="container xmas-hero-grid">
           <div className="xmas-hero-copy">
-            <nav className="xmas-breadcrumb" aria-label="Breadcrumb">
-              <Link to="/shop">Gifts & décor</Link>
-              <span>/</span>
-              <span>The Christmas Edit</span>
-            </nav>
+            <div className="xmas-hero-badge-row">
+              <span className="xmas-badge xmas-badge-gold">✦ Christmas 2026 Collection</span>
+              <span className="xmas-badge xmas-badge-pine">Crafted in Edmonton, Canada</span>
+            </div>
 
-            <p className="xmas-eyebrow">
-              <span aria-hidden="true">✦</span> HAND-FINISHED IN EDMONTON · CHRISTMAS 2026 COLLECTION
-            </p>
-            <h1>
-              Warm light,<br />
-              festive colour &amp;<br />
-              <em>real 3D craft.</em>
+            <h1 className="xmas-title">
+              Heirloom holiday warmth,<br />
+              <em>crafted in Canada.</em>
             </h1>
-            <p className="xmas-intro">
-              Thoughtful little gifts, glowing winter scenes and festive favourites. Find your favourite, then explore its photos, video and interactive 3D view.
+
+            <p className="xmas-lead">
+              Illuminated table lamps, kinetic spiral trees, intricate nativity scenes, festive character figurines and trinket trays. Crafted in small batches at our Edmonton studio with precision detail and free tracked Canadian shipping.
             </p>
 
-            <div className="xmas-hero-selector" role="tablist" aria-label="Select a Christmas piece to inspect in 3D">
+            <div className="xmas-hero-selector" aria-label="Interactive 3D preview selector">
               <p className="xmas-selector-heading">Select a piece to load into the live 3D stage:</p>
               <div className="xmas-selector-pills">
                 {heroShowcases.map(item => {
@@ -593,7 +487,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                     >
                       <img src={p.images[0].thumb} alt="" width="42" height="42" />
                       <div>
-                        <strong>{p.name}</strong>
+                        <strong>{nameFor(p.id, p.name)}</strong>
                         <small>{price(p)} CAD · Delivered</small>
                       </div>
                     </button>
@@ -605,7 +499,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
             <div className="xmas-actions">
               <div className="xmas-action-row">
                 <Link className="xmas-button" to={activeHeroLink}>
-                  View {activeHeroProduct.name} Details &amp; Photos <span>↗</span>
+                  View {nameFor(activeHeroProduct.id, activeHeroProduct.name)} Details &amp; Photos <span>↗</span>
                 </Link>
                 <a className="xmas-button xmas-button-secondary" href="#christmas-pieces">
                   Browse All {listings.length} Collections <span>↓</span>
@@ -616,7 +510,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
             <div className="xmas-hero-trust-pills">
               <span><strong>✓ Free Tracked Shipping</strong> across Canada</span>
               <span><strong>✓ Local Pickup Bonus:</strong> 10% promo code for your next order</span>
-              <span><strong>✓ Real 3D Models + Real Photos</strong> on every piece</span>
+              <span><strong>✓ Small-Batch Studio Detail:</strong> Hand-finished in Edmonton</span>
             </div>
           </div>
 
@@ -625,7 +519,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
               <div className="xmas-stage-card-header">
                 <div>
                   <span className="xmas-stage-kicker">{activeHeroMeta.tag}</span>
-                  <h3>{activeHeroProduct.name}</h3>
+                  <h3>{nameFor(activeHeroProduct.id, activeHeroProduct.name)}</h3>
                 </div>
                 <div className="xmas-stage-mode-switcher" role="tablist" aria-label="Switch between Real 3D Model, Product Video, and Studio Photo">
                   <button
@@ -635,7 +529,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                     className={heroViewTab === "3d" ? "is-active" : ""}
                     onClick={() => setHeroViewTab("3d")}
                   >
-                    🧊 Interactive 3D Model
+                    🧊 Interactive 3D
                   </button>
                   {activeHeroProduct.video && (
                     <button
@@ -645,7 +539,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                       className={heroViewTab === "video" ? "is-active" : ""}
                       onClick={() => setHeroViewTab("video")}
                     >
-                      ▶ Product Video
+                      ▶ Video
                     </button>
                   )}
                   <button
@@ -663,9 +557,10 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
               <div className="xmas-stage-card-body">
                 {heroViewTab === "3d" ? (
                   <Christmas3DViewer
-                    modelId={activeHeroId}
+                    key={activeHeroMeta.id}
+                    modelId={activeHeroMeta.id}
                     poster={activeHeroProduct.images[0].src}
-                    productName={activeHeroProduct.name}
+                    productName={nameFor(activeHeroProduct.id, activeHeroProduct.name)}
                     warmLighting={true}
                     compact={true}
                   />
@@ -718,13 +613,13 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
         <div>
           {Array.from({ length: 4 }, (_, i) => (
             <span key={i}>
-              CRAFTED IN EDMONTON, ALBERTA <b>✦</b> REAL INTERACTIVE 3D MODELS <b>✦</b> FREE TRACKED CANADIAN SHIPPING INCLUDED <b>✦</b> SOUTH EDMONTON PICKUP GIVES 10% OFF YOUR NEXT ORDER <b>✦</b>
+              CRAFTED IN EDMONTON, ALBERTA <b>✦</b> SMALL-BATCH STUDIO PIECES <b>✦</b> FREE TRACKED CANADIAN SHIPPING INCLUDED <b>✦</b> SOUTH EDMONTON APPOINTMENT PICKUP <b>✦</b>
             </span>
           ))}
         </div>
       </div>
 
-      {/* SYMMETRICAL, BRIGHT, GLOWING CHRISTMAS PRODUCT COLLECTION GRID */}
+      {/* CHRISTMAS PRODUCT COLLECTION GRID */}
       <section className="xmas-products-section" id="christmas-pieces">
         <div className="container">
           <div className="xmas-section-top">
@@ -736,7 +631,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
               </h2>
             </div>
             <p className="xmas-section-aside">
-              Every price below includes Canadian shipping. Open a collection to explore its designs, photos and available videos or interactive 3D previews.
+              Every price below includes Canadian shipping. Open a collection to explore its options, photos and available videos or interactive 3D previews.
             </p>
           </div>
 
@@ -749,22 +644,17 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                 onClick={() => setFilter(label)}
               >
                 {label}
-                {label === "Everything" ? ` (${listings.length})` : ""}
               </button>
             ))}
-            <span>Showing {visible.length} of {listings.length} collections · Prices in CAD</span>
           </div>
-          <p className="xmas-grid-shipping">Free shipping across Canada</p>
 
           <div className="xmas-product-grid">
-            {visible.map(p => {
+            {filteredListings.map(p => {
               const meta = PRODUCT_META[p.id];
-              const hasReal3D = Boolean(resolve3DModelId(p.id));
-              const cardVideo =
-                p.video ||
-                (p.id === "christmas-character-figurines" ? get("hooked-santa")?.video : undefined) ||
-                (p.id === "christmas-character-ornaments" ? ornaments[0]?.video : undefined);
-              const isHoverPlaying = (hoveredVideoId === p.id || tappedVideoId === p.id) && Boolean(cardVideo);
+              const hasReal3D = resolve3DModelId(p.id) !== null;
+              const cardVideo = p.video || (p.videos && p.videos[0]);
+              const isHoverPlaying = hoveredVideoId === p.id || tappedVideoId === p.id;
+              const targetLink = itemHref(p.id);
 
               return (
                 <article
@@ -779,65 +669,70 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                   onPointerLeave={() => setHoveredVideoId(null)}
                 >
                   <div className="xmas-card-media">
-                  <Link className="xmas-product-image" to={href(p.id)}>
-                    <img
-                      src={p.images[0].thumb}
-                      srcSet={`${p.images[0].thumb} 480w, ${p.images[0].src} 1200w`}
-                      sizes="(max-width:680px) 45vw, (max-width:1060px) 45vw, 31vw"
-                      alt={p.images[0].alt}
-                      loading="lazy"
-                      width="900"
-                      height="1000"
-                    />
-                    {isHoverPlaying && cardVideo ? (
-                      <video
-                        className="xmas-card-hover-video"
-                        src={cardVideo}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
+                    <Link className="xmas-product-image" to={targetLink}>
+                      <img
+                        src={p.images[0].thumb}
+                        srcSet={`${p.images[0].thumb} 480w, ${p.images[0].src} 1200w`}
+                        sizes="(max-width:680px) 45vw, (max-width:1060px) 45vw, 31vw"
+                        alt={p.images[0].alt}
+                        loading="lazy"
+                        width="900"
+                        height="1000"
                       />
-                    ) : (
-                      p.images[1] && (
-                        <img
-                          className="xmas-product-alternate"
-                          src={p.images[1].thumb}
-                          alt=""
-                          loading="lazy"
-                          width="480"
-                          height="540"
+                      {isHoverPlaying && cardVideo ? (
+                        <video
+                          className="xmas-card-hover-video"
+                          src={cardVideo}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
                         />
-                      )
-                    )}
-                    <div className="xmas-card-top-badges">
-                      <span className="xmas-card-badge">
-                        {meta?.tag || "Christmas Collection"}
-                      </span>
-                      {hasReal3D && (
-                        <span className="xmas-card-3d-badge" title="Includes interactive 3D model on product page">
-                          🧊 Interactive 3D Model
-                        </span>
+                      ) : (
+                        p.images[1] && (
+                          <img
+                            className="xmas-product-alternate"
+                            src={p.images[1].thumb}
+                            alt=""
+                            loading="lazy"
+                            width="480"
+                            height="540"
+                          />
+                        )
                       )}
-                    </div>
-                  </Link>
-                  {cardVideo && (
-                    <button type="button" className="xmas-video-pill" aria-label={`${isHoverPlaying ? "Stop" : "Play"} video for ${p.name}`} aria-pressed={isHoverPlaying}
-                      onClick={() => {
-                        setHoveredVideoId(null);
-                        setTappedVideoId(isHoverPlaying ? null : p.id);
-                      }}>
-                      {isHoverPlaying ? "Ⅱ Stop video" : "▶ Play video"}
-                    </button>
-                  )}
+                      <div className="xmas-card-top-badges">
+                        <span className="xmas-card-badge">
+                          {meta?.tag || "Christmas Collection"}
+                        </span>
+                        {hasReal3D && (
+                          <span className="xmas-card-3d-badge" title="Includes interactive 3D model on product page">
+                            🧊 Interactive 3D
+                          </span>
+                        )}
+                      </div>
+                    </Link>
+                    {cardVideo && (
+                      <button
+                        type="button"
+                        className="xmas-video-pill"
+                        aria-label={`${isHoverPlaying ? "Stop" : "Play"} video for ${nameFor(p.id, p.name)}`}
+                        aria-pressed={isHoverPlaying}
+                        onClick={() => {
+                          setHoveredVideoId(null);
+                          setTappedVideoId(isHoverPlaying ? null : p.id);
+                        }}
+                      >
+                        {isHoverPlaying ? "Ⅱ Stop video" : "▶ Play video"}
+                      </button>
+                    )}
                   </div>
 
                   <div className="xmas-product-copy">
                     <p className="xmas-card-kicker">
-                      {meta ? `${meta.heightLabel} · Printed in Edmonton` : "Printed in Edmonton"}
+                      {meta ? `${meta.heightLabel} · Crafted in Edmonton, AB` : "Crafted in Edmonton, AB"}
                     </p>
                     <h3>
-                      <Link to={href(p.id)}>{p.name}</Link>
+                      <Link to={targetLink}>{nameFor(p.id, p.name)}</Link>
                     </h3>
                     <p className="xmas-card-mini-desc">
                       {meta?.summary || p.description}
@@ -847,7 +742,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                         <strong>{price(p)} <span>CAD</span></strong>
                         <small>Free Canadian shipping</small>
                       </div>
-                      <Link className="xmas-card-launch" to={href(p.id)}>
+                      <Link className="xmas-card-launch" to={targetLink}>
                         <span className="xmas-card-desktop-action">{hasReal3D ? "3D Model & Photos ↗" : "Photos & Details ↗"}</span>
                         <span className="xmas-card-mobile-action">View details ↗</span>
                       </Link>
@@ -869,16 +764,17 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
               poster={get("village-on-the-moon-table-lamp").images[0].src}
               productName="Moonlit Christmas Village"
               warmLighting={true}
+              compact={true}
             />
           </FloatingTiltCard>
-          <div className="xmas-glow-copy">
-            <p className="xmas-eyebrow">ILLUMINATED CHRISTMAS SCULPTURES · REAL 3D PREVIEW</p>
-            <h2>
-              Let the season<br />
-              <em>glow a little warmer.</em>
-            </h2>
+          <div className="xmas-glow-copy-col">
+            <span className="xmas-stage-kicker">AMBIENT HOLIDAY LIGHTING</span>
+            <h2>Warm light for winter evenings.</h2>
+            <p className="lead">
+              Our illuminated Christmas lamps are designed around standard battery LED tealights, casting soft architectural silhouettes through frosted windows, manger cutouts and sculpted pine trees.
+            </p>
             <p>
-              Try dragging the <strong>Moonlit Christmas Village</strong> 3D model right here on the left, and slide its <strong>Tealight Brightness</strong> control to see how warm light fills the miniature cottages and crescent moon.
+              Try interacting with the <strong>Moonlit Christmas Village</strong> 3D model right here on the left to see how ambient light cradles the miniature cottages and crescent moon.
             </p>
             <div className="xmas-glow-lamp-links">
               {[
@@ -889,10 +785,10 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
               ].map(lampId => {
                 const lamp = get(lampId);
                 return (
-                  <Link key={lampId} to={href(lampId)} className="xmas-glow-mini-card">
+                  <Link key={lampId} to={itemHref(lampId)} className="xmas-glow-mini-card">
                     <img src={lamp.images[0].thumb} alt="" width="48" height="48" />
                     <div>
-                      <strong>{lamp.name}</strong>
+                      <strong>{nameFor(lamp.id, lamp.name)}</strong>
                       <span>{price(lamp)} CAD · Inspect in 3D ↗</span>
                     </div>
                   </Link>
@@ -903,7 +799,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
         </div>
       </section>
 
-      {/* DROP 175 CHARACTER ORNAMENTS SHOWCASE */}
+      {/* CHARACTER ORNAMENTS SHOWCASE */}
       <section className="xmas-ornament-section" id="christmas-ornaments">
         <div className="container">
           <div className="xmas-section-top">
@@ -938,12 +834,12 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                     playsInline
                   />
                 ) : (
-                  <img src={activeOrnament.images[0].src} alt={activeOrnament.name} />
+                  <img src={activeOrnament.images[0].src} alt={nameFor(activeOrnament.id, activeOrnament.name)} />
                 )}
               </div>
               <div className="xmas-ornament-spotlight-info">
                 <p className="xmas-eyebrow">SELECTED ORNAMENT · PRODUCT VIDEO &amp; GALLERY</p>
-                <h3>{activeOrnament.name}</h3>
+                <h3>{nameFor(activeOrnament.id, activeOrnament.name)}</h3>
                 <p>{activeOrnament.description}</p>
                 <div className="xmas-spotlight-meta">
                   <span>📏 Approx. 5 cm tall sculpted bauble</span>
@@ -951,8 +847,8 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                   <span>🎄 Built-in hanging loop</span>
                 </div>
                 <div className="xmas-spotlight-actions">
-                  <Link className="xmas-button" to={`${href("christmas-character-ornaments")}&variant=${activeOrnament.id}`}>
-                    View {activeOrnament.name.replace(" Christmas Ornament", "")} Photos &amp; Options <span>↗</span>
+                  <Link className="xmas-button" to={itemHref("christmas-character-ornaments", activeOrnament.id)}>
+                    View {nameFor(activeOrnament.id, activeOrnament.name).replace(" Christmas Ornament", "")} Photos &amp; Options <span>↗</span>
                   </Link>
                 </div>
               </div>
@@ -980,9 +876,9 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                       {isSelected ? "● Playing Video Above" : "▶ Click for Video"}
                     </span>
                   </button>
-                  <Link className="xmas-ornament-title-link" to={`${href("christmas-character-ornaments")}&variant=${p.id}`}>
-                    <strong>{p.name.replace(" Christmas Ornament", "")}</strong>
-                    <small>{price(p)} CAD · View 6 Photos ↗</small>
+                  <Link className="xmas-ornament-title-link" to={itemHref("christmas-character-ornaments", p.id)}>
+                    <strong>{nameFor(p.id, p.name).replace(" Christmas Ornament", "")}</strong>
+                    <small>{price(p)} CAD · View Photos ↗</small>
                   </Link>
                 </div>
               );
@@ -998,52 +894,59 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
       <section className="xmas-closing">
         <div className="container">
           <span aria-hidden="true">✦</span>
-          <p className="xmas-eyebrow">MADE TO ORDER IN EDMONTON, ALBERTA</p>
-          <h2>
-            Small pieces.<br />
-            <em>Warm holiday memories.</em>
-          </h2>
+          <h2>Crafted with care in Edmonton, Alberta.</h2>
           <p>
-            Every Christmas piece includes free tracked Canadian shipping—or select South Edmonton pickup in your cart to receive a 10% promo code for your next order.
+            Every piece is made in small batches, hand-inspected, carefully packed, and shipped directly from our studio. No mass-market warehouse shelves. Just honest craft.
           </p>
-          <a className="xmas-button" href="#christmas-pieces">
+          <div className="button-row">
+            <Link className="button" to="/shop">
+              Shop All Studio Products ↗
+            </Link>
+            <Link className="button button-outline" to="/contact">
+              Ask a Studio Question ↗
+            </Link>
+          </div>
+          <a className="xmas-back-to-top" href="#top">
             Back to All {listings.length} Christmas Collections <span>↑</span>
           </a>
         </div>
       </section>
 
-      <details className="container xmas-owner-review">
-        <summary>Owner review · delivered pricing &amp; real 3D model status</summary>
-        <p>
-          All prices below are unified delivered CAD prices (free tracked shipping included; no separate pickup price toggle). Customers who choose South Edmonton pickup in the cart receive a 10% promo code on their next order.
-        </p>
-        <div className="xmas-price-table">
-          <table>
-            <thead>
-              <tr>
-                <th>Listing</th>
-                <th>Delivered CAD (Shipping Included)</th>
-                <th>3D Model / Media Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {listings.map(p => (
-                <tr key={p.id}>
-                  <td><Link to={href(p.id)}>{p.name}</Link></td>
-                  <td>{money(p.priceCents)}</td>
-                  <td>
-                    {resolve3DModelId(p.id)
-                      ? "✓ Real Interactive 3D Model (.3mf/.stl converted) + Studio Photos & Video"
-                      : CHRISTMAS_GRACE_IDS.has(p.id)
-                        ? "Reviewed reference photos & product video · original STL/3MF archive saved locally"
-                        : "Studio Photos & Product Video (add assembled .3mf/.stl to enable 3D viewer)"}
-                  </td>
+      {/* OWNER REVIEW TABLE ONLY IN PRIVATE PREVIEW MODE */}
+      {!publicMode && (
+        <details className="container xmas-owner-review">
+          <summary>Owner review · delivered pricing &amp; real 3D model status</summary>
+          <p>
+            All prices below are unified delivered CAD prices (free tracked shipping included; no separate pickup price toggle). Customers who choose South Edmonton pickup in the cart receive a 10% promo code on their next order.
+          </p>
+          <div className="xmas-price-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Listing</th>
+                  <th>Delivered CAD (Shipping Included)</th>
+                  <th>3D Model / Media Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </details>
+              </thead>
+              <tbody>
+                {listings.map(p => (
+                  <tr key={p.id}>
+                    <td><Link to={itemHref(p.id)}>{p.name}</Link></td>
+                    <td>{price(p)}</td>
+                    <td>
+                      {resolve3DModelId(p.id)
+                        ? "✓ Real Interactive 3D Model (.3mf/.stl converted) + Studio Photos & Video"
+                        : CHRISTMAS_GRACE_IDS.has(p.id)
+                          ? "Reviewed reference photos & product video · original STL/3MF archive saved locally"
+                          : "Studio Photos & Product Video (add assembled .3mf/.stl to enable 3D viewer)"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      )}
     </div>
   );
 }

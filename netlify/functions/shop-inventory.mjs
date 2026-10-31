@@ -2,7 +2,7 @@ import {getStore} from '@netlify/blobs';
 import {createHash} from 'node:crypto';
 import baseline from '../../commerce/catalog-baseline.json' with {type:'json'};
 import {catalogStore,readState} from '../../commerce/catalog-store.mjs';
-import {compileCatalog} from '../../commerce/catalog-management.mjs';
+import {compileCatalog,mergeCollectionsWithBaseline} from '../../commerce/catalog-management.mjs';
 import {requireAdmin} from '../../commerce/admin-session.mjs';
 import {createShopifyAdmin} from '../../commerce/shopify-admin.mjs';
 import {inventoryDefaults,validateInventorySettings,inventoryUnits,initialQuantity,inventoryConnection,readInventory,setAvailable,addAvailable,enforceStockPolicy,activateStock,publicStock} from '../../commerce/inventory.mjs';
@@ -18,7 +18,7 @@ export default async(request,context)=>{
   if(action==='status'&&request.method==='GET') {
    if(!settings.enabled)return reply({enabled:false,stock:{}});
    if(!new URL(request.url).searchParams.has('fresh')&&cached&&Date.now()-cached.at<15000)return reply(cached.data);
-   const {state}=await readState(catalogStore(context)),catalog=compileCatalog(baseline.products,state.collections||baseline.collections,Object.values(state.documents),state.archived);
+   const {state}=await readState(catalogStore(context)),catalog=compileCatalog(baseline.products,mergeCollectionsWithBaseline(state.collections,baseline.collections,Object.values(state.documents),state.archived),Object.values(state.documents),state.archived);
    const rows=await readInventory(admin,inventoryUnits(catalog.products),settings.locationId);
    const data={enabled:true,stock:publicStock(rows),lowStockThreshold:settings.lowStockThreshold,checkedAt:new Date().toISOString()};cached={at:Date.now(),data};return reply(data);
   }
@@ -30,7 +30,7 @@ export default async(request,context)=>{
   if(connection.missing.length)throw Error(`The Shopify app needs these inventory permissions: ${connection.missing.join(', ')}. No stock has been changed.`);
   const locationId=settings.locationId || (connection.locations.length===1?connection.locations[0].id:'');
   if(action!=='settings'&&!connection.locations.some(l=>l.id===locationId))throw Error('Choose an active Shopify location that fulfills online orders.');
-  const {state}=await readState(catalogStore(context)),catalog=compileCatalog(baseline.products,state.collections||baseline.collections,Object.values(state.documents),state.archived),units=inventoryUnits(catalog.products);
+  const {state}=await readState(catalogStore(context)),catalog=compileCatalog(baseline.products,mergeCollectionsWithBaseline(state.collections,baseline.collections,Object.values(state.documents),state.archived),Object.values(state.documents),state.archived),units=inventoryUnits(catalog.products);
   if(action==='list') {
    const rows=await readInventory(admin,units,locationId);
    const initialized=await store.get('initialized',{type:'json'}) || {};

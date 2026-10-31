@@ -1,9 +1,10 @@
+import Managed3DViewer from "../components/Managed3DViewer";
 import {StockStatus} from "../components/StockStatus";
 import { shippingFee, productShippingFee } from "../lib/fulfillmentPricing";
 import { MediaStage } from "../components/MediaStage";
 import { MixPackOrder } from "../components/MixPackOrder";
 import { FormEvent, lazy, Suspense, useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import products from "../data/catalog";
 import settings from "../../commerce/settings.json";
 import collections from "../../commerce/collections.json";
@@ -12,7 +13,7 @@ import { business } from "../data/business";
 import { ShopDisplayAdmin } from "../components/ShopDisplayAdmin";
 import { ModelDiscoveryAdmin } from "../components/ModelDiscoveryAdmin";
 import { MobilePurchaseBar } from "../components/MobilePurchaseBar";
-import { analyticsSearchTerm, lowestProductPrice, matchesProductSearch, subcollections } from "../lib/shopDiscovery";
+import { analyticsSearchTerm, isProductVisibleInSeason, lowestProductPrice, matchesProductSearch, subcollections, PURE_CHRISTMAS_PRODUCT_IDS, PURE_HALLOWEEN_PRODUCT_IDS } from "../lib/shopDiscovery";
 import { useShopFeature, useShopMerchandising } from "../components/SiteContent";
 import { PageIntro } from "../components/Shared";
 import { useCart, money } from "../components/Cart";
@@ -29,6 +30,7 @@ import deliveryPolicy from "../../commerce/delivery-policy.json" with {type:"jso
 import { PickupPreference, FulfillmentSelector, PICKUP_PRICE_DIFFERENCE, useFulfillment } from "../components/Fulfillment";
 import { LithophaneAdmin } from "../components/LithophaneAdmin";
 import { SaleAdmin } from "../components/SaleAdmin";
+const Product3DAdmin=lazy(()=>import("../components/Product3DAdmin"));
 const InventoryAdmin=lazy(()=>import("../components/InventoryAdmin").then(m=>({default:m.InventoryAdmin})));
 const ProductManager=lazy(()=>import("../components/ProductManager").then(module=>({default:module.ProductManager})));
 const DeliveryAdmin=lazy(()=>import("../components/DeliveryAdmin").then(module=>({default:module.DeliveryAdmin})));
@@ -130,14 +132,15 @@ export function ShopNav({ showFulfillment = true }: { showFulfillment?: boolean 
     <nav className="shop-nav container" aria-label="Shop categories">
       <Link className="shop-nav-home" to="/shop">Shop</Link>
       <ShopCategoryNavigation links={[
+        ...(merchandising.activeSeason === "christmas" ? [{ id: "christmas-special", label: "🎄 Christmas Special" }] : []),
+        ...(merchandising.activeSeason === "halloween" ? [{ id: "halloween-special", label: "🎃 Halloween Special" }] : []),
         { id: "all", label: "Shop all" },
-        ...departments.map(collection => ({ id: collection!.id, label: collection!.shortName })),
+        ...departments.filter(c => merchandising.hideOffSeasonProducts !== true || (merchandising.activeSeason === "christmas" ? !["halloween", "masks-costumes"].includes(c!.id) : true)).map(collection => ({ id: collection!.id, label: collection!.shortName })),
         ...(sale ? [{ id: "sale", label: `${sale.percentage}% off`, sale: true }] : []),
         { id: "gifts-under-25", label: "$25 & under" },
       ]} />
     </nav>
     {sale && <Link className="shop-sale-ribbon" to="/shop/sale"><strong>{sale.percentage}% off · {sale.title}</strong><span>{sale.endAt ? `Shop before ${new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric" }).format(new Date(sale.endAt))} ↗` : "Shop sale products ↗"}</span></Link>}
-    <ShopSearch />
     {showFulfillment && <FulfillmentSelector />}
     </>
   );
@@ -187,11 +190,13 @@ function AddProduct({
   variantId,
   onVariantChange,
   formId,
+  showStock = true,
 }: {
   product: Product;
   variantId?: string;
   onVariantChange?: (id: string) => void;
   formId?: string;
+  showStock?: boolean;
 }) {
   const { add,remainingFor } = useCart();
   const { priceFor, nameFor } = useShopifyCatalog();
@@ -245,7 +250,7 @@ function AddProduct({
           </select>
         </label>
       )}
-      <StockStatus ids={[orderProduct.id]}/>
+      {showStock && <StockStatus ids={[orderProduct.id]}/>}
       <label>
         Quantity
         <input
@@ -344,7 +349,7 @@ function ShopProductCard({ product, listId }: { product: Product; listId?: strin
               ? "Choose design ↗"
               : "variantLabel" in product && product.variantLabel === "Console model" ? "Choose console model ↗" : "Choose size ↗"}
           </Link>
-        ) : <AddProduct product={product} />}
+        ) : <AddProduct product={product} showStock={false} />}
       </div>
     </article>
   );
@@ -410,7 +415,7 @@ function CollectionTiles({ ids, compact = false }: { ids: string[]; compact?: bo
       const cover = collection && catalogProduct(collection.coverProduct);
       if (!collection || !cover) return null;
       return <Link className="shop-collection-card" style={{ "--delay": `${(index % 3) * 70}ms` } as React.CSSProperties} key={id} to={`/shop/${id}`}>
-        <CollectionCover collectionId={id} product={cover} /><span className="shop-collection-overlay"><small>{collection.products.length} products</small><strong>{collection.name}</strong><span>Shop collection <span className="shop-collection-arrow" aria-hidden="true">→</span></span></span>
+        <CollectionCover collectionId={id} product={cover} /><span className="shop-collection-overlay"><small>{collection.products.length} {collection.products.length === 1 ? "product" : "products"}</small><strong>{collection.name}</strong><span>Shop collection <span className="shop-collection-arrow" aria-hidden="true">→</span></span></span>
       </Link>;
     })}
   </div>;
@@ -433,7 +438,7 @@ export function Shop() {
   const feature = useShopFeature();
   const cover = catalogProduct(feature.coverProduct) || evergreenProducts[0];
   const featured = groupListings(feature.featuredIds.map(id => catalogProduct(id)).filter((product): product is Product => Boolean(product)));
-  const budget = evergreenProducts.filter(product => lowestProductPrice(product, priceFor) <= 2500).slice(0, 4);
+  const budget = evergreenProducts.filter(product => isProductVisibleInSeason(product.id, merchandising) && lowestProductPrice(product, priceFor) <= 2500).slice(0, 4);
 
   return <>
     <ShopNav showFulfillment={false} />
@@ -444,7 +449,7 @@ export function Shop() {
     <FulfillmentSelector compact />
     <section className="section shop-featured-section" id="featured"><div className="container"><div className="section-heading"><div><p className="eyebrow">FEATURED RIGHT NOW</p><h2>{feature.featuredTitle}</h2></div><Link className="text-link" to="/shop/all">See all products →</Link></div><ProductGrid listed={featured} listId="shop_featured" /></div></section>
     {sale && <section className="container shop-sale-feature shop-sale-feature-compact" aria-label="Current shop sale"><div><p className="eyebrow">{sale.percentage}% OFF · LIMITED TIME</p><h2>{sale.title}</h2><Link className="button" to="/shop/sale">Explore sale products ↗</Link></div></section>}
-    <section className="section shop-collections-section" id="collections"><div className="container"><div className="section-heading"><div><p className="eyebrow">SHOP BY CATEGORY</p><h2>Find your kind of gift.</h2></div><p>Choose a collection. See what catches your eye.</p></div><CollectionTiles ids={collections.filter(c=>merchandising.departments.includes(c.id)||!originalCategoryIds.includes(c.id)).map(c=>c.id)} /><div className="shop-collection-shortcuts"><Link to="/shop/all">Browse all {evergreenProducts.length} products ↗</Link><Link to="/shop/headphone-stands">Headphone stands ↗</Link><Link to="/shop/photo-frames">Photo holders ↗</Link></div></div></section>
+    <section className="section shop-collections-section" id="collections"><div className="container"><div className="section-heading"><div><p className="eyebrow">SHOP BY CATEGORY</p><h2>Find your kind of gift.</h2></div><p>Choose a collection. See what catches your eye.</p></div><CollectionTiles ids={collections.filter(c=>merchandising.departments.includes(c.id)||(c.kind==="department"&&!originalCategoryIds.includes(c.id))).map(c=>c.id)} /><div className="shop-collection-shortcuts"><Link to="/shop/all">Browse all {evergreenProducts.length} products ↗</Link><Link to="/shop/headphone-stands">Headphone stands ↗</Link><Link to="/shop/photo-frames">Photo holders ↗</Link></div></div></section>
     {merchandising.showBudgetGifts && budget.length > 0 && <section className="section shop-under-section"><div className="container"><div className="section-heading"><div><p className="eyebrow">LITTLE GIFTS / $25 & UNDER</p><h2>Small gifts. Easy choices.</h2></div><Link className="text-link" to="/shop/gifts-under-25">Explore gifts $25 & under →</Link></div><ProductGrid listed={budget} listId="shop_budget_gifts" /></div></section>}
     {(adminRows as {id:string;title:string;description:string;productIds:string[];enabled:boolean;kind?:string;startAt?:string;endAt?:string}[]).filter(row=>row.enabled&&(!row.startAt||Date.now()>=Date.parse(row.startAt))&&(!row.endAt||Date.now()<Date.parse(row.endAt))).map(row=><section className="section" key={row.id}><div className="container"><div className="section-heading"><div><h2>{row.title}</h2><p>{row.description}</p></div></div>{row.kind!=="information"&&<ProductGrid listed={row.productIds.map(catalogProduct).filter((p):p is Product=>Boolean(p))} listId={`admin_row_${row.id}`}/>}</div></section>)}
     {merchandising.showStudioProof && <StudioProof />}
@@ -467,6 +472,10 @@ export function ShopSale() {
 }
 
 export function HalloweenSpecial() {
+  const merchandising = useShopMerchandising();
+  if (merchandising.activeSeason !== "halloween" && merchandising.hideOffSeasonProducts) {
+    return <Navigate to="/shop/christmas-special" replace />;
+  }
   const { mode } = useFulfillment();
   const featured = halloweenSpecialIds.map((id) => catalogProduct(id)!).filter(Boolean);
   const masks = ["pumpkin-head-halloween-mask", "carved-in-fear-halloween-mask"]
@@ -573,6 +582,10 @@ export function HalloweenSpecial() {
 }
 
 export function ShopCollection({ id }: { id: string }) {
+  const merchandising = useShopMerchandising();
+  if ((id === "halloween" || id === "masks-costumes") && merchandising.activeSeason !== "halloween" && merchandising.hideOffSeasonProducts) {
+    return <Navigate to="/shop/christmas-special" replace />;
+  }
   const collection = id === "all" ? {
     id: "all",
     name: "Shop All Products",
@@ -580,9 +593,9 @@ export function ShopCollection({ id }: { id: string }) {
     eyebrow: "THE COMPLETE COLLECTION",
     heading: "Find your next favourite.",
     description: "Explore every finished product made by Custom Build Studio, from useful accessories to personalized gifts and seasonal pieces.",
-    seoDescription: "Browse all finished Custom Build Studio products made in Edmonton, including gifts, home décor, gaming accessories, figurines and Halloween masks.",
+    seoDescription: "Browse all finished Custom Build Studio products made in Edmonton, including gifts, home décor, gaming accessories, figurines and holiday pieces.",
     coverProduct: "lithophane-table-lamp",
-    products: evergreenProducts.map((product) => product.id),
+    products: evergreenProducts.filter(p => isProductVisibleInSeason(p.id, merchandising)).map((product) => product.id),
     kind: "curated",
   } : collections.find((item) => item.id === id);
   const { priceFor, nameFor } = useShopifyCatalog();
@@ -600,10 +613,10 @@ export function ShopCollection({ id }: { id: string }) {
   const listed = !collection
     ? []
     : id === "gifts-under-25"
-      ? products.filter(p => !isVariant(p) && lowestProductPrice(p, priceFor) <= 2500)
+      ? products.filter(p => !isVariant(p) && isProductVisibleInSeason(p.id, merchandising) && lowestProductPrice(p, priceFor) <= 2500)
       : id === "all" && query.trim()
-        ? products.filter(p => !isVariant(p) && !p.purchaseOnly && p.launchReady !== false)
-        : groupListings(collection.products.map(productId => catalogProduct(productId)!).filter(Boolean));
+        ? products.filter(p => !isVariant(p) && !p.purchaseOnly && p.launchReady !== false && isProductVisibleInSeason(p.id, merchandising))
+        : groupListings(collection.products.map(productId => catalogProduct(productId)!).filter(Boolean).filter(p => isProductVisibleInSeason(p.id, merchandising)));
   const category = collections.find(item => item.id === department && item.kind === "department");
   const filtered = listed.filter(product => matchesProductSearch(product, query, nameFor(product.id, product.name)) &&
     (id !== "all" || !category || category.products.includes(product.id) || ("listingGroup" in product && product.listingGroup && category.products.includes(product.listingGroup))) && lowestProductPrice(product, priceFor) <= priceLimit);
@@ -741,17 +754,20 @@ export function ShopProduct({ previewCatalog, previewId }: { previewCatalog?: Pr
     );
     if (!("groupedDesigns" in product) && imageIndex >= 0) setIndex(imageIndex);
   };
+  const isChristmasProduct = PURE_CHRISTMAS_PRODUCT_IDS.includes(product.id) || product.category === "Christmas décor" || Boolean(product.listingGroup && PURE_CHRISTMAS_PRODUCT_IDS.includes(product.listingGroup));
   return (
     <>
       {previewCatalog && <div className="container" style={{paddingTop: 20}}><Link className="text-link" to="/preview/christmas?analytics_test=1">← Back to Christmas Special preview</Link></div>}
+      {isChristmasProduct && !previewCatalog && <div className="container" style={{paddingTop: 16}}><Link className="text-link" to="/shop/christmas-special" style={{color: "#d4af37", fontWeight: 600}}>← Back to Christmas Special</Link></div>}
       <ShopNav showFulfillment={!previewOnly} />
       {previewOnly ? <p className="shop-notice container">Design preview · proposed CAD item prices · ordering not open</p> : productShippingFee(product.id) ? <p className="shop-notice container">CAD prices · {mode === "pickup" ? "Edmonton pickup · no shipping fee" : `${money(productShippingFee(product.id))} tracked Canadian shipping once per order`}</p> : <ShopNotice />}
       <section className="section">
         <div className="container">
-          <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {"personalization" in product && <><Link to="/shop/personalized-gifts">Personalized Gifts</Link> / <Link to="/shop/photo-frames">Photo Holders</Link> / </>}{product.category === "PS5 console stands" && <><Link to="/shop/console-stands">PS5 Console Stands</Link> / </>}{product.category === "Headphone stands" && <><Link to="/shop/headphone-stands">Headphone Stands</Link> / </>}{nameFor(product.id, product.name)}</nav>
+          <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {isChristmasProduct && <><Link to="/shop/christmas-special">Christmas Special</Link> / </>}{"personalization" in product && <><Link to="/shop/personalized-gifts">Personalized Gifts</Link> / <Link to="/shop/photo-frames">Photo Holders</Link> / </>}{product.category === "PS5 console stands" && <><Link to="/shop/console-stands">PS5 Console Stands</Link> / </>}{product.category === "Headphone stands" && <><Link to="/shop/headphone-stands">Headphone Stands</Link> / </>}{nameFor(product.id, product.name)}</nav>
           <div className="shop-detail">
             <div>
               <MediaStage media={[...images.map(({image})=>({src:image.src,alt:image.alt})),...videos.map(v=>({src:v.src,alt:v.label+" product video",video:true,poster:v.owner.images[0]?.src}))]} index={index} onChange={setIndex}/>
+              <Managed3DViewer onlyUploaded modelId={selectedVariantId || product.id} productName={selectedVariant.name} poster={selectedVariant.images[0]?.src}/>
               {gallery.designCount > 0 && <div className="shop-gallery-scope">
                 <span>{gallery.overview ? `Explore all ${gallery.designCount} designs` : "Selected design photos"}</span>
                 {gallery.overview ? <span className="small">Browse photos · choose below ↓</span> : <button type="button" className="text-link" onClick={() => { setIndex(0); setShowAllDesigns(true); }}>Show all designs</button>}
@@ -1392,7 +1408,7 @@ export function ShopAdmin() {
     [busy, setBusy] = useState(false),
     [content, setContent] = useState<SiteContent>(publicContent),
     [productContent, setProductContent] = useState<ProductContent>(publicProductContent),
-    [tab, setTab] = useState<"orders" | "website" | "products" | "lithophane" | "sales" | "display" | "delivery" | "models" | "inventory">("products"),
+    [tab, setTab] = useState<"orders" | "website" | "products" | "lithophane" | "sales" | "display" | "delivery" | "models" | "inventory" | "product3d">("products"),
     [saved, setSaved] = useState("");
   async function load() {
     try {
@@ -1516,6 +1532,7 @@ export function ShopAdmin() {
                 <button aria-pressed={tab === "delivery"} className={tab === "delivery" ? "button" : "button button-dark"} onClick={() => setTab("delivery")}>Pricing & delivery</button>
                 <button aria-pressed={tab === "orders"} className={tab === "orders" ? "button" : "button button-dark"} onClick={() => setTab("orders")}>Orders</button>
                 <button aria-pressed={tab === "website"} className={tab === "website" ? "button" : "button button-dark"} onClick={() => setTab("website")}>Website settings</button>
+                <button className="button" aria-pressed={tab === "product3d"} onClick={()=>setTab("product3d")}>Product 3D previews</button>
                 <button aria-pressed={tab === "models"} className={tab === "models" ? "button" : "button button-dark"} onClick={() => setTab("models")}>Model discovery</button>
                 <button aria-pressed={tab === "display"} className={tab === "display" ? "button" : "button button-dark"} onClick={() => setTab("display")}>Shop display</button>
                 <button aria-pressed={tab === "products"} className={tab === "products" ? "button" : "button button-dark"} onClick={() => setTab("products")}>Products & collections</button>
@@ -1636,6 +1653,7 @@ export function ShopAdmin() {
                   {saved && <p role="status">{saved}</p>}
                 </form>
               )}
+              {tab === "product3d" && <Suspense fallback={<p>Loading 3D controls…</p>}><Product3DAdmin adminKey={key}/></Suspense>}
               {tab === "inventory" && <Suspense fallback={<p>Loading inventory…</p>}><InventoryAdmin/></Suspense>}
               {tab === "models" && <ModelDiscoveryAdmin />}
               {tab === "products" && <Suspense fallback={<p>Loading product editor...</p>}><ProductManager /></Suspense>}

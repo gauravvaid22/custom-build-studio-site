@@ -10,10 +10,12 @@ const contextKey = "cbs-shop-browsing-category";
 
 function directCategory(pathname: string, links: CategoryLink[]) {
   const destination = pathname.split("/").filter(Boolean)[1];
-  if (!destination || destination === "all") return "all";
+  if (!destination) return null;
+  if (destination === "all") return "all";
   if (links.some(link => link.id === destination)) return destination;
   return Object.entries(subcollections).find(([, children]) => children.includes(destination))?.[0]
-    || (destination === "halloween-special" ? "seasonal" : null);
+    || (destination === "halloween-special" ? (links.some(l => l.id === "halloween-special") ? "halloween-special" : "seasonal") : null)
+    || (destination === "christmas-special" ? (links.some(l => l.id === "christmas-special") ? "christmas-special" : "christmas") : null);
 }
 
 function productCategories(pathname: string, links: CategoryLink[]) {

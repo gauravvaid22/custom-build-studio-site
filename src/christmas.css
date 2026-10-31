@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
 
+.xmas-root,
 .xmas-page,
 .xmas-detail-wrapper {
   --bg-ivory: #fcf7ee;
@@ -29,6 +30,9 @@
   overflow-x: clip;
 }
 
+.xmas-root h1,
+.xmas-root h2,
+.xmas-root h3,
 .xmas-page h1,
 .xmas-page h2,
 .xmas-page h3,
@@ -40,12 +44,46 @@
   color: var(--pine-deep);
 }
 
+.xmas-root h1 em,
+.xmas-root h2 em,
 .xmas-page h1 em,
 .xmas-page h2 em,
 .xmas-detail-wrapper h2 em {
   color: var(--cranberry);
   font-style: italic;
   font-weight: 600;
+}
+
+.xmas-hero-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.xmas-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.xmas-badge-gold {
+  background: rgba(207, 155, 60, 0.16);
+  border: 1px solid rgba(207, 155, 60, 0.45);
+  color: #8c6014;
+}
+
+.xmas-badge-pine {
+  background: rgba(16, 43, 35, 0.08);
+  border: 1px solid rgba(16, 43, 35, 0.22);
+  color: #102b23;
 }
 
 /* ==========================================================================
