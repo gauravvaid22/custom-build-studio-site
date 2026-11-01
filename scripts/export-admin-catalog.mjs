@@ -56,7 +56,7 @@ if (source || process.env.CONTEXT==='production') {
     const base = baselineMap.get(p.id);
     if (base) {
       if (base.name && !p.name) p.name = base.name;
-      if (base.seoTitle && (!p.seoTitle || p.seoTitle === p.name || p.seoTitle.startsWith('Luminous Christmas Tree LED Lantern —'))) p.seoTitle = base.seoTitle;
+      if (base.seoTitle && (!p.seoTitle || p.seoTitle === p.name || p.seoTitle.startsWith('Luminous Christmas Tree LED Lantern —') || p.seoTitle.includes('Green & White Holiday Mantel'))) p.seoTitle = base.seoTitle;
       if (base.seoDescription && (!p.seoDescription || p.seoDescription.startsWith('A character bauble with festive colour and sculpted detail.') || base.seoDescription.length > p.seoDescription.length + 25)) p.seoDescription = base.seoDescription;
       if (Array.isArray(base.searchKeywords) && (!Array.isArray(p.searchKeywords) || !p.searchKeywords.length)) p.searchKeywords = base.searchKeywords;
     }
