@@ -1,14 +1,16 @@
-import products from "../data/catalog";
-import collections from "../../commerce/collections.json";
+import staticProducts from "../data/catalog";
+import staticCollections from "../../commerce/collections.json";
 import defaults from "../../commerce/shop-merchandising.json";
 import { PURE_HALLOWEEN_PRODUCT_IDS, PURE_CHRISTMAS_PRODUCT_IDS } from "../../commerce/merchandising.mjs";
+import { getCurrentLiveCollections, getCurrentLiveProducts } from "./catalogAvailability";
 
 export { PURE_HALLOWEEN_PRODUCT_IDS, PURE_CHRISTMAS_PRODUCT_IDS };
 export type Merchandising = typeof defaults;
 export type ShopFeature = Merchandising["fallback"];
-type Product = (typeof products)[number];
-export const shopDepartments = collections.filter(collection => collection.kind === "department");
-export const parentProducts = products.filter(product => !("variantOf" in product) && !("listingGroup" in product));
+type Product = (typeof staticProducts)[number];
+type Collection = (typeof staticCollections)[number];
+export const shopDepartments = staticCollections.filter(collection => collection.kind === "department");
+export const parentProducts = staticProducts.filter(product => !("variantOf" in product) && !("listingGroup" in product));
 export const subcollections: Record<string, string[]> = {
   "gaming-desk": ["headphone-stands", "console-stands"],
   "personalized-gifts": ["photo-frames"],
@@ -61,14 +63,16 @@ export interface SearchAutocompleteItem {
   url: string;
 }
 
-const searchablePublicCatalog = products.filter(
-  product => !("variantOf" in product) && !product.purchaseOnly && product.launchReady !== false,
-);
-
-export function matchesProductSearch(product: Product, query: string, displayName = product.name) {
+export function matchesProductSearch(
+  product: Product,
+  query: string,
+  displayName = product.name,
+  customCollections?: Collection[],
+) {
   const q = normalize(query).trim();
   if (!q) return true;
-  const family = collections.filter(collection => collection.products.includes(product.id)).map(collection => collection.name).join(" ");
+  const activeCollections = customCollections || getCurrentLiveCollections();
+  const family = activeCollections.filter(collection => collection.products.includes(product.id)).map(collection => collection.name).join(" ");
   const variantText = "variants" in product && product.variants ? product.variants.map(v => v.label).join(" ") : "";
   const groupedText = "groupedDesigns" in product && product.groupedDesigns ? product.groupedDesigns.map(d => d.label).join(" ") : "";
   const keywordsText = "searchKeywords" in product && Array.isArray(product.searchKeywords) ? product.searchKeywords.join(" ") : "";
@@ -97,23 +101,30 @@ export function searchCatalogAutocomplete(
   priceFor?: (id: string, cents: number) => number,
   nameFor?: (id: string, fallback: string) => string,
   limit = 7,
+  customProducts?: Product[],
+  customCollections?: Collection[],
 ): SearchAutocompleteItem[] {
   const q = normalize(query).trim();
   if (!q) return [];
   const tokens = q.split(/\s+/).filter(Boolean);
+  const activeProducts = customProducts || getCurrentLiveProducts();
+  const activeCollections = customCollections || getCurrentLiveCollections();
+  const searchablePublicCatalog = activeProducts.filter(
+    product => !("variantOf" in product) && !product.purchaseOnly && product.launchReady !== false,
+  );
 
   const scored: { item: SearchAutocompleteItem; score: number }[] = [];
 
   for (const product of searchablePublicCatalog) {
     if (!isProductVisibleInSeason(product.id)) continue;
     const displayName = nameFor ? nameFor(product.id, product.name) : product.name;
-    if (!matchesProductSearch(product, q, displayName)) continue;
+    if (!matchesProductSearch(product, q, displayName, activeCollections)) continue;
 
     const normName = normalize(displayName);
     const normSeo = normalize(product.seoTitle || "");
     const isDesignOption = Boolean("listingGroup" in product && product.listingGroup);
     const parentProduct = isDesignOption
-      ? products.find(p => p.id === product.listingGroup)
+      ? activeProducts.find(p => p.id === product.listingGroup)
       : undefined;
 
     let score = 0;
@@ -158,6 +169,7 @@ export function searchCatalogAutocomplete(
 }
 /** Never forward arbitrary search text (emails, phone numbers, etc.) to analytics. */
 export function analyticsSearchTerm(query: string) {
-  const vocabulary = new Set(normalize(parentProducts.map(product => `${product.name} ${product.category}`).join(" ")).split(/[^a-z0-9]+/).filter(word => word.length > 2));
+  const activeParents = getCurrentLiveProducts().filter(product => !("variantOf" in product) && !("listingGroup" in product));
+  const vocabulary = new Set(normalize(activeParents.map(product => `${product.name} ${product.category}`).join(" ")).split(/[^a-z0-9]+/).filter(word => word.length > 2));
   return normalize(query).split(/[^a-z0-9]+/).filter(word => vocabulary.has(word)).slice(0, 8).join(" ") || "other product search";
 }

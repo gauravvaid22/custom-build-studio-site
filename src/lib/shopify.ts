@@ -1,10 +1,10 @@
 import {assertStockQuantities} from "../../commerce/stock-limits.mjs";
 import deliveryPolicy from "../../commerce/delivery-policy.json" with {type:"json"};
-import {assertCatalogAvailable} from "./catalogAvailability";
+import {assertCatalogAvailable, getCurrentLiveProducts} from "./catalogAvailability";
 import type { CartItem } from "../components/Cart";
 import type { FulfillmentMode } from "../components/Fulfillment";
 import { shippingFee } from "./fulfillmentPricing";
-import products from "../data/catalog";
+import staticProducts from "../data/catalog";
 import { checkoutAnalyticsAttributes } from "../components/Analytics";
 
 const storeDomain = "aqk73w-k2.myshopify.com";
@@ -39,18 +39,20 @@ type GraphResponse<T> = {
 export const shopifyConfigured = Boolean(storefrontToken);
 
 export function fulfillmentSku(id: string, mode: FulfillmentMode) {
+  const products = getCurrentLiveProducts();
   const product = products.find(item => item.id === id);
   const sku = product && "variants" in product && product.variants?.length ? product.variants[0].id : id;
   return mode === "pickup" && !deliveryPolicy.active ? `${sku}-pickup` : sku;
 }
 
-function shopifyHandleFor(product: (typeof products)[number]) {
+function shopifyHandleFor(product: (typeof staticProducts)[number]) {
   if ("shopifyHandle" in product && product.shopifyHandle) return product.shopifyHandle;
   return "variantOf" in product ? product.variantOf : product.id;
 }
 
 export async function fetchShopifyCatalog(): Promise<ShopifyCatalog> {
   if (!storefrontToken) return { prices: {}, compareAtPrices: {}, names: {} };
+  const products = getCurrentLiveProducts();
   const handles = [
     ...new Set(
       products
@@ -95,6 +97,7 @@ export async function fetchShopifyCatalog(): Promise<ShopifyCatalog> {
 }
 
 function productHandle(id: string) {
+  const products = getCurrentLiveProducts();
   const product = products.find((item) => item.id === id);
   if (!product) throw new Error("A cart item is no longer available.");
   return shopifyHandleFor(product);
@@ -153,6 +156,7 @@ async function merchandiseFor(items: CartItem[], mode: FulfillmentMode, expected
     }),
   );
 
+  const products = getCurrentLiveProducts();
   return items.map((item) => {
     const product = products.find(product => product.id === item.id);
     if (product && "personalization" in product) {

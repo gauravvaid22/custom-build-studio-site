@@ -5,9 +5,8 @@ import { MediaStage } from "../components/MediaStage";
 import { MixPackOrder } from "../components/MixPackOrder";
 import { FormEvent, lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
-import products from "../data/catalog";
+import type { CatalogProduct } from "../data/catalog";
 import settings from "../../commerce/settings.json";
-import collections from "../../commerce/collections.json";
 import headphoneSearch from "../../commerce/headphone-search.json";
 import christmasFaqs from "../../commerce/christmas-faqs.json";
 import { business } from "../data/business";
@@ -36,8 +35,7 @@ const InventoryAdmin=lazy(()=>import("../components/InventoryAdmin").then(m=>({d
 const ProductManager=lazy(()=>import("../components/ProductManager").then(module=>({default:module.ProductManager})));
 const DeliveryAdmin=lazy(()=>import("../components/DeliveryAdmin").then(module=>({default:module.DeliveryAdmin})));
 import originalCategoryIds from "../../commerce/catalog-original-categories.json";
-import adminRows from "../../commerce/admin-rows.json";
-import {useCatalogAvailability} from "../lib/catalogAvailability";
+import { useCatalogAvailability, useLiveCatalog, getCurrentLiveProducts } from "../lib/catalogAvailability";
 import { ProductDesignPicker } from "../components/ProductDesignPicker";
 import { ShopCategoryNavigation } from "../components/ShopCategoryNavigation";
 import { PhotoPrintOrder } from "../components/PhotoPrintOrder";
@@ -49,7 +47,7 @@ import { analyticsTestMode, setAnalyticsTestMode } from "../lib/analyticsPrefere
 import { productGallery } from "../lib/productGallery";
 const consolePriceItems = consoleSource.products.flatMap(product => product.options.map(option => ({ ...option, name: `${product.name} — ${option.label}` })));
 
-type Product = (typeof products)[number];
+type Product = CatalogProduct;
 type ProductVariant = {
   id: string;
   label: string;
@@ -59,13 +57,9 @@ type ProductVariant = {
 const variantsFor = (product: Product): ProductVariant[] =>
   "variants" in product ? product.variants || [] : [];
 const isVariant = (product: Product) => "variantOf" in product;
-const catalogProduct = (id: string) => products.find((product) => product.id === id);
-const halloweenSpecialIds =
-  collections.find((collection) => collection.id === "halloween")?.products || [];
-const departmentCollections = collections.filter((collection) => collection.kind === "department");
-const evergreenProducts = products.filter((product) => !("variantOf" in product) && !("listingGroup" in product));
-const groupListings = (items: Product[]) => [...new Map(items.map(item => {
-  const grouped = "listingGroup" in item ? catalogProduct(item.listingGroup || "") || item : item;
+const catalogProduct = (id: string, list: Product[] = getCurrentLiveProducts()) => list.find((product) => product.id === id);
+const groupListings = (items: Product[], list: Product[] = getCurrentLiveProducts()) => [...new Map(items.map(item => {
+  const grouped = "listingGroup" in item ? catalogProduct(item.listingGroup || "", list) || item : item;
   return [grouped.id, grouped] as const;
 })).values()];
 type Order = {
@@ -126,7 +120,9 @@ async function api(
 }
 export function ShopNav({ showFulfillment = true }: { showFulfillment?: boolean } = {}) {
   const { sale } = useShopifyCatalog();
+  const { collections } = useLiveCatalog();
   const merchandising = useShopMerchandising();
+  const departmentCollections = collections.filter((collection) => collection.kind === "department");
   const departments = merchandising.departments.map(id => departmentCollections.find(collection => collection.id === id)).filter(Boolean);
   return (
     <>
@@ -201,6 +197,7 @@ function AddProduct({
 }) {
   const { add,remainingFor } = useCart();
   const { priceFor, nameFor } = useShopifyCatalog();
+  const { products } = useLiveCatalog();
   const [quantity, setQuantity] = useState(1);
   const [addError, setAddError] = useState("");
   const [confirmation, setConfirmation] = useState("");
@@ -218,7 +215,7 @@ function AddProduct({
       ? product.variantLabel
       : "Bottle diameter";
   const selectedId = variantId || variants[0]?.id;
-  const orderProduct = selectedId ? catalogProduct(selectedId) || product : product;
+  const orderProduct = selectedId ? catalogProduct(selectedId, products) || product : product;
   const available=remainingFor(orderProduct.id);
   return (
     <form
@@ -411,12 +408,13 @@ function ProductGrid({ listed, listId }: { listed: Product[]; listId: string }) 
 }
 function CollectionTiles({ ids, compact = false }: { ids: string[]; compact?: boolean }) {
   const merchandising = useShopMerchandising();
+  const { products, collections } = useLiveCatalog();
   return <div className={compact ? "shop-subcollection-grid" : "shop-collection-grid"}>
     {ids.map((id, index) => {
       const collection = collections.find(item => item.id === id);
       const visibleIds = collection ? collection.products.filter(pid => isProductVisibleInSeason(pid, merchandising)) : [];
       const coverId = collection && (isProductVisibleInSeason(collection.coverProduct, merchandising) ? collection.coverProduct : visibleIds[0]);
-      const cover = coverId ? catalogProduct(coverId) : undefined;
+      const cover = coverId ? catalogProduct(coverId, products) : undefined;
       if (!collection || !cover || !visibleIds.length) return null;
       return <Link className="shop-collection-card" style={{ "--delay": `${(index % 3) * 70}ms` } as React.CSSProperties} key={id} to={`/shop/${id}/`}>
         <CollectionCover collectionId={id} product={cover} /><span className="shop-collection-overlay"><small>{visibleIds.length} {visibleIds.length === 1 ? "product" : "products"}</small><strong>{collection.name}</strong><span>Shop collection <span className="shop-collection-arrow" aria-hidden="true">→</span></span></span>
@@ -437,11 +435,13 @@ function StudioProof() {
 export function Shop() {
   const { mode } = useFulfillment();
   const { priceFor, nameFor, sale } = useShopifyCatalog();
+  const { products, collections, rows: adminRows } = useLiveCatalog();
   const content = useSiteContent();
   const merchandising = useShopMerchandising();
   const feature = useShopFeature();
-  const cover = catalogProduct(feature.coverProduct) || evergreenProducts[0];
-  const featured = groupListings(feature.featuredIds.map(id => catalogProduct(id)).filter((product): product is Product => Boolean(product)));
+  const evergreenProducts = products.filter((product) => !("variantOf" in product) && !("listingGroup" in product));
+  const cover = catalogProduct(feature.coverProduct, products) || evergreenProducts[0];
+  const featured = groupListings(feature.featuredIds.map(id => catalogProduct(id, products)).filter((product): product is Product => Boolean(product)), products);
   const visibleEvergreenCount = evergreenProducts.filter(product => isProductVisibleInSeason(product.id, merchandising)).length;
   const budget = evergreenProducts.filter(product => isProductVisibleInSeason(product.id, merchandising) && lowestProductPrice(product, priceFor) <= 2500).slice(0, 4);
 
@@ -456,7 +456,7 @@ export function Shop() {
     {sale && <section className="container shop-sale-feature shop-sale-feature-compact" aria-label="Current shop sale"><div><p className="eyebrow">{sale.percentage}% OFF · LIMITED TIME</p><h2>{sale.title}</h2><Link className="button" to="/shop/sale">Explore sale products ↗</Link></div></section>}
     <section className="section shop-collections-section" id="collections"><div className="container"><div className="section-heading"><div><p className="eyebrow">SHOP BY CATEGORY</p><h2>Find your kind of gift.</h2></div><p>Choose a collection. See what catches your eye.</p></div><CollectionTiles ids={collections.filter(c=>merchandising.departments.includes(c.id)||(c.kind==="department"&&!originalCategoryIds.includes(c.id))).map(c=>c.id)} /><div className="shop-collection-shortcuts"><Link to="/shop/all">Browse all {visibleEvergreenCount} products ↗</Link><Link to="/shop/headphone-stands">Headphone stands ↗</Link><Link to="/shop/photo-frames">Photo holders ↗</Link></div></div></section>
     {merchandising.showBudgetGifts && budget.length > 0 && <section className="section shop-under-section"><div className="container"><div className="section-heading"><div><p className="eyebrow">LITTLE GIFTS / $25 & UNDER</p><h2>Small gifts. Easy choices.</h2></div><Link className="text-link" to="/shop/gifts-under-25">Explore gifts $25 & under →</Link></div><ProductGrid listed={budget} listId="shop_budget_gifts" /></div></section>}
-    {(adminRows as {id:string;title:string;description:string;productIds:string[];enabled:boolean;kind?:string;startAt?:string;endAt?:string}[]).filter(row=>row.enabled&&(!row.startAt||Date.now()>=Date.parse(row.startAt))&&(!row.endAt||Date.now()<Date.parse(row.endAt))).map(row=><section className="section" key={row.id}><div className="container"><div className="section-heading"><div><h2>{row.title}</h2><p>{row.description}</p></div></div>{row.kind!=="information"&&<ProductGrid listed={row.productIds.map(catalogProduct).filter((p):p is Product=>Boolean(p))} listId={`admin_row_${row.id}`}/>}</div></section>)}
+    {adminRows.filter(row=>row.enabled&&(!row.startAt||Date.now()>=Date.parse(row.startAt))&&(!row.endAt||Date.now()<Date.parse(row.endAt))).map(row=><section className="section" key={row.id}><div className="container"><div className="section-heading"><div><h2>{row.title}</h2><p>{row.description}</p></div></div>{row.kind!=="information"&&<ProductGrid listed={row.productIds.map(id => catalogProduct(id, products)).filter((p):p is Product=>Boolean(p))} listId={`admin_row_${row.id}`}/>}</div></section>)}
     {merchandising.showStudioProof && <StudioProof />}
     <section className="container"><ShopBenefits /></section>
     <section className="shop-how section"><div className="container detail-columns"><div><p className="eyebrow">FROM YOUR CART TO YOUR DOOR</p><h2>Simple from the first click.</h2><p>Choose your product and options, add to cart, then pay securely through Shopify. Your order goes directly to the studio.</p><Link className="text-link" to="/shipping-returns">Shipping & returns →</Link></div><div><h3>{mode === "pickup" ? "Pickup to suit your schedule." : "Tracked shipping across Canada."}</h3><p>{mode === "pickup" ? "Collect in Southeast Edmonton by appointment. We email the private address after ordering." : "Tracked Canadian shipping is included in the displayed price. Your product page explains delivery estimates. You can request South Edmonton pickup in your cart."}</p><p>{content.productionTime.replace(/ready to ship/gi, mode === "pickup" ? "ready for pickup" : "ready to ship")}.</p><Link className="text-link" to="/contact">Need a custom colour or size? Ask us →</Link></div></div></section>
@@ -465,8 +465,9 @@ export function Shop() {
 
 export function ShopSale() {
   const { sale } = useShopifyCatalog();
+  const { products } = useLiveCatalog();
   if (!sale) return <><ShopNav/><section className="section"><div className="container note-panel"><h1>No sale is active right now.</h1><p>Explore the full collection and check back for new promotions.</p><Link className="button" to="/shop">Shop all products ↗</Link></div></section></>;
-  const featured = groupListings(sale.productIds.map((id) => catalogProduct(id)).filter((product): product is Product => Boolean(product)));
+  const featured = groupListings(sale.productIds.map((id) => catalogProduct(id, products)).filter((product): product is Product => Boolean(product)), products);
   return <>
     <ShopNav showFulfillment={false}/>
     <section className="shop-sale-hero"><div className="container"><p className="eyebrow">CUSTOM BUILD STUDIO / LIMITED PROMOTION</p><div className="shop-sale-hero-percent">{sale.percentage}% OFF</div><h1>{sale.title}</h1><p>Explore selected pieces at sale prices. Every item is a finished physical product made in Edmonton.</p>{sale.endAt && <p className="shop-sale-deadline">Ends {new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(sale.endAt))}</p>}<a className="button" href="#sale-products">Shop the sale ↘</a></div></section>
@@ -478,13 +479,15 @@ export function ShopSale() {
 
 export function HalloweenSpecial() {
   const merchandising = useShopMerchandising();
+  const { products, collections } = useLiveCatalog();
   if (merchandising.activeSeason !== "halloween" && merchandising.hideOffSeasonProducts) {
     return <Navigate to="/shop/christmas-special" replace />;
   }
   const { mode } = useFulfillment();
-  const featured = halloweenSpecialIds.map((id) => catalogProduct(id)!).filter(Boolean);
+  const halloweenSpecialIds = collections.find((collection) => collection.id === "halloween")?.products || [];
+  const featured = halloweenSpecialIds.map((id) => catalogProduct(id, products)!).filter(Boolean);
   const masks = ["pumpkin-head-halloween-mask", "carved-in-fear-halloween-mask"]
-    .map((id) => catalogProduct(id)!).filter(Boolean);
+    .map((id) => catalogProduct(id, products)!).filter(Boolean);
   const otherPieces = featured.filter((product) => !masks.some((mask) => mask.id === product.id));
   return (
     <div className="halloween-special">
@@ -588,9 +591,12 @@ export function HalloweenSpecial() {
 
 export function ShopCollection({ id }: { id: string }) {
   const merchandising = useShopMerchandising();
+  const { products, collections } = useLiveCatalog();
   if ((id === "halloween" || id === "masks-costumes") && merchandising.activeSeason !== "halloween" && merchandising.hideOffSeasonProducts) {
     return <Navigate to="/shop/christmas-special" replace />;
   }
+  const departmentCollections = collections.filter((collection) => collection.kind === "department");
+  const evergreenProducts = products.filter((product) => !("variantOf" in product) && !("listingGroup" in product));
   const collection = id === "all" ? {
     id: "all",
     name: "Shop All Products",
@@ -621,9 +627,9 @@ export function ShopCollection({ id }: { id: string }) {
       ? products.filter(p => !isVariant(p) && isProductVisibleInSeason(p.id, merchandising) && lowestProductPrice(p, priceFor) <= 2500)
       : id === "all" && query.trim()
         ? products.filter(p => !isVariant(p) && !p.purchaseOnly && p.launchReady !== false && isProductVisibleInSeason(p.id, merchandising))
-        : groupListings(collection.products.map(productId => catalogProduct(productId)!).filter(Boolean).filter(p => isProductVisibleInSeason(p.id, merchandising)));
+        : groupListings(collection.products.map(productId => catalogProduct(productId, products)!).filter(Boolean).filter(p => isProductVisibleInSeason(p.id, merchandising)), products);
   const category = collections.find(item => item.id === department && item.kind === "department");
-  const filtered = listed.filter(product => matchesProductSearch(product, query, nameFor(product.id, product.name)) &&
+  const filtered = listed.filter(product => matchesProductSearch(product, query, nameFor(product.id, product.name), collections) &&
     (id !== "all" || !category || category.products.includes(product.id) || ("listingGroup" in product && product.listingGroup && category.products.includes(product.listingGroup))) && lowestProductPrice(product, priceFor) <= priceLimit);
   const sorted = [...filtered].sort((a, b) =>
     sort === "price-low" ? lowestProductPrice(a, priceFor) - lowestProductPrice(b, priceFor) :
@@ -635,7 +641,7 @@ export function ShopCollection({ id }: { id: string }) {
     return () => clearTimeout(timer);
   }, [query, sorted.length, mode]);
   if (!collection) return <NotFound />;
-  const cover = (isProductVisibleInSeason(collection.coverProduct, merchandising) && catalogProduct(collection.coverProduct)) || listed[0] || catalogProduct(collection.coverProduct)!;
+  const cover = (isProductVisibleInSeason(collection.coverProduct, merchandising) && catalogProduct(collection.coverProduct, products)) || listed[0] || catalogProduct(collection.coverProduct, products)!;
   return (
     <>
       <ShopNav showFulfillment={false} />
@@ -654,7 +660,7 @@ export function ShopCollection({ id }: { id: string }) {
           <div className="shop-collection-hero-image">{cover && <CollectionCover collectionId={id} product={cover} large/>}</div>
         </div>
       </section>
-      {(subcollections[id]?.length || id === "personalized-gifts") && <section className="container shop-subcollections" aria-label="Explore this collection"><CollectionTiles ids={subcollections[id] || []} compact />{id === "personalized-gifts" && <Link className="shop-personal-lamp-link" to="/shop/lithophane-table-lamp"><ProductImage product={catalogProduct("lithophane-table-lamp")!} /><span><strong>Personalized Photo Lamps</strong><small>Your photo, softly illuminated →</small></span></Link>}</section>}
+      {(subcollections[id]?.length || id === "personalized-gifts") && <section className="container shop-subcollections" aria-label="Explore this collection"><CollectionTiles ids={subcollections[id] || []} compact />{id === "personalized-gifts" && <Link className="shop-personal-lamp-link" to="/shop/lithophane-table-lamp"><ProductImage product={catalogProduct("lithophane-table-lamp", products)!} /><span><strong>Personalized Photo Lamps</strong><small>Your photo, softly illuminated →</small></span></Link>}</section>}
       <FulfillmentSelector />
       <ShopNotice/>
       <section className="section" id="products">
@@ -709,9 +715,10 @@ export function ShopCollection({ id }: { id: string }) {
   );
 }
 export function ShopProduct({ previewCatalog, previewId }: { previewCatalog?: Product[]; previewId?: string } = {}) {
-  const activeCatalog = previewCatalog || products;
+  const { products: liveProducts, archived } = useLiveCatalog();
+  const activeCatalog = previewCatalog || liveProducts;
   const catalogProduct = (id: string) => activeCatalog.find(product => product.id === id);
-  const archived = useCatalogAvailability();
+  const evergreenProducts = activeCatalog.filter((product) => !("variantOf" in product) && !("listingGroup" in product));
   const { mode } = useFulfillment();
   const { priceFor, nameFor, compareAtFor, sale } = useShopifyCatalog();
   const content = useSiteContent();
@@ -1019,6 +1026,7 @@ function CartQuantity({id,name,quantity}:{id:string;name:string;quantity:number}
 export function ShopCart() {
   const { mode, lock, pickupRequested, policy } = useFulfillment();
   const { items, setQuantity } = useCart();
+  const { products } = useLiveCatalog();
   const { priceFor, nameFor, compareAtFor, refresh, catalogLoaded, catalogError } = useShopifyCatalog();
   const viewedCart = useRef("");
   const [busy, setBusy] = useState(false);
@@ -1160,6 +1168,7 @@ export function ShopCart() {
 export function Checkout() {
   const { mode, lock, pickupRequested, policy } = useFulfillment();
   const { items } = useCart();
+  const { products } = useLiveCatalog();
   const { priceFor, nameFor, refresh, catalogLoaded, catalogError } = useShopifyCatalog();
   const content = useSiteContent();
   const [busy, setBusy] = useState(false),

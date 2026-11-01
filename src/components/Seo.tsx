@@ -2,14 +2,16 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { getSeo, getStructuredData } from "../data/seo";
 import { useShopifyCatalog } from "./ShopifyCatalog";
+import { useLiveCatalog } from "../lib/catalogAvailability";
 import discovery from "../../commerce/search-discovery.json";
-import collections from "../../commerce/collections.json";
-const discoveryIds = new Set(collections.filter(c => discovery.collectionIds.includes(c.id)).flatMap(c => c.products));
+import staticCollections from "../../commerce/collections.json";
+const discoveryIds = new Set(staticCollections.filter(c => discovery.collectionIds.includes(c.id)).flatMap(c => c.products));
 export default function Seo() {
   const { pathname } = useLocation();
   const { prices,stock,inventoryEnabled } = useShopifyCatalog();
+  const { products, collections } = useLiveCatalog();
   useEffect(() => {
-    const seo = getSeo(pathname);
+    const seo = getSeo(pathname, products, collections);
     document.title = seo.title;
     let structured = document.getElementById("structured-data");
     if (!structured) {
@@ -18,7 +20,7 @@ export default function Seo() {
       structured.setAttribute("type", "application/ld+json");
       document.head.appendChild(structured);
     }
-    structured.textContent = JSON.stringify(getStructuredData(pathname, prices,stock,inventoryEnabled));
+    structured.textContent = JSON.stringify(getStructuredData(pathname, prices, stock, inventoryEnabled, products, collections));
     const meta = (attr: string, key: string, value: string) => {
       let tag = document.head.querySelector<HTMLMetaElement>(
         `meta[${attr}="${key}"]`,
@@ -67,7 +69,7 @@ export default function Seo() {
       document.head.appendChild(link);
     }
     link.href = seo.url;
-  }, [pathname, prices,stock,inventoryEnabled]);
+  }, [pathname, prices, stock, inventoryEnabled, products, collections]);
   useEffect(() => {
     const id = pathname.split("/").filter(Boolean).pop() || "";
     if (!discoveryIds.has(id)) return;
@@ -82,6 +84,6 @@ export default function Seo() {
         if (structured) structured.textContent = JSON.stringify(data.schema);
       }).catch(() => {});
     return () => controller.abort();
-  }, [pathname, prices,stock,inventoryEnabled]);
+  }, [pathname, prices, stock, inventoryEnabled, products, collections]);
   return null;
 }

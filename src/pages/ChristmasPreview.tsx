@@ -3,12 +3,12 @@ import { CSSProperties, useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate, useParams, useSearchParams } from "react-router-dom";
 import draftProducts from "../../commerce/christmas-preview-products.json";
 import christmasFaqs from "../../commerce/christmas-faqs.json";
-import allProducts, { CatalogProduct } from "../data/catalog";
+import { CatalogProduct } from "../data/catalog";
 import { money } from "../components/Cart";
 import { ShopProduct } from "./Shop";
 import Christmas3DViewer from "../components/Managed3DViewer";
 import { useShopifyCatalog } from "../components/ShopifyCatalog";
-import { useCatalogAvailability } from "../lib/catalogAvailability";
+import { useLiveCatalog } from "../lib/catalogAvailability";
 import "../christmas.css";
 
 const draftCatalog = draftProducts as CatalogProduct[];
@@ -182,6 +182,7 @@ function ProductDetailWith3D({ product, publicMode = false }: { product: Catalog
   const variantParam = params.get("variant");
   const model3dId = resolve3DModelId(product.id, variantParam);
   const { priceFor, nameFor } = useShopifyCatalog();
+  const { products: allProducts } = useLiveCatalog();
   const sourceCatalog = publicMode ? allProducts : draftCatalog;
 
   const activeFigurine = useMemo(() => {
@@ -322,7 +323,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
   const [tappedVideoId, setTappedVideoId] = useState<string | null>(null);
 
   const { priceFor, nameFor } = useShopifyCatalog();
-  const archived = useCatalogAvailability();
+  const { products: allProducts, archived } = useLiveCatalog();
 
   // If a product ID is requested in public mode, redirect cleanly to canonical /shop/:id
   if (id && publicMode) {
@@ -333,7 +334,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
   const catalog = useMemo(() => {
     if (!publicMode) return draftCatalog;
     return allProducts.filter(p => !archived.includes(p.id));
-  }, [publicMode, archived]);
+  }, [publicMode, allProducts, archived]);
 
   const listings = useMemo(() => {
     const rootItems = catalog.filter(p => !p.listingGroup && (p.category === "Christmas décor" || CHRISTMAS_GRACE_IDS.has(p.id) || p.id === "endless-swirling-tree"));
@@ -598,7 +599,13 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
 
               <div className="xmas-stage-card-footer">
                 <div>
-                  <p className="xmas-stage-blurb">{activeHeroMeta.blurb}</p>
+                  <p className="xmas-stage-blurb">
+                    {(() => {
+                      const baseDesc = draftCatalog.find(d => d.id === activeHeroProduct.id)?.description;
+                      const descEdited = Boolean(activeHeroProduct.description && baseDesc && activeHeroProduct.description.trim() !== baseDesc.trim());
+                      return descEdited ? activeHeroProduct.description : activeHeroMeta.blurb;
+                    })()}
+                  </p>
                 </div>
                 <div className="xmas-stage-price-cta">
                   <div className="xmas-stage-price">
@@ -742,7 +749,11 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                       <Link to={targetLink}>{nameFor(p.id, p.name)}</Link>
                     </h3>
                     <p className="xmas-card-mini-desc">
-                      {meta?.summary || p.description}
+                      {(() => {
+                        const baseDesc = draftCatalog.find(d => d.id === p.id)?.description;
+                        const descEdited = Boolean(p.description && baseDesc && p.description.trim() !== baseDesc.trim());
+                        return descEdited ? p.description : (meta?.summary || p.description);
+                      })()}
                     </p>
                     {publicMode && "groupedDesigns" in p && Array.isArray(p.groupedDesigns) && p.groupedDesigns.length > 0 && p.id !== "christmas-character-ornaments" && (
                       <div className="xmas-card-subdesigns" aria-label={`${p.name} individual designs`}>

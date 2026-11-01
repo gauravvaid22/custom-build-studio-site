@@ -3,7 +3,7 @@ import { fetchShopifyCatalog, type ShopifyCatalog } from "../lib/shopify";
 import { PICKUP_PRICE_DIFFERENCE, useFulfillment } from "./Fulfillment";
 import { fulfillmentSku } from "../lib/shopify";
 import { pickupDifference } from "../lib/fulfillmentPricing";
-import products from "../data/catalog";
+import { useLiveCatalog } from "../lib/catalogAvailability";
 import {stockLimit, type StockRecord} from "../../commerce/stock-limits.mjs";
 
 export type ActiveSale = {
@@ -29,6 +29,7 @@ const ShopifyCatalogContext = createContext<{
 }>({ catalog: emptyCatalog, sale: null, refresh: async () => {}, catalogLoaded: false, catalogError: false, inventory:{enabled:false,stock:{}},inventoryLoaded:false });
 
 export function ShopifyCatalogProvider({ children }: { children: React.ReactNode }) {
+  const { revision } = useLiveCatalog();
   const [catalog, setCatalog] = useState<ShopifyCatalog>(emptyCatalog);
   const [sale, setSale] = useState<ActiveSale | null>(null);
   const [catalogLoaded, setCatalogLoaded] = useState(false);
@@ -61,7 +62,7 @@ export function ShopifyCatalogProvider({ children }: { children: React.ReactNode
     const onVisible = () => { if (document.visibilityState === "visible") void refresh().catch(() => setSale(null)); };
     document.addEventListener("visibilitychange", onVisible);
     return () => { window.clearInterval(interval); document.removeEventListener("visibilitychange", onVisible); };
-  }, [refresh]);
+  }, [refresh, revision]);
   useEffect(() => {
     if (!sale?.endAt) return;
     const remaining = Date.parse(sale.endAt) - Date.now();
@@ -75,6 +76,7 @@ export function ShopifyCatalogProvider({ children }: { children: React.ReactNode
 
 export function useShopifyCatalog() {
   const { catalog: { prices, compareAtPrices, names }, sale, refresh, catalogLoaded, catalogError,inventory,inventoryLoaded } = useContext(ShopifyCatalogContext);
+  const { products } = useLiveCatalog();
   const { mode } = useFulfillment();
   const priceFor = (id: string, fallback: number) => {
     const product = products.find(item => item.id === id);

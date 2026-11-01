@@ -8,7 +8,7 @@ import projects from "../data/projects.json";
 import { money, useCart } from "./Cart";
 import { useShopifyCatalog } from "./ShopifyCatalog";
 import { searchCatalogAutocomplete } from "../lib/shopDiscovery";
-import collections from "../../commerce/collections.json";
+import { useLiveCatalog } from "../lib/catalogAvailability";
 
 const images: Record<string, { base: string; width: number; height: number }> =
   imageData;
@@ -106,6 +106,7 @@ function HeaderSearch() {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { priceFor, nameFor } = useShopifyCatalog();
+  const { products, collections } = useLiveCatalog();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -124,8 +125,8 @@ function HeaderSearch() {
   }, []);
 
   const results = useMemo(
-    () => searchCatalogAutocomplete(query, priceFor, nameFor, 7),
-    [query, priceFor, nameFor],
+    () => searchCatalogAutocomplete(query, priceFor, nameFor, 7, products, collections),
+    [query, priceFor, nameFor, products, collections],
   );
 
   function handleSubmit(event: FormEvent) {
@@ -226,6 +227,7 @@ function HeaderSearch() {
 
 export function Header() {
   const { items } = useCart();
+  const { collections } = useLiveCatalog();
   const [open, setOpen] = useState(false);
   const [activePanel, setActivePanel] = useState<"shop" | "services" | null>(null);
   const location = useLocation();

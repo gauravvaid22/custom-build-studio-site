@@ -4,6 +4,7 @@ import { priceRecord } from '../../commerce/delivery-pricing.mjs';
 import deliveryPolicy from '../../commerce/delivery-policy.json' with { type: "json" };
 import { money } from './Cart';
 import { useShopifyCatalog } from './ShopifyCatalog';
+import { notifyCatalogUpdated } from '../lib/catalogAvailability';
 import { draftDescription, slug } from '../../commerce/catalog-management.mjs';
 import { PURE_CHRISTMAS_PRODUCT_IDS, PURE_HALLOWEEN_PRODUCT_IDS } from '../../commerce/merchandising.mjs';
 import './product-manager.css';
@@ -13,6 +14,7 @@ type Option = { basePriceCents?: number; deliveryExtraCents?: number; pricingSch
 type Product = {
   seoTitle?: string;
   seoDescription?: string;
+  seoEdited?: boolean;
   titleSource?: string;
   shippingPriceMode?: "included" | "per-order";
   shippingFeeCents?: number;
@@ -53,15 +55,27 @@ type Document = {
 
 type Collection = { id: string; name: string; kind: string; description: string; coverProduct: string; products: string[]; [key: string]: unknown };
 type Row = { kind?: string; startAt?: string; endAt?: string; id: string; title: string; description: string; productIds: string[]; enabled: boolean };
+type Job = {
+  id: string;
+  status: string;
+  action: string;
+  productId: string;
+  revision?: number;
+  error?: string;
+  buildHookWarning?: string;
+  results?: { id: string; shopifyId?: string; updatedAt?: string }[];
+};
 type Data = {
   presets?: { name: string; document: Document }[];
   documents: Document[];
+  draftIds?: string[];
+  publishedIds?: string[];
   templates: { id: string; name: string }[];
   archived: string[];
   collections: Collection[];
   rows: Row[];
   revision: number;
-  jobs: { id: string; status: string; action: string; productId: string; revision?: number; error?: string }[];
+  jobs: Job[];
   history: { at: string; action: string; id: string; savedRevision?: number }[];
   connection: Record<string, string>;
   ready: { shopify: boolean; buildHook: boolean; catalogSource: boolean };
@@ -204,10 +218,22 @@ export function ProductManager() {
 
   const { deliveredPriceFor, refresh } = useShopifyCatalog();
   const dialog = useRef<HTMLDialogElement>(null);
+  const [activeJobId, setActiveJobId] = useState<string | null>(null);
+  const notifiedJobsRef = useRef<Set<string>>(new Set());
+  const seededInitialJobsRef = useRef(false);
 
   const load = async () => {
     try {
-      setData(await catalogRequest('list'));
+      const nextData: Data = await catalogRequest('list');
+      if (!seededInitialJobsRef.current) {
+        seededInitialJobsRef.current = true;
+        for (const j of nextData.jobs || []) {
+          if (j.status === 'website' || j.status === 'live') {
+            notifiedJobsRef.current.add(j.id);
+          }
+        }
+      }
+      setData(nextData);
       setError('');
     } catch (e) {
       setError((e as Error).message);
@@ -217,10 +243,37 @@ export function ProductManager() {
   useEffect(() => { void load(); }, []);
 
   useEffect(() => {
-    if (!data?.jobs.some(j => ['queued', 'shopify', 'website'].includes(j.status))) return;
-    const timer = window.setInterval(() => { void load(); }, 6000);
+    const fastSyncing = Boolean(data?.jobs.some(j => ['queued', 'shopify'].includes(j.status)));
+    const websiteBuilding = Boolean(data?.jobs.some(j => j.status === 'website'));
+    if (!fastSyncing && !websiteBuilding) return;
+    const intervalMs = fastSyncing ? 1500 : 5000;
+    const timer = window.setInterval(() => { void load(); }, intervalMs);
     return () => window.clearInterval(timer);
   }, [data?.jobs]);
+
+  useEffect(() => {
+    if (!data?.jobs?.length) return;
+    for (const job of data.jobs) {
+      if ((job.status === 'website' || job.status === 'live') && !notifiedJobsRef.current.has(job.id)) {
+        notifiedJobsRef.current.add(job.id);
+        notifyCatalogUpdated(job.revision);
+        void refresh().catch(() => {});
+        if (!draft && job.id === activeJobId) {
+          const docTitle = data.documents.find(d => d.id === job.productId)?.products[0]?.name || job.productId;
+          setMessage(`✓ “${docTitle}” is now live on the website & Shopify!`);
+        }
+        if (Array.isArray(job.results) && job.results.length > 0 && draft && (job.id === activeJobId || job.productId === draft.id)) {
+          setExpected(prev => {
+            const next = { ...prev };
+            for (const res of job.results || []) {
+              if (res.id && res.updatedAt) next[res.id] = res.updatedAt;
+            }
+            return next;
+          });
+        }
+      }
+    }
+  }, [data?.jobs, draft, activeJobId, refresh]);
 
   useEffect(() => {
     const warn = (e: BeforeUnloadEvent) => {
@@ -237,7 +290,6 @@ export function ProductManager() {
     if (draft && !dialog.current?.open) dialog.current?.showModal();
   }, [draft]);
 
-  const [publishReview, setPublishReview] = useState(false);
   const [nameReview, setNameReview] = useState<{ changes: { id: string; before: string; after: string; seoTitle: string }[]; revision: number; completed: boolean } | null>(null);
   const [bulkBase, setBulkBase] = useState('4.99');
   const [singlePackPrice, setSinglePackPrice] = useState('7.99');
@@ -246,7 +298,7 @@ export function ProductManager() {
   const [expected, setExpected] = useState<Record<string, string>>({});
 
   const open = (doc: Document) => {
-    setPublishReview(false);
+    setActiveJobId(null);
     setExpected({});
     setMessage('');
     setDraft(clone(doc));
@@ -284,12 +336,13 @@ export function ProductManager() {
     dialog.current?.close();
     setDraft(null);
     setDirty(false);
+    setActiveJobId(null);
   };
 
   const change = (patch: Partial<Document>) => {
-    setPublishReview(false);
     setDraft(current => current ? { ...current, ...patch } : null);
     setDirty(true);
+    setMessage('');
   };
 
   const product = draft?.products.find(p => p.id === selected);
@@ -383,8 +436,9 @@ export function ProductManager() {
 
   const save = async () => {
     if (!draft || !data) return false;
+    setActiveJobId(null);
     const next = rebuildGroup(draft);
-    const ok = await act('save-draft', { document: next, revision: data.revision }, 'Draft saved. It has not been published.');
+    const ok = await act('save-draft', { document: next, revision: data.revision }, 'Saved as unpublished draft. Click “Save & Publish Live” when ready to show on the website.');
     if (ok) {
       setDraft(next);
       setDirty(false);
@@ -392,18 +446,60 @@ export function ProductManager() {
     return ok;
   };
 
-  const publish = async () => {
+  const saveAndPublish = async () => {
     if (!draft || !data) return;
-    if (dirty) {
-      setError('Save your draft before publishing.');
+    if (!draft.fulfillmentConfirmed) {
+      setError("Please check 'I have confirmed the item's fulfillment, included components and dimensions' before publishing live.");
       return;
     }
-    if (!publishReview) {
-      setPublishReview(true);
+    if (draft.products.some(p => p.launchReady === false)) {
+      setError('Mark all items ready to sell publicly before publishing live, or save as a draft.');
       return;
     }
-    if (await act('publish', { id: draft.id, revision: data.revision, expected }, 'Update queued. The status below will show when it is live.')) {
-      setPublishReview(false);
+    setBusy(true);
+    setError('');
+    setMessage('');
+    try {
+      const next = rebuildGroup(draft);
+      const res = await catalogRequest('save-and-publish', {
+        document: next,
+        revision: data.revision,
+        expected,
+      });
+      setDraft(next);
+      setDirty(false);
+      if (res?.job?.id) {
+        setActiveJobId(res.job.id);
+      }
+      await load();
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const publishCardDraft = async (doc: Document) => {
+    if (!data) return;
+    setBusy(true);
+    setError('');
+    setMessage('');
+    try {
+      const live = await catalogRequest('inspect', { id: doc.id });
+      const res = await catalogRequest('publish', {
+        id: doc.id,
+        revision: data.revision,
+        expected: live.expected || {},
+      });
+      if (res?.job?.id) {
+        setActiveJobId(res.job.id);
+      }
+      setMessage(`Publishing “${doc.products[0]?.name || doc.id}” to Shopify & website…`);
+      await load();
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(false);
     }
   };
 
@@ -552,7 +648,7 @@ export function ProductManager() {
       return !PURE_CHRISTMAS_PRODUCT_IDS.includes(doc.id) && !PURE_HALLOWEEN_PRODUCT_IDS.includes(doc.id);
     }
     if (quickFilter === 'drafts') {
-      return quickEdits.has(doc.id) || doc.products.some(p => p.launchReady === false);
+      return quickEdits.has(doc.id) || Boolean(data.draftIds?.includes(doc.id)) || doc.products.some(p => p.launchReady === false);
     }
     return true;
   }).filter(doc => {
@@ -601,11 +697,20 @@ export function ProductManager() {
       {message && <p role="status">{message}</p>}
 
       {data.jobs.slice(0, 3).map(job => (
-        <div className="manager-job" key={job.id}>
-          <strong>{job.status === 'website' ? 'Updating website' : job.status === 'shopify' ? 'Updating Shopify' : job.status === 'live' ? 'Live' : job.status === 'error' ? 'Needs attention' : 'Queued'}</strong>
-          <span>{job.productId} {job.error}</span>
+        <div className={`manager-job manager-job-${job.status}`} key={job.id}>
+          <strong>{job.status === 'website' ? '✓ Live on website' : job.status === 'shopify' ? 'Syncing Shopify…' : job.status === 'live' ? '✓ Live' : job.status === 'error' ? 'Needs attention' : 'Queued…'}</strong>
+          <span>
+            {job.productId}
+            {job.status === 'website' ? ' · Visible to shoppers now (background SEO cache refreshing)' : ''}
+            {job.error ? ` · ${job.error}` : ''}
+          </span>
+          {(job.status === 'website' || job.status === 'live') && !job.productId.includes(',') && job.productId !== 'layout' && job.productId !== 'search-naming' && job.productId !== 'lighting-inclusions' && (
+            <a className="text-link" href={`/shop/${job.productId}/?analytics_test=1`} target="_blank" rel="noreferrer">
+              View live ↗
+            </a>
+          )}
           {job.status === 'error' && (
-            <button className="text-link" disabled={busy} onClick={() => void act(job.action, { id: job.productId, revision: data.revision }, 'Retry queued.')}>
+            <button className="text-link" disabled={busy} onClick={() => void act(job.action === 'save-and-publish' ? 'publish' : job.action, { id: job.productId, revision: data.revision }, 'Retry queued.')}>
               Retry
             </button>
           )}
@@ -639,7 +744,7 @@ export function ProductManager() {
               🏠 Year-Round
             </button>
             <button type="button" className={`filter-btn button ${quickFilter === 'drafts' ? '' : 'button-dark'}`} onClick={() => setQuickFilter('drafts')}>
-              Pending ({quickEdits.size})
+              Pending ({new Set([...quickEdits.keys(), ...(data.draftIds || [])]).size})
             </button>
 
             <input
@@ -861,19 +966,43 @@ export function ProductManager() {
               const p = doc.products.find(p => p.id === doc.id)!;
               const archived = data.archived.includes(doc.id);
               const isChristmas = PURE_CHRISTMAS_PRODUCT_IDS.includes(doc.id);
+              const hasDraft = Boolean(data.draftIds?.includes(doc.id));
+              const syncingJob = data.jobs.find(j => j.productId === doc.id && ['queued', 'shopify'].includes(j.status));
 
               return (
                 <article key={doc.id} style={{ borderLeft: isChristmas ? '4px solid #d4af37' : undefined }}>
                   {p.images[0] && <img src={p.images[0].thumb} alt="" loading="lazy" width="100" height="100" />}
                   <div>
-                    <h3>{p.name || 'Untitled draft'} {isChristmas && <span style={{ fontSize: 13, color: '#d4af37' }}>🎄 Christmas</span>}</h3>
+                    <h3 style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                      <span>{p.name || 'Untitled draft'}</span>
+                      {isChristmas && <span style={{ fontSize: 13, color: '#d4af37' }}>🎄 Christmas</span>}
+                      {archived ? (
+                        <span className="manager-pill manager-pill-muted">Archived</span>
+                      ) : p.launchReady === false ? (
+                        <span className="manager-pill manager-pill-amber">Preview only</span>
+                      ) : syncingJob ? (
+                        <span className="manager-pill manager-pill-blue">Syncing…</span>
+                      ) : hasDraft ? (
+                        <span className="manager-pill manager-pill-amber">Unpublished draft</span>
+                      ) : (
+                        <span className="manager-pill manager-pill-live">● Live</span>
+                      )}
+                    </h3>
                     <p>{p.category} · {money(deliveredPriceFor(p.id, p.priceCents))} CAD</p>
                     <small>
-                      {archived ? 'Archived' : p.launchReady === false ? 'Launch details pending' : doc.updatedAt ? 'Saved editor revision' : 'Existing listing'} · {doc.products.filter(p => !p.variantOf).length > 1 ? `${doc.products.filter(p => p.listingGroup).length} designs` : 'Single listing'}
+                      {archived ? 'Hidden from storefront' : p.launchReady === false ? 'Launch details pending' : hasDraft ? 'Draft saved — not yet published to live website' : 'Live on website & Shopify'} · {doc.products.filter(p => !p.variantOf).length > 1 ? `${doc.products.filter(p => p.listingGroup).length} designs` : 'Single listing'}
                     </small>
                   </div>
                   <div className="manager-actions">
+                    {hasDraft && !archived && p.launchReady !== false && (
+                      <button className="button manager-publish-btn" disabled={busy || Boolean(syncingJob)} onClick={() => void publishCardDraft(doc)}>
+                        Publish draft
+                      </button>
+                    )}
                     <button className="button button-dark" disabled={busy} onClick={() => void edit(doc)}>Edit</button>
+                    {!archived && p.launchReady !== false && (
+                      <a className="text-link" href={`/shop/${doc.id}/?analytics_test=1`} target="_blank" rel="noreferrer">View live ↗</a>
+                    )}
                     <button className="text-link" onClick={() => { open(duplicateDocument(doc)); setDirty(true); }}>Duplicate</button>
                     <button className="text-link" disabled={busy} onClick={() => {
                       if (window.confirm(`${archived ? 'Restore' : 'Remove'} “${p.name}” ${archived ? 'to' : 'from'} the website? This ${doc.products.length > 1 ? 'includes its designs and options.' : 'preserves past orders.'}`)) {
@@ -1178,10 +1307,10 @@ export function ProductManager() {
                       <legend>Google search appearance &amp; SEO (optional)</legend>
                       <p className="small">Leave fields blank to use the product name and description automatically. The studio name is added automatically.</p>
                       <label>Search title (SEO Title)
-                        <input maxLength={150} value={product.seoTitle || ''} placeholder={product.name} onChange={e => updateProduct({ seoTitle: e.target.value })} />
+                        <input maxLength={150} value={product.seoTitle || ''} placeholder={product.name} onChange={e => updateProduct({ seoTitle: e.target.value, seoEdited: Boolean(e.target.value.trim() || product.seoDescription?.trim()) })} />
                       </label>
                       <label>Search description (Meta Description)
-                        <textarea rows={2} maxLength={300} value={product.seoDescription || ''} placeholder={product.description} onChange={e => updateProduct({ seoDescription: e.target.value })} />
+                        <textarea rows={2} maxLength={300} value={product.seoDescription || ''} placeholder={product.description} onChange={e => updateProduct({ seoDescription: e.target.value, seoEdited: Boolean(e.target.value.trim() || product.seoTitle?.trim()) })} />
                       </label>
                       <label>Product title source
                         <select value={product.titleSource || 'default'} onChange={e => updateProduct({ titleSource: e.target.value })}>
@@ -1453,25 +1582,80 @@ export function ProductManager() {
               </div>
             </div>
 
-            <footer>
-              <button className="text-link" disabled={busy} onClick={() => {
-                const name = window.prompt("Name this reusable template");
-                if (name) void act("save-preset", { name, document: rebuildGroup(draft) }, "Reusable template saved.");
-              }}>
-                Save as template
-              </button>
-              <button className="button button-dark" onClick={() => setPreview(!preview)}>
-                {preview ? 'Back to editing' : 'Preview'}
-              </button>
-              <button className="button button-dark" disabled={busy} onClick={() => void save()}>
-                Save draft
-              </button>
-              <button className="button" disabled={busy || dirty || draft.products.some(p => p.launchReady === false)} onClick={() => void publish()}>
-                {publishReview ? "Confirm & publish" : "Publish saved draft"}
-              </button>
-              {publishReview && (
-                <p role="status">Ready to update Shopify and the website with this saved draft. Review the prices and delivery rule, then choose Confirm &amp; publish.</p>
-              )}
+            <footer className="manager-dialog-footer">
+              {(() => {
+                const modalJob = activeJobId
+                  ? data.jobs.find(j => j.id === activeJobId)
+                  : data.jobs.find(j => j.productId === draft.id && ['queued', 'shopify'].includes(j.status));
+                const isSyncing = Boolean(modalJob && ['queued', 'shopify'].includes(modalJob.status));
+                const isLiveDone = Boolean(!dirty && modalJob && (modalJob.status === 'website' || modalJob.status === 'live'));
+                const hasUnpublishedDraft = Boolean(data.draftIds?.includes(draft.id));
+
+                return (
+                  <>
+                    <div className="manager-footer-status" aria-live="polite">
+                      {error ? (
+                        <div className="manager-status-banner manager-status-error" role="alert">
+                          <strong>Unable to publish:</strong> {error}
+                        </div>
+                      ) : isSyncing ? (
+                        <div className="manager-status-banner manager-status-syncing">
+                          <span className="manager-spinner" aria-hidden="true" />
+                          <span><strong>Saving &amp; publishing live…</strong> Syncing Shopify &amp; updating live storefront (usually 2–3 seconds).</span>
+                        </div>
+                      ) : modalJob?.status === 'error' ? (
+                        <div className="manager-status-banner manager-status-error" role="alert">
+                          <span><strong>Publish needs attention:</strong> {modalJob.error || 'Please try again.'}</span>
+                        </div>
+                      ) : isLiveDone ? (
+                        <div className="manager-status-banner manager-status-live">
+                          <span>
+                            <strong>✓ Live on website!</strong> Your listing updates are visible to shoppers right now.
+                            {modalJob?.status === 'website' ? ' (Static SEO cache refreshing in background.)' : ''}
+                          </span>
+                          <a className="manager-live-link" href={`/shop/${draft.id}/?analytics_test=1`} target="_blank" rel="noreferrer">
+                            View live listing ↗
+                          </a>
+                        </div>
+                      ) : dirty ? (
+                        <div className="manager-status-banner manager-status-dirty">
+                          <span><strong>Unsaved edits</strong> — click <strong>Save &amp; Publish Live</strong> to update the live website immediately.</span>
+                        </div>
+                      ) : hasUnpublishedDraft ? (
+                        <div className="manager-status-banner manager-status-dirty">
+                          <span><strong>Saved as unpublished draft</strong> — not yet shown on the live website.</span>
+                        </div>
+                      ) : message ? (
+                        <div className="manager-status-banner manager-status-info">
+                          <span>{message}</span>
+                        </div>
+                      ) : null}
+                    </div>
+
+                    <div className="manager-footer-actions">
+                      <button className="text-link" disabled={busy || isSyncing} onClick={() => {
+                        const name = window.prompt("Name this reusable template");
+                        if (name) void act("save-preset", { name, document: rebuildGroup(draft) }, "Reusable template saved.");
+                      }}>
+                        Save as template
+                      </button>
+                      <button className="button button-dark" onClick={() => setPreview(!preview)}>
+                        {preview ? 'Back to editing' : 'Preview'}
+                      </button>
+                      <button className="button button-dark" disabled={busy || isSyncing} onClick={() => void save()}>
+                        Save as draft
+                      </button>
+                      <button
+                        className="button manager-publish-btn"
+                        disabled={busy || isSyncing || draft.products.some(p => p.launchReady === false)}
+                        onClick={() => void saveAndPublish()}
+                      >
+                        {isSyncing ? 'Publishing live…' : 'Save & Publish Live'}
+                      </button>
+                    </div>
+                  </>
+                );
+              })()}
             </footer>
           </>
         )}

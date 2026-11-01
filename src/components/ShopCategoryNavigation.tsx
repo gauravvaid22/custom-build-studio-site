@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { Link, useLocation } from "react-router-dom";
-import products from "../data/catalog";
-import collections from "../../commerce/collections.json";
+import { useLiveCatalog } from "../lib/catalogAvailability";
 import { subcollections } from "../lib/shopDiscovery";
 import "../shop-category-navigation.css";
 
@@ -18,7 +17,12 @@ function directCategory(pathname: string, links: CategoryLink[]) {
     || (destination === "christmas-special" ? (links.some(l => l.id === "christmas-special") ? "christmas-special" : "christmas") : null);
 }
 
-function productCategories(pathname: string, links: CategoryLink[]) {
+function productCategories(
+  pathname: string,
+  links: CategoryLink[],
+  products: ReturnType<typeof useLiveCatalog>["products"],
+  collections: ReturnType<typeof useLiveCatalog>["collections"],
+) {
   const destination = pathname.split("/").filter(Boolean)[1];
   const product = products.find(item => item.id === destination);
   if (!product) return [];
@@ -30,11 +34,12 @@ function productCategories(pathname: string, links: CategoryLink[]) {
 /** Shared navigation: route-aware selection and decorative motion confined to each link. */
 export function ShopCategoryNavigation({ links }: { links: CategoryLink[] }) {
   const { pathname } = useLocation();
+  const { products, collections } = useLiveCatalog();
   const track = useRef<HTMLDivElement>(null);
   const [browsingCategory, setBrowsingCategory] = useState<string | null>(null);
   const [edges, setEdges] = useState({ start: false, end: false });
   const explicitCategory = directCategory(pathname, links);
-  const candidates = productCategories(pathname, links);
+  const candidates = productCategories(pathname, links, products, collections);
   const activeCategory = explicitCategory || (browsingCategory && candidates.includes(browsingCategory)
     ? browsingCategory : candidates[0]);
   const signature = links.map(link => link.id).join(",");

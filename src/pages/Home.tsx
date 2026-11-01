@@ -1,4 +1,4 @@
-import products from "../data/catalog";
+import { useLiveCatalog } from "../lib/catalogAvailability";
 import { ModelDiscoveryTeaser } from "../components/ModelDiscovery";
 import { useShopFeature } from "../components/SiteContent";
 import { Link } from "react-router-dom";
@@ -18,6 +18,7 @@ import { business } from "../data/business";
 import { useShopifyCatalog } from "../components/ShopifyCatalog";
 
 export default function Home() {
+  const { products } = useLiveCatalog();
   const { sale, nameFor } = useShopifyCatalog();
   const feature = useShopFeature();
   const coverProduct = products.find(product => product.id === feature.coverProduct) || products.find(product=>!('variantOf' in product) && !('listingGroup' in product))!;

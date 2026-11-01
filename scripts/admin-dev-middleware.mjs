@@ -1,14 +1,28 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { randomUUID } from 'node:crypto';
 import baseline from '../commerce/catalog-baseline.json' with { type: 'json' };
 import collections from '../commerce/collections.json' with { type: 'json' };
 import siteContent from '../commerce/site-content.json' with { type: 'json' };
 import { modelDiscoveryFor, validateModelDiscovery } from '../commerce/model-discovery.mjs';
 import productContent from '../commerce/product-content.json' with { type: 'json' };
 import deliveryPolicy from '../commerce/delivery-policy.json' with { type: 'json' };
-import { templates, seedDocuments, validateDocument, compileCatalog } from '../commerce/catalog-management.mjs';
+import bakedRevision from '../commerce/catalog-revision.json' with { type: 'json' };
+import { templates, seedDocuments, validateDocument, compileCatalog, mergeCollectionsWithBaseline } from '../commerce/catalog-management.mjs';
+import { finalizePublicCatalog } from '../commerce/public-catalog.mjs';
 
 const localDrafts = new Map();
+const localPublished = new Map();
+const localArchived = new Set();
+let localRevision = bakedRevision.revision || 45;
+let localJobs = [];
+let localHistory = [
+  {
+    at: new Date().toISOString(),
+    action: 'Connected Local Dev Catalog',
+    id: 'catalog-connected',
+  },
+];
 
 function readJsonBody(req) {
   return new Promise((resolve) => {
@@ -42,6 +56,42 @@ function getChristmasProducts() {
   return [];
 }
 
+function enqueueLocalPublishJob(doc, action = 'publish', expected = {}) {
+  for (const p of doc.products.filter(x => !x.variantOf && !x.groupedDesigns)) {
+    const currentStamp = localPublished.get(doc.id)?.updatedAt || 'initial-dev-stamp';
+    if (expected[p.id] && expected[p.id] !== currentStamp) {
+      throw new Error(`${p.name} changed in Shopify. Reload the editor before publishing.`);
+    }
+  }
+  const jobId = randomUUID();
+  const job = {
+    id: jobId,
+    productId: doc.id,
+    action,
+    status: 'shopify',
+    createdAt: new Date().toISOString(),
+    document: doc,
+  };
+  localJobs = [job, ...localJobs].slice(0, 20);
+  setTimeout(() => {
+    const newStamp = new Date().toISOString();
+    const publishedDoc = { ...doc, updatedAt: newStamp };
+    localPublished.set(doc.id, publishedDoc);
+    const existingDraft = localDrafts.get(doc.id);
+    const cutoff = doc.updatedAt && doc.updatedAt > job.createdAt ? doc.updatedAt : job.createdAt;
+    if (!existingDraft || !existingDraft.updatedAt || existingDraft.updatedAt <= cutoff) {
+      localDrafts.delete(doc.id);
+    }
+    localRevision += 1;
+    job.status = 'website';
+    job.revision = localRevision;
+    job.results = doc.products
+      .filter(p => !p.variantOf && !p.groupedDesigns)
+      .map(p => ({ id: p.id, shopifyId: `gid://shopify/Product/${p.id}`, updatedAt: newStamp }));
+  }, 350);
+  return job;
+}
+
 export function createAdminDevMiddleware() {
   return async (req, res, next) => {
     const url = new URL(req.url || '', 'http://localhost');
@@ -63,104 +113,139 @@ export function createAdminDevMiddleware() {
     // 2. Shop Catalog & Product Manager
     if (fnName === 'shop-catalog') {
       const christmas = getChristmasProducts();
-      const allProducts = [...baseline.products, ...christmas];
+      const baseIds = new Set(baseline.products.map(p => p.id));
+      const allProducts = [...baseline.products, ...christmas.filter(c => !baseIds.has(c.id))];
+      const effectiveCollections = mergeCollectionsWithBaseline(
+        collections,
+        baseline.collections,
+        Array.from(localPublished.values()),
+        Array.from(localArchived),
+      );
 
       if (action === 'availability') {
-        return sendJson(res, { archived: [], revision: 1 });
+        return sendJson(res, { pricingUpdating: false, archived: Array.from(localArchived), revision: localRevision });
+      }
+
+      if (action === 'public' || action === 'snapshot') {
+        const compiled = compileCatalog(
+          allProducts,
+          effectiveCollections,
+          Array.from(localPublished.values()),
+          Array.from(localArchived),
+        );
+        if (action === 'public') {
+          const finalized = finalizePublicCatalog(
+            { ...compiled, revision: localRevision, rows: [] },
+            baseline,
+            localArchived,
+            { validate: false },
+          );
+          return sendJson(res, finalized);
+        }
+        return sendJson(res, { ...compiled, revision: localRevision, rows: [], deliveryPolicy });
       }
 
       if (action === 'list') {
-        const seeded = seedDocuments(allProducts, collections);
+        const seeded = seedDocuments(allProducts, effectiveCollections);
         const documentsMap = new Map(seeded.map(d => [d.id, d]));
+        for (const [id, pub] of localPublished.entries()) {
+          documentsMap.set(id, pub);
+        }
         for (const [id, draft] of localDrafts.entries()) {
           documentsMap.set(id, draft);
         }
 
         return sendJson(res, {
           documents: Array.from(documentsMap.values()),
+          draftIds: Array.from(localDrafts.keys()),
+          publishedIds: Array.from(localPublished.keys()),
           templates,
           presets: [],
-          archived: [],
-          collections: collections,
+          archived: Array.from(localArchived),
+          collections: effectiveCollections,
           rows: [],
-          revision: 1,
-          jobs: [],
-          history: [
-            {
-              at: new Date().toISOString(),
-              action: 'Connected Local Dev Catalog',
-              id: 'catalog-connected'
-            }
-          ],
+          revision: localRevision,
+          jobs: localJobs,
+          history: localHistory,
           connection: {
-            publicationId: 'online-store',
-            deliveryProfileId: 'standard-delivery'
+            publicationId: 'gid://shopify/Publication/1',
+            deliveryProfileId: 'gid://shopify/DeliveryProfile/1',
+            pickupProfileId: 'gid://shopify/DeliveryProfile/2',
           },
           ready: {
             shopify: true,
-            buildHook: false,
-            catalogSource: true
-          }
+            buildHook: true,
+            catalogSource: true,
+          },
         });
       }
 
       if (action === 'inspect') {
         const docId = body?.id || '';
-        const christmas = getChristmasProducts();
-        const allProducts = [...baseline.products, ...christmas];
-        const doc = localDrafts.get(docId) || seedDocuments(allProducts, collections).find(d => d.id === docId);
+        const doc =
+          localDrafts.get(docId) ||
+          localPublished.get(docId) ||
+          seedDocuments(allProducts, effectiveCollections).find(d => d.id === docId);
 
         const prices = {};
+        const expected = {};
+        const currentStamp = localPublished.get(docId)?.updatedAt || 'initial-dev-stamp';
         if (doc) {
           doc.products.forEach(p => {
+            if (!p.variantOf && !p.groupedDesigns) expected[p.id] = currentStamp;
             prices[p.id] = p.priceCents;
             p.variants?.forEach(v => {
               prices[v.id] = v.priceCents;
             });
           });
         }
-        return sendJson(res, { prices, expected: {}, hasDraft: localDrafts.has(docId) });
+        return sendJson(res, { prices, expected, hasDraft: localDrafts.has(docId) });
       }
 
       if (action === 'save-draft') {
-        if (body?.document) {
-          try {
-            const doc = body.document;
-            localDrafts.set(doc.id, doc);
-
-            // If it's a Christmas product, keep commerce/christmas-preview-products.json in sync
-            const christmasFile = path.resolve('commerce/christmas-preview-products.json');
-            if (fs.existsSync(christmasFile)) {
-              const currentXmas = JSON.parse(fs.readFileSync(christmasFile, 'utf8'));
-              const isXmas = doc.products.some(p => currentXmas.some(x => x.id === p.id)) || currentXmas.some(x => x.id === doc.id);
-              if (isXmas) {
-                const docProductIds = new Set(doc.products.map(p => p.id));
-                const updatedXmas = currentXmas.map(p => {
-                  const matching = doc.products.find(dp => dp.id === p.id);
-                  return matching || p;
-                });
-                for (const p of doc.products) {
-                  if (!updatedXmas.some(x => x.id === p.id)) {
-                    updatedXmas.push(p);
-                  }
-                }
-                fs.writeFileSync(christmasFile, JSON.stringify(updatedXmas, null, 2) + '\n', 'utf8');
-              }
-            }
-
-            return sendJson(res, { ok: true, revision: 1 });
-          } catch (e) {
-            return sendJson(res, { error: e.message || 'Unable to save draft.' }, 400);
-          }
+        try {
+          const doc = validateDocument(body.document);
+          localDrafts.set(doc.id, doc);
+          localRevision += 1;
+          localHistory = [{ at: new Date().toISOString(), action: 'save-draft', id: doc.id, revision: localRevision }, ...localHistory].slice(0, 100);
+          return sendJson(res, { saved: true, revision: localRevision, updatedAt: doc.updatedAt });
+        } catch (e) {
+          return sendJson(res, { error: e.message || 'Unable to save draft.' }, 400);
         }
-        return sendJson(res, { ok: true, revision: 1 });
+      }
+
+      if (action === 'save-and-publish') {
+        try {
+          const doc = validateDocument(body.document, { publish: true });
+          localDrafts.set(doc.id, doc);
+          localRevision += 1;
+          const job = enqueueLocalPublishJob(doc, 'publish', body.expected || {});
+          localHistory = [{ at: new Date().toISOString(), action: 'publish', id: doc.id, revision: localRevision }, ...localHistory].slice(0, 100);
+          return sendJson(res, { saved: true, revision: localRevision, updatedAt: doc.updatedAt, job: { id: job.id, status: job.status } });
+        } catch (e) {
+          return sendJson(res, { error: e.message || 'Unable to publish listing.' }, 400);
+        }
+      }
+
+      if (action === 'publish') {
+        try {
+          const docId = body?.id || '';
+          const sourceDoc = localDrafts.get(docId) || localPublished.get(docId) || seedDocuments(allProducts, effectiveCollections).find(d => d.id === docId);
+          if (!sourceDoc) return sendJson(res, { error: 'Product not found.' }, 400);
+          const doc = validateDocument(sourceDoc, { publish: true });
+          const job = enqueueLocalPublishJob(doc, 'publish', body.expected || {});
+          localHistory = [{ at: new Date().toISOString(), action: 'publish', id: doc.id, revision: localRevision }, ...localHistory].slice(0, 100);
+          return sendJson(res, { saved: true, revision: localRevision, job: { id: job.id, status: job.status } });
+        } catch (e) {
+          return sendJson(res, { error: e.message || 'Unable to publish listing.' }, 400);
+        }
       }
 
       if (action === 'preview-search-names') {
-        return sendJson(res, { changes: [], revision: 1, completed: true });
+        return sendJson(res, { changes: [], revision: localRevision, completed: true });
       }
 
-      return sendJson(res, { ok: true });
+      return sendJson(res, { ok: true, revision: localRevision });
     }
 
     // 3. Shop Orders & Settings
@@ -213,9 +298,9 @@ export function createAdminDevMiddleware() {
         shopifyAdminConfigured: false,
         sale: {
           admin: {
-            status: 'inactive'
-          }
-        }
+            status: 'inactive',
+          },
+        },
       });
     }
 

@@ -54,12 +54,19 @@ export const publicRoutes = [
   "/privacy",
   "/shipping-returns",
 ];
-export function getSeo(path: string) {
+export function getSeo(
+  path: string,
+  customProducts: typeof products = products,
+  customCollections: typeof collections = collections,
+) {
   const page = path.replace(/\/$/, "") || "/";
+  const activePublicProducts = customProducts.filter(
+    (product) => !("variantOf" in product) && !product.purchaseOnly && isSeasonallyPublicProduct(product),
+  );
   const service = services.find((s) => page === `/services/${s.id}`);
   const project = projects.find((p) => page === `/work/${p.id}`);
-  const product = products.find((p) => page === `/shop/${p.id}`);
-  const collection = collections.find((item) => page === `/shop/${item.id}`);
+  const product = customProducts.find((p) => page === `/shop/${p.id}`);
+  const collection = customCollections.find((item) => page === `/shop/${item.id}`);
   const pages: Record<string, [string, string]> = {
     "/find-a-3d-model": ["Find a 3D Model to Print | Edmonton Printing Quotes", "Explore MakerWorld, Printables, Thingiverse and Cults3D, then send a model link to Custom Build Studio for a custom 3D printing quote in Edmonton."],
     "/shipping-returns": ["Shipping & Returns", "Canadian shipping rates shown before checkout, Edmonton pickup by appointment and 30-day unused standard-product returns. Read Custom Build Studio shop policies."],
@@ -162,17 +169,21 @@ export function getSeo(path: string) {
             "Find design and fabrication services at Custom Build Studio.",
           ];
   const collectionCoverProduct = collection
-    ? publicProducts.find((item) => item.id === collection.coverProduct) ||
-      collection.products.map((id) => publicProducts.find((item) => item.id === id)).find(Boolean) ||
-      products.find((item) => item.id === collection.coverProduct)
+    ? activePublicProducts.find((item) => item.id === collection.coverProduct) ||
+      collection.products.map((id) => activePublicProducts.find((item) => item.id === id)).find(Boolean) ||
+      customProducts.find((item) => item.id === collection.coverProduct)
     : undefined;
+  const isDynamicallyPublic = Boolean(
+    (product && isSeasonallyPublicProduct(product)) ||
+    (collection && (merchandising.hideOffSeasonProducts !== true || (CHRISTMAS_PUBLIC_ENABLED ? !["halloween", "masks-costumes"].includes(collection.id) : HALLOWEEN_PUBLIC_ENABLED ? collection.id !== "christmas" : !["halloween", "masks-costumes", "christmas"].includes(collection.id)))),
+  );
   return {
     title: `${entry[0]} | Custom Build Studio`,
     description: entry[1],
     url: canonical(page),
     image: new URL((product?.images[0]?.src || collectionCoverProduct?.images[0]?.src || (page === "/shop/christmas-special" ? "/media/shop/endless-swirling-tree/owner-green-v3-0-1200.webp" : page === "/shop/halloween-special" ? "/media/shop/candlelight-pumpkins-table-lamp/1-1200.webp" : "/og-image.jpg")), business.origin).href,
     imageAlt: product?.images[0]?.alt || (collection ? `${collection.name} from Custom Build Studio` : page === "/shop/christmas-special" ? "Spiral Tabletop Christmas Tree from the Christmas Collection" : page === "/shop/halloween-special" ? "Candlelight Pumpkins Table Lamp from the Halloween Special" : "Custom Build Studio design and fabrication project"),
-    noindex: !publicRoutes.includes(page) || page === "/privacy",
+    noindex: (!publicRoutes.includes(page) && !isDynamicallyPublic) || page === "/privacy",
   };
 }
 export const localBusiness = {
@@ -233,10 +244,22 @@ export const localBusiness = {
   },
 };
 
-export function getStructuredData(path: string, livePrices: Record<string, number> = {}, stock:StockRecord = {}, inventoryEnabled=false) {
+export function getStructuredData(
+  path: string,
+  livePrices: Record<string, number> = {},
+  stock: StockRecord = {},
+  inventoryEnabled = false,
+  customProducts: typeof products = products,
+  customCollections: typeof collections = collections,
+) {
   const page = path.replace(/\/$/, "") || "/";
-  const product = products.find((item) => page === `/shop/${item.id}`);
-  const collection = collections.find((item) => page === `/shop/${item.id}`);
+  const activePublicProducts = customProducts.filter(
+    (product) => !("variantOf" in product) && !product.purchaseOnly && isSeasonallyPublicProduct(product),
+  );
+  const activeBrowsingProducts = activePublicProducts.filter(product => !("listingGroup" in product));
+  const activeHalloweenIds = customCollections.find((collection) => collection.id === "halloween")?.products || [];
+  const product = customProducts.find((item) => page === `/shop/${item.id}`);
+  const collection = customCollections.find((item) => page === `/shop/${item.id}`);
   const halloweenSpecial = page === "/shop/halloween-special";
   if (product) {
     const variants = "variants" in product ? product.variants || [] : [];
@@ -316,7 +339,7 @@ export function getStructuredData(path: string, livePrices: Record<string, numbe
         variesBy: [product.variantLabel === "Design" ? "https://schema.org/pattern" : "https://schema.org/size"],
         hasVariant: variants
           .map(variant => {
-            const variantProduct = products.find(p => p.id === variant.id);
+            const variantProduct = customProducts.find(p => p.id === variant.id);
             if (!variantProduct || !isSeasonallyPublicProduct(variantProduct)) return null;
             const variantUrl = "variantOf" in variantProduct && variantProduct.variantOf
               ? canonical(`/shop/${variantProduct.variantOf}`) + "?variant=" + variant.id
@@ -338,19 +361,19 @@ export function getStructuredData(path: string, livePrices: Record<string, numbe
   const christmasSpecial = page === "/shop/christmas-special";
   if (page === "/shop" || page === "/shop/all" || collection || halloweenSpecial || christmasSpecial) {
     const baseListed = christmasSpecial
-      ? (collections.find(c => c.id === "christmas")?.products.map((id) => publicProducts.find((product) => product.id === id)).filter(Boolean) || [])
+      ? (customCollections.find(c => c.id === "christmas")?.products.map((id) => activePublicProducts.find((product) => product.id === id)).filter(Boolean) || [])
       : halloweenSpecial
-      ? halloweenSpecialIds.map((id) => publicProducts.find((product) => product.id === id)).filter(Boolean)
+      ? activeHalloweenIds.map((id) => activePublicProducts.find((product) => product.id === id)).filter(Boolean)
       : collection
-      ? collection.products.map((id) => publicProducts.find((product) => product.id === id)).filter(Boolean)
-      : browsingProducts;
+      ? collection.products.map((id) => activePublicProducts.find((product) => product.id === id)).filter(Boolean)
+      : activeBrowsingProducts;
     const isChristmasHub = christmasSpecial || collection?.id === "christmas";
     const listedProducts = isChristmasHub
       ? [...new Map(
           baseListed.flatMap(entry => {
             if (!entry) return [];
             const childEntries = ("groupedDesigns" in entry && Array.isArray(entry.groupedDesigns))
-              ? entry.groupedDesigns.map(d => publicProducts.find(p => p.id === d.id)).filter(Boolean)
+              ? entry.groupedDesigns.map(d => activePublicProducts.find(p => p.id === d.id)).filter(Boolean)
               : [];
             return childEntries.length ? childEntries : [entry];
           }).map(entry => [entry!.id, entry!])

@@ -1,6 +1,5 @@
 import { lazy, Suspense, useEffect, useRef } from "react";
 import ChristmasPreview from "./pages/ChristmasPreview";
-import shopCollections from "../commerce/collections.json";
 import { Routes, Route, Navigate, useLocation, useParams } from "react-router-dom";
 import { Header, Footer } from "./components/Shared";
 import Analytics from "./components/Analytics";
@@ -13,6 +12,7 @@ import { Work, ProjectDetail } from "./pages/Work";
 import Contact from "./pages/Contact";
 import FindModel from "./pages/FindModel";
 import { FulfillmentProvider } from "./components/Fulfillment";
+import { LiveCatalogProvider, useLiveCatalog } from "./lib/catalogAvailability";
 import { CartProvider } from "./components/Cart";
 import { ShopifyCatalogProvider } from "./components/ShopifyCatalog";
 import { SiteContentProvider } from "./components/SiteContent";
@@ -39,6 +39,48 @@ function ValidProject() {
   const { id } = useParams();
   return projects.some((p) => p.id === id) ? <ProjectDetail /> : <NotFound />;
 }
+function AppRoutes({ searchKey }: { searchKey: string }) {
+  const { collections: shopCollections } = useLiveCatalog();
+  return (
+    <Routes>
+      {(import.meta.env.DEV || import.meta.env.VITE_CHRISTMAS_PREVIEW === "true") && <Route path="/preview/christmas/:id?" element={<Suspense fallback={<p className="container section">Preparing a little Christmas magic…</p>}><ChristmasPreview /></Suspense>} />}
+      <Route path="/" element={<Home />} />
+      <Route path="/services" element={<Services />} />
+      <Route path="/find-a-3d-model" element={<FindModel />} />
+      <Route path="/services/:id" element={<ValidService />} />
+      <Route path="/work" element={<Work />} />
+      <Route path="/work/:id" element={<ValidProject />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/pricing" element={<Pricing />} />
+      <Route path="/products" element={<Products />} />
+      <Route path="/shop" element={<Shop />} />
+      {shopCollections.map(collection => <Route key={collection.id} path={`/shop/${collection.id}`} element={<ShopCollection id={collection.id} />} />)}
+      <Route path="/shop/all" element={<ShopCollection id="all" />} />
+      <Route path="/shop/sale" element={<ShopSale />} />
+      <Route path="/shop/halloween-special" element={<HalloweenSpecial />} />
+      {CHRISTMAS_PUBLIC_ENABLED && (
+        <Route
+          path="/shop/christmas-special/:id?"
+          element={<ChristmasPreview publicMode />}
+        />
+      )}
+      <Route path="/shop/cart" element={<ShopCart />} />
+      <Route path="/shop/checkout" element={<Checkout />} />
+      <Route path="/shop/order" element={<OrderConfirmation />} />
+      <Route path="/shop/admin" element={<ShopAdmin />} />
+      <Route path="/shop/photo" element={<UploadedPhotoViewer />} />
+      <Route path="/shop/:id" element={<ShopProduct />} />
+      <Route path="/reviews" element={<Reviews />} />
+      <Route path="/contact" element={<Contact key={searchKey} />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/shipping-returns" element={<StorePolicy />} />
+      <Route path="/thank-you" element={<ThankYou />} />
+      <Route path="/thank-you.html" element={<ThankYou />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+}
+
 export default function App() {
   const location = useLocation();
   const previousPath = useRef(location.pathname);
@@ -56,6 +98,7 @@ export default function App() {
   }, [location.pathname, location.hash]);
   return (
     <FulfillmentProvider>
+    <LiveCatalogProvider>
     <ShopifyCatalogProvider>
     <CartProvider>
       <SiteContentProvider>
@@ -68,48 +111,14 @@ export default function App() {
       </a>
       <Header />
       <main id="main" tabIndex={-1}>
-        <Routes>
-          {(import.meta.env.DEV || import.meta.env.VITE_CHRISTMAS_PREVIEW === "true") && <Route path="/preview/christmas/:id?" element={<Suspense fallback={<p className="container section">Preparing a little Christmas magic…</p>}><ChristmasPreview /></Suspense>} />}
-          <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/find-a-3d-model" element={<FindModel />} />
-          <Route path="/services/:id" element={<ValidService />} />
-          <Route path="/work" element={<Work />} />
-          <Route path="/work/:id" element={<ValidProject />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/shop" element={<Shop />} />
-          {shopCollections.map(collection => <Route key={collection.id} path={`/shop/${collection.id}`} element={<ShopCollection id={collection.id} />} />)}
-          <Route path="/shop/all" element={<ShopCollection id="all" />} />
-          <Route path="/shop/sale" element={<ShopSale />} />
-          <Route path="/shop/halloween-special" element={<HalloweenSpecial />} />
-          {CHRISTMAS_PUBLIC_ENABLED && (
-            <Route
-              path="/shop/christmas-special/:id?"
-              element={<ChristmasPreview publicMode />}
-            />
-          )}
-          <Route path="/shop/cart" element={<ShopCart />} />
-          <Route path="/shop/checkout" element={<Checkout />} />
-          <Route path="/shop/order" element={<OrderConfirmation />} />
-          <Route path="/shop/admin" element={<ShopAdmin />} />
-          <Route path="/shop/photo" element={<UploadedPhotoViewer />} />
-          <Route path="/shop/:id" element={<ShopProduct />} />
-          <Route path="/reviews" element={<Reviews />} />
-          <Route path="/contact" element={<Contact key={location.search} />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/shipping-returns" element={<StorePolicy />} />
-          <Route path="/thank-you" element={<ThankYou />} />
-          <Route path="/thank-you.html" element={<ThankYou />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AppRoutes searchKey={location.search} />
       </main>
       <Footer />
 
       </SiteContentProvider>
     </CartProvider>
     </ShopifyCatalogProvider>
+    </LiveCatalogProvider>
     </FulfillmentProvider>
   );
 }

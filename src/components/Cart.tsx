@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import products from "../data/catalog";
+import { useLiveCatalog } from "../lib/catalogAvailability";
 import { trackShop } from "./Analytics";
 import { useShopifyCatalog } from "./ShopifyCatalog";
 import { useFulfillment } from "./Fulfillment";
@@ -23,6 +23,7 @@ const CartContext = createContext<CartContextType>({
   remainingFor:()=>0,
 });
 export function CartProvider({ children }: { children: React.ReactNode }) {
+  const { products } = useLiveCatalog();
   const { priceFor, prices, catalogLoaded,stockLimitFor } = useShopifyCatalog();
   const [pendingEvents, setPendingEvents] = useState<{ id: string; quantity: number; mode: typeof mode }[]>([]);
   const { mode } = useFulfillment();

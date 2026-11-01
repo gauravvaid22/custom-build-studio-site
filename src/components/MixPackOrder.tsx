@@ -1,9 +1,11 @@
 import {StockStatus} from "./StockStatus";
 import {useState} from 'react';
-import products,{CatalogProduct} from '../data/catalog';
+import {type CatalogProduct} from '../data/catalog';
+import {useLiveCatalog} from '../lib/catalogAvailability';
 import {useCart,money} from './Cart';
 import {useShopifyCatalog} from './ShopifyCatalog';
 export function MixPackOrder({product,onPreview}:{product:CatalogProduct;onPreview:(id:string)=>void}){
+ const {products}=useLiveCatalog();
  const {add,remainingFor}=useCart(),{priceFor}=useShopifyCatalog();const [size,setSize]=useState(1),[choices,setChoices]=useState<Record<string,number>>({}),[message,setMessage]=useState('');
  const designs=product.groupedDesigns||[],count=Object.values(choices).reduce((a,b)=>a+b,0),offer=product.bundleOffers?.find(o=>o.quantity===size),pack=products.find(p=>p.id===offer?.sku);
  const chosen=designs.find(d=>choices[d.id]===1),single=products.find(p=>p.id===chosen?.optionIds[0]),price=pack?priceFor(pack.id,pack.priceCents):single?priceFor(single.id,single.priceCents):priceFor(product.id,product.priceCents);

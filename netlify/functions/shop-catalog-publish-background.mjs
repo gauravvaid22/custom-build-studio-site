@@ -4,7 +4,7 @@ import {mergeCollectionsWithBaseline} from '../../commerce/catalog-management.mj
 import { getStore } from '@netlify/blobs';
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import {catalogStore,readState,writeState} from '../../commerce/catalog-store.mjs';
-import {syncDocument,withdrawDocument,lookupProduct} from '../../commerce/catalog-shopify.mjs';
+import {syncDocument,withdrawDocument,lookupProduct,hasDocumentPricingChange} from '../../commerce/catalog-shopify.mjs';
 import {syncSearchNames,prepareSearchNaming} from '../../commerce/search-naming.mjs';
 import {createShopifyAdmin} from '../../commerce/shopify-admin.mjs';
 import {initializePublishedInventory} from '../../commerce/inventory-publish.mjs';
@@ -49,13 +49,15 @@ export default async (request,context) => {
       results = [];
       for (const doc of job.documents) {
         const latestBefore = await readState(store);
-        const original = latestBefore.state.documents[doc.id];
-        const res = await syncDocument(admin, doc, {...latestBefore.state.connection, initializeInventory: initializePublishedInventory});
+        const original = latestBefore.state.documents[doc.id]
+          ? { ...latestBefore.state.documents[doc.id], _fromPublishedState: true }
+          : null;
+        const res = await syncDocument(admin, doc, {...latestBefore.state.connection, initializeInventory: initializePublishedInventory}, {}, original);
         results.push({ id: doc.id, res });
         const removed = original?.products.filter(p => !doc.products.some(x => x.id === p.id)) || [];
         if (removed.length) await withdrawDocument(admin, { products: removed }, latestBefore.state.connection.publicationId);
 
-        // Immediately persist each synced document to Netlify Blobs so line 51 readState keeps it
+        // Immediately persist each synced document to Netlify Blobs so subsequent readState keeps it
         const checkpoint = await readState(store);
         checkpoint.state.documents[doc.id] = doc;
         delete checkpoint.state.drafts[doc.id];
@@ -76,9 +78,11 @@ export default async (request,context) => {
       }
     }
     if (job.action==='publish') {
-      const sale=await getStore({name:'shop-orders-v1',consistency:'strong'}).get('config/shop-sale',{type:'json'});
-      if(sale && sale.status!=='inactive')throw new Error('End or cancel the current sale before publishing base-price changes.');
-      results=await syncDocument(admin,job.document,{...found.state.connection,initializeInventory:initializePublishedInventory},job.expected);
+      if (hasDocumentPricingChange(job.document, job.previousDocument)) {
+        const sale=await getStore({name:'shop-orders-v1',consistency:'strong'}).get('config/shop-sale',{type:'json'});
+        if(sale && sale.status!=='inactive')throw new Error('End or cancel the current sale before publishing base-price changes.');
+      }
+      results=await syncDocument(admin,job.document,{...found.state.connection,initializeInventory:initializePublishedInventory},job.expected,job.previousDocument);
       const removed=job.previousDocument?.products.filter(p=>!job.document.products.some(x=>x.id===p.id)) || [];
       if(removed.length)await withdrawDocument(admin,{products:removed},found.state.connection.publicationId);
     }
@@ -86,30 +90,53 @@ export default async (request,context) => {
       if(job.action==='restore')results=await syncDocument(admin,job.document,{...found.state.connection,initializeInventory:initializePublishedInventory});
       await withdrawDocument(admin,job.document,found.state.connection.publicationId,job.action==='restore');
     }
-    found=await readState(store); job=found.state.jobs.find(j=>j.id===id);if(results)job.results=results;
-    if(job.action==='publish-search-names') {
-      for(const doc of job.documents) {
-        const previous=found.state.documents[doc.id];
-        if(previous)await store.setJSON(`revisions/${doc.id}/${found.state.revision}`,previous);
-        found.state.documents[doc.id]=doc;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      found=await readState(store); job=found.state.jobs.find(j=>j.id===id);if(results)job.results=results;
+      if(job.action==='publish-search-names') {
+        for(const doc of job.documents) {
+          const previous=found.state.documents[doc.id];
+          if(previous)await store.setJSON(`revisions/${doc.id}/${found.state.revision}`,previous);
+          found.state.documents[doc.id]=doc;
+        }
+        // Preserve unpublished price/media edits while aligning their names.
+        for(const [key,draft] of Object.entries(found.state.drafts))found.state.drafts[key]={...draft,products:prepareSearchNaming({products:draft.products,collections:[]}).catalog.products};
+        found.state.collections=job.collections;
+        if(found.state.layoutDraft)found.state.layoutDraft.collections=prepareSearchNaming({products:[],collections:found.state.layoutDraft.collections}).catalog.collections;
+        found.state.searchNamingVersion=job.namingVersion;
       }
-      // Preserve unpublished price/media edits while aligning their names.
-      for(const [key,draft] of Object.entries(found.state.drafts))found.state.drafts[key]={...draft,products:prepareSearchNaming({products:draft.products,collections:[]}).catalog.products};
-      found.state.collections=job.collections;
-      if(found.state.layoutDraft)found.state.layoutDraft.collections=prepareSearchNaming({products:[],collections:found.state.layoutDraft.collections}).catalog.collections;
-      found.state.searchNamingVersion=job.namingVersion;
+      const lamp=(job.documents || (job.document?[job.document]:[])).flatMap(d=>d.products).find(p=>p.id==='lithophane-table-lamp');
+      if(lamp && ['publish','publish-search-names'].includes(job.action)){const contentStore=getStore({name:'shop-orders-v1',consistency:'strong'});const content=await contentStore.get('config/product-content',{type:'json'});if(content?.['lithophane-table-lamp'])await contentStore.setJSON('config/product-content',{...content,'lithophane-table-lamp':{...content['lithophane-table-lamp'],name:lamp.name}});}
+      if (job.action==='publish') {
+        found.state.documents[job.productId]=job.document;
+        // Clear draft unless a newer draft was saved after this publish job started
+        const publishedCutoff = job.document.updatedAt && job.document.updatedAt > job.createdAt ? job.document.updatedAt : job.createdAt;
+        if (!found.state.drafts[job.productId] || !found.state.drafts[job.productId].updatedAt || found.state.drafts[job.productId].updatedAt <= publishedCutoff) {
+          delete found.state.drafts[job.productId];
+        }
+        const currentIds=new Set(job.document.products.map(p=>p.id));
+        found.state.unavailableIds=[...new Set([...(found.state.unavailableIds || []).filter(id=>!currentIds.has(id)),...(job.previousDocument?.products || []).filter(p=>!currentIds.has(p.id)).map(p=>p.id)])];
+      }
+      if (job.action==='publish-layout' && found.state.layoutDraft) {found.state.collections=found.state.layoutDraft.collections;found.state.rows=found.state.layoutDraft.rows;delete found.state.layoutDraft;}
+      if (job.action==='archive') {found.state.unavailableIds=[...new Set([...(found.state.unavailableIds || []),...job.document.products.map(p=>p.id)])];found.state.documents[job.productId]=job.document;found.state.archived=[...new Set([...found.state.archived,job.productId])];}
+      if (job.action==='restore') {found.state.documents[job.productId]=job.document;found.state.archived=found.state.archived.filter(x=>x!==job.productId);const ids=new Set(job.document.products.map(p=>p.id));found.state.unavailableIds=(found.state.unavailableIds || []).filter(id=>!ids.has(id));}
+      found.state.revision++;job.status='website';job.revision=found.state.revision;
+      try {
+        await writeState(store,found.state,found.etag);
+        break;
+      } catch (writeErr) {
+        if (attempt < 2 && (writeErr.status === 409 || /condition|etag|changed/i.test(writeErr.message))) continue;
+        throw writeErr;
+      }
     }
-    const lamp=(job.documents || (job.document?[job.document]:[])).flatMap(d=>d.products).find(p=>p.id==='lithophane-table-lamp');
-    if(lamp && ['publish','publish-search-names'].includes(job.action)){const contentStore=getStore({name:'shop-orders-v1',consistency:'strong'});const content=await contentStore.get('config/product-content',{type:'json'});if(content?.['lithophane-table-lamp'])await contentStore.setJSON('config/product-content',{...content,'lithophane-table-lamp':{...content['lithophane-table-lamp'],name:lamp.name}});}
-    if (job.action==='publish') {found.state.documents[job.productId]=job.document;delete found.state.drafts[job.productId];const currentIds=new Set(job.document.products.map(p=>p.id));found.state.unavailableIds=[...new Set([...(found.state.unavailableIds || []).filter(id=>!currentIds.has(id)),...(job.previousDocument?.products || []).filter(p=>!currentIds.has(p.id)).map(p=>p.id)])];}
-    if (job.action==='publish-layout' && found.state.layoutDraft) {found.state.collections=found.state.layoutDraft.collections;found.state.rows=found.state.layoutDraft.rows;delete found.state.layoutDraft;}
-    if (job.action==='archive') {found.state.unavailableIds=[...new Set([...(found.state.unavailableIds || []),...job.document.products.map(p=>p.id)])];found.state.documents[job.productId]=job.document;found.state.archived=[...new Set([...found.state.archived,job.productId])];}
-    if (job.action==='restore') {found.state.documents[job.productId]=job.document;found.state.archived=found.state.archived.filter(x=>x!==job.productId);const ids=new Set(job.document.products.map(p=>p.id));found.state.unavailableIds=(found.state.unavailableIds || []).filter(id=>!ids.has(id));}
-    found.state.revision++;job.status='website';job.revision=found.state.revision;
-    await writeState(store,found.state,found.etag);
-    const hook=await fetch(process.env.NETLIFY_CATALOG_BUILD_HOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({revision:job.revision}),signal:AbortSignal.timeout(15000)});
-    if (!hook.ok) throw new Error('Netlify did not accept the website build. Shopify may already be updated; retry the website update.');
+    try {
+      const hook=await fetch(process.env.NETLIFY_CATALOG_BUILD_HOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({revision:job.revision}),signal:AbortSignal.timeout(15000)});
+      if (!hook.ok) throw new Error('Netlify build hook returned HTTP ' + hook.status);
+    } catch (hookError) {
+      // Shopify and live website state (Netlify Blobs) are already committed and live for visitors via LiveCatalogProvider.
+      const fresh=await readState(store);const currentJob=fresh.state.jobs.find(j=>j.id===id);
+      if (currentJob) { currentJob.buildHookWarning=String(hookError.message).slice(0,240); await writeState(store,fresh.state,fresh.etag).catch(()=>{}); }
+    }
   } catch(error) {
-    found=await readState(store);job=found.state.jobs.find(j=>j.id===id);job.status='error';job.error=String(error.message).slice(0,600);await writeState(store,found.state,found.etag);
+    found=await readState(store);job=found.state.jobs.find(j=>j.id===id);if(job){job.status='error';job.error=String(error.message).slice(0,600);await writeState(store,found.state,found.etag).catch(()=>{});}
   }
 };

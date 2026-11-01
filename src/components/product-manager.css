@@ -12,3 +12,27 @@
 .tag-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
 .tag-chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 8px; background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 14px; font-size: 12px; color: #bae6fd; }
 .tag-chip button { background: none; border: none; color: inherit; cursor: pointer; padding: 0 2px; font-size: 14px; line-height: 1; }
+
+.manager-dialog footer.manager-dialog-footer { flex-direction: column; align-items: stretch; gap: 12px; background: #0d1622; }
+.manager-footer-status { width: 100%; }
+.manager-footer-actions { display: flex; justify-content: flex-end; align-items: center; gap: 12px; flex-wrap: wrap; width: 100%; }
+.manager-footer-actions > .text-link { margin-right: auto; }
+.manager-publish-btn { background: #15803d !important; border-color: #22c55e !important; color: #ffffff !important; font-weight: 700; }
+.manager-publish-btn:hover:not(:disabled) { background: #16a34a !important; }
+.manager-status-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 10px 14px; border-radius: 10px; font-size: 14px; line-height: 1.4; }
+.manager-status-syncing { background: rgba(56, 189, 248, 0.14); border: 1px solid rgba(56, 189, 248, 0.45); color: #e0f2fe; justify-content: flex-start; }
+.manager-status-live { background: rgba(34, 197, 94, 0.16); border: 1px solid rgba(34, 197, 94, 0.5); color: #dcfce7; }
+.manager-status-dirty { background: rgba(245, 158, 11, 0.14); border: 1px solid rgba(245, 158, 11, 0.45); color: #fef3c7; }
+.manager-status-error { background: rgba(239, 68, 68, 0.16); border: 1px solid rgba(239, 68, 68, 0.5); color: #fee2e2; }
+.manager-status-info { background: rgba(148, 163, 184, 0.14); border: 1px solid rgba(148, 163, 184, 0.35); color: #e2e8f0; }
+.manager-live-link { display: inline-flex; align-items: center; gap: 4px; padding: 5px 12px; border-radius: 8px; background: #16a34a; color: #ffffff !important; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.manager-live-link:hover { background: #15803d; }
+.manager-spinner { width: 16px; height: 16px; border: 2px solid rgba(186, 230, 253, 0.35); border-top-color: #38bdf8; border-radius: 50%; animation: manager-spin 0.8s linear infinite; flex-shrink: 0; }
+@keyframes manager-spin { to { transform: rotate(360deg); } }
+.manager-pill { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; letter-spacing: 0.01em; }
+.manager-pill-live { background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.45); color: #4ade80; }
+.manager-pill-amber { background: rgba(245, 158, 11, 0.16); border: 1px solid rgba(245, 158, 11, 0.5); color: #fbbf24; }
+.manager-pill-blue { background: rgba(56, 189, 248, 0.16); border: 1px solid rgba(56, 189, 248, 0.45); color: #38bdf8; }
+.manager-pill-muted { background: rgba(148, 163, 184, 0.16); border: 1px solid rgba(148, 163, 184, 0.35); color: #94a3b8; }
+.manager-job-live, .manager-job-website { border-left-color: #22c55e; background: rgba(34, 197, 94, 0.08); }
+.manager-job-error { border-left-color: #ef4444; background: rgba(239, 68, 68, 0.08); }
