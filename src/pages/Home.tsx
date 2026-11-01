@@ -54,7 +54,7 @@ export default function Home() {
               </Link>
             </div>
             <p className="hero-note">Have a sketch, file or broken part? <Link to="/contact">Request a custom quote ↗</Link></p>
-            <Link className="hero-seasonal-link" to={`/shop/${feature.destination}`}>
+            <Link className="hero-seasonal-link" to={`/shop/${feature.destination}/`}>
               <span>{feature.eyebrow}</span> {feature.buttonLabel} <Arrow />
             </Link>
           </div>
@@ -103,7 +103,7 @@ export default function Home() {
             <h2 id="home-shop-title">{feature.title}</h2>
             <p>{feature.description}</p>
             <div className="button-row">
-              <Link className="button" to={`/shop/${feature.destination}`}>
+              <Link className="button" to={`/shop/${feature.destination}/`}>
                 {feature.buttonLabel} <Arrow />
               </Link>
               <Link className="button button-outline" to="/shop/">

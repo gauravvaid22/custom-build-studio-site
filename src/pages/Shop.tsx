@@ -9,6 +9,7 @@ import products from "../data/catalog";
 import settings from "../../commerce/settings.json";
 import collections from "../../commerce/collections.json";
 import headphoneSearch from "../../commerce/headphone-search.json";
+import christmasFaqs from "../../commerce/christmas-faqs.json";
 import { business } from "../data/business";
 import { ShopDisplayAdmin } from "../components/ShopDisplayAdmin";
 import { ModelDiscoveryAdmin } from "../components/ModelDiscoveryAdmin";
@@ -417,7 +418,7 @@ function CollectionTiles({ ids, compact = false }: { ids: string[]; compact?: bo
       const coverId = collection && (isProductVisibleInSeason(collection.coverProduct, merchandising) ? collection.coverProduct : visibleIds[0]);
       const cover = coverId ? catalogProduct(coverId) : undefined;
       if (!collection || !cover || !visibleIds.length) return null;
-      return <Link className="shop-collection-card" style={{ "--delay": `${(index % 3) * 70}ms` } as React.CSSProperties} key={id} to={`/shop/${id}`}>
+      return <Link className="shop-collection-card" style={{ "--delay": `${(index % 3) * 70}ms` } as React.CSSProperties} key={id} to={`/shop/${id}/`}>
         <CollectionCover collectionId={id} product={cover} /><span className="shop-collection-overlay"><small>{visibleIds.length} {visibleIds.length === 1 ? "product" : "products"}</small><strong>{collection.name}</strong><span>Shop collection <span className="shop-collection-arrow" aria-hidden="true">→</span></span></span>
       </Link>;
     })}
@@ -447,7 +448,7 @@ export function Shop() {
   return <>
     <ShopNav showFulfillment={false} />
     <section className="shop-hero shop-hub-hero shop-campaign-hero" aria-labelledby="shop-campaign-title"><div className="container shop-hero-grid">
-      <div className="shop-campaign-copy"><p className="eyebrow">{feature.eyebrow}</p><h1 id="shop-campaign-title">{feature.title}</h1><p className="lead">{feature.description}</p><Link className="button" to={`/shop/${feature.destination}`}>{feature.buttonLabel} ↗</Link><p className="shop-campaign-assurance"><BenefitIcon type={mode === "pickup" ? "local" : "shipping"} />{mode === "pickup" ? "Edmonton pickup by appointment" : content.shippingMessage}</p></div>
+      <div className="shop-campaign-copy"><p className="eyebrow">{feature.eyebrow}</p><h1 id="shop-campaign-title">{feature.title}</h1><p className="lead">{feature.description}</p><Link className="button" to={`/shop/${feature.destination}/`}>{feature.buttonLabel} ↗</Link><p className="shop-campaign-assurance"><BenefitIcon type={mode === "pickup" ? "local" : "shipping"} />{mode === "pickup" ? "Edmonton pickup by appointment" : content.shippingMessage}</p></div>
       {cover && <Link to={`/shop/${cover.id}/`} className="shop-hero-photo" onClick={() => trackShop("select_item", [{ id: cover.id, quantity: 1, priceCents: lowestProductPrice(cover, priceFor) }], mode, "shop_campaign")}><ProductImage product={cover} index={feature.imageIndex} large /><span><strong>{nameFor(cover.id, cover.name)}</strong><small>Explore this product ↗</small></span></Link>}
     </div></section>
     <FulfillmentSelector compact />
@@ -674,15 +675,29 @@ export function ShopCollection({ id }: { id: string }) {
           <div className="section-heading"><div><p className="eyebrow">KEEP EXPLORING</p><h2>Another kind of curious.</h2></div></div>
           <div className="shop-related-links">
             {departmentCollections.filter((item) => item.id !== collection.id).slice(0, 4).map((item) => (
-              <Link key={item.id} to={`/shop/${item.id}`}>{item.name}<span>↗</span></Link>
+              <Link key={item.id} to={`/shop/${item.id}/`}>{item.name}<span>↗</span></Link>
             ))}
           </div>
         </div>
       </section>
       <section className="container"><ShopBenefits/></section>
       {id === "headphone-stands" && <section className="section"><div className="container faq-layout">
-        <div><p className="eyebrow">FIND YOUR DESK COMPANION</p><h2>Choosing your headphone stand.</h2><Link className="text-link" to="/contact">Ask us about fit or colour ↗</Link></div>
+        <div><p className="eyebrow">FIND YOUR DESK COMPANION</p><h2>Choosing your headphone stand.</h2><Link className="text-link" to="/contact/">Ask us about fit or colour ↗</Link></div>
         <div className="faq-list">{headphoneSearch.faqs.map(([question, answer]) => <details key={question}><summary>{question}<span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div>
+      </div></section>}
+      {id === "christmas" && <section className="section"><div className="container faq-layout">
+        <div>
+          <p className="eyebrow">EDMONTON STUDIO · HOLIDAY GIFT GUIDE</p>
+          <h2>Christmas gifts made in Edmonton, shipped across Canada.</h2>
+          <p className="small" style={{ marginTop: "0.75rem" }}>
+            Explore our full interactive holiday showcase or jump straight to any individual ornament, tree topper, or illuminated lamp below.
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "0.75rem" }}>
+            <Link className="text-link" to="/shop/christmas-special/">Explore Christmas Special Showcase ↗</Link>
+            <Link className="text-link" to="/shipping-returns/">Shipping &amp; 30-day returns ↗</Link>
+          </div>
+        </div>
+        <div className="faq-list">{christmasFaqs.map(([question, answer]) => <details key={question}><summary>{question}<span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div>
       </div></section>}
       <section className="section shop-collection-copy">
         <div className="container detail-columns">
@@ -700,6 +715,7 @@ export function ShopProduct({ previewCatalog, previewId }: { previewCatalog?: Pr
   const { mode } = useFulfillment();
   const { priceFor, nameFor, compareAtFor, sale } = useShopifyCatalog();
   const content = useSiteContent();
+  const merchandising = useShopMerchandising();
   const { id: routeId } = useParams();
   const id = previewId || routeId;
   const [searchParams, setSearchParams] = useSearchParams();
@@ -762,12 +778,12 @@ export function ShopProduct({ previewCatalog, previewId }: { previewCatalog?: Pr
   return (
     <>
       {previewCatalog && <div className="container" style={{paddingTop: 20}}><Link className="text-link" to="/preview/christmas?analytics_test=1">← Back to Christmas Special preview</Link></div>}
-      {isChristmasProduct && !previewCatalog && <div className="container" style={{paddingTop: 16}}><Link className="text-link" to="/shop/christmas-special" style={{color: "#d4af37", fontWeight: 600}}>← Back to Christmas Special</Link></div>}
+      {isChristmasProduct && !previewCatalog && <div className="container" style={{paddingTop: 16}}><Link className="text-link" to="/shop/christmas-special/" style={{color: "#d4af37", fontWeight: 600}}>← Back to Christmas Special</Link></div>}
       <ShopNav showFulfillment={!previewOnly} />
       {previewOnly ? <p className="shop-notice container">Design preview · proposed CAD item prices · ordering not open</p> : productShippingFee(product.id) ? <p className="shop-notice container">CAD prices · {mode === "pickup" ? "Edmonton pickup · no shipping fee" : `${money(productShippingFee(product.id))} tracked Canadian shipping once per order`}</p> : <ShopNotice />}
       <section className="section">
         <div className="container">
-          <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {isChristmasProduct && <><Link to="/shop/christmas-special">Christmas Special</Link> / </>}{"personalization" in product && <><Link to="/shop/personalized-gifts">Personalized Gifts</Link> / <Link to="/shop/photo-frames">Photo Holders</Link> / </>}{product.category === "PS5 console stands" && <><Link to="/shop/console-stands">PS5 Console Stands</Link> / </>}{product.category === "Headphone stands" && <><Link to="/shop/headphone-stands">Headphone Stands</Link> / </>}{nameFor(product.id, product.name)}</nav>
+          <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {isChristmasProduct && <><Link to="/shop/christmas-special/">Christmas Special</Link> / <Link to="/shop/christmas/">Christmas</Link> / </>}{"personalization" in product && <><Link to="/shop/personalized-gifts/">Personalized Gifts</Link> / <Link to="/shop/photo-frames/">Photo Holders</Link> / </>}{product.category === "PS5 console stands" && <><Link to="/shop/console-stands/">PS5 Console Stands</Link> / </>}{product.category === "Headphone stands" && <><Link to="/shop/headphone-stands/">Headphone Stands</Link> / </>}{nameFor(product.id, product.name)}</nav>
           <div className="shop-detail">
             <div>
               <MediaStage media={[...images.map(({image})=>({src:image.src,alt:image.alt})),...videos.map(v=>({src:v.src,alt:v.label+" product video",video:true,poster:v.owner.images[0]?.src}))]} index={index} onChange={setIndex}/>
@@ -960,7 +976,13 @@ export function ShopProduct({ previewCatalog, previewId }: { previewCatalog?: Pr
           <aside className="shop-reference-note" aria-label="Related gifts">
             <h2>More to explore</h2>
             <div className="shop-filters">
-              {evergreenProducts.filter(p => p.id !== product.id && p.category === product.category).slice(0, 3).map(p => (
+              {("listingGroup" in product && product.listingGroup
+                ? activeCatalog.filter(p => p.id !== product.id && "listingGroup" in p && p.listingGroup === product.listingGroup && !isVariant(p) && isProductVisibleInSeason(p.id, merchandising)).slice(0, 4)
+                : []
+              ).map(p => (
+                <Link key={p.id} className="text-link" to={`/shop/${p.id}/`}>{nameFor(p.id, p.name)} · {money(priceFor(p.id, p.priceCents))} CAD →</Link>
+              ))}
+              {evergreenProducts.filter(p => p.id !== product.id && p.category === product.category && isProductVisibleInSeason(p.id, merchandising)).slice(0, 3).map(p => (
                 <Link key={p.id} className="text-link" to={`/shop/${p.id}/`}>{nameFor(p.id, p.name)} · {money(priceFor(p.id, p.priceCents))} CAD →</Link>
               ))}
               <Link to="/shop/">Browse all gifts & décor →</Link>

@@ -2,6 +2,7 @@ import {CUSTOMER_3D_ENABLED} from '../lib/storefrontFeatures';
 import { CSSProperties, useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate, useParams, useSearchParams } from "react-router-dom";
 import draftProducts from "../../commerce/christmas-preview-products.json";
+import christmasFaqs from "../../commerce/christmas-faqs.json";
 import allProducts, { CatalogProduct } from "../data/catalog";
 import { money } from "../components/Cart";
 import { ShopProduct } from "./Shop";
@@ -197,13 +198,13 @@ function ProductDetailWith3D({ product, publicMode = false }: { product: Catalog
 
   const currentItem = activeFigurine || activeTray || product;
   const listings = sourceCatalog.filter(p => !p.listingGroup && (p.category === "Christmas décor" || CHRISTMAS_GRACE_IDS.has(p.id) || p.id === "endless-swirling-tree"));
-  const itemHref = (id: string) => publicMode ? `/shop/${id}` : `/preview/christmas/${id}?analytics_test=1`;
+  const itemHref = (id: string) => publicMode ? `/shop/${id}/` : `/preview/christmas/${id}?analytics_test=1`;
 
   return (
     <div className="xmas-detail-wrapper">
       <div className="xmas-detail-subnav">
         <div className="container xmas-detail-subnav-inner">
-          <Link className="xmas-subnav-back" to={publicMode ? "/shop/christmas-special" : "/preview/christmas?analytics_test=1"}>
+          <Link className="xmas-subnav-back" to={publicMode ? "/shop/christmas-special/" : "/preview/christmas?analytics_test=1"}>
             ← Back to Christmas Collection
           </Link>
           <div className="xmas-subnav-switcher" aria-label="Browse other Christmas products">
@@ -351,12 +352,12 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
 
   const itemHref = (targetId: string, variant?: string) => {
     if (publicMode) {
-      return `/shop/${targetId}${variant ? `?variant=${variant}` : ""}`;
+      return `/shop/${targetId}/${variant ? `?variant=${variant}` : ""}`;
     }
     return `/preview/christmas/${targetId}?analytics_test=1${variant ? `&variant=${variant}` : ""}`;
   };
 
-  const baseRoute = publicMode ? "/shop/christmas-special" : "/preview/christmas?analytics_test=1";
+  const baseRoute = publicMode ? "/shop/christmas-special/" : "/preview/christmas?analytics_test=1";
 
   useEffect(() => {
     document.title = id
@@ -743,6 +744,15 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                     <p className="xmas-card-mini-desc">
                       {meta?.summary || p.description}
                     </p>
+                    {publicMode && "groupedDesigns" in p && Array.isArray(p.groupedDesigns) && p.groupedDesigns.length > 0 && p.id !== "christmas-character-ornaments" && (
+                      <div className="xmas-card-subdesigns" aria-label={`${p.name} individual designs`}>
+                        {p.groupedDesigns.map(design => (
+                          <Link key={design.id} to={itemHref(design.id)} className="xmas-card-subdesign-chip">
+                            {design.label} ↗
+                          </Link>
+                        ))}
+                      </div>
+                    )}
                     <div className="xmas-card-bottom">
                       <div className="xmas-card-price-block">
                         <strong>{price(p)} <span>CAD</span></strong>
@@ -853,7 +863,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                   <span>🎄 Built-in hanging loop</span>
                 </div>
                 <div className="xmas-spotlight-actions">
-                  <Link className="xmas-button" to={itemHref("christmas-character-ornaments", activeOrnament.id)}>
+                  <Link className="xmas-button" to={publicMode ? itemHref(activeOrnament.id) : itemHref("christmas-character-ornaments", activeOrnament.id)}>
                     View {nameFor(activeOrnament.id, activeOrnament.name).replace(" Christmas Ornament", "")} Photos &amp; Options <span>↗</span>
                   </Link>
                 </div>
@@ -877,12 +887,12 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                   >
                     <span className="xmas-hanging-thread" aria-hidden="true" />
                     <span className="xmas-ornament-cap" aria-hidden="true" />
-                    <img src={p.images[0].thumb} alt={p.name} loading="lazy" width="480" height="600" />
+                    <img src={p.images[0].thumb} alt={p.images[0].alt || p.name} loading="lazy" width="480" height="600" />
                     <span className="xmas-ornament-live-badge">
                       {isSelected ? "● Playing Video Above" : "▶ Click for Video"}
                     </span>
                   </button>
-                  <Link className="xmas-ornament-title-link" to={itemHref("christmas-character-ornaments", p.id)}>
+                  <Link className="xmas-ornament-title-link" to={publicMode ? itemHref(p.id) : itemHref("christmas-character-ornaments", p.id)}>
                     <strong>{nameFor(p.id, p.name).replace(" Christmas Ornament", "")}</strong>
                     <small>{price(p)} CAD · View Photos ↗</small>
                   </Link>
@@ -896,6 +906,33 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
         </div>
       </section>
 
+      {/* LOCAL EDMONTON CHRISTMAS GIFT & CANADIAN SHIPPING FAQ */}
+      <section className="xmas-faq-section" id="christmas-faq" aria-labelledby="xmas-faq-heading">
+        <div className="container xmas-faq-layout">
+          <div className="xmas-faq-intro">
+            <p className="xmas-eyebrow">EDMONTON STUDIO · HOLIDAY GIFT GUIDE</p>
+            <h2 id="xmas-faq-heading">Christmas gifts made in Edmonton, shipped across Canada.</h2>
+            <p>
+              Looking for locally crafted Christmas gifts in Edmonton, illuminated nativity scenes, or Canadian-made ornaments ready to ship? Here are the details to know before ordering.
+            </p>
+            <Link className="xmas-faq-link" to="/shipping-returns/">
+              Read full shipping &amp; 30-day return policy ↗
+            </Link>
+          </div>
+          <div className="xmas-faq-list">
+            {christmasFaqs.map(([question, answer]) => (
+              <details key={question} className="xmas-faq-item">
+                <summary>
+                  <span>{question}</span>
+                  <b aria-hidden="true">+</b>
+                </summary>
+                <p>{answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* WARM CLOSING BANNER */}
       <section className="xmas-closing">
         <div className="container">
@@ -905,15 +942,15 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
             Every piece is made in small batches, hand-inspected, carefully packed, and shipped directly from our studio. No mass-market warehouse shelves. Just honest craft.
           </p>
           <div className="button-row">
-            <Link className="button" to="/shop">
+            <Link className="button" to="/shop/">
               Shop All Studio Products ↗
             </Link>
             {publicMode && (
-              <Link className="button button-outline" to="/shop/christmas">
+              <Link className="button button-outline" to="/shop/christmas/">
                 Browse Standard Grid View ↗
               </Link>
             )}
-            <Link className="button button-outline" to="/contact">
+            <Link className="button button-outline" to="/contact/">
               Ask a Studio Question ↗
             </Link>
           </div>

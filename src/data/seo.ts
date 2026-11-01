@@ -6,6 +6,7 @@ import products from "./catalog";
 import collections from "../../commerce/collections.json";
 import headphoneSearch from "../../commerce/headphone-search.json";
 import maskSearch from "../../commerce/mask-search.json";
+import christmasFaqs from "../../commerce/christmas-faqs.json";
 import {searchTitle,searchDescription} from "../../commerce/product-search.mjs";
 import merchandising from "../../commerce/shop-merchandising.json";
 import { PURE_HALLOWEEN_PRODUCT_IDS, PURE_CHRISTMAS_PRODUCT_IDS } from "../../commerce/merchandising.mjs";
@@ -83,8 +84,8 @@ export function getSeo(path: string) {
       "Shop locally made Halloween décor and wearable masks in Edmonton, including ghosts, pumpkin lighting and seasonal gifts, with free tracked Canadian shipping.",
     ],
     "/shop/christmas-special": [
-      "The Christmas Collection — Holiday Table Lamps, Nativity Scenes & Decor",
-      "Warm holiday table lamps, illuminated nativity sculptures, spiral Christmas trees, festive trinket trays and cute tree ornaments made in Edmonton with free tracked Canadian shipping.",
+      "Christmas Gifts Made in Edmonton — Holiday Table Lamps, Nativity Scenes & Ornaments",
+      "Shop small-batch Christmas gifts made in Edmonton: glowing nativity table lamps, Christmas villages, spiral holiday trees, white-and-gold trinket trays and cute ornaments with free tracked Canadian shipping.",
     ],
     "/shop/cart": ["Your Cart", "Review your physical 3D-printed products."],
     "/shop/checkout": [
@@ -105,7 +106,9 @@ export function getSeo(path: string) {
     ],
     "/": [
       "3D Printing, CAD & 3D Scanning Edmonton",
-      "FDM and resin 3D printing, CAD design, 3D scanning in Edmonton. One-off projects, prototypes and small runs. Request a quote.",
+      CHRISTMAS_PUBLIC_ENABLED
+        ? "FDM and resin 3D printing, CAD design, 3D scanning, plus locally crafted Christmas gifts, personalized photo lamps and holiday décor made in Edmonton."
+        : "FDM and resin 3D printing, CAD design, 3D scanning and locally crafted gifts and home décor made in Edmonton. Request a quote or shop online.",
     ],
     "/services": [
       "Design & Fabrication Services in Edmonton",
@@ -179,7 +182,7 @@ export const localBusiness = {
   name: business.name,
   url: business.origin,
   description:
-    "Custom FDM and resin 3D printing, CAD design, 3D scanning and reverse engineering in Edmonton, Alberta.",
+    "Custom FDM and resin 3D printing, CAD design, 3D scanning, personalized photo lamps, Christmas gifts and finished home décor crafted in Edmonton, Alberta.",
   telephone: business.telephone,
   email: business.email,
   image: business.origin + "/og-image.jpg",
@@ -189,19 +192,44 @@ export const localBusiness = {
     addressRegion: "AB",
     addressCountry: "CA",
   },
-  areaServed: { "@type": "City", name: "Edmonton" },
+  areaServed: [
+    { "@type": "City", name: "Edmonton" },
+    { "@type": "Country", name: "Canada" },
+  ],
   sameAs: [business.instagram, business.facebook, business.googleProfile],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
-    name: "Design and fabrication services",
-    itemListElement: services.map((s) => ({
-      "@type": "Offer",
-      itemOffered: {
-        "@type": "Service",
-        name: s.name,
-        url: business.origin + `/services/${s.id}`,
+    name: "Design, fabrication services & studio-crafted gifts",
+    itemListElement: [
+      ...services.map((s) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: s.name,
+          url: business.origin + `/services/${s.id}/`,
+        },
+      })),
+      ...(CHRISTMAS_PUBLIC_ENABLED
+        ? [
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "ProductCollection",
+                name: "Christmas Gifts, Holiday Table Lamps & Ornaments Made in Edmonton",
+                url: business.origin + "/shop/christmas-special/",
+              },
+            },
+          ]
+        : []),
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "ProductCollection",
+          name: "Personalized Photo Lamps & Custom Gifts Made in Edmonton",
+          url: business.origin + "/shop/personalized-gifts/",
+        },
       },
-    })),
+    ],
   },
 };
 
@@ -241,6 +269,21 @@ export function getStructuredData(path: string, livePrices: Record<string, numbe
                 value: p.shippingPriceMode === "per-order" ? "5.00" : "0.00",
                 currency: "CAD",
               },
+              deliveryTime: {
+                "@type": "ShippingDeliveryTime",
+                handlingTime: {
+                  "@type": "QuantitativeValue",
+                  minValue: 1,
+                  maxValue: 3,
+                  unitCode: "DAY",
+                },
+                transitTime: {
+                  "@type": "QuantitativeValue",
+                  minValue: 2,
+                  maxValue: 7,
+                  unitCode: "DAY",
+                },
+              },
             },
             hasMerchantReturnPolicy: {
               "@type": "MerchantReturnPolicy",
@@ -271,10 +314,19 @@ export function getStructuredData(path: string, livePrices: Record<string, numbe
         "@type": "ProductGroup", name: product.name, description: product.description,
         productGroupID: product.id, url: canonical(page),
         variesBy: [product.variantLabel === "Design" ? "https://schema.org/pattern" : "https://schema.org/size"],
-        hasVariant: variants.map(variant => ({
-          ...item(products.find(p => p.id === variant.id)!, canonical(page) + "?variant=" + variant.id),
-          [product.variantLabel === "Design" ? "pattern" : "size"]: variant.label,
-        })),
+        hasVariant: variants
+          .map(variant => {
+            const variantProduct = products.find(p => p.id === variant.id);
+            if (!variantProduct || !isSeasonallyPublicProduct(variantProduct)) return null;
+            const variantUrl = "variantOf" in variantProduct && variantProduct.variantOf
+              ? canonical(`/shop/${variantProduct.variantOf}`) + "?variant=" + variant.id
+              : canonical(`/shop/${variantProduct.id}`);
+            return {
+              ...item(variantProduct, variantUrl),
+              [product.variantLabel === "Design" ? "pattern" : "size"]: variant.label,
+            };
+          })
+          .filter(Boolean),
       } : item(product, canonical(page)),
       { "@type": "BreadcrumbList", itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: canonical("/") },
@@ -285,19 +337,36 @@ export function getStructuredData(path: string, livePrices: Record<string, numbe
   }
   const christmasSpecial = page === "/shop/christmas-special";
   if (page === "/shop" || page === "/shop/all" || collection || halloweenSpecial || christmasSpecial) {
-    const listedProducts = christmasSpecial
+    const baseListed = christmasSpecial
       ? (collections.find(c => c.id === "christmas")?.products.map((id) => publicProducts.find((product) => product.id === id)).filter(Boolean) || [])
       : halloweenSpecial
       ? halloweenSpecialIds.map((id) => publicProducts.find((product) => product.id === id)).filter(Boolean)
       : collection
       ? collection.products.map((id) => publicProducts.find((product) => product.id === id)).filter(Boolean)
       : browsingProducts;
+    const isChristmasHub = christmasSpecial || collection?.id === "christmas";
+    const listedProducts = isChristmasHub
+      ? [...new Map(
+          baseListed.flatMap(entry => {
+            if (!entry) return [];
+            const childEntries = ("groupedDesigns" in entry && Array.isArray(entry.groupedDesigns))
+              ? entry.groupedDesigns.map(d => publicProducts.find(p => p.id === d.id)).filter(Boolean)
+              : [];
+            return childEntries.length ? childEntries : [entry];
+          }).map(entry => [entry!.id, entry!])
+        ).values()]
+      : baseListed;
+    const faqEntries = isChristmasHub
+      ? christmasFaqs
+      : collection?.id === "headphone-stands"
+        ? headphoneSearch.faqs
+        : null;
     return {
       "@context": "https://schema.org",
       "@graph": [
         {
           "@type": "CollectionPage",
-          name: christmasSpecial ? "Christmas Gifts & Holiday Décor" : halloweenSpecial ? "Halloween Special" : collection?.name || (page === "/shop/all" ? "Shop All Products" : "Unique Gifts & Décor, Made in Edmonton"),
+          name: christmasSpecial ? "Christmas Gifts & Holiday Décor Made in Edmonton" : halloweenSpecial ? "Halloween Special" : collection?.name || (page === "/shop/all" ? "Shop All Products" : "Unique Gifts & Décor, Made in Edmonton"),
           description: (christmasSpecial || halloweenSpecial) ? getSeo(page).description : collection?.seoDescription || getSeo("/shop").description,
           url: canonical(page),
           mainEntity: {
@@ -311,6 +380,21 @@ export function getStructuredData(path: string, livePrices: Record<string, numbe
             })),
           },
         },
+        ...(faqEntries?.length
+          ? [
+              {
+                "@type": "FAQPage",
+                mainEntity: faqEntries.map(([question, answer]) => ({
+                  "@type": "Question",
+                  name: question,
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: answer,
+                  },
+                })),
+              },
+            ]
+          : []),
         {
           "@type": "BreadcrumbList",
           itemListElement: [

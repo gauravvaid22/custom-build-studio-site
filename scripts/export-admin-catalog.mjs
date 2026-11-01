@@ -49,13 +49,23 @@ if (source || process.env.CONTEXT==='production') {
   snapshot=prepareSearchNaming(snapshot).catalog;
   snapshot.products=applyDefaultListingCovers(snapshot.products,baseline.products);
   const baselineMap = new Map(baseline.products.map(p => [p.id, p]));
+  const baselineAltBySrc = new Map(
+    baseline.products.flatMap(p => (p.images || []).filter(i => i?.src && i?.alt && !/reference view/i.test(i.alt)).map(i => [i.src, i.alt]))
+  );
   for (const p of snapshot.products) {
     const base = baselineMap.get(p.id);
     if (base) {
       if (base.name && !p.name) p.name = base.name;
-      if (base.seoTitle && (!p.seoTitle || p.seoTitle === p.name)) p.seoTitle = base.seoTitle;
-      if (base.seoDescription && (!p.seoDescription || p.seoDescription.startsWith('A character bauble with festive colour and sculpted detail.'))) p.seoDescription = base.seoDescription;
+      if (base.seoTitle && (!p.seoTitle || p.seoTitle === p.name || p.seoTitle.startsWith('Luminous Christmas Tree LED Lantern —'))) p.seoTitle = base.seoTitle;
+      if (base.seoDescription && (!p.seoDescription || p.seoDescription.startsWith('A character bauble with festive colour and sculpted detail.') || base.seoDescription.length > p.seoDescription.length + 25)) p.seoDescription = base.seoDescription;
       if (Array.isArray(base.searchKeywords) && (!Array.isArray(p.searchKeywords) || !p.searchKeywords.length)) p.searchKeywords = base.searchKeywords;
+    }
+    if (Array.isArray(p.images)) {
+      for (const img of p.images) {
+        if (img?.src && /reference view/i.test(img.alt || '') && baselineAltBySrc.has(img.src)) {
+          img.alt = baselineAltBySrc.get(img.src);
+        }
+      }
     }
   }
   const baselineColls = new Map((baseline.collections || []).map(c => [c.id, c]));

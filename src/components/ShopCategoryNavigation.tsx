@@ -90,7 +90,7 @@ export function ShopCategoryNavigation({ links }: { links: CategoryLink[] }) {
 
   return <div className={`shop-category-navigation${edges.start ? " can-scroll-start" : ""}${edges.end ? " can-scroll-end" : ""}`}>
     <div className="shop-nav-collections" ref={track}>
-      {links.map(link => <Link key={link.id} to={`/shop/${link.id}`}
+      {links.map(link => <Link key={link.id} to={`/shop/${link.id}/`}
         className={`shop-category-link${link.sale ? " shop-sale-nav-link" : ""}`}
         aria-current={activeCategory === link.id ? (pathname.replace(/\/$/, "") === `/shop/${link.id}` ? "page" : "location") : undefined}
         onPointerEnter={followPointer} onPointerMove={followPointer}>
