@@ -40,6 +40,12 @@ test('purchase requires an order ID and duplicate completion fires once', async 
   assert.equal(purchases.length, 1);
   assert.equal(purchases[0][2].shipping, 5);
   assert.equal(purchases[0][2].tax, 2);
+  const adsConversions = pixel.calls().filter(call => call[1] === 'conversion');
+  assert.equal(adsConversions.length, 1);
+  assert.equal(adsConversions[0][2].send_to, 'AW-17678917579/8UIXCIWM85wdEMu_--1B');
+  assert.equal(adsConversions[0][2].value, 32);
+  assert.equal(adsConversions[0][2].currency, 'CAD');
+  assert.equal(adsConversions[0][2].transaction_id, 'gid://shopify/Order/123');
 });
 test('owner test checkout produces no ecommerce events', async () => {
   const pixel = setup();

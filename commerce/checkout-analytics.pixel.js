@@ -80,5 +80,8 @@ analytics.subscribe("checkout_completed", async event => {
     if (await browser.localStorage.getItem(key)) return;
     await browser.localStorage.setItem(key, "1");
   } catch { /* GA4 also deduplicates purchases by transaction_id. */ }
-  gtag("event", "purchase", { ...params(checkout), transaction_id: transactionId, shipping: Number(checkout.shippingLine?.price?.amount || 0), tax: Number(checkout.totalTax?.amount || 0) });
+  const baseParams = params(checkout);
+  gtag("event", "purchase", { ...baseParams, transaction_id: transactionId, shipping: Number(checkout.shippingLine?.price?.amount || 0), tax: Number(checkout.totalTax?.amount || 0) });
+  gtag("config", "AW-17678917579", { send_page_view: false });
+  gtag("event", "conversion", { send_to: "AW-17678917579/8UIXCIWM85wdEMu_--1B", value: baseParams.value, currency: baseParams.currency, transaction_id: transactionId, transport_type: "beacon" });
 });
