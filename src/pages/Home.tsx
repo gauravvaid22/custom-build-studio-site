@@ -132,7 +132,7 @@ export default function Home() {
           <p className="eyebrow">LIMITED-TIME OFFER · {sale.percentage}% OFF</p>
           <h2>{sale.title}</h2>
           <p>Explore {sale.productIds.length} selected {sale.productIds.length === 1 ? "product" : "products"} at sale prices, with Edmonton pickup or free tracked shipping across Canada.</p>
-          <Link className="button" to="/shop/sale">Shop {sale.percentage}% off <Arrow /></Link>
+          <Link className="button" to={sale.collectionId === "christmas" ? "/shop/christmas-special/" : "/shop/sale"}>Shop {sale.percentage}% off <Arrow /></Link>
         </div>
       </section>}
       <section id="capabilities" className="section">

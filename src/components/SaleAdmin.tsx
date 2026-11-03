@@ -13,6 +13,20 @@ const baseProducts = products.filter((product) => !("variantOf" in product) && !
 const saleCollections = collections.filter((collection) => collection.kind !== "curated");
 const localInput = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}T${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
 const initialConfig = (): Config => ({ title: "Studio sale", percentage: 10, minimumPickupPriceCents: 100, scope: "all", collectionId: saleCollections[0].id, productIds: [], startAt: "", endAt: localInput(new Date(Date.now() + 7 * 86400000)) });
+const earlyChristmasPreset = (): Config => {
+  const end = new Date(Date.now() + 7 * 86400000);
+  end.setHours(23, 59, 0, 0);
+  return {
+    title: "Early Christmas Shopper Event",
+    percentage: 25,
+    minimumPickupPriceCents: 100,
+    scope: "collection",
+    collectionId: "christmas",
+    productIds: [],
+    startAt: "",
+    endAt: localInput(end),
+  };
+};
 const toApiConfig = (config: Config) => ({ ...config, startAt: config.startAt ? new Date(config.startAt).toISOString() : null, endAt: new Date(config.endAt).toISOString() });
 const fromApiConfig = (config: Config): Config => ({ ...config, startAt: config.startAt ? localInput(new Date(config.startAt)) : "", endAt: config.endAt ? localInput(new Date(config.endAt)) : initialConfig().endAt });
 const editableConfig = (config: Config): Config => {
@@ -81,6 +95,19 @@ export function SaleAdmin({ adminKey }: { adminKey: string }) {
       <p>{attention ? "Recovery will restore variants that still match the sale prices. A manual Shopify edit will be flagged instead of overwritten." : "Ending restores the saved regular prices and removes the sale display."}</p>
       <button className="button" type="button" disabled={busy} onClick={() => void run("end")}>{busy ? "Working with Shopify…" : attention ? "Recover original prices" : "End sale & restore prices"}</button>
     </div> : <>
+      <div className="sale-admin-presets">
+        <span>Quick preset:</span>
+        <button
+          type="button"
+          className="button button-dark sale-admin-preset-btn"
+          onClick={() => {
+            change(earlyChristmasPreset());
+            setNotice("Loaded 1-week Early Christmas Shopper Event (25% off Christmas collection). Click “Preview sale prices” below to review.");
+          }}
+        >
+          🎄 Load Early Christmas Shopper · 25% Off (1 Week)
+        </button>
+      </div>
       <div className="sale-admin-grid">
         <form className="quote-form shop-admin-settings" onSubmit={(event) => { event.preventDefault(); void run("preview"); }}>
           <label>Sale name<input required maxLength={70} value={config.title} onChange={(e) => change({ ...config, title: e.target.value })} /></label>
@@ -94,7 +121,7 @@ export function SaleAdmin({ adminKey }: { adminKey: string }) {
           </fieldset>
           {config.scope === "collection" && <label>Category<select value={config.collectionId} onChange={(e) => change({ ...config, collectionId: e.target.value })}>{saleCollections.map((collection) => <option key={collection.id} value={collection.id}>{collection.name}</option>)}</select></label>}
           {config.scope === "products" && <fieldset className="sale-admin-products"><legend>Products</legend>{baseProducts.map((product) => <label key={product.id}><input type="checkbox" checked={config.productIds.includes(product.id)} onChange={(e) => change({ ...config, productIds: e.target.checked ? [...config.productIds, product.id] : config.productIds.filter((id) => id !== product.id) })}/>{product.name}</label>)}</fieldset>}
-          <p className="small">The delivered sale price is discounted first. Edmonton pickup stays exactly {money(PICKUP_PRICE_DIFFERENCE)} below the delivered sale price. Sale checkout prices are set in Shopify.</p>
+          <p className="small">{deliveryPolicy.active ? "Sale percentage is applied to your regular free-shipping CAD prices in Shopify, with original regular prices shown alongside." : <>The delivered sale price is discounted first. Edmonton pickup stays exactly {money(PICKUP_PRICE_DIFFERENCE)} below the delivered sale price. Sale checkout prices are set in Shopify.</>}</p>
           <button className="button" type="submit" disabled={busy || configured === false}>{busy ? "Checking Shopify…" : "Preview sale prices"}</button>
         </form>
         <div className="sale-admin-art"><img src="/images/brand/sale-industrial-bg.jpg" alt="Abstract dark slate and copper sale artwork"/><div><span>SALE ARTWORK</span><strong>Ready when you are.</strong><p>This image and the sale page appear only after Shopify prices have been verified.</p></div></div>

@@ -2179,3 +2179,220 @@
     font-size: 0.74rem;
   }
 }
+
+/* ==========================================================================
+   EARLY CHRISTMAS SHOPPER SALE BANNER, BADGES & STRIKETHROUGH PRICING
+   ========================================================================== */
+.xmas-sale-banner {
+  position: relative;
+  z-index: 6;
+  background: linear-gradient(96deg, #0f2921 0%, #183d31 52%, #6e1520 100%);
+  border-bottom: 1px solid rgba(246, 212, 131, 0.45);
+  color: #fff9ec;
+  padding: 0.72rem 0;
+}
+
+.xmas-sale-banner-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem 1.25rem;
+}
+
+.xmas-sale-banner-copy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem 0.75rem;
+  min-width: 0;
+}
+
+.xmas-sale-banner-copy p {
+  margin: 0;
+  color: #fff9ec;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.xmas-sale-banner-copy p strong {
+  color: #f6d483;
+}
+
+.xmas-sale-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  background: #8f1a25;
+  border: 1px solid rgba(246, 212, 131, 0.65);
+  color: #fffdf8;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.xmas-sale-banner-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.xmas-sale-deadline {
+  padding: 0.28rem 0.68rem;
+  border-radius: 999px;
+  background: rgba(255, 249, 236, 0.12);
+  border: 1px solid rgba(246, 212, 131, 0.42);
+  color: #f6d483;
+  font-size: 0.74rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.xmas-sale-jump {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.34rem 0.82rem;
+  border-radius: 999px;
+  background: #f6d483;
+  color: #0f2921;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.16s ease, filter 0.16s ease;
+}
+
+.xmas-sale-jump:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.xmas-badge-sale {
+  background: #8f1a25;
+  border: 1px solid rgba(246, 212, 131, 0.65);
+  color: #fffdf8;
+  text-decoration: none;
+  box-shadow: 0 6px 16px rgba(143, 26, 37, 0.22);
+  transition: transform 0.16s ease, filter 0.16s ease;
+}
+
+.xmas-badge-sale:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+  color: #fffdf8;
+}
+
+.xmas-hero-sale-callout {
+  margin: 0 0 1.05rem;
+  padding: 0.75rem 0.95rem;
+  border-radius: 14px;
+  background: rgba(255, 250, 240, 0.94);
+  border: 1px solid rgba(161, 33, 45, 0.28);
+  border-left: 4px solid #8f1a25;
+  color: var(--ink);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  max-width: 58ch;
+}
+
+.xmas-hero-sale-callout strong {
+  color: #8f1a25;
+}
+
+.xmas-pill-was {
+  opacity: 0.82;
+}
+
+.xmas-stage-price span.xmas-stage-sale-tag {
+  display: inline-block;
+  margin-bottom: 0.22rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+  background: #8f1a25;
+  color: #fffdf8;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+.xmas-card-sale-badge {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  padding: 0.3rem 0.68rem;
+  border-radius: 999px;
+  background: #8f1a25;
+  border: 1px solid rgba(246, 212, 131, 0.65);
+  color: #fffdf8;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  box-shadow: 0 6px 16px rgba(15, 41, 33, 0.28);
+  pointer-events: none;
+}
+
+.xmas-was-price {
+  display: block;
+  margin-top: 0.18rem;
+  color: var(--ink-muted);
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.xmas-ornament-was {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+.xmas-spotlight-meta span.xmas-spotlight-sale-pill {
+  background: #8f1a25;
+  border-color: #8f1a25;
+  color: #fffdf8;
+}
+
+.xmas-ornament-sale-tag {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 2;
+  padding: 0.22rem 0.52rem;
+  border-radius: 999px;
+  background: #8f1a25;
+  border: 1px solid rgba(246, 212, 131, 0.65);
+  color: #fffdf8;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+@media (max-width: 760px) {
+  .xmas-hero-copy .xmas-hero-sale-callout {
+    order: 2;
+    font-size: 0.82rem;
+    padding: 0.65rem 0.8rem;
+  }
+  .xmas-sale-banner-copy p {
+    font-size: 0.79rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .xmas-card-sale-badge {
+    bottom: 7px;
+    right: 7px;
+    padding: 4px 7px;
+    font-size: 0.64rem;
+  }
+  .xmas-was-price {
+    font-size: 0.7rem;
+  }
+}

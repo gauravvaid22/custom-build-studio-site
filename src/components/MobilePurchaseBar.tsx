@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { money } from "./Cart";
 
 /** Returns to the same validated purchase form; never creates a parallel cart path. */
-export function MobilePurchaseBar({ name, priceCents, targetId, chooseOptions = false }: { name: string; priceCents: number; targetId: string; chooseOptions?: boolean }) {
+export function MobilePurchaseBar({ name, priceCents, compareAtCents, targetId, chooseOptions = false }: { name: string; priceCents: number; compareAtCents?: number | null; targetId: string; chooseOptions?: boolean }) {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     setVisible(false);
@@ -14,7 +14,7 @@ export function MobilePurchaseBar({ name, priceCents, targetId, chooseOptions = 
   }, [targetId, name]);
   if (!visible) return null;
   return <aside className="shop-mobile-purchase" aria-label="Product purchase shortcut">
-    <span><strong>{name}</strong><small>{money(priceCents)} CAD</small></span>
+    <span><strong>{name}</strong><small>{money(priceCents)} CAD{compareAtCents && compareAtCents > priceCents ? <> · <s>{money(compareAtCents)}</s></> : null}</small></span>
     <button type="button" className="button" onClick={() => {
       const form = document.getElementById(targetId) as HTMLFormElement | null;
       if (!form) return;

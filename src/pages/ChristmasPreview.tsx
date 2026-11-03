@@ -353,7 +353,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
   const [hoveredVideoId, setHoveredVideoId] = useState<string | null>(null);
   const [tappedVideoId, setTappedVideoId] = useState<string | null>(null);
 
-  const { priceFor, nameFor } = useShopifyCatalog();
+  const { priceFor, compareAtFor, nameFor, sale } = useShopifyCatalog();
   const { products: allProducts, archived } = useLiveCatalog();
   const { add, items, remainingFor } = useCart();
   const [justAddedId, setJustAddedId] = useState<string | null>(null);
@@ -415,11 +415,39 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
       : "The Christmas Collection · Crafted in Edmonton | Custom Build Studio";
   }, [id, nameFor]);
 
+  const lowestVariantOption = (p: CatalogProduct) => {
+    if (!p.variants?.length) return null;
+    return [...p.variants].sort((a, b) => priceFor(a.id, a.priceCents) - priceFor(b.id, b.priceCents))[0];
+  };
+
   const price = (p: CatalogProduct) => {
-    const rawPrice = priceFor(p.id, p.priceCents);
-    const hasRange = p.variants?.some(v => priceFor(v.id, v.priceCents) !== rawPrice);
+    const lowest = lowestVariantOption(p);
+    const rawPrice = lowest ? priceFor(lowest.id, lowest.priceCents) : priceFor(p.id, p.priceCents);
+    const hasRange = Boolean(p.variants?.some(v => priceFor(v.id, v.priceCents) !== rawPrice));
     return `${hasRange ? "From " : ""}${money(rawPrice)}`;
   };
+
+  const regularPriceFor = (p: CatalogProduct) => {
+    if (!publicMode) return null;
+    const lowest = lowestVariantOption(p);
+    return compareAtFor(lowest ? lowest.id : p.id);
+  };
+
+  const christmasSaleActive = useMemo(() => {
+    if (!publicMode || !sale) return false;
+    if (sale.scope === "all" || sale.collectionId === "christmas") return true;
+    return listings.some(p => {
+      const lowest = p.variants?.length
+        ? [...p.variants].sort((a, b) => priceFor(a.id, a.priceCents) - priceFor(b.id, b.priceCents))[0]
+        : null;
+      return compareAtFor(lowest ? lowest.id : p.id) !== null;
+    }) || ornaments.some(o => compareAtFor(o.id) !== null);
+  }, [publicMode, sale, listings, ornaments, compareAtFor, priceFor]);
+
+  const saleEndLabel = useMemo(() => {
+    if (!sale?.endAt) return "";
+    return new Intl.DateTimeFormat("en-CA", { month: "short", day: "numeric" }).format(new Date(sale.endAt));
+  }, [sale?.endAt]);
 
   if (id) {
     if (id === "christmas-grace-decorations") return <Navigate replace to={`${baseRoute}?collection=christmas-grace#christmas-pieces`} />;
@@ -483,13 +511,31 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
       return ["endless-swirling-tree", "meowy-christmas-tree-topper", "guiding-star-tree-topper", "evergreen-wreath", "christmas-character-ornaments", "christmas-trinket-trays", "santa-s-snack-hat-bowl"].includes(p.id);
     }
     if (filter === "Under $30") {
-      return priceFor(p.id, p.priceCents) <= 3000;
+      const lowest = lowestVariantOption(p);
+      return (lowest ? priceFor(lowest.id, lowest.priceCents) : priceFor(p.id, p.priceCents)) <= 3000;
     }
     return true;
   });
 
   return (
     <div className="xmas-root xmas-page" id="top">
+      {christmasSaleActive && sale && (
+        <div className="xmas-sale-banner" role="region" aria-label="Early Christmas Shopper Promotion">
+          <div className="container xmas-sale-banner-inner">
+            <div className="xmas-sale-banner-copy">
+              <span className="xmas-sale-pill">🎄 {sale.percentage}% OFF · EARLY SHOPPER</span>
+              <p>
+                <strong>{sale.title}:</strong> Shop early &amp; beat the holiday rush — <strong>{sale.percentage}% off</strong> is already applied to every Christmas piece below (no code needed).
+              </p>
+            </div>
+            <div className="xmas-sale-banner-meta">
+              {saleEndLabel && <span className="xmas-sale-deadline">Ends {saleEndLabel}</span>}
+              <a className="xmas-sale-jump" href="#christmas-pieces">Shop {sale.percentage}% Off ↓</a>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* SNOWFLAKE AMBIENT CANVAS */}
       <div className="xmas-snow-ambient" aria-hidden="true">
         {Array.from({ length: 24 }, (_, i) => (
@@ -512,6 +558,11 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
         <div className="container xmas-hero-grid">
           <div className="xmas-hero-copy">
             <div className="xmas-hero-badge-row">
+              {christmasSaleActive && sale && (
+                <a className="xmas-badge xmas-badge-sale" href="#christmas-pieces">
+                  🎁 {sale.percentage}% Off · Early Shopper Savings
+                </a>
+              )}
               <span className="xmas-badge xmas-badge-gold">✦ Christmas 2026 Collection</span>
               <span className="xmas-badge xmas-badge-pine">Crafted in Edmonton, Canada</span>
               <a className="xmas-badge xmas-badge-rating" href="#christmas-reviews">
@@ -529,6 +580,13 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
               <em>crafted in Canada.</em>
             </h1>
 
+            {christmasSaleActive && sale && (
+              <div className="xmas-hero-sale-callout">
+                <strong>🎁 Early Christmas Shopper Reward — Save {sale.percentage}%{saleEndLabel ? ` through ${saleEndLabel}` : ""}:</strong>{" "}
+                Order early so our Edmonton studio can craft and ship your holiday pieces well ahead of December, with free tracked Canadian shipping still included.
+              </div>
+            )}
+
             <p className="xmas-lead">
               Illuminated table lamps, kinetic spiral trees, intricate nativity scenes, festive character figurines and trinket trays. Crafted in small batches at our Edmonton studio with precision detail and free tracked Canadian shipping.
             </p>
@@ -539,6 +597,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                 {heroShowcases.map(item => {
                   const p = get(item.id);
                   const active = item.id === activeHeroId;
+                  const regPrice = regularPriceFor(p);
                   return (
                     <button
                       type="button"
@@ -551,7 +610,9 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                       <img src={p.images[0].thumb} alt="" width="42" height="42" />
                       <div>
                         <strong>{nameFor(p.id, p.name)}</strong>
-                        <small>{price(p)} CAD · Delivered</small>
+                        <small>
+                          {price(p)} CAD{regPrice ? <> · <s className="xmas-pill-was">{money(regPrice)}</s></> : " · Delivered"}
+                        </small>
                       </div>
                     </button>
                   );
@@ -666,6 +727,9 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                 </div>
                 <div className="xmas-stage-price-cta">
                   <div className="xmas-stage-price">
+                    {regularPriceFor(activeHeroProduct) && sale && (
+                      <span className="xmas-stage-sale-tag">{sale.percentage}% OFF · Regular <s>{money(regularPriceFor(activeHeroProduct)!)}</s></span>
+                    )}
                     <strong>{price(activeHeroProduct)} <small>CAD</small></strong>
                     <span>Free shipping included</span>
                   </div>
@@ -702,7 +766,9 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
               </h2>
             </div>
             <p className="xmas-section-aside">
-              Every price below includes Canadian shipping. Open a collection to explore its options, photos and available videos.
+              {christmasSaleActive && sale
+                ? `Early Christmas Shopper prices (${sale.percentage}% off) are shown below with free tracked Canadian shipping included.`
+                : "Every price below includes Canadian shipping. Open a collection to explore its options, photos and available videos."}
             </p>
           </div>
 
@@ -788,6 +854,9 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                           </span>
                         )}
                       </div>
+                      {regularPriceFor(p) && sale && (
+                        <span className="xmas-card-sale-badge">{sale.percentage}% OFF</span>
+                      )}
                     </Link>
                     {cardVideo && (
                       <button
@@ -831,6 +900,11 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                     <div className="xmas-card-bottom">
                       <div className="xmas-card-price-block">
                         <strong>{price(p)} <span>CAD</span></strong>
+                        {regularPriceFor(p) && (
+                          <span className="xmas-was-price">
+                            Regular <s>{money(regularPriceFor(p)!)}</s> CAD
+                          </span>
+                        )}
                         <small>Free Canadian shipping</small>
                       </div>
                       <div className="xmas-card-actions">
@@ -896,12 +970,15 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                 "santa-s-bonfire-table-lamp",
               ].map(lampId => {
                 const lamp = get(lampId);
+                const lampRegular = regularPriceFor(lamp);
                 return (
                   <Link key={lampId} to={itemHref(lampId)} className="xmas-glow-mini-card">
                     <img src={lamp.images[0].thumb} alt="" width="48" height="48" />
                     <div>
                       <strong>{nameFor(lamp.id, lamp.name)}</strong>
-                      <span>{price(lamp)} CAD · Photos &amp; details ↗</span>
+                      <span>
+                        {price(lamp)} CAD{lampRegular ? <> · <s>{money(lampRegular)}</s></> : null} · Photos &amp; details ↗
+                      </span>
                     </div>
                   </Link>
                 );
@@ -927,7 +1004,13 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                 Choose Santa, a sleepy pet, a reindeer, a snowman, or a nutcracker. Click any character below to watch its product video and inspect its photos.
               </p>
               <p className="xmas-price-line">
-                {price(get("christmas-character-ornaments"))} <span>CAD each · Free tracked Canadian shipping included</span>
+                {price(get("christmas-character-ornaments"))}{" "}
+                {regularPriceFor(get("christmas-character-ornaments")) && (
+                  <span className="xmas-ornament-was">
+                    Regular <s>{money(regularPriceFor(get("christmas-character-ornaments"))!)}</s> ·{" "}
+                  </span>
+                )}
+                <span>CAD each · Free tracked Canadian shipping included</span>
               </p>
             </div>
           </div>
@@ -955,7 +1038,13 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                 <p>{activeOrnament.description}</p>
                 <div className="xmas-spotlight-meta">
                   <span>📏 Approx. 5 cm tall sculpted bauble</span>
-                  <span>🚚 {price(activeOrnament)} CAD delivered</span>
+                  <span>
+                    🚚 {price(activeOrnament)} CAD delivered
+                    {regularPriceFor(activeOrnament) ? <> (Regular <s>{money(regularPriceFor(activeOrnament)!)}</s>)</> : null}
+                  </span>
+                  {regularPriceFor(activeOrnament) && sale && (
+                    <span className="xmas-spotlight-sale-pill">🎁 {sale.percentage}% Off Early Shopper</span>
+                  )}
                   <span>🎄 Built-in hanging loop</span>
                 </div>
                 <div className="xmas-spotlight-actions">
@@ -970,6 +1059,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
           <div className="xmas-ornament-grid">
             {ornaments.map(p => {
               const isSelected = p.id === activeOrnament.id;
+              const ornRegular = regularPriceFor(p);
               return (
                 <div
                   className={`xmas-ornament ${isSelected ? "is-selected" : ""}`}
@@ -984,13 +1074,18 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                     <span className="xmas-hanging-thread" aria-hidden="true" />
                     <span className="xmas-ornament-cap" aria-hidden="true" />
                     <img src={p.images[0].thumb} alt={p.images[0].alt || p.name} loading="lazy" width="480" height="600" />
+                    {ornRegular && sale && (
+                      <span className="xmas-ornament-sale-tag">{sale.percentage}% OFF</span>
+                    )}
                     <span className="xmas-ornament-live-badge">
                       {isSelected ? "● Playing Video Above" : "▶ Click for Video"}
                     </span>
                   </button>
                   <Link className="xmas-ornament-title-link" to={publicMode ? itemHref(p.id) : itemHref("christmas-character-ornaments", p.id)}>
                     <strong>{nameFor(p.id, p.name).replace(" Christmas Ornament", "")}</strong>
-                    <small>{price(p)} CAD · View Photos ↗</small>
+                    <small>
+                      {price(p)} CAD{ornRegular ? <> · <s>{money(ornRegular)}</s></> : " · View Photos ↗"}
+                    </small>
                   </Link>
                 </div>
               );

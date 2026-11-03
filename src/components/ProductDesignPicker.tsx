@@ -9,7 +9,7 @@ type Design = { id: string; label: string; optionIds: string[] };
 export function ProductDesignPicker({ designs, selectedId, onChange, catalog = products, showDropdown = false }: {
   designs: Design[]; selectedId: string; onChange: (id: string) => void; catalog?: typeof products; showDropdown?: boolean;
 }) {
-  const { priceFor } = useShopifyCatalog();
+  const { priceFor, compareAtFor } = useShopifyCatalog();
   const [expanded, setExpanded] = useState(false);
   const optionsId = useId();
   const selected = designs.find(design => design.optionIds.includes(selectedId)) || designs[0];
@@ -20,7 +20,9 @@ export function ProductDesignPicker({ designs, selectedId, onChange, catalog = p
       <select aria-label="Product design" value={selectedId} onChange={event => onChange(event.target.value)}>
         {designs.map(design => {
           const optionId = design.optionIds.includes(selectedId) ? selectedId : design.optionIds.find(id => id.endsWith(consoleSuffix)) || design.optionIds[0];
-          return <option key={design.id} value={optionId}>{design.label} · {money(priceFor(optionId, catalog.find(p => p.id === optionId)!.priceCents))} CAD</option>;
+          const optionPrice = priceFor(optionId, catalog.find(p => p.id === optionId)!.priceCents);
+          const regPrice = compareAtFor(optionId);
+          return <option key={design.id} value={optionId}>{design.label} · {money(optionPrice)} CAD{regPrice && regPrice > optionPrice ? ` (was ${money(regPrice)})` : ''}</option>;
         })}
       </select>
     </label>
@@ -28,14 +30,13 @@ export function ProductDesignPicker({ designs, selectedId, onChange, catalog = p
     <div className="shop-design-options" id={optionsId}>
       {designs.map(design => {
         const product = catalog.find(item => item.id === design.id)!;
-        const cents = Math.min(...design.optionIds.map(id => {
-          const option = catalog.find(item => item.id === id)!;
-          return priceFor(id, option.priceCents);
-        }));
+        const lowestId = [...design.optionIds].sort((a, b) => priceFor(a, catalog.find(item => item.id === a)!.priceCents) - priceFor(b, catalog.find(item => item.id === b)!.priceCents))[0];
+        const cents = priceFor(lowestId, catalog.find(item => item.id === lowestId)!.priceCents);
+        const regCents = compareAtFor(lowestId);
         return <button type="button" key={design.id} aria-pressed={selected.id === design.id}
           onClick={() => onChange(design.optionIds.find(id => id.endsWith(consoleSuffix)) || design.optionIds[0])}>
           <img src={product.images[0].thumb} alt="" width="90" height="90" loading="lazy" />
-          <span>{design.label}<small>{money(cents)} CAD</small></span>
+          <span>{design.label}<small>{money(cents)} CAD{regCents && regCents > cents ? <> · <s>{money(regCents)}</s></> : null}</small></span>
           {selected.id === design.id && <span className="shop-design-check" aria-hidden="true">✓</span>}
         </button>;
       })}

@@ -175,3 +175,40 @@ test("all 36 Christmas SKUs emit enriched feed titles, color, material, product 
     }
   }
 });
+
+test("merchantFeed emits <g:price> regular + <g:sale_price> active price during a verified Shopify sale while keeping JSON-LD offers.price on checkout price", async () => {
+  const tree = discoveryProducts.find(p => p.id === "endless-swirling-tree");
+  const lamp = discoveryProducts.find(p => p.id === "snowy-branch-table-lamp");
+  const regularItem = discoveryProducts.find(p => p.category === "Headphone stands");
+  const subset = [tree, lamp, regularItem];
+  const data = {
+    p0: {
+      title: tree.name,
+      variants: { nodes: [{ sku: tree.id, availableForSale: true, price: { amount: "22.49", currencyCode: "CAD" }, compareAtPrice: { amount: "29.99", currencyCode: "CAD" } }] },
+    },
+    p1: {
+      title: lamp.name,
+      variants: { nodes: [{ sku: lamp.id, availableForSale: true, price: { amount: "37.49", currencyCode: "CAD" }, compareAtPrice: { amount: "49.99", currencyCode: "CAD" } }] },
+    },
+    p2: {
+      title: regularItem.name,
+      variants: { nodes: [{ sku: regularItem.id, availableForSale: true, price: { amount: "39.99", currencyCode: "CAD" }, compareAtPrice: null }] },
+    },
+  };
+  const items = await fetchDiscoveryCatalog("public-test-token", async () => Response.json({ data }), subset);
+  assert.equal(items.length, 3);
+  assert.equal(items[0].livePrice, "22.49");
+  assert.equal(items[0].liveCompareAtPrice, "29.99");
+  assert.equal(items[2].liveCompareAtPrice, undefined);
+
+  const xml = merchantFeed(items);
+  const blocks = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map(m => m[1]);
+  assert.match(blocks[0], /<g:price>29\.99 CAD<\/g:price><g:sale_price>22\.49 CAD<\/g:sale_price>/);
+  assert.match(blocks[1], /<g:price>49\.99 CAD<\/g:price><g:sale_price>37\.49 CAD<\/g:sale_price>/);
+  assert.match(blocks[1], /<g:custom_label_1>30_to_50_cad<\/g:custom_label_1>/);
+  assert.match(blocks[2], /<g:price>39\.99 CAD<\/g:price>/);
+  assert.doesNotMatch(blocks[2], /<g:sale_price>/);
+
+  const schemaOffer = discoverySchema(items[0])["@graph"][0].offers;
+  assert.equal(schemaOffer.price, "22.49");
+});

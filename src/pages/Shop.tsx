@@ -137,7 +137,7 @@ export function ShopNav({ showFulfillment = true }: { showFulfillment?: boolean 
         { id: "gifts-under-25", label: "$25 & under" },
       ]} />
     </nav>
-    {sale && <Link className="shop-sale-ribbon" to="/shop/sale"><strong>{sale.percentage}% off · {sale.title}</strong><span>{sale.endAt ? `Shop before ${new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric" }).format(new Date(sale.endAt))} ↗` : "Shop sale products ↗"}</span></Link>}
+    {sale && <Link className="shop-sale-ribbon" to={sale.collectionId === "christmas" ? "/shop/christmas-special/" : "/shop/sale"}><strong>{sale.percentage}% off · {sale.title}</strong><span>{sale.endAt ? `${sale.collectionId === "christmas" ? "Early Christmas savings · ends " : "Shop before "}${new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric" }).format(new Date(sale.endAt))} ↗` : "Shop sale products ↗"}</span></Link>}
     {showFulfillment && <FulfillmentSelector />}
     </>
   );
@@ -453,7 +453,7 @@ export function Shop() {
     </div></section>
     <FulfillmentSelector compact />
     <section className="section shop-featured-section" id="featured"><div className="container"><div className="section-heading"><div><p className="eyebrow">FEATURED RIGHT NOW</p><h2>{feature.featuredTitle}</h2></div><Link className="text-link" to="/shop/all">See all products →</Link></div><ProductGrid listed={featured} listId="shop_featured" /></div></section>
-    {sale && <section className="container shop-sale-feature shop-sale-feature-compact" aria-label="Current shop sale"><div><p className="eyebrow">{sale.percentage}% OFF · LIMITED TIME</p><h2>{sale.title}</h2><Link className="button" to="/shop/sale">Explore sale products ↗</Link></div></section>}
+    {sale && <section className="container shop-sale-feature shop-sale-feature-compact" aria-label="Current shop sale"><div><p className="eyebrow">{sale.percentage}% OFF · LIMITED TIME</p><h2>{sale.title}</h2><Link className="button" to={sale.collectionId === "christmas" ? "/shop/christmas-special/" : "/shop/sale"}>{sale.collectionId === "christmas" ? `Shop ${sale.percentage}% off Christmas ↗` : "Explore sale products ↗"}</Link></div></section>}
     <section className="section shop-collections-section" id="collections"><div className="container"><div className="section-heading"><div><p className="eyebrow">SHOP BY CATEGORY</p><h2>Find your kind of gift.</h2></div><p>Choose a collection. See what catches your eye.</p></div><CollectionTiles ids={collections.filter(c=>merchandising.departments.includes(c.id)||(c.kind==="department"&&!originalCategoryIds.includes(c.id))).map(c=>c.id)} /><div className="shop-collection-shortcuts"><Link to="/shop/all">Browse all {visibleEvergreenCount} products ↗</Link><Link to="/shop/headphone-stands">Headphone stands ↗</Link><Link to="/shop/photo-frames">Photo holders ↗</Link></div></div></section>
     {merchandising.showBudgetGifts && budget.length > 0 && <section className="section shop-under-section"><div className="container"><div className="section-heading"><div><p className="eyebrow">LITTLE GIFTS / $25 & UNDER</p><h2>Small gifts. Easy choices.</h2></div><Link className="text-link" to="/shop/gifts-under-25">Explore gifts $25 & under →</Link></div><ProductGrid listed={budget} listId="shop_budget_gifts" /></div></section>}
     {adminRows.filter(row=>row.enabled&&(!row.startAt||Date.now()>=Date.parse(row.startAt))&&(!row.endAt||Date.now()<Date.parse(row.endAt))).map(row=><section className="section" key={row.id}><div className="container"><div className="section-heading"><div><h2>{row.title}</h2><p>{row.description}</p></div></div>{row.kind!=="information"&&<ProductGrid listed={row.productIds.map(id => catalogProduct(id, products)).filter((p):p is Product=>Boolean(p))} listId={`admin_row_${row.id}`}/>}</div></section>)}
@@ -470,7 +470,7 @@ export function ShopSale() {
   const featured = groupListings(sale.productIds.map((id) => catalogProduct(id, products)).filter((product): product is Product => Boolean(product)), products);
   return <>
     <ShopNav showFulfillment={false}/>
-    <section className="shop-sale-hero"><div className="container"><p className="eyebrow">CUSTOM BUILD STUDIO / LIMITED PROMOTION</p><div className="shop-sale-hero-percent">{sale.percentage}% OFF</div><h1>{sale.title}</h1><p>Explore selected pieces at sale prices. Every item is a finished physical product made in Edmonton.</p>{sale.endAt && <p className="shop-sale-deadline">Ends {new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(sale.endAt))}</p>}<a className="button" href="#sale-products">Shop the sale ↘</a></div></section>
+    <section className="shop-sale-hero"><div className="container"><p className="eyebrow">CUSTOM BUILD STUDIO / LIMITED PROMOTION</p><div className="shop-sale-hero-percent">{sale.percentage}% OFF</div><h1>{sale.title}</h1><p>Explore selected pieces at sale prices. Every item is a finished physical product made in Edmonton.</p>{sale.endAt && <p className="shop-sale-deadline">Ends {new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(sale.endAt))}</p>}<a className="button" href="#sale-products">Shop the sale ↘</a>{sale.collectionId === "christmas" && <Link className="button button-dark shop-sale-showcase-btn" to="/shop/christmas-special/">Explore 3D Christmas Showcase ↗</Link>}</div></section>
     <FulfillmentSelector/><ShopNotice/>
     <section className="section" id="sale-products"><div className="container"><div className="section-heading"><div><p className="eyebrow">ON SALE NOW</p><h2>{featured.length} {featured.length === 1 ? "product" : "products"} to explore.</h2></div><p>The price shown includes shipping. Sale prices carry through to secure Shopify checkout.</p></div><div className="shop-grid">{featured.map((product) => <ShopProductCard key={product.id} product={product}/>)}</div></div></section>
     <section className="container"><ShopBenefits/></section>
@@ -990,7 +990,7 @@ export function ShopProduct({ previewCatalog, previewId }: { previewCatalog?: Pr
               </p>
             </div>
           </div>
-          <MobilePurchaseBar name={nameFor(product.id, product.name)} priceCents={priceFor(selectedVariant.id, selectedVariant.priceCents)} targetId="product-purchase-form" chooseOptions={variants.length > 0 || "personalization" in product} />
+          <MobilePurchaseBar name={nameFor(product.id, product.name)} priceCents={priceFor(selectedVariant.id, selectedVariant.priceCents)} compareAtCents={compareAtFor(selectedVariant.id)} targetId="product-purchase-form" chooseOptions={variants.length > 0 || "personalization" in product} />
           {verifiedReviews.length > 0 && (
             <section className="shop-pdp-reviews" id="studio-reviews" aria-labelledby="pdp-reviews-heading">
               <div className="shop-pdp-reviews-head">

@@ -1357,7 +1357,17 @@
 .shop-sale-inline { display: inline-block; margin-right: .5rem; padding: .28rem .55rem; color: #fff; background: #a83b15; font-size: .78rem; letter-spacing: .06em; }
 .shop-sale-hero-percent { display: inline-block; margin-top: 1rem; padding: .35rem .75rem; color: #fff; background: #b64b21; font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; line-height: 1; letter-spacing: -.015em; transform: rotate(-2deg); box-shadow: 7px 7px 0 rgba(0,0,0,.3); }
 .shop-sale-hero .shop-sale-deadline { display: inline-block; padding: .4rem .75rem; border: 1px solid rgba(255,255,255,.55); color: #fff !important; font-weight: 700; }
-.shop-sale-hero .shop-sale-deadline + .button { margin-left: .7rem; }
+.shop-sale-hero .shop-sale-deadline + .button,
+.shop-sale-hero .shop-sale-showcase-btn { margin-left: .7rem; }
+.sale-admin-presets {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1rem;
+  margin: 1rem 0 1.25rem; padding: .9rem 1.15rem;
+  border: 1px solid #c9dcd6; border-radius: 6px; background: #f2f8f6;
+}
+.sale-admin-presets > span { font-size: .84rem; font-weight: 700; color: #173c35; }
+.sale-admin-preset-btn { font-size: .86rem; padding: .6rem 1rem; }
+.shop-design-options small s,
+.shop-mobile-purchase small s { opacity: .68; font-weight: 400; }
 .shop-regular-price { color: #6b7280; font-size: .86rem; margin: -.4rem 0 1rem; }
 .shop-card .shop-regular-price { margin-top: -.7rem; }
 .shop-sale-hero {
@@ -1404,7 +1414,7 @@
   .shop-sale-hero .container { padding-top: 4.5rem; padding-bottom: 4.5rem; }
 }
 @media (prefers-reduced-motion: reduce) { .shop-sale-ribbon { transition: none; } }
-@media (max-width: 600px) { .shop-sale-hero .shop-sale-deadline + .button { margin-left: 0; } }
+@media (max-width: 600px) { .shop-sale-hero .shop-sale-deadline + .button, .shop-sale-hero .shop-sale-showcase-btn { margin-left: 0; } }
 
 /* Product discovery: familiar controls, quick access to real products. */
 .shop-search { display: flex; gap: 8px; padding-block: 12px; }

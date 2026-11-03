@@ -26,7 +26,7 @@ export const productUrl = (id, variant) => `${config.origin}/shop/${id}/?fulfill
 
 export async function fetchDiscoveryCatalog(token, fetcher = fetch, sourceProducts = discoveryProducts) {
   if (!token) throw new Error("Storefront catalog connection is unavailable.");
-  const fields = sourceProducts.map((p, i) => `p${i}: product(handle: ${JSON.stringify(p.shopifyHandle || p.id)}) { title variants(first: 100) { nodes { sku availableForSale price { amount currencyCode } } } }`).join("\n");
+  const fields = sourceProducts.map((p, i) => `p${i}: product(handle: ${JSON.stringify(p.shopifyHandle || p.id)}) { title variants(first: 100) { nodes { sku availableForSale price { amount currencyCode } compareAtPrice { amount currencyCode } } } }`).join("\n");
   const response = await fetcher(`https://${config.storeDomain}/api/${config.apiVersion}/graphql.json`, {
     method: "POST", headers: { "Content-Type": "application/json", "X-Shopify-Storefront-Access-Token": token },
     body: JSON.stringify({ query: `{ ${fields} }` }), signal: AbortSignal.timeout(8000),
@@ -40,13 +40,17 @@ export async function fetchDiscoveryCatalog(token, fetcher = fetch, sourceProduc
     const verified = options.flatMap(option => {
       const variant = live?.variants.nodes.find(v => v.sku === option.id);
       if (!variant || variant.price.currencyCode !== "CAD" || !Number.isFinite(Number(variant.price.amount)) || Number(variant.price.amount) < 0) return [];
+      const saleAmount = Number(variant.price.amount);
+      const compareAmount = variant.compareAtPrice?.currencyCode === "CAD" ? Number(variant.compareAtPrice.amount) : NaN;
+      const liveCompareAtPrice = Number.isFinite(compareAmount) && compareAmount > saleAmount ? compareAmount.toFixed(2) : null;
       const detail = products.find(item => item.id === option.id) || p;
       const images = p.variantLabel === "Design" ? p.images.filter(image => image.design === option.label) : p.images;
       return [{ ...detail, images: images.length ? images : detail.images, name: live.title + (option.label ? ` — ${option.label}` : ""), parentId: p.id,
         optionLabel: option.label, variantKind: p.variantLabel === "Design" ? "pattern" : "size",
-        dimensions: option.dimensions || detail.dimensions, livePrice: Number(variant.price.amount).toFixed(2), available: variant.availableForSale }];
+        dimensions: option.dimensions || detail.dimensions, livePrice: saleAmount.toFixed(2),
+        ...(liveCompareAtPrice ? { liveCompareAtPrice } : {}), available: variant.availableForSale }];
     });
-    return verified.length ? [{ ...p, name: live.title, liveVariants: verified, livePrice: verified[0].livePrice, available: verified.some(v => v.available) }] : [];
+    return verified.length ? [{ ...p, name: live.title, liveVariants: verified, livePrice: verified[0].livePrice, ...(verified[0].liveCompareAtPrice ? { liveCompareAtPrice: verified[0].liveCompareAtPrice } : {}), available: verified.some(v => v.available) }] : [];
   });
 }
 
@@ -149,6 +153,6 @@ export function merchantFeed(catalog, seasonConfig = merchandising) {
     const richAttributes = extra
       ? `${extra.color ? field("color", extra.color) : ""}${extra.material ? field("material", extra.material) : ""}${(extra.highlights || []).map(h => field("product_highlight", h.slice(0, 150))).join("")}`
       : "";
-    return `<item>${field("id", p.id)}${productTitle(p)}${field("description", `${parent.description} ${p.included} ${p.dimensions || ""}`)}${field("link", productUrl(parent.id, p.id === parent.id ? undefined : p.id))}${field("image_link", new URL(p.images[0].src,config.origin).href)}${p.images.slice(1, 11).map(i => field("additional_image_link", new URL(i.src,config.origin).href)).join("")}${p.optionLabel ? field("item_group_id", parent.id) + field(p.variantKind, p.optionLabel) : ""}${field("availability", p.available ? "in_stock" : "out_of_stock")}${field("price", `${p.livePrice} CAD`)}${field("brand", "Custom Build Studio")}${field("condition", "new")}${field("identifier_exists", "no")}${googleCategory}${field("product_type", `Shop > ${parent.category}`)}${richAttributes}${field("custom_label_0", customLabel0)}${field("custom_label_1", getCustomLabel1(p))}<g:shipping>${field("country", config.shippingCountry)}${field("price", `${((p.shippingFeeCents ?? 0) / 100).toFixed(2)} CAD`)}${field("min_handling_time", 1)}${field("max_handling_time", 3)}${field("min_transit_time", 2)}${field("max_transit_time", 7)}</g:shipping></item>`;
+    return `<item>${field("id", p.id)}${productTitle(p)}${field("description", `${parent.description} ${p.included} ${p.dimensions || ""}`)}${field("link", productUrl(parent.id, p.id === parent.id ? undefined : p.id))}${field("image_link", new URL(p.images[0].src,config.origin).href)}${p.images.slice(1, 11).map(i => field("additional_image_link", new URL(i.src,config.origin).href)).join("")}${p.optionLabel ? field("item_group_id", parent.id) + field(p.variantKind, p.optionLabel) : ""}${field("availability", p.available ? "in_stock" : "out_of_stock")}${p.liveCompareAtPrice && Number(p.liveCompareAtPrice) > Number(p.livePrice) ? field("price", `${p.liveCompareAtPrice} CAD`) + field("sale_price", `${p.livePrice} CAD`) : field("price", `${p.livePrice} CAD`)}${field("brand", "Custom Build Studio")}${field("condition", "new")}${field("identifier_exists", "no")}${googleCategory}${field("product_type", `Shop > ${parent.category}`)}${richAttributes}${field("custom_label_0", customLabel0)}${field("custom_label_1", getCustomLabel1(p))}<g:shipping>${field("country", config.shippingCountry)}${field("price", `${((p.shippingFeeCents ?? 0) / 100).toFixed(2)} CAD`)}${field("min_handling_time", 1)}${field("max_handling_time", 3)}${field("min_transit_time", 2)}${field("max_transit_time", 7)}</g:shipping></item>`;
   })).join("")}</channel></rss>`;
 }
