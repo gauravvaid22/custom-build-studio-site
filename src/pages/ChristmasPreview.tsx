@@ -143,6 +143,36 @@ const PRODUCT_META: Record<string, { heightLabel: string; tag: string; summary: 
     tag: "HOLIDAY DISHES",
     summary: "Festive white-and-gold catch-all trays shaped as an Evergreen Tree, Winter Snowflake, or Holiday Stocking.",
   },
+  "kitten-ornament-table-lamp": {
+    heightLabel: "Approx. 13 cm tall",
+    tag: "LUMINOUS CHRISTMAS",
+    summary: "A peaceful white kitten curled atop an embossed holiday bauble, with warm CR2032 LED lighting included.",
+  },
+  "snowy-branch-table-lamp": {
+    heightLabel: "Approx. 18 cm tall",
+    tag: "LUMINOUS CHRISTMAS",
+    summary: "A snowy pine branch suspending a glowing winter snowman diorama bauble on a gold cord, with LED lighting included.",
+  },
+  "olive-branch-nativity-table-lamp": {
+    heightLabel: "Approx. 10 cm tall",
+    tag: "LUMINOUS CHRISTMAS",
+    summary: "A modern white stable framed by olive branches and crowned with a silk-gold star, with warm LED lighting included.",
+  },
+  "guardian-angel-table-lamp": {
+    heightLabel: "Approx. 13 cm tall",
+    tag: "LUMINOUS CHRISTMAS",
+    summary: "Tall feathered angel wings sheltering Mary, Joseph and baby Jesus against a warm golden LED glow.",
+  },
+  "glowing-gift-bag-table-lamp": {
+    heightLabel: "Approx. 10 cm tall",
+    tag: "LUMINOUS CHRISTMAS",
+    summary: "Santa peeking behind a festive red sack overflowing with softly glowing ribboned gift boxes, LED included.",
+  },
+  "snowman-shine-table-lamp": {
+    heightLabel: "Approx. 12 cm tall",
+    tag: "LUMINOUS CHRISTMAS",
+    summary: "A cheerful top-hat snowman with red scarf and snowflake cutouts that shine warmly from within, LED included.",
+  },
 };
 
 function FloatingTiltCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
@@ -447,7 +477,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
     if (filter === "Everything") return true;
     if (filter === "Christmas Grace") return CHRISTMAS_GRACE_IDS.has(p.id);
     if (filter === "Festive lights") {
-      return ["christmas-angel", "bright-nativity-table-lamp", "village-on-the-moon-table-lamp", "santa-s-bonfire-table-lamp", "luminous-tree", "village-lights"].includes(p.id);
+      return ["christmas-angel", "bright-nativity-table-lamp", "village-on-the-moon-table-lamp", "santa-s-bonfire-table-lamp", "luminous-tree", "village-lights", "kitten-ornament-table-lamp", "snowy-branch-table-lamp", "olive-branch-nativity-table-lamp", "guardian-angel-table-lamp", "glowing-gift-bag-table-lamp", "snowman-shine-table-lamp"].includes(p.id);
     }
     if (filter === "Tree & table") {
       return ["endless-swirling-tree", "meowy-christmas-tree-topper", "guiding-star-tree-topper", "evergreen-wreath", "christmas-character-ornaments", "christmas-trinket-trays", "santa-s-snack-hat-bowl"].includes(p.id);

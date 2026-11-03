@@ -64,7 +64,13 @@ export const PURE_CHRISTMAS_PRODUCT_IDS = [
   "christmas-trinket-trays",
   "stocking-tray",
   "snowflake-tray",
-  "christmas-tree-tray"
+  "christmas-tree-tray",
+  "kitten-ornament-table-lamp",
+  "snowy-branch-table-lamp",
+  "olive-branch-nativity-table-lamp",
+  "guardian-angel-table-lamp",
+  "glowing-gift-bag-table-lamp",
+  "snowman-shine-table-lamp"
 ];
 
 export const SEASONAL_PRESETS = {

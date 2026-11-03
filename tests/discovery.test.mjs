@@ -108,15 +108,15 @@ test("google shopping custom labels correctly segment christmas hero items, gene
   assert.match(xml, /<g:custom_label_1>under_30_cad<\/g:custom_label_1>/);
 });
 
-test("all 30 Christmas SKUs emit enriched feed titles, color, material, product highlights, shipping handling/transit times, and descriptive image alts", () => {
+test("all 36 Christmas SKUs emit enriched feed titles, color, material, product highlights, shipping handling/transit times, and descriptive image alts", () => {
   const christmasItems = discoveryProducts
     .filter(p => getCustomLabel0(p, p) !== "core_catalog")
     .map(p => ({ ...p, livePrice: (p.priceCents / 100).toFixed(2), available: true }));
-  assert.equal(christmasItems.length, 30, "All 30 Christmas SKUs must enter the active Merchant feed");
+  assert.equal(christmasItems.length, 36, "All 36 Christmas SKUs must enter the active Merchant feed");
 
   const xml = merchantFeed(christmasItems);
   const itemBlocks = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map(m => m[1]);
-  assert.equal(itemBlocks.length, 30);
+  assert.equal(itemBlocks.length, 36);
 
   for (const block of itemBlocks) {
     const id = block.match(/<g:id>(.*?)<\/g:id>/)?.[1];
