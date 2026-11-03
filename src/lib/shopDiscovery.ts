@@ -2,6 +2,7 @@ import staticProducts from "../data/catalog";
 import staticCollections from "../../commerce/collections.json";
 import defaults from "../../commerce/shop-merchandising.json";
 import { PURE_HALLOWEEN_PRODUCT_IDS, PURE_CHRISTMAS_PRODUCT_IDS } from "../../commerce/merchandising.mjs";
+import { matchesSearchQuery, scoreSearchQuery } from "../../commerce/storefront-search.mjs";
 import { getCurrentLiveCollections, getCurrentLiveProducts } from "./catalogAvailability";
 
 export { PURE_HALLOWEEN_PRODUCT_IDS, PURE_CHRISTMAS_PRODUCT_IDS };
@@ -68,32 +69,20 @@ export function matchesProductSearch(
   query: string,
   displayName = product.name,
   customCollections?: Collection[],
+  allowTrailingPrefix = false,
 ) {
-  const q = normalize(query).trim();
-  if (!q) return true;
   const activeCollections = customCollections || getCurrentLiveCollections();
-  const family = activeCollections.filter(collection => collection.products.includes(product.id)).map(collection => collection.name).join(" ");
-  const variantText = "variants" in product && product.variants ? product.variants.map(v => v.label).join(" ") : "";
-  const groupedText = "groupedDesigns" in product && product.groupedDesigns ? product.groupedDesigns.map(d => d.label).join(" ") : "";
-  const keywordsText = "searchKeywords" in product && Array.isArray(product.searchKeywords) ? product.searchKeywords.join(" ") : "";
-  const searchable = normalize(
-    [
-      displayName,
-      product.name,
-      product.seoTitle || "",
-      product.seoDescription || "",
-      keywordsText,
-      product.category,
-      product.description,
-      product.notes || "",
-      product.included || "",
-      product.dimensions || "",
-      variantText,
-      groupedText,
-      family,
-    ].join(" "),
-  );
-  return q.split(/\s+/).filter(Boolean).every(word => searchable.includes(word));
+  return matchesSearchQuery(product, query, displayName, activeCollections, allowTrailingPrefix);
+}
+
+export function scoreProductSearch(
+  product: Product,
+  query: string,
+  displayName = product.name,
+  customCollections?: Collection[],
+): number {
+  const activeCollections = customCollections || getCurrentLiveCollections();
+  return scoreSearchQuery(product, query, displayName, activeCollections);
 }
 
 export function searchCatalogAutocomplete(
@@ -113,53 +102,49 @@ export function searchCatalogAutocomplete(
     product => !("variantOf" in product) && !product.purchaseOnly && product.launchReady !== false,
   );
 
-  const scored: { item: SearchAutocompleteItem; score: number }[] = [];
+  const collectMatches = (allowTrailingPrefix: boolean) => {
+    const scored: { item: SearchAutocompleteItem; score: number }[] = [];
+    for (const product of searchablePublicCatalog) {
+      if (!isProductVisibleInSeason(product.id)) continue;
+      const displayName = nameFor ? nameFor(product.id, product.name) : product.name;
+      if (!matchesProductSearch(product, q, displayName, activeCollections, allowTrailingPrefix)) continue;
 
-  for (const product of searchablePublicCatalog) {
-    if (!isProductVisibleInSeason(product.id)) continue;
-    const displayName = nameFor ? nameFor(product.id, product.name) : product.name;
-    if (!matchesProductSearch(product, q, displayName, activeCollections)) continue;
+      const isDesignOption = Boolean("listingGroup" in product && product.listingGroup);
+      const parentProduct = isDesignOption
+        ? activeProducts.find(p => p.id === product.listingGroup)
+        : undefined;
 
-    const normName = normalize(displayName);
-    const normSeo = normalize(product.seoTitle || "");
-    const isDesignOption = Boolean("listingGroup" in product && product.listingGroup);
-    const parentProduct = isDesignOption
-      ? activeProducts.find(p => p.id === product.listingGroup)
-      : undefined;
+      const score = scoreProductSearch(product, q, displayName, activeCollections);
+      const basePrice = priceFor ? lowestProductPrice(product, priceFor) : product.priceCents;
+      const hasPriceRange = Boolean(
+        ("variants" in product && product.variants && product.variants.length > 1) ||
+          ("groupedDesigns" in product && product.groupedDesigns && product.groupedDesigns.length > 1),
+      );
 
-    let score = 0;
-    if (normName === q) score += 120;
-    else if (normName.startsWith(q)) score += 85;
-    else if (normName.includes(q)) score += 60;
-    else if (normSeo.includes(q)) score += 45;
-    else if (tokens.every(t => normName.includes(t))) score += 50;
-    else score += 20;
+      scored.push({
+        score,
+        item: {
+          id: product.id,
+          name: displayName,
+          category: product.category,
+          isDesignOption,
+          parentName: parentProduct
+            ? (nameFor ? nameFor(parentProduct.id, parentProduct.name) : parentProduct.name)
+            : undefined,
+          priceCents: basePrice,
+          hasPriceRange,
+          thumb: product.images[0]?.thumb || product.images[0]?.src || "",
+          alt: product.images[0]?.alt || displayName,
+          url: `/shop/${product.id}`,
+        },
+      });
+    }
+    return scored;
+  };
 
-    if (!isDesignOption) score += 10;
-
-    const basePrice = priceFor ? lowestProductPrice(product, priceFor) : product.priceCents;
-    const hasPriceRange = Boolean(
-      ("variants" in product && product.variants && product.variants.length > 1) ||
-        ("groupedDesigns" in product && product.groupedDesigns && product.groupedDesigns.length > 1),
-    );
-
-    scored.push({
-      score,
-      item: {
-        id: product.id,
-        name: displayName,
-        category: product.category,
-        isDesignOption,
-        parentName: parentProduct
-          ? (nameFor ? nameFor(parentProduct.id, parentProduct.name) : parentProduct.name)
-          : undefined,
-        priceCents: basePrice,
-        hasPriceRange,
-        thumb: product.images[0]?.thumb || product.images[0]?.src || "",
-        alt: product.images[0]?.alt || displayName,
-        url: `/shop/${product.id}`,
-      },
-    });
+  let scored = collectMatches(false);
+  if (scored.length === 0 && tokens[tokens.length - 1]?.length >= 3) {
+    scored = collectMatches(true);
   }
 
   return scored
@@ -170,6 +155,14 @@ export function searchCatalogAutocomplete(
 /** Never forward arbitrary search text (emails, phone numbers, etc.) to analytics. */
 export function analyticsSearchTerm(query: string) {
   const activeParents = getCurrentLiveProducts().filter(product => !("variantOf" in product) && !("listingGroup" in product));
-  const vocabulary = new Set(normalize(activeParents.map(product => `${product.name} ${product.category}`).join(" ")).split(/[^a-z0-9]+/).filter(word => word.length > 2));
+  const vocabulary = new Set(
+    normalize(
+      activeParents
+        .map(product => `${product.name} ${product.category} ${"searchKeywords" in product && Array.isArray(product.searchKeywords) ? product.searchKeywords.join(" ") : ""}`)
+        .join(" "),
+    )
+      .split(/[^a-z0-9]+/)
+      .filter(word => word.length > 2),
+  );
   return normalize(query).split(/[^a-z0-9]+/).filter(word => vocabulary.has(word)).slice(0, 8).join(" ") || "other product search";
 }

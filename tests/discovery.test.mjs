@@ -153,4 +153,25 @@ test("all 36 Christmas SKUs emit enriched feed titles, color, material, product 
       }
     }
   }
+
+  // Verify Drop 378 feed titles front-load "Christmas" inside chars 1-67 and zero highlights contain promotional price claims
+  const drop378Ids = [
+    "kitten-ornament-table-lamp",
+    "snowy-branch-table-lamp",
+    "olive-branch-nativity-table-lamp",
+    "guardian-angel-table-lamp",
+    "glowing-gift-bag-table-lamp",
+    "snowman-shine-table-lamp",
+  ];
+  for (const id of drop378Ids) {
+    const productRecord = products.find(p => p.id === id);
+    assert.ok(productRecord && /Christmas/i.test(productRecord.name), `Expected 'Christmas' in product name for ${id}, got: ${productRecord?.name}`);
+    const feedTitle = christmasFeedAttributes[id]?.feedTitle || "";
+    assert.ok(/Christmas/i.test(feedTitle.slice(0, 67)), `Expected 'Christmas' within first 67 chars of feedTitle for ${id}, got: ${feedTitle}`);
+  }
+  for (const [id, attrs] of Object.entries(christmasFeedAttributes)) {
+    for (const h of attrs.highlights || []) {
+      assert.doesNotMatch(h, /\$\d+|under \$\d+/i, `Policy-disallowed price claim in <g:product_highlight> on ${id}: ${h}`);
+    }
+  }
 });

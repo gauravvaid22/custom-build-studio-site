@@ -8096,12 +8096,19 @@
         "green and gold christmas tree",
         "holiday home decor",
         "holiday gifts canada",
-        "edmonton made gifts"
+        "edmonton made gifts",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift",
+        "kinetic fidget tree",
+        "christmas fidget"
       ]
     },
     {
       "id": "christmas-angel",
-      "name": "Light-Up Angel Nativity Table Lamp",
+      "name": "Light-Up Blue & White Christmas Angel Nativity Table Lamp",
       "priceCents": 6499,
       "category": "Christmas décor",
       "description": "An angel silhouette frames a delicate nativity scene, creating a peaceful Christmas centrepiece.",
@@ -8178,7 +8185,7 @@
       "pricingSchemaVersion": 2,
       "shippingPriceMode": "included",
       "shippingFeeCents": 0,
-      "seoTitle": "Light-Up Angel Nativity Table Lamp — Glowing Holy Family Christmas Centerpiece",
+      "seoTitle": "Light-Up Blue & White Christmas Angel Nativity Table Lamp — LED Decor",
       "seoDescription": "Starry night-blue backlit LED angel nativity table lamp with sculpted wings sheltering Mary, Joseph and Baby Jesus. A meaningful Christian Christmas centerpiece and gift.",
       "searchKeywords": [
         "nativity table lamp",
@@ -8188,7 +8195,17 @@
         "christian christmas decor",
         "glowing manger lamp",
         "holiday gifts canada",
-        "edmonton made gifts"
+        "edmonton made gifts",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "christmas lamp",
+        "christmas night light",
+        "table lamp",
+        "night light",
+        "nativity scene",
+        "manger",
+        "christian christmas gift"
       ]
     },
     {
@@ -8274,7 +8291,13 @@
         "pet christmas decor",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift",
+        "cat christmas gift"
       ]
     },
     {
@@ -8373,7 +8396,12 @@
         "cute holiday desk decor",
         "stocking stuffers",
         "holiday gifts canada",
-        "edmonton made gifts"
+        "edmonton made gifts",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift"
       ]
     },
     {
@@ -8442,7 +8470,11 @@
         "stocking stuffer",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "secret santa gift"
       ]
     },
     {
@@ -8511,7 +8543,12 @@
         "kids christmas gift",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift"
       ]
     },
     {
@@ -8609,7 +8646,10 @@
         "mantel gnome figurines",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor"
       ]
     },
     {
@@ -8689,7 +8729,17 @@
         "christmas manger light",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "christmas lamp",
+        "christmas night light",
+        "table lamp",
+        "night light",
+        "nativity scene",
+        "manger",
+        "christian christmas gift"
       ]
     },
     {
@@ -8770,7 +8820,12 @@
         "snowman gift",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift"
       ]
     },
     {
@@ -8856,12 +8911,19 @@
         "holiday night light",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "christmas lamp",
+        "christmas night light",
+        "table lamp",
+        "night light"
       ]
     },
     {
       "id": "santa-s-bonfire-table-lamp",
-      "name": "Santa & Reindeer Campfire Night Light",
+      "name": "Santa & Reindeer Christmas Campfire Night Light",
       "priceCents": 4999,
       "category": "Christmas décor",
       "description": "Santa and his reindeer take a quiet break beside a glowing little campfire. A colourful scene for cosy Christmas evenings.",
@@ -8938,7 +9000,7 @@
       "pricingSchemaVersion": 2,
       "shippingPriceMode": "included",
       "shippingFeeCents": 0,
-      "seoTitle": "Santa & Reindeer Campfire Night Light — Glowing Christmas Bonfire Table Lamp",
+      "seoTitle": "Santa & Reindeer Christmas Campfire Night Light — LED Table Lamp",
       "seoDescription": "Cozy Christmas night light featuring Santa Claus and his reindeer roasting marshmallows around a warm glowing LED campfire.",
       "searchKeywords": [
         "santa night light",
@@ -8948,7 +9010,14 @@
         "cozy holiday table lamp",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "christmas lamp",
+        "christmas night light",
+        "table lamp",
+        "night light"
       ]
     },
     {
@@ -9022,7 +9091,12 @@
         "office candy dish",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift"
       ]
     },
     {
@@ -9097,7 +9171,12 @@
         "edmonton crafted ornament",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift"
       ]
     },
     {
@@ -9172,7 +9251,12 @@
         "canadian made ornament",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift"
       ]
     },
     {
@@ -9247,7 +9331,12 @@
         "edmonton made",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift"
       ]
     },
     {
@@ -9321,7 +9410,12 @@
         "canadian holiday decor",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift"
       ]
     },
     {
@@ -9395,7 +9489,12 @@
         "canadian christmas gift",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift"
       ]
     },
     {
@@ -9469,7 +9568,14 @@
         "canadian crafted gift",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift",
+        "cat christmas gift",
+        "cat lover christmas gift"
       ]
     },
     {
@@ -9543,7 +9649,12 @@
         "canadian craft",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift"
       ]
     },
     {
@@ -9617,7 +9728,12 @@
         "canadian made christmas",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift"
       ]
     },
     {
@@ -9796,7 +9912,12 @@
         "stocking stuffer ornaments",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift"
       ]
     },
     {
@@ -9870,12 +9991,19 @@
         "christian christmas gift",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift",
+        "nativity scene",
+        "manger"
       ]
     },
     {
       "id": "heavenly-trio",
-      "name": "Christmas Angel Figurines (Set of 3) — White, Silver & Gold Mantel Statues",
+      "name": "Christmas Angel Figurines (Set of 3) — White & Gold Mantel Statues",
       "priceCents": 5499,
       "category": "Christmas décor",
       "description": "Three graceful angels in complementary poses, finished in a soft white-and-gold palette. Display the trio together or create little moments of Christmas throughout your home.",
@@ -9930,8 +10058,8 @@
       "shippingPriceMode": "included",
       "shippingFeeCents": 0,
       "pickupPriceDifferenceCents": 0,
-      "seoTitle": "Christmas Angel Figurines Set of 3 — White, Silver & Gold Holiday Mantel Statues",
-      "seoDescription": "Set of 3 ribbed-gown Christmas angel figurines in matte white with gold and silver accents holding a star, heart and prayerful hands.",
+      "seoTitle": "Christmas Angel Figurines Set of 3 — White & Gold Holiday Mantel Statues",
+      "seoDescription": "Set of 3 ribbed-gown Christmas angel figurines in matte white with warm gold accents holding a star, heart and prayerful hands.",
       "videos": [
         "/media/shop/heavenly-trio/product-1.webm"
       ],
@@ -9944,7 +10072,10 @@
         "memorial christmas angel gift",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor"
       ]
     },
     {
@@ -9999,7 +10130,10 @@
         "classic christmas star topper",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor"
       ]
     },
     {
@@ -10060,7 +10194,10 @@
         "modern winter wreath",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor"
       ]
     },
     {
@@ -10147,21 +10284,21 @@
       "groupedDesigns": [
         {
           "id": "luminous-tree-stars",
-          "label": "Starry Tiers",
+          "label": "Light-Up White & Gold Christmas Tree Lantern — Starry Tiers",
           "optionIds": [
             "luminous-tree-stars"
           ]
         },
         {
           "id": "luminous-tree-lace",
-          "label": "Lace Tiers",
+          "label": "Light-Up White & Gold Christmas Tree Lantern — Lace Tiers",
           "optionIds": [
             "luminous-tree-lace"
           ]
         },
         {
           "id": "luminous-tree-spiral",
-          "label": "Spiral Stars",
+          "label": "Light-Up White & Gold Christmas Tree Lantern — Spiral Stars",
           "optionIds": [
             "luminous-tree-spiral"
           ]
@@ -10170,7 +10307,7 @@
       "variants": [
         {
           "id": "luminous-tree-stars",
-          "label": "Starry Tiers",
+          "label": "Light-Up White & Gold Christmas Tree Lantern — Starry Tiers",
           "priceCents": 3499,
           "dimensions": "Approximately 12 cm tall",
           "basePriceCents": 2999,
@@ -10179,7 +10316,7 @@
         },
         {
           "id": "luminous-tree-lace",
-          "label": "Lace Tiers",
+          "label": "Light-Up White & Gold Christmas Tree Lantern — Lace Tiers",
           "priceCents": 3499,
           "dimensions": "Approximately 12 cm tall",
           "basePriceCents": 2999,
@@ -10188,7 +10325,7 @@
         },
         {
           "id": "luminous-tree-spiral",
-          "label": "Spiral Stars",
+          "label": "Light-Up White & Gold Christmas Tree Lantern — Spiral Stars",
           "priceCents": 3499,
           "dimensions": "Approximately 12 cm tall",
           "basePriceCents": 2999,
@@ -10205,12 +10342,19 @@
         "holiday dining centerpiece",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "christmas lamp",
+        "christmas night light",
+        "table lamp",
+        "night light"
       ]
     },
     {
       "id": "luminous-tree-stars",
-      "name": "Luminous Christmas Tree — Starry Tiers",
+      "name": "Light-Up White & Gold Christmas Tree Lantern — Starry Tiers",
       "priceCents": 3499,
       "category": "Christmas décor",
       "description": "Starry Tiers design. A sculptural Christmas tree designed to glow from within using a battery LED tealight. Add a warm seasonal focal point to a shelf, side table or mantel.",
@@ -10253,12 +10397,19 @@
         "canadian holiday decor",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "christmas lamp",
+        "christmas night light",
+        "table lamp",
+        "night light"
       ]
     },
     {
       "id": "luminous-tree-lace",
-      "name": "Luminous Christmas Tree — Lace Tiers",
+      "name": "Light-Up White & Gold Christmas Tree Lantern — Lace Tiers",
       "priceCents": 3499,
       "category": "Christmas décor",
       "description": "Lace Tiers design. A sculptural Christmas tree designed to glow from within using a battery LED tealight. Add a warm seasonal focal point to a shelf, side table or mantel.",
@@ -10306,12 +10457,19 @@
         "mantel holiday decor",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "christmas lamp",
+        "christmas night light",
+        "table lamp",
+        "night light"
       ]
     },
     {
       "id": "luminous-tree-spiral",
-      "name": "Luminous Christmas Tree — Spiral Stars",
+      "name": "Light-Up White & Gold Christmas Tree Lantern — Spiral Stars",
       "priceCents": 3499,
       "category": "Christmas décor",
       "description": "Spiral Stars design. A sculptural Christmas tree designed to glow from within using a battery LED tealight. Add a warm seasonal focal point to a shelf, side table or mantel.",
@@ -10359,7 +10517,14 @@
         "canadian studio decor",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "christmas lamp",
+        "christmas night light",
+        "table lamp",
+        "night light"
       ]
     },
     {
@@ -10462,7 +10627,14 @@
         "led mantel houses",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "christmas lamp",
+        "christmas night light",
+        "table lamp",
+        "night light"
       ]
     },
     {
@@ -10642,7 +10814,12 @@
         "stocking stuffer gift",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift"
       ]
     },
     {
@@ -10717,7 +10894,12 @@
         "small holiday gift",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift"
       ]
     },
     {
@@ -10792,7 +10974,12 @@
         "canadian made gift",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift"
       ]
     },
     {
@@ -10855,12 +11042,17 @@
         "edmonton made gift",
         "holiday gifts canada",
         "edmonton made gifts",
-        "christmas home decor"
+        "christmas home decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "stocking stuffer",
+        "secret santa gift"
       ]
     },
     {
       "id": "kitten-ornament-table-lamp",
-      "name": "Sleepy Kitten & Glowing Bauble Table Lamp",
+      "name": "White Cat Christmas Ornament Night Light — LED Table Lamp",
       "priceCents": 3799,
       "category": "Christmas décor",
       "description": "A peaceful sleeping kitten curls atop a sculpted holiday bauble embossed with pine trees and snowflakes, casting a cozy amber glow across a mantel or bedside table.",
@@ -10872,37 +11064,37 @@
         {
           "src": "/media/shop/kitten-ornament-table-lamp/natural-cover-v1-1200.webp",
           "thumb": "/media/shop/kitten-ornament-table-lamp/natural-cover-v1-480.webp",
-          "alt": "Warm holiday mantel setting for Sleepy Kitten & Glowing Bauble Table Lamp; original studio views are included in the gallery.",
+          "alt": "Warm holiday mantel setting for White Cat Christmas Ornament Night Light — LED Table Lamp; original studio views are included in the gallery.",
           "generatedLifestyle": true
         },
         {
           "src": "/media/shop/kitten-ornament-table-lamp/1-1200.webp",
           "thumb": "/media/shop/kitten-ornament-table-lamp/1-480.webp",
-          "alt": "Sleepy Kitten & Glowing Bauble Table Lamp (matte snow white with warm amber LED bauble glow) — front illuminated studio view 1, crafted in Edmonton",
+          "alt": "White Cat Christmas Ornament Night Light — LED Table Lamp (matte snow white with warm amber LED bauble glow) — front illuminated studio view 1, crafted in Edmonton",
           "sourceFile": "Kitten_Ornament_Table_Lamp1_c366a23a0a.png"
         },
         {
           "src": "/media/shop/kitten-ornament-table-lamp/2-1200.webp",
           "thumb": "/media/shop/kitten-ornament-table-lamp/2-480.webp",
-          "alt": "Sleepy Kitten & Glowing Bauble Table Lamp (matte snow white with warm amber LED bauble glow) — angled detail view 2, crafted in Edmonton",
+          "alt": "White Cat Christmas Ornament Night Light — LED Table Lamp (matte snow white with warm amber LED bauble glow) — angled detail view 2, crafted in Edmonton",
           "sourceFile": "Kitten_Ornament_Table_Lamp2_abad391ff6.png"
         },
         {
           "src": "/media/shop/kitten-ornament-table-lamp/3-1200.webp",
           "thumb": "/media/shop/kitten-ornament-table-lamp/3-480.webp",
-          "alt": "Sleepy Kitten & Glowing Bauble Table Lamp (matte snow white with warm amber LED bauble glow) — close-up sculpt and finish view 3, crafted in Edmonton",
+          "alt": "White Cat Christmas Ornament Night Light — LED Table Lamp (matte snow white with warm amber LED bauble glow) — close-up sculpt and finish view 3, crafted in Edmonton",
           "sourceFile": "Kitten_Ornament_Table_Lamp3_55f4646ccf.png"
         },
         {
           "src": "/media/shop/kitten-ornament-table-lamp/4-1200.webp",
           "thumb": "/media/shop/kitten-ornament-table-lamp/4-480.webp",
-          "alt": "Sleepy Kitten & Glowing Bauble Table Lamp (matte snow white with warm amber LED bauble glow) — side profile studio view 4, crafted in Edmonton",
+          "alt": "White Cat Christmas Ornament Night Light — LED Table Lamp (matte snow white with warm amber LED bauble glow) — side profile studio view 4, crafted in Edmonton",
           "sourceFile": "Kitten_Ornament_Table_Lamp4_ae92933ff1.png"
         },
         {
           "src": "/media/shop/kitten-ornament-table-lamp/5-1200.webp",
           "thumb": "/media/shop/kitten-ornament-table-lamp/5-480.webp",
-          "alt": "Sleepy Kitten & Glowing Bauble Table Lamp (matte snow white with warm amber LED bauble glow) — alternate display angle 5, crafted in Edmonton",
+          "alt": "White Cat Christmas Ornament Night Light — LED Table Lamp (matte snow white with warm amber LED bauble glow) — alternate display angle 5, crafted in Edmonton",
           "sourceFile": "Kitten_Ornament_Table_Lamp5_884c17ae45.png"
         }
       ],
@@ -10920,22 +11112,28 @@
       "pricingSchemaVersion": 2,
       "shippingPriceMode": "included",
       "shippingFeeCents": 0,
-      "seoTitle": "Sleepy Kitten & Glowing Bauble Table Lamp — Cat Christmas Ornament Night Light",
-      "seoDescription": "White 3D-printed sleeping cat Christmas ornament table lamp with embossed trees, snowflakes and warm CR2032 LED lighting included. Crafted in Edmonton, Canada.",
+      "seoTitle": "White Cat Christmas Ornament Night Light — Cat Lover Holiday Lamp",
+      "seoDescription": "White cat Christmas ornament LED night light and table lamp (13 cm) with a sleeping kitten, embossed pines, snowflakes, and warm CR2032 LED included. Made in Edmonton.",
       "searchKeywords": [
+        "cat christmas gift",
+        "cat lover christmas gift",
         "cat christmas lamp",
+        "cat night light",
         "kitten christmas night light",
-        "cat lover holiday gift",
-        "glowing christmas bauble lamp",
-        "3d printed christmas lamp",
+        "cat christmas ornament",
+        "christmas night light",
+        "christmas table lamp",
+        "christmas lamp",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
         "holiday gifts canada",
-        "edmonton made gifts",
-        "christmas mantel lighting"
+        "edmonton made gifts"
       ]
     },
     {
       "id": "snowy-branch-table-lamp",
-      "name": "Snowy Branch Hanging Ornament Table Lamp",
+      "name": "Snowman Christmas Ornament Table Lamp — Snowy Branch Lantern",
       "priceCents": 4999,
       "category": "Christmas décor",
       "description": "A snow-draped pine branch suspends a cutaway winter bauble on a metallic gold cord, illuminating a miniature snowman and evergreen scene inside.",
@@ -10947,43 +11145,43 @@
         {
           "src": "/media/shop/snowy-branch-table-lamp/natural-cover-v1-1200.webp",
           "thumb": "/media/shop/snowy-branch-table-lamp/natural-cover-v1-480.webp",
-          "alt": "Warm holiday mantel setting for Snowy Branch Hanging Ornament Table Lamp; original studio views are included in the gallery.",
+          "alt": "Warm holiday mantel setting for Snowman Christmas Ornament Table Lamp — Snowy Branch Lantern; original studio views are included in the gallery.",
           "generatedLifestyle": true
         },
         {
           "src": "/media/shop/snowy-branch-table-lamp/1-1200.webp",
           "thumb": "/media/shop/snowy-branch-table-lamp/1-480.webp",
-          "alt": "Snowy Branch Hanging Ornament Table Lamp (matte winter white with gold hanging cord and warm snowman diorama glow) — front illuminated studio view 1, crafted in Edmonton",
+          "alt": "Snowman Christmas Ornament Table Lamp — Snowy Branch Lantern (matte winter white with gold hanging cord and warm snowman diorama glow) — front illuminated studio view 1, crafted in Edmonton",
           "sourceFile": "Snowy_Branch_Table_Lamp_1_5b99da0122.png"
         },
         {
           "src": "/media/shop/snowy-branch-table-lamp/2-1200.webp",
           "thumb": "/media/shop/snowy-branch-table-lamp/2-480.webp",
-          "alt": "Snowy Branch Hanging Ornament Table Lamp (matte winter white with gold hanging cord and warm snowman diorama glow) — angled detail view 2, crafted in Edmonton",
+          "alt": "Snowman Christmas Ornament Table Lamp — Snowy Branch Lantern (matte winter white with gold hanging cord and warm snowman diorama glow) — angled detail view 2, crafted in Edmonton",
           "sourceFile": "Snowy_Branch_Table_Lamp_2_7c73849153.png"
         },
         {
           "src": "/media/shop/snowy-branch-table-lamp/3-1200.webp",
           "thumb": "/media/shop/snowy-branch-table-lamp/3-480.webp",
-          "alt": "Snowy Branch Hanging Ornament Table Lamp (matte winter white with gold hanging cord and warm snowman diorama glow) — close-up sculpt and finish view 3, crafted in Edmonton",
+          "alt": "Snowman Christmas Ornament Table Lamp — Snowy Branch Lantern (matte winter white with gold hanging cord and warm snowman diorama glow) — close-up sculpt and finish view 3, crafted in Edmonton",
           "sourceFile": "Snowy_Branch_Table_Lamp_3_dcbc06b7ea.png"
         },
         {
           "src": "/media/shop/snowy-branch-table-lamp/4-1200.webp",
           "thumb": "/media/shop/snowy-branch-table-lamp/4-480.webp",
-          "alt": "Snowy Branch Hanging Ornament Table Lamp (matte winter white with gold hanging cord and warm snowman diorama glow) — side profile studio view 4, crafted in Edmonton",
+          "alt": "Snowman Christmas Ornament Table Lamp — Snowy Branch Lantern (matte winter white with gold hanging cord and warm snowman diorama glow) — side profile studio view 4, crafted in Edmonton",
           "sourceFile": "Snowy_Branch_Table_Lamp_4_bc6efa21aa.png"
         },
         {
           "src": "/media/shop/snowy-branch-table-lamp/5-1200.webp",
           "thumb": "/media/shop/snowy-branch-table-lamp/5-480.webp",
-          "alt": "Snowy Branch Hanging Ornament Table Lamp (matte winter white with gold hanging cord and warm snowman diorama glow) — alternate display angle 5, crafted in Edmonton",
+          "alt": "Snowman Christmas Ornament Table Lamp — Snowy Branch Lantern (matte winter white with gold hanging cord and warm snowman diorama glow) — alternate display angle 5, crafted in Edmonton",
           "sourceFile": "Snowy_Branch_Table_Lamp_5_e802a5af47.png"
         },
         {
           "src": "/media/shop/snowy-branch-table-lamp/6-1200.webp",
           "thumb": "/media/shop/snowy-branch-table-lamp/6-480.webp",
-          "alt": "Snowy Branch Hanging Ornament Table Lamp (matte winter white with gold hanging cord and warm snowman diorama glow) — back and structure detail view 6, crafted in Edmonton",
+          "alt": "Snowman Christmas Ornament Table Lamp — Snowy Branch Lantern (matte winter white with gold hanging cord and warm snowman diorama glow) — back and structure detail view 6, crafted in Edmonton",
           "sourceFile": "Snowy_Branch_Table_Lamp_6_a401097b74.png"
         }
       ],
@@ -11001,22 +11199,28 @@
       "pricingSchemaVersion": 2,
       "shippingPriceMode": "included",
       "shippingFeeCents": 0,
-      "seoTitle": "Snowy Branch Hanging Ornament Table Lamp — Illuminated Snowman Diorama Lantern",
-      "seoDescription": "Sculpted snowy branch Christmas table lamp suspending a glowing winter snowman and pine diorama bauble on a gold cord, with LED lighting included. Made in Edmonton.",
+      "seoTitle": "Snowman Christmas Ornament Table Lamp — Light-Up Branch Lantern",
+      "seoDescription": "Snowman Christmas ornament LED table lamp (18 cm) with a sculpted snowy pine branch suspending a glowing winter diorama globe on a gold cord. LED included.",
       "searchKeywords": [
-        "hanging ornament table lamp",
-        "snowman diorama night light",
-        "winter village bauble lamp",
-        "illuminated christmas centerpiece",
-        "white christmas table lamp",
+        "snowman christmas lamp",
+        "snowman night light",
+        "christmas ornament lamp",
+        "hanging globe christmas lantern",
+        "snowman christmas decor",
+        "christmas table lamp",
+        "christmas night light",
+        "christmas lamp",
+        "white and gold christmas decor",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
         "holiday gifts canada",
-        "edmonton made gifts",
-        "mantel christmas decor"
+        "edmonton made gifts"
       ]
     },
     {
       "id": "olive-branch-nativity-table-lamp",
-      "name": "Light-Up Olive-Branch Nativity Stable Table Lamp",
+      "name": "Light-Up White & Gold Christmas Nativity Scene Table Lamp",
       "priceCents": 3299,
       "category": "Christmas décor",
       "description": "Framed by sculpted olive branches and crowned with a silk-gold Bethlehem star, this compact modern stable illuminates Mary, Joseph, baby Jesus and gentle manger animals.",
@@ -11028,43 +11232,43 @@
         {
           "src": "/media/shop/olive-branch-nativity-table-lamp/natural-cover-v1-1200.webp",
           "thumb": "/media/shop/olive-branch-nativity-table-lamp/natural-cover-v1-480.webp",
-          "alt": "Warm holiday mantel setting for Light-Up Olive-Branch Nativity Stable Table Lamp; original studio views are included in the gallery.",
+          "alt": "Warm holiday mantel setting for Light-Up White & Gold Christmas Nativity Scene Table Lamp; original studio views are included in the gallery.",
           "generatedLifestyle": true
         },
         {
           "src": "/media/shop/olive-branch-nativity-table-lamp/1-1200.webp",
           "thumb": "/media/shop/olive-branch-nativity-table-lamp/1-480.webp",
-          "alt": "Light-Up Olive-Branch Nativity Stable Table Lamp (matte white stable with olive branches and silk metallic gold star) — front illuminated studio view 1, crafted in Edmonton",
+          "alt": "Light-Up White & Gold Christmas Nativity Scene Table Lamp (matte white stable with olive branches and silk metallic gold star) — front illuminated studio view 1, crafted in Edmonton",
           "sourceFile": "Nativity_Scene_Table_Lamp1_0d18888c45.png"
         },
         {
           "src": "/media/shop/olive-branch-nativity-table-lamp/2-1200.webp",
           "thumb": "/media/shop/olive-branch-nativity-table-lamp/2-480.webp",
-          "alt": "Light-Up Olive-Branch Nativity Stable Table Lamp (matte white stable with olive branches and silk metallic gold star) — angled detail view 2, crafted in Edmonton",
+          "alt": "Light-Up White & Gold Christmas Nativity Scene Table Lamp (matte white stable with olive branches and silk metallic gold star) — angled detail view 2, crafted in Edmonton",
           "sourceFile": "Nativity_Scene_Table_Lamp2_6fd1f03408.png"
         },
         {
           "src": "/media/shop/olive-branch-nativity-table-lamp/3-1200.webp",
           "thumb": "/media/shop/olive-branch-nativity-table-lamp/3-480.webp",
-          "alt": "Light-Up Olive-Branch Nativity Stable Table Lamp (matte white stable with olive branches and silk metallic gold star) — close-up sculpt and finish view 3, crafted in Edmonton",
+          "alt": "Light-Up White & Gold Christmas Nativity Scene Table Lamp (matte white stable with olive branches and silk metallic gold star) — close-up sculpt and finish view 3, crafted in Edmonton",
           "sourceFile": "Nativity_Scene_Table_Lamp3_6364f7d10f.png"
         },
         {
           "src": "/media/shop/olive-branch-nativity-table-lamp/4-1200.webp",
           "thumb": "/media/shop/olive-branch-nativity-table-lamp/4-480.webp",
-          "alt": "Light-Up Olive-Branch Nativity Stable Table Lamp (matte white stable with olive branches and silk metallic gold star) — side profile studio view 4, crafted in Edmonton",
+          "alt": "Light-Up White & Gold Christmas Nativity Scene Table Lamp (matte white stable with olive branches and silk metallic gold star) — side profile studio view 4, crafted in Edmonton",
           "sourceFile": "Nativity_Scene_Table_Lamp4_1ec2adab6d.png"
         },
         {
           "src": "/media/shop/olive-branch-nativity-table-lamp/5-1200.webp",
           "thumb": "/media/shop/olive-branch-nativity-table-lamp/5-480.webp",
-          "alt": "Light-Up Olive-Branch Nativity Stable Table Lamp (matte white stable with olive branches and silk metallic gold star) — alternate display angle 5, crafted in Edmonton",
+          "alt": "Light-Up White & Gold Christmas Nativity Scene Table Lamp (matte white stable with olive branches and silk metallic gold star) — alternate display angle 5, crafted in Edmonton",
           "sourceFile": "Nativity_Scene_Table_Lamp5_b090c127cc.png"
         },
         {
           "src": "/media/shop/olive-branch-nativity-table-lamp/6-1200.webp",
           "thumb": "/media/shop/olive-branch-nativity-table-lamp/6-480.webp",
-          "alt": "Light-Up Olive-Branch Nativity Stable Table Lamp (matte white stable with olive branches and silk metallic gold star) — back and structure detail view 6, crafted in Edmonton",
+          "alt": "Light-Up White & Gold Christmas Nativity Scene Table Lamp (matte white stable with olive branches and silk metallic gold star) — back and structure detail view 6, crafted in Edmonton",
           "sourceFile": "Nativity_Scene_Table_Lamp6_dfbf1abab6.png"
         }
       ],
@@ -11082,22 +11286,28 @@
       "pricingSchemaVersion": 2,
       "shippingPriceMode": "included",
       "shippingFeeCents": 0,
-      "seoTitle": "Light-Up Olive-Branch Nativity Stable Table Lamp — White & Gold Holy Family Light",
-      "seoDescription": "Modern white and gold olive-branch Christmas nativity stable table lamp sheltering the Holy Family and manger animals with warm LED lighting included. Made in Edmonton.",
+      "seoTitle": "Light-Up White & Gold Christmas Nativity Scene — Holy Family Lamp",
+      "seoDescription": "Light-up white and gold Christmas nativity scene table lamp (10 cm) sheltering Mary, Joseph, baby Jesus, and manger animals under a gold star. LED included.",
       "searchKeywords": [
-        "modern nativity table lamp",
-        "white and gold nativity light",
-        "olive branch nativity scene",
-        "compact manger night light",
+        "nativity scene",
+        "light up nativity scene",
+        "christmas nativity lamp",
+        "white and gold nativity",
+        "holy family night light",
+        "manger scene",
         "christian christmas gift",
-        "holiday gifts canada",
-        "edmonton made gifts",
-        "religious holiday decor"
+        "religious christmas decor",
+        "christmas night light",
+        "christmas table lamp",
+        "christmas lamp",
+        "christmas gift",
+        "christmas decor",
+        "holiday gifts canada"
       ]
     },
     {
       "id": "guardian-angel-table-lamp",
-      "name": "Light-Up Guardian Angel Nativity Table Lamp",
+      "name": "Light-Up Christmas Angel & Holy Family Nativity Night Light",
       "priceCents": 3099,
       "category": "Christmas décor",
       "description": "A praying guardian angel spreads tall feathered wings behind Mary, Joseph and baby Jesus, bathing the Holy Family silhouette in a peaceful golden glow.",
@@ -11109,37 +11319,37 @@
         {
           "src": "/media/shop/guardian-angel-table-lamp/natural-cover-v1-1200.webp",
           "thumb": "/media/shop/guardian-angel-table-lamp/natural-cover-v1-480.webp",
-          "alt": "Warm holiday mantel setting for Light-Up Guardian Angel Nativity Table Lamp; original studio views are included in the gallery.",
+          "alt": "Warm holiday mantel setting for Light-Up Christmas Angel & Holy Family Nativity Night Light; original studio views are included in the gallery.",
           "generatedLifestyle": true
         },
         {
           "src": "/media/shop/guardian-angel-table-lamp/1-1200.webp",
           "thumb": "/media/shop/guardian-angel-table-lamp/1-480.webp",
-          "alt": "Light-Up Guardian Angel Nativity Table Lamp (matte white feathered wings with warm golden LED Holy Family backlight) — front illuminated studio view 1, crafted in Edmonton",
+          "alt": "Light-Up Christmas Angel & Holy Family Nativity Night Light (matte white feathered wings with warm golden LED Holy Family backlight) — front illuminated studio view 1, crafted in Edmonton",
           "sourceFile": "Guardian_Angel_Table_Lamp_1_e71c610c52.png"
         },
         {
           "src": "/media/shop/guardian-angel-table-lamp/2-1200.webp",
           "thumb": "/media/shop/guardian-angel-table-lamp/2-480.webp",
-          "alt": "Light-Up Guardian Angel Nativity Table Lamp (matte white feathered wings with warm golden LED Holy Family backlight) — angled detail view 2, crafted in Edmonton",
+          "alt": "Light-Up Christmas Angel & Holy Family Nativity Night Light (matte white feathered wings with warm golden LED Holy Family backlight) — angled detail view 2, crafted in Edmonton",
           "sourceFile": "Guardian_Angel_Table_Lamp_2_77abfe21ac.png"
         },
         {
           "src": "/media/shop/guardian-angel-table-lamp/3-1200.webp",
           "thumb": "/media/shop/guardian-angel-table-lamp/3-480.webp",
-          "alt": "Light-Up Guardian Angel Nativity Table Lamp (matte white feathered wings with warm golden LED Holy Family backlight) — close-up sculpt and finish view 3, crafted in Edmonton",
+          "alt": "Light-Up Christmas Angel & Holy Family Nativity Night Light (matte white feathered wings with warm golden LED Holy Family backlight) — close-up sculpt and finish view 3, crafted in Edmonton",
           "sourceFile": "Guardian_Angel_Table_Lamp_3_18e4a95da6.png"
         },
         {
           "src": "/media/shop/guardian-angel-table-lamp/4-1200.webp",
           "thumb": "/media/shop/guardian-angel-table-lamp/4-480.webp",
-          "alt": "Light-Up Guardian Angel Nativity Table Lamp (matte white feathered wings with warm golden LED Holy Family backlight) — side profile studio view 4, crafted in Edmonton",
+          "alt": "Light-Up Christmas Angel & Holy Family Nativity Night Light (matte white feathered wings with warm golden LED Holy Family backlight) — side profile studio view 4, crafted in Edmonton",
           "sourceFile": "Guardian_Angel_Table_Lamp_4_6bf2f8755b.png"
         },
         {
           "src": "/media/shop/guardian-angel-table-lamp/5-1200.webp",
           "thumb": "/media/shop/guardian-angel-table-lamp/5-480.webp",
-          "alt": "Light-Up Guardian Angel Nativity Table Lamp (matte white feathered wings with warm golden LED Holy Family backlight) — alternate display angle 5, crafted in Edmonton",
+          "alt": "Light-Up Christmas Angel & Holy Family Nativity Night Light (matte white feathered wings with warm golden LED Holy Family backlight) — alternate display angle 5, crafted in Edmonton",
           "sourceFile": "Guardian_Angel_Table_Lamp_5_154b68ebfd.png"
         }
       ],
@@ -11157,22 +11367,28 @@
       "pricingSchemaVersion": 2,
       "shippingPriceMode": "included",
       "shippingFeeCents": 0,
-      "seoTitle": "Light-Up Guardian Angel Nativity Table Lamp — Feathered Wings Holy Family Light",
-      "seoDescription": "Sculpted white guardian angel nativity table lamp with open feathered wings sheltering Mary, Joseph and baby Jesus in warm golden LED light. Crafted in Edmonton.",
+      "seoTitle": "Light-Up Christmas Angel & Holy Family Nativity Lamp — Night Light",
+      "seoDescription": "Light-up white Christmas guardian angel and Holy Family nativity night light (13 cm) with feathered wings and warm CR2032 LED backlight included. Made in Edmonton.",
       "searchKeywords": [
-        "guardian angel nativity lamp",
-        "angel wings holy family light",
-        "white christmas angel lamp",
-        "christian mantel decor",
-        "meaningful christmas gift",
-        "holiday gifts canada",
-        "edmonton made gifts",
-        "illuminated nativity statue"
+        "christmas angel lamp",
+        "angel night light",
+        "nativity scene",
+        "nativity night light",
+        "guardian angel christmas gift",
+        "holy family nativity",
+        "manger",
+        "christian christmas gift",
+        "christmas night light",
+        "christmas table lamp",
+        "christmas lamp",
+        "christmas gift",
+        "christmas decor",
+        "holiday gifts canada"
       ]
     },
     {
       "id": "glowing-gift-bag-table-lamp",
-      "name": "Light-Up Santa's Glowing Gift Bag Table Lamp",
+      "name": "Light-Up Santa Claus & Gift Sack Christmas Night Light",
       "priceCents": 3299,
       "category": "Christmas décor",
       "description": "Cheerful Santa leans playfully behind a festive red sack overflowing with ribbon-tied gift boxes that shine warmly from within.",
@@ -11184,49 +11400,49 @@
         {
           "src": "/media/shop/glowing-gift-bag-table-lamp/natural-cover-v1-1200.webp",
           "thumb": "/media/shop/glowing-gift-bag-table-lamp/natural-cover-v1-480.webp",
-          "alt": "Warm holiday mantel setting for Light-Up Santa's Glowing Gift Bag Table Lamp; original studio views are included in the gallery.",
+          "alt": "Warm holiday mantel setting for Light-Up Santa Claus & Gift Sack Christmas Night Light; original studio views are included in the gallery.",
           "generatedLifestyle": true
         },
         {
           "src": "/media/shop/glowing-gift-bag-table-lamp/1-1200.webp",
           "thumb": "/media/shop/glowing-gift-bag-table-lamp/1-480.webp",
-          "alt": "Light-Up Santa's Glowing Gift Bag Table Lamp (festive red, snow white, and warm glowing gift boxes) — front illuminated studio view 1, crafted in Edmonton",
+          "alt": "Light-Up Santa Claus & Gift Sack Christmas Night Light (festive red, snow white, and warm glowing gift boxes) — front illuminated studio view 1, crafted in Edmonton",
           "sourceFile": "Glowing_Gift_Bag_Table_Lamp1_1223decd77.png"
         },
         {
           "src": "/media/shop/glowing-gift-bag-table-lamp/2-1200.webp",
           "thumb": "/media/shop/glowing-gift-bag-table-lamp/2-480.webp",
-          "alt": "Light-Up Santa's Glowing Gift Bag Table Lamp (festive red, snow white, and warm glowing gift boxes) — angled detail view 2, crafted in Edmonton",
+          "alt": "Light-Up Santa Claus & Gift Sack Christmas Night Light (festive red, snow white, and warm glowing gift boxes) — angled detail view 2, crafted in Edmonton",
           "sourceFile": "Glowing_Gift_Bag_Table_Lamp2_9d94b29922.png"
         },
         {
           "src": "/media/shop/glowing-gift-bag-table-lamp/3-1200.webp",
           "thumb": "/media/shop/glowing-gift-bag-table-lamp/3-480.webp",
-          "alt": "Light-Up Santa's Glowing Gift Bag Table Lamp (festive red, snow white, and warm glowing gift boxes) — close-up sculpt and finish view 3, crafted in Edmonton",
+          "alt": "Light-Up Santa Claus & Gift Sack Christmas Night Light (festive red, snow white, and warm glowing gift boxes) — close-up sculpt and finish view 3, crafted in Edmonton",
           "sourceFile": "Glowing_Gift_Bag_Table_Lamp3_99b7f04e57.png"
         },
         {
           "src": "/media/shop/glowing-gift-bag-table-lamp/4-1200.webp",
           "thumb": "/media/shop/glowing-gift-bag-table-lamp/4-480.webp",
-          "alt": "Light-Up Santa's Glowing Gift Bag Table Lamp (festive red, snow white, and warm glowing gift boxes) — side profile studio view 4, crafted in Edmonton",
+          "alt": "Light-Up Santa Claus & Gift Sack Christmas Night Light (festive red, snow white, and warm glowing gift boxes) — side profile studio view 4, crafted in Edmonton",
           "sourceFile": "Glowing_Gift_Bag_Table_Lamp4_4d0a27085b.png"
         },
         {
           "src": "/media/shop/glowing-gift-bag-table-lamp/5-1200.webp",
           "thumb": "/media/shop/glowing-gift-bag-table-lamp/5-480.webp",
-          "alt": "Light-Up Santa's Glowing Gift Bag Table Lamp (festive red, snow white, and warm glowing gift boxes) — alternate display angle 5, crafted in Edmonton",
+          "alt": "Light-Up Santa Claus & Gift Sack Christmas Night Light (festive red, snow white, and warm glowing gift boxes) — alternate display angle 5, crafted in Edmonton",
           "sourceFile": "Glowing_Gift_Bag_Table_Lamp5_c7279d838a.png"
         },
         {
           "src": "/media/shop/glowing-gift-bag-table-lamp/6-1200.webp",
           "thumb": "/media/shop/glowing-gift-bag-table-lamp/6-480.webp",
-          "alt": "Light-Up Santa's Glowing Gift Bag Table Lamp (festive red, snow white, and warm glowing gift boxes) — back and structure detail view 6, crafted in Edmonton",
+          "alt": "Light-Up Santa Claus & Gift Sack Christmas Night Light (festive red, snow white, and warm glowing gift boxes) — back and structure detail view 6, crafted in Edmonton",
           "sourceFile": "Glowing_Gift_Bag_Table_Lamp6_d3f032e2bb.png"
         },
         {
           "src": "/media/shop/glowing-gift-bag-table-lamp/7-1200.webp",
           "thumb": "/media/shop/glowing-gift-bag-table-lamp/7-480.webp",
-          "alt": "Light-Up Santa's Glowing Gift Bag Table Lamp (festive red, snow white, and warm glowing gift boxes) — tabletop scale and finish view 7, crafted in Edmonton",
+          "alt": "Light-Up Santa Claus & Gift Sack Christmas Night Light (festive red, snow white, and warm glowing gift boxes) — tabletop scale and finish view 7, crafted in Edmonton",
           "sourceFile": "Glowing_Gift_Bag_Table_Lamp7_047f864569.png"
         }
       ],
@@ -11244,22 +11460,28 @@
       "pricingSchemaVersion": 2,
       "shippingPriceMode": "included",
       "shippingFeeCents": 0,
-      "seoTitle": "Light-Up Santa's Glowing Gift Bag Table Lamp — Festive Christmas Night Light",
-      "seoDescription": "Multicolour Santa Claus Christmas table lamp with a red gift sack overflowing with warmly glowing white-ribboned presents and LED lighting included. Made in Edmonton.",
+      "seoTitle": "Light-Up Santa Claus Christmas Night Light — Glowing Gift Sack Lamp",
+      "seoDescription": "Light-up Santa Claus and glowing gift sack Christmas night light (10 cm) in festive red and snow white with warm CR2032 LED lighting included. Made in Edmonton.",
       "searchKeywords": [
-        "santa night light",
-        "santa gift bag table lamp",
-        "christmas kids night light",
-        "festive santa shelf decor",
-        "glowing presents christmas lamp",
+        "santa claus night light",
+        "santa christmas lamp",
+        "kids christmas night light",
+        "santa gift bag lamp",
+        "christmas night light",
+        "christmas table lamp",
+        "christmas lamp",
+        "stocking stuffer",
+        "secret santa gift",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
         "holiday gifts canada",
-        "edmonton made gifts",
-        "christmas desk lamp"
+        "edmonton made gifts"
       ]
     },
     {
       "id": "snowman-shine-table-lamp",
-      "name": "Light-Up Snowflake Snowman Table Lamp",
+      "name": "Light-Up Christmas Snowman Night Light — LED Table Lamp",
       "priceCents": 2799,
       "category": "Christmas décor",
       "description": "A smiling winter snowman in a tilted top hat and cozy red scarf, pierced with crisp snowflake cutouts that cast a warm holiday glow.",
@@ -11271,43 +11493,43 @@
         {
           "src": "/media/shop/snowman-shine-table-lamp/natural-cover-v1-1200.webp",
           "thumb": "/media/shop/snowman-shine-table-lamp/natural-cover-v1-480.webp",
-          "alt": "Warm holiday mantel setting for Light-Up Snowflake Snowman Table Lamp; original studio views are included in the gallery.",
+          "alt": "Warm holiday mantel setting for Light-Up Christmas Snowman Night Light — LED Table Lamp; original studio views are included in the gallery.",
           "generatedLifestyle": true
         },
         {
           "src": "/media/shop/snowman-shine-table-lamp/1-1200.webp",
           "thumb": "/media/shop/snowman-shine-table-lamp/1-480.webp",
-          "alt": "Light-Up Snowflake Snowman Table Lamp (matte white, red winter scarf, black top hat, and warm snowflake glow) — front illuminated studio view 1, crafted in Edmonton",
+          "alt": "Light-Up Christmas Snowman Night Light — LED Table Lamp (matte white, red winter scarf, black top hat, and warm snowflake glow) — front illuminated studio view 1, crafted in Edmonton",
           "sourceFile": "Snowman_Shine_Table_Lamp_1_6f6e92e046.png"
         },
         {
           "src": "/media/shop/snowman-shine-table-lamp/2-1200.webp",
           "thumb": "/media/shop/snowman-shine-table-lamp/2-480.webp",
-          "alt": "Light-Up Snowflake Snowman Table Lamp (matte white, red winter scarf, black top hat, and warm snowflake glow) — angled detail view 2, crafted in Edmonton",
+          "alt": "Light-Up Christmas Snowman Night Light — LED Table Lamp (matte white, red winter scarf, black top hat, and warm snowflake glow) — angled detail view 2, crafted in Edmonton",
           "sourceFile": "Snowman_Shine_Table_Lamp_2_65437697a1.png"
         },
         {
           "src": "/media/shop/snowman-shine-table-lamp/3-1200.webp",
           "thumb": "/media/shop/snowman-shine-table-lamp/3-480.webp",
-          "alt": "Light-Up Snowflake Snowman Table Lamp (matte white, red winter scarf, black top hat, and warm snowflake glow) — close-up sculpt and finish view 3, crafted in Edmonton",
+          "alt": "Light-Up Christmas Snowman Night Light — LED Table Lamp (matte white, red winter scarf, black top hat, and warm snowflake glow) — close-up sculpt and finish view 3, crafted in Edmonton",
           "sourceFile": "Snowman_Shine_Table_Lamp_3_a4b0c22a6c.png"
         },
         {
           "src": "/media/shop/snowman-shine-table-lamp/4-1200.webp",
           "thumb": "/media/shop/snowman-shine-table-lamp/4-480.webp",
-          "alt": "Light-Up Snowflake Snowman Table Lamp (matte white, red winter scarf, black top hat, and warm snowflake glow) — side profile studio view 4, crafted in Edmonton",
+          "alt": "Light-Up Christmas Snowman Night Light — LED Table Lamp (matte white, red winter scarf, black top hat, and warm snowflake glow) — side profile studio view 4, crafted in Edmonton",
           "sourceFile": "Snowman_Shine_Table_Lamp_4_ac47fd6475.png"
         },
         {
           "src": "/media/shop/snowman-shine-table-lamp/5-1200.webp",
           "thumb": "/media/shop/snowman-shine-table-lamp/5-480.webp",
-          "alt": "Light-Up Snowflake Snowman Table Lamp (matte white, red winter scarf, black top hat, and warm snowflake glow) — alternate display angle 5, crafted in Edmonton",
+          "alt": "Light-Up Christmas Snowman Night Light — LED Table Lamp (matte white, red winter scarf, black top hat, and warm snowflake glow) — alternate display angle 5, crafted in Edmonton",
           "sourceFile": "Snowman_Shine_Table_Lamp_5_00634baa85.png"
         },
         {
           "src": "/media/shop/snowman-shine-table-lamp/6-1200.webp",
           "thumb": "/media/shop/snowman-shine-table-lamp/6-480.webp",
-          "alt": "Light-Up Snowflake Snowman Table Lamp (matte white, red winter scarf, black top hat, and warm snowflake glow) — back and structure detail view 6, crafted in Edmonton",
+          "alt": "Light-Up Christmas Snowman Night Light — LED Table Lamp (matte white, red winter scarf, black top hat, and warm snowflake glow) — back and structure detail view 6, crafted in Edmonton",
           "sourceFile": "Snowman_Shine_Table_Lamp_6_3d5cb44312.png"
         }
       ],
@@ -11325,17 +11547,23 @@
       "pricingSchemaVersion": 2,
       "shippingPriceMode": "included",
       "shippingFeeCents": 0,
-      "seoTitle": "Light-Up Snowflake Snowman Table Lamp — Winter Holiday LED Night Light",
-      "seoDescription": "Cheerful top-hat snowman Christmas table lamp with red scarf and glowing snowflake cutouts, complete with battery LED lighting under $30 CAD. Made in Edmonton.",
+      "seoTitle": "Light-Up Christmas Snowman Night Light — Snowflake LED Table Lamp",
+      "seoDescription": "Light-up Christmas snowman LED night light and table lamp (12 cm) in crisp white, red scarf, and top hat with glowing snowflake cutouts. Battery LED included.",
       "searchKeywords": [
+        "christmas snowman night light",
+        "snowman lamp",
         "snowman night light",
-        "light up snowman lamp",
-        "snowflake cutout lantern",
-        "christmas gift under 30",
-        "winter mantel decor",
-        "holiday gifts canada",
-        "edmonton made gifts",
-        "cozy holiday night light"
+        "light up snowman",
+        "snowflake christmas lamp",
+        "christmas night light",
+        "christmas table lamp",
+        "christmas lamp",
+        "stocking stuffer",
+        "secret santa gift",
+        "christmas gift",
+        "christmas gifts",
+        "christmas decor",
+        "holiday gifts canada"
       ]
     }
   ],

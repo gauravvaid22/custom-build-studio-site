@@ -18,3 +18,20 @@ declare module "*/commerce/merchandising.mjs" {
   export const SEASONAL_PRESETS: Record<string, any>;
   export function validateMerchandising(input: any): any;
 }
+
+declare module "*/commerce/storefront-search.mjs" {
+  export function buildTokenRegex(rawToken: string, prefixFallback?: boolean): RegExp;
+  export function matchesSearchQuery(
+    product: any,
+    query: string,
+    displayName?: string,
+    activeCollections?: any[],
+    allowTrailingPrefix?: boolean,
+  ): boolean;
+  export function scoreSearchQuery(
+    product: any,
+    query: string,
+    displayName?: string,
+    activeCollections?: any[],
+  ): number;
+}

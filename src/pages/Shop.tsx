@@ -13,7 +13,7 @@ import { business, reviewSummary, verifiedReviews } from "../data/business";
 import { ShopDisplayAdmin } from "../components/ShopDisplayAdmin";
 import { ModelDiscoveryAdmin } from "../components/ModelDiscoveryAdmin";
 import { MobilePurchaseBar } from "../components/MobilePurchaseBar";
-import { analyticsSearchTerm, isProductVisibleInSeason, lowestProductPrice, matchesProductSearch, subcollections, PURE_CHRISTMAS_PRODUCT_IDS, PURE_HALLOWEEN_PRODUCT_IDS } from "../lib/shopDiscovery";
+import { analyticsSearchTerm, isProductVisibleInSeason, lowestProductPrice, matchesProductSearch, scoreProductSearch, subcollections, PURE_CHRISTMAS_PRODUCT_IDS, PURE_HALLOWEEN_PRODUCT_IDS } from "../lib/shopDiscovery";
 import { useShopFeature, useShopMerchandising } from "../components/SiteContent";
 import { PageIntro } from "../components/Shared";
 import { useCart, money } from "../components/Cart";
@@ -631,9 +631,11 @@ export function ShopCollection({ id }: { id: string }) {
   const category = collections.find(item => item.id === department && item.kind === "department");
   const filtered = listed.filter(product => matchesProductSearch(product, query, nameFor(product.id, product.name), collections) &&
     (id !== "all" || !category || category.products.includes(product.id) || ("listingGroup" in product && product.listingGroup && category.products.includes(product.listingGroup))) && lowestProductPrice(product, priceFor) <= priceLimit);
+  const hasSearchQuery = Boolean(query.trim());
   const sorted = [...filtered].sort((a, b) =>
     sort === "price-low" ? lowestProductPrice(a, priceFor) - lowestProductPrice(b, priceFor) :
-    sort === "price-high" ? lowestProductPrice(b, priceFor) - lowestProductPrice(a, priceFor) : 0,
+    sort === "price-high" ? lowestProductPrice(b, priceFor) - lowestProductPrice(a, priceFor) :
+    hasSearchQuery ? scoreProductSearch(b, query, nameFor(b.id, b.name), collections) - scoreProductSearch(a, query, nameFor(a.id, a.name), collections) : 0,
   );
   useEffect(() => {
     if (!query.trim()) return;
