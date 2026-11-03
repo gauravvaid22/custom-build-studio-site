@@ -4,7 +4,8 @@ import { Link, Navigate, useParams, useSearchParams } from "react-router-dom";
 import draftProducts from "../../commerce/christmas-preview-products.json";
 import christmasFaqs from "../../commerce/christmas-faqs.json";
 import { CatalogProduct } from "../data/catalog";
-import { money } from "../components/Cart";
+import { money, useCart } from "../components/Cart";
+import { business, reviewSummary, verifiedReviews } from "../data/business";
 import { ShopProduct } from "./Shop";
 import Christmas3DViewer from "../components/Managed3DViewer";
 import { useShopifyCatalog } from "../components/ShopifyCatalog";
@@ -65,7 +66,7 @@ const PRODUCT_META: Record<string, { heightLabel: string; tag: string; summary: 
   "christmas-angel": {
     heightLabel: "Approx. 21 cm tall",
     tag: "ILLUMINATED NATIVITY",
-    summary: "Graceful angel wings framing a multi-layered nativity silhouette, with warm LED lighting included.",
+    summary: "Graceful angel wings framing a multi-layered nativity silhouette, with starry night-blue backlit LED lighting included.",
   },
   "meowy-christmas-tree-topper": {
     heightLabel: "Approx. 27 cm tall",
@@ -324,6 +325,24 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
 
   const { priceFor, nameFor } = useShopifyCatalog();
   const { products: allProducts, archived } = useLiveCatalog();
+  const { add, items, remainingFor } = useCart();
+  const [justAddedId, setJustAddedId] = useState<string | null>(null);
+  const justAddedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const cartCount = useMemo(() => items.reduce((sum, item) => sum + item.quantity, 0), [items]);
+
+  useEffect(
+    () => () => {
+      if (justAddedTimer.current) clearTimeout(justAddedTimer.current);
+    },
+    [],
+  );
+
+  function handleQuickAdd(productId: string) {
+    if (!add(productId, 1)) return;
+    setJustAddedId(productId);
+    if (justAddedTimer.current) clearTimeout(justAddedTimer.current);
+    justAddedTimer.current = setTimeout(() => setJustAddedId(null), 8000);
+  }
 
   // If a product ID is requested in public mode, redirect cleanly to canonical /shop/:id
   if (id && publicMode) {
@@ -396,8 +415,8 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
     {
       id: "christmas-angel",
       tag: "ILLUMINATED NATIVITY",
-      headline: "A warm golden halo over the manger.",
-      blurb: "Porcelain-look angel wings framing a multi-layered nativity silhouette, with warm LED lighting included.",
+      headline: "Starry night-blue glow over the manger.",
+      blurb: "Porcelain-look angel wings framing a multi-layered nativity silhouette, with starry night-blue backlit LED lighting included.",
     },
     {
       id: "village-on-the-moon-table-lamp",
@@ -465,6 +484,14 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
             <div className="xmas-hero-badge-row">
               <span className="xmas-badge xmas-badge-gold">✦ Christmas 2026 Collection</span>
               <span className="xmas-badge xmas-badge-pine">Crafted in Edmonton, Canada</span>
+              <a className="xmas-badge xmas-badge-rating" href="#christmas-reviews">
+                ★★★★★ {reviewSummary.rating} ({reviewSummary.totalCount} Reviews)
+              </a>
+              {publicMode && cartCount > 0 && (
+                <Link className="xmas-badge xmas-badge-cart" to="/shop/cart">
+                  🛒 Cart ({cartCount}) →
+                </Link>
+              )}
             </div>
 
             <h1 className="xmas-title">
@@ -669,6 +696,13 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
               const cardVideo = p.video || (p.videos && p.videos[0]);
               const isHoverPlaying = hoveredVideoId === p.id || tappedVideoId === p.id;
               const targetLink = itemHref(p.id);
+              const isSingleSku =
+                publicMode &&
+                !p.variants?.length &&
+                !("groupedDesigns" in p && Array.isArray(p.groupedDesigns) && p.groupedDesigns.length > 0) &&
+                !("launchReady" in p && p.launchReady === false);
+              const canQuickAdd = isSingleSku && remainingFor(p.id) > 0;
+              const isJustAdded = publicMode && justAddedId === p.id;
 
               return (
                 <article
@@ -769,10 +803,31 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
                         <strong>{price(p)} <span>CAD</span></strong>
                         <small>Free Canadian shipping</small>
                       </div>
-                      <Link className="xmas-card-launch" to={targetLink}>
-                        <span className="xmas-card-desktop-action">{hasReal3D ? "3D Model & Photos ↗" : "Photos & Details ↗"}</span>
-                        <span className="xmas-card-mobile-action">View details ↗</span>
-                      </Link>
+                      <div className="xmas-card-actions">
+                        {isJustAdded ? (
+                          <Link className="xmas-quick-checkout-link" to="/shop/cart">
+                            ✓ Added · Checkout →
+                          </Link>
+                        ) : canQuickAdd ? (
+                          <button
+                            type="button"
+                            className="xmas-quick-add-btn"
+                            onClick={() => handleQuickAdd(p.id)}
+                          >
+                            + Add to Cart
+                          </button>
+                        ) : null}
+                        <Link className="xmas-card-launch" to={targetLink}>
+                          <span className="xmas-card-desktop-action">
+                            {isSingleSku
+                              ? (hasReal3D ? "3D & Photos ↗" : "Details ↗")
+                              : (hasReal3D ? "3D Model & Photos ↗" : "Photos & Details ↗")}
+                          </span>
+                          <span className="xmas-card-mobile-action">
+                            {isSingleSku ? "Details ↗" : "Choose option ↗"}
+                          </span>
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </article>
@@ -798,7 +853,7 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
             <span className="xmas-stage-kicker">AMBIENT HOLIDAY LIGHTING</span>
             <h2>Warm light for winter evenings.</h2>
             <p className="lead">
-              LED lighting is included in the listed price of every illuminated Christmas product. Enjoy the warm glow shown for your selected lamp or lantern, with no extra charge for its lights.
+              LED lighting is included in the listed price of every illuminated Christmas product. Enjoy the cozy glow shown for your selected lamp or lantern, with no extra charge for its lights.
             </p>
             <p>
               Explore the <strong>{nameFor("village-on-the-moon-table-lamp", get("village-on-the-moon-table-lamp").name)}</strong> photos to see the miniature cottages and crescent moon in detail.
@@ -914,6 +969,55 @@ export default function ChristmasPreview({ publicMode = false }: { publicMode?: 
           <p className="xmas-ornament-note">
             One selected ornament per purchase. Mix your favourites by choosing each character design individually.
           </p>
+        </div>
+      </section>
+
+      {/* VERIFIED STUDIO CUSTOMER REVIEWS */}
+      <section className="xmas-reviews-section" id="christmas-reviews" aria-labelledby="xmas-reviews-heading">
+        <div className="container">
+          <div className="xmas-section-top">
+            <div>
+              <p className="xmas-eyebrow">
+                VERIFIED CUSTOMER REVIEWS · {reviewSummary.googleCount} GOOGLE &amp; {reviewSummary.etsyCount} ETSY
+              </p>
+              <h2 id="xmas-reviews-heading">
+                Rated {reviewSummary.rating} ★ across<br />
+                <em>{reviewSummary.totalCount} public reviews.</em>
+              </h2>
+            </div>
+            <div className="xmas-reviews-links">
+              <Link className="xmas-review-pill-link" to="/reviews">
+                All Studio Reviews ↗
+              </Link>
+              <a className="xmas-review-pill-link" href={business.googleProfile} target="_blank" rel="noreferrer">
+                Google ({reviewSummary.googleCount}) ↗
+              </a>
+              <a className="xmas-review-pill-link" href={business.etsyReviews} target="_blank" rel="noreferrer">
+                Etsy ({reviewSummary.etsyCount}) ↗
+              </a>
+            </div>
+          </div>
+
+          <div className="xmas-reviews-grid">
+            {verifiedReviews.slice(0, 4).map(review => (
+              <blockquote key={review.id} className="xmas-review-card">
+                <div className="xmas-review-card-top">
+                  <span className="xmas-review-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                  <span className="xmas-review-platform">{review.platform}</span>
+                </div>
+                <p>“{review.text}”</p>
+                <footer>
+                  <div>
+                    <strong>{review.name}</strong>
+                    <span>{review.context}</span>
+                  </div>
+                  <a href={review.source} target="_blank" rel="noreferrer">
+                    Source ↗
+                  </a>
+                </footer>
+              </blockquote>
+            ))}
+          </div>
         </div>
       </section>
 

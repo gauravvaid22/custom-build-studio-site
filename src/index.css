@@ -872,12 +872,20 @@ summary {
 }
 .breadcrumb {
   display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.38rem;
   min-height: 44px;
   align-items: center;
   font-size: 0.85rem;
   margin-bottom: 32px;
+  color: var(--muted);
+  text-decoration: none;
+}
+.breadcrumb a {
+  color: var(--ink);
+  font-weight: 600;
   text-decoration: underline;
-  text-underline-offset: 5px;
+  text-underline-offset: 4px;
 }
 .service-detail-grid {
   display: grid;
@@ -2797,5 +2805,99 @@ h3 {
     left: 0;
     right: 0;
     width: 100%;
+  }
+}
+
+/* Verified public customer reviews (Google Business Profile + Etsy) */
+.reviews-stars {
+  color: #d97706;
+  letter-spacing: 0.08em;
+  font-size: 1rem;
+  line-height: 1;
+}
+.reviews-summary-panel .reviews-summary-score {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-bottom: 12px;
+}
+.reviews-summary-panel .reviews-summary-score strong {
+  display: inline;
+  margin: 0;
+  font-size: 1.45rem;
+}
+.reviews-summary-panel .reviews-summary-score span:last-child {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.verified-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.verified-review-card {
+  margin: 0;
+  padding: 24px;
+  border: 1px solid #d5ddda;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.verified-review-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.verified-review-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #edf3ef;
+  color: #173c35;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.verified-review-card p {
+  color: var(--ink);
+  font-size: 0.96rem;
+  line-height: 1.65;
+  flex: 1;
+}
+.verified-review-card footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e5ece8;
+}
+.verified-review-card footer strong {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+.verified-review-card footer small {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.verified-review-card footer a {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #173c35;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+@media (max-width: 760px) {
+  .verified-reviews-grid {
+    grid-template-columns: 1fr;
   }
 }

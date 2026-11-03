@@ -1419,7 +1419,7 @@
 .shop-campaign-hero h1 { font-size: clamp(2rem, 4.2vw, 4rem); max-width: 13ch; margin: 10px 0 16px; }
 .shop-campaign-hero .lead { max-width: 40ch; font-size: 1.05rem; line-height: 1.55; margin-bottom: 20px; }
 .shop-campaign-hero .shop-hero-photo { box-shadow: 10px 10px 0 rgba(30, 71, 79, .12); }
-.shop-campaign-hero .shop-hero-photo img { height: 310px; max-height: 310px; aspect-ratio: auto; object-fit: cover; }
+.shop-campaign-hero .shop-hero-photo img { height: 356px; max-height: 356px; aspect-ratio: auto; object-fit: cover; object-position: center 16%; }
 .shop-campaign-hero .shop-hero-photo > span { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 13px 18px; font-size: .9rem; }
 .shop-campaign-hero .shop-hero-photo small { flex: none; color: #c3dbe3; font-size: .75rem; }
 .shop-campaign-assurance { display: flex; align-items: center; gap: 8px; font-size: .8rem; color: #35525d; margin: 18px 0 0; }
@@ -1497,7 +1497,7 @@
   .shop-campaign-hero { padding-block: 16px 22px; }
   .shop-campaign-hero .shop-hero-grid { grid-template-columns: 1fr; gap: 22px; }
   .shop-campaign-hero .shop-hero-photo { grid-row: 1; box-shadow: 6px 6px 0 rgba(30, 71, 79, .12); }
-  .shop-campaign-hero .shop-hero-photo img { height: 220px; max-height: 220px; }
+  .shop-campaign-hero .shop-hero-photo img { height: 248px; max-height: 248px; object-position: center 16%; }
   .shop-campaign-hero .shop-hero-photo > span { display: flex; padding: 10px 12px; font-size: .82rem; }
   .shop-campaign-hero .shop-hero-photo small { margin: 0; font-size: .7rem; }
   .shop-campaign-hero h1 { font-size: 2rem; max-width: 20ch; margin-block: 8px 10px; }
@@ -1632,4 +1632,145 @@
 
 @media (max-width:760px) {
   body:has(.shop-detail) .delivery-assurance, body:has(.shop-detail) .shop-notice { display: none; }
+}
+
+/* Above-the-fold PDP layout, checkout confirmation CTA & studio reviews */
+.shop-detail-section {
+  padding-top: 22px;
+  padding-bottom: 72px;
+}
+.shop-pdp-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-bottom: 18px;
+}
+.shop-pdp-topbar .breadcrumb {
+  min-height: 0;
+  margin-bottom: 0;
+  font-size: 0.82rem;
+}
+.shop-back-xmas-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 13px;
+  border-radius: 999px;
+  background: #14362c;
+  color: #f8e5b4;
+  border: 1px solid rgba(207, 155, 60, 0.5);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.shop-back-xmas-pill:hover {
+  background: #9f202c;
+  color: #fff;
+}
+.shop-detail-info .eyebrow {
+  margin-bottom: 8px;
+}
+.shop-detail-info h1 {
+  font-size: clamp(1.85rem, 3.1vw, 2.75rem);
+  line-height: 1.08;
+  margin-bottom: 8px;
+}
+.shop-detail-info .shop-price {
+  margin: 4px 0 8px;
+}
+.shop-pdp-rating-pill {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 12px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: #fdf8eb;
+  border: 1px solid #e6cfa0;
+  color: #173c35;
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+.shop-pdp-rating-pill:hover {
+  border-color: #d97706;
+}
+.shop-detail-info > .lead {
+  font-size: 1rem;
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+.shop-detail-info > .shop-add {
+  margin: 0 0 16px;
+}
+.shop-detail-info .shop-purchase-facts {
+  margin: 14px 0 16px;
+  padding: 12px 15px;
+  gap: 6px;
+  font-size: 0.86rem;
+}
+.shop-added-confirmation a.shop-added-checkout-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 13px;
+  border-radius: 6px;
+  background: #173c35;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.shop-added-confirmation a.shop-added-checkout-btn:hover {
+  background: #d95118;
+  color: #ffffff;
+}
+.shop-pdp-reviews {
+  margin-top: 44px;
+  padding: 28px;
+  border: 1px solid #d5ddda;
+  background: #f6f8f7;
+}
+.shop-pdp-reviews-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-bottom: 20px;
+}
+.shop-pdp-reviews-head .eyebrow {
+  margin-bottom: 6px;
+  color: #173c35;
+}
+.shop-pdp-reviews-head h2 {
+  font-size: clamp(1.35rem, 2.3vw, 1.85rem);
+}
+.shop-pdp-reviews-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+}
+.shop-pdp-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+@media (max-width: 960px) {
+  .shop-pdp-reviews-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 760px) {
+  .shop-detail-info > .shop-pdp-rating-pill {
+    order: 1;
+    width: max-content;
+    max-width: 100%;
+  }
+  .shop-pdp-reviews {
+    padding: 20px 16px;
+    margin-top: 28px;
+  }
 }

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useLiveCatalog } from "../lib/catalogAvailability";
-import { subcollections } from "../lib/shopDiscovery";
+import { subcollections, PURE_CHRISTMAS_PRODUCT_IDS, PURE_HALLOWEEN_PRODUCT_IDS } from "../lib/shopDiscovery";
 import "../shop-category-navigation.css";
 
 type CategoryLink = { id: string; label: string; sale?: boolean };
@@ -27,8 +27,34 @@ function productCategories(
   const product = products.find(item => item.id === destination);
   if (!product) return [];
   const parentId = product.listingGroup || product.variantOf || product.id;
-  return links.filter(link => collections.some(collection => collection.id === link.id
-    && collection.kind === "department" && collection.products.includes(parentId))).map(link => link.id);
+  const matched: string[] = [];
+  if (
+    links.some(link => link.id === "christmas-special") &&
+    (PURE_CHRISTMAS_PRODUCT_IDS.includes(parentId) ||
+      PURE_CHRISTMAS_PRODUCT_IDS.includes(product.id) ||
+      product.category === "Christmas décor" ||
+      collections.some(c => c.id === "christmas" && c.products.includes(parentId)))
+  ) {
+    matched.push("christmas-special");
+  }
+  if (
+    links.some(link => link.id === "halloween-special") &&
+    (PURE_HALLOWEEN_PRODUCT_IDS.includes(parentId) ||
+      PURE_HALLOWEEN_PRODUCT_IDS.includes(product.id) ||
+      collections.some(c => c.id === "halloween" && c.products.includes(parentId)))
+  ) {
+    matched.push("halloween-special");
+  }
+  for (const link of links) {
+    if (
+      !matched.includes(link.id) &&
+      collections.some(collection => collection.id === link.id
+        && collection.kind === "department" && collection.products.includes(parentId))
+    ) {
+      matched.push(link.id);
+    }
+  }
+  return matched;
 }
 
 /** Shared navigation: route-aware selection and decorative motion confined to each link. */

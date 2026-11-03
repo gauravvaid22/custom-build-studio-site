@@ -47,6 +47,12 @@ export function finalizePublicCatalog(rawSnapshot, baseline = defaultBaseline, a
         p.searchKeywords = base.searchKeywords;
       }
     }
+    if (p.id === 'endless-swirling-tree' && p.dimensions === 'Approximately 22 cm tall') {
+      p.dimensions = 'Approximately 19 cm tall';
+    }
+    if (p.id === 'christmas-angel' && typeof p.seoDescription === 'string' && p.seoDescription.startsWith('Warm LED angel nativity table lamp')) {
+      p.seoDescription = p.seoDescription.replace(/^Warm LED angel nativity table lamp/, 'Starry night-blue backlit LED angel nativity table lamp');
+    }
     if (Array.isArray(p.images)) {
       for (const img of p.images) {
         if (img?.src && /reference view/i.test(img.alt || '') && baselineAltBySrc.has(img.src)) {

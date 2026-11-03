@@ -14,7 +14,7 @@ import {
 } from "../components/Shared";
 import { services } from "../data/services";
 import projects from "../data/projects.json";
-import { business } from "../data/business";
+import { business, reviewSummary } from "../data/business";
 import { useShopifyCatalog } from "../components/ShopifyCatalog";
 
 export default function Home() {
@@ -90,11 +90,13 @@ export default function Home() {
       </section>
       <div className="trust-strip">
         <div className="container">
-          <span>Designed around your project</span>
+          <Link to="/reviews">
+            ★★★★★ {reviewSummary.rating} Rated · {reviewSummary.totalCount} Verified Google &amp; Etsy Reviews
+          </Link>
           <a href={business.googleProfile} target="_blank" rel="noreferrer">
             Read our Google reviews ↗
           </a>
-          <span>From digital model to physical part</span>
+          <span>Crafted in Edmonton, AB</span>
         </div>
       </div>
       <section className="home-shop-feature" aria-labelledby="home-shop-title">

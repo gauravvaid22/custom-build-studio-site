@@ -8,7 +8,7 @@ import {
   QuoteLink,
 } from "../components/Shared";
 import Gallery from "../components/Gallery";
-import { business, verifiedReviews } from "../data/business";
+import { business, reviewSummary, verifiedReviews } from "../data/business";
 import { useSiteContent, wholeDollars } from "../components/SiteContent";
 
 export function About() {
@@ -224,60 +224,76 @@ export function Reviews() {
   return (
     <>
       <PageIntro
-        eyebrow="CUSTOMER FEEDBACK"
+        eyebrow="VERIFIED CUSTOMER FEEDBACK"
         title="Confidence starts with real work."
-        description="Explore the project portfolio and talk directly with us about the design, material and approach for your own project."
+        description="Rated 5.0 out of 5 across 26 public reviews on Google Business Profile and Etsy. Every testimonial below is published verbatim from verified buyers and custom-fabrication clients."
       />
       <section className="section">
-        <div className="container narrow">
-          <div className="note-panel">
-            <h2>Hear from our customers.</h2>
+        <div className="container">
+          <div className="note-panel reviews-summary-panel">
+            <div className="reviews-summary-score">
+              <span className="reviews-stars" aria-hidden="true">★★★★★</span>
+              <strong>{reviewSummary.rating} / 5.0 Studio Rating</strong>
+              <span>{reviewSummary.googleCount} Google reviews · {reviewSummary.etsyCount} Etsy shop reviews</span>
+            </div>
             <p>
-              Read customer feedback on our public Google Business Profile, or
-              share your experience if we’ve worked on a project together.
+              Read public feedback directly on Google Business Profile and our Etsy shop, or share your experience if we’ve made a gift or custom project for you.
             </p>
-            <a
-              className="button button-dark"
-              href={business.googleProfile}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Read Our Google Reviews ↗
-            </a>
+            <div className="button-row">
+              <a
+                className="button button-dark"
+                href={business.googleProfile}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Read All {reviewSummary.googleCount} Google Reviews ↗
+              </a>
+              <a
+                className="button"
+                href={business.etsyReviews}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Read Etsy Shop Reviews ({reviewSummary.etsyCount}) ↗
+              </a>
+            </div>
           </div>
-          {verifiedReviews.length ? (
-            verifiedReviews.map((r) => (
-              <blockquote key={r.source}>
-                <p>{r.text}</p>
-                <footer>
-                  {r.name} ·{" "}
-                  <a href={r.source} target="_blank" rel="noreferrer">
-                    Read the original review ↗
-                  </a>
-                </footer>
-              </blockquote>
-            ))
-          ) : (
-            <div className="note-panel">
-              <h2>See what goes into a project.</h2>
-              <p>
-                Our portfolio shows actual parts and prototypes, with materials
-                and project details. If you have a similar challenge, we’re
-                happy to discuss it.
-              </p>
-              <Link className="button button-dark" to="/work">
-                Explore Our Work ↗
-              </Link>
+          {verifiedReviews.length > 0 && (
+            <div className="verified-reviews-grid" aria-label="Verified customer testimonials">
+              {verifiedReviews.map((r) => (
+                <blockquote className="verified-review-card" key={r.id}>
+                  <div className="verified-review-top">
+                    <span className="reviews-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                    <span className="verified-review-badge">{r.platform}</span>
+                  </div>
+                  <p>“{r.text}”</p>
+                  <footer>
+                    <div>
+                      <strong>{r.name}</strong>
+                      <small>{r.context}</small>
+                    </div>
+                    <a href={r.source} target="_blank" rel="noreferrer">
+                      Original ↗
+                    </a>
+                  </footer>
+                </blockquote>
+              ))}
             </div>
           )}
-          <h2>Worked with us?</h2>
-          <p>
-            We’d welcome your feedback.{" "}
-            <a className="inline-link" href={`mailto:${business.email}`}>
-              Contact the studio
-            </a>{" "}
-            to share your experience.
-          </p>
+          <div className="narrow" style={{ marginTop: "3rem" }}>
+            <h2>Worked with us?</h2>
+            <p>
+              We’d welcome your feedback.{" "}
+              <a className="inline-link" href={business.googleProfile} target="_blank" rel="noreferrer">
+                Leave a Google review ↗
+              </a>{" "}
+              or{" "}
+              <a className="inline-link" href={`mailto:${business.email}`}>
+                contact the studio
+              </a>{" "}
+              to share your experience.
+            </p>
+          </div>
         </div>
       </section>
       <CallToAction />

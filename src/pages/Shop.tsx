@@ -9,7 +9,7 @@ import type { CatalogProduct } from "../data/catalog";
 import settings from "../../commerce/settings.json";
 import headphoneSearch from "../../commerce/headphone-search.json";
 import christmasFaqs from "../../commerce/christmas-faqs.json";
-import { business } from "../data/business";
+import { business, reviewSummary, verifiedReviews } from "../data/business";
 import { ShopDisplayAdmin } from "../components/ShopDisplayAdmin";
 import { ModelDiscoveryAdmin } from "../components/ModelDiscoveryAdmin";
 import { MobilePurchaseBar } from "../components/MobilePurchaseBar";
@@ -151,7 +151,7 @@ function ShopNotice() {
         ? "Collection preview — prices and production details are being reviewed. "
         : ""}
       Finished physical products <span aria-hidden="true">·</span> No digital files{" "}
-      <span aria-hidden="true">·</span> {mode === "pickup" ? "Edmonton pickup by appointment" : "Tracked shipping across Canada · delivery shown in cart"}{" "}
+      <span aria-hidden="true">·</span> {mode === "pickup" ? "Edmonton pickup by appointment" : "Free tracked shipping on most Canadian orders · details in cart"}{" "}
       <span aria-hidden="true">·</span> Secure Shopify checkout
     </div>
   );
@@ -229,7 +229,7 @@ function AddProduct({
         setConfirmation(`${quantity} × ${nameFor(orderProduct.id, orderProduct.name)}`);
         setConfirmationKey((current) => current + 1);
         if (confirmationTimer.current) clearTimeout(confirmationTimer.current);
-        confirmationTimer.current = setTimeout(() => setConfirmation(""), 4200);
+        confirmationTimer.current = setTimeout(() => setConfirmation(""), 9000);
       }}
     >
       {variants.length > 0 && !("groupedDesigns" in product) && (
@@ -285,7 +285,7 @@ function AddProduct({
             <strong>Added to cart</strong>
             <small>{confirmation}</small>
           </span>
-          <Link to="/shop/cart">View cart →</Link>
+          <Link className="shop-added-checkout-btn" to="/shop/cart">Cart &amp; Checkout →</Link>
         </div>
       )}
     </form>
@@ -428,8 +428,8 @@ function CollectionCover({ collectionId, product, large = false }: { collectionI
 }
 function StudioProof() {
   return <section className="container shop-studio-proof" aria-labelledby="shop-studio-proof-title">
-    <div className="shop-studio-proof-copy"><p className="eyebrow">YOUR EDMONTON STUDIO</p><h2 id="shop-studio-proof-title">Made in Edmonton. Here to help.</h2><p>Custom Build Studio designs and makes products in Edmonton. Have a fit question or a custom idea? Talk directly with the studio.</p><div className="button-row"><a className="text-link" href={business.googleProfile} target="_blank" rel="noreferrer">Read our Google reviews ↗</a><Link className="text-link" to="/work">See our studio work ↗</Link></div></div>
-    <div className="shop-studio-assurances"><Link to="/shipping-returns"><BenefitIcon type="shipping"/><span><strong>Clear shipping & returns</strong><small>Check the details before ordering →</small></span></Link><Link to="/contact"><BenefitIcon type="local"/><span><strong>A question before you buy?</strong><small>Ask us about size, colour or custom work →</small></span></Link></div>
+    <div className="shop-studio-proof-copy"><p className="eyebrow">★★★★★ {reviewSummary.rating} RATED EDMONTON STUDIO · {reviewSummary.totalCount} PUBLIC REVIEWS</p><h2 id="shop-studio-proof-title">Made in Edmonton. Trusted by real buyers.</h2><p>Custom Build Studio designs and crafts finished gifts and custom parts in Edmonton, rated 5.0★ across Google Business Profile and Etsy.</p><div className="button-row"><Link className="text-link" to="/reviews">Read verified customer reviews →</Link><a className="text-link" href={business.googleProfile} target="_blank" rel="noreferrer">Google reviews ({reviewSummary.googleCount}) ↗</a><Link className="text-link" to="/work">See our studio work ↗</Link></div></div>
+    <div className="shop-studio-assurances"><Link to="/shipping-returns"><BenefitIcon type="shipping"/><span><strong>Clear shipping & returns</strong><small>Free tracked Canadian shipping & 30-day returns →</small></span></Link><Link to="/contact"><BenefitIcon type="local"/><span><strong>A question before you buy?</strong><small>Ask us about size, colour or custom work →</small></span></Link></div>
   </section>;
 }
 export function Shop() {
@@ -785,12 +785,14 @@ export function ShopProduct({ previewCatalog, previewId }: { previewCatalog?: Pr
   return (
     <>
       {previewCatalog && <div className="container" style={{paddingTop: 20}}><Link className="text-link" to="/preview/christmas?analytics_test=1">← Back to Christmas Special preview</Link></div>}
-      {isChristmasProduct && !previewCatalog && <div className="container" style={{paddingTop: 16}}><Link className="text-link" to="/shop/christmas-special/" style={{color: "#d4af37", fontWeight: 600}}>← Back to Christmas Special</Link></div>}
-      <ShopNav showFulfillment={!previewOnly} />
-      {previewOnly ? <p className="shop-notice container">Design preview · proposed CAD item prices · ordering not open</p> : productShippingFee(product.id) ? <p className="shop-notice container">CAD prices · {mode === "pickup" ? "Edmonton pickup · no shipping fee" : `${money(productShippingFee(product.id))} tracked Canadian shipping once per order`}</p> : <ShopNotice />}
-      <section className="section">
+      <ShopNav showFulfillment={false} />
+      {previewOnly ? <p className="shop-notice container">Design preview · proposed CAD item prices · ordering not open</p> : productShippingFee(product.id) ? <p className="shop-notice container">CAD prices · {mode === "pickup" ? "Edmonton pickup · no shipping fee" : `${money(productShippingFee(product.id))} tracked Canadian shipping once per order`}</p> : null}
+      <section className="section shop-detail-section">
         <div className="container">
-          <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> / <Link to="/shop/">Gifts & Décor</Link> / {isChristmasProduct && <><Link to="/shop/christmas-special/">Christmas Special</Link> / <Link to="/shop/christmas/">Christmas</Link> / </>}{"personalization" in product && <><Link to="/shop/personalized-gifts/">Personalized Gifts</Link> / <Link to="/shop/photo-frames/">Photo Holders</Link> / </>}{product.category === "PS5 console stands" && <><Link to="/shop/console-stands/">PS5 Console Stands</Link> / </>}{product.category === "Headphone stands" && <><Link to="/shop/headphone-stands/">Headphone Stands</Link> / </>}{nameFor(product.id, product.name)}</nav>
+          <div className="shop-pdp-topbar">
+            <nav className="breadcrumb" aria-label="Breadcrumb"><Link to="/">Home</Link> <span aria-hidden="true">/</span> <Link to="/shop/">Gifts &amp; Décor</Link> <span aria-hidden="true">/</span> {isChristmasProduct && <><Link to="/shop/christmas-special/">Christmas Special</Link> <span aria-hidden="true">/</span> <Link to="/shop/christmas/">Christmas</Link> <span aria-hidden="true">/</span> </>}{"personalization" in product && <><Link to="/shop/personalized-gifts/">Personalized Gifts</Link> <span aria-hidden="true">/</span> <Link to="/shop/photo-frames/">Photo Holders</Link> <span aria-hidden="true">/</span> </>}{product.category === "PS5 console stands" && <><Link to="/shop/console-stands/">PS5 Console Stands</Link> <span aria-hidden="true">/</span> </>}{product.category === "Headphone stands" && <><Link to="/shop/headphone-stands/">Headphone Stands</Link> <span aria-hidden="true">/</span> </>}<span>{nameFor(product.id, product.name)}</span></nav>
+            {isChristmasProduct && !previewCatalog && <Link className="shop-back-xmas-pill" to="/shop/christmas-special/">🎄 Explore All Christmas 3D Showcase ↗</Link>}
+          </div>
           <div className="shop-detail">
             <div>
               <MediaStage media={[...images.map(({image})=>({src:image.src,alt:image.alt})),...videos.map(v=>({src:v.src,alt:v.label+" product video",video:true,poster:v.owner.images[0]?.src}))]} index={index} onChange={setIndex}/>
@@ -860,6 +862,11 @@ export function ShopProduct({ previewCatalog, previewId }: { previewCatalog?: Pr
                 </span>
               </p>
               {compareAtFor(selectedVariant.id) && <p className="shop-regular-price"><strong className="shop-sale-inline">{sale?.percentage}% OFF</strong> Regular {money(compareAtFor(selectedVariant.id)!)} CAD</p>}
+              <a className="shop-pdp-rating-pill" href="#studio-reviews">
+                <span className="reviews-stars" aria-hidden="true">★★★★★</span>
+                <strong>{reviewSummary.rating} Studio Rating</strong>
+                <span>· {reviewSummary.totalCount} Google &amp; Etsy Reviews ↓</span>
+              </a>
               {product.shippingPriceMode==='per-order'&&<div className="note-panel bulk-delivery-savings"><strong>Mix & match — save on delivery</strong><p>{money(priceFor(selectedVariant.id,selectedVariant.priceCents))} CAD per item + {money(productShippingFee(product.id))} delivery once per order. Add more designs without another delivery charge.</p><div className="button-row">{[1,3,5].map(q=><span key={q}><strong>{q} {q===1?'item':'items'}</strong> · {money(q*priceFor(selectedVariant.id,selectedVariant.priceCents)+productShippingFee(product.id))} CAD</span>)}</div><small>Examples include delivery, before any applicable tax. Existing design choices stay the same.</small></div>}{!product.bundleOffers?.length && "groupedDesigns" in product && <ProductDesignPicker designs={product.groupedDesigns || []} selectedId={selectedVariant.id} onChange={chooseVariant} catalog={activeCatalog} showDropdown={Boolean(previewCatalog)} />}
               {!previewCatalog && "groupedDesigns" in product && product.groupedDesigns && (
                 <nav className="design-direct-links" aria-label={`${product.name} individual design pages`}>
@@ -893,21 +900,23 @@ export function ShopProduct({ previewCatalog, previewId }: { previewCatalog?: Pr
               )}
               <p className="lead">{product.description}</p>{"groupedDesigns" in product && <p className="small"><strong>{nameFor(mediaProduct.id, mediaProduct.name)}</strong> — {mediaProduct.description}</p>}
               {product.category === "Pet hats & costumes" && <div className="note-panel"><strong>Fully assembled · Standard size</strong><p>Costume elastic, straps and the pieces listed for your chosen design are included. Fit varies by pet; <a href="mailto:custombuildstudio@gmail.com?subject=Paw%20Couture%20fit%20question">ask us about fit before ordering</a> if unsure. For short, supervised photo moments.</p></div>}
-              <ul className="shop-purchase-facts" aria-label="Purchase details">
-                <li>{previewOnly ? previewCatalog ? "Proposed price includes Canadian delivery" : "$5 shipping extra for this collection — checkout setup pending" : mode === "pickup" ? "Pickup in Southeast Edmonton by appointment" : productShippingFee(product.id) ? `${money(productShippingFee(product.id))} tracked shipping once per order across Canada` : "Free tracked shipping in Canada"}</li>
-                <li>{previewCatalog ? "Preparation and delivery timing to confirm before launch" : mode === "pickup" ? productionMessage : deliveryEstimate}</li>
-                <li>{previewCatalog ? "Checkout stays closed during review" : "Secure payment through Shopify"}</li>
-              </ul>
-              <div className="shop-trust-links">
-                <a href="https://share.google/r0qV4iw8FxD8SLkLL" target="_blank" rel="noreferrer">
-                  Read customer reviews on Google ↗
-                </a>
-                <a href="tel:+17802030081">Questions? Call or text 780-203-0081</a>
-              </div>
-              <dl className="shop-core-details"><dt>Included</dt><dd>{product.bundleOffers?.length ? "Your chosen single animal, five-animal pack or ten-animal pack. Select the animals below." : selectedVariant.included}</dd>{!selectedVariant.dimensions.startsWith("Final dimensions") && <><dt>{isHalloweenMask ? "Ear-to-ear size" : "Approximate size"}</dt><dd>{selectedVariant.dimensions.replace("Source model: approximately", "Approximately").replace("Finished size: approximately", "Approximately").replace("Final printed dimensions require production review.", "Finished size may vary slightly.")}</dd></>}</dl>
-
               {product.bundleOffers?.length ? <MixPackOrder product={product} onPreview={chooseVariant}/> : "personalization" in product ? <PhotoPrintOrder key={product.id} productId={selectedVariant.id} /> : <AddProduct product={product} variantId={selectedVariant.id} onVariantChange={chooseVariant} formId="product-purchase-form" />}
-              <Link className="text-link" to="/shop/cart">View cart & checkout ↗</Link>
+              <ul className="shop-purchase-facts" aria-label="Purchase details">
+                <li>{previewOnly ? previewCatalog ? "Proposed price includes Canadian delivery" : "$5 shipping extra for this collection — checkout setup pending" : mode === "pickup" ? "Pickup in Southeast Edmonton by appointment" : productShippingFee(product.id) ? `${money(productShippingFee(product.id))} tracked shipping once per order across Canada` : "Free tracked shipping in Canada (or South Edmonton pickup in cart)"}</li>
+                <li>{previewCatalog ? "Preparation and delivery timing to confirm before launch" : mode === "pickup" ? productionMessage : deliveryEstimate}</li>
+                <li>{previewCatalog ? "Checkout stays closed during review" : "Secure payment through Shopify · 30-day standard returns"}</li>
+              </ul>
+              <dl className="shop-core-details"><dt>Included</dt><dd>{product.bundleOffers?.length ? "Your chosen single animal, five-animal pack or ten-animal pack. Select the animals below." : selectedVariant.included}</dd>{!selectedVariant.dimensions.startsWith("Final dimensions") && <><dt>{isHalloweenMask ? "Ear-to-ear size" : "Approximate size"}</dt><dd>{selectedVariant.dimensions.replace("Source model: approximately", "Approximately").replace("Finished size: approximately", "Approximately").replace("Final printed dimensions require production review.", "Finished size may vary slightly.")}</dd></>}</dl>
+              <div className="shop-trust-links">
+                <Link to="/shop/cart">View cart &amp; checkout ↗</Link>
+                <a href={business.googleProfile} target="_blank" rel="noreferrer">
+                  Google reviews ({reviewSummary.googleCount}) ↗
+                </a>
+                <a href={business.etsyReviews} target="_blank" rel="noreferrer">
+                  Etsy reviews ({reviewSummary.etsyCount}) ↗
+                </a>
+                <a href="tel:+17802030081">Call/text 780-203-0081</a>
+              </div>
               <p className="shop-purchase-policy">{"personalization" in product ? "Your photo print is included. Personalized orders are excluded from change-of-mind returns." : `Unused standard products can be returned within ${storePolicy.returnWindowDays} days. Custom-size orders are excluded.`} <Link to="/shipping-returns">Details →</Link></p>
               {isHalloweenMask && (
                 <div className="shop-mask-fit-guide" aria-label="Halloween mask size guide">
@@ -980,6 +989,39 @@ export function ShopProduct({ previewCatalog, previewId }: { previewCatalog?: Pr
             </div>
           </div>
           <MobilePurchaseBar name={nameFor(product.id, product.name)} priceCents={priceFor(selectedVariant.id, selectedVariant.priceCents)} targetId="product-purchase-form" chooseOptions={variants.length > 0 || "personalization" in product} />
+          {verifiedReviews.length > 0 && (
+            <section className="shop-pdp-reviews" id="studio-reviews" aria-labelledby="pdp-reviews-heading">
+              <div className="shop-pdp-reviews-head">
+                <div>
+                  <p className="eyebrow">★★★★★ {reviewSummary.rating} / 5.0 STUDIO RATING · {reviewSummary.totalCount} PUBLIC REVIEWS</p>
+                  <h2 id="pdp-reviews-heading">What verified buyers say about Custom Build Studio</h2>
+                </div>
+                <div className="shop-pdp-reviews-links">
+                  <Link className="text-link" to="/reviews">All studio reviews →</Link>
+                  <a className="text-link" href={business.googleProfile} target="_blank" rel="noreferrer">Google ({reviewSummary.googleCount}) ↗</a>
+                  <a className="text-link" href={business.etsyReviews} target="_blank" rel="noreferrer">Etsy ({reviewSummary.etsyCount}) ↗</a>
+                </div>
+              </div>
+              <div className="shop-pdp-reviews-grid">
+                {verifiedReviews.slice(0, 3).map((r) => (
+                  <blockquote className="verified-review-card" key={r.id}>
+                    <div className="verified-review-top">
+                      <span className="reviews-stars" aria-label="5 out of 5 stars">★★★★★</span>
+                      <span className="verified-review-badge">{r.platform}</span>
+                    </div>
+                    <p>“{r.text}”</p>
+                    <footer>
+                      <div>
+                        <strong>{r.name}</strong>
+                        <small>{r.context}</small>
+                      </div>
+                      <a href={r.source} target="_blank" rel="noreferrer">Original ↗</a>
+                    </footer>
+                  </blockquote>
+                ))}
+              </div>
+            </section>
+          )}
           <aside className="shop-reference-note" aria-label="Related gifts">
             <h2>More to explore</h2>
             <div className="shop-filters">
