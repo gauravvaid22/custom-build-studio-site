@@ -11562,8 +11562,7 @@
       {
         "src": "/media/shop/christmas-character-figurines/natural-cover-v2-1200.webp",
         "thumb": "/media/shop/christmas-character-figurines/natural-cover-v2-480.webp",
-        "alt": "Edited Christmas setting for Christmas Character Figurines; original product views are included in the gallery.",
-        "generatedLifestyle": true
+        "alt": "Edited Christmas setting for Christmas Character Figurines; original product views are included in the gallery."
       },
       {
         "src": "/media/shop/hooked-santa/1-1200.webp",
@@ -11599,29 +11598,29 @@
       {
         "id": "hooked-santa",
         "label": "Knitted-Style Santa Claus Shelf Figurine",
+        "dimensions": "Approximately 10 cm tall",
         "priceCents": 2499,
         "basePriceCents": 1999,
         "deliveryExtraCents": 0,
-        "pricingSchemaVersion": 2,
-        "dimensions": "Approximately 10 cm tall"
+        "pricingSchemaVersion": 2
       },
       {
         "id": "snow-in-jumper",
         "label": "Cozy Sweater Snowman Shelf Figurine",
+        "dimensions": "Approximately 8.3 cm tall",
         "priceCents": 2499,
         "basePriceCents": 1999,
         "deliveryExtraCents": 0,
-        "pricingSchemaVersion": 2,
-        "dimensions": "Approximately 8.3 cm tall"
+        "pricingSchemaVersion": 2
       },
       {
         "id": "zou-christmas-baby-axolotl",
         "label": "Christmas Axolotl Fidget Figurine with Santa Hat",
+        "dimensions": "Approximately 10 cm long",
         "priceCents": 2499,
         "basePriceCents": 1999,
         "deliveryExtraCents": 0,
-        "pricingSchemaVersion": 2,
-        "dimensions": "Approximately 10 cm long"
+        "pricingSchemaVersion": 2
       }
     ],
     "variantLabel": "Design",
@@ -12271,8 +12270,7 @@
       {
         "src": "/media/shop/santa-s-snack-hat-bowl/natural-cover-v2-1200.webp",
         "thumb": "/media/shop/santa-s-snack-hat-bowl/natural-cover-v2-480.webp",
-        "alt": "Edited Christmas setting for Santa Hat Treat Bowl; original product views are included in the gallery.",
-        "generatedLifestyle": true
+        "alt": "Edited Christmas setting for Santa Hat Treat Bowl; original product views are included in the gallery."
       },
       {
         "src": "/media/shop/santa-s-snack-hat-bowl/1-1200.webp",
@@ -12987,8 +12985,7 @@
       {
         "src": "/media/shop/christmas-character-ornaments/natural-cover-v2-1200.webp",
         "thumb": "/media/shop/christmas-character-ornaments/natural-cover-v2-480.webp",
-        "alt": "Edited Christmas setting for Christmas Character Ornaments; original product views are included in the gallery.",
-        "generatedLifestyle": true
+        "alt": "Edited Christmas setting for Christmas Character Ornaments; original product views are included in the gallery."
       },
       {
         "src": "/media/shop/christmas-character-ornaments/cover-1200.webp",
@@ -13058,8 +13055,8 @@
       {
         "id": "santa-claus-christmas-ornament",
         "label": "Santa Claus Christmas Ornament",
-        "priceCents": 2499,
         "dimensions": "Approximately 5 cm tall",
+        "priceCents": 2499,
         "basePriceCents": 1999,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
@@ -13067,8 +13064,8 @@
       {
         "id": "sleeping-bear-christmas-ornament",
         "label": "Sleeping Bear Christmas Ornament",
-        "priceCents": 2499,
         "dimensions": "Approximately 5 cm tall",
+        "priceCents": 2499,
         "basePriceCents": 1999,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
@@ -13076,8 +13073,8 @@
       {
         "id": "sleeping-dog-christmas-ornament",
         "label": "Sleeping Dog Christmas Ornament",
-        "priceCents": 2499,
         "dimensions": "Approximately 5 cm tall",
+        "priceCents": 2499,
         "basePriceCents": 1999,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
@@ -13085,8 +13082,8 @@
       {
         "id": "reindeer-head-christmas-ornament",
         "label": "Reindeer Christmas Ornament",
-        "priceCents": 2499,
         "dimensions": "Approximately 5 cm tall",
+        "priceCents": 2499,
         "basePriceCents": 1999,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
@@ -13094,8 +13091,8 @@
       {
         "id": "snowman-christmas-ornament",
         "label": "Snowman Christmas Ornament",
-        "priceCents": 2499,
         "dimensions": "Approximately 5 cm tall",
+        "priceCents": 2499,
         "basePriceCents": 1999,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
@@ -13103,8 +13100,8 @@
       {
         "id": "sleeping-cat-christmas-ornament",
         "label": "Sleeping Cat Christmas Ornament",
-        "priceCents": 2499,
         "dimensions": "Approximately 5 cm tall",
+        "priceCents": 2499,
         "basePriceCents": 1999,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
@@ -13112,8 +13109,8 @@
       {
         "id": "lying-reindeer-christmas-ornament",
         "label": "Resting Reindeer Christmas Ornament",
-        "priceCents": 2499,
         "dimensions": "Approximately 5 cm tall",
+        "priceCents": 2499,
         "basePriceCents": 1999,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
@@ -13121,8 +13118,8 @@
       {
         "id": "nutcracker-christmas-ornament",
         "label": "Nutcracker Christmas Ornament",
-        "priceCents": 2499,
         "dimensions": "Approximately 5 cm tall",
+        "priceCents": 2499,
         "basePriceCents": 1999,
         "deliveryExtraCents": 0,
         "pricingSchemaVersion": 2
@@ -14292,8 +14289,7 @@
       {
         "src": "/media/shop/kitten-ornament-table-lamp/natural-cover-v1-1200.webp",
         "thumb": "/media/shop/kitten-ornament-table-lamp/natural-cover-v1-480.webp",
-        "alt": "Warm holiday mantel setting for White Cat Christmas Ornament Night Light — LED Table Lamp; original studio views are included in the gallery.",
-        "generatedLifestyle": true
+        "alt": "Warm holiday mantel setting for White Cat Christmas Ornament Night Light — LED Table Lamp; original studio views are included in the gallery."
       },
       {
         "src": "/media/shop/kitten-ornament-table-lamp/1-1200.webp",
@@ -14373,8 +14369,7 @@
       {
         "src": "/media/shop/snowy-branch-table-lamp/natural-cover-v1-1200.webp",
         "thumb": "/media/shop/snowy-branch-table-lamp/natural-cover-v1-480.webp",
-        "alt": "Warm holiday mantel setting for Snowman Christmas Ornament Table Lamp — Snowy Branch Lantern; original studio views are included in the gallery.",
-        "generatedLifestyle": true
+        "alt": "Warm holiday mantel setting for Snowman Christmas Ornament Table Lamp — Snowy Branch Lantern; original studio views are included in the gallery."
       },
       {
         "src": "/media/shop/snowy-branch-table-lamp/1-1200.webp",
@@ -14460,8 +14455,7 @@
       {
         "src": "/media/shop/olive-branch-nativity-table-lamp/natural-cover-v1-1200.webp",
         "thumb": "/media/shop/olive-branch-nativity-table-lamp/natural-cover-v1-480.webp",
-        "alt": "Warm holiday mantel setting for Light-Up White & Gold Christmas Nativity Scene Table Lamp; original studio views are included in the gallery.",
-        "generatedLifestyle": true
+        "alt": "Warm holiday mantel setting for Light-Up White & Gold Christmas Nativity Scene Table Lamp; original studio views are included in the gallery."
       },
       {
         "src": "/media/shop/olive-branch-nativity-table-lamp/1-1200.webp",
@@ -14547,8 +14541,7 @@
       {
         "src": "/media/shop/guardian-angel-table-lamp/natural-cover-v1-1200.webp",
         "thumb": "/media/shop/guardian-angel-table-lamp/natural-cover-v1-480.webp",
-        "alt": "Warm holiday mantel setting for Light-Up Christmas Angel & Holy Family Nativity Night Light; original studio views are included in the gallery.",
-        "generatedLifestyle": true
+        "alt": "Warm holiday mantel setting for Light-Up Christmas Angel & Holy Family Nativity Night Light; original studio views are included in the gallery."
       },
       {
         "src": "/media/shop/guardian-angel-table-lamp/1-1200.webp",
@@ -14628,8 +14621,7 @@
       {
         "src": "/media/shop/glowing-gift-bag-table-lamp/natural-cover-v1-1200.webp",
         "thumb": "/media/shop/glowing-gift-bag-table-lamp/natural-cover-v1-480.webp",
-        "alt": "Warm holiday mantel setting for Light-Up Santa Claus & Gift Sack Christmas Night Light; original studio views are included in the gallery.",
-        "generatedLifestyle": true
+        "alt": "Warm holiday mantel setting for Light-Up Santa Claus & Gift Sack Christmas Night Light; original studio views are included in the gallery."
       },
       {
         "src": "/media/shop/glowing-gift-bag-table-lamp/1-1200.webp",
@@ -14721,8 +14713,7 @@
       {
         "src": "/media/shop/snowman-shine-table-lamp/natural-cover-v1-1200.webp",
         "thumb": "/media/shop/snowman-shine-table-lamp/natural-cover-v1-480.webp",
-        "alt": "Warm holiday mantel setting for Light-Up Christmas Snowman Night Light — LED Table Lamp; original studio views are included in the gallery.",
-        "generatedLifestyle": true
+        "alt": "Warm holiday mantel setting for Light-Up Christmas Snowman Night Light — LED Table Lamp; original studio views are included in the gallery."
       },
       {
         "src": "/media/shop/snowman-shine-table-lamp/1-1200.webp",
